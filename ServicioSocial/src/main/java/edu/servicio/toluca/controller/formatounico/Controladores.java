@@ -4,10 +4,13 @@
  */
 package edu.servicio.toluca.controller.formatounico;
 
+import org.springframework.stereotype.Controller;
+
 /**
  *
  * @author Héctor
  */
+@Controller
 public class Controladores {
     
 }
