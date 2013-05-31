@@ -17,11 +17,5 @@
     </head>
     <body>
         <h1 id="gato">Hello World!</h1>
-        <form:form action="login.do" method="POST" modelAttribute="datos">
-            <form:input path="correo"/>
-            <form:input path="pass"/>
-          
-            <input type="submit">
-        </form:form>
     </body>
 </html>
