@@ -25,5 +25,10 @@
             </div>
         </div>
         <h1>Pagina del Formato Unico</h1>
+        
+        <%-- fin del contenido --%>
+        <div id="footer">
+            <img  src="imagenes/foter.png"/>
+        </div>
     </body>
 </html>
