@@ -1,0 +1,200 @@
+/* 
+    Document   : estilo_sia
+    Created on : 20/02/2012, 09:49:44 AM
+    Author     : ingluisestrada
+    Description:
+        Purpose of the stylesheet follows.
+*/
+/* CSS Document */
+html 
+{
+	width:100%;
+	height: 100%;
+}
+
+body
+{
+	width:100%;
+	padding:0;
+	margin:0;
+	background:#083353;
+	font: 80% "Trebuchet MS", sans-serif; margin: 50px;
+}
+
+.pagina
+{
+	position:relative;
+	width:100%;
+}
+
+.banner
+{
+	position:relative;
+	margin-top:10px;
+	width:950px;
+	height:150px;
+	background:url(../imagenes/banner.png) no-repeat;
+}
+#menu {
+	width:950px;
+	text-align:left;
+	margin:0 auto;
+	z-index:100;
+}
+#contenido {
+	width:920px;
+	text-align:left;
+	margin:0 auto;
+	margin-top:20px;
+	background: #FFF url(../imagenes/SIA-MarcaAgua.png) repeat bottom left;
+	z-index:1;
+}
+
+	
+	
+#footer {
+	width:950px;
+	text-align:left;
+	margin:0 auto;
+	margin-top:20px;
+}
+h1 { margin:5; padding:10px 0 0 15px; font-weight:bold; color:#1484e6; font-family:Arial, Helvetica, sans-serif; font-size: 24px;}
+h2 { margin:5; padding:10px 0 0 15px; font-weight:bold; color:#e68400; font-family:Arial, Helvetica, sans-serif; font-size: 20px;}
+h3 { margin:5; padding:10px 0 0 15px; font-weight:bold; color:#1484e6; font-family:Arial, Helvetica, sans-serif; font-size: 16px;}
+h4 { margin:5; padding:10px 0 0 15px; font-weight:bold; color:#e68400; font-family:Arial, Helvetica, sans-serif; font-size: 14px;}
+a:link, a:visited { text-decoration: none; color: #1aa8fb;}
+a:hover { text-decoration: underline; color: #2f7ac0;}
+ul {margin:0 0 0 15px;}
+p {margin-top: 0;margin-bottom: 10px; padding: 0 5px 0 15px; font-family:Arial, Helvetica, sans-serif; font-size: 16px; }
+table {margin-top: 0;margin-bottom: 10px; padding: 0 5px 0 15px; font-family:Arial, Helvetica, sans-serif; font-size: 16px; }
+
+/*demo page css*/
+			
+			.demoHeaders { margin-top: 2em; }
+			#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+			#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+			ul#icons {margin: 0; padding: 0;}
+			ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+			ul#icons span.ui-icon {float: left; margin: 0 4px;}
+			
+/*validaciones */
+#commentForm { width: 920px; }
+#commentForm label { width: 350px; }
+#commentForm label.error { margin-left: 350px;  }
+#commentForm input.reset { margin-left: 10px; }
+#commentForm input.submit { margin-left: 10px; }
+#signupForm { width: 670px; }
+#signupForm label.error {
+	margin-left: 10px;
+	width: auto;
+	display: inline;
+}
+#newsletter_topics label.error {
+	display: none;
+	margin-left: 103px;
+}
+
+/*data tables*/
+#dt_example {
+	font: 80%/1.45em "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+	color: #333;
+	background-color: #fff;
+}
+
+
+#dt_example #container {
+	width: 800px;
+	margin: 30px auto;
+	padding: 0;
+}
+
+
+#dt_example #footer {
+	margin: 50px auto 0 auto;
+	padding: 0;
+}
+
+#dt_example #demo {
+	margin: 30px auto 0 auto;
+}
+
+#dt_example .demo_jui {
+	margin: 30px auto 0 auto;
+}
+
+#dt_example .big {
+	font-size: 1.3em;
+	font-weight: bold;
+	line-height: 1.6em;
+	color: #4E6CA3;
+}
+
+#dt_example .spacer {
+	height: 20px;
+	clear: both;
+}
+
+#dt_example .clear {
+	clear: both;
+}
+
+#dt_example pre {
+	padding: 15px;
+	background-color: #F5F5F5;
+	border: 1px solid #CCCCCC;
+}
+
+#dt_example h1 {
+	margin-top: 2em;
+	font-size: 1.3em;
+	font-weight: normal;
+	line-height: 1.6em;
+	color: #4E6CA3;
+	border-bottom: 1px solid #B0BED9;
+	clear: both;
+}
+
+#dt_example h2 {
+	font-size: 1.2em;
+	font-weight: normal;
+	line-height: 1.6em;
+	color: #4E6CA3;
+	clear: both;
+}
+
+#dt_example a {
+	color: #0063DC;
+	text-decoration: none;
+}
+
+#dt_example a:hover {
+	text-decoration: underline;
+}
+
+#dt_example ul {
+	color: #4E6CA3;
+}
+
+.css_right {
+	float: right;
+}
+
+.css_left {
+	float: left;
+}
+
+.demo_links {
+	float: left;
+	width: 50%;
+	margin-bottom: 1em;
+}
+
+#demo_info {
+	padding: 5px;
+	border: 1px solid #B0BED9;
+	height: 100px;
+	width: 100%;
+	overflow: auto;
+}
