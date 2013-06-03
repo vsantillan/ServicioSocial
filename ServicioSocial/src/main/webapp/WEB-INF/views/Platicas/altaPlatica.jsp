@@ -74,17 +74,15 @@ $(document).ready(function() {
 					inline: true
 				});
                                 $('#datepicker').datepicker('option', {dateFormat: 'dd/mm/yy'});
-			
+                                
+                                $('#datepicker2').datepicker({
+					inline: true
+				});
+			       $('#datepicker2').datepicker('option', {dateFormat: 'dd/mm/yy'});
 				
 			});
 		</script>
-        <script>
 
-$(document).ready(function() { 
-	
-	$('#fecha_max_fui').datepicker; 
-});
-</script>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
@@ -123,7 +121,7 @@ $(document).ready(function() {
                     </p>
                     <p>
                         <label for="fecha_maxfu">Fecha máxima formato unico</label>   
-                        <input type="text" name="fecha_max_fui" id="fecha_max_fui" size="15" require="true" />
+                        <input type="text" name="fecha_max_fui" id="datepicker2" size="15" require="true" />
                     </p>
 
 
