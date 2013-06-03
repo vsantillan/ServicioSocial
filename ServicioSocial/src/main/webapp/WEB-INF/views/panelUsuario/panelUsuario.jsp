@@ -34,9 +34,8 @@
         <%-- inicio del contenido --%>
         <div id="contenido">
 
-            <h1 align="center"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('wel', '', 'imagenes/welcome1_e.png', 1)"><img id="wel" src="imagenes/welcome1.png" /></a></h1>
-            <h1 align="center"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('t_wel', '', 'imagenes/texto_wel_e.png', 1)"><img id="t_wel" src="imagenes/texto_wel.png" /></a></h1>
-            <p> </p>			
+       
+            		
 
         </div>
         <%-- fin del contenido --%>
