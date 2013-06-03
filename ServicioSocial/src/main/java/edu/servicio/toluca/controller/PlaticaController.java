@@ -9,18 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 /**
  *
- * @author Jonny
+ * @author Héctor
  */
-  @Controller
-public class PlaticaController 
-{
-  
-    
+@Controller
+public class PlaticaController {
     @RequestMapping(method = RequestMethod.GET, value = "/altaPlatica.do")
-    public String formatoUnico(Model a) 
-    {
+    public String altaPlatica(Model a) {
         return "/Platicas/altaPlatica";
     }
 
-    
+   
 }
