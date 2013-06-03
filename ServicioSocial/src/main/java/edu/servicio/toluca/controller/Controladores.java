@@ -20,6 +20,6 @@ public class Controladores {
     }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnico.do")
     public String formatoUnico(Model a) {
-        return "formulario";
+        return "paginaPrueba";
     }
 }
