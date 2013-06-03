@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 /**
  *
- * @author Héctor
+ * @author WindSaber
  */
 @Controller
-public class Controladores {
-    @RequestMapping(method = RequestMethod.GET, value = "/formatoUnico.do")
+public class FormatoUnicoController {
+    @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model a) {
-        return "/FormatoUnico/formatoUnico.do";
+        return "/FormatoUnico/formatoUnicoUsuario";
     }
-
+   
    
 }

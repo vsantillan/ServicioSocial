@@ -1,9 +1,8 @@
 <%-- 
-    Document   : panelUsuario
-    Created on : 3/06/2013, 10:52:04 AM
-    Author     : roy
+    Document   : altaPlatica
+    Created on : 3/06/2013, 01:01:28 PM
+    Author     : Jonny
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,7 +21,7 @@
         <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
         <script type="text/javascript" src="js/jquery.validate.js" ></script>
 
-        <title>Home Usuario</title>
+        <title>Alta Plática</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
@@ -34,9 +33,7 @@
         <%-- inicio del contenido --%>
         <div id="contenido">
 
-       
-            		
-
+           
         </div>
         <%-- fin del contenido --%>
         <div id="footer">
