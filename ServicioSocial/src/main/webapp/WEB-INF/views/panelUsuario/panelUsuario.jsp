@@ -24,12 +24,26 @@
 
         <title>Home Usuario</title>
     </head>
-        <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
+    <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
             <div class="banner" align="left">
-                <a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('itt_logo', '', 'imagenes/logo_tec_r.png', 1)"><img src="imagenes/logo_tec.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
+                <a href="#" onmouseout="MM_swapImgRestore()" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
             </div>
         </div>
+
+        <%-- inicio del contenido --%>
+        <div id="contenido">
+
+            <h1 align="center"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('wel', '', 'imagenes/welcome1_e.png', 1)"><img id="wel" src="imagenes/welcome1.png" /></a></h1>
+            <h1 align="center"><a href="#" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('t_wel', '', 'imagenes/texto_wel_e.png', 1)"><img id="t_wel" src="imagenes/texto_wel.png" /></a></h1>
+            <p> </p>			
+
+        </div>
+        <%-- fin del contenido --%>
+        <div id="footer">
+            <img  src="imagenes/foter.png"/>
+        </div>
+
     </body>
 
 
