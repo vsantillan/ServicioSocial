@@ -14,17 +14,77 @@
         <link rel="stylesheet" type="text/css" href="css/jquerycssmenu2.css" />
         <link rel="stylesheet" type="text/css" href="css/screen.css" />
         <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
-        
-        <link rel="stylesheet" href="css/formly.css" type="text/css" />
+
+        <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
+        <LINK rel="stylesheet" href="css/platicajquery.clockpick.1.2.7.css" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
 
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="js/jquerycssmenu2.js"></script>
         <script type="text/javascript" src="js/baner.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
         <script type="text/javascript" src="js/jquery.validate.js" ></script>
-        <script type="text/javascript" src="js/formly.js"></script>
+        <script type="text/javascript" src="js/platicasEstiloFormularioformly.js"></script>
 
+
+        <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.js"></script>
+        <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.min.js"></script>
+        <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.pack.js"></script>
         <title>Alta Plática</title>
+
+        <script>
+
+            $(document).ready(function() {
+
+                $('#MyForm').formly();
+            });
+        </script>
+           <script>
+
+$(document).on('ready', function(){ 
+	
+	$('#hora').clockpick({
+        });
+         
+});
+</script>
+   <script>
+
+$(document).ready(function() { 
+	
+	$('#fecha_max_fui').datepicker; 
+});
+</script>
+   <script type="text/javascript">
+   		$(function(){
+
+				
+				
+	
+				// Tabs
+				$('#tabs').tabs();
+	
+
+				
+				
+				
+
+				// Datepicker
+				$('#datepicker').datepicker({
+					inline: true
+				});
+                                $('#datepicker').datepicker('option', {dateFormat: 'dd/mm/yy'});
+			
+				
+			});
+		</script>
+        <script>
+
+$(document).ready(function() { 
+	
+	$('#fecha_max_fui').datepicker; 
+});
+</script>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
@@ -35,43 +95,43 @@
 
         <%-- inicio del contenido --%>
         <div id="contenido">
-        <form name="altaPlatica" id="MyForm" action="controlador/PlaticasInduccion/AltaPlaticaC.jsp" method="POST">
-  
-     <center><p>
-					<label for="fecha">Fecha</label>
-					<input type="text" name="fecha" id="datepicker" size="15" require="true" />
-				</p>
-				<p>
-					<label for="hora">Hora</label>
-					<input type="text" name="hora" id="hora" size="15" require="true" />
-				</p>
-				<p>
-                                    <label for="lugar">Lugar De la Platica de Inducción</label>
-					<input type="text" name="lugar" id="lugar" size="20" require="true"/>
-				</p>			
-			
-																						
-				<p>
-					<label for="semestre">Periodo</label>
-					<select id="semestre" name="semestre">
-   <option                              value="ENE-JUN">ENE-JUN</option>
-   <option                              value="AGO-DIC">AGO-DIC</option>
-                             </select>   
-                                        Año (4 digitos)
-                                        <input type="text" name="aaaa" id="aaaa" size="8" require="true"/>
+            <form name="altaPlatica" id="MyForm" action="controlador/PlaticasInduccion/AltaPlaticaC.jsp" method="POST">
 
-				</p>
-                                <p>
-                                <label for="fecha_maxfu">Fecha máxima formato unico</label>   
-                                <input type="text" name="fecha_max_fui" id="fecha_max_fui" size="15" require="true" />
-                                </p>
-						
+                <center><p>
+                        <label for="fecha">Fecha</label>
+                        <input type="text" name="fecha" id="datepicker" size="15" require="true" />
+                    </p>
+                    <p>
+                        <label for="hora">Hora</label>
+                        <input type="text" name="hora" id="hora" size="15" require="true" />
+                    </p>
+                    <p>
+                        <label for="lugar">Lugar De la Platica de Inducción</label>
+                        <input type="text" name="lugar" id="lugar" size="20" require="true"/>
+                    </p>			
 
-			         <p class="submit"><button type="submit">Alta</button></p>
-     </center>
- 
- </form>
-           
+
+                    <p>
+                        <label for="semestre">Periodo</label>
+                        <select id="semestre" name="semestre">
+                            <option                              value="ENE-JUN">ENE-JUN</option>
+                            <option                              value="AGO-DIC">AGO-DIC</option>
+                        </select>   
+                        Año (4 digitos)
+                        <input type="text" name="aaaa" id="aaaa" size="8" require="true"/>
+
+                    </p>
+                    <p>
+                        <label for="fecha_maxfu">Fecha máxima formato unico</label>   
+                        <input type="text" name="fecha_max_fui" id="fecha_max_fui" size="15" require="true" />
+                    </p>
+
+
+                    <p class="submit"><button type="submit">Alta</button></p>
+                </center>
+
+            </form>
+
         </div>
         <%-- fin del contenido --%>
         <div id="footer">
