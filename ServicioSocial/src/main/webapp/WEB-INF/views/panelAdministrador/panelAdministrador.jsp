@@ -30,17 +30,14 @@
             </div>
         </div>
         <h1>Panel de Administraci&oacute;n</h1>
+        <div id="menu">
         <div class="jquerycssmenu">
             <ul>
                 <li>
-                    <a href="#" onclick="">Platicas</a>
+                    <a href="#">Platicas</a>
                     <ul>
-                        <li>
-                            <a href="#">1.1 Altas</a>
-                        </li>
-                        <li>
-                            <a href="#">1.2 Bajas | Consultas</a>
-                        </li>
+                        <li><a href="#">1.1 Altas</a></li>
+                        <li><a href="#">1.2 Bajas | Consultas</a></li>
                     </ul>
                 </li>
                 <li>
@@ -71,6 +68,7 @@
                     <a href="#">Casos Especiales</a>
                 </li>
             </ul>
+        </div>
         </div>
         <h1>Panel de Administraci&oacute;n</h1>
         <div id="footer">
