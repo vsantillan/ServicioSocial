@@ -19,6 +19,11 @@
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
     <body>
-        <h1>Hello World! formato unicp</h1>
+        <div class="pagina" align="center">
+            <div class="banner" align="left">
+                <a href="#"><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
+            </div>
+        </div>
+        <h1>Pagina del Formato Unico</h1>
     </body>
 </html>
