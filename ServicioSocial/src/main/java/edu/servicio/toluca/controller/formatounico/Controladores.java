@@ -5,6 +5,9 @@
 package edu.servicio.toluca.controller.formatounico;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
@@ -12,5 +15,8 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 public class Controladores {
-    
+    @RequestMapping(method = RequestMethod.GET, value = "/formatoUnico.do")
+    public String formatoUnico(Model a) {
+        return "formulario";
+    }
 }
