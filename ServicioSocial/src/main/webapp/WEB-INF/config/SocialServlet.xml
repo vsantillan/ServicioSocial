@@ -20,7 +20,7 @@ schemaLocation son las definiciones de XMLS
     
     
     
-    <context:component-scan base-package="edu.servicio.toluca.serviciosocial.controller" />
+    <context:component-scan base-package="edu.servicio.toluca.controller" />
    <!--
    Base-package ruta donde se encuetran todos los controladores
    -->

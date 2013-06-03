@@ -13,13 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class Controladores {
-    
-    @RequestMapping(method = RequestMethod.GET, value = "/formulario.do")
-    public String prueba2(Model a) {
-        return "formulario";
-    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnico.do")
     public String formatoUnico(Model a) {
         return "paginaPrueba";
     }
+   
+   
 }
