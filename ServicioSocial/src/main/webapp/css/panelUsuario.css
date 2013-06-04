@@ -1,0 +1,26 @@
+/* 
+    Document   : panelUsuario
+    Created on : 3/06/2013, 02:25:48 PM
+    Author     : roy
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.general {  
+    padding-top: 5px;
+    margin-left: 30%;
+}
+
+.imagenes{
+    height: 10%;
+    width: 10%;    
+}
+
+.filas  {
+    background-color: #FF4000;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0 0 5px 5px #DF7401;  
+    width: 50%;
+}
+#b{color: white;text-decoration: none;}
+#b:hover{font-size: 120%;}

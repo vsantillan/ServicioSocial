@@ -11,9 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jquerycssmenu2.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.7.1.custom.css"/>
+        <link rel="stylesheet" type="text/css" href="css/jquerycssmenu.css" />
         <link rel="stylesheet" type="text/css" href="css/screen.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="css/reset.css" />
+        <link rel="stylesheet" type="text/css" href="css/panelUsuario.css" />
         <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
 
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
@@ -27,15 +30,57 @@
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
             <div class="banner" align="left">
-                <a href="#" onmouseout="MM_swapImgRestore()" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
+                <a href="#" onmouseout="MM_swapImgRestore();" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
             </div>
         </div>
 
-        <%-- inicio del contenido --%>
+        <div id="menu">
+            <div class="jquerycssmenu">
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Noticias</a></li>
+                    <li><a href="#">Ayuda</a></li>
+                    <li><a href="#">Cerrar Seci&oacute;n</a></li>
+                </ul>
+            </div>  
+        </div>
+        
         <div id="contenido">
+            <table class="general">
+                <tr>
+                    <td class="filas"><a id="b" href="#">PLATICA</a></td>
+                    <td><img class="imagenes" src="imagenes/paloma.png"/></td>
+                </tr>
+                 <tr>
+                    <td class="filas"><a id="b" href="#">FORMATO UNICO</a></td>
+                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                </tr>
+                 <tr>
+                    <td class="filas"><a id="b" href="#">FORMATOS BIMESTRALES</a></td>
+                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                </tr>
+                 <tr>
+                    <td class="filas"><a id="b" href="#">FORMATOS MENSUALES</a></td>
+                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                </tr>
+                 <tr>
+                    <td class="filas"><a id="b" href="#">PLATICA DE BECADOS</a></td>
+                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                </tr>
+                 <tr>
+                    <td class="filas"><a id="b" href="#">DOCUMENTOS FINALES</a></td>
+                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                </tr>
+                 <tr>
+                     <td class="filas"><a id="b" href="#">SANCIONES</a></td>
+                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                </tr>                            
+            </table>
 
-       
-            		
+
+
+
+
 
         </div>
         <%-- fin del contenido --%>
