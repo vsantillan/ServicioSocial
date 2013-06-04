@@ -18,5 +18,13 @@ public class PlaticaController {
         return "/Platicas/altaPlatica";
     }
 
+   @RequestMapping(method = RequestMethod.GET, value = "/consultasBajas.do")
+    public String consultasBajas(Model a) {
+        return "/Platicas/consultasBajas";
+    }
    
+    @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
+    public String capturarAsistencia(Model a) {
+        return "/Platicas/capturarAsistencia";
+    }
 }
