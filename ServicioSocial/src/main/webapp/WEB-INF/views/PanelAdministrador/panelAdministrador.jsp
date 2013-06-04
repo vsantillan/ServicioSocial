@@ -44,7 +44,7 @@
     <body>
         <div class="pagina" align="center">
             <div class="banner" align="left">
-                <a href="#" onmouseout="MM_swapImgRestore()"><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
+                <a href="http://www.ittoluca.edu.mx" onmouseout="MM_swapImgRestore()"><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
             </div>
         </div>
         <div id="contenido">
@@ -110,11 +110,18 @@
                             <li><a href="#">7.2 Cambio de Proyecto</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Organizaciones</a></li>
+                    <li><a href="#">Organizaciones</a>
+                        <ul>
+                            <li><a href="#">8.1 Administrar Proyectos</a></li>
+                            <li><a href="#">8.2 Administrar Organizaciones</a></li>
+                            <li><a href="#">8.3 Validar Proyectos</a></li>
+                            <li><a href="#">8.4 Validar Organizaciones</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#">Administraci&oacute;n</a>
                         <ul>
-                            <li><a href="#">8.1 Administrar Observaciones</a></li>
-                            <li><a href="#">8.2 Noticias | Convocatorias</a></li>
+                            <li><a href="#">9.1 Administrar Observaciones</a></li>
+                            <li><a href="#">9.2 Noticias | Convocatorias</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Historial Servicio Social</a></li>
@@ -122,14 +129,14 @@
                     <li><a href="#">Reportes</a></li>
                     <li><a href="#">Casos Especiales</a>
                         <ul>
-                            <li><a href="#">12.1 Egresados</a></li>
-                            <li><a href="#">12.2 Especiales</a></li>
+                            <li><a href="#">13.1 Egresados</a></li>
+                            <li><a href="#">13.2 Especiales</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Acerca De</a>
                         <ul>
-                            <li><a href="#">13.1 Ayuda</a></li>
-                            <li><a href="#">13.2 Acerca De</a></li>
+                            <li><a href="#">14.1 Ayuda</a></li>
+                            <li><a href="#">14.2 Acerca De</a></li>
                         </ul>
                     </li>
                 </ul>
