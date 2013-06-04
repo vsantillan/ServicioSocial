@@ -47,7 +47,7 @@
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
             <div class="banner" align="left">
-                <a href="#" onmouseout="MM_swapImgRestore();" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
+                <a href="http://www.ittoluca.edu.mx/version10/index.php" onmouseout="MM_swapImgRestore();" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
             </div>
         </div>
 
@@ -55,7 +55,7 @@
             <div class="jquerycssmenu">
                 <div id="smoothmenu1" class="ddsmoothmenu" >
                     <ul>
-                        <li><a href="#">Inicio</a></li>
+                        <li><a href="panelUsuario.do">Inicio</a></li>
                         <li><a href="#">Noticias</a></li>
                         <li><a href="#">Ayuda</a></li>
                         <li><a href="#">Cerrar Seci&oacute;n</a></li>
@@ -68,11 +68,11 @@
         <div id="contenido">
             <table class="general">
                 <tr>
-                    <td class="filas"><a id="b" href="#">PLATICA</a></td>
+                    <td class="filas"><a id="b" href="platica.do">PLATICA</a></td>
                     <td><img class="imagenes" src="imagenes/paloma.png"/></td>
                 </tr>
                 <tr>
-                    <td class="filas"><a id="b" href="#">FORMATO UNICO</a></td>
+                    <td class="filas"><a id="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
                 <tr>
