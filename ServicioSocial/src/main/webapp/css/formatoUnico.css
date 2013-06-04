@@ -1,0 +1,16 @@
+/* 
+    Document   : formatoUnico
+    Created on : 4/06/2013, 11:40:50 AM
+    Author     : windsaber
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+input[type="text"]
+{
+    width:400px;
+}
+table[th]
+{
+    margin-bottom:50px;
+}

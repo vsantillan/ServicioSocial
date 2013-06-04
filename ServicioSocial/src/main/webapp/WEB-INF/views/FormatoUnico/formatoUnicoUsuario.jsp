@@ -8,7 +8,9 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
         <link rel="stylesheet" type="text/css" href="css/jquerycssmenu2.css" />
         <link rel="stylesheet" type="text/css" href="css/screen.css" />
+        <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
         <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
+        
         <!--css de tabs-->
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/demos.css"/>
@@ -41,10 +43,121 @@
                 <li><a href="#horarios">Horario</a></li>
             </ul>
             <div id="datosPersonales">
-                <p>Esta es la pag de Personales.</p>
+                <table>
+                    <tr>
+                        <td>Nombre:</td>
+                        <td><input type ="text" name ="nombre"> </td>
+                    </tr>
+                    <tr>
+                        <td>Apellido Paterno</td>
+                        <td><input type ="text" name ="apellidoP"> </td>
+                    </tr>
+                    <tr>
+                        <td>Apellido Materno:</td>
+                        <td><input type ="text" name ="apellidoM"> </td>
+                    </tr>
+                    <tr>
+                        <td>Sexo</td>
+                        <td>
+                            <select name="sexo">
+                                <option value="">MASCULINO</option>
+                                <option value="">FEMENINO</option>
+                                <option value="">INDEFINIDO</option>
+                            </select> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Estado civil:</td>
+                        <td>
+                            <select name="sexo">
+                                <option value="SOLTERO(A)">SOLTERO</option>
+                                <option value="CASADO(A)">CASADO(A)</option>
+                                <option value="VIUDO(A)">VIUDO(A)</option>
+                                <option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
+                                <option value="AMASIATO">AMASIATO</option>
+                                <option value="SEPARADO(A)">SEPARADO(A)</option>
+                                <option value="CONCUBINATO">CONCUBINATO</option>
+                                <option value="OTRO">OTRO</option>
+                            </select> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ocupaci&oacute;n:</td>
+                        <td><input type ="text" name ="ocupacion"> </td>
+                    </tr>
+                    <tr>
+                        <td>CURP:</td>
+                        <td><input type ="text" name ="curp"> </td>
+                    </tr>
+                    <tr>
+                        <td>Folio de Documento de Identificaci&oacute;n:</td>
+                        <td><input type ="text" name ="folioDocIdentificacion"> </td>
+                    </tr>
+                    <tr>
+                        <td>Clave de Documento de Identificaci&oacute;n:</td>
+                        <td><input type ="text" name ="claveDocIdentificacion"> </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type ="submit" value="Guardar Datos Personales" > </td>
+                    </tr>
+                </table>
             </div>
             <div id="datosContacto">
-                <p><p>Esta es la pag de Contacto.</p>
+                <table>
+                    <tr>
+                        <td>Calle:</td>
+                        <td><input type ="text" name ="calle"> </td>
+                    </tr>
+                    <tr>
+                        <td>No. Int.</td>
+                        <td><input type ="text" name ="numero_i"> </td>
+                    </tr>
+                    <tr>
+                        <td>No. Ext.</td>
+                        <td><input type ="text" name ="numero_e"> </td>
+                    </tr>
+                    <tr>
+                        <td>Colonia:</td>
+                        <td><input type ="text" name ="colonia"> </td>
+                    </tr>
+                    <tr>
+                        <td>Localidad:</td>
+                        <td><input type ="text" name ="localidad"> </td>
+                    </tr>
+                    <tr>
+                        <td>C&oacute;digo postal:</td>
+                        <td><input type ="text" name ="cp"> </td>
+                    </tr>
+                    <tr>
+                        <td>Entre Calles:</td>
+                        <td><input type ="text" name ="entre_calles"> </td>
+                    </tr>
+                    <tr>
+                        <td>Tel&eacute;fono casa:</td>
+                        <td><input type ="text" name ="telefono_casa"> </td>
+                    </tr>
+                    <tr>
+                        <td>Tel&eacute;fono cel:</td>
+                        <td><input type ="text" name ="telefono_cel"> </td>
+                    </tr>
+                    <tr>
+                        <td>Tel&eacute;fono oficina:</td>
+                        <td><input type ="text" name ="telefono_oficina"> </td>
+                    </tr>
+                    <tr>
+                        <td>Twitter:</td>
+                        <td><input type ="text" name ="twitter"> </td>
+                    </tr>
+                    <tr>
+                        <td>Facebook:</td>
+                        <td><input type ="text" name ="facebook"> </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type ="submit" value="Guardar Datos de Contacto" > </td>
+                    </tr>
+                </table>
             </div>
             <div id="datosOrganizaciones">
                 <p><p>Esta es la pag de Organizaciones.</p>
