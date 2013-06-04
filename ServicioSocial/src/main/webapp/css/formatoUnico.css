@@ -10,7 +10,7 @@ input[type="text"]
 {
     width:400px;
 }
-table[th]
+td
 {
-    margin-bottom:50px;
+    padding-bottom:5px;
 }
