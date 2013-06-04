@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
- * @author ekt
+ * @author roy
  */
 @Controller
-public class PanelAdministradorController 
-{
-    @RequestMapping(method = RequestMethod.GET, value = "/panelAdministrador.do")
-    public String panelAdministrador(Model a) 
-    {
-        return "/PanelAdministrador/panelAdministrador";
+public class OrganizacionesController {
+    @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
+    public String panelAdministrador(Model a){
+        return "/Organizaciones/administrarOrganizaciones";
     }
+    
 }
