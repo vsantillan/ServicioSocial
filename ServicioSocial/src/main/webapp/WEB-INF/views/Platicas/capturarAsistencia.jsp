@@ -8,33 +8,33 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jquerycssmenu2.css" />
-        <link rel="stylesheet" type="text/css" href="css/screen.css" />
-        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
+         <%@ include file="metas.jsp" %>
 
         <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
+       
 
-        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="js/jquerycssmenu2.js"></script>
-        <script type="text/javascript" src="js/baner.js"></script>
-        <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
-        <script type="text/javascript" src="js/jquery.validate.js" ></script>
         <script type="text/javascript" src="js/platicasEstiloFormularioformly.js"></script>
+
+        <script>
+
+            $(document).ready(function() {
+
+                $('#casistencia').formly();
+            });
+        </script>
         <title>Capturar Asistencia a Plática</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')">
-        <div class="pagina" align="center">
-            <div class="banner" align="left">
-                <a href="#" onmouseout="MM_swapImgRestore()" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
-            </div>
-        </div>
+        <%@ include file="banner.jsp" %>
         <div id="contenido"    
-             <center><h2>Capturar Asistencia a Plática</h2></center>
-
+            <center><h2>Capturar Asistencia a Plática</h2></center>  
+            <center><form name="casistencia" id="casistencia" action="#">
+                <label for="alumno">Número de control</label>
+                <input type="text" name="no_control" id="no_control" size="15"require="true" />   
+                <button type="submit">Asistió</button>
+            </form>
+            </center>
         </div>
+        <%@ include file="footer.jsp" %>
     </body>
 </html>
