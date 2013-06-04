@@ -21,6 +21,7 @@
     border-radius: 10px 10px 10px 10px;
     box-shadow: 0 0 5px 5px #DF7401;  
     width: 50%;
+    text-align: center; 
 }
 #b{color: white;text-decoration: none;}
 #b:hover{font-size: 120%;}
