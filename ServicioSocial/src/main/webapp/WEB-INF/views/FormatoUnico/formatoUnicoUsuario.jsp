@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
@@ -24,52 +24,7 @@
             });
         </script>
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#timepicker\\.\\[1\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[2\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[3\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[4\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[5\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[6\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[7\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[8\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[9\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[10\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[11\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[12\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[13\\]').timepicker({
-                    showAnim: 'blind'
-                });
-                $('#timepicker\\.\\[14\\]').timepicker({
-                    showAnim: 'blind'
-                });
-            });
-        </script>
+        <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
     <body>
@@ -83,8 +38,11 @@
                     <ul>
                         <li><a href="#datosPersonales">Datos Personales</a></li>
                         <li><a href="#datosContacto">Datos de Contacto</a></li>
+                        <li><a href="#datosAcademicos">Datos de Contacto</a></li>
                         <li><a href="#datosOrganizaciones">Datos de Organizaciones</a></li>
                         <li><a href="#horarios">Horario</a></li>
+                        <li><a href="#imprimirFui">Imprimir Formato &Uacute;nico</a></li>
+                        <li><a href="#subirFui">Subir Formato &Uacute;nico</a></li>
                     </ul>
                     <div id="datosPersonales">
                         <form>
@@ -207,6 +165,9 @@
                             </table>
                         </form>
                     </div>
+                    <div id="datosAcademicos">
+                        
+                    </div>
                     <div id="datosOrganizaciones">
                         <form>
                             <table>
@@ -270,7 +231,22 @@
                                     <th><input type="text" style="width: 70px;" id="timepicker.[13]" value="" /></th>
                                     <th><input type="text" style="width: 70px;" id="timepicker.[14]" value="" /></th>
                                 </tr>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="8"><input type ="submit" value="Guardar Datos de Horario" ></td>
+                                </tr>
                             </table>
+                        </form>
+                    </div>
+                    <div id="imprimirFui">
+                        <h1>Presiona el bot&oacute;n para descargar</h1>
+                        <a href=""><img src="imagenes/descargar.png" /></a>
+                    </div>
+                    <div id="subirFui">
+                        <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
+                        <form>
+                            <input type="file"  /> <br/>
+                            <input type="submit" value="Subir" />
                         </form>
                     </div>
                 </div>
