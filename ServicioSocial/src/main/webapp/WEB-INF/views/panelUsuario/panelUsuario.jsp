@@ -25,6 +25,23 @@
         <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
         <script type="text/javascript" src="js/jquery.validate.js" ></script>
 
+        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+        <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
+        <script type="text/javascript">
+
+            ddsmoothmenu.init({
+                mainmenuid: "smoothmenu1", //Menu DIV id
+                orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+                classname: 'ddsmoothmenu', //class added to menu's outer DIV
+                method: 'hover', // set to 'hover' (default) or 'toggle'
+                arrowswap: true, // enable rollover effect on menu arrow images?
+                //customtheme: ["#804000", "#482400"],
+                contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+            })
+
+        </script>
         <title>Home Usuario</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
@@ -36,43 +53,46 @@
 
         <div id="menu">
             <div class="jquerycssmenu">
-                <ul>
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Noticias</a></li>
-                    <li><a href="#">Ayuda</a></li>
-                    <li><a href="#">Cerrar Seci&oacute;n</a></li>
-                </ul>
-            </div>  
+                <div id="smoothmenu1" class="ddsmoothmenu" >
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Noticias</a></li>
+                        <li><a href="#">Ayuda</a></li>
+                        <li><a href="#">Cerrar Seci&oacute;n</a></li>
+                    </ul>
+                </div>  
+                <br style="clear: left" />
+            </div>
         </div>
-        
+
         <div id="contenido">
             <table class="general">
                 <tr>
                     <td class="filas"><a id="b" href="#">PLATICA</a></td>
                     <td><img class="imagenes" src="imagenes/paloma.png"/></td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="filas"><a id="b" href="#">FORMATO UNICO</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="filas"><a id="b" href="#">FORMATOS BIMESTRALES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="filas"><a id="b" href="#">FORMATOS MENSUALES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="filas"><a id="b" href="#">PLATICA DE BECADOS</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                 <tr>
+                <tr>
                     <td class="filas"><a id="b" href="#">DOCUMENTOS FINALES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                 <tr>
-                     <td class="filas"><a id="b" href="#">SANCIONES</a></td>
+                <tr>
+                    <td class="filas"><a id="b" href="#">SANCIONES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>                            
             </table>

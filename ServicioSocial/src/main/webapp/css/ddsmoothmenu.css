@@ -1,6 +1,7 @@
 .ddsmoothmenu{
 font: bold 12px Verdana;
-background: #414141; /*background of menu bar (default state)*/
+/*background: #414141;*/ /*background of menu bar (default state)*/
+background: #F1A044;
 width: 100%;
 }
 
@@ -21,7 +22,8 @@ float: left;
 /*Top level menu link items style*/
 .ddsmoothmenu ul li a{
 display: block;
-background: #414141; /*background of menu items (default state)*/
+/*background: #414141;*/ /*background of menu items (default state)*/
+background: #F1A044;
 color: white;
 padding: 8px 10px;
 border-right: 1px solid #778;
@@ -43,8 +45,9 @@ color: white;
 }
 
 .ddsmoothmenu ul li a:hover{
-background: black; /*background of menu items during onmouseover (hover state)*/
-color: white;
+/*background: black;*/ /*background of menu items during onmouseover (hover state)*/
+background: lightblue; /*background of menu items during onmouseover (hover state)*/
+color: navy;
 }
 	
 /* sub menus */
