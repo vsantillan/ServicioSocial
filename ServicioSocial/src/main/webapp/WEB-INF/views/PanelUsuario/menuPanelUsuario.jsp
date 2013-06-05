@@ -33,7 +33,7 @@
                         <li><a href="panelUsuario.do">Inicio</a></li>
                         <li><a href="#">Noticias</a></li>
                         <li><a href="#">Ayuda</a></li>
-                        <li><a href="#">Cerrar Seci&oacute;n</a></li>
+                        <li><a href="#">Cerrar Sesi&oacute;n</a></li>
                     </ul>
                 </div>  
                 <br style="clear: left" />
