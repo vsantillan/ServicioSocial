@@ -29,9 +29,8 @@ td
     color: #9F6000;
     background-color: #FEEFB3;
     background-image: url('../imagenes/warning.png');
-    visibility: hidden;
-}
-.alert {
+    
+}.alert {
 margin-left: 10px;
 width: 130px;
 padding: 10px;
