@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form"  uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="tags"  uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="core"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="format"  uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,6 +39,8 @@
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')">
         <%@ include file="banner.jsp" %>
+        <%@ include file="./panelAdministrador/menuPanelAdministrador.jsp" %>
+        <%--<jsp:include page="../panelAdministrador/menuPanelAdministrador.jsp" /> --%>
         <div id="contenido">
             <center> <h2>Consultas y Bajas de Pláticas</h2></center>
             <div id="div_BajaPlatica" style="display:block">
