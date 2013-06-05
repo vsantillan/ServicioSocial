@@ -48,7 +48,7 @@
         </script>   
 
 
-        <title>Administracion ed Organizaciones</title>
+        <title>Administracion de Organizaciones</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
@@ -81,6 +81,13 @@
                         <th>Cosas ilegales</th>
                         <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
                         <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="retroalimentacionOrganizacion.do" rel="shadowbox">Rechazar</a></th>
+                    </tr>
+                                        <tr class='gradeX'>
+                        <th>Hector Guzman Nava</th>
+                        <th>139103RLR</th>
+                        <th>Cosas ilegales</th>
+                        <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
+                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="algunLado.do" rel="shadowbox">Rechazar</a></th>
                     </tr>
 
                 </tbody>
