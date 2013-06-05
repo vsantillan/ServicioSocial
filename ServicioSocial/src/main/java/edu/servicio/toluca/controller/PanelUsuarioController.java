@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class PanelUsuarioController {
     @RequestMapping(method = RequestMethod.GET, value = "/panelUsuario.do")
     public String formatoUnico(Model a) {
-        return "/PanelUsuario/panelUsuario";
+        return "/panelUsuario/panelUsuario";
     }
     
 }

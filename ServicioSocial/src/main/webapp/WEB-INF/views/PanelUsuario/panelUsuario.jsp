@@ -11,20 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.7.1.custom.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jquerycssmenu.css" />
-        <link rel="stylesheet" type="text/css" href="css/screen.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="css/reset.css" />
         <link rel="stylesheet" type="text/css" href="css/panelUsuario.css" />
         <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
-
-        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="js/jquerycssmenu2.js"></script>
-        <script type="text/javascript" src="js/baner.js"></script>
-        <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
-        <script type="text/javascript" src="js/jquery.validate.js" ></script>
-
         <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>

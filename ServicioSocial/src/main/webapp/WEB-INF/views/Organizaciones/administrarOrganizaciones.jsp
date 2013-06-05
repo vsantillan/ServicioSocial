@@ -9,26 +9,44 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+        
+        
+        <!--CSS-->
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.7.1.custom.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jquerycssmenu.css" />
-        <link rel="stylesheet" type="text/css" href="css/screen.css" />
-        <link rel="stylesheet" type="text/css" href="css/style.css" />
-        <link rel="stylesheet" type="text/css" href="css/reset.css" />
-        <link rel="stylesheet" type="text/css" href="css/panelUsuario.css" />
-        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
+        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" />         
+        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+        
+        <!--Estilos para tablas-->
+        <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
+        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css" />
 
-        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="js/jquerycssmenu2.js"></script>
-        <script type="text/javascript" src="js/baner.js"></script>
-        <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
-        <script type="text/javascript" src="js/jquery.validate.js" ></script>
 
-        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-        <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
+        
+        <!--Scripts para shadowbox-->
+        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
+        <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
+                    'wmp', 'swf', 'flv']});</script> 
+
+        <!--        Scripts para tablas-->
+        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $('#example').dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
+                    "sScrollX": "100%",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+
+            });
+        </script>   
+
 
         <title>Administracion ed Organizaciones</title>
     </head>
@@ -42,17 +60,37 @@
 
 
         <div id="contenido">
+            <h3>Administrar Organizaciones</h3>
 
+            <p>A continuaci&oacute;n se muestran las organizaciones que esten por revisar.</p>
+            <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
+                <thead>
+                    <tr>
+                        <th>Titular</th>
+                        <th>RFC</th>
+                        <th>Tipo de Organizaci&oacute;n</th>
+                        <th>Ver proyecto</th>
+                        <th>Acci&oacute;n</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class='gradeX'>
+                        <th>Hector Guzman Nava</th>
+                        <th>139103RLR</th>
+                        <th>Cosas ilegales</th>
+                        <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
+                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="algunLado.do" rel="shadowbox">Rechazar</a></th>
+                    </tr>
 
+                </tbody>
+            </table>
 
-
-
-
+            <%-- fin del contenido --%>
         </div>
-        <%-- fin del contenido --%>
         <div id="footer">
-            <img  src="imagenes/foter.png"/>
-        </div>
+              <img  src="imagenes/foter.png"/>
+         </div>
 
     </body>
 
