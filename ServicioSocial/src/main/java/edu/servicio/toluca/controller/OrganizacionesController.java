@@ -27,4 +27,10 @@ public class OrganizacionesController
         return "/Organizaciones/retroalimentacionOrganizacion";
     }
     
+    @RequestMapping(method = RequestMethod.GET, value = "/retroalimentacionProyecto.do")
+    public String retoalimentacionProyectos(Model a)
+    {
+        return "/Organizaciones/retroalimentacionProyectos";
+    }
+    
 }
