@@ -31,3 +31,24 @@ td
     background-image: url('../imagenes/warning.png');
     visibility: hidden;
 }
+.alert {
+margin-left: 10px;
+width: 130px;
+padding: 10px;
+margin-bottom: 18px;
+color: #c09853;
+text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+font: 18px "Arial","HelveticaNeue", "Helvetica Neue", Helvetica, sans-serif;
+background-color: #fcf8e3;
+border: 1px solid #fbeee0;
+        border-radius: 6px;
+   -moz-border-radius: 6px;
+-webkit-border-radius: 6px;
+}
+.success {color: white; background-color: #006600; border-color: #d6e9c6;}
+.error {color: white; background-color: #FF3333; border-color: #eed3d7;}
+.info {color: #3a87ad; background-color: #d9edf7; border-color: #bce8f1;}
+.warning {color: white; background-color: #FFEB00; border-color: yellow;}
+.alineadoIzq { float: left}
+.textoCentrado{text-align: center}
+.leyenda{font: 14px "Arial","HelveticaNeue", "Helvetica Neue", Helvetica, sans-serif;}
