@@ -1,31 +1,28 @@
 <%-- 
     Document   : panelAdministrador
     Created on : 3/06/2013, 01:01:53 PM
-    Author     : ekt
+    Author     : Regules
 --%>
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+        <%-- Css --%>
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jquerycssmenu2.css" />
         <link rel="stylesheet" type="text/css" href="css/screen.css" />
-        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
+        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
+        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu-v.css" />
         <link rel="stylesheet" type="text/css" href="css/jquerycssmenu.css" />
-
+        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
+        <%-- JavaScript --%>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+        <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="js/jquerycssmenu2.js"></script>
         <script type="text/javascript" src="js/baner.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
         <script type="text/javascript" src="js/jquery.validate.js" ></script>
-
-        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
-        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu-v.css" />
-
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-        <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
         <script type="text/javascript">
 
             ddsmoothmenu.init({
