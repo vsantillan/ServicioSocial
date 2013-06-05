@@ -8,6 +8,7 @@
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
     <head>
