@@ -39,7 +39,7 @@
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')">
         <%@ include file="banner.jsp" %>
-        <jsp:include page="panelAdministrador.do" flush="false" />
+       
         <%--<jsp:include page="../panelAdministrador/menuPanelAdministrador.jsp" /> --%>
         <div id="contenido">
             <center> <h2>Consultas y Bajas de Pláticas</h2></center>

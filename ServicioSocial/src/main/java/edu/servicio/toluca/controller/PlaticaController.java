@@ -36,8 +36,4 @@ public class PlaticaController {
     public String seleccionarPlatica(Model a) {
         return "/Platicas/seleccionarPlatica";
     }
-        @RequestMapping(method = RequestMethod.GET, value = "/menuAdministrador.do")
-    public String menuAdministrador(Model a) {
-        return "/panelAdministrador/panelAdministrador";
-    }
 }
