@@ -80,7 +80,7 @@
                         <th>139103RLR</th>
                         <th>Cosas ilegales</th>
                         <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
-                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="algunLado.do" rel="shadowbox">Rechazar</a></th>
+                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="retroalimentacionOrganizacion.do" rel="shadowbox">Rechazar</a></th>
                     </tr>
 
                 </tbody>

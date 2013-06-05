@@ -55,10 +55,7 @@
             <div class="jquerycssmenu">
                 <div id="smoothmenu1" class="ddsmoothmenu" >
                     <ul>
-                        <li><a href="panelUsuario.do">Inicio</a></li>
-                        <li><a href="#">Noticias</a></li>
-                        <li><a href="#">Ayuda</a></li>
-                        <li><a href="#">Cerrar Seci&oacute;n</a></li>
+                        <li><a href="administrarProyectos.do">Volver</a></li>
                     </ul>
                 </div>  
                 <br style="clear: left" />

@@ -48,21 +48,16 @@
                 <a href="http://www.ittoluca.edu.mx/version10/index.php" onmouseout="MM_swapImgRestore();" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
             </div>
         </div>
-
         <div id="menu">
             <div class="jquerycssmenu">
                 <div id="smoothmenu1" class="ddsmoothmenu" >
                     <ul>
-                        <li><a href="panelUsuario.do">Inicio</a></li>
-                        <li><a href="#">Noticias</a></li>
-                        <li><a href="#">Ayuda</a></li>
-                        <li><a href="#">Cerrar Seci&oacute;n</a></li>
+                        <li><a href="administrarOrganizaciones.do">Volver</a></li>
                     </ul>
                 </div>  
                 <br style="clear: left" />
             </div>
         </div>
-
         <div id="contenido">
             <div id="tabs">
                 <ul>
