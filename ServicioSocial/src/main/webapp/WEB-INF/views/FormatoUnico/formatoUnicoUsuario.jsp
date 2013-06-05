@@ -171,10 +171,30 @@
                     </div>
                     <div id="datosAcademicos">
                         <form>
-                            <table>
+                            <table class="tablaInput300">
+                                <tr> 
+                                    <td>Numero de control</td>
+                                    <td><input type ="text" name ="ncontrol" readonly/></td>
+                                </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
+                                    <td>Carrera</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Periodo</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Semestre</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Total de cr&eacute;ditos cubiertos</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Porcentaje del total de cr&eacute;ditos cubiertos</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
                                 </tr>
                             </table>
                         </form>
@@ -211,7 +231,7 @@
                                 </tr>
                                 
                             </table>
-                            <table id="tablaDatosOrgs">
+                            <table class="tablaInput300">
                                 <tr>
                                     <td>Calle</td>
                                     <td><input type ="text"/></td> 
@@ -300,7 +320,16 @@
                         </form>
                     </div>
                 </div>
+                <div id="observaciones">
+                    <b>Debes atender los siguientes puntos</b><br/>
+                    <ul>
+                        <li>El nombre no fue escrito correctamente</li>
+                        <li>La Tu direcci&oacute;n est&aacute; vac&iacute;a</li>
+                    </ul>
+                    
+                </div>
             </div>
+            
             <%-- fin del contenido --%>
             <div id="footer" align="left">
                 <img  src="imagenes/foter.png"/>

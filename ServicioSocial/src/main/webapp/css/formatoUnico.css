@@ -14,7 +14,20 @@ td
 {
     padding-bottom:5px;
 }
-#tablaDatosOrgs input[type="text"]
+.tablaInput300 input[type="text"]
 {
     width:300px;
+}
+#observaciones
+{
+    border: 1px solid;
+    margin: 10px 0px;
+    padding:15px 10px 15px 50px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+    font-size:14px;
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('../imagenes/warning.png');
+    visibility: hidden;
 }
