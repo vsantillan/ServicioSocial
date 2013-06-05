@@ -87,8 +87,8 @@
                 </li>
                 <li><a href="#">Organizaciones</a>
                     <ul>
-                        <li><a href="#">8.1 Administrar Proyectos</a></li>
-                        <li><a href="#">8.2 Administrar Organizaciones</a></li>
+                        <li><a href="administrarProyectos.do">8.1 Administrar Proyectos</a></li>
+                        <li><a href="administrarOrganizaciones.do">8.2 Administrar Organizaciones</a></li>
                         <li><a href="#">8.3 Validar Proyectos</a></li>
                         <li><a href="#">8.4 Validar Organizaciones</a></li>
                     </ul>

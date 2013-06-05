@@ -80,7 +80,7 @@
                         <th>el hexor</th>
                         <th>1000</th>
                         <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
-                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="algunLado.do" rel="shadowbox">Rechazar</a></th>
+                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="retroalimentacionProyecto.do" rel="shadowbox">Rechazar</a></th>
                     </tr>
 
                 </tbody>
