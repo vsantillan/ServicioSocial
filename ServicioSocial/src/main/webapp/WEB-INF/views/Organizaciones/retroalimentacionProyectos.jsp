@@ -63,6 +63,7 @@
         </div>
 
         <div id="contenido">
+            <h2>Cancelacion de Proyecto</h2>
             <div id="tabs">
                 <ul>
                     <li><a href="#">Enviar Correo de Cancelado</a></li>
@@ -72,15 +73,15 @@
                         <table>
                             <tr>
                                 <td>Nombre del Proyecto:</td>
-                                <td><input type ="text" name ="nombre_proyecto"> </td>
+                                <td><input type ="text" name ="nombre_proyecto"  disabled=" disabled"> </td>
                             </tr>
                             <tr>
                                 <td>Nombre de la Organizaci&oacute;n:</td>
-                                <td><input type ="text" name ="nombre_organizacion"> </td>
+                                <td><input type ="text" name ="nombre_organizacion"  disabled=" disabled"> </td>
                             </tr>
                             <tr>
                                 <td>E-Mail:</td>
-                                <td><input type ="text" name ="email"> </td>
+                                <td><input type ="text" name ="email"  disabled=" disabled"> </td>
                             </tr>
                             <tr>
                                 <td>Descripci&oacute;n:</td>
