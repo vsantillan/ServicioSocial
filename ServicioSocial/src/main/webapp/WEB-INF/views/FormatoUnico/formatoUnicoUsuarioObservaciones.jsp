@@ -38,7 +38,7 @@
                     <p class="alineadoIzq" style="margin-top: 10px">En este momento tu Formato Único se encuentra:</p>
                     
                     <div class="alineadoIzq alert success textoCentrado">
-                        Rechazado
+                        Aceptado
                     </div>
                     <div style="clear: both"></div>
                     <div class="observaciones">
