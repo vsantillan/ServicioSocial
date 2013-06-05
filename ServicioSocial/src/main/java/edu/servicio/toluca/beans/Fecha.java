@@ -12,8 +12,8 @@ import java.util.List;
  * @author Jonny
  */
 public class Fecha {
-   private int anio;
-   private List<String> listaDeAnios;
+   private int anio=5;
+   
 
     /**
      * @return the anio
@@ -29,17 +29,16 @@ public class Fecha {
         this.anio = anio;
     }
     
-    public List<String> anioActual ()
+    public int anioActual ()
     {
          java.util.Calendar fecha = java.util.Calendar.getInstance();
-         listaDeAnios= new ArrayList<String>();
-         anio=fecha.get(java.util.Calendar.YEAR);
-         for (int i=1; i<=4;i++)
-         {
-         listaDeAnios.add (""+anio);
-         anio++;
-         }
-         return listaDeAnios;
+         return  fecha.get(java.util.Calendar.YEAR);
+                 
     }  
-    
+    public int anioFin ()
+    {
+         
+         return  anioActual()+4;
+                 
+    } 
 }

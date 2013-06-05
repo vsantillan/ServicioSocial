@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package edu.servicio.toluca.controller;
+import edu.servicio.toluca.beans.Fecha;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class PlaticaController {
     @RequestMapping(method = RequestMethod.GET, value = "/altaPlatica.do")
-    public String altaPlatica(Model a) {
+    public String altaPlatica(Model modelo) {
+        Fecha anio= new Fecha ();
+        modelo.addAttribute("anioInicio",anio.anioActual());
+        modelo.addAttribute("anioFin",anio.anioFin());
         return "/Platicas/altaPlatica";
     }
 

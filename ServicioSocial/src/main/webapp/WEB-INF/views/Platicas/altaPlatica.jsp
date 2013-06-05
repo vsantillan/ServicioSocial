@@ -48,11 +48,12 @@
                                 </td>  
                         </tr>
                         <tr>
-                                <td>  <label for="ano"> Año </label> </td>
-                                <td>
-                                <c:forEach var="anioActual" items="${lista.anioActual}">
-                                    <b><c:out value="${anioActual}"/></b> <br/>
-                                </c:forEach>
+                                <td>  <label for="ano"> Año  </label> </td>   
+                                <td>     
+                                    <select id="anio" name="anio">         
+                                    <core:forEach var="i" begin="${anioInicio}" end="${anioFin}" step="1">
+                                       <option value="${i}"><core:out value="${i}" /></option>
+                                    </core:forEach>
                                 </td>
                                   
                         </tr>
