@@ -47,11 +47,13 @@
                 <a href="http://www.ittoluca.edu.mx" onmouseout="MM_swapImgRestore()"><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
             </div>
         </div>
+        
         <div id="menu">
-            <jsp:include page="menuPanelAdministrador.jsp" />
-        </div>
-        <div id="contenido">
             
+        </div>
+        <jsp:include page="menuPanelAdministrador.jsp" />
+        <div id="contenido">
+            <p>Hola</p>
         </div>
 
         <div id="footer">
