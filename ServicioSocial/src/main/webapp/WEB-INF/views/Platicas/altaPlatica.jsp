@@ -16,6 +16,7 @@
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');" >
          <%@ include file="banner.jsp" %>
+        <%-- <%@ include file="../panelAdministrador/panelAdministrador.jsp" %> --%>
         <%-- inicio del contenido --%>
         <div id="contenido">
             <center> 

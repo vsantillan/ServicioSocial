@@ -54,10 +54,10 @@
                 <ul>
                     <li><a href="#">Platicas</a>
                         <ul>
-                            <li><a href="#">1.1 Altas</a></li>
-                            <li><a href="#">1.2 Bajas | Consultas</a></li>
-                            <li><a href="#">1.3 Capturar Asistencia</a></li>
-                            <li><a href="#">1.4 Alta Posterior</a></li>
+                            <li><a href="altaPlatica.do">1.1 Altas</a></li>
+                            <li><a href="consultasBajas.do">1.2 Bajas | Consultas</a></li>
+                            <li><a href="capturarAsistencia.do">1.3 Capturar Asistencia</a></li>
+                            <li><a href="asistenciaPosteriorEspecial.do">1.4 Alta Posterior</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Formato &Uacute;nico</a>

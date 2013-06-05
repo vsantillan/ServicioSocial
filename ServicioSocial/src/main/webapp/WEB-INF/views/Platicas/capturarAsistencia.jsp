@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form"  uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="tags"  uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="core"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="format"  uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
 <!DOCTYPE html>
 <html>
     <head>
@@ -28,11 +33,11 @@
         <%@ include file="banner.jsp" %>
         <div id="contenido"    
             <center><h2>Capturar Asistencia a Plática</h2></center>  
-            <center><form name="casistencia" id="casistencia" action="#">
+            <center><form:form name="casistencia" id="casistencia" action="#" method="post">
                 <label for="alumno">Número de control</label>
                 <input type="text" name="no_control" id="no_control" size="15"require="true" />   
                 <button type="submit">Asistió</button>
-            </form>
+            </form:form>
             </center>
         </div>
         <%@ include file="footer.jsp" %>

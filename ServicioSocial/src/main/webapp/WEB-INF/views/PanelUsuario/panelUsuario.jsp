@@ -68,7 +68,7 @@
         <div id="contenido">
             <table class="general">
                 <tr>
-                    <td class="filas"><a id="b" href="platica.do">PLATICA</a></td>
+                    <td class="filas"><a id="b" href="seleccionarPlatica.do">PLATICA</a></td>
                     <td><img class="imagenes" src="imagenes/paloma.png"/></td>
                 </tr>
                 <tr>

@@ -32,4 +32,8 @@ public class PlaticaController {
     public String AsistenciaPosteriorEspecial(Model a) {
         return "/Platicas/asistenciaPosteriorEspecial";
     }
+      @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
+    public String seleccionarPlatica(Model a) {
+        return "/Platicas/seleccionarPlatica";
+    }
 }
