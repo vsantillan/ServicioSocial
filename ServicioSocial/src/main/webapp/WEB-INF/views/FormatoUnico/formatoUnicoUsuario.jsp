@@ -34,11 +34,11 @@
             </div>
             <div id ="contenido" align="left">
                 <div id="tabs">
-                    <h1>Pagina del Formato Unico</h1>
+                    <h1>P&aacute;gina del Formato Unico</h1>
                     <ul>
                         <li><a href="#datosPersonales">Datos Personales</a></li>
                         <li><a href="#datosContacto">Datos de Contacto</a></li>
-                        <li><a href="#datosAcademicos">Datos de Contacto</a></li>
+                        <li><a href="#datosAcademicos">Datos Acad&eacute;micos</a></li>
                         <li><a href="#datosOrganizaciones">Datos de Organizaciones</a></li>
                         <li><a href="#horarios">Horario</a></li>
                         <li><a href="#imprimirFui">Imprimir Formato &Uacute;nico</a></li>
@@ -99,6 +99,10 @@
                                 <tr>
                                     <td>Clave de Documento de Identificaci&oacute;n:</td>
                                     <td><input type ="text" name ="claveDocIdentificacion"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type ="checkbox" name ="terminos" > He le&iacute;do y acepto el <a href="#">Acuerdo de Confidencialidad</a> </td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -166,7 +170,14 @@
                         </form>
                     </div>
                     <div id="datosAcademicos">
-                        
+                        <form>
+                            <table>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </form>
                     </div>
                     <div id="datosOrganizaciones">
                         <form>
@@ -180,6 +191,13 @@
                                             <option value="">ORG 3</option>
                                         </select> 
                                     </td>
+                                    <td>
+                                        Modalidad 
+                                        <select name="modalidad">
+                                            <option value="">Interno</option>
+                                            <option value="">Externo</option>
+                                        </select>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Proyecto:</td>
@@ -190,6 +208,38 @@
                                             <option value="">Proy 3</option>
                                         </select> 
                                     </td>
+                                </tr>
+                                
+                            </table>
+                            <table id="tablaDatosOrgs">
+                                <tr>
+                                    <td>Calle</td>
+                                    <td><input type ="text"/></td> 
+                                    <td colspan="2">N&uacute;mero exterior <input style="width:50px"  type ="text"/>
+                                    N&uacute;mero interior <input style="width:50px"  type ="text"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Colonia/Fracc</td>
+                                    <td><input type ="text"/></td> 
+                                    <td>Municipio</td>
+                                    <td><input type ="text"/></td> 
+                                </tr>
+                                <tr>
+                                    <td>Estado</td>
+                                    <td><input type ="text"/></td> 
+                                    <td>C.P.</td>
+                                    <td><input type ="text"/></td> 
+                                </tr>
+                                <tr>
+                                    <td>Titular</td>
+                                    <td><input type ="text"/></td> 
+                                    <td>Puesto</td>
+                                    <td><input type ="text"/></td> 
+                                </tr>
+                                <tr>
+                                    <td>Tel&eacute;fono del titular</td>
+                                    <td><input type ="text"/></td> 
+                                    
                                 </tr>
                                 <tr>
                                     <td></td>

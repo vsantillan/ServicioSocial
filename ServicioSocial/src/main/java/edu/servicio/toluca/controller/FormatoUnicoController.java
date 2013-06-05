@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model a) {
+        
         return "/FormatoUnico/formatoUnicoUsuario";
     }
    

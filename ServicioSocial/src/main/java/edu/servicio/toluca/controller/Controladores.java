@@ -17,6 +17,4 @@ public class Controladores {
     public String formatoUnico(Model a) {
         return "/FormatoUnico/formatoUnico.do";
     }
-
-   
 }
