@@ -48,7 +48,7 @@
             });
         </script>   
 
-        <title>Administraci&oaucte;n de Organizaciones</title>
+        <title>Administraci&oacute;n de Organizaciones</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
@@ -56,12 +56,11 @@
                 <a href="http://www.ittoluca.edu.mx/version10/index.php" onmouseout="MM_swapImgRestore();" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
             </div>
         </div>
-        
+
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <h1>Administrar Organizaciones</h1>
-
                 <p>A continuaci&oacute;n se muestran las organizaciones pendientes por validar.</p>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
@@ -79,7 +78,7 @@
                             <th>Hector Guzman Nava</th>
                             <th>139103RLR</th>
                             <th>Cosas ilegales</th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
+                            <th><a href="#detalle" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
                             <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                         </tr>
                         <tr class='gradeX'>
@@ -92,17 +91,47 @@
 
                     </tbody>
                 </table>
-                <div style="clear:boot;"/>
-            </div>
-            
-            <%-- fin del contenido --%>
-            
-        </div>
-        <div id="footer">
-            <img  src="imagenes/foter.png"/>
-        </div>
 
-    </body>
+                <%-- fin del contenido --%>
+
+            </div>
+            <div id="detalle" />
+            <h2>Detalle de Empresas</h2>
+            <table>
+                <tr>
+                    <td><p>Titular:</p></td>
+                    <td><p>Hector Guzman Nava</p></td>
+                </tr>
+                <tr>
+                    <td><p>RCF:</p></td>
+                    <td><p>139103RLR</p></td>
+                </tr>
+                <tr>
+                    <td><p>Tipo de Organizaci&oacute;n:</p></td>
+                    <td><p>Algun Tipo</p></td>
+                </tr>
+                <tr>
+                    <td><p>Titular:</p></td>
+                    <td><p>Hector Guzman Nava</p></td>
+                </tr>
+                <tr>
+                    <td><p>RCF:</p></td>
+                    <td><p>139103RLR</p></td>
+                </tr>
+                <tr>
+                    <td><p>Tipo de Organizaci&oacute;n:</p></td>
+                    <td><p>Algun Tipo</p></td>
+                </tr>
+            </table>
+        </div>
+        <div style="clear: both;"/>
+    </div>
+</div>
+<div id="footer">
+    <img  src="imagenes/foter.png"/>
+</div>
+
+</body>
 
 
 </html>

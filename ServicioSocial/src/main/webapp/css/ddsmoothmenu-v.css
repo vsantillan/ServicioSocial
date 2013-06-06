@@ -1,11 +1,12 @@
 .ddsmoothmenu-v
 {
-   float:left;
+   float: left;
+   padding-right: 10px;
 }
 .ddsmoothmenu-v ul{
 margin: 0;
 padding: 0;
-z-index:100;
+z-index: initial;
 width: 170px; /* Main Menu Item widths */
 list-style-type: none;
 font: bold 12px Verdana;

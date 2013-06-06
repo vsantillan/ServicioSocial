@@ -51,11 +51,13 @@
         <div id="menu">
             
         </div>
-        <jsp:include page="menuPanelAdministrador.jsp" />
+        
         <div id="contenido">
             <h2>Panel de Administraci&oacute;n</h2>
-
-            <p>Hola</p>
+            <jsp:include page="menuPanelAdministrador.jsp" />
+            <div>
+                
+            </div>
         </div>
 
         <div id="footer">
