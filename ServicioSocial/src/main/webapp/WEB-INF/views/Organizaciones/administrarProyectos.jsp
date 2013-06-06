@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
         
@@ -58,7 +59,7 @@
         </div>
 
 
-
+        <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
         <div id="contenido">
             <h3>Administrar Organizaciones</h3>
 
