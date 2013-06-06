@@ -48,7 +48,7 @@
         </script>   
 
 
-        <title>Administracion de Organizaciones</title>
+        <title>Administraci&oaucte;n de Organizaciones</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
@@ -60,16 +60,16 @@
 
 
         <div id="contenido">
-            <h3>Administrar Organizaciones</h3>
+            <h1>Administrar Organizaciones</h1>
 
-            <p>A continuaci&oacute;n se muestran las organizaciones que esten por revisar.</p>
+            <p>A continuaci&oacute;n se muestran las organizaciones pendientes por validar.</p>
             <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                 <thead>
                     <tr>
                         <th>Titular</th>
                         <th>RFC</th>
                         <th>Tipo de Organizaci&oacute;n</th>
-                        <th>Ver proyecto</th>
+                        <th>Detalle</th>
                         <th>Acci&oacute;n</th>
                         
                     </tr>
@@ -80,14 +80,14 @@
                         <th>139103RLR</th>
                         <th>Cosas ilegales</th>
                         <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
-                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="retroalimentacionOrganizacion.do" rel="shadowbox">Rechazar</a></th>
+                        <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                     </tr>
                                         <tr class='gradeX'>
                         <th>Hector Guzman Nava</th>
                         <th>139103RLR</th>
                         <th>Cosas ilegales</th>
                         <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
-                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="algunLado.do" rel="shadowbox">Rechazar</a></th>
+                        <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="algunLado.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                     </tr>
 
                 </tbody>
