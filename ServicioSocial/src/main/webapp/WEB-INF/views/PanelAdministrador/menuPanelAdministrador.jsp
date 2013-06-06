@@ -19,7 +19,6 @@
         </script>
 --%>
 <!--<div id="smoothmenu1" class="ddsmoothmenu"></div>-->
-<h2>Panel de Administraci&oacute;n</h2>
 <div id="smoothmenu2" class="ddsmoothmenu-v">
     <ul>
         <li><a href="#">Platicas</a>

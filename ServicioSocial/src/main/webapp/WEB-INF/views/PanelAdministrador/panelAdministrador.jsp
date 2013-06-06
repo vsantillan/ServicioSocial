@@ -53,6 +53,8 @@
         </div>
         <jsp:include page="menuPanelAdministrador.jsp" />
         <div id="contenido">
+            <h2>Panel de Administraci&oacute;n</h2>
+
             <p>Hola</p>
         </div>
 

@@ -16,16 +16,17 @@
         <title>Panel Organizaci&oacute;n</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');" >
-        
+
         <%@ include file="../Template/banner.jsp" %>
-        
+
         <jsp:include page="menuPanelOrganizacion.jsp" />
         <%-- inicio del contenido --%>
         <div id="contenido">
-
-            <h1>Bienvenido</h1>
-
-
+            <center>
+                <br/>
+                <h1>Bienvenido al Sitio para Organizaciones</h1>
+                <img src="imagenes/organizacion.jpg">
+            </center>
         </div>
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>
