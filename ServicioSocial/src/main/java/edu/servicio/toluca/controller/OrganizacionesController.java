@@ -37,4 +37,11 @@ public class OrganizacionesController
         return "/Organizaciones/retroalimentacionProyectos";
     }
     
+    //Panel de organizaciones (usuarios)
+    @RequestMapping(method = RequestMethod.GET, value = "/panelOrganizacion.do")
+    public String panelOrganizacion(Model a)
+    {
+        return "/PanelOrganizacion/panelOrganizacion";
+    }
+    
 }
