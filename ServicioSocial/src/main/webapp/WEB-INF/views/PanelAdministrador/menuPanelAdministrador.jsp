@@ -38,7 +38,7 @@
                 <li><a href="#">2.5 Alta Posterior</a></li>
             </ul>
         </li>
-        <li><a href="reporteBimestralAdministrador.do">Formato Bimestral</a>
+        <li><a href="#">Formato Bimestral</a>
             <ul>
                 <li><a href="#">3.1 Revisados</a></li>
                 <li><a href="#">3.2 No revisados</a></li>
@@ -83,8 +83,8 @@
             <ul>
                 <li><a href="administrarProyectos.do">8.1 Administrar Proyectos</a></li>
                 <li><a href="administrarOrganizaciones.do">8.2 Administrar Organizaciones</a></li>
-                <li><a href="#">8.3 Validar Proyectos</a></li>
-                <li><a href="#">8.4 Validar Organizaciones</a></li>
+                <li><a href="validarProyectos.do">8.3 Validar Proyectos</a></li>
+                <li><a href="validarOrganizaciones.do">8.4 Validar Organizaciones</a></li>
             </ul>
         </li>
         <li><a href="#">Administraci&oacute;n</a>
