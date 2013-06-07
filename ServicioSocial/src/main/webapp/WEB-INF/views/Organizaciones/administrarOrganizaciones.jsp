@@ -10,29 +10,20 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
         <!--CSS-->
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
         <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" />         
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="css/cssTablaDetallesOrganizaciones.css" />
-
         <!--Estilos para tablas-->
         <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css" />
 
-
-
-
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
-
         <!--        Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
         <script type="text/javascript" charset="utf-8">
@@ -79,13 +70,13 @@
                             <th>139103RLR</th>
                             <th>Cosas ilegales</th>
                             <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png"</a></th>
-                            <th><a href="detalleOrganizacion.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                         </tr>
                         <tr class='gradeX'>
                             <th>Hector Guzman Nava</th>
                             <th>139103RLR</th>
                             <th>Cosas ilegales</th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
+                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png"</a></th>
                             <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="algunLado.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                         </tr>
 
