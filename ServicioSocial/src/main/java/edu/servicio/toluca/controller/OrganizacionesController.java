@@ -80,8 +80,8 @@ public class OrganizacionesController
     public String altaAdminOrganizacion(Model a){
         return "/Organizaciones/altaAdminOrganizacion";
     }
-    @RequestMapping(method = RequestMethod.GET, value = "/altaAdminProyecto.do")
-    public String altaAdminProyecto(Model a){
+    @RequestMapping(method = RequestMethod.GET, value = "/altaAdminProyectos.do")
+    public String altaAdminProyectos(Model a){
         return "/Organizaciones/altaAdminProyecto";
     }
     

@@ -10,16 +10,10 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
-        
+        <jsp:include page="../Template/headsJQueryUI.jsp" />
+        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-
-        <!--Estilos para tablas-->
-        <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css" />
-
-
-
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
@@ -43,6 +37,7 @@
 
             });
         </script>   
+
 
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>

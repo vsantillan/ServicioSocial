@@ -24,7 +24,7 @@
         <div id="contenido">
             <h1>Alta de Organizaci&oacute;n</h1>
             <%-- Formulario Nueva Plática --%>
-            <form:form name="altaOrganizacion" id="formAltaOrganizacion" action="gdaAltaOrganizacion.do" method="POST">
+            <form:form name="altaOrganizacion" id="MyForm" action="gdaAltaOrganizacion.do" method="POST">
                 <table>
                     <tr>
                         <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
@@ -48,11 +48,11 @@
                     </tr>
                     <tr>
                         <td>  <label for="lugar">Correo:</label></td>
-                        <td>  <input type="email" name="lugar" id="puesto" size="20" require="true"/> </td>  
+                        <td>  <input type="text" name="lugar" id="puesto" size="20" require="true"/> </td>  
                     </tr>
                     <tr>
                         <td>  <label for="lugar">Tel&eacute;fono:</label></td>
-                        <td>  <input type="number" name="lugar" id="puesto" size="20" require="true"/> </td>  
+                        <td>  <input type="text" name="lugar" id="puesto" size="20" require="true"/> </td>  
                     </tr>
                     <tr>
                         <td>  <label for="lugar">Domicilio:</label></td>
