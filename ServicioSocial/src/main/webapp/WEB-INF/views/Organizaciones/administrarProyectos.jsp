@@ -10,23 +10,19 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-        
+
         <!--CSS-->
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
         <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" />         
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-        
+
         <!--Estilos para tablas-->
         <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css" />
 
-
-
-
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-        
+
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
@@ -58,40 +54,41 @@
             </div>
         </div>
 
-
-        <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
         <div id="contenido">
-            <h3>Administrar Organizaciones</h3>
+            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
+            <div style="float:left;">
+                <h3>Administrar Organizaciones</h3>
+                <p>A continuaci&oacute;n se muestran las organizaciones que esten por revisar.</p>
+                <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
+                    <thead>
+                        <tr>
+                            <th>Nombre del proyecto</th>
+                            <th>Titular</th>
+                            <th>Numero de vacantes</th>
+                            <th>Ver proyecto</th>
+                            <th>Acci&oacute;n</th>
 
-            <p>A continuaci&oacute;n se muestran las organizaciones que esten por revisar.</p>
-            <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
-                <thead>
-                    <tr>
-                        <th>Nombre del proyecto</th>
-                        <th>Titular</th>
-                        <th>Numero de vacantes</th>
-                        <th>Ver proyecto</th>
-                        <th>Acci&oacute;n</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class='gradeX'>
-                        <th>Cierto proyecto</th>
-                        <th>el hexor</th>
-                        <th>1000</th>
-                        <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
-                        <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="retroalimentacionProyecto.do" rel="shadowbox">Rechazar</a></th>
-                    </tr>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class='gradeX'>
+                            <th>Cierto proyecto</th>
+                            <th>el hexor</th>
+                            <th>1000</th>
+                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png"</a></th>
+                            <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="retroalimentacionProyecto.do" rel="shadowbox">Rechazar</a></th>
+                        </tr>
 
-                </tbody>
-            </table>
-
+                    </tbody>
+                </table>
+            </div>
+            <div style="clear: both;"/>
+        </div>
             <%-- fin del contenido --%>
         </div>
         <div id="footer">
-              <img  src="imagenes/foter.png"/>
-         </div>
+            <img  src="imagenes/foter.png"/>
+        </div>
 
     </body>
 
