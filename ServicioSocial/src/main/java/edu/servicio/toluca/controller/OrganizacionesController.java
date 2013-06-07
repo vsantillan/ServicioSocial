@@ -16,6 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class OrganizacionesController
 {
+    @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
+    public String administradorOrganizaciones(Model a){
+        return "/Organizaciones/administrarOrganizaciones";
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/administrarProyectos.do")
+    public String administradorProyectos(Model a){
+        return "/Organizaciones/administrarProyectos";
+    }
+    
     @RequestMapping(method = RequestMethod.GET, value = "/validarOrganizaciones.do")
     public String panelAdministradorOrganizaciones(Model a){
         return "/Organizaciones/validarOrganizaciones";
