@@ -16,6 +16,7 @@
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
         <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" />         
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="css/cssTablaDetallesOrganizaciones.css" />
 
         <!--Estilos para tablas-->
         <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
@@ -46,8 +47,7 @@
                 });
 
             });
-        </script>   
-
+        </script>
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
@@ -78,8 +78,8 @@
                             <th>Hector Guzman Nava</th>
                             <th>139103RLR</th>
                             <th>Cosas ilegales</th>
-                            <th><a href="#detalle" rel="shadowbox"><img src="imagenes/lupa.png"</a></th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png"</a></th>
+                            <th><a href="detalleOrganizacion.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                         </tr>
                         <tr class='gradeX'>
                             <th>Hector Guzman Nava</th>
@@ -93,43 +93,13 @@
                 </table>
 
                 <%-- fin del contenido --%>
-
             </div>
-            <div id="detalle" />
-            <h2>Detalle de Empresas</h2>
-            <table>
-                <tr>
-                    <td><p>Titular:</p></td>
-                    <td><p>Hector Guzman Nava</p></td>
-                </tr>
-                <tr>
-                    <td><p>RCF:</p></td>
-                    <td><p>139103RLR</p></td>
-                </tr>
-                <tr>
-                    <td><p>Tipo de Organizaci&oacute;n:</p></td>
-                    <td><p>Algun Tipo</p></td>
-                </tr>
-                <tr>
-                    <td><p>Titular:</p></td>
-                    <td><p>Hector Guzman Nava</p></td>
-                </tr>
-                <tr>
-                    <td><p>RCF:</p></td>
-                    <td><p>139103RLR</p></td>
-                </tr>
-                <tr>
-                    <td><p>Tipo de Organizaci&oacute;n:</p></td>
-                    <td><p>Algun Tipo</p></td>
-                </tr>
-            </table>
+            <div style="clear: both;"/>
         </div>
-        <div style="clear: both;"/>
     </div>
-</div>
-<div id="footer">
-    <img  src="imagenes/foter.png"/>
-</div>
+    <div id="footer">
+        <img  src="imagenes/foter.png"/>
+    </div>
 
 </body>
 
