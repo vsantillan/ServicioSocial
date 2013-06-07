@@ -8,12 +8,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="metas.jsp" %>
+         <%@ include file="../Template/headsMenuUsuario.jsp" %>
+        <%@ include file="../Template/metas.jsp" %>
         <title>Seleciona Plática</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
-        <%@ include file="banner.jsp" %>
+        <%@ include file="../Template/banner.jsp" %>
         <%-- inicio del contenido --%>
+        <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />
         <div id="contenido">
             <center> 
                 <h1>Selecciona Plática</h1>
@@ -54,9 +56,9 @@
                                
                               
                                     %>
-                                
-                                    <option value="<%=id%>"><%=fecha%>
-                                    <%}
+                                --%>
+                                    <option value="0">1
+                                 <%--   <%}
                                 if(lista.size()!=0){
                                hora=lista.get(0).getHora();
                                lugar+=lista.get(0).getLugar();}
@@ -65,20 +67,19 @@
                                 </select><br>
                                 <input type=text name="hora" id="hora" value="Hora:" readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>
                                 <input type="submit" value="Generar Folio" /> <br>
-                                </center>
+                                
                             </form>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+             <div style="clear:both;"></div>
         </div>
 
         <%-- fin del contenido --%>
-        <%@ include file="footer.jsp" %>
+        <%@ include file="../Template/footer.jsp" %>
     </body>
     <script language=JavaScript>
-
-
         var mm = new Date();
         var m2 = mm.getMonth() + 1;
         var mesok = (m2 < 10) ? '0' + m2 : m2;
@@ -97,7 +98,7 @@
         mesok[11] = "AGO-DIC";
         var mes = mesok[mm.getMonth()];
 
-        document.algunNombre.texto.value = "\t\tPERIODO\t" + mes + "\t" + mm.getFullYear();
+      //  document.algunNombre.texto.value = "\t\tPERIODO\t" + mes + "\t" + mm.getFullYear();
 //document.algunNombre.texto2.value=mm.getFullYear();
 
     </script>

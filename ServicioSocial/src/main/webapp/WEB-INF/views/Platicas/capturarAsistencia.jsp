@@ -13,7 +13,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <%@ include file="metas.jsp" %>
+         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
+        <jsp:include page="../Template/metas.jsp" />
 
         <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
        
@@ -30,16 +31,20 @@
         <title>Capturar Asistencia a Plática</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')">
-        <%@ include file="banner.jsp" %>
-        <div id="contenido"    
+        <jsp:include page="../Template/banner.jsp" />
+        <div id="contenido" >  
+            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
+            <div style="float:left;">
             <center><h2>Capturar Asistencia a Plática</h2></center>  
             <center><form:form name="casistencia" id="casistencia" action="#" method="post">
                 <label for="alumno">Número de control</label>
-                <input type="text" name="no_control" id="no_control" size="15"require="true" />   
+                <input type="text" name="no_control" id="no_control" size="15" />   
                 <button type="submit">Asistió</button>
             </form:form>
             </center>
+            </div>
+            <div style="clear:both;"></div>
         </div>
-        <%@ include file="footer.jsp" %>
+         <jsp:include page="../Template/footer.jsp" />
     </body>
 </html>

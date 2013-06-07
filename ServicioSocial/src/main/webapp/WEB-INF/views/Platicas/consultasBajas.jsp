@@ -14,7 +14,8 @@
 <html>
     <head>
 
-        <%@ include file="metas.jsp" %>
+        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
+        <jsp:include page="../Template/metas.jsp" />
         <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
         <link rel="stylesheet" type="text/css" href="css/platicaSyntaxHighlighter.css" />
 
@@ -38,84 +39,88 @@
         <title>Consultas y Bajas de Pláticas</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')">
-        <%@ include file="banner.jsp" %>
-         <%-- <jsp:include page="../../../menus/menuPanelAdministrador.jsp" flush="true" />--%>
+        <jsp:include page="../Template/banner.jsp" />
+        <%-- <jsp:include page="../../../menus/menuPanelAdministrador.jsp" flush="true" />--%>
         <%--<jsp:include page="../panelAdministrador/menuPanelAdministrador.jsp" /> --%>
         <div id="contenido">
-            <center> <h2>Consultas y Bajas de Pláticas</h2></center>
-            <div id="div_BajaPlatica" style="display:block">
-                <div style="height:200px;width:900px;overflow:scroll;"> 
-                    <center>
-                        <table id="grilla" class="tablesorter" border="1"  bordercolor="#FFFFFF">
-                            <thead>
-                                <tr bgcolor="#0080FF">
-                                    <th><font color="#1C1C1C">Eliminar</font></th>
-                                    <th><font color="#1C1C1C">Fecha</font></th>
-                                    <th><font color="#1C1C1C">Hora</font></th>
-                                    <th><font color="#1C1C1C">Lugar</font></th>
-                                    <th><font color="#1C1C1C">Periodo</font></th>
-                                    <th><font color="#1C1C1C">Año</font></th>
-                                    <th><font color="#1C1C1C">Asistentes</font></th>
-                                    <th><font color="#1C1C1C">Fecha máxima formato unico</font></th>
-                                    <th style="visibility: hidden"><font color="#1C1C1C">ID</font></th>
+            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
+            <div style="float:left;">
+                <center> <h2>Consultas y Bajas de Pláticas</h2></center>
+                <div id="div_BajaPlatica">
+                    <div style="height:400px;width:700px;overflow:scroll;"> 
+                        <center>
+                            <table id="grilla" class="tablesorter" border="1"  bordercolor="#FFFFFF">
+                                <thead>
+                                    <tr bgcolor="#0080FF">
+                                        <th><font color="#1C1C1C">Eliminar</font></th>
+                                        <th><font color="#1C1C1C">Fecha</font></th>
+                                        <th><font color="#1C1C1C">Hora</font></th>
+                                        <th><font color="#1C1C1C">Lugar</font></th>
+                                        <th><font color="#1C1C1C">Periodo</font></th>
+                                        <th><font color="#1C1C1C">Año</font></th>
+                                        <th><font color="#1C1C1C">Asistentes</font></th>
+                                        <th><font color="#1C1C1C">Fecha máxima formato unico</font></th>
+                                        <th style="visibility: hidden"><font color="#1C1C1C">ID</font></th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <%--  <%        
-                       if (lista.size() > 0){
-                       for (int i=0; i < lista.size(); i++){
-                          
-                           %> --%>
-                                <tr Bgcolor="#FBF2EF">
-                                    <td><a class="elimina"><img src="imagenes/platicadelete.png" /></a></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <%--  <%        
+                           if (lista.size() > 0){
+                           for (int i=0; i < lista.size(); i++){
+                              
+                               %> --%>
+                                    <tr Bgcolor="#FBF2EF">
+                                        <td><a class="elimina"><img src="imagenes/platicadelete.png" /></a></td>
 
-                                    <td><div  contenteditable >31/07/13</div></td>
-                                    <td><div  contenteditable >13:00 pm</div></td>
-                                    <td><div  contenteditable >abc</div></td>
-                                    <td><div  contenteditable >ENE-JUN</div></td>
-                                    <td><div  contenteditable >2013</div></td>
-                                    <td><div  contenteditable >2</div></td>
-                                    <td><div  contenteditable >01/12/2013</div></td>
-                                    <td style="visibility: hidden">2</td>              
-
-
-                                </tr>
-                                <tr Bgcolor="#FBF2EF">
-                                    <td><a class="elimina"><img src="imagenes/platicadelete.png" /></a></td>
-
-                                    <td><div  contenteditable >01/07/13</div></td>
-                                    <td><div  contenteditable >11:00 am</div></td>
-                                    <td><div  contenteditable >xyz</div></td>
-                                    <td><div  contenteditable >AGO-DIC</div></td>
-                                    <td><div  contenteditable >2014</div></td>
-                                    <td><div  contenteditable >2</div></td>
-                                    <td><div  contenteditable >01/12/2013</div></td>
-                                    <td style="visibility: hidden">2</td>              
+                                        <td><div  contenteditable >31/07/13</div></td>
+                                        <td><div  contenteditable >13:00 pm</div></td>
+                                        <td><div  contenteditable >abc</div></td>
+                                        <td><div  contenteditable >ENE-JUN</div></td>
+                                        <td><div  contenteditable >2013</div></td>
+                                        <td><div  contenteditable >2</div></td>
+                                        <td><div  contenteditable >01/12/2013</div></td>
+                                        <td style="visibility: hidden">2</td>              
 
 
-                                </tr>
+                                    </tr>
+                                    <tr Bgcolor="#FBF2EF">
+                                        <td><a class="elimina"><img src="imagenes/platicadelete.png" /></a></td>
 
-                                <%--     <%
-                           
-                       }
-                    }
-                    
-                    
-                           else{
-                        out.println("no hay platicas dadas de alta");
+                                        <td><div  contenteditable >01/07/13</div></td>
+                                        <td><div  contenteditable >11:00 am</div></td>
+                                        <td><div  contenteditable >xyz</div></td>
+                                        <td><div  contenteditable >AGO-DIC</div></td>
+                                        <td><div  contenteditable >2014</div></td>
+                                        <td><div  contenteditable >2</div></td>
+                                        <td><div  contenteditable >01/12/2013</div></td>
+                                        <td style="visibility: hidden">2</td>              
+
+
+                                    </tr>
+
+                                    <%--     <%
+                               
                            }
-                     %>    --%>
+                        }
+                        
+                        
+                               else{
+                            out.println("no hay platicas dadas de alta");
+                               }
+                         %>    --%>
 
-                            </tbody>
+                                </tbody>
 
-                        </table>
-                    </center>
-                    <br />
+                            </table>
+                        </center>
+                        <br />
+                    </div>
                 </div>
             </div>
+            <div style="clear:both;"></div>
         </div>
-        <%@ include file="footer.jsp" %>
+        <jsp:include page="../Template/footer.jsp" />
     </body>
 
 </html>

@@ -13,33 +13,38 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <%@ include file="metas.jsp" %>
+        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
+        <jsp:include page="../Template/metas.jsp" />
 
         <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
-       
+
 
         <script type="text/javascript" src="js/platicasEstiloFormularioformly.js"></script>
 
-         <script>
+        <script>
 
-$(document).ready(function() { 
-	
-	$('#casistenciaespecial').formly(); 
-});
-</script>
+            $(document).ready(function() {
+
+                $('#casistenciaespecial').formly();
+            });
+        </script>
         <title>Capturar Asistencia Especial Posterior</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')">
-        <%@ include file="banner.jsp" %>
-        <div id="contenido"    
-            <center><h2>Capturar Asistencia Especial Posterior</h2></center>  
-            <center><form:form name="casistenciaespecial" id="casistenciaespecial" action="#">
-                <label for="alumno">Número de control</label>
-                <input type="text" name="no_control" id="no_control" size="15"require="true" />   
-                <button type="submit">Asistió</button>
-            </form:form>
-            </center>
+        <jsp:include page="../Template/banner.jsp" />
+        <div id="contenido">
+            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
+            <div style="float:left;">
+                <center><h2>Capturar Asistencia Especial Posterior</h2></center>  
+                <center><form:form name="casistenciaespecial" id="casistenciaespecial" action="#">
+                        <label for="alumno">Número de control</label>
+                        <input type="text" name="no_control" id="no_control" size="15" />   
+                        <button type="submit">Asistió</button>
+                    </form:form>
+                </center>
+            </div>
+            <div style="clear:both;"></div>
         </div>
-        <%@ include file="footer.jsp" %>
+        <jsp:include page="../Template/footer.jsp" />
     </body>
 </html>
