@@ -57,7 +57,7 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;width: 730px">
-                <h1>Administrar Organizaciones</h1>
+                <h1>Administrar Proyectos</h1>
                 <p>A continuaci&oacute;n se muestran las organizaciones que esten por revisar.</p>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
@@ -75,8 +75,8 @@
                             <th>Cierto proyecto</th>
                             <th>el hexor</th>
                             <th>1000</th>
-                            <th><a href="detalleProyecto.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png"</a></th>
-                            <th><a href="algunLado.do" rel="shadowbox">Aceptar</a>---<a href="retroalimentacionProyecto.do" rel="shadowbox">Rechazar</a></th>
+                            <th><a href="detalleProyecto.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionProyecto.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                         </tr>
 
                     </tbody>
