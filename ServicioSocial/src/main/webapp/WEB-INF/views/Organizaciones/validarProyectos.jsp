@@ -50,7 +50,7 @@
 
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;">
+            <div style="float:left;width: 80%">
                 <h1>Validar Proyectos</h1>
 
                 <p>A continuaci&oacute;n se muestran los proyectos por validar.</p>

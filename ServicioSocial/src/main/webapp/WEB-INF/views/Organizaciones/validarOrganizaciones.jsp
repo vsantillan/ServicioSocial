@@ -51,7 +51,7 @@
 
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;">
+            <div style="float:left;width: 80%">
                 <h1>Validar Organizaciones</h1>
 
 
@@ -80,7 +80,7 @@
                             <th>139103RLR</th>
                             <th>Cosas ilegales</th>
                             <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="algunLado.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                         </tr>
 
                     </tbody>

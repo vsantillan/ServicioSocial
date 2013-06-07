@@ -56,7 +56,7 @@
 
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;width: 730px">
+            <div style="float:left;width: 80%">
                 <h1>Administrar Proyectos</h1>
                 <p>A continuaci&oacute;n se muestran las organizaciones que esten por revisar.</p>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
