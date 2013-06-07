@@ -70,7 +70,7 @@
                             <th>Cierto proyecto</th>
                             <th>el hexor</th>
                             <th>1000</th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="detalleProyecto.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                             <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/><a href="retroalimentacionProyecto.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
                         </tr>
 

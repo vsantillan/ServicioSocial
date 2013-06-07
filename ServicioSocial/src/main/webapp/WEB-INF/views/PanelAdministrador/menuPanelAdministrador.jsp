@@ -81,10 +81,12 @@
         </li>
         <li><a href="#">Organizaciones</a>
             <ul>
-                <li><a href="administrarProyectos.do">8.1 Administrar Proyectos</a></li>
-                <li><a href="administrarOrganizaciones.do">8.2 Administrar Organizaciones</a></li>
-                <li><a href="validarProyectos.do">8.3 Validar Proyectos</a></li>
-                <li><a href="validarOrganizaciones.do">8.4 Validar Organizaciones</a></li>
+                <li><a href="altaAdminOrganizacion.do">8.1 Alta Organizaciones</a></li>
+                <li><a href="altaAdminProyectos.do">8.2 Alta de Proyectos</a></li>
+                <li><a href="administrarOrganizaciones.do">8.3 Administrar Organizaciones</a></li>
+                <li><a href="administrarProyectos.do">8.4 Administrar Proyectos</a></li>
+                <li><a href="validarOrganizaciones.do">8.5 Validar Organizaciones</a></li>
+                <li><a href="validarProyectos.do">8.6 Validar Proyectos</a></li>                
             </ul>
         </li>
         <li><a href="#">Administraci&oacute;n</a>
