@@ -67,5 +67,14 @@ public class OrganizacionesController
         return "/Organizaciones/altaProyecto";
     }
     
+    @RequestMapping(method = RequestMethod.GET, value = "/detalleProyecto.do")
+    public String detalleProyecto(Model a){
+        return "/Organizaciones/detalleProyecto";
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/detalleOrganizacion.do")
+    public String detalleOrganizacion(Model a){
+        return "/Organizaciones/detalleOrganizacion";
+    }
+    
     
 }
