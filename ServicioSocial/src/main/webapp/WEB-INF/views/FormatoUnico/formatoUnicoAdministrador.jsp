@@ -27,7 +27,6 @@
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <script type="text/javascript">
             $(document).ready(function() {
-                $("#tabs").tabs();
                 $('#noRevisadosDT').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
