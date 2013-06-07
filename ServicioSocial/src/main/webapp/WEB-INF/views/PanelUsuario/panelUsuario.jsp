@@ -55,7 +55,7 @@
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
                 <tr>
-                    <td class="filas"><a id="b" href="reporteBimestralAdministrador">FORMATOS BIMESTRALES</a></td>
+                    <td class="filas"><a id="b" href="formatoReporteBimestral.do">FORMATOS BIMESTRALES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
                 <tr>

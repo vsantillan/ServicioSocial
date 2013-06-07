@@ -11,6 +11,7 @@
         <h1>Hello World!</h1>
         <a href="panelUsuario.do">Usuario</a>
          <a href="administrarOrganizaciones.do">Organizaciones</a>
+         <a href="panelAdministrador.do">Administracion</a>
          
     </body>
 </html>

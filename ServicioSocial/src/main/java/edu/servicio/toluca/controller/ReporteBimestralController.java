@@ -15,11 +15,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class ReporteBimestralController {
+    
      @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
-    public String preseleccionAlumnos(Model a)
+    public String reporteBimestralAdministrador(Model a)
     {
         
         return "/ReporteBimestral/reporteBimestralAdministrador";
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
+    public String reporteBimestralUsuario(Model a)
+    {
+        
+        return "/ReporteBimestral/formatoReporteBimestral";
     }
     
 }

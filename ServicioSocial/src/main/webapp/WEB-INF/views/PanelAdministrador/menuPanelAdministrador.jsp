@@ -38,7 +38,7 @@
                 <li><a href="#">2.5 Alta Posterior</a></li>
             </ul>
         </li>
-        <li><a href="#">Formato Bimestral</a>
+        <li><a href="reporteBimestralAdministrador.do">Formato Bimestral</a>
             <ul>
                 <li><a href="#">3.1 Revisados</a></li>
                 <li><a href="#">3.2 No revisados</a></li>
