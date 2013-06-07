@@ -1,39 +1,30 @@
+<%-- 
+    Document   : demoAdministrador
+    Created on : 07-jun-2013, 10:56:10
+    Author     : bustedvillain
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        
+        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
+        <jsp:include page="../Template/metas.jsp" />
         <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
-        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
-        
-        <!--Estilos para tablas-->
-        <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
-        <!--<link rel="stylesheet" type="text/css" href="css/demo_page.css" />-->
-        
-        <!--css de tabs-->
-        <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jqueryUI/demos.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.timepicker.css"/>
-        
-        
-        <!-- Scripts -->
-        <script src="js/jqueryUI/jquery-1.9.1.js"></script>
-        <script src="js/jqueryUI/jquery.ui.core.js"></script>
-        <script src="js/jqueryUI/jquery.ui.widget.js"></script>
-        <script src="js/jqueryUI/jquery.ui.tabs.js"></script>
-      
-        
+        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
-
-        <!--Scripts para tablas-->
-        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
-        
+        <jsp:include page="../Template/headsJQueryUI.jsp" />
+        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <script type="text/javascript">
             $(document).ready(function() {
                 $("#tabs").tabs();
@@ -48,7 +39,7 @@
                 $('#noAceptadosDT').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
-                  
+
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
 
@@ -56,7 +47,7 @@
                 $('#enCorreccionDT').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
-                    
+
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
 
@@ -64,30 +55,28 @@
                 $('#aceptadosDT').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
-                    
+
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
 
                 });
 
             });
-        </script> 
+        </script>
+        <title>Administrador</title>
         
-        <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
-        
-        
-        
-        <title>Formatos &Uacute;nicos</title>
     </head>
-    <body>
-        <div class="pagina" align="center">
-            <div class="banner" align="left">
-                <a href="#"><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
-            </div>
-            
-            <div id ="contenido" align="left">
+    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+        <jsp:include page="../Template/banner.jsp" />
+
+        <%-- inicio del contenido --%>
+        <div id="contenido">
+            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
+            <div style="float:left; width:80%;">
+                
+                <h1>P&aacute;gina del Formato Unico - Administrador</h1>
                 <div id="tabs">
-                    <h1>P&aacute;gina del Formato Unico</h1>
+                    
                     <ul>
                         <li><a href="#noRevisados">No revisados</a></li>
                         <li><a href="#noAceptados">No aceptados</a></li>
@@ -110,6 +99,40 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr class='gradeX'>
+                                    <td>Ene-Feb</td>
+                                    <td>09271024</td>
+                                    <td>Hector Guzman Nava</td>
+                                    <td><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"/></a></td>
+                                    <td>13-06-07</td>
+                                    <td>fui.pdf</td>
+                                    <td>
+                                        <select>
+                                            <option>Selecionar...</option>
+                                            <option>Aceptar</option>
+                                            <option>Rechazar</option>
+                                            <option>Correcci&oacute;n</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="button" value="Modificar"/></td>
+                                </tr>
+                                <tr class='gradeX'>
+                                    <td>Ene-Feb</td>
+                                    <td>09271024</td>
+                                    <td>Hector Guzman Nava</td>
+                                    <td><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"/></a></td>
+                                    <td>13-06-07</td>
+                                    <td>fui.pdf</td>
+                                    <td>
+                                        <select>
+                                            <option>Selecionar...</option>
+                                            <option>Aceptar</option>
+                                            <option>Rechazar</option>
+                                            <option>Correcci&oacute;n</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="button" value="Modificar"/></td>
+                                </tr>
                                 <tr class='gradeX'>
                                     <td>Ene-Feb</td>
                                     <td>09271024</td>
@@ -210,21 +233,15 @@
                         </table>
                     </div>    
                 </div>
-                <div id="observaciones">
-                    <b>Debes atender los siguientes puntos</b><br/>
-                    <ul>
-                        <li>El nombre no fue escrito correctamente</li>
-                        <li>La Tu direcci&oacute;n est&aacute; vac&iacute;a</li>
-                    </ul>
-                    
-                </div>
+                
             </div>
+            <div style="clear:both;"></div>
             
-            <%-- fin del contenido --%>
-            <div id="footer" align="left">
-                <img  src="imagenes/foter.png"/>
-            </div>
         </div>
-
+        <%-- fin del contenido --%>
+        <jsp:include page="../Template/footer.jsp" />
     </body>
 </html>
+
+
+        
