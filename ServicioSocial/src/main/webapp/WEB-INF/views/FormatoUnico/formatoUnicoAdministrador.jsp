@@ -11,7 +11,7 @@
         <!--Estilos para tablas-->
         <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css" />
+        <!--<link rel="stylesheet" type="text/css" href="css/demo_page.css" />-->
         
         <!--css de tabs-->
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
@@ -33,31 +33,46 @@
 
         <!--Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
-
+        
         <script type="text/javascript">
             $(document).ready(function() {
-                 $("#tabs").tabs({
-                    "show": function(event, ui) {
-                        var oTable = $('div.dataTables_scrollBody>table.display', ui.panel).dataTable();
-                        if ( oTable.length > 0 ) {
-                                oTable.fnAdjustColumnSizing();
-                        }
-                    }   
-                
-                });
-                $('table.display').dataTable({
-                    "sScrollY": "200px",
-                    "bScrollCollapse": true,
-                    "bPaginate": false,
+                $("#tabs").tabs();
+                $('#noRevisadosDT').dataTable({
                     "bJQueryUI": true,
-                    "aoColumnDefs": [
-						{ "sWidth": "10%", "aTargets": [ -1 ] }
-					]
+                    "sPaginationType": "full_numbers",
+                    "sScrollX": "100%",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
                 });
-             
+                $('#noAceptadosDT').dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
+                  
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+                $('#enCorreccionDT').dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
+                    
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+                $('#aceptadosDT').dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
+                    
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
 
             });
-        </script>
+        </script> 
+        
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
         
         
@@ -80,7 +95,7 @@
                         <li><a href="#aceptados">Aceptados</a></li>
                     </ul>
                     <div id="noRevisados">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="example1" width='100%'>
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="noRevisadosDT" width='100%'>
                             <thead>
                                 <tr>
                                     <td>Periodo</td>
@@ -116,7 +131,7 @@
                         </table>
                     </div>
                     <div id="noAceptados">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="example1" width='100%'>
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="noAceptadosDT" width='100%'>
                             <thead>
                                 <tr>
                                     <th>Periodo</th>
@@ -124,9 +139,9 @@
                                     <th>Nombre</th>
                                     <th>Documento</th>
                                     <th>Fecha Subida</th>
-                                    <th>Archivo</th>
-                                    <th>Acci&oacute;n</th>
-                                    <th>Establecer</th>
+                                    <th>Fecha Rechazo</th>
+                                    <th>Motivo</th>
+                                   
 
                                 </tr>
                             </thead>
@@ -135,24 +150,16 @@
                                     <td>Ene-Feb</td>
                                     <td>09271024</td>
                                     <td>Hector Guzman Nava</td>
-                                    <td><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"/></a></td>
-                                    <td>13-06-07</td>
                                     <td>fui.pdf</td>
-                                    <td>
-                                        <select>
-                                            <option>Selecionar...</option>
-                                            <option>Aceptar</option>
-                                            <option>Rechazar</option>
-                                            <option>Correcci&oacute;n</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="button" value="Modificar"/></td>
+                                    <td>13-06-07</td>
+                                    <td>13-08-09</td>
+                                    <td>Instancia no v&aacute;lida</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>    
                     <div id="enCorreccion">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display'  width='100%'>
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="enCorreccionDT" width='100%'>
                             <thead>
                                 <tr>
                                     <th>Periodo</th>
@@ -160,9 +167,7 @@
                                     <th>Nombre</th>
                                     <th>Documento</th>
                                     <th>Fecha Subida</th>
-                                    <th>Archivo</th>
-                                    <th>Acci&oacute;n</th>
-                                    <th>Establecer</th>
+                                    <th>Motivo</th>
 
                                 </tr>
                             </thead>
@@ -171,23 +176,38 @@
                                     <td>Ene-Feb</td>
                                     <td>09271024</td>
                                     <td>Hector Guzman Nava</td>
-                                    <td><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"/></a></td>
-                                    <td>13-06-07</td>
                                     <td>fui.pdf</td>
-                                    <td>
-                                        <select>
-                                            <option>Selecionar...</option>
-                                            <option>Aceptar</option>
-                                            <option>Rechazar</option>
-                                            <option>Correcci&oacute;n</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="button" value="Modificar"/></td>
+                                    <td>13-06-07</td>
+                                    <td>Faltas</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>    
                     <div id="aceptados">
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="aceptadosDT" width='100%'>
+                            <thead>
+                                <tr>
+                                    <th>Periodo</th>
+                                    <th>n. Control</th>
+                                    <th>Nombre</th>
+                                    <th>Documento</th>
+                                    <th>Fecha Subida</th>
+                                    <th>Fecha Aceptaci&oacute;n</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class='gradeX'>
+                                    <td>Ene-Feb</td>
+                                    <td>09271024</td>
+                                    <td>Hector Guzman Nava</td>
+                                    <td>fui.pdf</td>
+                                    <td>13-06-07</td>
+                                    <td>13-06-12</td>
+                                    
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>    
                 </div>
                 <div id="observaciones">
