@@ -23,6 +23,11 @@ public class FormatoUnicoController {
         
         return "/FormatoUnico/formatoUnicoUsuarioObservaciones";
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
+    public String formatoUnicoAdministrador(Model a) {
+        
+        return "/FormatoUnico/formatoUnicoAdministrador";
+    }
    
    
 }

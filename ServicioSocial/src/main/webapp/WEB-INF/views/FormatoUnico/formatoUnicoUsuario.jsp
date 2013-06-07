@@ -12,7 +12,8 @@
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/demos.css"/>
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.timepicker.css"/>
-        <!-- JSP -->
+        
+        <!-- Javascripts -->
         <script src="js/jqueryUI/jquery-1.9.1.js"></script>
         <script src="js/jqueryUI/jquery.ui.core.js"></script>
         <script src="js/jqueryUI/jquery.ui.widget.js"></script>
@@ -25,6 +26,9 @@
         </script>
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
         <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
+        
+        
+        
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
     <body>
