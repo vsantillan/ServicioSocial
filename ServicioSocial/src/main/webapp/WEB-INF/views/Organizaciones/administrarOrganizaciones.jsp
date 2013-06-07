@@ -26,7 +26,7 @@
                     'wmp', 'swf', 'flv']});</script> 
         <!--        Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
-        <script type="text/javascript" charset="utf-8">
+        <script type="text/javascript" >
             $(document).ready(function() {
                 $('#example').dataTable({
                     "bJQueryUI": true,

@@ -15,6 +15,28 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
+       
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#tabs").tabs();
+                $('#Rev').dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
+                    "sScrollX": "100%",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+                $('#NoRev').dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+
+            });
+        </script> 
         <title>Administrador</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
@@ -22,15 +44,12 @@
 
         <%-- inicio del contenido --%>
         <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;">
-                <h1>Demo Administrador</h1>
+           <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
+              <div style="float:left;">
+
                     
-                    
-                    
-                
-            </div>
-            <div style="clear:both;"></div>
+                <div style="clear:both;"></div>
+             </div>
         </div>
         <%-- fin del contenido --%>
         <jsp:include page="../Template/footer.jsp" />
