@@ -67,6 +67,23 @@
 
             });
         </script> 
+        <script language="javascript">
+
+            function contar() {
+
+            var checkboxes = form1.checkbox; //Array que contiene los checkbox
+            var cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
+
+            for (var x=0; x < checkboxes.length; x++) {
+            if (checkboxes[x].checked) {
+            cont = cont + 1;
+            }
+            }
+
+            alert ("El número de alumnos seleccionados es: " + cont);
+
+            }
+            </script>
         <title>Preselecci&oacute;n de Alumnos Becados</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');" >
@@ -77,6 +94,7 @@
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
+                <form:form id="form1">
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
@@ -99,18 +117,23 @@
                           <td><core:out value="${current.id}" /></td>
                           <td><core:out value="${current.name}" /></td>
                           <td><core:out value="${current.id}" /></td>
-                          <td><input type="checkbox" name="someData" value="1" id="id2"> </td> 
+                          <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                         </tr>
                       </core:forEach>
 
                     </tbody>  
                 </table>
                  <input type ="submit" value = "Generar lista " />                                 
-                 
-                <div style="clear:boot"/>
-            </div>
+                 <input type="button" name="Submit" value="Contar Alumnos Seleccionados" onClick="contar();">
+                 </form:form>
+               
          </div>
+            
+        </div>
+             
         <%-- fin del contenido --%>
          <%@ include file="footer.jsp" %>
-    </body>
+</body>
+
+
 </html>
