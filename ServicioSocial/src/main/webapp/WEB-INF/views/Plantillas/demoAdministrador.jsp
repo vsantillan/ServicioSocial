@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : demoAdministrador
     Created on : 07-jun-2013, 10:56:10
@@ -45,7 +46,7 @@
         <%-- inicio del contenido --%>
         <div id="contenido">
            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-              <div style="float:left;">
+              <div style="float:left; width: 80%">
 
                     
                 <div style="clear:both;"></div>

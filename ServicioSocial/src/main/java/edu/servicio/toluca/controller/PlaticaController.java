@@ -40,8 +40,5 @@ public class PlaticaController {
     public String seleccionarPlatica(Model a) {
         return "/Platicas/seleccionarPlatica";
     }
-          @RequestMapping(method = RequestMethod.GET, value = "/demoFormulario.do")
-    public String demoFormulario(Model a) {
-        return "/Plantillas/demoFormulario";
-    }
+      
 }
