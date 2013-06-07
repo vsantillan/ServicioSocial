@@ -91,5 +91,6 @@
         </div>
         <%-- fin del contenido --%>
          <jsp:include page="../Template/footer.jsp" />
+         <jsp:include page="../Plantillas/demoFormulario.jsp" />
     </body>
 </html>
