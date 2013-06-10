@@ -1,4 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib prefix="tags" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -49,188 +53,188 @@
                         <li><a href="#subirFui">Subir Formato &Uacute;nico</a></li>
                     </ul>
                     <div id="datosPersonales">
-                        <form id="frmDatosPersonales">
+                        <form:form id="frmDatosPersonales">
                             <table>
                                 <tr>
                                     <td>Nombre:</td>
-                                    <td><input type ="text" name ="nombre"> </td>
+                                    <td><form:input type ="text" path ="nombre" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Apellido Paterno</td>
-                                    <td><input type ="text" name ="apellidoP"> </td>
+                                    <td><form:input type ="text" path ="apellidoP" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Apellido Materno:</td>
-                                    <td><input type ="text" name ="apellidoM"> </td>
+                                    <td><form:input type ="text" path ="apellidoM" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Sexo</td>
                                     <td>
-                                        <select name="sexo">
-                                            <option value="">MASCULINO</option>
-                                            <option value="">FEMENINO</option>
-                                            <option value="">INDEFINIDO</option>
-                                        </select> 
+                                        <form:select path="sexo">
+                                            <form:option value="">MASCULINO</form:option>
+                                            <form:option value="">FEMENINO</form:option>
+                                            <form:option value="">INDEFINIDO</form:option>
+                                        </form:select> 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Estado civil:</td>
                                     <td>
-                                        <select name="estado_civil">
-                                            <option value="SOLTERO(A)">SOLTERO</option>
-                                            <option value="CASADO(A)">CASADO(A)</option>
-                                            <option value="VIUDO(A)">VIUDO(A)</option>
-                                            <option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-                                            <option value="AMASIATO">AMASIATO</option>
-                                            <option value="SEPARADO(A)">SEPARADO(A)</option>
-                                            <option value="CONCUBINATO">CONCUBINATO</option>
-                                            <option value="OTRO">OTRO</option>
-                                        </select> 
+                                        <form:select path="estado_civil">
+                                            <form:option value="SOLTERO(A)">SOLTERO</form:option>
+                                            <form:option value="CASADO(A)">CASADO(A)</form:option>
+                                            <form:option value="VIUDO(A)">VIUDO(A)</form:option>
+                                            <form:option value="DIVORCIADO(A)">DIVORCIADO(A)</form:option>
+                                            <form:option value="AMASIATO">AMASIATO</form:option>
+                                            <form:option value="SEPARADO(A)">SEPARADO(A)</form:option>
+                                            <form:option value="CONCUBINATO">CONCUBINATO</form:option>
+                                            <form:option value="OTRO">OTRO</form:option>
+                                        </form:select> 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Ocupaci&oacute;n:</td>
-                                    <td><input type ="text" name ="ocupacion"> </td>
+                                    <td><form:input type ="text" path ="ocupacion" /> </td>
                                 </tr>
                                 <tr>
                                     <td>CURP:</td>
-                                    <td><input type ="text" name ="curp"> </td>
+                                    <td><form:input type ="text"  path ="curp"/> </td>
                                 </tr>
                                 <tr>
                                     <td>Folio de Documento de Identificaci&oacute;n:</td>
-                                    <td><input type ="text" name ="folioDocIdentificacion"> </td>
+                                    <td><form:input type ="text" path ="folioDocIdentificacion" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Clave de Documento de Identificaci&oacute;n:</td>
-                                    <td><input type ="text" name ="claveDocIdentificacion"> </td>
+                                    <td><form:input type ="text" path ="claveDocIdentificacion" /> </td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type ="checkbox" name ="terminos" > He le&iacute;do y acepto el <a href="#">Acuerdo de Confidencialidad</a> </td>
+                                    <td><form:input type ="checkbox" path ="terminos"  /> He le&iacute;do y acepto el <a href="#">Acuerdo de Confidencialidad</a> </td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type ="submit" value="Guardar Datos Personales" > </td>
+                                    <td><form:input type ="submit" value="Guardar Datos Personales"  path="cmdDatosPersonales"/> </td>
                                 </tr>
                             </table>
-                        </form>
+                        </form:form>
                     </div>
                     <div id="datosContacto">
-                        <form id="frmDatosContacto">
+                        <form:form id="frmDatosContacto">
                             <table>
                                 <tr>
                                     <td>Calle:</td>
-                                    <td><input type ="text" name ="calle"> </td>
+                                    <td><form:input type ="text" path ="calle" /> </td>
                                 </tr>
                                 <tr>
                                     <td>No. Int.</td>
-                                    <td><input type ="text" name ="numero_i"> </td>
+                                    <td><form:input type ="text" path ="numero_i" /> </td>
                                 </tr>
                                 <tr>
                                     <td>No. Ext.</td>
-                                    <td><input type ="text" name ="numero_e"> </td>
+                                    <td><form:input type ="text" path ="numero_e" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Colonia:</td>
-                                    <td><input type ="text" name ="colonia"> </td>
+                                    <td><form:input type ="text" path ="colonia" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Localidad:</td>
-                                    <td><input type ="text" name ="localidad"> </td>
+                                    <td><form:input type ="text" path ="localidad" /> </td>
                                 </tr>
                                 <tr>
                                     <td>C&oacute;digo postal:</td>
-                                    <td><input type ="text" name ="cp"> </td>
+                                    <td><form:input type ="text"  path ="cp" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Entre Calles:</td>
-                                    <td><input type ="text" name ="entre_calles"> </td>
+                                    <td><form:input type ="text" path ="entre_calles" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Tel&eacute;fono casa:</td>
-                                    <td><input type ="text" name ="telefono_casa"> </td>
+                                    <td><form:input type ="text" path ="telefono_casa" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Tel&eacute;fono cel:</td>
-                                    <td><input type ="text" name ="telefono_cel"> </td>
+                                    <td><form:input type ="text" path ="telefono_cel" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Tel&eacute;fono oficina:</td>
-                                    <td><input type ="text" name ="telefono_oficina"> </td>
+                                    <td><form:input type ="text" path ="telefono_oficina" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Twitter:</td>
-                                    <td><input type ="text" name ="twitter"> </td>
+                                    <td><form:input type ="text" path ="twitter" /> </td>
                                 </tr>
                                 <tr>
                                     <td>Facebook:</td>
-                                    <td><input type ="text" name ="facebook"> </td>
+                                    <td><form:input type ="text" path ="facebook" /> </td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type ="submit" value="Guardar Datos de Contacto" > </td>
+                                    <td><form:input type ="submit" value="Guardar Datos de Contacto"  path="cmdDatosContacto"/> </td>
                                 </tr>
                             </table>
-                        </form>
+                        </form:form>
                     </div>
                     <div id="datosAcademicos">
-                        <form id="frmDatosAcademicos">
+                        <form:form id="frmDatosAcademicos">
                             <table class="tablaInput300">
                                 <tr> 
                                     <td>Numero de control</td>
-                                    <td><input type ="text" name ="ncontrol" readonly/></td>
+                                    <td><form:input type ="text" path ="ncontrol" /></td>
                                 </tr>
                                 <tr>
                                     <td>Carrera</td>
-                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                    <td><form:input type ="text" path ="carrera" /></td>
                                 </tr>
                                 <tr>
                                     <td>Periodo</td>
-                                    <td><input type ="text" name ="periodo" readonly/></td>
+                                    <td><form:input type ="text" path ="periodo" /></td>
                                 </tr>
                                 <tr>
                                     <td>Semestre</td>
-                                    <td><input type ="text" name ="semestre" readonly/></td>
+                                    <td><form:input type ="text" path ="semestre" /></td>
                                 </tr>
                                 <tr>
                                     <td>Total de cr&eacute;ditos cubiertos</td>
-                                    <td><input type ="text" name ="creditos" readonly/></td>
+                                    <td><form:input type ="text" path ="creditos" /></td>
                                 </tr>
                                 <tr>
                                     <td>Porcentaje del total de cr&eacute;ditos cubiertos</td>
-                                    <td><input type ="text" name ="porcentaje" readonly/></td>
+                                    <td><form:input type ="text" path ="porcentaje" /></td>
                                 </tr>
                             </table>
-                        </form>
+                        </form:form>
                     </div>
                     <div id="datosOrganizaciones">
-                        <form id="frmDatosOrganizaciones">
+                        <form:form id="frmDatosOrganizaciones">
                             <table>
                                 <tr>
                                     <td>Organizaci&oacute;n:</td>
                                     <td>
-                                        <select name="organizacion">
-                                            <option value="">ORG 1</option>
-                                            <option value="">ORG 2</option>
-                                            <option value="">ORG 3</option>
-                                        </select> 
+                                        <form:select path="organizacion">
+                                            <form:option value="">ORG 1</form:option>
+                                            <form:option value="">ORG 2</form:option>
+                                            <form:option value="">ORG 3</form:option>
+                                        </form:select> 
                                     </td>
                                     <td>
                                         Modalidad 
-                                        <select name="modalidad">
-                                            <option value="">Interno</option>
-                                            <option value="">Externo</option>
-                                        </select>
+                                        <form:select path="modalidad">
+                                            <form:option value="">Interno</form:option>
+                                            <form:option value="">Externo</form:option>
+                                        </form:select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Proyecto:</td>
                                     <td>
-                                        <select name="proyecto">
-                                            <option value="">Proy 1</option>
-                                            <option value="">Proy 2</option>
-                                            <option value="">Proy 3</option>
-                                        </select> 
+                                        <form:select path="proyecto">
+                                            <form:option value="">Proy 1</form:option>
+                                            <form:option value="">Proy 2</form:option>
+                                            <form:option value="">Proy 3</form:option>
+                                        </form:select> 
                                     </td>
                                 </tr>
                                 
@@ -238,42 +242,42 @@
                             <table class="tablaInput300">
                                 <tr>
                                     <td>Calle</td>
-                                    <td><input type ="text"/></td> 
-                                    <td colspan="2">N&uacute;mero exterior <input style="width:50px"  type ="text"/>
-                                    N&uacute;mero interior <input style="width:50px"  type ="text"/></td>
+                                    <td><form:input type ="text" name="calle" path="calle" /></td> 
+                                    <td colspan="2">N&uacute;mero exterior <form:input style="width:50px"  type ="text" name="numero_e" path="numero_e"/>
+                                    N&uacute;mero interior <form:input style="width:50px"  type ="text" name="numero_i" path="numero_i"/></td>
                                 </tr>
                                 <tr>
                                     <td>Colonia/Fracc</td>
-                                    <td><input type ="text"/></td> 
+                                    <td><form:input type ="text" name="colonia" path="colonia"/></td> 
                                     <td>Municipio</td>
-                                    <td><input type ="text"/></td> 
+                                    <td><form:input type ="text" name="munipio" path="munipio"/></td> 
                                 </tr>
                                 <tr>
                                     <td>Estado</td>
-                                    <td><input type ="text"/></td> 
+                                    <td><form:input type ="text" name="estado" path="estado"/></td> 
                                     <td>C.P.</td>
-                                    <td><input type ="text"/></td> 
+                                    <td><form:input type ="text" name="cp" path="cp"/></td> 
                                 </tr>
                                 <tr>
                                     <td>Titular</td>
-                                    <td><input type ="text"/></td> 
+                                    <td><form:input type ="text" name="titular" path="titular"/></td> 
                                     <td>Puesto</td>
-                                    <td><input type ="text"/></td> 
+                                    <td><form:input type ="text" name="puesto" path="puesto"/></td> 
                                 </tr>
                                 <tr>
                                     <td>Tel&eacute;fono del titular</td>
-                                    <td><input type ="text"/></td> 
+                                    <td><form:input type ="text" name="telefono_titular" path="telefono_titular"/></td> 
                                     
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type ="submit" value="Guardar Datos de Organizaci&oacute;n" > </td>
+                                    <td><form:input type ="submit" value="Guardar Datos de Organizaci&oacute;n" path="cmdDatosOrganizaciones"/> </td>
                                 </tr>
                             </table>
-                        </form>
+                        </form:form>
                     </div>
                     <div id="horarios">
-                        <form id="frmHorarios">
+                        <form:form id="frmHorarios">
                             <table>
                                 <tr>
                                     <th></th>
@@ -287,30 +291,30 @@
                                 </tr>
                                 <tr>
                                     <th>Horario Inicio:</th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[1]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[2]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[3]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[4]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[5]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[6]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[7]" value="" /></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[1]" value="" path="hlui" /></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[2]" value="" path="hmai" /></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[3]" value="" path="hmii"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[4]" value="" path="hjui"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[5]" value="" path="hvii"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[6]" value="" path="hsai"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[7]" value="" path="hdoi"/></th>
                                 </tr>
                                 <tr>
                                     <th>Horario Final</th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[8]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[9]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[10]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[11]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[12]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[13]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[14]" value="" /></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[8]" value="" path="hluf"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[9]" value="" path="hmaf"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[10]" value="" path="hmif"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[11]" value="" path="hjuf"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[12]" value="" path="hvif"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[13]" value="" path="hsabf"/></th>
+                                    <th><form:input type="text" style="width: 70px;" id="timepicker.[14]" value="" path="hdomf"/></th>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td colspan="7"><input type ="submit" value="Guardar Datos de Horario" ></td>
+                                    <td colspan="7"><form:input type ="submit" value="Guardar Datos de Horario"  path="cmdDatosHorarios"/></td>
                                 </tr>
                             </table>
-                        </form>
+                        </form:form>
                     </div>
                     <div id="imprimirFui">
                         <h1>Presiona el bot&oacute;n para descargar</h1>
@@ -318,10 +322,10 @@
                     </div>
                     <div id="subirFui">
                         <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
-                        <form id="frmSubirFui">
-                            <input type="file"  /> <br/>
-                            <input type="submit" value="Subir" />
-                        </form>
+                        <form:form id="frmSubirFui">
+                            <form:input type="file"  path="archivoFui"/> <br/>
+                            <form:input type="submit" value="Subir" path="cmdSubirFui"/>
+                        </form:form>
                     </div>
                 </div>
                 <div id="observaciones">
