@@ -14,18 +14,14 @@
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
         <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" />         
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-        <!--Estilos para tablas-->
-        <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css" />
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
         <!--        Scripts para tablas-->
-        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+        <jsp:include page="../Template/headsJQueryUI.jsp" />
+        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <script type="text/javascript" >
             $(document).ready(function() {
                 $('#example').dataTable({
