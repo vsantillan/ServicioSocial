@@ -30,7 +30,7 @@
             <h2>Cancelacion de Organizaci&oacute;n</h2>
             <div id="tabs">
                 <ul>
-                    <li><a href="#">Enviar Correo de Cancelado</a></li>
+                    <li><a href="#">Enviar Retroalimentaci&oacute;n</a></li>
                 </ul>
                 <div>
                     <form>
@@ -49,7 +49,7 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><input type ="submit" value="Enviar Correo" > </td>
+                                <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n" > </td>
                             </tr>
                         </table>
                     </form>

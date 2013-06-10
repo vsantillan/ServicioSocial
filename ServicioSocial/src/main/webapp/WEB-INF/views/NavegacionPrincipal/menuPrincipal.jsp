@@ -5,11 +5,11 @@
 --%>
 <%--Requiere de los siguientes archivos--->
 
-        <%-- Css --%>
+<%-- Css --%>
 
 <!--        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />-->
 
-        <%-- JavaScript --%>
+<%-- JavaScript --%>
 <!--    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
         <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
         <script type="text/javascript">
@@ -25,7 +25,7 @@
             })
 
         </script>-->
-       
+
 <div id="menu">
     <div class="jquerycssmenu">
         <div id="smoothmenu1" class="ddsmoothmenu" >
@@ -38,7 +38,7 @@
                         <li><a href="loginOrganizaciones.do">Login</a></li>
                         <li><a href="registroOrganizaciones.do">Registro</a></li>
                    </ul>
-                </li>                
+                </li>
                 <li><a href="ayuda.do">Ayuda</a>
                     <ul>
                         <li><a href="ayuda.do">Ayuda</a></li>
@@ -46,12 +46,7 @@
                         <li><a href="preguntasFrecuentes.do">Preguntas Frecuentes</a></li>
                    </ul>
                 </li>
-                <li><a href="panelUsuario.do">Perfil</a>
-                    <ul>
-                        <li><a href="panelUsuario.do">Panel Principal</a></li>
-                        <li><a href="cerrarSesion.do">Cerrar Sesi&oacute;n</a></li>
-                    </ul>
-                </li>
+                <li><a href="loginAlumnos.do">Login Alumnos</a></li>
                 
             </ul>
         </div>  

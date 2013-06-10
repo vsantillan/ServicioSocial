@@ -38,7 +38,7 @@
             });
         </script>   
 
-
+        <script src="js/jquery.manolo.js"></script>        
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
@@ -51,35 +51,41 @@
 
 
                 <p>A continuaci&oacute;n se muestran las organizaciones pendientes por validar.</p>
+                <div id="div-validar-organizacion" style="display:none;">
+                    <center>
+                        <img src="imagenes/paloma.png" width="100"/>
+                        <h2>Organizaci&oacute;n validada correctamente</h2>
+                    </center>
+                </div>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
+                            <th>Acci&oacute;n</th>
+                            <th>Detalle</th>
                             <th>Titular</th>
                             <th>RFC</th>
-                            <th>Tipo de Organizaci&oacute;n</th>
-                            <th>Detalle</th>
-                            <th>Acci&oacute;n</th>
-
+                            <th>Tipo de Organizaci&oacute;n</th>                        
                         </tr>
                     </thead>
                     <tbody>
                         <tr class='gradeX'>
+                            <th><a href="#" class="btn-validar-org"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                             <th>Hector Guzman Nava</th>
                             <th>139103RLR</th>
-                            <th>Cosas ilegales</th>
-                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                            <th>Cosas ilegales</th>            
                         </tr>
                         <tr class='gradeX'>
+                            <th><a href="#" class="btn-validar-org"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                             <th>Hector Guzman Nava</th>
                             <th>139103RLR</th>
                             <th>Cosas ilegales</th>
-                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                         </tr>
 
                     </tbody>
                 </table>
+
             </div>
             <div style="clear:both;"></div>
             <%-- fin del contenido --%>

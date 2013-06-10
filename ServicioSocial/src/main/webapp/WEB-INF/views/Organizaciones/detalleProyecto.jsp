@@ -16,7 +16,11 @@
                 </tr>
                 <tr>
                     <td><p>N&uacute;mero de vacantes:</p></td>
-                    <td><p>139103RLR</p></td>
+                    <td><p>1000</p></td>
+                </tr>
+                <tr>
+                    <td><p>N&uacute;mero de vacantes disponibles:</p></td>
+                    <td><p>122</p></td>
                 </tr>
                 <tr>
                     <td><p>Titular:</p></td>

@@ -23,7 +23,7 @@
         <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />
         <div id="contenido">
             <h1>Alta de Organizaci&oacute;n</h1>
-            <%-- Formulario Nueva Plática --%>
+            <%-- Formulario Nueva Organizacion --%>
             <form:form name="altaOrganizacion" id="MyForm" action="gdaAltaOrganizacion.do" method="POST">
                 <table>
                     <tr>
@@ -47,10 +47,6 @@
                         <td>  <input type="text" name="lugar" id="puesto" size="20" require="true"/> </td>  
                     </tr>
                     <tr>
-                        <td>  <label for="lugar">Correo:</label></td>
-                        <td>  <input type="text" name="lugar" id="puesto" size="20" require="true"/> </td>  
-                    </tr>
-                    <tr>
                         <td>  <label for="lugar">Tel&eacute;fono:</label></td>
                         <td>  <input type="text" name="lugar" id="puesto" size="20" require="true"/> </td>  
                     </tr>
@@ -69,6 +65,21 @@
                             </select>    
                         </td>  
                     </tr>
+                    <tr>
+                        <td colspan="2"><h3>Datos de contacto y de acceso:</h3></td>
+                    </tr>
+                    <tr>
+                        <td>  <label for="lugar">Correo:</label></td>
+                        <td>  <input type="text" name="lugar" id="puesto" size="20" require="true"/> </td>  
+                    </tr>
+                    <tr>
+                        <td>  <label for="lugar">Contrase&ntilde;a:</label></td>
+                        <td>  <input type="password" name="lugar" id="puesto" size="20" require="true"/> </td>  
+                    </tr>
+                    <tr>
+                        <td>  <label for="lugar">Confirmar Contrase&ntilde;a:</label></td>
+                        <td>  <input type="password" name="lugar" id="puesto" size="20" require="true"/> </td>  
+                    </tr>                        
                     <tr> 
                         <td> <input type ="submit" value = "Guardar " /> </td>
                         <td> <input type ="reset" value = "Limpiar" /></td>
@@ -76,7 +87,6 @@
 
                 </table>
             </form:form>
-
             <div style="clear:both;"></div>
         </div>
         <%-- fin del contenido --%>

@@ -48,37 +48,39 @@
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;width:80%">
                 <h1>Administrar Organizaciones</h1>
-                <p>A continuaci&oacute;n se muestran las organizaciones pendientes por validar.</p>
+                <p>A continuaci&oacute;n se muestran las organizaciones dadas de alta en el sistema.</p>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
+                            <th>Acci&oacute;n</th>
+                            <th>Detalle</th> 
+                            <th>Organizaci&oacute;n</th>
                             <th>Titular</th>
                             <th>RFC</th>
-                            <th>Tipo de Organizaci&oacute;n</th>
-                            <th>Detalle</th>
-                            <th>Acci&oacute;n</th>
-
+                            <th>Tipo de Organizaci&oacute;n</th>                                            
                         </tr>
                     </thead>
                     <tbody>
                         <tr class='gradeX'>
+                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="borrarOrganizacion.do" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
+                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th>Oxxo</th>
                             <th>Hector Guzman Nava</th>
                             <th>139103RLR</th>
                             <th>Cosas ilegales</th>
-                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="borrarOrganizacion.do" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
                         </tr>
                         <tr class='gradeX'>
+                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="borrarOrganizacion.do" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
+                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th>Primaria Diaz Ordaz</th>
                             <th>Hector Guzman Nava</th>
                             <th>139103RLR</th>
                             <th>Cosas ilegales</th>
-                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="borrarOrganizacion.do" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
                         </tr>
 
                     </tbody>
                 </table>
-
+                
                 <%-- fin del contenido --%>
             </div>
             <div style="clear: both;"/>
