@@ -22,11 +22,19 @@ public class ReporteBimestralController {
         
         return "/ReporteBimestral/reporteBimestralAdministrador";
     }
+     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model a)
     {
         
         return "/ReporteBimestral/formatoReporteBimestral";
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/retroalimentacionReportesBimestrales.do")
+    public String retroalimentacionBimestralUsuario(Model a)
+    {
+        
+        return "/ReporteBimestral/retroalimentacionReportesBimestrales";
     }
     
 }

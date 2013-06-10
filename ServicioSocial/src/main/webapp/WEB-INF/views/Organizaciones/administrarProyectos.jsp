@@ -22,7 +22,7 @@
                     'wmp', 'swf', 'flv']});</script> 
 
         <!--        Scripts para tablas-->
-         <jsp:include page="../Template/headsJQueryUI.jsp" />
+        <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <script type="text/javascript" >
             $(document).ready(function() {

@@ -20,10 +20,9 @@
         <script>
             $(function() {
                 $("#tabs").tabs();
-                $('#timepicker').timepicker();
             });
         </script>
-        <title>Home Usuario</title>
+        <title>Cancelaci&oacute;n de Organizaci&oacute;n </title>
     </head>
     <body>
         <div id="contenido">
@@ -37,11 +36,11 @@
                         <table>
                             <tr>
                                 <td>Nombre de la Organizaci&oacute;n:</td>
-                                <td><input type ="text" name ="nombre"  disabled=" disabled"> </td>
+                                <td><input type ="text" name ="nombre"  disabled="disabled"> </td>
                             </tr>
                             <tr>
                                 <td>E-Mail:</td>
-                                <td><input type ="text" name ="email"  disabled=" disabled"> </td>
+                                <td><input type ="text" name ="email"  disabled="disabled"> </td>
                             </tr>
                             <tr>
                                 <td>Descripci&oacute;n:</td>
