@@ -1,4 +1,10 @@
 <%-- 
+    Document   : listaAlumnosSeleccionados
+    Created on : 7/06/2013, 02:29:54 PM
+    Author     : Jonny
+--%>
+
+<%-- 
     Document   : altaPlatica
     Created on : 3/06/2013, 01:01:28 PM
     Author     : Jonny
@@ -124,7 +130,9 @@
                     </tbody>  
                 </table>
                  <input type ="submit" value = "Enviar Correo " />                                 
-                 <input type="button" name="Submit" value="Contar Alumnos Seleccionados" onClick="contar();">
+                 <input type="button" name="Submit" value="Generar Exel" >
+                 <input type="button" name="Submit" value="Eliminar" >
+                  <input type="button" name="Submit" value="Agregar Alumno" >
                  </form:form>            
             </div>
             <div style="clear:both;"></div>
