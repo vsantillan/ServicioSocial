@@ -48,7 +48,7 @@
                     <th>1</th>
                     <th>23 Jun 2105</th>
                     <th>100</th>
-                    <th>Labando ba&ntilde;os</th>
+                    <th>Lavando ba&ntilde;os</th>
                 </tr>
             </tbody>
         </table>

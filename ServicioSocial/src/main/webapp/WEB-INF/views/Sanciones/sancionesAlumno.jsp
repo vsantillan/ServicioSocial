@@ -72,15 +72,6 @@
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
-<<<<<<< HEAD
-                           <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
-                                        <th>&nbsp;Nombre&nbsp;</th>
-                                        <th>&nbsp;Carrera&nbsp;</th>
-                                        <th>&nbsp;Promedio&nbsp;</th>
-                                        <th>&nbsp;Tipo Servicio&nbsp;</th>
-                                        <th>&nbsp;Sexo&nbsp;</th>
-                                        <th>&nbsp;</th>
-=======
                             <th>Periodo</th>
                             <th>No control</th>
                             <th>Nombre</th>
@@ -90,7 +81,6 @@
                             <th>Lugar</th>
                             <th>Acci&oacute;n</th>
                             <th>Detalle</th>
->>>>>>> Módulo Sanciones (Segunda Parte)
                         </tr>
                     </thead>
                     <tbody>

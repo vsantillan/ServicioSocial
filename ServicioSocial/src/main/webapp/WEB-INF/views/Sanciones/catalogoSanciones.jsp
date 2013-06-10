@@ -70,7 +70,7 @@
             <div style="float:left;width:80%">
                 <h1>Cat&aacute;logo de Sanciones</h1>
                 <p>A continuaci&oacute;n se muestran las sanciones.</p>
-                <h2 style="position: absolute; margin-left:50%; margin-top:-5%;"><a href="ingresaSancion.do">Nueva Sanci&oacute;n</a></h2>
+                <h2 style="position: absolute; margin-left:40%; margin-top:-5%;"><a href="ingresaSancion.do">Nueva Sanci&oacute;n</a></h2>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
