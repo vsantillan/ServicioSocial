@@ -21,7 +21,7 @@
 <!--<div id="smoothmenu1" class="ddsmoothmenu"></div>-->
 <div id="smoothmenu2" class="ddsmoothmenu-v">
     <ul>
-        <li><a href="#">Platicas</a>
+        <li><a href="#">Pláticas</a>
             <ul>
                 <li><a href="altaPlatica.do">1.1 Altas</a></li>
                 <li><a href="consultasBajas.do">1.2 Bajas | Consultas</a></li>
@@ -94,7 +94,7 @@
                 <li><a href="#">14.2 Acerca De</a></li>
             </ul>
         </li>
-        <li><a href="#">Cerras Sesi&oacute;n</a></li>
+        <li><a href="#">Cerrar Sesi&oacute;n</a></li>
     </ul>
     <br style="clear: left" />
 </div>
