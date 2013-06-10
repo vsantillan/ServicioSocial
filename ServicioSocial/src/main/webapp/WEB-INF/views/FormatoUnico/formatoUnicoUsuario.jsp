@@ -76,7 +76,7 @@
                                 <tr>
                                     <td>Estado civil:</td>
                                     <td>
-                                        <select name="sexo">
+                                        <select name="estado_civil">
                                             <option value="SOLTERO(A)">SOLTERO</option>
                                             <option value="CASADO(A)">CASADO(A)</option>
                                             <option value="VIUDO(A)">VIUDO(A)</option>
@@ -186,19 +186,19 @@
                                 </tr>
                                 <tr>
                                     <td>Periodo</td>
-                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                    <td><input type ="text" name ="periodo" readonly/></td>
                                 </tr>
                                 <tr>
                                     <td>Semestre</td>
-                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                    <td><input type ="text" name ="semestre" readonly/></td>
                                 </tr>
                                 <tr>
                                     <td>Total de cr&eacute;ditos cubiertos</td>
-                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                    <td><input type ="text" name ="creditos" readonly/></td>
                                 </tr>
                                 <tr>
                                     <td>Porcentaje del total de cr&eacute;ditos cubiertos</td>
-                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                    <td><input type ="text" name ="porcentaje" readonly/></td>
                                 </tr>
                             </table>
                         </form>
