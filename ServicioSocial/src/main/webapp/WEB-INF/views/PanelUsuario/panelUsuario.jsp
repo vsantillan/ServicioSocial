@@ -45,6 +45,7 @@
             <jsp:include page="menuPanelUsuario.jsp" />
 
         <div id="contenido">
+            <h1>Panel de Usuario</h1>
             <table class="general">
                 <tr>
                     <td class="filas"><a id="b" href="seleccionarPlatica.do">PLATICA</a></td>
