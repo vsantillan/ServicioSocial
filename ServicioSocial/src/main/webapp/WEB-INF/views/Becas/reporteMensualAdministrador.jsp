@@ -1,7 +1,7 @@
 <%-- 
-    Document   : reporteBimestralAdministrador
+    Document   : reporteMensualAdministrador
     Created on : 5/06/2013, 02:15:04 PM
-    Author     : roy
+    Author     : Jonny
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

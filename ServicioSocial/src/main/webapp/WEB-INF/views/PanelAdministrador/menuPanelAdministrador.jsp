@@ -34,7 +34,7 @@
         <li><a href="#">Becados</a>
             <ul>
                 <li><a href="administracionAlumnosBecados.do">4.1 Alumnos Becados</a></li>
-                <li><a href="reporteMensualAdministrador">4.2 Formato Mensual</a>
+                <li><a href="reporteMensualAdministrador.do">4.2 Formato Mensual</a>
             </ul>
         </li>
         <li><a href="#">Documentos Finales</a>
