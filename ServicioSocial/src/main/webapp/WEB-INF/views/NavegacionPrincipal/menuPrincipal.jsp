@@ -46,7 +46,7 @@
                         <li><a href="preguntasFrecuentes.do">Preguntas Frecuentes</a></li>
                    </ul>
                 </li>
-                <li><a href="loginAlumnos.do">Login Alumnos</a></li>
+                <li><a href="loginAlumnos.do">Login</a></li>
                 
             </ul>
         </div>  
