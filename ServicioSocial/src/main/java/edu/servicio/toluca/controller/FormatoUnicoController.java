@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package edu.servicio.toluca.controller;
+import edu.servicio.toluca.beans.FormatoUnicoBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
-    public String formatoUnico(Model a) {
+    public String formatoUnico(FormatoUnicoBean formato,Model a) {
         
         return "/FormatoUnico/formatoUnicoUsuario";
     }
