@@ -28,35 +28,30 @@
     </head>
     <body>
         <div style="padding-left: 10px; padding-right: 10px ">
-    
-        <h1>Sanciones</h1>
-        <p>A continuaci&oacute;n se muestran los reportes de horas pagadas de sanci&oacute;n.</p>
-        <br />
-        <p><b>Nombre: </b>Hector Guzm&aacute;n Nava</p>
-        <p><b>No. Control: </b>09280000</p>
-        <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
-            <thead>
-                <tr>
-                    <th>No. Reporte</th>
-                    <th>Fecha</th>
-                    <th>Horas</th>
-                    <th>Descripci&oacute;n</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class='gradeX'>
-                    <th>1</th>
-                    <th>23 Jun 2105</th>
-                    <th>100</th>
-                    <th>Labando ba&ntilde;os</th>
-                </tr>
-            </tbody>
-        </table>
 
-        <%-- fin del contenido --%>
-    
+            <h1>Sanciones</h1>
+            <p>A continuaci&oacute;n se muestran los reportes de horas pagadas de sanci&oacute;n.</p>
+            <br />
+            <p><b>Nombre: </b>Hector Guzm&aacute;n Nava</p>
+            <p><b>No. Control: </b>09280000</p>
+            <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
+                <thead>
+                    <tr>
+                        <th>No. Reporte</th>
+                        <th>Fecha</th>
+                        <th>Horas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class='gradeX'>
+                        <th>1</th>
+                        <th>23 Jun 2105</th>
+                        <th>100</th>
+                    </tr>
+                </tbody>
+            </table>
 
-</div>
-
+            <%-- fin del contenido --%>
+        </div>
     </body>
 </html>

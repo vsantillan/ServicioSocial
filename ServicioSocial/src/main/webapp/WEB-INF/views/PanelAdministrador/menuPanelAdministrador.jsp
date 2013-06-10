@@ -44,8 +44,8 @@
         </li>
         <li><a href="#">Sanciones</a>
             <ul>
-                <li><a href="#">6.1 Administrar Sanciones</a></li>
-                <li><a href="#">6.2 Cat&aacute;logo de Sanciones</a></li>
+                <li><a href="sancionesAlumno.do">6.1 Administrar Sanciones</a></li>
+                <li><a href="catalogoSanciones.do">6.2 Cat&aacute;logo de Sanciones</a></li>
             </ul>
         </li>
         <li><a href="#">Bajas Temporales</a>

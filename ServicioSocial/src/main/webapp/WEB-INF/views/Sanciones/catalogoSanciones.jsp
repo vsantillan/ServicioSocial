@@ -1,6 +1,6 @@
 <%-- 
-    Document   : sancionesAlumno
-    Created on : 10/06/2013, 09:27:13 AM
+    Document   : catalogoSanciones
+    Created on : 10/06/2013, 11:36:57 AM
     Author     : ekt
 --%>
 <%@page import="java.util.Map"%>
@@ -12,16 +12,17 @@
 <%
   // Create an ArrayList with test data
   ArrayList list = new ArrayList();
-  Map sancionAlumno1 = new HashMap();
-  sancionAlumno1.put("periodo", "Ago-Dic 2014");
-  sancionAlumno1.put("noControl", "09280525");
-  sancionAlumno1.put("nombre", "Hector Guzman Nava");
-  sancionAlumno1.put("status", "Liberado");
-  sancionAlumno1.put("horasSancion", new Integer(360));
-  sancionAlumno1.put("horasRestantes", new Integer(360));
-  sancionAlumno1.put("lugar", "Biblioteca");
-  list.add(sancionAlumno1);
-  pageContext.setAttribute("sancionAlumno", list);
+  Map sancion1 = new HashMap();
+  sancion1.put("noSancion", "1");
+  sancion1.put("descripcion", "No llenaste correctamente tu nombre");
+  sancion1.put("horas", new Integer(20));
+  list.add(sancion1);
+  Map sancion2 = new HashMap();
+  sancion2.put("noSancion", "2");
+  sancion2.put("descripcion", "Parpadeaste 5 veces cuando contestabas tu formato unico");
+  sancion2.put("horas", new Integer(10));
+  list.add(sancion2);
+  pageContext.setAttribute("sanciones", list);
 %>
 
 <!DOCTYPE html>
@@ -67,44 +68,25 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;width:80%">
-                <h1>Sanciones</h1>
-                <p>A continuaci&oacute;n se muestran los alumnos con sanciones, de click en "Detalles" para ver sus reportes o click en "Pagar" para agregar reportes de pago de servicio.</p>
+                <h1>Cat&aacute;logo de Sanciones</h1>
+                <p>A continuaci&oacute;n se muestran las sanciones.</p>
+                <h2 style="position: absolute; margin-left:50%; margin-top:-5%;"><a href="ingresaSancion.do">Nueva Sanci&oacute;n</a></h2>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
-<<<<<<< HEAD
-                           <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
-                                        <th>&nbsp;Nombre&nbsp;</th>
-                                        <th>&nbsp;Carrera&nbsp;</th>
-                                        <th>&nbsp;Promedio&nbsp;</th>
-                                        <th>&nbsp;Tipo Servicio&nbsp;</th>
-                                        <th>&nbsp;Sexo&nbsp;</th>
-                                        <th>&nbsp;</th>
-=======
-                            <th>Periodo</th>
-                            <th>No control</th>
-                            <th>Nombre</th>
-                            <th>Estado</th>
-                            <th>Horas de sanci&oacute;n</th>
-                            <th>Horas restantes</th>
-                            <th>Lugar</th>
-                            <th>Acci&oacute;n</th>
-                            <th>Detalle</th>
->>>>>>> Módulo Sanciones (Segunda Parte)
+                            <th>No. Sanci&oacute;n</th>
+                            <th>Descripci&oacute;n</th>
+                            <th>Horas</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <core:forEach items="${sancionAlumno}" var="current">
+                        <core:forEach items="${sanciones}" var="current">
                         <tr class='gradeX'>
-                            <th><core:out value="${current.periodo}" /></th>
-                            <th><core:out value="${current.noControl}" /></th>
-                            <th><core:out value="${current.nombre}" /></th>
-                            <th><core:out value="${current.status}" /></th>
-                            <th><core:out value="${current.horasSancion}" /></th>
-                            <th><core:out value="${current.horasRestantes}" /></th>
-                            <th><core:out value="${current.lugar}" /></th>
-                            <th><a href="pagoSancionAlumno.do" rel="shadowbox">Pagar</a></th>
-                            <th><a href="detalleSancionAlumno.do" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><core:out value="${current.noSancion}" /></th>
+                            <th><core:out value="${current.descripcion}" /></th>
+                            <th><core:out value="${current.horas}" /></th>
+                            <th><a href="editaSancion.do" rel="shadowbox">Editar Valores</a></th>
                         </tr>
                       </core:forEach>
                     </tbody>
@@ -120,6 +102,4 @@
     </div>
 
 </body>
-
-
 </html>

@@ -40,7 +40,8 @@ color: white;
 }
 
 .ddsmoothmenu ul li a.selected { /*CSS class that's dynamically added to the currently active menu items' LI A element*/
-background: black !important; 
+/*background: black !important;*/ 
+background: #F1A044;
 color: white;
 }
 
