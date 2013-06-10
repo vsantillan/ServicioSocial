@@ -29,24 +29,8 @@
                 <li><a href="asistenciaPosteriorEspecial.do">1.4 Alta Posterior</a></li>
             </ul>
         </li>
-        <li><a href="#">Formato &Uacute;nico</a>
-            <ul>
-                <li><a href="#">2.1 Revisados</a></li>
-                <li><a href="#">2.2 No revisados</a></li>
-                <li><a href="#">2.3 En correcci&oacute;n</a></li>
-                <li><a href="#">2.4 Rechazados</a></li>
-                <li><a href="#">2.5 Alta Posterior</a></li>
-            </ul>
-        </li>
-        <li><a href="reporteBimestralAdministrador.do">Formato Bimestral</a>
-            <ul>
-                <li><a href="#">3.1 Revisados</a></li>
-                <li><a href="#">3.2 No revisados</a></li>
-                <li><a href="#">3.3 En correcci&oacute;n</a></li>
-                <li><a href="#">3.4 Rechazados</a></li>
-                <li><a href="#">3.5 Alta Posterior</a></li>
-            </ul>
-        </li>
+        <li><a href="#">Formato &Uacute;nico</a></li>
+        <li><a href="reporteBimestralAdministrador.do">Formato Bimestral</a></li>
         <li><a href="#">Becados</a>
             <ul>
                 <li><a href="#">4.1 Alta</a></li>
