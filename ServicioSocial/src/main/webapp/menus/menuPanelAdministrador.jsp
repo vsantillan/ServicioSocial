@@ -59,17 +59,8 @@
                 </li>
                 <li><a href="#">Becados</a>
                     <ul>
-                        <li><a href="#">4.1 Alta</a></li>
-                        <li><a href="#">4.2 Bajas | Consultas</a></li>
-                        <li><a href="#">4.3 Formato Mensual</a>
-                            <ul>
-                                <li><a href="#">4.3.1 Revisados</a></li>
-                                <li><a href="#">4.3.2 No revisados</a></li>
-                                <li><a href="#">4.3.3 En correcci&oacute;n</a></li>
-                                <li><a href="#">4.3.4 Rechazados</a></li>
-                                <li><a href="#">4.3.5 Alta Posterior</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="administracionAlumnosBecados.do">4.1 Alumnos Becados</a></li>
+                        <li><a href="#">4.2 Formato Mensual</a>
                     </ul>
                 </li>
                 <li><a href="#">Documentos Finales</a>

@@ -103,79 +103,72 @@
                             <table cellpadding='0' cellspacing='0' border='0' class='display' id="Rev" width='100%'>
                                 <thead>
                                     <tr>
-                                        <th>Periodo</th>
-                                        <th>N. Control</th>
-                                        <th>Nombre</th>
-                                        <th>Estado</th>
-                                        <th>Horas Acumuladas</th>
-                                        <th>Acci&oacute;n</th>
+                                        <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
+                                        <th>&nbsp;Nombre&nbsp;</th>
+                                        <th>&nbsp;Carrera&nbsp;</th>
+                                        <th>&nbsp;Promedio&nbsp;</th>
+                                        <th>&nbsp;Tipo Servicio&nbsp;</th>
+                                        <th>&nbsp;Sexo&nbsp;</th>
+                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <core:forEach items="${authors}" var="current">
                                     <tr class='gradeX'>
-                                        <th>Ago-Dic 2014</th>
-                                        <th>09280536</th>
-                                        <th>José Antonio Villanueva Gonzalez</th>
-                                        <th>En proceso</th>
-                                        <th>360</th>
-                                        <th><a href="algunlado.do" rel="shadowbox;"><img src="imagenes/lupa.png"/></a></th>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
-                                    <tr class='gradeC'>
-                                        <th>Ago-Dic 2014</th>
-                                        <th>09280545</th>
-                                        <th>Alberto Martinez Behumea</th>
-                                        <th>En proceso</th>
-                                        <th>360</th>
-                                        <th><a href="algunLado" rel="shadowbox"><img src="imagenes/lupa.png"/></a></th>
-                                    </tr>
+                                  </core:forEach>
                                 </tbody>
                             </table>
                             <table>
                                   <tr>
-                                    <td><a href="preseleccionAlumnos.do" rel="shadowbox">Agregar</td>
-                                    <td><a href="#" >Eliminar</td>
-                                    <td><a href="#" >Enviar Correo</td>
-                                    <td><a href="#" >Imprimir</td>
-                                    <td><a href="#" >Aceptar Alumno</td>
-                                     <td><a href="#">Generar Excel</td>
+                                    <td><a href="preseleccionAlumnos.do" rel="shadowbox"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></td>
+                                    <td><a href="#" ><img src="imagenes/tache.png" title="Eliminar" width="29"/></td>
+                                    <td><a href="#" ><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
+                                    <td><a href="#" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></td>
+                                    <td><a href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></td>
+                                     <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
                                </tr>
                             </table>
                         </div>
                         <div id="aceptados">
                             <table cellpadding='0' cellspacing='0' border='0' class='display' id="NoRev" width='100%'>
-                                <thead>
+                                 <thead>
                                     <tr>
-                                        <th>Periodo</th>
-                                        <th>N. Control</th>
-                                        <th>Nombre</th>
-                                        <th>Fecha Subida</th>
-                                        <th>Archivo</th>
-                                        <th>Acci&oacute;n</th>
+                                        <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
+                                        <th>&nbsp;Nombre&nbsp;</th>
+                                        <th>&nbsp;Carrera&nbsp;</th>
+                                        <th>&nbsp;Promedio&nbsp;</th>
+                                        <th>&nbsp;Tipo Servicio&nbsp;</th>
+                                        <th>&nbsp;Sexo&nbsp;</th>
+                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <core:forEach items="${authors}" var="current">
                                     <tr class='gradeX'>
-                                        <th>Ago-Dic 2014</th>
-                                        <th>09280539</th>
-                                        <th>Marco Antonio Cuellar</th>
-                                        <th>14 Abril 2014</th>
-                                        <th>Rerpote1.docx</th>
-                                        <th><a href="#" ><img class="imagenes" src="imagenes/paloma.png"/><img class="imagenes" src="imagenes/tache.png"/></a></th>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
-                                    <tr class='gradeC'>
-                                        <th>Ago-Dic 2014</th>
-                                        <th>09275643</th>
-                                        <th>Jose Luis Albarran Martinez</th>
-                                        <th>10 Abril 2014</th>
-                                        <th>Rerporte348.docx</th>
-                                        <th><a href="#"><img class="imagenes" src="imagenes/paloma.png"/><img class="imagenes" src="imagenes/tache.png"/></a></th>
-                                    </tr>
+                                  </core:forEach>
                                 </tbody>
                             </table>
                              <table>
                                   <tr>
-                                    <td><a href="enviarCorreo.do" rel="shadowbox">Enviar Correo</td>
-                                    <td><a href="#" rel="shadowbox">Imprimir</td>
+                                    <td><a href="#" ><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
+                                    <td><a href="#" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></td>
+                                     <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
                                </tr>
                             </table>
                         </div>       

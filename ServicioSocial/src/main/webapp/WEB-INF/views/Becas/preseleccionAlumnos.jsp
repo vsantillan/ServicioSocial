@@ -32,13 +32,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!--Scripts para tablas-->
-        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
-
-        <script type="text/javascript">
+        <head>
+        <jsp:include page="../Template/headsJQueryUI.jsp" />
+        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        <script type="text/javascript" >
             $(document).ready(function() {
-                $("#tabs").tabs();
-                $('#Rev').dataTable({
+                $('#example').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
                     "sScrollX": "100%",
@@ -46,16 +45,9 @@
                     "bScrollCollapse": true
 
                 });
-                $('#NoRev').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
 
             });
-        </script> 
+        </script>
         <script language="javascript">
 
             function contar() {
@@ -81,7 +73,7 @@
         <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
                <form:form id="form1">
                    <div >
-                            <table cellpadding='0' cellspacing='0' border='0' class='display' id="Rev" width='100%'>
+                            <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                                 <thead>
                                     <tr>
                                         <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
@@ -107,7 +99,7 @@
                                   </core:forEach>
                                 </tbody>
                             </table>
-                 <input type ="submit" value = "Aceptar " />                                 
+                 <input type ="button" value = "Aceptar " />                                 
                  <input type="button" name="Submit" value="Contar Alumnos Seleccionados" onClick="contar();">
                  </form:form>            
             </div>

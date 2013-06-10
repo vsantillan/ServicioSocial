@@ -28,5 +28,10 @@ public class BecasController
         return "/Becas/administracionAlumnosBecados";
     }
     
-    
+    @RequestMapping(method = RequestMethod.GET, value = "/reporteMensualAdministrador.do")
+    public String reporteMensualAdministrador(Model a)
+    {
+        
+        return "/Becas/reporteMensualAdministrador";
+    }
 }
