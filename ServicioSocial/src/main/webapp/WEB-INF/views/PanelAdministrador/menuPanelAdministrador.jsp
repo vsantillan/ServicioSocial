@@ -29,7 +29,7 @@
                 <li><a href="asistenciaPosteriorEspecial.do">1.4 Alta Posterior</a></li>
             </ul>
         </li>
-        <li><a href="#">Formato &Uacute;nico</a></li>
+        <li><a href="formatoUnicoAdministrador.do">Formato &Uacute;nico</a></li>
         <li><a href="reporteBimestralAdministrador.do">Formato Bimestral</a></li>
         <li><a href="#">Becados</a>
             <ul>
