@@ -21,6 +21,12 @@ public class BecasController
         return "/Becas/preseleccionAlumnos";
     }
     
+    @RequestMapping(method = RequestMethod.GET, value = "/administracionAlumnosBecados.do")
+    public String administracionAlumnosBecados(Model a)
+    {
+        
+        return "/Becas/administracionAlumnosBecados";
+    }
     
     
 }

@@ -3,6 +3,7 @@
     Created on : 3/06/2013, 01:01:28 PM
     Author     : Jonny
 --%>
+
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -31,35 +32,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-               <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
-        <!--CSS-->
-        <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
-        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" />         
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-
-        <!--Estilos para tablas-->
-        <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.4.custom.css" />
-
-
-
-
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-
-       
-        <!--        Scripts para tablas-->
+        <!--Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
-        <script type="text/javascript" >
+
+        <script type="text/javascript">
             $(document).ready(function() {
-                $('#example').dataTable({
+                $("#tabs").tabs();
+                $('#Rev').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
                     "sScrollX": "100%",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+                $('#NoRev').dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
 
@@ -84,53 +73,44 @@
 
             }
             </script>
-        <title>Preselecci&oacute;n de Alumnos Becados</title>
+
+
+           <title>Preselecci&oacute;n de Alumnos Becados</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
-        <jsp:include page="../Template/banner.jsp" />
-
-        <%-- inicio del contenido --%>
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;">
-               <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
+    <body>
+        <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
                <form:form id="form1">
-                <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
-                    <thead>
-                        <tr>
-                            <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
-                            <th>&nbsp;Nombre&nbsp;</th>
-                            <th>&nbsp;Carrera&nbsp;</th>
-                            <th>&nbsp;Promedio&nbsp;</th>
-                            <th>&nbsp;Tipo Servicio&nbsp;</th>
-                            <th>&nbsp;Sexo&nbsp;</th>
-                            <th>&nbsp;</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <core:forEach items="${authors}" var="current">
-                        <tr class='gradeX'>
-                          <td><core:out value="${current.name}" /></td>
-                          <td><core:out value="${current.id}" /></td>
-                          <td><core:out value="${current.name}" /></td>
-                          <td><core:out value="${current.id}" /></td>
-                          <td><core:out value="${current.name}" /></td>
-                          <td><core:out value="${current.id}" /></td>
-                          <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
-                        </tr>
-                      </core:forEach>
-
-                    </tbody>  
-                </table>
-                 <input type ="submit" value = "Enviar Correo " />                                 
+                   <div >
+                            <table cellpadding='0' cellspacing='0' border='0' class='display' id="Rev" width='100%'>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
+                                        <th>&nbsp;Nombre&nbsp;</th>
+                                        <th>&nbsp;Carrera&nbsp;</th>
+                                        <th>&nbsp;Promedio&nbsp;</th>
+                                        <th>&nbsp;Tipo Servicio&nbsp;</th>
+                                        <th>&nbsp;Sexo&nbsp;</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <core:forEach items="${authors}" var="current">
+                                    <tr class='gradeX'>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.id}" /></td>
+                                      <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
+                                    </tr>
+                                  </core:forEach>
+                                </tbody>
+                            </table>
+                 <input type ="submit" value = "Aceptar " />                                 
                  <input type="button" name="Submit" value="Contar Alumnos Seleccionados" onClick="contar();">
                  </form:form>            
             </div>
             <div style="clear:both;"></div>
-        </div>
-        <%-- fin del contenido --%>
-        <jsp:include page="../Template/footer.jsp" />
     </body>
 </html>
-
