@@ -49,7 +49,7 @@
                         <li><a href="#subirFui">Subir Formato &Uacute;nico</a></li>
                     </ul>
                     <div id="datosPersonales">
-                        <form>
+                        <form id="frmDatosPersonales">
                             <table>
                                 <tr>
                                     <td>Nombre:</td>
@@ -116,7 +116,7 @@
                         </form>
                     </div>
                     <div id="datosContacto">
-                        <form>
+                        <form id="frmDatosContacto">
                             <table>
                                 <tr>
                                     <td>Calle:</td>
@@ -174,7 +174,7 @@
                         </form>
                     </div>
                     <div id="datosAcademicos">
-                        <form>
+                        <form id="frmDatosAcademicos">
                             <table class="tablaInput300">
                                 <tr> 
                                     <td>Numero de control</td>
@@ -204,7 +204,7 @@
                         </form>
                     </div>
                     <div id="datosOrganizaciones">
-                        <form>
+                        <form id="frmDatosOrganizaciones">
                             <table>
                                 <tr>
                                     <td>Organizaci&oacute;n:</td>
@@ -273,7 +273,7 @@
                         </form>
                     </div>
                     <div id="horarios">
-                        <form>
+                        <form id="frmHorarios">
                             <table>
                                 <tr>
                                     <th></th>
@@ -307,7 +307,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td colspan="8"><input type ="submit" value="Guardar Datos de Horario" ></td>
+                                    <td colspan="7"><input type ="submit" value="Guardar Datos de Horario" ></td>
                                 </tr>
                             </table>
                         </form>
@@ -318,7 +318,7 @@
                     </div>
                     <div id="subirFui">
                         <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
-                        <form>
+                        <form id="frmSubirFui">
                             <input type="file"  /> <br/>
                             <input type="submit" value="Subir" />
                         </form>
