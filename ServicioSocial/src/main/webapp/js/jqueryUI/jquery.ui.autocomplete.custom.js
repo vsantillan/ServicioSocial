@@ -43,7 +43,7 @@
                     wasOpen = false;
             $("<a>")
                     .attr("tabIndex", -1)
-                    .attr("title", "Show All Items")
+                    .attr("title", "Mostrar todos los resultados")
                     .tooltip()
                     .appendTo(this.wrapper)
                     .button({
@@ -101,7 +101,7 @@
 // Remove invalid value
             this.input
                     .val("")
-                    .attr("title", value + " didn't match any item")
+                    .attr("title", value + " No se encontró ningún resultado")
                     .tooltip("open");
             this.element.val("");
             this._delay(function() {
@@ -116,9 +116,9 @@
     });
 })(jQuery);
 $(function() {
-    $("#combobox").combobox();
+    $(".combobox-autocomplete").combobox();
     $("#toggle").click(function() {
-        $("#combobox").toggle();
+        $(".combobox-autocomplete").toggle();
     });
 });
 

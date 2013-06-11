@@ -16,8 +16,13 @@
         <%@ include file="../Template/headsMenuUsuario.jsp" %>
         <%@ include file="../Template/metas.jsp" %>
 
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link rel="stylesheet" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
+        <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
                 $(".MyForm").formly();
             })
         </script>
@@ -39,30 +44,12 @@
                             <td> <label for="nombre-organizacion">Organizaci&oacute;n:</label> </td>
                             <td> 
                                 <div class="ui-widget">
-                                    <select id="combobox">
-                                        <option value="">Select one...</option>
-                                        <option value="ActionScript">ActionScript</option>
-                                        <option value="AppleScript">AppleScript</option>
-                                        <option value="Asp">Asp</option>
-                                        <option value="BASIC">BASIC</option>
-                                        <option value="C">C</option>
-                                        <option value="C++">C++</option>
-                                        <option value="Clojure">Clojure</option>
-                                        <option value="COBOL">COBOL</option>
-                                        <option value="ColdFusion">ColdFusion</option>
-                                        <option value="Erlang">Erlang</option>
-                                        <option value="Fortran">Fortran</option>
-                                        <option value="Groovy">Groovy</option>
-                                        <option value="Haskell">Haskell</option>
-                                        <option value="Java">Java</option>
-                                        <option value="JavaScript">JavaScript</option>
-                                        <option value="Lisp">Lisp</option>
-                                        <option value="Perl">Perl</option>
-                                        <option value="PHP">PHP</option>
-                                        <option value="Python">Python</option>
-                                        <option value="Ruby">Ruby</option>
-                                        <option value="Scala">Scala</option>
-                                        <option value="Scheme">Scheme</option>
+                                    <select class="combobox-autocomplete">
+                                        <option value="">Busqueda de Organizaci&oacute;n</option>
+                                        <option value="1">Instituto Tecnol&oacute;gico de Toluca</option>
+                                        <option value="2">IMMS</option>
+                                        <option value="3">Primaria D&iacute;z Ordaz</option>
+                                        <option value="4">General Motors</option>
                                     </select>
                                 </div>
                             </td>
@@ -73,7 +60,7 @@
                     </table>
                 </form:form>
                 <br/>
-                <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, registrela:</h4></p>
+                <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h4></p>
                 <%-- Formulario Nueva Organizacion --%>
                 <form:form name="altaOrganizacion" class="MyForm" action="gdaAltaOrganizacion.do" method="POST" style="width:60%;">
                     <table>
