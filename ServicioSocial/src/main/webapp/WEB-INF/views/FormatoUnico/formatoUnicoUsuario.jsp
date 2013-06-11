@@ -49,7 +49,7 @@
                         <li><a href="#subirFui">Subir Formato &Uacute;nico</a></li>
                     </ul>
                     <div id="datosPersonales">
-                        <form:form modelAttribute="datos">
+                        <form:form id="frmDatosPersonales" modelAttribute="datos">
                             <table>
                                 <tr>
                                     <td>Nombre:</td>
