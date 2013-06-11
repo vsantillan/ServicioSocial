@@ -1,13 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
+        <%@ include file="../Template/headsMenuUsuario.jsp" %>
+        <%@ include file="../Template/metas.jsp" %>
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
-        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
-
         <!--css de tabs-->
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/demos.css"/>
@@ -27,17 +29,15 @@
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
         <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
         
-        
-        
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
-    <body>
-        <div class="pagina" align="center">
-            <div class="banner" align="left">
-                <a href="#"><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
-            </div>
-            <div id ="contenido" align="left">
-                <div id="tabs">
+    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+        <%@ include file="../Template/banner.jsp" %>
+
+        <%-- inicio del contenido --%>
+        <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />
+        <div id="contenido">
+            <div id="tabs">
                     <h1>P&aacute;gina del Formato Unico</h1>
                     <ul>
                         <li><a href="#datosPersonales">Datos Personales</a></li>
@@ -332,13 +332,9 @@
                     </ul>
                     
                 </div>
-            </div>
-            
-            <%-- fin del contenido --%>
-            <div id="footer" align="left">
-                <img  src="imagenes/foter.png"/>
-            </div>
+            <div style="clear:both;"></div>
         </div>
-
+        <%-- fin del contenido --%>
+        <%@ include file="../Template/footer.jsp" %>
     </body>
 </html>
