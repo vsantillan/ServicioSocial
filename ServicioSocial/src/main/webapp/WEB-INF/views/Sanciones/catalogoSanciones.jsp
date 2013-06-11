@@ -92,7 +92,7 @@
                                         <th><core:out value="${current.noSancion}" /></th>
                                         <th><core:out value="${current.descripcion}" /></th>
                                         <th><core:out value="${current.horas}" /></th>
-                                        <th><a href="editaSancion.do" rel="shadowbox; width=1000px; height=400px">Editar Valores</a></th>
+                                        <th><a href="editaSancion.do?descripcion=${current.descripcion}&horas=${current.horas}" rel="shadowbox; width=1000px; height=400px">Editar Valores</a></th>
                                     </tr>
                                 </core:forEach>
                             </tbody>
@@ -101,7 +101,7 @@
                     <div id="nuevaSancion">
                         <center> 
                             <p>Nueva Sanci&oacute;n</p>
-                            <form:form name="nuevaSancion" id="MyForm" action="#" method="POST">
+                            <form:form name="nuevaSancion.do" id="MyForm" action="#" method="POST">
                                 <table>
                                     <tr>
                                         <td> <p><label for="descripcion">Descripci&oacute;n:</label> </p></td>

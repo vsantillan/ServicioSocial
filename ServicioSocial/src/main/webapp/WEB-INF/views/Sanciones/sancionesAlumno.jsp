@@ -93,8 +93,8 @@
                             <th><core:out value="${current.horasSancion}" /></th>
                             <th><core:out value="${current.horasRestantes}" /></th>
                             <th><core:out value="${current.lugar}" /></th>
-                            <th><a href="pagoSancionAlumno.do" rel="shadowbox">Pagar</a></th>
-                            <th><a href="detalleSancionAlumno.do" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="pagoSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox">Pagar</a></th>
+                            <th><a href="detalleSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
                         </tr>
                       </core:forEach>
                     </tbody>

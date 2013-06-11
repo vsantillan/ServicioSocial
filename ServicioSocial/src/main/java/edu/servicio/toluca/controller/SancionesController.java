@@ -23,16 +23,18 @@ public class SancionesController
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/pagoSancionAlumno.do")
-    public String pagoSancionAlumno(Model modelo)
+    public String pagoSancionAlumno(String nombre, String noControl, Model modelo)
     {
-        System.out.println("Si pasaaaa");
-        
+        modelo.addAttribute("nombre", nombre);
+        modelo.addAttribute("noControl", noControl);
         return "/Sanciones/pagoSancionAlumno";
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/detalleSancionAlumno.do")
-    public String detalleSancionAlumno(Model a)
+    public String detalleSancionAlumno(String nombre, String noControl, Model modelo)
     {
+        modelo.addAttribute("nombre", nombre);
+        modelo.addAttribute("noControl", noControl);
         return "/Sanciones/detalleSancionAlumno";
     }
     
@@ -43,8 +45,19 @@ public class SancionesController
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/editaSancion.do")
-    public String editaSancion(Model a)
+    public String editaSancion(String descripcion,String horas,Model modelo)
     {
+        modelo.addAttribute("descripcion", descripcion);
+        modelo.addAttribute("horas", horas);
         return "/Sanciones/editaSancion";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/nuevaSancion.do")
+    public String nuevaSancion(String descripcion,String horas,Model modelo)
+    {
+        modelo.addAttribute("descripcion", descripcion);
+        modelo.addAttribute("horas", horas);
+        System.out.println("desc: "+descripcion+"\n horas: "+horas);
+        return "/Sanciones/catalogoSanciones";
     }
 }

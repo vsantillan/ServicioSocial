@@ -27,11 +27,11 @@
                     <table>
                         <tr>
                             <td> <label for="descripcion">Descripci&oacute;n:</label> </td>
-                            <td> <textarea name="descripcion" rows="4" cols="50" id="descripcion"></textarea> </td>
+                            <td> <textarea name="descripcion" rows="4" cols="50" id="descripcion">${descripcion}</textarea> </td>
                         </tr>
                         <tr>
                             <td>  <label for="hora">Horas:</label> </td>
-                            <td>  <input type="text" name="horas" size="15" /></td>  
+                            <td>  <input type="text" name="horas" size="15" value="${horas}" /></td>  
                         </tr>
                         <tr> 
                             <td> <input type ="submit" value = "Guardar " /> </td>
