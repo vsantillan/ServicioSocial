@@ -15,6 +15,18 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
+        
+          <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.timepicker.css"/>
+          <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
+         <script type="text/javascript" src="js/jqueryUI/i18n/jquery.ui.datepicker-es"></script>
+            <script>
+            $(function() {
+                $('#hora2').timepicker();
+                
+              
+            });
+        </script>
+
         <title>Alta Plática</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');" >
@@ -35,7 +47,7 @@
                         </tr>
                         <tr>
                             <td>  <label for="hora">Hora</label> </td>
-                            <td>  <input type="text" name="hora" id="hora" size="15" /></td>  
+                            <td>  <input type="text" name="hora" id="hora2" size="15" /></td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Lugar De la Platica de Inducción</label></td>
