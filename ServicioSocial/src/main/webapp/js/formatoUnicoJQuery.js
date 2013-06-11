@@ -1,11 +1,19 @@
-$(document).on('ready',listo);
+$(document).ready(listo);
 var alumno = {};
 function listo()
 {
     timePicker();//Inicializa campos JQuery
-    $('#loginA').submit(function() {  
+     $('#frmDatosPersonales').submit(function() {
             $("form#frmDatosPersonales :input").each(function(){prepararJSON($(this));
     });
+    console.log(alumno);
+    
+    $.post("modificarFormato.do",alumno,function(respuesta){
+        alert(respuesta);
+   });
+    
+    
+    
     return false;
     });
 }
@@ -14,7 +22,7 @@ function prepararJSON($atributo)
     if($atributo.attr ("type")!=="submit")
     {
         alumno[$atributo.attr ("name")]=$atributo.val();
-        console.log(alumno);
+        
     }
     
 }

@@ -6,8 +6,11 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.FormatoUnicoBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 /**
  *
  * @author WindSaber
@@ -33,6 +36,19 @@ public class FormatoUnicoController {
     public String formatoUnicoPruebaDT(Model a) {
         
         return "/FormatoUnico/pruebaDT";
+    }
+    
+    
+   @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
+    public @ResponseBody String modificarDatosPersonalesAlumno( FormatoUnicoBean user, BindingResult result ){
+       System.out.println(user.getApellidoM()); 
+       String returnText;
+	        if(!result.hasErrors()){
+	            returnText = "Nava dice que todo bien";
+	        }else{
+	            returnText = "Error el corbata llego";
+	        }
+	        return returnText;
     }
    
    
