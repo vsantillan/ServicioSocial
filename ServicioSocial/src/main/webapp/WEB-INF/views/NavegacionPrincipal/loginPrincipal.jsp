@@ -25,7 +25,7 @@
         <div id="contenido">
             <center>
                 <br/>
-                <h1>Login Alumnos</h1>
+                <h1>Login</h1>
                 <p>Acceso al sistema de gesti&oacute;n del servicio social, recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</p>
                 <br/><br/><br/><br/><br/><br/><br/>
                 

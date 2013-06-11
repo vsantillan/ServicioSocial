@@ -22,10 +22,11 @@
         <%-- inicio del contenido --%>
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;">
+            <div style="float:left; width: 80%">
                 <h1>Panel Administrador</h1>
+                <center><img src="imagenes/admin.png" width="600"/></center>
 
-
+                
             </div>
             <div style="clear:both;"></div>
         </div>

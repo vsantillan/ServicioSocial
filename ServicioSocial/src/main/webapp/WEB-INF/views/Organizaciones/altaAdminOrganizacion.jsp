@@ -58,8 +58,28 @@
                         </tr>
                         <tr>
                             <td>  <label for="lugar">C&oacute;digo Postal:</label></td>
-                            <td>  <input type="text" name="codigo_postal" id="domicilio" size="20" require="true"/> </td>  
+                            <td>  <input type="text" name="lugar" id="cp" size="20" require="true"/> </td>  
                         </tr>
+                        <tr>
+                            <td>  <label for="lugar">Colonia:</label></td>
+                            <td>  <select name="lugar" id="colonia" >
+                                    <option value="0">Vicente Guerrero</option>
+                                    <option value="1">Plazas de San Buenaventura</option>
+                                  </select> 
+                            </td>  
+                        </tr>                        
+                        <tr>
+                            <td>  <label for="lugar">Estado:</label></td>
+                            <td>  <input type="text" name="lugar" id="estado" size="20" require="true"/> </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Municipio:</label></td>
+                            <td>  <input type="text" name="lugar" id="municipio" size="20" require="true"/> </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Ciudad</label></td>
+                            <td>  <input type="text" name="lugar" id="ciudad" size="20" require="true"/> </td>  
+                        </tr>                        
                         <tr>
                             <td> <label for="semestre">Tipo de Organizaci&oacute;n:</label> </td>
                             <td>
