@@ -40,6 +40,7 @@
                         <th>No. Reporte</th>
                         <th>Fecha</th>
                         <th>Horas</th>
+                        <th>Descripci&oacute;n</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +48,7 @@
                         <th>1</th>
                         <th>23 Jun 2105</th>
                         <th>100</th>
+                        <th>Lavando ba&ntilde;os</th>
                     </tr>
                 </tbody>
             </table>

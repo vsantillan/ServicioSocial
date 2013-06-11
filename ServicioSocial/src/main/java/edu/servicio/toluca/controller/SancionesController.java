@@ -41,4 +41,10 @@ public class SancionesController
     {
         return "/Sanciones/catalogoSanciones";
     }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/editaSancion.do")
+    public String editaSancion(Model a)
+    {
+        return "/Sanciones/editaSancion";
+    }
 }
