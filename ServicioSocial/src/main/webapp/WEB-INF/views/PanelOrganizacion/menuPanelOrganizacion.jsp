@@ -12,12 +12,6 @@
                 <li><a href="index.do">Inicio</a></li>
                 <li><a href="convocatorias.do">Convocatorias</a></li>
                 <li><a href="manualProcedimiento.do">Manual de Procedimiento</a></li>
-                <li><a href="organizaciones.do">Organizaciones</a>
-                    <ul>
-                        <li><a href="loginOrganizaciones.do">Login</a></li>
-                        <li><a href="registroOrganizaciones.do">Registro</a></li>
-                    </ul>
-                </li>
                 <li><a href="ayuda.do">Ayuda</a>
 
                 </li>
@@ -30,10 +24,10 @@
                                 <li><a href="altaProyecto.do">Alta Proyecto</a></li>
                                 <li><a href="verProyectos.do">Ver Proyectos</a></li>
                             </ul>
-                        </li>
+                        </li>                        
                     </ul>
                 </li>
-
+                <li><a href="cerrarSesion.do">Cerrar Sesi&oacute;n</a></li>
             </ul>
         </div>  
         <br style="clear: left" />

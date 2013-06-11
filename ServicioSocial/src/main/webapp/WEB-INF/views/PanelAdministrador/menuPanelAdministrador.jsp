@@ -85,7 +85,7 @@
                 <li><a href="#">14.2 Acerca De</a></li>
             </ul>
         </li>
-        <li><a href="#">Cerrar Sesi&oacute;n</a></li>
+        <li><a href="index.do">Cerrar Sesi&oacute;n</a></li>
     </ul>
     <br style="clear: left" />
 </div>

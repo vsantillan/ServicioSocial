@@ -36,17 +36,6 @@
                             <td>  <input type="text" name="rfc" id="vacacntes" size="20" require="true" /></td>  
                         </tr>
                         <tr>
-                            <td> <label for="semestre">Instancia/Organizaci&oacute;n:</label> </td>
-                            <td>
-                                <select id="organizacion" name="organizacion">
-                                    <option value="1">Instituto Tecnol&oacute;gico de Toluca</option>
-                                    <option value="2">IMMS</option>
-                                    <option value="3">Primaria D&iacute;z Ordaz</option>
-                                    <option value="4">General Motors</option>
-                                </select>    
-                            </td>  
-                        </tr>
-                        <tr>
                             <td>  <label for="lugar">Responsable del Programa:</label></td>
                             <td>  <input type="text" name="titular" id="titular" size="20" require="true"/> </td>  
                         </tr>
@@ -60,14 +49,36 @@
                         </tr>
                         <tr>
                             <td>  <label for="lugar">C&oacute;digo Postal:</label></td>
-                            <td>  <input type="text" name="codigo_postal" id="domicilio" size="20" require="true"/> </td>  
+                            <td>  <input type="text" name="lugar" id="cp" size="20" require="true"/> </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Colonia:</label></td>
+                            <td>  <select name="lugar" id="colonia" >
+                                    <option value="0">Vicente Guerrero</option>
+                                    <option value="1">Plazas de San Buenaventura</option>
+                                  </select> 
+                            </td>  
+                        </tr>                        
+                        <tr>
+                            <td>  <label for="lugar">Estado:</label></td>
+                            <td>  <input type="text" name="lugar" id="estado" size="20" require="true"/> </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Municipio:</label></td>
+                            <td>  <input type="text" name="lugar" id="municipio" size="20" require="true"/> </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Ciudad</label></td>
+                            <td>  <input type="text" name="lugar" id="ciudad" size="20" require="true"/> </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                             <td>
-                                <select id="organizacion" name="organizacion">
-                                    <option value="1">Alumnos Internos</option>
-                                    <option value="2">Alumnos Becados</option>
+                                <select id="tipo_proyecto" name="tipo_proyecto">
+                                    <option value="1">Interno</option>
+                                    <option value="2">Interno Becado</option>
+                                    <option value="3">Externo</option>
+                                    <option value="4">Externo Becado</option>
                                 </select>    
                             </td>  
                         </tr>

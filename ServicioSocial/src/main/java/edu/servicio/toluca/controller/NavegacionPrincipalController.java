@@ -44,11 +44,11 @@ public class NavegacionPrincipalController {
     
     @RequestMapping(method = RequestMethod.GET, value = "/registroOrganizaciones.do")
     public String registroOrganizaciones(Model a){
-        return "/NavegacionPrincipal/registroOrganizaciones";
+        return "/Organizaciones/registroOrganizaciones";
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/loginAlumnos.do")
+    @RequestMapping(method = RequestMethod.GET, value = "/login.do")
     public String loginAlumnos(Model a){
-        return "/NavegacionPrincipal/loginAlumnos";
+        return "/NavegacionPrincipal/loginPrincipal";
     }
 }

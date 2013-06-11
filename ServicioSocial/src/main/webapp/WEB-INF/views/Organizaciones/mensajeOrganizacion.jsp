@@ -1,6 +1,6 @@
 <%-- 
-    Document   : loginAlumnos
-    Created on : 10-jun-2013, 11:24:14
+    Document   : mensajeOrganizacion
+    Created on : 11-jun-2013, 13:56:30
     Author     : bustedvillain
 --%>
 
@@ -13,23 +13,22 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="../Template/headsMenuUsuario.jsp" %>
+        <%@ include file="../Template/headsOrganizaciones.jsp" %>
         <%@ include file="../Template/metas.jsp" %>
-        <title>Departamento de Servicio Social :: Organizaciones ::</title>
+        <title>Mensajes Organizador</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
         <%@ include file="../Template/banner.jsp" %>
 
         <%-- inicio del contenido --%>
-        <jsp:include page="menuPrincipal.jsp" />
+        <jsp:include page="../PanelOrganizacion/menuPanelOrganizacion.jsp" />
         <div id="contenido">
-            <center>
-                <br/>
-                <h1>Login Alumnos</h1>
-                <p>Acceso al sistema de gesti&oacute;n del servicio social, recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</p>
-                <br/><br/><br/><br/><br/><br/><br/>
-                
-            </center>
+            <h1>Mensajes Organizaci&oacute;n</h1>
+            <h4>A continuaci&oacute;n se muestran mensajes que el administrador le ha enviado:</h4>
+
+
+
+
             <div style="clear:both;"></div>
         </div>
         <%-- fin del contenido --%>

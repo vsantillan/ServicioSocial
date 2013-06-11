@@ -5,6 +5,22 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    // Create an ArrayList with test data
+    ArrayList list = new ArrayList();
+    Map detalleSancionAlumno1 = new HashMap();
+    detalleSancionAlumno1.put("noReporte", new Integer(1));
+    detalleSancionAlumno1.put("fecha", "12 Ago 2014");
+    detalleSancionAlumno1.put("horas", new Integer(360));
+    detalleSancionAlumno1.put("descripcion", "Barriendo todo el Tec");
+    list.add(detalleSancionAlumno1);
+    pageContext.setAttribute("detalleSancionAlumno", list);
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -32,22 +48,26 @@
             <h1>Sanciones</h1>
             <p>A continuaci&oacute;n se muestran los reportes de horas pagadas de sanci&oacute;n.</p>
             <br />
-            <p><b>Nombre: </b>Hector Guzm&aacute;n Nava</p>
-            <p><b>No. Control: </b>09280000</p>
+            <p><b>Nombre: </b>${nombre}</p>
+            <p><b>No. Control: </b>${noControl}</p>
             <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                 <thead>
                     <tr>
                         <th>No. Reporte</th>
                         <th>Fecha</th>
                         <th>Horas</th>
+                        <th>Descripci&oacute;n</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class='gradeX'>
-                        <th>1</th>
-                        <th>23 Jun 2105</th>
-                        <th>100</th>
-                    </tr>
+                    <core:forEach items="${detalleSancionAlumno}" var="current">
+                        <tr class='gradeX'>
+                            <th><core:out value="${current.noReporte}" /></th>
+                            <th><core:out value="${current.fecha}" /></th>
+                            <th><core:out value="${current.horas}" /></th>
+                            <th><core:out value="${current.descripcion}" /></th>
+                        </tr>
+                    </core:forEach>
                 </tbody>
             </table>
 

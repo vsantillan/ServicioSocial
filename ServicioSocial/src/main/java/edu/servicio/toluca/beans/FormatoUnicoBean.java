@@ -9,9 +9,9 @@ package edu.servicio.toluca.beans;
  * @author Héctor
  */
 public class FormatoUnicoBean {
-    private String nombre;
-    private String apellidoP;
-    private String apellidoM;
+    private String nombre="Joel";
+    private String apellidoP="Nava";
+    private String apellidoM="Pulido";
     private String sexo;
     private String estado_civil;
     private String ocupacion;

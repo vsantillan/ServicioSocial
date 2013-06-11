@@ -15,7 +15,11 @@
 <html>
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />       
+        <jsp:include page="../Template/metas.jsp" />   
+        <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
+        
+        <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>  
+        
         <title>Administrador</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
@@ -35,7 +39,7 @@
                         <tr>
                             <td>  <label for="vacantes">N&uacute;mero de Vacantes:</label> </td>
                             <td>  <input type="text" name="rfc" id="vacacntes" size="20" require="true" /></td>  
-                        </tr>
+                        </tr>                        
                         <tr>
                             <td> <label for="semestre">Instancia/Organizaci&oacute;n:</label> </td>
                             <td>
@@ -61,15 +65,37 @@
                         </tr>
                         <tr>
                             <td>  <label for="lugar">C&oacute;digo Postal:</label></td>
-                            <td>  <input type="text" name="codigo_postal" id="domicilio" size="20" require="true"/> </td>  
+                            <td>  <input type="text" name="lugar" id="cp" size="20" require="true"/> </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Colonia:</label></td>
+                            <td>  <select name="lugar" id="colonia" >
+                                    <option value="0">Vicente Guerrero</option>
+                                    <option value="1">Plazas de San Buenaventura</option>
+                                </select> 
+                            </td>  
+                        </tr>                        
+                        <tr>
+                            <td>  <label for="lugar">Estado:</label></td>
+                            <td>  <input type="text" name="lugar" id="estado" size="20" require="true"/> </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Municipio:</label></td>
+                            <td>  <input type="text" name="lugar" id="municipio" size="20" require="true"/> </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Ciudad</label></td>
+                            <td>  <input type="text" name="lugar" id="ciudad" size="20" require="true"/> </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                             <td>
-                                <select id="organizacion" name="organizacion">
-                                    <option value="1">Alumnos Internos</option>
-                                    <option value="2">Alumnos Becados</option>
-                               </select>    
+                                <select id="tipo_proyecto" name="tipo_proyecto">
+                                    <option value="1">Interno</option>
+                                    <option value="2">Interno Becado</option>
+                                    <option value="3">Externo</option>
+                                    <option value="4">Externo Becado</option>
+                                </select>    
                             </td>  
                         </tr>
                         <tr>
@@ -92,9 +118,37 @@
                         </tr>
                     </table>
                 </form:form> 
+                <div class="ui-widget">
+                    <label>I: </label>
+                    <select id="combobox">
+                        <option value="">Select one...</option>
+                        <option value="ActionScript">ActionScript</option>
+                        <option value="AppleScript">AppleScript</option>
+                        <option value="Asp">Asp</option>
+                        <option value="BASIC">BASIC</option>
+                        <option value="C">C</option>
+                        <option value="C++">C++</option>
+                        <option value="Clojure">Clojure</option>
+                        <option value="COBOL">COBOL</option>
+                        <option value="ColdFusion">ColdFusion</option>
+                        <option value="Erlang">Erlang</option>
+                        <option value="Fortran">Fortran</option>
+                        <option value="Groovy">Groovy</option>
+                        <option value="Haskell">Haskell</option>
+                        <option value="Java">Java</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Lisp">Lisp</option>
+                        <option value="Perl">Perl</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Python">Python</option>
+                        <option value="Ruby">Ruby</option>
+                        <option value="Scala">Scala</option>
+                        <option value="Scheme">Scheme</option>
+                    </select>
+                </div> 
                 <br/>
             </div>
-             <div style="clear:both;"></div>
+            <div style="clear:both;"></div>
         </div>
         <%-- fin del contenido --%>
         <jsp:include page="../Template/footer.jsp" />
