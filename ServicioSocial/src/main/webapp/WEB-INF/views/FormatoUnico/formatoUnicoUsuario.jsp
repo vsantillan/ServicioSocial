@@ -28,6 +28,7 @@
         </script>
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
         <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
+        <script type="text/javascript" src="js/jqueryUI/i18n/ui.datepicker-es.js"></script>
         
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
