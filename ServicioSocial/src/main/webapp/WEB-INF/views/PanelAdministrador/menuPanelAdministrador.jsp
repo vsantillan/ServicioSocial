@@ -50,7 +50,7 @@
         </li>
         <li><a href="#">Bajas Temporales</a>
             <ul>
-                <li><a href="#">7.1 Administrar</a></li>
+                <li><a href="administrarBajas.do">7.1 Administrar</a></li>
                 <li><a href="#">7.2 Cambio de Proyecto</a></li>
             </ul>
         </li>
