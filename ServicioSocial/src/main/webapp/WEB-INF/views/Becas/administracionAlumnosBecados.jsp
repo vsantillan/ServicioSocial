@@ -19,7 +19,7 @@
         <jsp:include page="../Template/metas.jsp" />
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/reporteBimestral.css" /> 
-               <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
 
         <!--Estilos para tablas-->
         <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
@@ -29,13 +29,6 @@
         <!--css de tabs-->
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/demos.css"/>
-
-
-        <!-- Scripts -->
-        <script src="js/jqueryUI/jquery-1.9.1.js"></script>
-        <script src="js/jqueryUI/jquery.ui.core.js"></script>
-        <script src="js/jqueryUI/jquery.ui.widget.js"></script>
-        <script src="js/jqueryUI/jquery.ui.tabs.js"></script>
 
 
         <!--Scripts para shadowbox-->
@@ -52,10 +45,8 @@
                 $('#Rev').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
-
                 });
                 $('#NoRev').dataTable({
                     "bJQueryUI": true,
@@ -83,7 +74,7 @@
   author3.put("id", new Integer(3));
   list.add(author3);
   pageContext.setAttribute("authors", list);
-%>
+        %>
 
 
         <title>Administrar Reportes Bimestrales</title>
@@ -93,93 +84,93 @@
         <div id ="contenido" align="left">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left; width: 700px;">
-                    <div id="tabs">
-                        <h1>Administraci&oacute;n de Alumnos Becados</h1>
-                        <ul>
-                            <li><a href="#preseleccion">Alumnos Preseleccionados</a></li>
-                            <li><a href="#aceptados">Alumnos Becados</a></li>
-                        </ul>
-                        <div id="preseleccion">
-                            <table cellpadding='0' cellspacing='0' border='0' class='display' id="Rev" width='100%'>
-                                <thead>
-                                    <tr>
-                                        <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
-                                        <th>&nbsp;Nombre&nbsp;</th>
-                                        <th>&nbsp;Carrera&nbsp;</th>
-                                        <th>&nbsp;Promedio&nbsp;</th>
-                                        <th>&nbsp;Tipo Servicio&nbsp;</th>
-                                        <th>&nbsp;Sexo&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <core:forEach items="${authors}" var="current">
+                <div id="tabs">
+                    <h1>Administraci&oacute;n de Alumnos Becados</h1>
+                    <ul>
+                        <li><a href="#preseleccion">Alumnos Preseleccionados</a></li>
+                        <li><a href="#aceptados">Alumnos Becados</a></li>
+                    </ul>
+                    <div id="preseleccion">
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="Rev" width='100%'>
+                            <thead>
+                                <tr>
+                                    <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
+                                    <th>&nbsp;Nombre&nbsp;</th>
+                                    <th>&nbsp;Carrera&nbsp;</th>
+                                    <th>&nbsp;Promedio&nbsp;</th>
+                                    <th>&nbsp;Tipo Servicio&nbsp;</th>
+                                    <th>&nbsp;Sexo&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <core:forEach items="${authors}" var="current">
                                     <tr class='gradeX'>
-                                      <td><core:out value="${current.name}" /></td>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.name}" /></td>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.name}" /></td>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
+                                        <td><core:out value="${current.name}" /></td>
+                                        <td><core:out value="${current.id}" /></td>
+                                        <td><core:out value="${current.name}" /></td>
+                                        <td><core:out value="${current.id}" /></td>
+                                        <td><core:out value="${current.name}" /></td>
+                                        <td><core:out value="${current.id}" /></td>
+                                        <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
-                                  </core:forEach>
-                                </tbody>
-                            </table>
-                            <table>
-                                  <tr>
-                                    <td><a href="preseleccionAlumnos.do" rel="shadowbox"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></td>
-                                    <td><a href="#" ><img src="imagenes/tache.png" title="Eliminar" width="29"/></td>
-                                    <td><a href="#" ><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
-                                    <td><a href="#" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></td>
-                                    <td><a href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></td>
-                                     <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
-                               </tr>
-                            </table>
-                        </div>
-                        <div id="aceptados">
-                            <table cellpadding='0' cellspacing='0' border='0' class='display' id="NoRev" width='100%'>
-                                 <thead>
-                                    <tr>
-                                        <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
-                                        <th>&nbsp;Nombre&nbsp;</th>
-                                        <th>&nbsp;Carrera&nbsp;</th>
-                                        <th>&nbsp;Promedio&nbsp;</th>
-                                        <th>&nbsp;Tipo Servicio&nbsp;</th>
-                                        <th>&nbsp;Sexo&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <core:forEach items="${authors}" var="current">
+                                </core:forEach>
+                            </tbody>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><a href="preseleccionAlumnos.do" rel="shadowbox"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></td>
+                                <td><a href="#" ><img src="imagenes/eliminar.jpg" title="Eliminar" width="29"/></td>
+                                <td><a href="correo.do" rel="shadowbox"><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
+                                <td><a href="#" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></td>
+                                <td><a href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></td>
+                                <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="aceptados">
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="NoRev" width='100%'>
+                            <thead>
+                                <tr>
+                                    <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
+                                    <th>&nbsp;Nombre&nbsp;</th>
+                                    <th>&nbsp;Carrera&nbsp;</th>
+                                    <th>&nbsp;Promedio&nbsp;</th>
+                                    <th>&nbsp;Tipo Servicio&nbsp;</th>
+                                    <th>&nbsp;Sexo&nbsp;</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <core:forEach items="${authors}" var="current">
                                     <tr class='gradeX'>
-                                      <td><core:out value="${current.name}" /></td>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.name}" /></td>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.name}" /></td>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
+                                        <td><core:out value="${current.name}" /></td>
+                                        <td><core:out value="${current.id}" /></td>
+                                        <td><core:out value="${current.name}" /></td>
+                                        <td><core:out value="${current.id}" /></td>
+                                        <td><core:out value="${current.name}" /></td>
+                                        <td><core:out value="${current.id}" /></td>
+                                        <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
-                                  </core:forEach>
-                                </tbody>
-                            </table>
-                             <table>
-                                  <tr>
-                                    <td><a href="#" ><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
-                                    <td><a href="#" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></td>
-                                     <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
-                               </tr>
-                            </table>
-                        </div>       
-                    </div>  
-                </div>
-           <div style="clear:both;"></div>
-        
-        <%-- fin del contenido --%>
-     </div>
-    <jsp:include page="../Template/footer.jsp" />
-    
+                                </core:forEach>
+                            </tbody>
+                        </table>
+                        <table>
+                            <tr>
+                                <td><a href="#" ><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
+                                <td><a href="#" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></td>
+                                <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
+                            </tr>
+                        </table>
+                    </div>       
+                </div>  
+            </div>
+            <div style="clear:both;"></div>
 
-</body>
+            <%-- fin del contenido --%>
+        </div>
+        <jsp:include page="../Template/footer.jsp" />
+
+
+    </body>
 </html>
