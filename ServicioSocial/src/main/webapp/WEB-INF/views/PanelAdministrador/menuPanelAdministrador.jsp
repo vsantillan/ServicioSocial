@@ -71,7 +71,7 @@
             </ul>
         </li>
         <li><a href="#">Historial Servicio Social</a></li>
-        <li><a href="#">Cartas de Liberaci&oacute;n</a></li>
+        <li><a href="liberaciones.do">Cartas de Liberaci&oacute;n</a></li>
         <li><a href="#">Reportes</a></li>
         <li><a href="#">Casos Especiales</a>
             <ul>
