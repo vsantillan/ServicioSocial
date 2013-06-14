@@ -45,6 +45,15 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
+
+
+                <c:forEach items="${platica}" var="platica">
+                    <b>ID:</b>${platica.id}<br/>
+                    <b>Fecha</b>${platica.fecha}<br/>
+                    <b>Hora</b>${platica.hora}<br/>
+                </c:forEach>
+
+
                 <center> <h2>Consultas y Bajas de Pláticas</h2></center>
                 <div id="div_BajaPlatica">
                     <div style="height:400px;width:700px;overflow:scroll;"> 
