@@ -4,7 +4,13 @@
     Author     : roy
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,7 +28,7 @@
         <!--        Scripts para tablas-->
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        
+
         <script type="text/javascript" >
             $(document).ready(function() {
                 $('#example').dataTable({
@@ -62,26 +68,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class='gradeX'>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="borrarOrganizacion.do" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
-                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th>Oxxo</th>
-                            <th>Hector Guzman Nava</th>
-                            <th>139103RLR</th>
-                            <th>Cosas ilegales</th>
-                        </tr>
-                        <tr class='gradeX'>
-                            <th><a href="algunLado.do" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="borrarOrganizacion.do" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
-                            <th><a href="detalleOrganizacion.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th>Primaria Diaz Ordaz</th>
-                            <th>Hector Guzman Nava</th>
-                            <th>139103RLR</th>
-                            <th>Cosas ilegales</th>
-                        </tr>
-
+                        <core:forEach items="${organizaciones}" var="current">
+                            <tr class='gradeX'>
+                                <th><core:out value="${current.id}" /></th>
+                                <th><core:out value="${current.detalle}" /></th>
+                                <th><core:out value="${current.nombre}" /></th>
+                                <th><core:out value="${current.titular}" /></th>
+                                <th><core:out value="${current.rfc}" /></th>
+                                <th><core:out value="${current.tipoOrganizacion}" /></th>
+                            </tr>
+                        </core:forEach>
                     </tbody>
                 </table>
-                
+
                 <%-- fin del contenido --%>
             </div>
             <div style="clear: both;"/>

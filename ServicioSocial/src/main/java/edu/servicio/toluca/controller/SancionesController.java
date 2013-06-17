@@ -7,6 +7,7 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.entidades.CatalogoSanciones;
 import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
@@ -52,7 +53,7 @@ public class SancionesController
         CatalogoSanciones cs=new CatalogoSanciones();
         cs.setHorasSancion(BigInteger.valueOf(10));
         cs.setTolerancia(BigInteger.valueOf(10));
-        cs.setDetalle("Es la segundaaaaaa sancion");
+        cs.setDetalle("Es la tercera sancion");        
         catalogoSancionesFacade.create(cs);
         System.out.println("Conteo de registros Platica:"+catalogoSancionesFacade.count()); 
         model.addAttribute("sanciones", catalogoSancionesFacade.findAll());
