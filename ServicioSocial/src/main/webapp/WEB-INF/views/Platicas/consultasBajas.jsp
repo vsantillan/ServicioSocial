@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <%@taglib prefix="form"  uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="tags"  uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="core"  uri="http://java.sun.com/jsp/jstl/core"%>
@@ -27,11 +28,19 @@
         <script type="text/javascript" src="js/platicajquery-latest.js"></script>
         <script type="text/javascript" src="js/platicajquery.tablesorter.js"></script>
         <script type="text/javascript" src="js/platicajquery.tablesorter.min.js"></script>
-
-
+        <jsp:include page="../Template/headsJQueryUI.jsp" />
+<jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <script type="text/javascript">
-            $(function() {
-                $("#grilla").tablesorter({sortList: [[0, 0], [2, 1]], widgets: ['zebra']});
+            $(document).ready(function() {
+                $('#platicas').dataTable({
+                    "bJQueryUI": true,
+                    "sPaginationType": "full_numbers",
+                    "sScrollX": "100%",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+
 
             });
         </script>
@@ -47,18 +56,18 @@
             <div style="float:left;">
 
 
-                <c:forEach items="${platica}" var="platica">
+                <%-- <c:forEach items="${platica}" var="platica">
                     <b>ID:</b>${platica.id}<br/>
                     <b>Fecha</b>${platica.fecha}<br/>
                     <b>Hora</b>${platica.hora}<br/>
-                </c:forEach>
+                </c:forEach> --%>
 
 
                 <center> <h2>Consultas y Bajas de Pláticas</h2></center>
                 <div id="div_BajaPlatica">
-                    <div style="height:400px;width:700px;overflow:scroll;"> 
+                   
                         <center>
-                            <table id="grilla" class="tablesorter" border="1"  >
+                            <table cellpadding='0' border='0' class='display' id="platicas" width='100%' >
                                 <thead>
                                     <tr bgcolor="#0080FF">
                                         <th><font color="#1C1C1C">Eliminar</font></th>
@@ -117,7 +126,7 @@
                 </div>
             </div>
             <div style="clear:both;"></div>
-        </div>
+        
         <jsp:include page="../Template/footer.jsp" />
     </body>
 

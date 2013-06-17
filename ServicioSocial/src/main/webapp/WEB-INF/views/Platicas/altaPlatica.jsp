@@ -26,6 +26,7 @@
 
             });
         </script>
+         
 
         <title>Alta Plática</title>
     </head>
@@ -38,9 +39,10 @@
             <div style="float:left;">
                 <center> 
                     <h1>Nueva Plática</h1>
+                    ${notificacion}
                     <%-- Formulario Nueva Plática --%>
                     <form:form action="altaPlaticaBD.do" method="post" modelAttribute="platica" id="MyForm"> 
-                        <table>
+                        <table >
                             <tr>
                                 <td>
                                     <form:input type="hidden" value="1" path="status"/>

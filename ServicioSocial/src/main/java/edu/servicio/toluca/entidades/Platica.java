@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "PLATICA", catalog = "", schema = "GES_VIN")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Platica.findAll", query = "SELECT p FROM Platica p"),
+    @NamedQuery(name = "Platica.findAll", query = "SELECT p FROM Platica p WHERE P.status=1"),
     @NamedQuery(name = "Platica.findById", query = "SELECT p FROM Platica p WHERE p.id = :id"),
     @NamedQuery(name = "Platica.findByFecha", query = "SELECT p FROM Platica p WHERE p.fecha = :fecha"),
     @NamedQuery(name = "Platica.findByHora", query = "SELECT p FROM Platica p WHERE p.hora = :hora"),
@@ -43,11 +44,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
 public class Platica implements Serializable {
     private static final long serialVersionUID = 1L;
+    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
+    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
-   
     private Long id;
     @Basic(optional = false)
     @NotNull

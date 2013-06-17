@@ -96,9 +96,9 @@ public class PlaticaController {
 
 
         platicaFacade.create(platica);
-
+       
         //  System.out.println("nombres es"+datos.getNombre());
-
+        modelo.addAttribute("notificacion", "platica dada de alta correctamente");
         return "/Platicas/altaPlatica";
     }
 }
