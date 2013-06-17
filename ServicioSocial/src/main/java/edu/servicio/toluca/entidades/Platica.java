@@ -5,7 +5,6 @@
 package edu.servicio.toluca.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,18 +12,16 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bustedvillain
+ * @author mary
  */
 @Entity
 @Table(name = "PLATICA", catalog = "", schema = "GES_VIN")
@@ -40,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Platica.findByNumeroAsistentes", query = "SELECT p FROM Platica p WHERE p.numeroAsistentes = :numeroAsistentes"),
     @NamedQuery(name = "Platica.findByTipo", query = "SELECT p FROM Platica p WHERE p.tipo = :tipo"),
     @NamedQuery(name = "Platica.findByStatus", query = "SELECT p FROM Platica p WHERE p.status = :status"),
-    @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui")})
+    @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui"),
+    @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
 public class Platica implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,8 +74,9 @@ public class Platica implements Serializable {
     @Column(name = "FECHA_MX_FUI")
     @Temporal(TemporalType.DATE)
     private Date fechaMxFui;
-    @OneToMany(mappedBy = "platicaId")
-    private Collection<FoliosPlatica> foliosPlaticaCollection;
+    @Size(max = 400)
+    @Column(name = "DESCRIPCION")
+    private String descripcion;
 
     public Platica() {
     }
@@ -172,13 +171,12 @@ public class Platica implements Serializable {
         this.fechaMxFui = fechaMxFui;
     }
 
-    @XmlTransient
-    public Collection<FoliosPlatica> getFoliosPlaticaCollection() {
-        return foliosPlaticaCollection;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setFoliosPlaticaCollection(Collection<FoliosPlatica> foliosPlaticaCollection) {
-        this.foliosPlaticaCollection = foliosPlaticaCollection;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override

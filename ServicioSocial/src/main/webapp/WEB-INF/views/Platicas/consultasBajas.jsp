@@ -58,7 +58,7 @@
                 <div id="div_BajaPlatica">
                     <div style="height:400px;width:700px;overflow:scroll;"> 
                         <center>
-                            <table id="grilla" class="tablesorter" border="1"  bordercolor="#FFFFFF">
+                            <table id="grilla" class="tablesorter" border="1"  >
                                 <thead>
                                     <tr bgcolor="#0080FF">
                                         <th><font color="#1C1C1C">Eliminar</font></th>
@@ -79,34 +79,23 @@
                            for (int i=0; i < lista.size(); i++){
                               
                                %> --%>
-                                    <tr Bgcolor="#FBF2EF">
-                                        <td><a class="elimina"><img src="imagenes/platicadelete.png" /></a></td>
+                                    <c:forEach items="${platica}" var="platica">
+                                        <tr Bgcolor="#FBF2EF">
+                                            <td><a class="elimina"><img src="imagenes/platicadelete.png" /></a></td>
 
-                                        <td><div  contenteditable >31/07/13</div></td>
-                                        <td><div  contenteditable >13:00 pm</div></td>
-                                        <td><div  contenteditable >abc</div></td>
-                                        <td><div  contenteditable >ENE-JUN</div></td>
-                                        <td><div  contenteditable >2013</div></td>
-                                        <td><div  contenteditable >2</div></td>
-                                        <td><div  contenteditable >01/12/2013</div></td>
-                                        <td style="visibility: hidden">2</td>              
-
-
-                                    </tr>
-                                    <tr Bgcolor="#FBF2EF">
-                                        <td><a class="elimina"><img src="imagenes/platicadelete.png" /></a></td>
-
-                                        <td><div  contenteditable >01/07/13</div></td>
-                                        <td><div  contenteditable >11:00 am</div></td>
-                                        <td><div  contenteditable >xyz</div></td>
-                                        <td><div  contenteditable >AGO-DIC</div></td>
-                                        <td><div  contenteditable >2014</div></td>
-                                        <td><div  contenteditable >2</div></td>
-                                        <td><div  contenteditable >01/12/2013</div></td>
-                                        <td style="visibility: hidden">2</td>              
+                                            <td><div  contenteditable >${platica.fecha}</div></td>
+                                            <td><div  contenteditable >${platica.hora}</div></td>
+                                            <td><div  contenteditable >${platica.lugar}</div></td>
+                                            <td><div  contenteditable >${platica.periodo}</div></td>
+                                            <td><div  contenteditable >${platica.anio}</div></td>
+                                            <td><div  contenteditable >${platica.numeroAsistentes}</div></td>
+                                            <td><div  contenteditable >${platica.fechaMxFui}</div></td>
+                                            <td style="visibility: hidden">${platica.id}</td>              
 
 
-                                    </tr>
+                                        </tr>
+                                    </c:forEach>
+
 
                                     <%--     <%
                                
