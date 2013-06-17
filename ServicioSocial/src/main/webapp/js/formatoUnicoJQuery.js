@@ -6,14 +6,29 @@ function listo()
     $('#frmDatosPersonales').submit(enviarDatosAlumno);
 }
 
+function enviarDatosAlumno()
+{
+    $("form#frmDatosPersonales :input").each(function(){
+        prepararJSON($(this));   });
+    
+    $.post("modificarFormato.do",alumno,function(respuesta){
+        alert(respuesta);
+    });
+    
+    
+    return false;
+}
 function prepararJSON($atributo)
 {
-    if($atributo.attr ("type")!=="submit")
+    if($atributo.attr("type") !== "submit")
     {
-        alumno[$atributo.attr ("name")]=$atributo.val();
+        alumno[$atributo.attr ("name")] = $atributo.val();
+    }
+    if($atributo.attr("type") === "checkbox")
+    {
+        alumno[$atributo.attr ("name")] = $("#"+$atributo.attr ("name")+"1" ).is(":checked");
     }
 }
-
 function timePicker()
 {
     var idTimePicker = 14;
@@ -24,16 +39,4 @@ function timePicker()
        $(idCadena).timepicker({showAnim: 'blind'});
     }
 }
-function enviarDatosAlumno()
-{
-    $("form#frmDatosPersonales :input").each(function(){prepararJSON($(this));
-    });
-    console.log(alumno);
-    
-    $.post("modificarFormato.do",alumno,function(respuesta){
-        alert(respuesta);
-   });    
-    return false;
-}
-
 

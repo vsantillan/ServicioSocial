@@ -50,7 +50,7 @@
                         <li><a href="#subirFui">Subir Formato &Uacute;nico</a></li>
                     </ul>
                     <div id="datosPersonales">
-                        <form:form id="frmDatosPersonales" modelAttribute="datos">
+                        <form:form id="frmDatosPersonales" modelAttribute="formatoUnico">
                             <table>
                                 <tr>
                                     <td>Nombre:</td>
@@ -107,7 +107,8 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><input type ="checkbox" name ="terminos" /> He le&iacute;do y acepto el <a href="#">Acuerdo de Confidencialidad</a> </td>
+                                    <td>
+                                        <form:checkbox path="acuerdoC" />  He le&iacute;do y acepto el <a href="#">Acuerdo de Confidencialidad</a> </td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -116,7 +117,6 @@
                             </table>
                         </form:form>
                     </div>
-
                 </div>
                 <div id="observaciones">
                     <b>Debes atender los siguientes puntos</b><br/>

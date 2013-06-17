@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.FormatoUnicoBean;
+import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
-    public String formatoUnico(Model a) {
-        a.addAttribute("datos", new FormatoUnicoBean());
+    public String formatoUnico(Model modelo) {
+        modelo.addAttribute("formatoUnico", new FormatoUnicoBean());
         return "/FormatoUnico/formatoUnicoUsuario";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuarioObservaciones.do")
@@ -40,15 +41,15 @@ public class FormatoUnicoController {
     
     
    @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
-    public @ResponseBody String modificarDatosPersonalesAlumno( FormatoUnicoBean user, BindingResult result ){
-       System.out.println(user.getApellidoM()); 
+    public @ResponseBody FormatoUnicoErrores modificarDatosPersonalesAlumno( FormatoUnicoBean dt, BindingResult result ){
+       System.out.println(dt.isAcuerdoC()); 
        String returnText;
 	        if(!result.hasErrors()){
 	            returnText = "Nava dice que todo bien";
 	        }else{
 	            returnText = "Error el corbata llego";
 	        }
-	        return returnText;
+	        return new FormatoUnicoErrores();
     }
    
    
