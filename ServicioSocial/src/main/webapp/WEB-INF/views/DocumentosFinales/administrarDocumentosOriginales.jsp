@@ -1,8 +1,9 @@
 <%-- 
-    Document   : catalogoSanciones
-    Created on : 10/06/2013, 11:36:57 AM
+    Document   : administrarDocumentosOriginales
+    Created on : 12/06/2013, 09:44:29 AM
     Author     : Regules
 --%>
+
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -13,18 +14,18 @@
 
 <%
     // Create an ArrayList with test data
-//    ArrayList list = new ArrayList();
-//    Map sancion1 = new HashMap();
-//    sancion1.put("noSancion", "1");
-//    sancion1.put("descripcion", "No llenaste correctamente tu nombre");
-//    sancion1.put("horas", new Integer(20));
-//    list.add(sancion1);
-//    Map sancion2 = new HashMap();
-//    sancion2.put("noSancion", "2");
-//    sancion2.put("descripcion", "Parpadeaste 5 veces cuando contestabas tu formato unico");
-//    sancion2.put("horas", new Integer(10));
-//    list.add(sancion2);
-//    pageContext.setAttribute("sanciones", list);
+    ArrayList list = new ArrayList();
+    Map sancion1 = new HashMap();
+    sancion1.put("noSancion", "1");
+    sancion1.put("descripcion", "No llenaste correctamente tu nombre");
+    sancion1.put("horas", new Integer(20));
+    list.add(sancion1);
+    Map sancion2 = new HashMap();
+    sancion2.put("noSancion", "2");
+    sancion2.put("descripcion", "Parpadeaste 5 veces cuando contestabas tu formato unico");
+    sancion2.put("horas", new Integer(10));
+    list.add(sancion2);
+    pageContext.setAttribute("sanciones", list);
 %>
 
 <!DOCTYPE html>
@@ -57,7 +58,7 @@
 
             });
         </script>
-        <title>Cat&aacute;logo de Sanciones</title>
+        <title>Administraci&oacute;n Documentos Originales</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
         <div class="pagina" align="center">
@@ -69,30 +70,39 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;width:79%">
-                <h1>Cat&aacute;logo de Sanciones</h1>
-                <p>A continuaci&oacute;n se muestran las sanciones.</p>
+                <h1>Administraci&oacute;n Documentos Originales</h1>
+                <p>A continuaci&oacute;n se muestra una vista de los documentos originales de cada alumno.</p>
                 <div id="tabs">
                     <ul>
-                        <li><a href="#catalogoSanciones">Cat&aacute;logo de Sanciones</a></li>
-                        <li><a href="#nuevaSancion">Nueva Sanci&oacute;n</a></li>
+                        <li><a href="#documentosOriginales">Documentos Originales</a></li>
+                        <li><a href="#nuevaSancion">Recepci&oacute;n de Documentos Originales</a></li>
                     </ul>
-                    <div id="catalogoSanciones">
+                    <div id="documentosOriginales">
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                             <thead>
                                 <tr>
-                                    <th>No. Sanci&oacute;n</th>
-                                    <th>Descripci&oacute;n</th>
-                                    <th>Horas</th>
-                                    <th>Editar</th>
+                                    <th>No. Control</th>
+                                    <th>Nombre</th>
+                                    <th>Formato &Uacute;nico</th>
+                                    <th>Reportes Bimestrales</th>
+                                    <th>Reporte Final</th>
+                                    <th>Constancia de Pago</th>
+                                    <% if(1==1){
+                                        %>
+                                    <th>Reporte de Evaluaci&oacute;n</th>
+                                    <th>Constancia de Pago</th>
+                                    <%
+                                    }%>
+                                    <th>Reporte Final</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <core:forEach items="${sanciones}" var="current">
                                     <tr class='gradeX'>
-                                        <th><core:out value="${current.id}" /></th>
-                                        <th><core:out value="${current.detalle}" /></th>
-                                        <th><core:out value="${current.horasSancion}" /></th>
-                                        <th><a href="editaSancion.do?descripcion=${current.detalle}&horas=${current.horasSancion}" rel="shadowbox; width=1000px; height=400px">Editar Valores</a></th>
+                                        <th><core:out value="${current.noSancion}" /></th>
+                                        <th><core:out value="${current.descripcion}" /></th>
+                                        <th><core:out value="${current.horas}" /></th>
+                                        <th><a href="editaSancion.do?descripcion=${current.descripcion}&horas=${current.horas}" rel="shadowbox; width=1000px; height=400px">Editar Valores</a></th>
                                     </tr>
                                 </core:forEach>
                             </tbody>

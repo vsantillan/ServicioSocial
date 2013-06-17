@@ -4,6 +4,11 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.entidades.CatalogoSanciones;
+import edu.servicio.toluca.entidades.Sanciones;
+import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
+import java.math.BigInteger;
+import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class SancionesController 
 {
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoSancionesFacade")
+    private CatalogoSancionesFacade catalogoSancionesFacade;
+    
     @RequestMapping(method = RequestMethod.GET, value = "/sancionesAlumno.do")
     public String sancionesAlumno(Model modelo)
     {
@@ -39,8 +47,15 @@ public class SancionesController
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/catalogoSanciones.do")
-    public String catalogoSanciones(Model a)
+    public String catalogoSanciones(Model model)
     {
+        CatalogoSanciones cs=new CatalogoSanciones();
+        cs.setHorasSancion(BigInteger.valueOf(10));
+        cs.setTolerancia(BigInteger.valueOf(10));
+        cs.setDetalle("Es la segundaaaaaa sancion");
+        catalogoSancionesFacade.create(cs);
+        System.out.println("Conteo de registros Platica:"+catalogoSancionesFacade.count()); 
+        model.addAttribute("sanciones", catalogoSancionesFacade.findAll());
         return "/Sanciones/catalogoSanciones";
     }
     

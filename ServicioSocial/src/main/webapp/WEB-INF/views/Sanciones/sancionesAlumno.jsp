@@ -72,6 +72,7 @@
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
+                            <th>Detalle</th>
                             <th>Periodo</th>
                             <th>No control</th>
                             <th>Nombre</th>
@@ -80,12 +81,12 @@
                             <th>Horas restantes</th>
                             <th>Lugar</th>
                             <th>Acci&oacute;n</th>
-                            <th>Detalle</th>
                         </tr>
                     </thead>
                     <tbody>
                         <core:forEach items="${sancionAlumno}" var="current">
                         <tr class='gradeX'>
+                            <th><a href="detalleSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
                             <th><core:out value="${current.periodo}" /></th>
                             <th><core:out value="${current.noControl}" /></th>
                             <th><core:out value="${current.nombre}" /></th>
@@ -94,7 +95,6 @@
                             <th><core:out value="${current.horasRestantes}" /></th>
                             <th><core:out value="${current.lugar}" /></th>
                             <th><a href="pagoSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox">Pagar</a></th>
-                            <th><a href="detalleSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
                         </tr>
                       </core:forEach>
                     </tbody>
