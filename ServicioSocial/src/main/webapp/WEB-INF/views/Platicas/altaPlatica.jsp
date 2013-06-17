@@ -42,7 +42,9 @@
                     <form:form action="altaPlaticaBD.do" method="post" modelAttribute="platica" id="MyForm"> 
                         <table>
                             <tr>
-                                <td><form:input type="hidden" value="4" path="id"/> <label for="fecha">Fecha</label> </td>
+                                <td>
+                                    <form:input type="hidden" value="1" path="status"/>
+                                    <label for="fecha">Fecha</label> </td>
 
                                 <td> <form:input path="fecha" id="datepicker" size="15"/></td>  
                             </tr>
