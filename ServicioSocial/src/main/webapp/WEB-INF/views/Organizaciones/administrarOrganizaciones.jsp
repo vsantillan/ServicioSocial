@@ -70,12 +70,12 @@
                     <tbody>
                         <core:forEach items="${organizaciones}" var="current">
                             <tr class='gradeX'>
-                                <th><core:out value="${current.id}" /></th>
-                                <th><core:out value="${current.detalle}" /></th>
+                                <th><a href="detalleOrganizacion.do" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="borrarOrganizacion.do" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
+                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
-                                <th><core:out value="${current.tipoOrganizacion}" /></th>
+                                <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
                             </tr>
                         </core:forEach>
                     </tbody>

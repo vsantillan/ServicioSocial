@@ -51,11 +51,11 @@ public class SancionesController
     public String catalogoSanciones(Model model)
     {
         CatalogoSanciones cs=new CatalogoSanciones();
-        cs.setHorasSancion(BigInteger.valueOf(10));
-        cs.setTolerancia(BigInteger.valueOf(10));
-        cs.setDetalle("Es la tercera sancion");        
-        catalogoSancionesFacade.create(cs);
-        System.out.println("Conteo de registros Platica:"+catalogoSancionesFacade.count()); 
+//        cs.setHorasSancion(BigInteger.valueOf(10));
+//        cs.setTolerancia(BigInteger.valueOf(10));
+//        cs.setDetalle("Es la tercera sancion");        
+        //catalogoSancionesFacade.create(cs);
+        System.out.println("Conteo de registros Catalogo Sanciones:"+catalogoSancionesFacade.count()); 
         model.addAttribute("sanciones", catalogoSancionesFacade.findAll());
         return "/Sanciones/catalogoSanciones";
     }
