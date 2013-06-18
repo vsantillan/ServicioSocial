@@ -10,14 +10,15 @@ package edu.servicio.toluca.beans;
  */
 public class FormatoUnicoErrores {
     private String nombre;
-    private String apellido;
+    private String[] apellido=new String[2];
 
     
     
     public FormatoUnicoErrores()
     {
         this.nombre = "Hec";
-        this.apellido = "Morales";
+        this.apellido[0]="a";
+        this.apellido[1]="b";
     }
     /**
      * @return the nombre
@@ -36,14 +37,14 @@ public class FormatoUnicoErrores {
     /**
      * @return the apellido
      */
-    public String getApellido() {
+    public String[] getApellido() {
         return apellido;
     }
 
     /**
      * @param apellido the apellido to set
      */
-    public void setApellido(String apellido) {
+    public void setApellido(String[] apellido) {
         this.apellido = apellido;
     }
 }
