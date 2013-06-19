@@ -48,6 +48,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proyectos.findByVacantes", query = "SELECT p FROM Proyectos p WHERE p.vacantes = :vacantes"),
     @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles")})
 public class Proyectos implements Serializable {
+    @Size(max = 60)
+    @Column(name = "NOMBRE")
+    private String nombre;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -299,6 +302,14 @@ public class Proyectos implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Proyectos[ idProyecto=" + idProyecto + " ]";
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     
 }
