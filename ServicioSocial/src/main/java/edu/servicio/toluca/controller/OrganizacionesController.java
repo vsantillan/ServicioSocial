@@ -34,7 +34,8 @@ public class OrganizacionesController
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/validarOrganizaciones.do")
-    public String panelAdministradorOrganizaciones(Model a){
+    public String panelAdministradorOrganizaciones(Model model){
+        model.addAttribute("organizacion", instanciaFacade.findAll());
         return "/Organizaciones/validarOrganizaciones";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/validarProyectos.do")
