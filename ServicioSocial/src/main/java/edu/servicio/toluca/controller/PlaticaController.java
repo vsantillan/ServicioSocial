@@ -7,13 +7,16 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.entidades.Platica;
 import edu.servicio.toluca.sesion.PlaticaFacade;
+import edu.servicio.toluca.beans.PlaticaBean;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -72,7 +75,7 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
-    public String insertarPlatica(Platica platica, Model modelo) throws ParseException {
+    public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException {
         //parametros se recben en el metodo
         //inyectar en lapagina
         //instanciar clase del modelo para hacer el calculo de los numeros
@@ -92,13 +95,20 @@ public class PlaticaController {
 //        platica1.setId(platica.getId());
 //        platica1.setStatus((short) 1);
 //        platica1.setFechaMxFui(df.parse(fecha2));
+            if (result.hasErrors()) {
+			return "/Platicas/altaPlatica";
+		} else {
+                //platicaFacade.create(platica);
+                 modelo.addAttribute("notificacion", "platica dada de alta correctamente");
+        return "/Platicas/redirectAltaPlatica";
+			
+		}
+ 
 
 
-
-        platicaFacade.create(platica);
+        
        
         //  System.out.println("nombres es"+datos.getNombre());
-        modelo.addAttribute("notificacion", "platica dada de alta correctamente");
-        return "/Platicas/altaPlatica";
+       
     }
 }

@@ -9,6 +9,7 @@
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -26,8 +27,34 @@
 
             });
         </script>
-         
+        <script>
+            var fecha = new Date();
+            var anio = fecha.getFullYear();
+            // var select = document.getElementsByTagName('anio')[0];
+            var s = document.MyForm.anio;
+            select.options.length = 0; // clear out existing items
+            for (var i = 0; i < 4; i++) {
+                var option = document.createElement("option");
+                var d = ano + 1;
+                option.value = anio + 1;
+                //option.text="Aqui va el texto"; 
+                s.appendChild(option); // y aqui lo añadiste
+            }
 
+        </script>
+<style>
+.error {
+	color: #ff0000;
+}
+ 
+.errorblock {
+	color: #000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 8px;
+	margin: 16px;
+}
+</style>
         <title>Alta Plática</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');" >
@@ -46,17 +73,22 @@
                             <tr>
                                 <td>
                                     <form:input type="hidden" value="1" path="status"/>
-                                    <label for="fecha">Fecha</label> </td>
+                                    <label for="fecha">Fecha</label> 
+                                </td>
 
-                                <td> <form:input path="fecha" id="datepicker" size="15"/></td>  
+                                <td> <form:input path="fecha" id="datepicker" size="15"/></td> 
+                                <td><form:errors path="fecha" cssClass="error" /></td>
+                                
                             </tr>
                             <tr>
                                 <td>  <label for="hora">Hora</label> </td>
                                 <td>  <form:input  path="hora" id="hora2" size="15" /></td>  
+                                <td><form:errors path="hora" cssClass="error" /></td>
                             </tr>
                             <tr>
                                 <td>  <label for="lugar">Lugar De la Platica de Inducción</label></td>
                                 <td>  <form:input path="lugar" id="lugar" size="20" /> </td>  
+                                <td><form:errors path="lugar" cssClass="error" /></td>
                             </tr>
 
                             <tr>
@@ -96,6 +128,7 @@
                             <tr> 
                                 <td>  <label for="fecha_max_fui">Fecha máxima formato unico</label>  </td>
                                 <td><form:input  path="fechaMxFui" id="datepicker2" size="15" /> </td>
+                                <td><form:errors path="fechaMxFui" cssClass="error" /></td>
                             </tr>
                             <tr> 
                                 <td> <input type ="submit" value = "Guardar " /> </td>
