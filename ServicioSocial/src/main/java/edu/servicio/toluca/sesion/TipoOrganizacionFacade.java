@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author bustedvillain
+ * @author ekt
  */
 @Stateless
 public class TipoOrganizacionFacade extends AbstractFacade<TipoOrganizacion> {

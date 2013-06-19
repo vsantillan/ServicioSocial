@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bustedvillain
+ * @author ekt
  */
 @Entity
 @Table(name = "FORMATO_UNICO", catalog = "", schema = "GES_VIN")

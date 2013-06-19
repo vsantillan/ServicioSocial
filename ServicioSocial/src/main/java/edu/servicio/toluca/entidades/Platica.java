@@ -5,32 +5,32 @@
 package edu.servicio.toluca.entidades;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.GenericGenerator;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author mary
+ * @author ekt
  */
 @Entity
 @Table(name = "PLATICA", catalog = "", schema = "GES_VIN")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Platica.findAll", query = "SELECT p FROM Platica p WHERE P.status=1"),
+    @NamedQuery(name = "Platica.findAll", query = "SELECT p FROM Platica p"),
     @NamedQuery(name = "Platica.findById", query = "SELECT p FROM Platica p WHERE p.id = :id"),
     @NamedQuery(name = "Platica.findByFecha", query = "SELECT p FROM Platica p WHERE p.fecha = :fecha"),
     @NamedQuery(name = "Platica.findByHora", query = "SELECT p FROM Platica p WHERE p.hora = :hora"),
@@ -44,9 +44,7 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
 public class Platica implements Serializable {
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
-    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
@@ -82,6 +80,8 @@ public class Platica implements Serializable {
     @Size(max = 400)
     @Column(name = "DESCRIPCION")
     private String descripcion;
+    @OneToMany(mappedBy = "platicaId")
+    private Collection<FoliosPlatica> foliosPlaticaCollection;
 
     public Platica() {
     }
@@ -182,6 +182,15 @@ public class Platica implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    @XmlTransient
+    public Collection<FoliosPlatica> getFoliosPlaticaCollection() {
+        return foliosPlaticaCollection;
+    }
+
+    public void setFoliosPlaticaCollection(Collection<FoliosPlatica> foliosPlaticaCollection) {
+        this.foliosPlaticaCollection = foliosPlaticaCollection;
     }
 
     @Override

@@ -18,13 +18,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bustedvillain
+ * @author ekt
  */
 @Entity
 @Table(name = "CODIGOS_POSTALES", catalog = "", schema = "GES_VIN")
@@ -32,8 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "CodigosPostales.findAll", query = "SELECT c FROM CodigosPostales c"),
     @NamedQuery(name = "CodigosPostales.findByIdCp", query = "SELECT c FROM CodigosPostales c WHERE c.idCp = :idCp"),
-    @NamedQuery(name = "CodigosPostales.findByCp", query = "SELECT c FROM CodigosPostales c WHERE c.cp = :cp"),
-    @NamedQuery(name = "CodigosPostales.findByColonia", query = "SELECT c FROM CodigosPostales c WHERE c.colonia = :colonia")})
+    @NamedQuery(name = "CodigosPostales.findByCp", query = "SELECT c FROM CodigosPostales c WHERE c.cp = :cp")})
 public class CodigosPostales implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,11 +43,8 @@ public class CodigosPostales implements Serializable {
     @NotNull
     @Column(name = "CP")
     private int cp;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "COLONIA")
-    private String colonia;
+    @OneToMany(mappedBy = "idCp")
+    private Collection<Colonia> coloniaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCp")
     private Collection<Instancia> instanciaCollection;
     @JoinColumn(name = "ID_TIPO_LOCALIDAD", referencedColumnName = "ID_TIPO_LOCALIDAD")
@@ -74,10 +69,9 @@ public class CodigosPostales implements Serializable {
         this.idCp = idCp;
     }
 
-    public CodigosPostales(Integer idCp, int cp, String colonia) {
+    public CodigosPostales(Integer idCp, int cp) {
         this.idCp = idCp;
         this.cp = cp;
-        this.colonia = colonia;
     }
 
     public Integer getIdCp() {
@@ -96,12 +90,13 @@ public class CodigosPostales implements Serializable {
         this.cp = cp;
     }
 
-    public String getColonia() {
-        return colonia;
+    @XmlTransient
+    public Collection<Colonia> getColoniaCollection() {
+        return coloniaCollection;
     }
 
-    public void setColonia(String colonia) {
-        this.colonia = colonia;
+    public void setColoniaCollection(Collection<Colonia> coloniaCollection) {
+        this.coloniaCollection = coloniaCollection;
     }
 
     @XmlTransient

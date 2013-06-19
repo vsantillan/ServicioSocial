@@ -4,12 +4,8 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.entidades.CodigosPostales;
-import edu.servicio.toluca.entidades.Instancia;
-import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,26 +25,6 @@ public class OrganizacionesController
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model)
     {
-//        CodigosPostales cp=new CodigosPostales();
-//        cp.setIdCp(1);
-//        TipoOrganizacion to=new TipoOrganizacion();
-//        to.setIdTipoOrganizacion(BigDecimal.valueOf(1));
-//        Instancia instancia=new Instancia();
-//        instancia.setCorreo("algo@algo.com");
-//        instancia.setDomicilio("Av. Sin salida No. 000");
-//        instancia.setEstatus(BigInteger.valueOf(1));
-//        instancia.setIdCp(cp);
-//        instancia.setNombre("OXXO");
-//        instancia.setPassword("123");
-//        instancia.setPuesto("puesto");
-//        instancia.setRfc("qqqqqq1111");
-//        instancia.setTelefono(7220228855L);
-//        instancia.setTipoOrganizacion(to);
-//        instancia.setTitular("Roy Nava");
-//        instancia.setUsuario("Roy Nava Usuario");
-//        instancia.setValidacionAdmin(BigInteger.valueOf(1));
-//        instanciaFacade.create(instancia);
-        Instancia instancia=new Instancia();
         model.addAttribute("organizaciones", instanciaFacade.findAll());
         return "/Organizaciones/administrarOrganizaciones";
     }
@@ -104,7 +80,9 @@ public class OrganizacionesController
         return "/Organizaciones/detalleProyecto";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/detalleOrganizacion.do")
-    public String detalleOrganizacion(Model a){
+    public String detalleOrganizacion(int id,Model model)
+    {
+        model.addAttribute("intancia", instanciaFacade.find(id));
         return "/Organizaciones/detalleOrganizacion";
     }
     

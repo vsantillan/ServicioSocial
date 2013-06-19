@@ -1,3 +1,8 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="css/cssTablaDetallesOrganizaciones.css" />
@@ -5,6 +10,7 @@
     <body>
         <div id="muestradatos">
             <table class="table">
+                
                 <tr>
                     <td colspan="2">
                         <h2>Detalle de Empresas</h2>
@@ -12,7 +18,7 @@
                 </tr>
                 <tr>
                     <td><p>Nombre de la Organizaci&oacute;n</p></td>
-                    <td><p>Hector Guzman Nava</p></td>
+                    <td><p>${instancia.nombre}</p></td>
                 </tr>
                 <tr>
                     <td><p>RCF:</p></td>
