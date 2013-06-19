@@ -117,6 +117,214 @@
                             </table>
                         </form:form>
                     </div>
+                    <div id="datosContacto">
+                        <form>
+                            <table>
+                                <tr>
+                                    <td>Calle:</td>
+                                    <td><input type ="text" name ="calle"> </td>
+                                </tr>
+                                <tr>
+                                    <td>No. Int.</td>
+                                    <td><input type ="text" name ="numero_i"> </td>
+                                </tr>
+                                <tr>
+                                    <td>No. Ext.</td>
+                                    <td><input type ="text" name ="numero_e"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Colonia:</td>
+                                    <td><input type ="text" name ="colonia"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Localidad:</td>
+                                    <td><input type ="text" name ="localidad"> </td>
+                                </tr>
+                                <tr>
+                                    <td>C&oacute;digo postal:</td>
+                                    <td><input type ="text" name ="cp"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Entre Calles:</td>
+                                    <td><input type ="text" name ="entre_calles"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Tel&eacute;fono casa:</td>
+                                    <td><input type ="text" name ="telefono_casa"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Tel&eacute;fono cel:</td>
+                                    <td><input type ="text" name ="telefono_cel"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Tel&eacute;fono oficina:</td>
+                                    <td><input type ="text" name ="telefono_oficina"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Twitter:</td>
+                                    <td><input type ="text" name ="twitter"> </td>
+                                </tr>
+                                <tr>
+                                    <td>Facebook:</td>
+                                    <td><input type ="text" name ="facebook"> </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type ="submit" value="Guardar Datos de Contacto" > </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div id="datosAcademicos">
+                        <form>
+                            <table class="tablaInput300">
+                                <tr> 
+                                    <td>Numero de control</td>
+                                    <td><input type ="text" name ="ncontrol" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Carrera</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Periodo</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Semestre</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Total de cr&eacute;ditos cubiertos</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                                <tr>
+                                    <td>Porcentaje del total de cr&eacute;ditos cubiertos</td>
+                                    <td><input type ="text" name ="carrera" readonly/></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div id="datosOrganizaciones">
+                        <form>
+                            <table>
+                                <tr>
+                                    <td>Organizaci&oacute;n:</td>
+                                    <td>
+                                        <select name="organizacion">
+                                            <option value="">ORG 1</option>
+                                            <option value="">ORG 2</option>
+                                            <option value="">ORG 3</option>
+                                        </select> 
+                                    </td>
+                                    <td>
+                                        Modalidad 
+                                        <select name="modalidad">
+                                            <option value="">Interno</option>
+                                            <option value="">Externo</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Proyecto:</td>
+                                    <td>
+                                        <select name="proyecto">
+                                            <option value="">Proy 1</option>
+                                            <option value="">Proy 2</option>
+                                            <option value="">Proy 3</option>
+                                        </select> 
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                            <table class="tablaInput300">
+                                <tr>
+                                    <td>Calle</td>
+                                    <td><input type ="text"/></td> 
+                                    <td colspan="2">N&uacute;mero exterior <input style="width:50px"  type ="text"/>
+                                    N&uacute;mero interior <input style="width:50px"  type ="text"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Colonia/Fracc</td>
+                                    <td><input type ="text"/></td> 
+                                    <td>Municipio</td>
+                                    <td><input type ="text"/></td> 
+                                </tr>
+                                <tr>
+                                    <td>Estado</td>
+                                    <td><input type ="text"/></td> 
+                                    <td>C.P.</td>
+                                    <td><input type ="text"/></td> 
+                                </tr>
+                                <tr>
+                                    <td>Titular</td>
+                                    <td><input type ="text"/></td> 
+                                    <td>Puesto</td>
+                                    <td><input type ="text"/></td> 
+                                </tr>
+                                <tr>
+                                    <td>Tel&eacute;fono del titular</td>
+                                    <td><input type ="text"/></td> 
+                                    
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><input type ="submit" value="Guardar Datos de Organizaci&oacute;n" > </td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div id="horarios">
+                        <form>
+                            <table>
+                                <tr>
+                                    <th></th>
+                                    <th>Lunes</th>
+                                    <th>Martes</th>
+                                    <th>Mi&eacute;rcoles</th>
+                                    <th>Jueves</th>
+                                    <th>Viernes</th>
+                                    <th>S&aacute;bado</th>
+                                    <th>Domingo</th> 
+                                </tr>
+                                <tr>
+                                    <th>Horario Inicio:</th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[1]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[2]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[3]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[4]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[5]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[6]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[7]" value="" /></th>
+                                </tr>
+                                <tr>
+                                    <th>Horario Final</th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[8]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[9]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[10]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[11]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[12]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[13]" value="" /></th>
+                                    <th><input type="text" style="width: 70px;" id="timepicker.[14]" value="" /></th>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="8"><input type ="submit" value="Guardar Datos de Horario" ></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <div id="imprimirFui">
+                        <h1>Presiona el bot&oacute;n para descargar</h1>
+                        <a href=""><img src="imagenes/descargar.png" /></a>
+                    </div>
+                    <div id="subirFui">
+                        <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
+                        <form>
+                            <input type="file"  /> <br/>
+                            <input type="submit" value="Subir" />
+                        </form>
+                    </div>
                 </div>
                 <div id="observaciones">
                     <b>Debes atender los siguientes puntos</b><br/>
@@ -126,6 +334,7 @@
                     </ul>
                     
                 </div>
+            
             <div style="clear:both;"></div>
         </div>
         <%-- fin del contenido --%>
