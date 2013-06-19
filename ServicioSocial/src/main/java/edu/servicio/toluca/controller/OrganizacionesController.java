@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
@@ -81,9 +82,9 @@ public class OrganizacionesController
         return "/Organizaciones/detalleProyecto";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/detalleOrganizacion.do")
-    public String detalleOrganizacion(int id,Model model)
+    public String detalleOrganizacion(BigDecimal id,Model model)
     {
-        model.addAttribute("intancia", instanciaFacade.find(id));
+        model.addAttribute("instancia", instanciaFacade.find(id));
         return "/Organizaciones/detalleOrganizacion";
     }
     
@@ -101,5 +102,9 @@ public class OrganizacionesController
         return "/Organizaciones/mensajeOrganizacion";
     }
     
-    
+    //Editar Organizacion
+    @RequestMapping(method = RequestMethod.GET, value = "/editarOrganizacion.do")
+    public String editarOrganizacion(Model a){
+        return "/Organizaciones/editarOrganizacion";
+    }
 }
