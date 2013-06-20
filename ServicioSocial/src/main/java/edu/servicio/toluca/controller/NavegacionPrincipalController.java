@@ -9,13 +9,23 @@ package edu.servicio.toluca.controller;
  * @author bustedvillain
  */
 
+import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
+import edu.servicio.toluca.sesion.CodigosPostalesFacade;
+import edu.servicio.toluca.sesion.InstanciaFacade;
+import javax.ejb.EJB;
+import org.apache.taglibs.standard.tag.common.xml.ForEachTag;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class NavegacionPrincipalController {
+public class NavegacionPrincipalController {       
+    @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
+    public InstanciaFacade instanciaFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
+    public CodigosPostalesFacade codigosPostalesFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model a){
@@ -43,7 +53,9 @@ public class NavegacionPrincipalController {
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/registroOrganizaciones.do")
-    public String registroOrganizaciones(Model a){
+    public String registroOrganizaciones(Model model){ 
+        ConsultasOrganizaciones consultasOrganizaciones = new ConsultasOrganizaciones();        
+        model.addAttribute("preOrganizaciones", instanciaFacade.findAll());      
         return "/Organizaciones/registroOrganizaciones";
     }
     

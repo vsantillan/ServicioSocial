@@ -25,7 +25,7 @@
         <div id="contenido">
             <center> 
                 <h1>Alta de Proyecto</h1>
-                <form:form name="altaOrganizacion" id="MyForm" action="gdaAltaOrganizacion.do" method="POST">
+                <form:form name="altaOrganizacion" id="MyForm" action="gdaAltaOrganizacionUsuario.do" method="POST">
                     <table>
                         <tr>
                             <td> <label for="nombre">Nombre del Proyecto:</label> </td>

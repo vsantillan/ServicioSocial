@@ -7,6 +7,7 @@ package edu.servicio.toluca.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Colonia.findByNombre", query = "SELECT c FROM Colonia c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "Colonia.findByStatus", query = "SELECT c FROM Colonia c WHERE c.status = :status")})
 public class Colonia implements Serializable {
+    @OneToMany(mappedBy = "idColonia")
+    private Collection<Instancia> instanciaCollection;
+    @OneToMany(mappedBy = "idColonia")
+    private Collection<Proyectos> proyectosCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -118,6 +125,24 @@ public class Colonia implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Colonia[ idColonia=" + idColonia + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Instancia> getInstanciaCollection() {
+        return instanciaCollection;
+    }
+
+    public void setInstanciaCollection(Collection<Instancia> instanciaCollection) {
+        this.instanciaCollection = instanciaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Proyectos> getProyectosCollection() {
+        return proyectosCollection;
+    }
+
+    public void setProyectosCollection(Collection<Proyectos> proyectosCollection) {
+        this.proyectosCollection = proyectosCollection;
     }
     
 }

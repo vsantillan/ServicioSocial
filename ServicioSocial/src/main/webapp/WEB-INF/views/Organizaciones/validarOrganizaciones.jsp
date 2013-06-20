@@ -74,18 +74,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                              <core:forEach items="${organizacion}" var="current">
-                                    <tr class='gradeX'>
-                                        <th><a href="#" class="btn-validar-org"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
-                                        <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                                        <th><core:out value="${current.titular}" /></th>
-                                        <th><core:out value="${current.rfc}" /></th>
-                                        <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
-                                       
-                                    </tr>
-                                </core:forEach>
+                        <core:forEach items="${organizacion}" var="current">
+                            <tr class='gradeX'>
+                                <th><a href="#" class="btn-validar-org"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                <th><core:out value="${current.titular}" /></th>
+                                <th><core:out value="${current.rfc}" /></th>
+                                <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
 
-
+                            </tr>
+                        </core:forEach>
                     </tbody>
                 </table>
 

@@ -107,4 +107,20 @@ public class OrganizacionesController
     public String editarOrganizacion(Model a){
         return "/Organizaciones/editarOrganizacion";
     }
+    
+    //Alta Organizaicon visitante
+    @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaOrganizacionVisitante.do")
+    public String gdaOrganizacionVisitante(Model a){
+        
+        
+        return "/Organizaciones/editarOrganizacion";
+    }
+    
+    //Alta de organizacion por pre-registro
+    @RequestMapping(method = RequestMethod.GET, value = "/confirmaOrganizacionVisitante.do")
+    public String confirmaOrganizacionVisitante(Model model){        
+        
+      
+        return "/Organizaciones/editarOrganizacion";
+    }
 }

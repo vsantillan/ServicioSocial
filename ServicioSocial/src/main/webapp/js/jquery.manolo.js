@@ -44,9 +44,56 @@ $(document).ready(function() {
                 window.location.href = "panelOrganizacion.do";
             }, 3000)
         }
+    })
 
+    function objetoAjax() {
+        var xmlhttp = false;
+        try {
+            xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (E) {
+                xmlhttp = false;
+            }
+        }
 
+        if (!xmlhttp && typeof XMLHttpRequest != 'undefined') {
+            xmlhttp = new XMLHttpRequest();
 
+        }
+
+        return xmlhttp;
+
+    }
+
+//Cargar escuelas con AJAX
+    function cargarColonias(idCP) {
+
+        var comboColonias = document.getElementById("colonia");
+        var notice = document.getElementById("notice");
+
+        notice.innerHTML = "<img src='imagenes/loading.gif' width='30'>";
+        var peticion = objetoAjax();
+
+        peticion.open("GET", "cargarColonias.do?idCp=" + idCP);
+        peticion.onreadystatechange = function() {
+            if (peticion.readyState == 4) {
+                //escribimos la respuesta
+                comboColonias.length = 0;
+                comboColonias.innerHTML = peticion.responseText;
+                notice.innerHTML = "";
+                if (comboColonias.options[comboColonias.selectedIndex].value == 0) {
+                    $("#otra_colonia").show("slow");
+                }
+            }
+        }
+        peticion.send(null);
+    }
+
+//Evento de teclado para codigos postales registroOrganizacion.do
+    $("#codigo_postal").keyup(function(event) {
+        cargarColonias($("#codigo_postal").val());
     })
 });
 

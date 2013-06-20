@@ -10,6 +10,7 @@
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,13 +20,15 @@
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <script src="js/jquery.manolo.js"></script>
         <link rel="stylesheet" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
         <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
         <script>
             $(document).ready(function() {
-                $(".MyForm").formly();
-            })
+                $(".MyForm").formly();                
+            })           
         </script>
+            
         <title>Departamento de Servicio Social :: Organizaciones ::</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
@@ -38,7 +41,7 @@
                 <br/>
                 <h1>Registro de Organizaciones</h1>
                 <p><h4>Busque si la Organizaci&oacute;n ya esta pre-registrada</h4></p>
-                <form:form name="altaOrganizacion" class="MyForm" action="gdaAltaOrganizacion.do" method="POST" style="width:60%;">
+                <form:form name="altaOrganizacion" class="MyForm" action="confirmaOrganizacionVisitante.do" method="POST" style="width:60%;">
                     <table>
                         <tr> 
                             <td> <label for="nombre-organizacion">Organizaci&oacute;n:</label> </td>
@@ -46,10 +49,9 @@
                                 <div class="ui-widget">
                                     <select class="combobox-autocomplete">
                                         <option value="">Busqueda de Organizaci&oacute;n</option>
-                                        <option value="1">Instituto Tecnol&oacute;gico de Toluca</option>
-                                        <option value="2">IMMS</option>
-                                        <option value="3">Primaria D&iacute;z Ordaz</option>
-                                        <option value="4">General Motors</option>
+                                        <core:forEach items="${preOrganizaciones}" var="organizacion">
+                                            <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
+                                        </core:forEach> 
                                     </select>
                                 </div>
                             </td>
@@ -60,9 +62,10 @@
                     </table>
                 </form:form>
                 <br/>
+                
                 <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h4></p>
                 <%-- Formulario Nueva Organizacion --%>
-                <form:form name="altaOrganizacion" class="MyForm" action="gdaAltaOrganizacion.do" method="POST" style="width:60%;">
+                <form:form name="altaOrganizacion" class="MyForm" action="gdaAltaOrganizacionVisitante.do" method="POST" style="width:60%;">
                     <table>
                         <tr>
                             <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
@@ -90,30 +93,32 @@
                         </tr>
                         <tr>
                             <td>  <label for="lugar">C&oacute;digo Postal:</label></td>
-                            <td>  <input type="text" name="lugar" id="cp" size="20" require="true"/> </td>  
+                            <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" require="true"></td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Colonia:</label></td>
-                            <td>  <select name="lugar" id="colonia" >
-                                    <option value="0">Vicente Guerrero</option>
-                                    <option value="1">Plazas de San Buenaventura</option>
-                                </select> 
+                            <td>  
+                                <div id="notice"></div>
+                                <select name="colonia" id="colonia"></select> 
+                                <div id="otra_colonia" style="display:none;">
+                                    <input type="text" name="otra_colonia" id="otra_colonia" />
+                                </div>
                             </td>  
                         </tr>                        
                         <tr>
                             <td>  <label for="lugar">Estado:</label></td>
-                            <td>  <input type="text" name="lugar" id="estado" size="20" require="true"/> </td>  
+                            <td>  <input type="text" name="lugar" id="estado" size="20" require="true" disabled="true"/> </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Municipio:</label></td>
-                            <td>  <input type="text" name="lugar" id="municipio" size="20" require="true"/> </td>  
+                            <td>  <input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/> </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Ciudad</label></td>
-                            <td>  <input type="text" name="lugar" id="ciudad" size="20" require="true"/> </td>  
+                            <td>  <input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/> </td>  
                         </tr>                        
                         <tr>
-                            <td> <label for="semestre">Tipo de Organizaci&oacute;n:</label> </td>
+                            <td> <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> </td>
                             <td>
                                 <select id="tipo_organizacion" name="tipo_organizacion">
                                     <option value="1">Gobierno Federal</option>

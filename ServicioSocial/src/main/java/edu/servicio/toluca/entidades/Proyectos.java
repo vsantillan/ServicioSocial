@@ -48,6 +48,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proyectos.findByVacantes", query = "SELECT p FROM Proyectos p WHERE p.vacantes = :vacantes"),
     @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles")})
 public class Proyectos implements Serializable {
+    @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
+    @ManyToOne
+    private Colonia idColonia;
     @Size(max = 60)
     @Column(name = "NOMBRE")
     private String nombre;
@@ -310,6 +313,14 @@ public class Proyectos implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Colonia getIdColonia() {
+        return idColonia;
+    }
+
+    public void setIdColonia(Colonia idColonia) {
+        this.idColonia = idColonia;
     }
     
 }
