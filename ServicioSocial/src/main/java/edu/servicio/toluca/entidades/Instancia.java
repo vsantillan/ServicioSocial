@@ -12,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,11 +23,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Entity
 @Table(name = "INSTANCIA", catalog = "", schema = "GES_VIN")
@@ -50,9 +48,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Instancia implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
-    @GeneratedValue(generator="generator")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_INSTANCIA")
@@ -102,9 +98,9 @@ public class Instancia implements Serializable {
     @JoinColumn(name = "TIPO_ORGANIZACION", referencedColumnName = "ID_TIPO_ORGANIZACION")
     @ManyToOne(optional = false)
     private TipoOrganizacion tipoOrganizacion;
-    @JoinColumn(name = "ID_CP", referencedColumnName = "ID_CP")
-    @ManyToOne(optional = false)
-    private CodigosPostales idCp;
+    @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
+    @ManyToOne
+    private Colonia idColonia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<RetroalimentacionInstancia> retroalimentacionInstanciaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
@@ -231,12 +227,12 @@ public class Instancia implements Serializable {
         this.tipoOrganizacion = tipoOrganizacion;
     }
 
-    public CodigosPostales getIdCp() {
-        return idCp;
+    public Colonia getIdColonia() {
+        return idColonia;
     }
 
-    public void setIdCp(CodigosPostales idCp) {
-        this.idCp = idCp;
+    public void setIdColonia(Colonia idColonia) {
+        this.idColonia = idColonia;
     }
 
     @XmlTransient

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Entity
 @Table(name = "EGRESADO", catalog = "", schema = "GES_VIN")

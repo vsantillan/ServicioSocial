@@ -7,7 +7,6 @@ package edu.servicio.toluca.entidades;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Entity
 @Table(name = "CODIGOS_POSTALES", catalog = "", schema = "GES_VIN")
@@ -45,8 +44,6 @@ public class CodigosPostales implements Serializable {
     private int cp;
     @OneToMany(mappedBy = "idCp")
     private Collection<Colonia> coloniaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCp")
-    private Collection<Instancia> instanciaCollection;
     @JoinColumn(name = "ID_TIPO_LOCALIDAD", referencedColumnName = "ID_TIPO_LOCALIDAD")
     @ManyToOne(optional = false)
     private TipoLocalidad idTipoLocalidad;
@@ -59,8 +56,6 @@ public class CodigosPostales implements Serializable {
     @JoinColumn(name = "ID_CIUDAD", referencedColumnName = "ID_CIUDAD")
     @ManyToOne
     private Ciudades idCiudad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCp")
-    private Collection<Proyectos> proyectosCollection;
 
     public CodigosPostales() {
     }
@@ -99,15 +94,6 @@ public class CodigosPostales implements Serializable {
         this.coloniaCollection = coloniaCollection;
     }
 
-    @XmlTransient
-    public Collection<Instancia> getInstanciaCollection() {
-        return instanciaCollection;
-    }
-
-    public void setInstanciaCollection(Collection<Instancia> instanciaCollection) {
-        this.instanciaCollection = instanciaCollection;
-    }
-
     public TipoLocalidad getIdTipoLocalidad() {
         return idTipoLocalidad;
     }
@@ -138,15 +124,6 @@ public class CodigosPostales implements Serializable {
 
     public void setIdCiudad(Ciudades idCiudad) {
         this.idCiudad = idCiudad;
-    }
-
-    @XmlTransient
-    public Collection<Proyectos> getProyectosCollection() {
-        return proyectosCollection;
-    }
-
-    public void setProyectosCollection(Collection<Proyectos> proyectosCollection) {
-        this.proyectosCollection = proyectosCollection;
     }
 
     @Override

@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Entity
 @Table(name = "PROYECTOS", catalog = "", schema = "GES_VIN")
@@ -46,14 +46,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Proyectos.findByModalidad", query = "SELECT p FROM Proyectos p WHERE p.modalidad = :modalidad"),
     @NamedQuery(name = "Proyectos.findByFechaAlta", query = "SELECT p FROM Proyectos p WHERE p.fechaAlta = :fechaAlta"),
     @NamedQuery(name = "Proyectos.findByVacantes", query = "SELECT p FROM Proyectos p WHERE p.vacantes = :vacantes"),
-    @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles")})
+    @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles"),
+    @NamedQuery(name = "Proyectos.findByNombre", query = "SELECT p FROM Proyectos p WHERE p.nombre = :nombre")})
 public class Proyectos implements Serializable {
-    @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
-    @ManyToOne
-    private Colonia idColonia;
-    @Size(max = 60)
-    @Column(name = "NOMBRE")
-    private String nombre;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -106,6 +101,9 @@ public class Proyectos implements Serializable {
     @NotNull
     @Column(name = "VACANTES_DISPONIBLES")
     private BigInteger vacantesDisponibles;
+    @Size(max = 60)
+    @Column(name = "NOMBRE")
+    private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Horario> horarioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
@@ -118,9 +116,9 @@ public class Proyectos implements Serializable {
     @JoinColumn(name = "ID_INSTANCIA", referencedColumnName = "ID_INSTANCIA")
     @ManyToOne(optional = false)
     private Instancia idInstancia;
-    @JoinColumn(name = "ID_CP", referencedColumnName = "ID_CP")
-    @ManyToOne(optional = false)
-    private CodigosPostales idCp;
+    @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
+    @ManyToOne
+    private Colonia idColonia;
 
     public Proyectos() {
     }
@@ -231,6 +229,14 @@ public class Proyectos implements Serializable {
         this.vacantesDisponibles = vacantesDisponibles;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     @XmlTransient
     public Collection<Horario> getHorarioCollection() {
         return horarioCollection;
@@ -274,12 +280,12 @@ public class Proyectos implements Serializable {
         this.idInstancia = idInstancia;
     }
 
-    public CodigosPostales getIdCp() {
-        return idCp;
+    public Colonia getIdColonia() {
+        return idColonia;
     }
 
-    public void setIdCp(CodigosPostales idCp) {
-        this.idCp = idCp;
+    public void setIdColonia(Colonia idColonia) {
+        this.idColonia = idColonia;
     }
 
     @Override
@@ -305,22 +311,6 @@ public class Proyectos implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Proyectos[ idProyecto=" + idProyecto + " ]";
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Colonia getIdColonia() {
-        return idColonia;
-    }
-
-    public void setIdColonia(Colonia idColonia) {
-        this.idColonia = idColonia;
     }
     
 }

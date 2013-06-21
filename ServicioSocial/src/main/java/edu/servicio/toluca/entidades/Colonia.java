@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Entity
 @Table(name = "COLONIA", catalog = "", schema = "GES_VIN")
@@ -36,10 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Colonia.findByNombre", query = "SELECT c FROM Colonia c WHERE c.nombre = :nombre"),
     @NamedQuery(name = "Colonia.findByStatus", query = "SELECT c FROM Colonia c WHERE c.status = :status")})
 public class Colonia implements Serializable {
-    @OneToMany(mappedBy = "idColonia")
-    private Collection<Instancia> instanciaCollection;
-    @OneToMany(mappedBy = "idColonia")
-    private Collection<Proyectos> proyectosCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -57,6 +53,10 @@ public class Colonia implements Serializable {
     @JoinColumn(name = "ID_CP", referencedColumnName = "ID_CP")
     @ManyToOne
     private CodigosPostales idCp;
+    @OneToMany(mappedBy = "idColonia")
+    private Collection<Instancia> instanciaCollection;
+    @OneToMany(mappedBy = "idColonia")
+    private Collection<Proyectos> proyectosCollection;
 
     public Colonia() {
     }
@@ -102,6 +102,24 @@ public class Colonia implements Serializable {
         this.idCp = idCp;
     }
 
+    @XmlTransient
+    public Collection<Instancia> getInstanciaCollection() {
+        return instanciaCollection;
+    }
+
+    public void setInstanciaCollection(Collection<Instancia> instanciaCollection) {
+        this.instanciaCollection = instanciaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Proyectos> getProyectosCollection() {
+        return proyectosCollection;
+    }
+
+    public void setProyectosCollection(Collection<Proyectos> proyectosCollection) {
+        this.proyectosCollection = proyectosCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -125,24 +143,6 @@ public class Colonia implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Colonia[ idColonia=" + idColonia + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Instancia> getInstanciaCollection() {
-        return instanciaCollection;
-    }
-
-    public void setInstanciaCollection(Collection<Instancia> instanciaCollection) {
-        this.instanciaCollection = instanciaCollection;
-    }
-
-    @XmlTransient
-    public Collection<Proyectos> getProyectosCollection() {
-        return proyectosCollection;
-    }
-
-    public void setProyectosCollection(Collection<Proyectos> proyectosCollection) {
-        this.proyectosCollection = proyectosCollection;
     }
     
 }

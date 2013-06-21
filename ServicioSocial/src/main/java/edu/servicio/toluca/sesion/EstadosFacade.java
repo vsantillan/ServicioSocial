@@ -4,7 +4,7 @@
  */
 package edu.servicio.toluca.sesion;
 
-import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.Estados;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author bustedvillain
  */
 @Stateless
-public class InstanciaFacade extends AbstractFacade<Instancia> {
+public class EstadosFacade extends AbstractFacade<Estados> {
     @PersistenceContext(unitName = "servicioPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class InstanciaFacade extends AbstractFacade<Instancia> {
         return em;
     }
 
-    public InstanciaFacade() {
-        super(Instancia.class);
+    public EstadosFacade() {
+        super(Estados.class);
     }
     
 }

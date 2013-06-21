@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Stateless
 public class RegObservacionesFacade extends AbstractFacade<RegObservaciones> {

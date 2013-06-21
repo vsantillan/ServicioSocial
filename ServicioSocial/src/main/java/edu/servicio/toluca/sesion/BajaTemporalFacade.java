@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Stateless
 public class BajaTemporalFacade extends AbstractFacade<BajaTemporal> {

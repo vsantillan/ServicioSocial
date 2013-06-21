@@ -17,21 +17,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Entity
 @Table(name = "PLATICA", catalog = "", schema = "GES_VIN")
@@ -49,31 +42,23 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
     @NamedQuery(name = "Platica.findByStatus", query = "SELECT p FROM Platica p WHERE p.status = :status"),
     @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui"),
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
-
-
 public class Platica implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
     private Long id;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA")
-  //  @Temporal(TemporalType.DATE)
-    
+    @Temporal(TemporalType.DATE)
     private Date fecha;
-    
     @Size(max = 8)
     @Column(name = "HORA")
-    @NotEmpty
     private String hora;
     @Size(max = 25)
     @Column(name = "LUGAR")
-    @NotEmpty
     private String lugar;
     @Basic(optional = false)
     @NotNull
@@ -91,7 +76,6 @@ public class Platica implements Serializable {
     private Short status;
     @Column(name = "FECHA_MX_FUI")
     @Temporal(TemporalType.DATE)
-    
     private Date fechaMxFui;
     @Size(max = 400)
     @Column(name = "DESCRIPCION")
@@ -233,4 +217,5 @@ public class Platica implements Serializable {
     public String toString() {
         return "edu.servicio.toluca.entidades.Platica[ id=" + id + " ]";
     }
+    
 }

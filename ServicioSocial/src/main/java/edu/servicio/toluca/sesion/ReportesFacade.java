@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author ekt
+ * @author bustedvillain
  */
 @Stateless
 public class ReportesFacade extends AbstractFacade<Reportes> {
