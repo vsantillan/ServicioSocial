@@ -6,6 +6,7 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.sesion.InstanciaFacade;
+import edu.servicio.toluca.sesion.ProyectosFacade;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,10 @@ public class OrganizacionesController
 {
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     private InstanciaFacade instanciaFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
+    private ProyectosFacade proyectosFacade;
+    
     
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model)
@@ -40,7 +45,8 @@ public class OrganizacionesController
         return "/Organizaciones/validarOrganizaciones";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/validarProyectos.do")
-    public String panelAdministradorProyectos(Model a){
+    public String panelAdministradorProyectos(Model model){
+        model.addAttribute("proyecto", proyectosFacade.findAll());
         return "/Organizaciones/validarProyectos";
     }
     
@@ -78,7 +84,8 @@ public class OrganizacionesController
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/detalleProyecto.do")
-    public String detalleProyecto(Model a){
+    public String detalleProyecto(BigDecimal id,Model model){
+        model.addAttribute("proyectoDetalle", proyectosFacade.find(id));
         return "/Organizaciones/detalleProyecto";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/detalleOrganizacion.do")

@@ -4,7 +4,13 @@
     Author     : roy
 --%>
 
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -63,19 +69,21 @@
                         <tr>
                             <th>Acci&oacute;n</th>
                             <th>Ver proyecto</th>
-                            <th>Nombre del proyecto</th>
+                            <th>(Responsable o Nombre?)del proyecto</th>
                             <th>Organizaci&oacute;n</th>
                             <th>Numero de vacantes</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class='gradeX'>
-                            <th><a href="#" class="btn-validar-proyecto"><img src="imagenes/paloma.png" width="30"/><a href="retroalimentacionProyecto.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
-                            <th><a href="detalleProyecto.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th>Cierto proyecto</th>
-                            <th>el hexor</th>
-                            <th>1000</th>       
-                        </tr>
+                        <core:forEach items="${proyecto}" var="current">
+                                    <tr class='gradeX'>
+                                        <th><a href="#" class="btn-validar-proyecto"><img src="imagenes/paloma.png" width="30"/><a href="retroalimentacionProyecto.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
+                                        <th><a href="detalleProyecto.do?id=${current.idProyecto}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                        <th><core:out value="${current.nombreResponsable}" /></th>
+                                        <th><core:out value="${current.idInstancia.nombre}" /></th>
+                                        <th><core:out value="${current.vacantes}" /></th>                                      
+                                    </tr>
+                           </core:forEach>
 
                     </tbody>
                 </table>
