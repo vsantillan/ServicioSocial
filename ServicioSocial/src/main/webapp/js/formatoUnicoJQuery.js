@@ -13,6 +13,7 @@ function enviarDatosAlumno()
     
     $.post("modificarFormato.do",alumno,function(respuesta){
         alert(respuesta);
+        console.log(respuesta);
     });
     
     

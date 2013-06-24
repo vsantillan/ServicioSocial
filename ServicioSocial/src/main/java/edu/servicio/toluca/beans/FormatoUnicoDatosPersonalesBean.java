@@ -9,6 +9,7 @@ package edu.servicio.toluca.beans;
  * @author Héctor
  */
 public class FormatoUnicoDatosPersonalesBean {
+    
     private String nombre;
     private String apellidoP;
     private String apellidoM;

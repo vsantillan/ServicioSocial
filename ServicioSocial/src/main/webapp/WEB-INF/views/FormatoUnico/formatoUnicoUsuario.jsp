@@ -50,7 +50,7 @@
                         <li><a href="#subirFui">Subir Formato &Uacute;nico</a></li>
                     </ul>
                     <div id="datosPersonales">
-                        <form:form id="frmDatosPersonales" modelAttribute="formatoUnico">
+                        <form:form id="frmDatosPersonales" modelAttribute="formatoUnicoDatosPersonales">
                             <table>
                                 <tr>
                                     <td>Nombre:</td>
@@ -77,7 +77,7 @@
                                 <tr>
                                     <td>Estado civil:</td>
                                     <td>
-                                        <select name="sexo">
+                                        <select name="estado_civil">
                                             <option value="SOLTERO(A)">SOLTERO</option>
                                             <option value="CASADO(A)">CASADO(A)</option>
                                             <option value="VIUDO(A)">VIUDO(A)</option>

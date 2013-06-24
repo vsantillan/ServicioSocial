@@ -3,12 +3,16 @@
  * and open the template in the editor.
  */
 package edu.servicio.toluca.controller;
+import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,9 +24,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo) {
-        modelo.addAttribute("formatoUnico", new FormatoUnicoDatosPersonalesBean());
+        modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
         return "/FormatoUnico/formatoUnicoUsuario";
     }
+    
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new FormatoUnicoDatosPersoValidaciones()); // registramos el validador
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
+    public @ResponseBody FormatoUnicoErrores modificarDatosPersonalesAlumno( @Valid FormatoUnicoDatosPersonalesBean dt,BindingResult resultado){
+        System.out.println(dt.getSexo());
+        
+        if (resultado.hasErrors())
+        {
+            for(FieldError error: resultado.getFieldErrors())
+            {
+                System.out.println(error.getRejectedValue());
+            }
+            System.out.println("Entro");
+        }
+        
+        return new FormatoUnicoErrores();
+    }
+    
+    
+    
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuarioObservaciones.do")
     public String formatoUnicoObservaciones(Model a) {
         
@@ -38,19 +66,5 @@ public class FormatoUnicoController {
         
         return "/FormatoUnico/pruebaDT";
     }
-    
-    
-   @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
-    public @ResponseBody FormatoUnicoErrores modificarDatosPersonalesAlumno( FormatoUnicoDatosPersonalesBean dt, BindingResult result ){
-       System.out.println(dt.isAcuerdoC()); 
-       String returnText;
-	        if(!result.hasErrors()){
-	            returnText = "Nava dice que todo bien";
-	        }else{
-	            returnText = "Error el corbata llego";
-	        }
-	        return new FormatoUnicoErrores();
-    }
-   
    
 }
