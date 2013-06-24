@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 package edu.servicio.toluca.controller;
-import edu.servicio.toluca.beans.FormatoUnicoBean;
+import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo) {
-        modelo.addAttribute("formatoUnico", new FormatoUnicoBean());
+        modelo.addAttribute("formatoUnico", new FormatoUnicoDatosPersonalesBean());
         return "/FormatoUnico/formatoUnicoUsuario";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuarioObservaciones.do")
@@ -41,7 +41,7 @@ public class FormatoUnicoController {
     
     
    @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
-    public @ResponseBody FormatoUnicoErrores modificarDatosPersonalesAlumno( FormatoUnicoBean dt, BindingResult result ){
+    public @ResponseBody FormatoUnicoErrores modificarDatosPersonalesAlumno( FormatoUnicoDatosPersonalesBean dt, BindingResult result ){
        System.out.println(dt.isAcuerdoC()); 
        String returnText;
 	        if(!result.hasErrors()){
