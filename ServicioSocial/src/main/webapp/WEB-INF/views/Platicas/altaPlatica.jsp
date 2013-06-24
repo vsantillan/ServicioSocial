@@ -42,19 +42,7 @@
             }
 
         </script>
-<style>
-.error {
-	color: #ff0000;
-}
- 
-.errorblock {
-	color: #000;
-	background-color: #ffEEEE;
-	border: 3px solid #ff0000;
-	padding: 8px;
-	margin: 16px;
-}
-</style>
+
         <title>Alta Plática</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');" >

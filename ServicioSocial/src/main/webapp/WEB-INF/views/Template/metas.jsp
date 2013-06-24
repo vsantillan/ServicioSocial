@@ -14,6 +14,7 @@
 
         <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
         <LINK rel="stylesheet" href="css/platicajquery.clockpick.1.2.7.css" type="text/css">
+        <LINK rel="stylesheet" href="css/cssValidaciones.css" type="text/css">
         
 
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>

@@ -38,11 +38,7 @@ schemaLocation son las definiciones de XMLS
         <property name="suffix" value=".jsp" />
       
     </bean>
-    <!-- bind your messages.properties -->
-    <bean class="org.springframework.context.support.ResourceBundleMessageSource"
-              id="messageSource">
-        <property name="basename" value="/WEB-INF/propertiesValidaciones" />
-    </bean>
+    
  
  
 </beans>
