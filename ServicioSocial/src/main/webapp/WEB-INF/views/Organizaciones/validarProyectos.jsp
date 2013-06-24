@@ -69,7 +69,7 @@
                         <tr>
                             <th>Acci&oacute;n</th>
                             <th>Ver proyecto</th>
-                            <th>(Responsable o Nombre?)del proyecto</th>
+                            <th>Nombre del proyecto</th>
                             <th>Organizaci&oacute;n</th>
                             <th>Numero de vacantes</th>
                         </tr>
@@ -79,7 +79,7 @@
                                     <tr class='gradeX'>
                                         <th><a href="#" class="btn-validar-proyecto"><img src="imagenes/paloma.png" width="30"/><a href="retroalimentacionProyecto.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
                                         <th><a href="detalleProyecto.do?id=${current.idProyecto}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                                        <th><core:out value="${current.nombreResponsable}" /></th>
+                                        <th><core:out value="${current.nombre}" /></th>
                                         <th><core:out value="${current.idInstancia.nombre}" /></th>
                                         <th><core:out value="${current.vacantes}" /></th>                                      
                                     </tr>

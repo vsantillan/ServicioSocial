@@ -48,7 +48,7 @@
                 </tr>
                 <tr>
                     <td><p>Actividades:</p></td>
-                    <td><p>Alg&uacute;n tipo</p></td>
+                    <td><p><core:out value="${proyectosDetalle.actividadesCollection.detalle}"/></p></td>
                 </tr>
                 <tr>
                     <td><p>Horario:</p></td>
@@ -72,7 +72,7 @@
                 </tr>
                 <tr>
                     <td><p>C&oacute;digo Postal:</p></td>
-                    <td><p>45458</p></td>
+                    <td><p><core:out value="${proyectoDetalle.idColonia.idCp.cp}"/></p></td>
                 </tr>
                 <tr>
                     <td><p>Tipo de Proyecto</p></td>
