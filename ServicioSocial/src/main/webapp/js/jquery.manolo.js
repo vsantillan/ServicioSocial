@@ -71,35 +71,74 @@ $(document).ready(function() {
     function cargarColonias(cp) {
 
         var comboColonias = document.getElementById("colonia");
-        var notice = document.getElementById("notice");
+        var inputCiudad = document.getElementById("ciudad");
+        var inputEstado = document.getElementById("estado");
+        var inputMunicipio = document.getElementById("municipio");
+
+        var notice = document.getElementById("notice");        
 
         notice.innerHTML = "<img src='imagenes/loading.gif' width='30'>";
-        var peticion = objetoAjax();
+        $.get("cargarColonias.do?cp=" + cp, null, function(respuesta) {
+            
+            notice.innerHTML = "";
+            statusJSON = true;
+            console.log(respuesta);
 
-        peticion.open("GET", "cargarColonias.do?cp=" + cp);
-        peticion.onreadystatechange = function() {
-            if (peticion.readyState == 4) {
-                //escribimos la respuesta
-                comboColonias.length = 0;
-                comboColonias.innerHTML = peticion.responseText;
-                notice.innerHTML = "";
-                if (comboColonias.options[comboColonias.selectedIndex].value == 0) {
-                    $("#otra_colonia").show("slow");
-                }
+            comboColonias.length = 0;
+
+            inputCiudad.value = respuesta.ciudad;
+            inputEstado.value = respuesta.estado;
+            inputMunicipio.value = respuesta.municipio;
+            //alert(colonias.length);
+            for (i = 0; i < respuesta.nombreColonia.length; i++) {
+                var option = document.createElement("option");
+                option.text = respuesta.nombreColonia[i];
+                option.value = respuesta.idColonia[i];
+                comboColonias.appendChild(option);
             }
-        }
-        peticion.send(null);
+            var option = document.createElement("option");
+            option.text = "Otra (Especifique)";
+            option.value = 0;
+            comboColonias.appendChild(option);
+
+            if (comboColonias.options[comboColonias.selectedIndex].value == 0) {
+                $("#otra_colonia").show("slow");
+            }    
+            
+
+        });
+        
+      
+       
+        
     }
-    
-    $("#colonia").change(function(event){
+
+    $("#colonia").change(function(event) {
         //Actualiza los demas campos de acuerdo a la colonia
+        var comboColonias = document.getElementById("colonia");
+        //console.log("")
+
+        if (comboColonias.value == 0) {
+            $("#otra_colonia").show("slow");
+            document.getElementById("estado").disabled = false;
+            document.getElementById("municipio").disabled = false;
+            document.getElementById("ciudad").disabled = false;
+        } else {
+            $("#otra_colonia").hide("slow");
+            document.getElementById("estado").disabled = true;
+            document.getElementById("municipio").disabled = true;
+            document.getElementById("ciudad").disabled = true;
+        }
     })
 
 //Evento de teclado para codigos postales registroOrganizacion.do
     $("#codigo_postal").keyup(function(event) {
-        var cp= document.getElementById("codigo_postal").value
+        var cp = document.getElementById("codigo_postal").value
         cargarColonias(cp);
     })
+
+
+
 });
 
 

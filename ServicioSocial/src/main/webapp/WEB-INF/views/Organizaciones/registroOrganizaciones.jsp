@@ -72,31 +72,31 @@
                             <td> <input type="text" name="fecha" id="nombre" size="20" require="true" /></td>  
                         </tr>
                         <tr>
-                            <td>  <label for="hora">RFC:</label> </td>
+                            <td>  <label for="rfc">RFC:</label> </td>
                             <td>  <input type="text" name="hora" id="rfc" size="20" require="true" /></td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Titular:</label></td>
+                            <td>  <label for="titular">Titular:</label></td>
                             <td>  <input type="text" name="lugar" id="titular" size="20" require="true"/> </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Puesto:</label></td>
+                            <td>  <label for="puesto">Puesto:</label></td>
                             <td>  <input type="text" name="lugar" id="puesto" size="20" require="true"/> </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Tel&eacute;fono:</label></td>
+                            <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                             <td>  <input type="text" name="lugar" id="telefono" size="20" require="true"/> </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Domicilio:</label></td>
+                            <td>  <label for="calle">Calle:</label></td>
                             <td>  <input type="text" name="lugar" id="domicilio" size="20" require="true"/> </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">C&oacute;digo Postal:</label></td>
+                            <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
                             <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" require="true"></td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Colonia:</label></td>
+                            <td>  <label for="colonia">Colonia:</label></td>
                             <td>  
                                 <div id="notice"></div>
                                 <select name="colonia" id="colonia"></select> 
@@ -106,15 +106,15 @@
                             </td>  
                         </tr>                        
                         <tr>
-                            <td>  <label for="lugar">Estado:</label></td>
+                            <td>  <label for="estado">Estado:</label></td>
                             <td>  <input type="text" name="lugar" id="estado" size="20" require="true" disabled="true"/> </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Municipio:</label></td>
+                            <td>  <label for="municipio">Municipio:</label></td>
                             <td>  <input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/> </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Ciudad</label></td>
+                            <td>  <label for="ciudad">Ciudad</label></td>
                             <td>  <input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/> </td>  
                         </tr>                        
                         <tr>

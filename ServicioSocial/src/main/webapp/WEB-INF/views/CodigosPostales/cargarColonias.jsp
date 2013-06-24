@@ -20,6 +20,7 @@
 <core:forEach items="${codigoPostal.coloniaCollection}" var="colonias">            
     <option value="${colonias.idColonia}">${colonias.nombre}</option>  
 </core:forEach>
+    <option value="0">Otra</option>  
 
 
 
