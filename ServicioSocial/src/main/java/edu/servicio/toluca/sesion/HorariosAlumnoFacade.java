@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Stateless
 public class HorariosAlumnoFacade extends AbstractFacade<HorariosAlumno> {

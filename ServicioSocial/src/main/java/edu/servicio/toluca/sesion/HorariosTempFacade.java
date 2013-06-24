@@ -4,17 +4,17 @@
  */
 package edu.servicio.toluca.sesion;
 
-import edu.servicio.toluca.entidades.Perfil;
+import edu.servicio.toluca.entidades.HorariosTemp;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Stateless
-public class PerfilFacade extends AbstractFacade<Perfil> {
+public class HorariosTempFacade extends AbstractFacade<HorariosTemp> {
     @PersistenceContext(unitName = "servicioPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class PerfilFacade extends AbstractFacade<Perfil> {
         return em;
     }
 
-    public PerfilFacade() {
-        super(Perfil.class);
+    public HorariosTempFacade() {
+        super(HorariosTemp.class);
     }
     
 }

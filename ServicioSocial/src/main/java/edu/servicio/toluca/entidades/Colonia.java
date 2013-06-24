@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Entity
 @Table(name = "COLONIA", catalog = "", schema = "GES_VIN")
@@ -55,6 +55,8 @@ public class Colonia implements Serializable {
     private CodigosPostales idCp;
     @OneToMany(mappedBy = "idColonia")
     private Collection<Instancia> instanciaCollection;
+    @OneToMany(mappedBy = "idColonia")
+    private Collection<DatosPersonales> datosPersonalesCollection;
     @OneToMany(mappedBy = "idColonia")
     private Collection<Proyectos> proyectosCollection;
 
@@ -109,6 +111,15 @@ public class Colonia implements Serializable {
 
     public void setInstanciaCollection(Collection<Instancia> instanciaCollection) {
         this.instanciaCollection = instanciaCollection;
+    }
+
+    @XmlTransient
+    public Collection<DatosPersonales> getDatosPersonalesCollection() {
+        return datosPersonalesCollection;
+    }
+
+    public void setDatosPersonalesCollection(Collection<DatosPersonales> datosPersonalesCollection) {
+        this.datosPersonalesCollection = datosPersonalesCollection;
     }
 
     @XmlTransient

@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Entity
 @Table(name = "DATOS_PERSONALES", catalog = "", schema = "GES_VIN")
@@ -44,7 +44,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "DatosPersonales.findByCorreoElectronico", query = "SELECT d FROM DatosPersonales d WHERE d.correoElectronico = :correoElectronico"),
     @NamedQuery(name = "DatosPersonales.findByNombre", query = "SELECT d FROM DatosPersonales d WHERE d.nombre = :nombre"),
     @NamedQuery(name = "DatosPersonales.findByApellidoP", query = "SELECT d FROM DatosPersonales d WHERE d.apellidoP = :apellidoP"),
-    @NamedQuery(name = "DatosPersonales.findByApellidoM", query = "SELECT d FROM DatosPersonales d WHERE d.apellidoM = :apellidoM")})
+    @NamedQuery(name = "DatosPersonales.findByApellidoM", query = "SELECT d FROM DatosPersonales d WHERE d.apellidoM = :apellidoM"),
+    @NamedQuery(name = "DatosPersonales.findByFacebook", query = "SELECT d FROM DatosPersonales d WHERE d.facebook = :facebook"),
+    @NamedQuery(name = "DatosPersonales.findByTwitter", query = "SELECT d FROM DatosPersonales d WHERE d.twitter = :twitter"),
+    @NamedQuery(name = "DatosPersonales.findByCalle", query = "SELECT d FROM DatosPersonales d WHERE d.calle = :calle"),
+    @NamedQuery(name = "DatosPersonales.findByNumeroI", query = "SELECT d FROM DatosPersonales d WHERE d.numeroI = :numeroI"),
+    @NamedQuery(name = "DatosPersonales.findByNumeroE", query = "SELECT d FROM DatosPersonales d WHERE d.numeroE = :numeroE"),
+    @NamedQuery(name = "DatosPersonales.findByEntreCalles", query = "SELECT d FROM DatosPersonales d WHERE d.entreCalles = :entreCalles"),
+    @NamedQuery(name = "DatosPersonales.findByReferencia", query = "SELECT d FROM DatosPersonales d WHERE d.referencia = :referencia"),
+    @NamedQuery(name = "DatosPersonales.findByOcupacion", query = "SELECT d FROM DatosPersonales d WHERE d.ocupacion = :ocupacion"),
+    @NamedQuery(name = "DatosPersonales.findByTelefonoOficina", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoOficina = :telefonoOficina"),
+    @NamedQuery(name = "DatosPersonales.findByEstadoCivil", query = "SELECT d FROM DatosPersonales d WHERE d.estadoCivil = :estadoCivil")})
 public class DatosPersonales implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -88,25 +98,56 @@ public class DatosPersonales implements Serializable {
     @Size(max = 30)
     @Column(name = "APELLIDO_M")
     private String apellidoM;
+    @Size(max = 30)
+    @Column(name = "FACEBOOK")
+    private String facebook;
+    @Size(max = 25)
+    @Column(name = "TWITTER")
+    private String twitter;
+    @Size(max = 200)
+    @Column(name = "CALLE")
+    private String calle;
+    @Size(max = 5)
+    @Column(name = "NUMERO_I")
+    private String numeroI;
+    @Size(max = 5)
+    @Column(name = "NUMERO_E")
+    private String numeroE;
+    @Size(max = 255)
+    @Column(name = "ENTRE_CALLES")
+    private String entreCalles;
+    @Size(max = 70)
+    @Column(name = "REFERENCIA")
+    private String referencia;
+    @Size(max = 30)
+    @Column(name = "OCUPACION")
+    private String ocupacion;
+    @Size(max = 30)
+    @Column(name = "TELEFONO_OFICINA")
+    private String telefonoOficina;
+    @Size(max = 15)
+    @Column(name = "ESTADO_CIVIL")
+    private String estadoCivil;
     @OneToMany(mappedBy = "datosPersonalesId")
     private Collection<Egresado> egresadoCollection;
     @OneToMany(mappedBy = "datosPersonalesId")
     private Collection<Sanciones> sancionesCollection;
     @OneToMany(mappedBy = "datosPersonalesId")
-    private Collection<RegObservaciones> regObservacionesCollection;
-    @OneToMany(mappedBy = "datosPersonalesId")
     private Collection<DocumentosFinales> documentosFinalesCollection;
     @OneToMany(mappedBy = "datosPersonalesId")
-    private Collection<Reportes> reportesCollection;
+    private Collection<LogServicio> logServicioCollection;
+    @OneToMany(mappedBy = "datosPersonalesId")
+    private Collection<RegObservaciones> regObservacionesCollection;
     @OneToMany(mappedBy = "datosPersonalesId")
     private Collection<Documentos> documentosCollection;
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
     @ManyToOne
     private VistaAlumno alumnoId;
+    @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
+    @ManyToOne
+    private Colonia idColonia;
     @OneToMany(mappedBy = "datosPersonalesId")
     private Collection<BajaTemporal> bajaTemporalCollection;
-    @OneToMany(mappedBy = "datosPersonalesId")
-    private Collection<LogServicio> logServicioCollection;
     @OneToMany(mappedBy = "datosPersonalesId")
     private Collection<FormatoUnico> formatoUnicoCollection;
 
@@ -221,6 +262,86 @@ public class DatosPersonales implements Serializable {
         this.apellidoM = apellidoM;
     }
 
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
+    }
+
+    public String getNumeroI() {
+        return numeroI;
+    }
+
+    public void setNumeroI(String numeroI) {
+        this.numeroI = numeroI;
+    }
+
+    public String getNumeroE() {
+        return numeroE;
+    }
+
+    public void setNumeroE(String numeroE) {
+        this.numeroE = numeroE;
+    }
+
+    public String getEntreCalles() {
+        return entreCalles;
+    }
+
+    public void setEntreCalles(String entreCalles) {
+        this.entreCalles = entreCalles;
+    }
+
+    public String getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(String referencia) {
+        this.referencia = referencia;
+    }
+
+    public String getOcupacion() {
+        return ocupacion;
+    }
+
+    public void setOcupacion(String ocupacion) {
+        this.ocupacion = ocupacion;
+    }
+
+    public String getTelefonoOficina() {
+        return telefonoOficina;
+    }
+
+    public void setTelefonoOficina(String telefonoOficina) {
+        this.telefonoOficina = telefonoOficina;
+    }
+
+    public String getEstadoCivil() {
+        return estadoCivil;
+    }
+
+    public void setEstadoCivil(String estadoCivil) {
+        this.estadoCivil = estadoCivil;
+    }
+
     @XmlTransient
     public Collection<Egresado> getEgresadoCollection() {
         return egresadoCollection;
@@ -240,15 +361,6 @@ public class DatosPersonales implements Serializable {
     }
 
     @XmlTransient
-    public Collection<RegObservaciones> getRegObservacionesCollection() {
-        return regObservacionesCollection;
-    }
-
-    public void setRegObservacionesCollection(Collection<RegObservaciones> regObservacionesCollection) {
-        this.regObservacionesCollection = regObservacionesCollection;
-    }
-
-    @XmlTransient
     public Collection<DocumentosFinales> getDocumentosFinalesCollection() {
         return documentosFinalesCollection;
     }
@@ -258,12 +370,21 @@ public class DatosPersonales implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Reportes> getReportesCollection() {
-        return reportesCollection;
+    public Collection<LogServicio> getLogServicioCollection() {
+        return logServicioCollection;
     }
 
-    public void setReportesCollection(Collection<Reportes> reportesCollection) {
-        this.reportesCollection = reportesCollection;
+    public void setLogServicioCollection(Collection<LogServicio> logServicioCollection) {
+        this.logServicioCollection = logServicioCollection;
+    }
+
+    @XmlTransient
+    public Collection<RegObservaciones> getRegObservacionesCollection() {
+        return regObservacionesCollection;
+    }
+
+    public void setRegObservacionesCollection(Collection<RegObservaciones> regObservacionesCollection) {
+        this.regObservacionesCollection = regObservacionesCollection;
     }
 
     @XmlTransient
@@ -283,6 +404,14 @@ public class DatosPersonales implements Serializable {
         this.alumnoId = alumnoId;
     }
 
+    public Colonia getIdColonia() {
+        return idColonia;
+    }
+
+    public void setIdColonia(Colonia idColonia) {
+        this.idColonia = idColonia;
+    }
+
     @XmlTransient
     public Collection<BajaTemporal> getBajaTemporalCollection() {
         return bajaTemporalCollection;
@@ -290,15 +419,6 @@ public class DatosPersonales implements Serializable {
 
     public void setBajaTemporalCollection(Collection<BajaTemporal> bajaTemporalCollection) {
         this.bajaTemporalCollection = bajaTemporalCollection;
-    }
-
-    @XmlTransient
-    public Collection<LogServicio> getLogServicioCollection() {
-        return logServicioCollection;
-    }
-
-    public void setLogServicioCollection(Collection<LogServicio> logServicioCollection) {
-        this.logServicioCollection = logServicioCollection;
     }
 
     @XmlTransient

@@ -4,17 +4,17 @@
  */
 package edu.servicio.toluca.sesion;
 
-import edu.servicio.toluca.entidades.Reportes;
+import edu.servicio.toluca.entidades.DetRepMen;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Stateless
-public class ReportesFacade extends AbstractFacade<Reportes> {
+public class DetRepMenFacade extends AbstractFacade<DetRepMen> {
     @PersistenceContext(unitName = "servicioPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class ReportesFacade extends AbstractFacade<Reportes> {
         return em;
     }
 
-    public ReportesFacade() {
-        super(Reportes.class);
+    public DetRepMenFacade() {
+        super(DetRepMen.class);
     }
     
 }

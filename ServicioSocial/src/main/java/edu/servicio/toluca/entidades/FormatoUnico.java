@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Entity
 @Table(name = "FORMATO_UNICO", catalog = "", schema = "GES_VIN")
@@ -89,6 +89,11 @@ public class FormatoUnico implements Serializable {
     private BigInteger revisionesFuf;
     @OneToMany(mappedBy = "formatoUnicoId")
     private Collection<HorariosAlumno> horariosAlumnoCollection;
+    @OneToMany(mappedBy = "idFormatoUnico")
+    private Collection<Becado> becadoCollection;
+    @JoinColumn(name = "IDPROYECTO", referencedColumnName = "ID_PROYECTO")
+    @ManyToOne
+    private Proyectos idproyecto;
     @JoinColumn(name = "DATOS_PERSONALES_ID", referencedColumnName = "ID")
     @ManyToOne
     private DatosPersonales datosPersonalesId;
@@ -222,6 +227,23 @@ public class FormatoUnico implements Serializable {
 
     public void setHorariosAlumnoCollection(Collection<HorariosAlumno> horariosAlumnoCollection) {
         this.horariosAlumnoCollection = horariosAlumnoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Becado> getBecadoCollection() {
+        return becadoCollection;
+    }
+
+    public void setBecadoCollection(Collection<Becado> becadoCollection) {
+        this.becadoCollection = becadoCollection;
+    }
+
+    public Proyectos getIdproyecto() {
+        return idproyecto;
+    }
+
+    public void setIdproyecto(Proyectos idproyecto) {
+        this.idproyecto = idproyecto;
     }
 
     public DatosPersonales getDatosPersonalesId() {

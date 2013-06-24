@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -22,12 +21,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Entity
 @Table(name = "PLATICA", catalog = "", schema = "GES_VIN")
@@ -46,10 +43,7 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui"),
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
 public class Platica implements Serializable {
-
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "generator", strategy = "increment")
-    @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)
     @NotNull
@@ -61,11 +55,8 @@ public class Platica implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Size(max = 8)
-    @NotNull
     @Column(name = "HORA")
     private String hora;
-    
-    @NotBlank
     @Size(max = 25)
     @Column(name = "LUGAR")
     private String lugar;
@@ -83,7 +74,6 @@ public class Platica implements Serializable {
     private Short tipo;
     @Column(name = "STATUS")
     private Short status;
-    @NotNull
     @Column(name = "FECHA_MX_FUI")
     @Temporal(TemporalType.DATE)
     private Date fechaMxFui;
@@ -227,4 +217,5 @@ public class Platica implements Serializable {
     public String toString() {
         return "edu.servicio.toluca.entidades.Platica[ id=" + id + " ]";
     }
+    
 }

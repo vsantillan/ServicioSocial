@@ -4,17 +4,17 @@
  */
 package edu.servicio.toluca.sesion;
 
-import edu.servicio.toluca.entidades.ProyectoPerfil;
+import edu.servicio.toluca.entidades.TipoProyecto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Stateless
-public class ProyectoPerfilFacade extends AbstractFacade<ProyectoPerfil> {
+public class TipoProyectoFacade extends AbstractFacade<TipoProyecto> {
     @PersistenceContext(unitName = "servicioPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class ProyectoPerfilFacade extends AbstractFacade<ProyectoPerfil> {
         return em;
     }
 
-    public ProyectoPerfilFacade() {
-        super(ProyectoPerfil.class);
+    public TipoProyectoFacade() {
+        super(TipoProyecto.class);
     }
     
 }

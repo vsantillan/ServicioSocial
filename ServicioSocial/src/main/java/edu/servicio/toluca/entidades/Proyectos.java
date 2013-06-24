@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Entity
 @Table(name = "PROYECTOS", catalog = "", schema = "GES_VIN")
@@ -105,11 +105,14 @@ public class Proyectos implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
+    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Horario> horarioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Actividades> actividadesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
-    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;
+    @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
+    @ManyToOne(optional = false)
+    private TipoProyecto idTipoProyecto;
     @JoinColumn(name = "ID_PROGRAMA", referencedColumnName = "ID_PROGRAMA")
     @ManyToOne(optional = false)
     private Programa idPrograma;
@@ -119,6 +122,8 @@ public class Proyectos implements Serializable {
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
+    @OneToMany(mappedBy = "idproyecto")
+    private Collection<FormatoUnico> formatoUnicoCollection;
 
     public Proyectos() {
     }
@@ -238,6 +243,15 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
+    public Collection<RetroalimentacionProyecto> getRetroalimentacionProyectoCollection() {
+        return retroalimentacionProyectoCollection;
+    }
+
+    public void setRetroalimentacionProyectoCollection(Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection) {
+        this.retroalimentacionProyectoCollection = retroalimentacionProyectoCollection;
+    }
+
+    @XmlTransient
     public Collection<Horario> getHorarioCollection() {
         return horarioCollection;
     }
@@ -255,13 +269,12 @@ public class Proyectos implements Serializable {
         this.actividadesCollection = actividadesCollection;
     }
 
-    @XmlTransient
-    public Collection<RetroalimentacionProyecto> getRetroalimentacionProyectoCollection() {
-        return retroalimentacionProyectoCollection;
+    public TipoProyecto getIdTipoProyecto() {
+        return idTipoProyecto;
     }
 
-    public void setRetroalimentacionProyectoCollection(Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection) {
-        this.retroalimentacionProyectoCollection = retroalimentacionProyectoCollection;
+    public void setIdTipoProyecto(TipoProyecto idTipoProyecto) {
+        this.idTipoProyecto = idTipoProyecto;
     }
 
     public Programa getIdPrograma() {
@@ -286,6 +299,15 @@ public class Proyectos implements Serializable {
 
     public void setIdColonia(Colonia idColonia) {
         this.idColonia = idColonia;
+    }
+
+    @XmlTransient
+    public Collection<FormatoUnico> getFormatoUnicoCollection() {
+        return formatoUnicoCollection;
+    }
+
+    public void setFormatoUnicoCollection(Collection<FormatoUnico> formatoUnicoCollection) {
+        this.formatoUnicoCollection = formatoUnicoCollection;
     }
 
     @Override

@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author bustedvillain
+ * @author Jonny
  */
 @Embeddable
 public class LocalidadesPK implements Serializable {
