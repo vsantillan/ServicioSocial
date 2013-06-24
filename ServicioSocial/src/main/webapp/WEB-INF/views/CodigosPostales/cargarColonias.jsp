@@ -16,24 +16,11 @@
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-    <head>        
-        <title>Administraci&oacute;n de Organizaciones</title>
-    </head>
-    <body>
-        <core:forEach items="${estados}" var="estados">
-        <option value="${estados.idEstado}">${estados.nombre} </option>
-            <core:forEach items="${estados.codigosPostalesCollection}" var="codigos">
-                
-                <option value="${codigos.idCp}">${codigos.cp} </option>
-                
-                        
-            </core:forEach>
-    </core:forEach>
-</body>
+
+<core:forEach items="${codigoPostal.coloniaCollection}" var="colonias">            
+    <option value="${colonias.idColonia}">${colonias.nombre}</option>  
+</core:forEach>
 
 
-</html>
 
 

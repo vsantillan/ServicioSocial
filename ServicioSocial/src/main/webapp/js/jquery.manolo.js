@@ -68,7 +68,7 @@ $(document).ready(function() {
     }
 
 //Cargar escuelas con AJAX
-    function cargarColonias(idCP) {
+    function cargarColonias(cp) {
 
         var comboColonias = document.getElementById("colonia");
         var notice = document.getElementById("notice");
@@ -76,7 +76,7 @@ $(document).ready(function() {
         notice.innerHTML = "<img src='imagenes/loading.gif' width='30'>";
         var peticion = objetoAjax();
 
-        peticion.open("GET", "cargarColonias.do?idCp=" + idCP);
+        peticion.open("GET", "cargarColonias.do?cp=" + cp);
         peticion.onreadystatechange = function() {
             if (peticion.readyState == 4) {
                 //escribimos la respuesta
@@ -90,10 +90,15 @@ $(document).ready(function() {
         }
         peticion.send(null);
     }
+    
+    $("#colonia").change(function(event){
+        //Actualiza los demas campos de acuerdo a la colonia
+    })
 
 //Evento de teclado para codigos postales registroOrganizacion.do
     $("#codigo_postal").keyup(function(event) {
-        cargarColonias($("#codigo_postal").val());
+        var cp= document.getElementById("codigo_postal").value
+        cargarColonias(cp);
     })
 });
 

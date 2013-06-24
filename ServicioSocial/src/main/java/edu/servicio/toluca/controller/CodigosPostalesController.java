@@ -4,7 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.sesion.EstadosSiaFacade;
+import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
@@ -19,15 +19,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class CodigosPostalesController {
 
-    @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
-    private EstadosSiaFacade estadosSiaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
+    private CodigosPostalesFacade codigosPostalesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarColonias.do")
-    public String administradorOrganizaciones(Model model) {
-        BigDecimal bigDecimal = new BigDecimal(8509);
+    public String cargarColonias(Model model, String cp) {
+        System.out.println("Controlador, recibe cp:"+cp);
+//        BigDecimal bigDecimal = new BigDecimal(Integer.parseInt(cp));
         
-        System.out.println("Comenzare el query");
-        model.addAttribute("estados", estadosSiaFacade.findAll());
+        System.out.println("Comenzare el query buscando el codigo postal:"+cp);        
+        //Consulta codigo postal
+        model.addAttribute("codigoPostal", codigosPostalesFacade.find(Integer.parseInt(cp)));
         System.out.println("Termine el query");
         return "/CodigosPostales/cargarColonias";
     }
