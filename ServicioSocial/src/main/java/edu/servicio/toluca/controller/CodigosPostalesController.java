@@ -6,6 +6,7 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.EstadosJSON;
 import edu.servicio.toluca.beans.LocalidadJSON;
+import edu.servicio.toluca.beans.MunicipiosJSON;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
@@ -30,15 +31,14 @@ public class CodigosPostalesController {
 
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     private CodigosPostalesFacade codigosPostalesFacade;
-    
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
-    
     @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
     private MunicipiosSiaFacade municipiosFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarColonias.do")
-    public @ResponseBody LocalidadJSON cargarColonias(Model model, String cp) {
+    public @ResponseBody
+    LocalidadJSON cargarColonias(Model model, String cp) {
         System.out.println("Controlador, recibe cp:" + cp);
 //        BigDecimal bigDecimal = new BigDecimal(Integer.parseInt(cp));
 
@@ -59,10 +59,10 @@ public class CodigosPostalesController {
             }
             //localidadJSON.setColonias(coloniasTmp);
             localidadJSON.setCiudad(codigosPostales.getIdCiudad().getNombre());
-            localidadJSON.setIdEstado(codigosPostales.getIdEstado().getIdEstado()+"");
+            localidadJSON.setIdEstado(codigosPostales.getIdEstado().getIdEstado() + "");
             localidadJSON.setMunicipio(codigosPostales.getIdMunicipio().getNombre());
-            localidadJSON.setCiudad(codigosPostales.getIdCiudad().getNombre()+"");
-            localidadJSON.setIdMunicipio(codigosPostales.getIdMunicipio().getIdMunicipio()+"");
+            localidadJSON.setCiudad(codigosPostales.getIdCiudad().getNombre() + "");
+            localidadJSON.setIdMunicipio(codigosPostales.getIdMunicipio().getIdMunicipio() + "");
             //Operacion realizada con exito
             localidadJSON.setStatusJSON(true);
             System.out.println("Operacion con exito");
@@ -73,18 +73,19 @@ public class CodigosPostalesController {
             return localidadJSON;
         }
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/cargarEstados.do")
-    public @ResponseBody EstadosJSON cargarColonias(Model model) {
+    public @ResponseBody
+    EstadosJSON cargarColonias(Model model) {
         System.out.println("Cargar Estados controller");
         //Fabricacion de objeto
         EstadosJSON estadosJSON = new EstadosJSON();
         try {
-            List<EstadosSia> estados=estadosFacade.findAll();
+            List<EstadosSia> estados = estadosFacade.findAll();
             for (int i = 0; i < estados.size(); i++) {
-                estadosJSON.getIdEstados().add(estados.get(i).getIdEstado()+"");
-                estadosJSON.getNombreEstados().add(estados.get(i).getNombre());                
-                System.out.println("Estado:"+estadosJSON.getNombreEstados().get(i));
+                estadosJSON.getIdEstados().add(estados.get(i).getIdEstado() + "");
+                estadosJSON.getNombreEstados().add(estados.get(i).getNombre());
+                System.out.println("Estado:" + estadosJSON.getNombreEstados().get(i));
             }
             System.out.println("Consulta exitosa");
             estadosJSON.setStatusJSON(true);
@@ -96,27 +97,31 @@ public class CodigosPostalesController {
             return null;
         }
     }
-    
-    @RequestMapping(method = RequestMethod.GET, value = "/cargarMunicipios.do")
-    public @ResponseBody EstadosJSON cargarMunicipios(Model model, String idEstado) {
-        System.out.println("Cargar Estados controller, idEstado:"+idEstado);
-        //Fabricacion de objeto
-        EstadosJSON estadosJSON = new EstadosJSON();
-        try {
-            List<EstadosSia> estados=estadosFacade.findAll();
-            for (int i = 0; i < estados.size(); i++) {
-                estadosJSON.getIdEstados().add(estados.get(i).getIdEstado()+"");
-                estadosJSON.getNombreEstados().add(estados.get(i).getNombre());                
-                System.out.println("Estado:"+estadosJSON.getNombreEstados().get(i));
-            }
-            System.out.println("Consulta exitosa");
-            estadosJSON.setStatusJSON(true);
-            return estadosJSON;
-        } catch (Exception e) {
-            estadosJSON.setStatusJSON(false);
-            e.printStackTrace();
-            //Error en consulta           
-            return null;
-        }
-    }
+
+//    @RequestMapping(method = RequestMethod.GET, value = "/cargarMunicipios.do")
+//    public @ResponseBody
+//    EstadosJSON cargarMunicipios(Model model, String idEstado) {
+//        System.out.println("Cargar Estados controller, idEstado:" + idEstado);
+//        try {
+//
+//            EstadosSia estado = estadosFacade.find(Integer.parseInt(idEstado));
+//            ArrayList<CodigosPostales> codigosPostales = new ArrayList<CodigosPostales>(estado.getCodigosPostalesCollection());
+//            //Fabricacion de objeto
+//            MunicipiosJSON municipiosJSON = new MunicipiosJSON();
+//
+//            for (int i = 0; i < estados.size(); i++) {
+//                estadosJSON.getIdEstados().add(estados.get(i).getIdEstado() + "");
+//                estadosJSON.getNombreEstados().add(estados.get(i).getNombre());
+//                System.out.println("Estado:" + estadosJSON.getNombreEstados().get(i));
+//            }
+//            System.out.println("Consulta exitosa");
+//            estadosJSON.setStatusJSON(true);
+//            return estadosJSON;
+//        } catch (Exception e) {
+//            estadosJSON.setStatusJSON(false);
+//            e.printStackTrace();
+//            //Error en consulta           
+//            return null;
+//        }
+//    }
 }
