@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,9 +40,11 @@ public class FormatoUnicoController {
         
         if (resultado.hasErrors())
         {
-            for(FieldError error: resultado.getFieldErrors())
+          
+            for(ObjectError error: resultado.getAllErrors())
             {
-                System.out.println(error.getRejectedValue());
+                System.out.println(error.getCode());
+                
             }
             System.out.println("Entro");
         }
