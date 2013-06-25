@@ -12,23 +12,7 @@
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-  // Create an ArrayList with test data
-  ArrayList list = new ArrayList();
-  Map author1 = new HashMap();
-  author1.put("name", "Ali");
-  author1.put("id", new Integer(1));
-  list.add(author1);
-  Map author2 = new HashMap();
-  author2.put("name", "Basdf");
-  author2.put("id", new Integer(2));
-  list.add(author2);
-  Map author3 = new HashMap();
-  author3.put("name", "Casdf");
-  author3.put("id", new Integer(3));
-  list.add(author3);
-  pageContext.setAttribute("authors", list);
-%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -76,6 +60,7 @@
                             <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                                 <thead>
                                     <tr>
+                                        <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
                                         <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
                                         <th>&nbsp;Nombre&nbsp;</th>
                                         <th>&nbsp;Carrera&nbsp;</th>
@@ -86,14 +71,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <core:forEach items="${authors}" var="current">
+                                    <core:forEach items="${alumno}" var="current">
                                     <tr class='gradeX'>
-                                      <td><core:out value="${current.name}" /></td>
                                       <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.name}" /></td>
                                       <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.name}" /></td>
+                                      <td><core:out value="${current.nombre}" /></td>
+                                      <td><core:out value="${current.carrera}" /></td>
+                                      <td><core:out value="${current.promedio}" /></td>
                                       <td><core:out value="${current.id}" /></td>
+                                      <td><core:out value="${current.sexo}" /></td>
                                       <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
                                   </core:forEach>
