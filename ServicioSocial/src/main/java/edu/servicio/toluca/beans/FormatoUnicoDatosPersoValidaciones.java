@@ -24,8 +24,17 @@ public class FormatoUnicoDatosPersoValidaciones implements Validator
     public void validate(Object o, Errors errors) {
         FormatoUnicoDatosPersonalesBean datosPersonales = (FormatoUnicoDatosPersonalesBean) o;
         
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre","El nombre es Obligatorio");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre","El nombre es obligatorio");
         
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre","El nombre es obligatorio");
+        
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre","El nombre es obligatorio");
+        
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre","El nombre es obligatorio");
+        
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre","El nombre es obligatorio");
+        
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nombre","El nombre es obligatorio");
         
     }
     
