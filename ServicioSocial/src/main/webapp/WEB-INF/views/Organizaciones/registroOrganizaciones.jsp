@@ -25,10 +25,10 @@
         <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
         <script>
             $(document).ready(function() {
-                $(".MyForm").formly();                
-            })           
+                $(".MyForm").formly();
+            })
         </script>
-            
+
         <title>Departamento de Servicio Social :: Organizaciones ::</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
@@ -62,7 +62,7 @@
                     </table>
                 </form:form>
                 <br/>
-                
+
                 <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h4></p>
                 <%-- Formulario Nueva Organizacion --%>
                 <form:form name="altaOrganizacion" class="MyForm" action="gdaAltaOrganizacionVisitante.do" method="POST" style="width:60%;">
@@ -96,27 +96,33 @@
                             <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" require="true"></td>  
                         </tr>
                         <tr>
+                            <td>  <label for="estado">Estado:</label></td>
+                            <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> 
+                                <select name="estado" id="estado" disabled="true"></select>
+                            </td>  
+                        </tr>                        
+                        <tr>
+                            <td>  <label for="municipio">Municipio:</label></td>
+                            <td>  <!--input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/--> 
+                                <select name="municipio" id="municipio" disabled="true"></select>
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="ciudad">Ciudad</label></td>
+                            <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
+                                <select name="ciudad" id="ciudad" disabled="true"></select>
+                            </td>  
+                        </tr>
+                        <tr>
                             <td>  <label for="colonia">Colonia:</label></td>
                             <td>  
                                 <div id="notice"></div>
-                                <select name="colonia" id="colonia"></select> 
+                                <select name="colonia" id="colonia" disabled="true"></select> 
                                 <div id="otra_colonia" style="display:none;">
                                     <input type="text" name="otra_colonia" id="otra_colonia" />
                                 </div>
                             </td>  
-                        </tr>                        
-                        <tr>
-                            <td>  <label for="estado">Estado:</label></td>
-                            <td>  <input type="text" name="lugar" id="estado" size="20" require="true" disabled="true"/> </td>  
-                        </tr>
-                        <tr>
-                            <td>  <label for="municipio">Municipio:</label></td>
-                            <td>  <input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/> </td>  
-                        </tr>
-                        <tr>
-                            <td>  <label for="ciudad">Ciudad</label></td>
-                            <td>  <input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/> </td>  
-                        </tr>                        
+                        </tr>                     
                         <tr>
                             <td> <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> </td>
                             <td>

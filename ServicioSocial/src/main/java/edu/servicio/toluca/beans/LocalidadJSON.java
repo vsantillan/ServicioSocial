@@ -14,53 +14,12 @@ import java.util.ArrayList;
 public class LocalidadJSON {
     private ArrayList<String> nombreColonia = new ArrayList<String>();
     private ArrayList<String> idColonia = new ArrayList<String>();
-    private String estado;
+    private String idEstado;    
+    private String idMunicipio;
     private String municipio;
+    private String idCiudad;
     private String ciudad;
-
-    /**
-     * @return the estado
-     */
-    public String getEstado() {
-        return estado;
-    }
-
-    /**
-     * @param estado the estado to set
-     */
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    /**
-     * @return the municipio
-     */
-    public String getMunicipio() {
-        return municipio;
-    }
-
-    /**
-     * @param municipio the municipio to set
-     */
-    public void setMunicipio(String municipio) {
-        this.municipio = municipio;
-    }
-
-    /**
-     * @return the ciudad
-     */
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    /**
-     * @param ciudad the ciudad to set
-     */
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-   
+    private boolean statusJSON;
 
     /**
      * @return the nombreColonia
@@ -89,4 +48,89 @@ public class LocalidadJSON {
     public void setIdColonia(ArrayList<String> idColonia) {
         this.idColonia = idColonia;
     }
+
+    /**
+     * @return the idEstado
+     */
+    public String getIdEstado() {
+        return idEstado;
+    }
+
+    /**
+     * @param idEstado the idEstado to set
+     */
+    public void setIdEstado(String idEstado) {
+        this.idEstado = idEstado;
+    }
+
+    /**
+     * @return the idMunicipio
+     */
+    public String getIdMunicipio() {
+        return idMunicipio;
+    }
+
+    /**
+     * @param idMunicipio the idMunicipio to set
+     */
+    public void setIdMunicipio(String idMunicipio) {
+        this.idMunicipio = idMunicipio;
+    }
+
+    /**
+     * @return the municipio
+     */
+    public String getMunicipio() {
+        return municipio;
+    }
+
+    /**
+     * @param municipio the municipio to set
+     */
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
+    }
+
+    /**
+     * @return the idCiudad
+     */
+    public String getIdCiudad() {
+        return idCiudad;
+    }
+
+    /**
+     * @param idCiudad the idCiudad to set
+     */
+    public void setIdCiudad(String idCiudad) {
+        this.idCiudad = idCiudad;
+    }
+
+    /**
+     * @return the ciudad
+     */
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    /**
+     * @param ciudad the ciudad to set
+     */
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    /**
+     * @return the statusJSON
+     */
+    public boolean isStatusJSON() {
+        return statusJSON;
+    }
+
+    /**
+     * @param statusJSON the statusJSON to set
+     */
+    public void setStatusJSON(boolean statusJSON) {
+        this.statusJSON = statusJSON;
+    }
+
 }

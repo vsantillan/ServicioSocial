@@ -9,6 +9,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,7 +43,7 @@ public class CodigosPostales implements Serializable {
     @NotNull
     @Column(name = "CP")
     private int cp;
-    @OneToMany(mappedBy = "idCp")
+    @OneToMany(mappedBy = "idCp", fetch= FetchType.EAGER)
     private Collection<Colonia> coloniaCollection;
     @JoinColumn(name = "ID_TIPO_LOCALIDAD", referencedColumnName = "ID_TIPO_LOCALIDAD")
     @ManyToOne(optional = false)
