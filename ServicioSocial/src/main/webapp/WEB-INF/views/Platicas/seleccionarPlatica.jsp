@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ include file="../Template/taglibs.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -35,7 +36,7 @@
                             <%--  <input type="text" id="Caja" value="Hola"></input>
     <button onclick=<%String x="document.write(document.getElementById('texto').value)";out.print(x);%>>Pasar valor</button>  --%>
 
-                            <form name="SeleccionPlatica" id="MyForm" action="controlador/PlaticasInduccion/GenerarFolioC.jsp" method="POST">
+                            <form:form action="folioPlatica.do" method="get"  id="MyForm">
 
                                 <h1>Fechas Disponibles</h1>
 
@@ -67,10 +68,10 @@
                                 </select><br>
                                 <input type=text name="hora" id="hora" value="Hora:" readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>
                                 <input type="checkbox" name="aceptacionleer" value="aceptacionleer"> Acépto haber leído el manual donde se describe el uso del<br>
-                                sistema via web de como dar de alta mi servicio social<br>
+                                sistema via web sobre como dar de alta mi servicio social<br>
                                 <input type="submit" value="Generar Folio" /> <br>
 
-                            </form>
+                            </form:form>
                         </td>
                     </tr>
                     </tbody>
@@ -81,25 +82,25 @@
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>
         <script language=JavaScript>
-     var mm = new Date();
-     var m2 = mm.getMonth() + 1;
-     var mesok = (m2 < 10) ? '0' + m2 : m2;
-     var mesok = new Array(12);
-     mesok[0] = "ENE-JUN";
-     mesok[1] = "ENE-JUN";
-     mesok[2] = "ENE-JUN";
-     mesok[3] = "ENE-JUN";
-     mesok[4] = "ENE-JUN";
-     mesok[5] = "ENE-JUN";
-     mesok[6] = "Julio";
-     mesok[7] = "AGO-DIC";
-     mesok[8] = "AGO-DIC";
-     mesok[9] = "AGO-DIC";
-     mesok[10] = "AGO-DIC";
-     mesok[11] = "AGO-DIC";
-     var mes = mesok[mm.getMonth()];
+        var mm = new Date();
+        var m2 = mm.getMonth() + 1;
+        var mesok = (m2 < 10) ? '0' + m2 : m2;
+        var mesok = new Array(12);
+        mesok[0] = "ENE-JUN";
+        mesok[1] = "ENE-JUN";
+        mesok[2] = "ENE-JUN";
+        mesok[3] = "ENE-JUN";
+        mesok[4] = "ENE-JUN";
+        mesok[5] = "ENE-JUN";
+        mesok[6] = "Julio";
+        mesok[7] = "AGO-DIC";
+        mesok[8] = "AGO-DIC";
+        mesok[9] = "AGO-DIC";
+        mesok[10] = "AGO-DIC";
+        mesok[11] = "AGO-DIC";
+        var mes = mesok[mm.getMonth()];
 
-     //  document.algunNombre.texto.value = "\t\tPERIODO\t" + mes + "\t" + mm.getFullYear();
+        //  document.algunNombre.texto.value = "\t\tPERIODO\t" + mes + "\t" + mm.getFullYear();
 //document.algunNombre.texto2.value=mm.getFullYear();
 
         </script>

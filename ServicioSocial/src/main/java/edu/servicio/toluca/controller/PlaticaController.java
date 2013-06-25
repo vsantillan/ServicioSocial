@@ -17,11 +17,13 @@ import javax.validation.Valid;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -77,11 +79,12 @@ public class PlaticaController {
         return "/Platicas/seleccionarPlatica";
     }
 
-   @InitBinder
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true);
         binder.registerCustomEditor(Date.class, editor);
     }
+
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
     public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException {
         //parametros se recben en el metodo
@@ -103,20 +106,22 @@ public class PlaticaController {
 //        platica1.setId(platica.getId());
 //        platica1.setStatus((short) 1);
 //        platica1.setFechaMxFui(df.parse(fecha2));
-            if (result.hasErrors()) {
-			return "/Platicas/altaPlatica";
-		} else {
-                //platicaFacade.create(platica);
-                 modelo.addAttribute("notificacion", "platica dada de alta correctamente");
-        return "/Platicas/redirectAltaPlatica";
-			
-		}
- 
+        if (result.hasErrors()) {
+            return "/Platicas/altaPlatica";
+        } else {
+            //platicaFacade.create(platica);
+            modelo.addAttribute("notificacion", "platica dada de alta correctamente");
+            return "/Platicas/redirectAltaPlatica";
+
+        }
 
 
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/folioPlatica.do")
+     public String folioPlatica(Model a) {
         
-       
-        //  System.out.println("nombres es"+datos.getNombre());
-       
+        
+        return "/Platicas/reporte";
     }
 }
