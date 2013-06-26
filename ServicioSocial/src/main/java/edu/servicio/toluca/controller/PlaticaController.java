@@ -86,7 +86,7 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
-    public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException {
+    public String insertarPlatica(@Valid Platica platica, BindingResult result) throws ParseException {
         //parametros se recben en el metodo
         //inyectar en lapagina
         //instanciar clase del modelo para hacer el calculo de los numeros
@@ -107,10 +107,13 @@ public class PlaticaController {
 //        platica1.setStatus((short) 1);
 //        platica1.setFechaMxFui(df.parse(fecha2));
         if (result.hasErrors()) {
+            System.out.print("hubo errores");
             return "/Platicas/altaPlatica";
+            
         } else {
-            //platicaFacade.create(platica);
-            modelo.addAttribute("notificacion", "platica dada de alta correctamente");
+            System.out.print("no hubo errores");
+            platicaFacade.create(platica);
+            //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
             return "/Platicas/redirectAltaPlatica";
         }
 

@@ -37,6 +37,17 @@
             }
 
         </script>
+        <style type="text/css">
+<!--
+
+
+
+#MyForm label
+{
+width: 150px;
+display: block
+}
+</style>
 
         <title>Alta Plática</title>
     </head>
@@ -51,8 +62,8 @@
                     <h1>Nueva Plática</h1>
                     ${notificacion}
                     <%-- Formulario Nueva Plática --%>
-                    <form:form action="altaPlaticaBD.do" method="post" modelAttribute="platica" id="MyForm"> 
-                        <table >
+                    <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="MyForm"> 
+                        <table style="width:500px">
                             <tr>
                                 <td>
                                     <form:input type="hidden" value="1" path="status"/>
@@ -70,7 +81,7 @@
                             </tr>
                             <tr>
                                 <td>  <label for="lugar">Lugar De la Platica de Inducción</label></td>
-                                <td>  <form:input path="lugar" id="lugar" size="20" /> </td>  
+                                <td>  <form:input path="lugar" id="lugar" size="15" /> </td>  
                                 <td><form:errors path="lugar" cssClass="error" /></td>
                             </tr>
 
@@ -105,7 +116,7 @@
                             </tr>
                             <tr>
                                 <td>  <label for="descripcion"> Descripción </label> </td>
-                                <td>  <form:textarea  path="descripcion" rows="4" cols="50" id="descripcion"/></td>  
+                                <td>  <form:textarea  path="descripcion" rows="6" cols="15" id="descripcion"/></td>  
                             </tr>
 
                             <tr> 
