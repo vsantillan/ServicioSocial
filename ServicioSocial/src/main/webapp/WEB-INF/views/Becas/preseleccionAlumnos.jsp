@@ -72,7 +72,7 @@
                                     <tr class='gradeX'>
                                       <td><core:out value="${current.id}" /></td>
                                       <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.nombre}" /></td>
+                                      <td><core:out value="${current.apellido_pat} ${current.apellido_mat} ${current.nombre}"  /></td>
                                       <td><core:out value="${current.carrera}" /></td>
                                       <td><core:out value="${current.promedio}" /></td>
                                       <td><core:out value="${current.id}" /></td>
@@ -82,8 +82,12 @@
                                   </core:forEach>
                                 </tbody>
                             </table>
-                 <input type ="button" value = "Aceptar " />                                 
-                 <input type="button" name="Submit" value="Contar Alumnos Seleccionados" onClick="contar();">
+                            <table>
+                                 <tr>
+                <td> <input type ="button" value = "Aceptar " /> </td>                                
+                <td> <input type="button" name="Submit" value="Contar Alumnos Seleccionados" onClick="contar();"></td>
+                  </tr>
+                    </table>
                  </form:form>            
             </div>
             <div style="clear:both;"></div>

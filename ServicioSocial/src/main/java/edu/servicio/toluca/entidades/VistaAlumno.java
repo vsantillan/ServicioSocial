@@ -111,7 +111,8 @@ public class VistaAlumno implements Serializable {
     @Column(name = "PORCENTAJE")
     private String porcentaje;
     @Column(name = "PROMEDIO")
-    private BigInteger promedio;
+    //se cambio el tipo de dato de BigInteger a Double
+    private Double promedio;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<Egresado> egresadoCollection;
     @OneToMany(mappedBy = "alumnoId")
@@ -278,12 +279,12 @@ public class VistaAlumno implements Serializable {
     public void setPorcentaje(String porcentaje) {
         this.porcentaje = porcentaje;
     }
-
-    public BigInteger getPromedio() {
+//cambio tipo de dato
+    public Double getPromedio() {
         return promedio;
     }
-
-    public void setPromedio(BigInteger promedio) {
+//cambio tipo de dato
+    public void setPromedio(Double promedio) {
         this.promedio = promedio;
     }
 
