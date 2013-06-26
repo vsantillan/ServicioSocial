@@ -37,8 +37,7 @@ public class CodigosPostalesController {
     private MunicipiosSiaFacade municipiosFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarColonias.do")
-    public @ResponseBody
-    LocalidadJSON cargarColonias(Model model, String cp) {
+    public @ResponseBody LocalidadJSON cargarColonias(Model model, String cp) {
         System.out.println("Controlador, recibe cp:" + cp);
 //        BigDecimal bigDecimal = new BigDecimal(Integer.parseInt(cp));
 
@@ -75,8 +74,7 @@ public class CodigosPostalesController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarEstados.do")
-    public @ResponseBody
-    EstadosJSON cargarColonias(Model model) {
+    public @ResponseBody EstadosJSON cargarColonias(Model model) {
         System.out.println("Cargar Estados controller");
         //Fabricacion de objeto
         EstadosJSON estadosJSON = new EstadosJSON();
@@ -124,4 +122,18 @@ public class CodigosPostalesController {
 //            return null;
 //        }
 //    }
+    
+    //Alta de organizacion por pre-registro
+    @RequestMapping(method = RequestMethod.GET, value = "/pruebaConsulta.do")
+    public @ResponseBody void pruebaConsulta(Model model){        
+        
+        //Buscar codigos postales 
+        List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", "50110", "equal", null, null);
+        
+        for (int i = 0; i < codigosPostales.size(); i++) {
+//            ArrayList<Colonia> colonias = new ArrayList(codigosPostales.get(i).getColoniaCollection());
+            System.out.println(codigosPostales.get(i).getCp()+" "+codigosPostales.get(i).getIdEstado().getNombre());
+        }
+        
+    }
 }
