@@ -48,7 +48,13 @@
                 </tr>
                 <tr>
                     <td><p>Actividades:</p></td>
-                    <td><p><core:out value="${proyectosDetalle.actividadesCollection.detalle}"/></p></td>
+                    <td><p>
+                            <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
+                                <core:out  value="${actividades.detalle}"/>
+                            </core:forEach>
+                            
+                        </p>
+                    </td>
                 </tr>
                 <tr>
                     <td><p>Horario:</p></td>
@@ -76,7 +82,7 @@
                 </tr>
                 <tr>
                     <td><p>Tipo de Proyecto</p></td>
-                    <td><p>Alg&uacute;n Domicilio</p></td>
+                    <td><p><core:out value="${proyectoDetalle.idTipoProyecto.descripcion}" /></p></td>
                 </tr>
                 <tr>
                     <td><p>Perfil buscado:</p></td>
