@@ -65,11 +65,14 @@
 
                 <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h4></p>
                 <%-- Formulario Nueva Organizacion --%>
-                <form:form name="altaOrganizacion" class="MyForm" action="gdaAltaOrganizacionVisitante.do" method="POST" style="width:60%;">
+                <form:form name="altaOrganizacion" class="MyForm" action="gdaAltaOrganizacionVisitante.do" commandName="instancia" method="POST" style="width:60%;">
                     <table>
                         <tr>
                             <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
-                            <td> <input type="text" name="fecha" id="nombre" size="20" require="true" /></td>  
+                            <td> 
+                                <form:input path="fecha" id="datepicker" size="15"/>
+                                <form:errors path="fecha" cssClass="error" />
+                            </td>  
                         </tr>
                         <tr>
                             <td>  <label for="rfc">RFC:</label> </td>

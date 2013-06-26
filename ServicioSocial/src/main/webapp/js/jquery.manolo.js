@@ -79,7 +79,7 @@ $(document).ready(function() {
 
         notice.innerHTML = "<img src='imagenes/loading.gif' width='30'>";
         $.get("cargarColonias.do?cp=" + cp, null, function(respuesta) {
-            notice.innerHTML = "";
+            notice.innerHTML = "";           
             console.log(respuesta);
             comboColonias.length = 0;
             comboCiudad.length = 0;
@@ -120,12 +120,15 @@ $(document).ready(function() {
                 if (comboColonias.options[comboColonias.selectedIndex].value == 0) {
                     $("#otra_colonia").show("slow");
                 }
+                comboEstado.disabled = true;
                 comboColonias.disabled=false;
+                
             } else {
                 existeCP = false;
                 notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>"
                 $("#otra_colonia").show("slow");
                 comboEstado.disabled=false;
+                comboColonias.disabled=true;
                 cargarMunicipios();
                 
 //                inputCiudad.value = "No disponible";

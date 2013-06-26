@@ -112,7 +112,6 @@ public class PlaticaController {
             //platicaFacade.create(platica);
             modelo.addAttribute("notificacion", "platica dada de alta correctamente");
             return "/Platicas/redirectAltaPlatica";
-
         }
 
 
