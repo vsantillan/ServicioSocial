@@ -6,8 +6,11 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.sesion.InstanciaFacade;
+import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
+import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +31,11 @@ public class OrganizacionesController
     @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
     private ProyectosFacade proyectosFacade;
     
+    @EJB(mappedName = "java:global/ServicioSocial/TipoOrganizacionFacade")
+    private TipoOrganizacionFacade tipoOrganizacionFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/PerfilFacade")
+    private PerfilFacade perfilFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model)
@@ -36,7 +44,9 @@ public class OrganizacionesController
         return "/Organizaciones/administrarOrganizaciones";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/administrarProyectos.do")
-    public String administradorProyectos(Model a){
+    public String administradorProyectos(Model model)
+    {
+        model.addAttribute("proyectos", proyectosFacade.findAll());
         return "/Organizaciones/administrarProyectos";
     }
     
@@ -110,10 +120,37 @@ public class OrganizacionesController
         return "/Organizaciones/mensajeOrganizacion";
     }
     
-    //Editar Organizacion
+   //Editar Organizacion
     @RequestMapping(method = RequestMethod.GET, value = "/editarOrganizacion.do")
-    public String editarOrganizacion(Model a){
+    public String editarOrganizacion(int id,Model model)
+    {
+        model.addAttribute("tipoOrg", tipoOrganizacionFacade.findAll());
+        model.addAttribute("instancia", instanciaFacade.find(BigDecimal.valueOf(id)));
+        model.addAttribute("perfil", perfilFacade.findAll());
         return "/Organizaciones/editarOrganizacion";
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/editarProyecto.do")
+    public String editarProyectos(int id,Model model)
+    {
+        model.addAttribute("proyectos", proyectosFacade.find(BigDecimal.valueOf(id)));
+        model.addAttribute("instancias", instanciaFacade.findAll());
+        return "/Organizaciones/editarProyecto";
+    }
+    
+    //Borrar Organizacion & Proyecto
+    @RequestMapping(method = RequestMethod.GET, value = "/borrarOrganizacion.do")
+    public @ResponseBody String borrarOrganizacion(int id,Model model)
+    {
+        Instancia instancia=new Instancia();
+        instancia.setIdInstancia(BigDecimal.valueOf(id));
+        instancia.setEstatus(BigInteger.valueOf(0));
+        System.out.println("Antes del update");
+        instanciaFacade.edit(instancia);
+        System.out.println("Despues del update");
+        String returnText="Se modifico objeto instancia, con un id de: "+id;
+        System.out.println(returnText);
+        return returnText;
     }
     
     //Alta Organizaicon visitante
@@ -132,5 +169,16 @@ public class OrganizacionesController
         return "/Organizaciones/editarOrganizacion";
     }
     
-    
+     @RequestMapping(method = RequestMethod.GET, value = "/pruebaUpdate.do")
+    public String pruebaUpdate(int id,Model model)
+    {            
+        Instancia instancia = new Instancia();
+        instancia.setIdInstancia(BigDecimal.valueOf(id));
+        instancia.setEstatus(BigInteger.valueOf(0));
+        System.out.println("Antes del update");
+        instanciaFacade.edit(instancia);
+        System.out.println("Despues del update");
+        model.addAttribute("instancias", instanciaFacade.findAll());
+        return "/Organizaciones/pruebaUpdate";
+    }
 }
