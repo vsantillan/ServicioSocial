@@ -28,7 +28,7 @@ public class BecasController {
     @RequestMapping(method = RequestMethod.GET, value = "/preseleccionAlumnos.do")
     public String preseleccionAlumnos(Model model) {
 
-        model.addAttribute("alumno",vistaAlumno.findAll());    
+        model.addAttribute("alumno",formatoUnico.findAll());    
         return "/Becas/preseleccionAlumnos";
     }
 

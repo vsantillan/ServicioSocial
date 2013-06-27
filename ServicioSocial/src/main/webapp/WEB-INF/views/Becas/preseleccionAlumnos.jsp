@@ -70,22 +70,23 @@
                                 <tbody>
                                     <core:forEach items="${alumno}" var="current">
                                     <tr class='gradeX'>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.apellido_pat} ${current.apellido_mat} ${current.nombre}"  /></td>
-                                      <td><core:out value="${current.carrera}" /></td>
-                                      <td><core:out value="${current.promedio}" /></td>
-                                      <td><core:out value="${current.id}" /></td>
-                                      <td><core:out value="${current.sexo}" /></td>
+                                      <td><core:out value="${current.datos_personales_id.id}" /></td>
+                                      <td><core:out value="${current.datos_personales_id.id}" /></td>
+                                      <td><core:out value="${current.datos_personales_id.nombre}"  /></td>
+                                      <td><core:out value="${current.datos_personales_id.id.carrera}" /></td>
+                                      <td><core:out value="${current.datos_personales_id.id.promedio}" /></td>
+                                      <td><core:out value="${current.tipo_servicio}" /></td>
+                                      <td><core:out value="${current.datos_personales_id.sexo}" /></td>
                                       <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
                                   </core:forEach>
                                 </tbody>
                             </table>
+                       <br>
                             <table>
                                  <tr>
-                <td> <input type ="button" value = "Aceptar " /> </td>                                
-                <td> <input type="button" name="Submit" value="Contar Alumnos Seleccionados" onClick="contar();"></td>
+                                     <td> <input type ="button" value = "Aceptar " /> </td>                                
+                <td> <input type="button" name="Submit" value="Contar Alumnos" onClick="contar();"></td>
                   </tr>
                     </table>
                  </form:form>            

@@ -4,9 +4,6 @@
     Author     : Jonny
 --%>
 
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
@@ -17,27 +14,17 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/reporteBimestral.css" /> 
+        <!-- CSS  Shadowbox-->
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
 
-        <!--Estilos para tablas-->
-        <link rel="stylesheet" type="text/css" href="css/demo_page.css" />
-        <link rel="stylesheet" type="text/css" href="css/jquery.dataTables_themeroller.css" />
-
-
-        <!--css de tabs-->
-        <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
-        <link rel="stylesheet" type="text/css" href="css/jqueryUI/demos.css"/>
-
-
-        <!--Scripts para shadowbox-->
+        <!--Script para DataTables-->
+        <jsp:include page="../Template/headsJQueryUI.jsp" />
+        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        
+         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
-
-        <!--Scripts para tablas-->
-        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -45,8 +32,10 @@
                 $('#Rev').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
+                    "sScrollX": "100%",
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
+
                 });
                 $('#NoRev').dataTable({
                     "bJQueryUI": true,
@@ -55,28 +44,8 @@
                     "bScrollCollapse": true
 
                 });
-
             });
         </script> 
-        <%
-  // Create an ArrayList with test data
-  ArrayList list = new ArrayList();
-  Map author1 = new HashMap();
-  author1.put("name", "Ali");
-  author1.put("id", new Integer(1));
-  list.add(author1);
-  Map author2 = new HashMap();
-  author2.put("name", "Basdf");
-  author2.put("id", new Integer(2));
-  list.add(author2);
-  Map author3 = new HashMap();
-  author3.put("name", "Casdf");
-  author3.put("id", new Integer(3));
-  list.add(author3);
-  pageContext.setAttribute("authors", list);
-        %>
-
-
         <title>Administrar Reportes Bimestrales</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
