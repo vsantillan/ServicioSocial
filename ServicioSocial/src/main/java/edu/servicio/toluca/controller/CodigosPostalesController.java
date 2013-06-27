@@ -49,19 +49,21 @@ public class CodigosPostalesController {
         //Fabricacion de objeto
         LocalidadJSON localidadJSON = new LocalidadJSON();
         try {
-            CodigosPostales codigosPostales = codigosPostalesFacade.find(Integer.parseInt(cp));
-            ArrayList<Colonia> colonias = new ArrayList(codigosPostales.getColoniaCollection());
+//            CodigosPostales codigosPostales = codigosPostalesFacade.find(Integer.parseInt(cp));
+            List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", cp, "equal", null, null);
+            
+            ArrayList<Colonia> colonias = new ArrayList(codigosPostales.get(0).getColoniaCollection());
             for (int i = 0; i < colonias.size(); i++) {
                 System.out.println("Colonia:" + colonias.get(i).getNombre() + " id:" + colonias.get(i).getIdColonia());
                 localidadJSON.getIdColonia().add(colonias.get(i).getIdColonia() + "");
                 localidadJSON.getNombreColonia().add(colonias.get(i).getNombre());
             }
             //localidadJSON.setColonias(coloniasTmp);
-            localidadJSON.setCiudad(codigosPostales.getIdCiudad().getNombre());
-            localidadJSON.setIdEstado(codigosPostales.getIdEstado().getIdEstado() + "");
-            localidadJSON.setMunicipio(codigosPostales.getIdMunicipio().getNombre());
-            localidadJSON.setCiudad(codigosPostales.getIdCiudad().getNombre() + "");
-            localidadJSON.setIdMunicipio(codigosPostales.getIdMunicipio().getIdMunicipio() + "");
+            localidadJSON.setCiudad(codigosPostales.get(0).getIdCiudad().getNombre());
+            localidadJSON.setIdEstado(codigosPostales.get(0).getIdEstado().getIdEstado() + "");
+            localidadJSON.setMunicipio(codigosPostales.get(0).getIdMunicipio().getNombre());
+            localidadJSON.setCiudad(codigosPostales.get(0).getIdCiudad().getNombre() + "");
+            localidadJSON.setIdMunicipio(codigosPostales.get(0).getIdMunicipio().getIdMunicipio() + "");
             //Operacion realizada con exito
             localidadJSON.setStatusJSON(true);
             System.out.println("Operacion con exito");
@@ -74,7 +76,7 @@ public class CodigosPostalesController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarEstados.do")
-    public @ResponseBody EstadosJSON cargarColonias(Model model) {
+    public @ResponseBody EstadosJSON cargarEstados(Model model) {
         System.out.println("Cargar Estados controller");
         //Fabricacion de objeto
         EstadosJSON estadosJSON = new EstadosJSON();
