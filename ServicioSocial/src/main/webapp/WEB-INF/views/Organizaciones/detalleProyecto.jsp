@@ -16,7 +16,7 @@
                 </tr>
                 <tr>
                     <td><p>Nombre del Proyecto:</p></td>
-                    <td><p>Sextor</p></td>
+                    <td><p><o value="${proyectoDetalle.nombre}"/></p></td>
                 </tr>
                 <tr>
                     <td><p>N&uacute;mero de vacantes:</p></td>
@@ -58,7 +58,13 @@
                 </tr>
                 <tr>
                     <td><p>Horario:</p></td>
-                    <td><p>Alg&uacute;n Domicilio</p></td>
+                    <td><p>
+                            <core:forEach items="${proyectoDetalle.horarioCollection}" var="horarios">
+                                <core:out  value="${horarios.dia}"/>
+                                <core:out  value="${horarios.hora}"/>
+                            </core:forEach> 
+                        </p>
+                    </td>
                 </tr>
                 <tr>
                     <td><p>Responsable del Programa:</p></td>
