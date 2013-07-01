@@ -4,21 +4,56 @@
  */
 package edu.servicio.toluca.beans;
 
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  *
  * @author Héctor
  */
 public class FormatoUnicoDatosPersonalesBean {
     
+    @Size(min=1, max=60,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo Nombre es Requerido")
+    @Pattern(regexp="[a-z]+")  
     private String nombre;
+    
+    @Size(min=1, max=30,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo Apellido Paterno es Requerido")
     private String apellidoP;
+    
+    @Size(min=1, max=30,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo Apellido Materno es Requerido")
     private String apellidoM;
+    
+    @Size(min=1, max=30,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo Sexo es Requerido")
     private String sexo;
+    
+    @Size(min=1, max=15,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo Estado Civil es Requerido")
     private String estado_civil;
+    
+    @Size(min=1, max=30,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo Ocupacion es Requerido")
     private String ocupacion;
+    
+    @Size(min=1, max=30,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo CURP es Requerido")
     private String curp;
+    
+    @Size(min=1, max=60,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo Folio de Identificacion es Requerido")
     private String folioDocIdentificacion;
+    
+    @Size(min=1, max=60,message = "Tamaño de Nombre debe ser Menor a 60 caracteres")
+    @NotEmpty(message = "Campo Clave de Identificacion es Requerido")
     private String claveDocIdentificacion;
+    
+    @AssertTrue(message = "Debes Aceptar el Acuerdo de Confidencialidad")
     private boolean acuerdoC;
     
     

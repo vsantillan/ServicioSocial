@@ -29,10 +29,10 @@ public class FormatoUnicoController {
         return "/FormatoUnico/formatoUnicoUsuario";
     }
     
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(new FormatoUnicoDatosPersoValidaciones()); // registramos el validador
-    }
+//    @InitBinder
+//    protected void initBinder(WebDataBinder binder) {
+//        binder.setValidator(new FormatoUnicoDatosPersoValidaciones()); // registramos el validador
+//    }
     
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
     public @ResponseBody FormatoUnicoErrores modificarDatosPersonalesAlumno( @Valid FormatoUnicoDatosPersonalesBean dt,BindingResult resultado){
@@ -43,10 +43,8 @@ public class FormatoUnicoController {
           
             for(ObjectError error: resultado.getAllErrors())
             {
-                System.out.println(error.getCode());
-                
+                System.out.println(error.getDefaultMessage());   
             }
-            System.out.println("Entro");
         }
         
         return new FormatoUnicoErrores();
