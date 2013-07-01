@@ -3,6 +3,7 @@
   <persistence-unit name="servicioPU" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <jta-data-source>jdbc/serviciosocial</jta-data-source>
+    <class>edu.servicio.toluca.entidades.LugaresPlatica</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties/>
   </persistence-unit>

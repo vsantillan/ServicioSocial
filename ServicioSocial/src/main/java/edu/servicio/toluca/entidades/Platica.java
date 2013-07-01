@@ -12,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -46,6 +48,9 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui"),
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
 public class Platica implements Serializable {
+    @JoinColumn(name = "ID_LUGAR", referencedColumnName = "ID")
+    @ManyToOne
+    private LugaresPlatica idLugar;
 
     private static final long serialVersionUID = 1L;
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -238,5 +243,13 @@ public class Platica implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Platica[ id=" + id + " ]";
+    }
+
+    public LugaresPlatica getIdLugar() {
+        return idLugar;
+    }
+
+    public void setIdLugar(LugaresPlatica idLugar) {
+        this.idLugar = idLugar;
     }
 }

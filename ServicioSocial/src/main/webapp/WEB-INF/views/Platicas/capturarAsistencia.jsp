@@ -9,11 +9,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
+        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
 
         <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
-       
+
 
         <script type="text/javascript" src="js/platicasEstiloFormularioformly.js"></script>
 
@@ -31,16 +31,18 @@
         <div id="contenido" >  
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
-            <center><h2>Capturar Asistencia a Plática</h2></center>  
-            <center><form:form name="casistencia" id="casistencia" action="#" method="post">
-                <label for="alumno">Número de control</label>
-                <input type="text" name="no_control" id="no_control" size="15" />   
-                <button type="submit">Asistió</button>
-            </form:form>
-            </center>
+                <center><h2>Capturar Asistencia a Plática</h2></center>  
+                <center>
+                    <form:form name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="folio">
+                        <label for="alumno">Folio</label>
+                        <form:input type="text" path="numeroFolio" id="numeroFolio" size="15" />   
+                        <form:errors path="numeroFolio" />
+                        <button type="submit">Asistió</button>
+                    </form:form>
+                </center>
             </div>
             <div style="clear:both;"></div>
         </div>
-         <jsp:include page="../Template/footer.jsp" />
+        <jsp:include page="../Template/footer.jsp" />
     </body>
 </html>

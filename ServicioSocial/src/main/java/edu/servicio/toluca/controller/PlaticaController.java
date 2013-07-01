@@ -7,11 +7,13 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.entidades.Platica;
 import edu.servicio.toluca.sesion.PlaticaFacade;
-import edu.servicio.toluca.beans.PlaticaBean;
+import edu.servicio.toluca.beans.ValidacionAsistenciaPlatica;
+import edu.servicio.toluca.entidades.FoliosPlatica;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -21,9 +23,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -60,7 +64,10 @@ public class PlaticaController {
 
 
         // System.out.println("Conteo de registros Platica:"+platicaFacade.count()); 
-        model.addAttribute("platica", platicaFacade.findAll());
+        LinkedHashMap ordenarDesc = new LinkedHashMap();
+        ordenarDesc.put("fecha", "desc");
+
+        model.addAttribute("platica", platicaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
         return "/Platicas/consultasBajas";
     }
 
@@ -107,11 +114,11 @@ public class PlaticaController {
 //        platica1.setStatus((short) 1);
 //        platica1.setFechaMxFui(df.parse(fecha2));
         if (result.hasErrors()) {
-            System.out.print("hubo errores");
+            // System.out.print("hubo errores");
             return "/Platicas/altaPlatica";
-            
+
         } else {
-            System.out.print("no hubo errores");
+            // System.out.print("no hubo errores");
             platicaFacade.create(platica);
             //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
             return "/Platicas/redirectAltaPlatica";
@@ -121,9 +128,23 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/folioPlatica.do")
-     public String folioPlatica(Model a) {
-        
-        
+    public String folioPlatica(Model a) {
+
+
         return "/Platicas/reporte";
+    }
+
+    @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
+    public String Asistencia(@Valid ValidacionAsistenciaPlatica folio, BindingResult result) {
+       
+      
+        if (result.hasErrors()) {
+            return "/Platicas/capturarAsistencia";
+
+        } else {
+
+            return "/Platicas/redirectAltaPlatica";
+        }
+
     }
 }

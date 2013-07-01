@@ -38,16 +38,16 @@
 
         </script>
         <style type="text/css">
-<!--
+            <!--
 
 
 
-#MyForm label
-{
-width: 150px;
-display: block
-}
-</style>
+            #MyForm label
+            {
+                width: 150px;
+                display: block
+            }
+        </style>
 
         <title>Alta Plática</title>
     </head>
@@ -67,26 +67,26 @@ display: block
                             <tr>
                                 <td>
                                     <form:input type="hidden" value="1" path="status"/>
-                                    <label for="fecha">Fecha</label> 
+                                    <label for="fecha"><fmt:message key="fecha" /></label> 
                                 </td>
 
                                 <td> <form:input path="fecha" id="datepicker" size="15"/></td> 
                                 <td><form:errors path="fecha" cssClass="error" /></td>
-                                
+
                             </tr>
                             <tr>
-                                <td>  <label for="hora">Hora</label> </td>
+                                <td>  <label for="hora"><fmt:message key="hora" /></label> </td>
                                 <td>  <form:input  path="hora" id="hora2" size="15" /></td>  
                                 <td><form:errors path="hora" cssClass="error" /></td>
                             </tr>
                             <tr>
-                                <td>  <label for="lugar">Lugar De la Platica de Inducción</label></td>
+                                <td>  <label for="lugar"><fmt:message key="lugar" /></label></td>
                                 <td>  <form:input path="lugar" id="lugar" size="15" /> </td>  
                                 <td><form:errors path="lugar" cssClass="error" /></td>
                             </tr>
 
                             <tr>
-                                <td> <label for="periodo">Periodo</label> </td>
+                                <td> <label for="periodo"><fmt:message key="periodo" /></label> </td>
                                 <td>
                                     <form:select path="periodo">
                                         <form:option value="ENE-JUN"/>
@@ -95,7 +95,7 @@ display: block
                                 </td>  
                             </tr>
                             <tr>
-                                <td>  <label for="ano"> Año  </label> </td>   
+                                <td>  <label for="ano"> <fmt:message key="anio" />  </label> </td>   
                                 <td>     
                                     <form:select id="anio" path="anio">         
                                         <core:forEach var="i" begin="${anioInicio}" end="${anioFin}" step="1">
@@ -106,21 +106,21 @@ display: block
 
                             </tr>
                             <tr>
-                                <td> <label for="tipoPlatica">Tipo de platica</label> </td>
+                                <td> <label for="tipoPlatica"><fmt:message key="tipo" /></label> </td>
                                 <td> <form:select id="tipo" path="tipo">
                                         <form:option  value="1">Normal</form:option>
-                                        <form:option  value="2">Becado</form:option>
+                                        <form:option  value="2">Becarios</form:option>
                                         <form:option  value="3">Especial</form:option>
                                     </form:select>    
                                 </td>  
                             </tr>
                             <tr>
-                                <td>  <label for="descripcion"> Descripción </label> </td>
+                                <td>  <label for="descripcion"> <fmt:message key="descripcion" /> </label> </td>
                                 <td>  <form:textarea  path="descripcion" rows="6" cols="15" id="descripcion"/></td>  
                             </tr>
 
                             <tr> 
-                                <td>  <label for="fecha_max_fui">Fecha máxima formato unico</label>  </td>
+                                <td>  <label for="fecha_max_fui"><fmt:message key="fecha_max_fui" /> </label>  </td>
                                 <td><form:input  path="fechaMxFui" id="datepicker2" size="15" /> </td>
                                 <td><form:errors path="fechaMxFui" cssClass="error" /></td>
                             </tr>
