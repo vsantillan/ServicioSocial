@@ -91,7 +91,6 @@
                                 <td><a href="preseleccionAlumnos.do" rel="shadowbox"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></td>
                                 <td><a href="#" ><img src="imagenes/eliminar.jpg" title="Eliminar" width="29"/></td>
                                 <td><a href="correo.do" rel="shadowbox"><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
-                                <td><a href="#" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></td>
                                 <td><a href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></td>
                                 <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
                             </tr>

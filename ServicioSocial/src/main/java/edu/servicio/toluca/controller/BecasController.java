@@ -49,4 +49,9 @@ public class BecasController {
 
         return "/Becas/correo";
     }
+    
+     @RequestMapping(method = RequestMethod.GET, value = "/excel.do")
+     public String generaExcel(Model a) {
+        return "/Becas/excel";
+    }
 }
