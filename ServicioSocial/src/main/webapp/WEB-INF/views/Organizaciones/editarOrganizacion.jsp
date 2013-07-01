@@ -48,7 +48,17 @@
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Status:</label></td>
-                            <td>  <input type="text" name="status" id="status" size="20" require="true" value="${instancia.estatus}"/> </td>  
+                            <td>
+                                <core:choose>
+                                    <core:when test="${instancia.estatus==1}">
+                                        <input type="text" name="status" id="status" size="20" require="true" value="Activa"/>
+                                    </core:when>
+                                    <core:otherwise>
+                                        <input type="text" name="status" id="status" size="20" require="true" value="Inactiva"/>
+                                    </core:otherwise>
+                                </core:choose>
+                                    
+                            </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Tel&eacute;fono:</label></td>
