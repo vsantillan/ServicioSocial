@@ -5,6 +5,7 @@
 package edu.servicio.toluca.beans;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -38,6 +39,21 @@ public class Fecha {
 
         return anioActual() + 4;
 
+    }
+     public String CalculaPeriodo() {
+        Calendar calendar = Calendar.getInstance();
+        int month = 1;
+        String periodo="";
+        // Obtenemos el valor del año, mes y día.
+        month = calendar.get(Calendar.MONTH) + 1;
+        
+        if (month <7) 
+            periodo = "ENR-JUN";
+        else if (month>7)
+             periodo = "AGO-DIC";
+        else
+            periodo="JULIO";
+        return periodo;
     }
     
 }

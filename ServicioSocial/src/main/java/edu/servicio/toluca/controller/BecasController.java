@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import javax.ejb.EJB;
@@ -27,7 +28,7 @@ public class BecasController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/preseleccionAlumnos.do")
     public String preseleccionAlumnos(Model model) {
-
+        Fecha fecha= new Fecha ();
         model.addAttribute("alumno",formatoUnico.findAll());    
         return "/Becas/preseleccionAlumnos";
     }

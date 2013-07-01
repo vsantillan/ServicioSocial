@@ -52,13 +52,15 @@
     </head>
     <body>
         <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
-               <form:form id="form1">
+               <form:form id="form1" action="#" method="POST" onsubmit="window.parent.Shadowbox.close();">
                    <div >
                             <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                                 <thead>
                                     <tr>
                                         <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
                                         <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
+                                        <th>&nbsp;Apellido Paterno&nbsp;</th>
+                                        <th>&nbsp;Apellido Materno&nbsp;</th>
                                         <th>&nbsp;Nombre&nbsp;</th>
                                         <th>&nbsp;Carrera&nbsp;</th>
                                         <th>&nbsp;Promedio&nbsp;</th>
@@ -70,13 +72,15 @@
                                 <tbody>
                                     <core:forEach items="${alumno}" var="current">
                                     <tr class='gradeX'>
-                                      <td><core:out value="${current.datos_personales_id.id}" /></td>
-                                      <td><core:out value="${current.datos_personales_id.id}" /></td>
-                                      <td><core:out value="${current.datos_personales_id.nombre}"  /></td>
-                                      <td><core:out value="${current.datos_personales_id.id.carrera}" /></td>
-                                      <td><core:out value="${current.datos_personales_id.id.promedio}" /></td>
-                                      <td><core:out value="${current.tipo_servicio}" /></td>
-                                      <td><core:out value="${current.datos_personales_id.sexo}" /></td>
+                                      <td><core:out value="${current.datosPersonalesId.id}" /></td>
+                                      <td><core:out value="${current.datosPersonalesId.alumnoId.id}" /></td>
+                                      <td><core:out value="${current.datosPersonalesId.apellidoP}"  /></td>
+                                      <td><core:out value="${current.datosPersonalesId.apellidoM}"  /></td>
+                                      <td><core:out value="${current.datosPersonalesId.nombre}"  /></td>
+                                      <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
+                                      <td><core:out value="${current.datosPersonalesId.alumnoId.promedio}" /></td>
+                                      <td><core:out value="${current.tipoServicio}" /></td>
+                                      <td><core:out value="${current.datosPersonalesId.sexo}" /></td>
                                       <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
                                   </core:forEach>
@@ -85,10 +89,10 @@
                        <br>
                             <table>
                                  <tr>
-                                     <td> <input type ="button" value = "Aceptar " /> </td>                                
-                <td> <input type="button" name="Submit" value="Contar Alumnos" onClick="contar();"></td>
-                  </tr>
-                    </table>
+                                     <td> <input type ="submit" value = "Aceptar " /> </td>                                
+                                     <td> <input type="button" value="Contar Alumnos" onClick="contar();"></td>
+                                 </tr>
+                             </table>
                  </form:form>            
             </div>
             <div style="clear:both;"></div>
