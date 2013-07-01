@@ -11,7 +11,14 @@ import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.logging.Level;
+import javax.annotation.Resource;
+
 import javax.ejb.EJB;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
+import org.openide.util.Exceptions;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +32,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class OrganizacionesController
 {
+//    @Resource
+//    private UserTransaction utx;
+    
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     private InstanciaFacade instanciaFacade;
     
@@ -41,6 +51,7 @@ public class OrganizacionesController
     public String administradorOrganizaciones(Model model)
     {
         model.addAttribute("organizaciones", instanciaFacade.findAll());
+        System.out.println("Despues del Js");
         return "/Organizaciones/administrarOrganizaciones";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/administrarProyectos.do")
@@ -142,14 +153,13 @@ public class OrganizacionesController
     @RequestMapping(method = RequestMethod.GET, value = "/borrarOrganizacion.do")
     public @ResponseBody String borrarOrganizacion(int id,Model model)
     {
-        Instancia instancia=new Instancia();
+        String returnText="Se modifico objeto instancia, con un id de: "+id;
+        Instancia instancia=instanciaFacade.find(BigDecimal.valueOf(id));
         instancia.setIdInstancia(BigDecimal.valueOf(id));
         instancia.setEstatus(BigInteger.valueOf(0));
         System.out.println("Antes del update");
-        instanciaFacade.edit(instancia);
-        System.out.println("Despues del update");
-        String returnText="Se modifico objeto instancia, con un id de: "+id;
-        System.out.println(returnText);
+        //instanciaFacade.edit(instancia);
+        System.out.println("Despues del update"); 
         return returnText;
     }
     

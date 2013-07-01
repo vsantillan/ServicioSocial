@@ -6,6 +6,12 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
+import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.sesion.DatosPersonalesFacade;
+import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +29,29 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class FormatoUnicoController {
+    @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
+    private DatosPersonalesFacade datosPersonalesFacade;  
+    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+    private VistaAlumnoFacade vistaPersonalesFacade;
+    
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
+        String alumno_id = "09280437";
+        List<VistaAlumno> listaAlumnos = vistaPersonalesFacade.findBySpecificField("id", alumno_id, "equal", null, null);
+        System.out.println("Algo "+ listaAlumnos.get(0).getNombre());
+        DatosPersonales datosPersonales = new DatosPersonales();
+        VistaAlumno alumno = listaAlumnos.get(0);
+        datosPersonales.setAlumnoId(alumno);
+        datosPersonales.setNombre(alumno.getNombre());
+        datosPersonales.setApellidoP(alumno.getApellidoPat());
+        datosPersonales.setApellidoM(alumno.getApellidoMat());
+        datosPersonales.setCurp(alumno.getCurp());
+        datosPersonales.setSexo(alumno.getSexo());
+        datosPersonales.setTelefonoCasa(alumno.getTelefono())   ;
+        datosPersonales.setCorreoElectronico(alumno.getEMail());
+        datosPersonalesFacade.create(datosPersonales);
+        
         return "/FormatoUnico/formatoUnicoUsuario";
     }
     
@@ -36,17 +62,14 @@ public class FormatoUnicoController {
     
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
     public @ResponseBody FormatoUnicoErrores modificarDatosPersonalesAlumno( @Valid FormatoUnicoDatosPersonalesBean dt,BindingResult resultado){
-        System.out.println(dt.getSexo());
-        
+        System.out.println(dt.getSexo());      
         if (resultado.hasErrors())
-        {
-          
+        {         
             for(ObjectError error: resultado.getAllErrors())
             {
                 System.out.println(error.getDefaultMessage());   
             }
-        }
-        
+        }        
         return new FormatoUnicoErrores();
     }
     
