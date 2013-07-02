@@ -13,6 +13,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -106,9 +107,9 @@ public class Proyectos implements Serializable {
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "idProyecto",fetch= FetchType.EAGER)
     private Collection<Horario> horarioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto", fetch= FetchType.EAGER)
     private Collection<Actividades> actividadesCollection;
     @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
     @ManyToOne(optional = false)

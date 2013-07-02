@@ -2,6 +2,9 @@
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@page import="java.util.Map"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.ArrayList"%>
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="css/cssTablaDetallesOrganizaciones.css" />
@@ -16,7 +19,7 @@
                 </tr>
                 <tr>
                     <td><p>Nombre del Proyecto:</p></td>
-                    <td><p><o value="${proyectoDetalle.nombre}"/></p></td>
+                    <td><p><core:out value="${proyectoDetalle.nombre}"/></p></td>
                 </tr>
                 <tr>
                     <td><p>N&uacute;mero de vacantes:</p></td>

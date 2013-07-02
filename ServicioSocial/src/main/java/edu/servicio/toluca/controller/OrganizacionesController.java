@@ -107,7 +107,8 @@ public class OrganizacionesController
     
     @RequestMapping(method = RequestMethod.GET, value = "/detalleProyecto.do")
     public String detalleProyecto(BigDecimal id,Model model){
-        model.addAttribute("proyectoDetalle", proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        //model.addAttribute("proyectoDetalle", proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("proyectoDetalle", proyectosFacade.find(id));
         return "/Organizaciones/detalleProyecto";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/detalleOrganizacion.do")
