@@ -290,5 +290,9 @@ public class FormatoUnico implements Serializable {
     public String toString() {
         return "edu.servicio.toluca.entidades.FormatoUnico[ id=" + id + " ]";
     }
+
+    public void setTipoServicio(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

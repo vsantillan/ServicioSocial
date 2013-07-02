@@ -81,7 +81,7 @@
                                       <td><core:out value="${current.datosPersonalesId.alumnoId.promedio}" /></td>
                                       <td><core:out value="${current.tipoServicio}" /></td>
                                       <td><core:out value="${current.datosPersonalesId.sexo}" /></td>
-                                      <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
+                                      <td><form:checkbox path="preseleccionados" value="${current.id}"/></td> 
                                     </tr>
                                   </core:forEach>
                                 </tbody>
