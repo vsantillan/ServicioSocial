@@ -7,9 +7,12 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
+import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.validation.Valid;
@@ -32,14 +35,18 @@ public class FormatoUnicoController {
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;  
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
-    private VistaAlumnoFacade vistaPersonalesFacade;
+    private VistaAlumnoFacade vistaAlumnoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
+    private FormatoUnicoFacade formatoUnicoFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
-        String alumno_id = "09280437";
-        List<VistaAlumno> listaAlumnos = vistaPersonalesFacade.findBySpecificField("id", alumno_id, "equal", null, null);
-        System.out.println("Algo "+ listaAlumnos.get(0).getNombre());
+        //id de alumno provisional en lo que nos dan lo de sesión
+        String alumno_id = "09280476";
+        //select * from ...where
+        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
+        //objeto que voy a insertar
         DatosPersonales datosPersonales = new DatosPersonales();
         VistaAlumno alumno = listaAlumnos.get(0);
         datosPersonales.setAlumnoId(alumno);
@@ -50,7 +57,17 @@ public class FormatoUnicoController {
         datosPersonales.setSexo(alumno.getSexo());
         datosPersonales.setTelefonoCasa(alumno.getTelefono())   ;
         datosPersonales.setCorreoElectronico(alumno.getEMail());
+        //inserción del objeto en el facade
         datosPersonalesFacade.create(datosPersonales);
+        
+        //Para insertar en formato único es necesario recuperar el id de datos personales.
+        BigDecimal idDatosPersonales = datosPersonalesFacade.find(datosPersonales.getId()).getId();
+        FormatoUnico formatoUnico = new FormatoUnico();
+        formatoUnico.setDatosPersonalesId(datosPersonales);
+        formatoUnico.setNumeroCreditos(alumno.getCreditosAcumulados());
+        formatoUnico.setPorcentajeCreditos(Double.valueOf(alumno.getPorcentaje()));
+        formatoUnicoFacade.create(formatoUnico);
+        
         
         return "/FormatoUnico/formatoUnicoUsuario";
     }
