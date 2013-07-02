@@ -25,7 +25,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -39,7 +38,7 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Platica.findById", query = "SELECT p FROM Platica p WHERE p.id = :id"),
     @NamedQuery(name = "Platica.findByFecha", query = "SELECT p FROM Platica p WHERE p.fecha = :fecha"),
     @NamedQuery(name = "Platica.findByHora", query = "SELECT p FROM Platica p WHERE p.hora = :hora"),
-    @NamedQuery(name = "Platica.findByLugar", query = "SELECT p FROM Platica p WHERE p.lugar = :lugar"),
+
     @NamedQuery(name = "Platica.findByPeriodo", query = "SELECT p FROM Platica p WHERE p.periodo = :periodo"),
     @NamedQuery(name = "Platica.findByAnio", query = "SELECT p FROM Platica p WHERE p.anio = :anio"),
     @NamedQuery(name = "Platica.findByNumeroAsistentes", query = "SELECT p FROM Platica p WHERE p.numeroAsistentes = :numeroAsistentes"),
@@ -71,11 +70,8 @@ public class Platica implements Serializable {
     @Column(name = "HORA")
     private String hora;
     
-    @NotBlank
-    @Size(max = 25)
-    @Column(name = "LUGAR")
+  
     
-    private String lugar;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -147,13 +143,7 @@ public class Platica implements Serializable {
         this.hora = hora;
     }
 
-    public String getLugar() {
-        return lugar;
-    }
 
-    public void setLugar(String lugar) {
-        this.lugar = lugar;
-    }
 
     public String getPeriodo() {
         return periodo;

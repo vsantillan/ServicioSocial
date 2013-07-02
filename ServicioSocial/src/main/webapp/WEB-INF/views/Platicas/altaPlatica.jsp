@@ -81,8 +81,13 @@
                             </tr>
                             <tr>
                                 <td>  <label for="lugar"><fmt:message key="lugar" /></label></td>
-                                <td>  <form:input path="lugar" id="lugar" size="15" /> </td>  
-                                <td><form:errors path="lugar" cssClass="error" /></td>
+
+                                <td>  <form:select path="idLugar">
+                                        <core:forEach items="${lugares}" var="lugares" >
+                                            <form:option value="${lugares.id}">${lugares.lugar}</form:option>
+                                        </core:forEach>
+                                    </form:select> </td>  
+
                             </tr>
 
                             <tr>

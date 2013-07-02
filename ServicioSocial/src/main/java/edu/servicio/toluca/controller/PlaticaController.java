@@ -6,7 +6,9 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.entidades.Platica;
+import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.PlaticaFacade;
+import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
 import edu.servicio.toluca.beans.ValidacionAsistenciaPlatica;
 import edu.servicio.toluca.entidades.FoliosPlatica;
 import java.text.DateFormat;
@@ -38,6 +40,8 @@ public class PlaticaController {
 
     @EJB(mappedName = "java:global/ServicioSocial/PlaticaFacade")
     private PlaticaFacade platicaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/LugaresPlaticaFacade")
+    private LugaresPlaticaFacade lugaresPlaticaFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/altaPlatica.do")
     public String altaPlatica(Model modelo) {
@@ -45,6 +49,11 @@ public class PlaticaController {
         modelo.addAttribute("anioInicio", anio.anioActual());
         modelo.addAttribute("anioFin", anio.anioFin());
         modelo.addAttribute("platica", new Platica());
+        //lista de lugares platica de induccion
+        
+        modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
+        
+        
         return "/Platicas/altaPlatica";
     }
 
