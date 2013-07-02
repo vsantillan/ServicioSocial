@@ -44,9 +44,9 @@ public class HorariosAlumno implements Serializable {
     @Column(name = "DIA")
     private String dia;
     @Column(name = "HORA_INICIO")
-    private BigDecimal horaInicio;
+    private Float horaInicio;
     @Column(name = "HORA_FIN")
-    private BigDecimal horaFin;
+    private Float horaFin;
     @JoinColumn(name = "FORMATO_UNICO_ID", referencedColumnName = "ID")
     @ManyToOne
     private FormatoUnico formatoUnicoId;
@@ -74,19 +74,19 @@ public class HorariosAlumno implements Serializable {
         this.dia = dia;
     }
 
-    public BigDecimal getHoraInicio() {
+    public Float getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(BigDecimal horaInicio) {
+    public void setHoraInicio(Float horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public BigDecimal getHoraFin() {
+    public Float getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(BigDecimal horaFin) {
+    public void setHoraFin(Float horaFin) {
         this.horaFin = horaFin;
     }
 
