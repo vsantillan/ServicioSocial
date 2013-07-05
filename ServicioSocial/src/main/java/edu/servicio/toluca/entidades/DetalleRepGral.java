@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "DETALLE_REP_GRAL", catalog = "", schema = "GES_VIN")

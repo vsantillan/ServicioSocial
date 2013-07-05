@@ -11,7 +11,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,11 +22,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "DATOS_PERSONALES", catalog = "", schema = "GES_VIN")
@@ -60,9 +58,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class DatosPersonales implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GenericGenerator(name="generatorDP" ,strategy = "increment")
     @Id
-    @GeneratedValue(generator="generatorDP")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
@@ -142,6 +138,8 @@ public class DatosPersonales implements Serializable {
     private Collection<LogServicio> logServicioCollection;
     @OneToMany(mappedBy = "datosPersonalesId")
     private Collection<RegObservaciones> regObservacionesCollection;
+    @OneToMany(mappedBy = "datosPersonalesId")
+    private Collection<Reportes> reportesCollection;
     @OneToMany(mappedBy = "datosPersonalesId")
     private Collection<Documentos> documentosCollection;
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
@@ -389,6 +387,15 @@ public class DatosPersonales implements Serializable {
 
     public void setRegObservacionesCollection(Collection<RegObservaciones> regObservacionesCollection) {
         this.regObservacionesCollection = regObservacionesCollection;
+    }
+
+    @XmlTransient
+    public Collection<Reportes> getReportesCollection() {
+        return reportesCollection;
+    }
+
+    public void setReportesCollection(Collection<Reportes> reportesCollection) {
+        this.reportesCollection = reportesCollection;
     }
 
     @XmlTransient

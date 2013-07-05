@@ -5,26 +5,18 @@
 package edu.servicio.toluca.sesion;
 
 import edu.servicio.toluca.entidades.Platica;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Stateless
 public class PlaticaFacade extends AbstractFacade<Platica> {
-
     @PersistenceContext(unitName = "servicioPU")
-    
     private EntityManager em;
-    
- 
-    
-  
 
     @Override
     protected EntityManager getEntityManager() {
@@ -34,6 +26,5 @@ public class PlaticaFacade extends AbstractFacade<Platica> {
     public PlaticaFacade() {
         super(Platica.class);
     }
-
-  
+    
 }

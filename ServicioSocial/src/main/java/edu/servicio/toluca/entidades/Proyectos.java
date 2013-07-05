@@ -13,7 +13,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "PROYECTOS", catalog = "", schema = "GES_VIN")
@@ -106,10 +105,10 @@ public class Proyectos implements Serializable {
     @Column(name = "NOMBRE")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
-    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "idProyecto",fetch= FetchType.EAGER)
+    private Collection<ProyectoPerfil> proyectoPerfilCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Horario> horarioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto", fetch= FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Actividades> actividadesCollection;
     @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
     @ManyToOne(optional = false)
@@ -244,12 +243,12 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
-    public Collection<RetroalimentacionProyecto> getRetroalimentacionProyectoCollection() {
-        return retroalimentacionProyectoCollection;
+    public Collection<ProyectoPerfil> getProyectoPerfilCollection() {
+        return proyectoPerfilCollection;
     }
 
-    public void setRetroalimentacionProyectoCollection(Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection) {
-        this.retroalimentacionProyectoCollection = retroalimentacionProyectoCollection;
+    public void setProyectoPerfilCollection(Collection<ProyectoPerfil> proyectoPerfilCollection) {
+        this.proyectoPerfilCollection = proyectoPerfilCollection;
     }
 
     @XmlTransient

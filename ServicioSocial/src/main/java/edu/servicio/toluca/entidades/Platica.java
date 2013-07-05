@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -24,11 +23,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author bustedvillain
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "PLATICA", catalog = "", schema = "GES_VIN")
@@ -38,7 +36,6 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "Platica.findById", query = "SELECT p FROM Platica p WHERE p.id = :id"),
     @NamedQuery(name = "Platica.findByFecha", query = "SELECT p FROM Platica p WHERE p.fecha = :fecha"),
     @NamedQuery(name = "Platica.findByHora", query = "SELECT p FROM Platica p WHERE p.hora = :hora"),
-
     @NamedQuery(name = "Platica.findByPeriodo", query = "SELECT p FROM Platica p WHERE p.periodo = :periodo"),
     @NamedQuery(name = "Platica.findByAnio", query = "SELECT p FROM Platica p WHERE p.anio = :anio"),
     @NamedQuery(name = "Platica.findByNumeroAsistentes", query = "SELECT p FROM Platica p WHERE p.numeroAsistentes = :numeroAsistentes"),
@@ -47,62 +44,43 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui"),
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
 public class Platica implements Serializable {
-    @JoinColumn(name = "ID_LUGAR", referencedColumnName = "ID")
-    @ManyToOne
-    private LugaresPlatica idLugar;
-
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "generator", strategy = "increment")
-    @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ID")
     private Long id;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    
     @Size(max = 8)
-    @NotNull
     @Column(name = "HORA")
     private String hora;
-    
-  
-    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "PERIODO")
     private String periodo;
-    
-    
     @Size(max = 6)
     @Column(name = "ANIO")
     private String anio;
-    
     @Column(name = "NUMERO_ASISTENTES")
     private Integer numeroAsistentes;
-    
-    
     @Column(name = "TIPO")
     private Short tipo;
-    
     @Column(name = "STATUS")
     private Short status;
-    
-    @NotNull
     @Column(name = "FECHA_MX_FUI")
     @Temporal(TemporalType.DATE)
     private Date fechaMxFui;
-    
     @Size(max = 400)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-    
-    
+    @JoinColumn(name = "ID_LUGAR", referencedColumnName = "ID")
+    @ManyToOne
+    private LugaresPlatica idLugar;
     @OneToMany(mappedBy = "platicaId")
     private Collection<FoliosPlatica> foliosPlaticaCollection;
 
@@ -142,8 +120,6 @@ public class Platica implements Serializable {
     public void setHora(String hora) {
         this.hora = hora;
     }
-
-
 
     public String getPeriodo() {
         return periodo;
@@ -201,6 +177,14 @@ public class Platica implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public LugaresPlatica getIdLugar() {
+        return idLugar;
+    }
+
+    public void setIdLugar(LugaresPlatica idLugar) {
+        this.idLugar = idLugar;
+    }
+
     @XmlTransient
     public Collection<FoliosPlatica> getFoliosPlaticaCollection() {
         return foliosPlaticaCollection;
@@ -234,12 +218,5 @@ public class Platica implements Serializable {
     public String toString() {
         return "edu.servicio.toluca.entidades.Platica[ id=" + id + " ]";
     }
-
-    public LugaresPlatica getIdLugar() {
-        return idLugar;
-    }
-
-    public void setIdLugar(LugaresPlatica idLugar) {
-        this.idLugar = idLugar;
-    }
+    
 }

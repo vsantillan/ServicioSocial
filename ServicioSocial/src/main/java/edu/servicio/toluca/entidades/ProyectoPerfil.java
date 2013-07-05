@@ -20,7 +20,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author ekt
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "PROYECTO_PERFIL", catalog = "", schema = "GES_VIN")
@@ -36,6 +36,9 @@ public class ProyectoPerfil implements Serializable {
     @NotNull
     @Column(name = "ID_PROYECTO_PERFIL")
     private BigDecimal idProyectoPerfil;
+    @JoinColumn(name = "ID_PROYECTO", referencedColumnName = "ID_PROYECTO")
+    @ManyToOne(optional = false)
+    private Proyectos idProyecto;
     @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")
     @ManyToOne(optional = false)
     private Perfil idPerfil;
@@ -53,6 +56,14 @@ public class ProyectoPerfil implements Serializable {
 
     public void setIdProyectoPerfil(BigDecimal idProyectoPerfil) {
         this.idProyectoPerfil = idProyectoPerfil;
+    }
+
+    public Proyectos getIdProyecto() {
+        return idProyecto;
+    }
+
+    public void setIdProyecto(Proyectos idProyecto) {
+        this.idProyecto = idProyecto;
     }
 
     public Perfil getIdPerfil() {

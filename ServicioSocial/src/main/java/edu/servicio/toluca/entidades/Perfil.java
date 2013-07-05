@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author ekt
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "PERFIL", catalog = "", schema = "GES_VIN")

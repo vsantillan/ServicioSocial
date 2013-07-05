@@ -12,7 +12,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,11 +25,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "FORMATO_UNICO", catalog = "", schema = "GES_VIN")
@@ -50,13 +48,12 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "FormatoUnico.findByNumeroCreditos", query = "SELECT f FROM FormatoUnico f WHERE f.numeroCreditos = :numeroCreditos"),
     @NamedQuery(name = "FormatoUnico.findByPeriodoInicio", query = "SELECT f FROM FormatoUnico f WHERE f.periodoInicio = :periodoInicio"),
     @NamedQuery(name = "FormatoUnico.findByRevisionesFui", query = "SELECT f FROM FormatoUnico f WHERE f.revisionesFui = :revisionesFui"),
-    @NamedQuery(name = "FormatoUnico.findByRevisionesFuf", query = "SELECT f FROM FormatoUnico f WHERE f.revisionesFuf = :revisionesFuf")})
+    @NamedQuery(name = "FormatoUnico.findByRevisionesFuf", query = "SELECT f FROM FormatoUnico f WHERE f.revisionesFuf = :revisionesFuf"),
+    @NamedQuery(name = "FormatoUnico.findByModalidad", query = "SELECT f FROM FormatoUnico f WHERE f.modalidad = :modalidad")})
 public class FormatoUnico implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GenericGenerator(name="generatorFU" ,strategy = "increment")
     @Id
-    @GeneratedValue(generator="generatorFU")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
@@ -91,6 +88,9 @@ public class FormatoUnico implements Serializable {
     private BigInteger revisionesFui;
     @Column(name = "REVISIONES_FUF")
     private BigInteger revisionesFuf;
+    @Size(max = 1)
+    @Column(name = "MODALIDAD")
+    private String modalidad;
     @OneToMany(mappedBy = "formatoUnicoId")
     private Collection<HorariosAlumno> horariosAlumnoCollection;
     @OneToMany(mappedBy = "idFormatoUnico")
@@ -224,6 +224,14 @@ public class FormatoUnico implements Serializable {
         this.revisionesFuf = revisionesFuf;
     }
 
+    public String getModalidad() {
+        return modalidad;
+    }
+
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
+
     @XmlTransient
     public Collection<HorariosAlumno> getHorariosAlumnoCollection() {
         return horariosAlumnoCollection;
@@ -289,10 +297,6 @@ public class FormatoUnico implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.FormatoUnico[ id=" + id + " ]";
-    }
-
-    public void setTipoServicio(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

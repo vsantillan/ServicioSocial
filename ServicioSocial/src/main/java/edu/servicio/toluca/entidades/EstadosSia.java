@@ -12,7 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "ESTADOS_SIA", catalog = "", schema = "GES_VIN")
@@ -52,7 +51,7 @@ public class EstadosSia implements Serializable {
     @NotNull
     @Column(name = "STATUS")
     private BigInteger status;
-    @OneToMany(cascade = CascadeType.ALL,  mappedBy = "idEstado")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idEstado")
     private Collection<CodigosPostales> codigosPostalesCollection;
 
     public EstadosSia() {

@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author ekt
+ * @author SATELLITE
  */
 @Stateless
 public class ProyectoPerfilFacade extends AbstractFacade<ProyectoPerfil> {

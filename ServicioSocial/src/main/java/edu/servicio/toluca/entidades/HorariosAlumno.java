@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "HORARIOS_ALUMNO", catalog = "", schema = "GES_VIN")
@@ -43,10 +43,12 @@ public class HorariosAlumno implements Serializable {
     @Size(max = 30)
     @Column(name = "DIA")
     private String dia;
+    @Size(max = 10)
     @Column(name = "HORA_INICIO")
-    private Float horaInicio;
+    private String horaInicio;
+    @Size(max = 10)
     @Column(name = "HORA_FIN")
-    private Float horaFin;
+    private String horaFin;
     @JoinColumn(name = "FORMATO_UNICO_ID", referencedColumnName = "ID")
     @ManyToOne
     private FormatoUnico formatoUnicoId;
@@ -74,19 +76,19 @@ public class HorariosAlumno implements Serializable {
         this.dia = dia;
     }
 
-    public Float getHoraInicio() {
+    public String getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(Float horaInicio) {
+    public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public Float getHoraFin() {
+    public String getHoraFin() {
         return horaFin;
     }
 
-    public void setHoraFin(Float horaFin) {
+    public void setHoraFin(String horaFin) {
         this.horaFin = horaFin;
     }
 

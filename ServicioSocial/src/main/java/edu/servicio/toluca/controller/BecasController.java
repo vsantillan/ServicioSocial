@@ -40,7 +40,7 @@ public class BecasController {
     @RequestMapping(method = RequestMethod.GET, value = "/administracionAlumnosBecados.do")
     public String administracionAlumnosBecados(Model model) {
         FormatoUnico form = new FormatoUnico();
-        form.setTipoServicio(6);
+        //form.setTipoServicio(6);
         formatoUnico.edit(form);
         return "/Becas/administracionAlumnosBecados";
     }

@@ -11,7 +11,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Stateless
 public class MunicipiosSiaFacade extends AbstractFacade<MunicipiosSia> {

@@ -11,11 +11,10 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author mary
+ * @author SATELLITE
  */
 @Stateless
-public class LugaresPlaticaFacade extends AbstractFacade<LugaresPlatica>{
-    
+public class LugaresPlaticaFacade extends AbstractFacade<LugaresPlatica> {
     @PersistenceContext(unitName = "servicioPU")
     private EntityManager em;
 

@@ -9,7 +9,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "CODIGOS_POSTALES", catalog = "", schema = "GES_VIN")
@@ -43,7 +42,7 @@ public class CodigosPostales implements Serializable {
     @NotNull
     @Column(name = "CP")
     private int cp;
-    @OneToMany(mappedBy = "idCp", fetch= FetchType.EAGER)
+    @OneToMany(mappedBy = "idCp")
     private Collection<Colonia> coloniaCollection;
     @JoinColumn(name = "ID_TIPO_LOCALIDAD", referencedColumnName = "ID_TIPO_LOCALIDAD")
     @ManyToOne(optional = false)

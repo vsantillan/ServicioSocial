@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jonny
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "VISTA_ALUMNO", catalog = "", schema = "GES_VIN")
@@ -111,8 +111,7 @@ public class VistaAlumno implements Serializable {
     @Column(name = "PORCENTAJE")
     private String porcentaje;
     @Column(name = "PROMEDIO")
-    //se cambio el tipo de dato de BigInteger a Double
-    private Double promedio;
+    private BigInteger promedio;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<Egresado> egresadoCollection;
     @OneToMany(mappedBy = "alumnoId")
@@ -279,12 +278,12 @@ public class VistaAlumno implements Serializable {
     public void setPorcentaje(String porcentaje) {
         this.porcentaje = porcentaje;
     }
-//cambio tipo de dato
-    public Double getPromedio() {
+
+    public BigInteger getPromedio() {
         return promedio;
     }
-//cambio tipo de dato
-    public void setPromedio(Double promedio) {
+
+    public void setPromedio(BigInteger promedio) {
         this.promedio = promedio;
     }
 
