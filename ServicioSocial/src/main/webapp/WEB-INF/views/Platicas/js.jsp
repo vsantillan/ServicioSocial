@@ -41,4 +41,11 @@
 				
 			});
 </script>
+   <script>
+            $(function() {
+                $('#hora2').timepicker();
+
+
+            });
+        </script>
 <%-- Fin Alta palticas --%>
