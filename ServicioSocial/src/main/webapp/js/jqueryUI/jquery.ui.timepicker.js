@@ -62,10 +62,14 @@
         this._currentClass = 'ui-timepicker-current'; // The name of the current hour / minutes marker class
         this._dayOverClass = 'ui-timepicker-days-cell-over'; // The name of the day hover marker class
 
-        this.regional = []; // Available regional settings, indexed by language code
+        this.regional = ['es']; // Available regional settings, indexed by language code
         this.regional[''] = { // Default regional settings
             hourText: 'Hora',           // Display text for hours section
-            minuteText: 'Minutos',       // Display text for minutes link
+
+                // Display text for minutes link
+
+            minuteText: 'Minuto',       // Display text for minutes link
+
             amPmText: ['', ''],     // Display text for AM PM
             closeButtonText: 'Done',        // Text for the confirmation button (ok button)
             nowButtonText: 'Now',           // Text for the now button
@@ -101,15 +105,15 @@
             onMinuteShow: null,             // callback for enabling / disabling on time selection  ex : function(hour,minute) { return true; }
 
             hours: {
-                starts: 0,                  // first displayed hour
-                ends: 23                    // last displayed hour
+                starts: 07,                  // first displayed hour
+                ends: 21                    // last displayed hour
             },
             minutes: {
                 starts: 0,                  // first displayed minute
                 ends: 55,                   // last displayed minute
-                interval: 5                 // interval of displayed minutes
+                interval: 30                 // interval of displayed minutes
             },
-            rows: 4,                        // number of rows for the input tables, minimum 2, makes more sense if you use multiple of 2
+            rows: 3,                        // number of rows for the input tables, minimum 2, makes more sense if you use multiple of 2
             // 2011-08-05 0.2.4
             showHours: true,                // display the hours section of the dialog
             showMinutes: true,              // display the minute section of the dialog

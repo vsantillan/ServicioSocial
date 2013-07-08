@@ -26,6 +26,4 @@
         <script type="text/javascript" src="js/jqueryUI/jquery-ui.custom.js"></script>
 
 
-        <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.js"></script>
-        <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.min.js"></script>
-        <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.pack.js"></script>
+      
