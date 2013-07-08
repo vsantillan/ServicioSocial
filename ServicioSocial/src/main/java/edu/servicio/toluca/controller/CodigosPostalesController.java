@@ -10,10 +10,12 @@ import edu.servicio.toluca.beans.MunicipiosJSON;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
+import edu.servicio.toluca.entidades.MunicipiosSia;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.MunicipiosSiaFacade;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
@@ -81,6 +83,9 @@ public class CodigosPostalesController {
         //Fabricacion de objeto
         EstadosJSON estadosJSON = new EstadosJSON();
         try {
+            LinkedHashMap<String, String> ordering = new LinkedHashMap<String, String>();
+            ordering.put("asc", "nombre");
+            //List<EstadosSia> estados = estadosFacade.findBySpecificField(null, null, null, null, null);
             List<EstadosSia> estados = estadosFacade.findAll();
             for (int i = 0; i < estados.size(); i++) {
                 estadosJSON.getIdEstados().add(estados.get(i).getIdEstado() + "");
@@ -98,32 +103,34 @@ public class CodigosPostalesController {
         }
     }
 
-//    @RequestMapping(method = RequestMethod.GET, value = "/cargarMunicipios.do")
-//    public @ResponseBody
-//    EstadosJSON cargarMunicipios(Model model, String idEstado) {
-//        System.out.println("Cargar Estados controller, idEstado:" + idEstado);
-//        try {
-//
-//            EstadosSia estado = estadosFacade.find(Integer.parseInt(idEstado));
-//            ArrayList<CodigosPostales> codigosPostales = new ArrayList<CodigosPostales>(estado.getCodigosPostalesCollection());
-//            //Fabricacion de objeto
-//            MunicipiosJSON municipiosJSON = new MunicipiosJSON();
-//
-//            for (int i = 0; i < estados.size(); i++) {
-//                estadosJSON.getIdEstados().add(estados.get(i).getIdEstado() + "");
-//                estadosJSON.getNombreEstados().add(estados.get(i).getNombre());
-//                System.out.println("Estado:" + estadosJSON.getNombreEstados().get(i));
-//            }
-//            System.out.println("Consulta exitosa");
-//            estadosJSON.setStatusJSON(true);
-//            return estadosJSON;
-//        } catch (Exception e) {
-//            estadosJSON.setStatusJSON(false);
-//            e.printStackTrace();
-//            //Error en consulta           
-//            return null;
-//        }
-//    }
+    @RequestMapping(method = RequestMethod.GET, value = "/cargarMunicipios.do")
+    public @ResponseBody MunicipiosJSON cargarMunicipios(Model model, String idEstado) {
+        System.out.println("Cargar Estados controller, idEstado:" + idEstado);
+        //Fabricacion de objeto
+        MunicipiosJSON municipiosJSON = new MunicipiosJSON();
+        try {
+            System.out.println("Antes del query");
+//            CodigosPostales codigosPostales = codigosPostalesFacade.find(Integer.parseInt(cp));
+            List<EstadosSia> estados = estadosFacade.findBySpecificField("idEstado", idEstado, "equal", null, null);
+            System.out.println("Despues del query");
+            ArrayList<CodigosPostales> codigosPostales = new ArrayList(estados.get(0).getCodigosPostalesCollection());
+            for (int i = 0; i < codigosPostales.size(); i++) {
+                System.out.println("Municipio:" + codigosPostales.get(i).getIdMunicipio().getNombre());
+                municipiosJSON.getIdMunicipios().add(codigosPostales.get(i).getIdMunicipio().getIdMunicipio()+"");
+                municipiosJSON.getMunicipios().add(codigosPostales.get(i).getIdMunicipio().getNombre());                
+            }
+           
+            //Operacion realizada con exito
+            municipiosJSON.setStatusJSON(true);
+            System.out.println("Operacion con exito");
+            return municipiosJSON;
+        } catch (Exception e) {
+            e.printStackTrace();
+            //Error en consulta
+            municipiosJSON.setStatusJSON(false);
+            return municipiosJSON;
+        }
+    }
     
     //Alta de organizacion por pre-registro
     @RequestMapping(method = RequestMethod.GET, value = "/pruebaConsulta.do")

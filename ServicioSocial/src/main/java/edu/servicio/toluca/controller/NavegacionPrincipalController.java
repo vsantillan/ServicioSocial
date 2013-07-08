@@ -9,13 +9,15 @@ package edu.servicio.toluca.controller;
  * @author bustedvillain
  */
 
-import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
+import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
+import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
+import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
+import java.util.LinkedHashMap;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,6 +28,12 @@ public class NavegacionPrincipalController {
     
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     public CodigosPostalesFacade codigosPostalesFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/TipoOrganizacionFacade")
+    public TipoOrganizacionFacade tipoOrganizacionFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
+    public EstadosSiaFacade estadosFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model a){
@@ -54,8 +62,16 @@ public class NavegacionPrincipalController {
     
     @RequestMapping(method = RequestMethod.GET, value = "/registroOrganizaciones.do")
     public String registroOrganizaciones(Model model){ 
-        ConsultasOrganizaciones consultasOrganizaciones = new ConsultasOrganizaciones();        
-        model.addAttribute("preOrganizaciones", instanciaFacade.findAll());      
+//        ConsultasOrganizaciones consultasOrganizaciones = new ConsultasOrganizaciones();        
+        model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));      
+        model.addAttribute("instancia", new Instancia()); 
+        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+//        model.addAttribute("colonia", new Colonia()); 
+//        model.addAttribute("tipoOrganizacionesObj", new TipoOrganizacion());
+        model.addAttribute("estados", estadosFacade.findAll());
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        ordenamiento.put("nombre", "asc");
+        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
         return "/Organizaciones/registroOrganizaciones";
     }
     

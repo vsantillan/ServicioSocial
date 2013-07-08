@@ -14,6 +14,7 @@ public class MunicipiosJSON {
     
     private ArrayList<String> municipios = new ArrayList<String>();
     private ArrayList<String> idMunicipios = new ArrayList<String>();
+    private boolean statusJSON;
 
     /**
      * @return the municipios
@@ -41,6 +42,20 @@ public class MunicipiosJSON {
      */
     public void setIdMunicipios(ArrayList<String> idMunicipios) {
         this.idMunicipios = idMunicipios;
+    }
+
+    /**
+     * @return the statusJSON
+     */
+    public boolean isStatusJSON() {
+        return statusJSON;
+    }
+
+    /**
+     * @param statusJSON the statusJSON to set
+     */
+    public void setStatusJSON(boolean statusJSON) {
+        this.statusJSON = statusJSON;
     }
     
 }

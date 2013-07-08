@@ -21,11 +21,11 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author SATELLITE
+ * @author Jonny
  */
 public abstract class AbstractFacade<T> {
     private Class<T> entityClass;
-    public int MAX_RECORDS_RETURNED = 50000;
+    private int MAX_RECORDS_RETURNED=50000;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -54,6 +54,30 @@ public abstract class AbstractFacade<T> {
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
     }
+    
+    public List<T> findAll(LinkedHashMap<String, String> ordering) {
+        CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
+        Root<T> root = cq.from(entityClass);
+        cq.select(root);
+        //cq.select(cq.from(entityClass));
+        if (ordering != null) {
+            CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
+            //Root<T> root = cq.from(entityClass);
+            Set<String> set = ordering.keySet();
+            List<Order> orders = new ArrayList<Order>();
+            for (String orderingField : set) {
+                Order order;
+                if (ordering.get(orderingField).equals("asc")) {
+                    order = criteriaBuilder.asc(root.get(orderingField));
+                } else {
+                    order = criteriaBuilder.desc(root.get(orderingField));
+                }
+                orders.add(order);
+            }
+            cq.orderBy(orders);
+        }
+        return getEntityManager().createQuery(cq).setMaxResults(MAX_RECORDS_RETURNED).getResultList();
+    }
 
     public List<T> findRange(int[] range) {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
@@ -71,6 +95,7 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
+    
     public List<T> findBySpecificField(String field, Object fieldContent, String predicates, LinkedHashMap<String, String> ordering, LinkedList<String> grouping) {
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
