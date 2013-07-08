@@ -8,43 +8,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-        <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
-        <link rel="stylesheet" type="text/css" href="css/panelUsuario.css" />
-        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" /> 
-        <link rel="stylesheet" type="text/css" href="css/ddsmoothmenu.css" />
-        
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-        <script type="text/javascript" src="js/ddsmoothmenu.js"></script>
-        <script type="text/javascript">
-
-            ddsmoothmenu.init({
-                mainmenuid: "smoothmenu1", //Menu DIV id
-                orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
-                classname: 'ddsmoothmenu', //class added to menu's outer DIV
-                method: 'hover', // set to 'hover' (default) or 'toggle'
-                arrowswap: true, // enable rollover effect on menu arrow images?
-                //customtheme: ["#804000", "#482400"],
-                contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
-            })
-
-        </script>
-
-
-
+        <%@ include file="../Template/headsMenuUsuario.jsp" %>
+        <%@ include file="../Template/metas.jsp" %>
         <title>Home Usuario</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
-        <div class="pagina" align="center">
-            <div class="banner" align="left">
-                <a href="http://www.ittoluca.edu.mx/version10/index.php" onmouseout="MM_swapImgRestore();" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
-            </div>
-        </div>
+    <body class="background" >
+        <jsp:include page="../Template/banner.jsp" />
 
-            <jsp:include page="menuPanelUsuario.jsp" />
+        <jsp:include page="menuPanelUsuario.jsp" />
 
         <div id="contenido">
+
             <h1>Panel de Usuario</h1>
             <table class="general">
                 <tr>
@@ -77,16 +51,9 @@
                 </tr>                            
             </table>
 
-
-
-
-
-
         </div>
         <%-- fin del contenido --%>
-        <div id="footer">
-            <img  src="imagenes/foter.png"/>
-        </div>
+        <%@ include file="../Template/footer.jsp" %>
 
     </body>
 

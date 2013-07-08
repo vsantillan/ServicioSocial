@@ -53,7 +53,7 @@
 
         <title>Alta Plática</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');" >
+    <body class="background" >
         <jsp:include page="../Template/banner.jsp" />
 
         <%-- inicio del contenido --%>

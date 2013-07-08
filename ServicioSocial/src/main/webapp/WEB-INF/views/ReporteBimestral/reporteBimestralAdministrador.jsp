@@ -66,7 +66,7 @@
 
         <title>Administrar Reportes Bimestrales</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body class="background">
         <jsp:include page="../Template/banner.jsp" />
         <div id ="contenido" align="left">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />

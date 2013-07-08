@@ -9,6 +9,7 @@
 .general {  
     padding-top: 5px;
     margin-left: 30%;
+    border-color: blue;
 }
 
 .imagenes{
@@ -22,6 +23,7 @@
     box-shadow: 0 0 5px 5px #DF7401;  
     width: 50%;
     text-align: center; 
+    border: none;
 }
 #b{color: white;text-decoration: none;}
 #b:hover{font-size: 120%;}

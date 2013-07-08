@@ -6,7 +6,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
+        <link rel="stylesheet" type="text/css" href="css/styleTemplate.css" />
         <link rel="stylesheet" type="text/css" href="css/excite-bike/jquery-ui-1.10.3.custom.css"/>
         <link rel="stylesheet" type="text/css" href="css/jquerycssmenu2.css" />
         <link rel="stylesheet" type="text/css" href="css/screen.css" />

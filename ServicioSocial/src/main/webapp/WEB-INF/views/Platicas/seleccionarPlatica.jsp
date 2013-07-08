@@ -13,7 +13,7 @@
         <%@ include file="../Template/metas.jsp" %>
         <title>Seleciona Plática</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body class="background">
         <%@ include file="../Template/banner.jsp" %>
         <%-- inicio del contenido --%>
         <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />
