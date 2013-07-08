@@ -14,7 +14,7 @@
 
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.timepicker.css"/>
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
-        <script type="text/javascript" src="js/jqueryUI/i18n/jquery.ui.datepicker-es"></script>
+
         <script>
             $(function() {
                 $('#hora2').timepicker();
@@ -82,12 +82,14 @@
                             <tr>
                                 <td>  <label for="lugar"><fmt:message key="lugar" /></label></td>
 
-                                <td>  <form:select path="idLugar">
+                                <td>  
+                                    <form:select path="idLugar" id="idLugar" >
+
                                         <core:forEach items="${lugares}" var="lugares" >
-                                            <form:option value="${lugares.id}">${lugares.lugar}</form:option>
+                                            <form:option value="${lugares}">${lugares.lugar}</form:option>
                                         </core:forEach>
                                     </form:select> </td>  
-
+                             
                             </tr>
 
                             <tr>

@@ -51,7 +51,15 @@ body
       
 }
 
-	
+#contenido2 {
+	width:700px;
+	text-align:left;
+	margin:0 auto;
+	margin-top:20px;
+	background: #FFF url(../imagenes/SIA-MarcaAgua.png) repeat bottom left;
+	z-index:1;
+      
+}	
 	
 #footer {
 	width:950px;
@@ -59,6 +67,7 @@ body
 	margin:0 auto;
 	margin-top:20px;
 }
+#h1p { margin:5; padding:10px 0 0 15px; font-weight:bold; color:#1484e6; font-family:Arial, Helvetica, sans-serif; font-size: 24px;}
 h1 { margin:5; padding:10px 0 0 15px; font-weight:bold; color:#1484e6; font-family:Arial, Helvetica, sans-serif; font-size: 24px;}
 h2 { margin:5; padding:10px 0 0 15px; font-weight:bold; color:#e68400; font-family:Arial, Helvetica, sans-serif; font-size: 20px;}
 h3 { margin:5; padding:10px 0 0 15px; font-weight:bold; color:#1484e6; font-family:Arial, Helvetica, sans-serif; font-size: 16px;}
