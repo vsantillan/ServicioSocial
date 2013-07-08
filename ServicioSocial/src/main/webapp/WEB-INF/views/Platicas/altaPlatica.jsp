@@ -53,7 +53,11 @@
 
         <title>Alta Plática</title>
     </head>
+<<<<<<< HEAD
     <body class="background" >
+=======
+    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');document.platica.fecha.focus()" >
+>>>>>>> lugares platica
         <jsp:include page="../Template/banner.jsp" />
 
         <%-- inicio del contenido --%>
@@ -64,7 +68,7 @@
                     <h1>Nueva Plática</h1>
                     ${notificacion}
                     <%-- Formulario Nueva Plática --%>
-                    <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica"> 
+                    <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica" > 
                         <table style="width:500px">
                             <tr>
                                 <td>

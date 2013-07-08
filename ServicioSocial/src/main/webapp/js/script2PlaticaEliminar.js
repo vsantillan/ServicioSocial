@@ -49,7 +49,7 @@
             function fn_dar_eliminar(){
                 $("a.elimina").click(function(){
                     id = $(this).parents("tr").find("td").eq(10).html();
-                    fecha = $(this).parents("tr").find("td").eq(1).html();
+                    fecha = $(this).parents("tr").find("td").find("div").eq(0).html();
                     respuesta = confirm("Está seguro que desea eliminar la platica con fecha: " + fecha);
                     if (respuesta){
                         $(this).parents("tr").fadeOut("normal", function(){
@@ -59,7 +59,7 @@
                             var id_platica=id
                            
                                 
-                              //  $.post("controlador/PlaticasInduccion/EliminarPlaticaC.jsp", {id_platica: id_platica})
+                                $.post("eliminarPlatica.do", {id_platica: id_platica})
                             
                         })
                     }

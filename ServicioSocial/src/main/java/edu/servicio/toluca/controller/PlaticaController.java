@@ -29,6 +29,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,6 +86,8 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
     public String capturarAsistencia(Model a) {
+
+
         return "/Platicas/capturarAsistencia";
     }
 
@@ -96,16 +99,6 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
     public String seleccionarPlatica(Model a) {
         return "/Platicas/seleccionarPlatica";
-    }
-     @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
-    public String altaLugares(Model modelo) {
-        return "/Platicas/lugaresPlatica";
-    }
-      @RequestMapping(method = RequestMethod.POST, value = "/altaLugarBD.do")
-    public String altaLugaresBD(LugaresPlatica lugares, Model modelo) {
-          lugaresPlaticaFacade.create(lugares);
-          
-        return "/Platicas/lugaresPlatica";
     }
 
     @InitBinder
@@ -119,7 +112,7 @@ public class PlaticaController {
         //parametros se recben en el metodo
         //inyectar en lapagina
         //instanciar clase del modelo para hacer el calculo de los numeros
-      //  Platica platica1 = new Platica();
+        //  Platica platica1 = new Platica();
 //        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 //        String fecha1 = df.format(platica.getFecha());
 //        String fecha2 = df.format(platica.getFechaMxFui());
@@ -153,13 +146,13 @@ public class PlaticaController {
 //            return "/Platicas/altaPlatica";
 //
 //        } else {
-            System.out.print("no hubo errores");
-            LugaresPlatica lugaresPlatica= new LugaresPlatica();
-            lugaresPlatica.setId(BigDecimal.valueOf(1));
-            platica.setIdLugar(lugaresPlatica);
-            platicaFacade.create(platica);
-            //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
-            return "/Platicas/redirectAltaPlatica";
+        System.out.print("no hubo errores");
+        LugaresPlatica lugaresPlatica = new LugaresPlatica();
+        lugaresPlatica.setId(BigDecimal.valueOf(1));
+        platica.setIdLugar(lugaresPlatica);
+        platicaFacade.create(platica);
+        //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
+        return "/Platicas/redirectAltaPlatica";
 //    }
 
 
@@ -185,5 +178,29 @@ public class PlaticaController {
             return "/Platicas/redirectAltaPlatica";
         }
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/eliminarPlatica.do")
+    public void eliminarPlatica(long id_platica) throws ParseException {
+        System.out.print("eliminar platica.do");
+        Platica platica = new Platica();
+        platica.setId(id_platica);
+        platicaFacade.remove(platica);
+
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
+    public String altaLugares(Model modelo) {
+        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+        return "/Platicas/lugaresPlatica";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/altaLugarBD.do")
+    public String altaLugaresBD(LugaresPlatica lugares, Model modelo) {
+
+        lugaresPlaticaFacade.create(lugares);
+        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+        return "/Platicas/lugaresPlatica";
     }
 }

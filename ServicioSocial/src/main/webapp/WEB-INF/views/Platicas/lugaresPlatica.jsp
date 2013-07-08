@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Catálogo de lugares</title>
     </head>
-    <body  onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body  onload="MM_preloadImages('imagenes/logo_tec_r.png');document.alta.lugar.focus()">
         <jsp:include page="../Template/banner.jsp" />
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
@@ -22,17 +22,21 @@
                 <center>
                     <h1>Catálogo de lugares</h1>
                     <%-- Formulario Nueva lugar para platica de inducción --%>
-                    <form:form action="altaLugarBD.do" method="post"  id="MyForm" modelAttribute="lugares">  
+                    <form:form action="altaLugarBD.do" method="post"  id="MyForm" modelAttribute="lugaresPlatica" name="alta">  
                         <table style="width:500px">
                             <tr>
                                 <td>
                                     <form:input type="hidden" value="1" path="status"/>
-                                    <label for="Lugar"><fmt:message key="lugar2" /></label> 
+                                    <label for="Lugar"><fmt:message key="lugar" /></label> 
                                 </td>
 
-                                <td>  <form:textarea  path="lugar" rows="6" cols="15"/></td> 
-                               
+                                
 
+                            </tr>
+                           
+                               
+                            <tr>
+                              <td>  <form:textarea  path="lugar" rows="3" cols="60" /></td>    
                             </tr>
 
                             <tr> 
