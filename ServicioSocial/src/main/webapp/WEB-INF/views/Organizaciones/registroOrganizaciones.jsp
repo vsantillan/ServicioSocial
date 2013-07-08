@@ -33,7 +33,7 @@
 
         <title>Departamento de Servicio Social :: Organizaciones ::</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body class="background">
         <%@ include file="../Template/banner.jsp" %>
 
         <%-- inicio del contenido --%>
@@ -145,7 +145,7 @@
                             </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="colonia">Coloniassss:</label></td>
+                            <td>  <label for="colonia">Colonia:</label></td>
                             <td>  
                                 <div id="notice"></div>
                                 <!--select name="colonia" id="colonia" disabled="true"></select--> 

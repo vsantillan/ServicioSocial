@@ -6,8 +6,7 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.Instancia;
-import edu.servicio.toluca.entidades.Platica;
-import edu.servicio.toluca.entidades.TipoOrganizacion;
+import edu.servicio.toluca.model.ColoniaEditor;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
@@ -15,20 +14,15 @@ import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.ParseException;
-import javax.ejb.EJB;
 import javax.validation.Valid;
-import java.util.logging.Level;
-import javax.annotation.Resource;
 
 import javax.ejb.EJB;
-import javax.transaction.SystemException;
-import javax.transaction.UserTransaction;
-import org.openide.util.Exceptions;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -190,16 +184,18 @@ public class OrganizacionesController {
         model.addAttribute("instancias", instanciaFacade.findAll());
         return "/Organizaciones/pruebaUpdate";
     }
-
+    
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaOrganizacion.do")
-    public String gdaAtalaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model) {
+    public String gdaAtalaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model) {     
+//          binder.registerCustomEditor(Colonia.class, new ColoniaEditor());
+//          result.
 //        System.out.println("Tipo Organizacion:"+tipoOrganizacion);
 //        instancia.setTipoOrganizacion(tipoOrganizacionFacade.find(BigDecimal.valueOf(Double.parseDouble(tipoOrganizacion))));
         System.out.println("idColonia:"+instancia.getIdColonia());
 //        instancia.setIdColonia(coloniaFacade.find(BigDecimal.valueOf(Double.parseDouble(idColonia))));
         if (result.hasErrors()) {
             System.out.print("hubo errores");
-            System.out.println(instancia.toString());
+            System.out.println("Datos: Nombre:"+instancia.getNombre());
             System.out.println(result.toString());
 //            model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
 //            model.addAttribute("instancia", new Instancia());

@@ -18,7 +18,7 @@
         <script src="js/jquery.manolo.js"></script>  
         <title>Departamento de Servicio Social :: Organizaciones ::</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body class="background">
         <%@ include file="../Template/banner.jsp" %>
 
         <%-- inicio del contenido --%>

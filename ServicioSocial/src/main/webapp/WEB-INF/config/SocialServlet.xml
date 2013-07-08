@@ -41,11 +41,21 @@ schemaLocation son las definiciones de XMLS
 
     
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-    <property name="basename">
-        <value>messages</value>
-    </property>
-
-</bean>
+        <property name="basename">
+            <value>messages</value>
+        </property>
+    </bean>
+    
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="edu.servicio.toluca.entidades.Colonia">
+                    <bean class="edu.servicio.toluca.model.ColoniaEditor">
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
 
  
  

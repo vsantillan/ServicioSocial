@@ -17,7 +17,7 @@
         
         <title>Alta de Organizaciones</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body class="background">
         <%@ include file="../Template/banner.jsp" %>
 
         <jsp:include page="../PanelOrganizacion/menuPanelOrganizacion.jsp" />

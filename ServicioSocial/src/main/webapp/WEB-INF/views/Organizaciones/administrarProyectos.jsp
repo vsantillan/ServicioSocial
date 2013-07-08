@@ -47,7 +47,7 @@
 
         <title>Administracion de Proyectos</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png')" >
+    <body class="background">
         <div class="pagina" align="center">
             <div class="banner" align="left">
                 <a href="http://www.ittoluca.edu.mx/version10/index.php" onmouseout="MM_swapImgRestore();" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
