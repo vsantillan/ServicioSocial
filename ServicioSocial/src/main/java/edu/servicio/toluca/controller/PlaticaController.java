@@ -122,7 +122,7 @@ public class PlaticaController {
 //        platica1.setFecha(df.parse(fecha1));
 //        platica1.setFecha(platica.getFecha());
 //        platica1.setHora(platica.getHora());
-       platica1.setIdLugar(platica.getIdLugar());
+       platica1=platica;
 //        
       System.out.println(platica.getIdLugar().getLugar());
 //        
