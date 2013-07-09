@@ -46,20 +46,18 @@ public class FormatoUnicoController {
     public String formatoUnico(Model modelo) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
         //id de alumno provisional en lo que nos dan lo de sesión
-        String alumno_id = "98280379";
+        String alumno_id = "09280435";
         //select * from ...where
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //objeto que voy a insertar
         VistaAlumno alumno = listaAlumnos.get(0);
-       
+
         DatosPersonales datosPersonales = new DatosPersonales();
         datosPersonales.setAlumnoId(alumno);
         //verificar si ya está en datos personales
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
-        
-        //System.out.println(listaDatosPersonales);
         BigDecimal idDatosPersonales;
-        if ( alumno.getDatosPersonalesCollection().isEmpty()) {
+        if (listaDatosPersonales.isEmpty()) {
             datosPersonales.setNombre(alumno.getNombre());
             datosPersonales.setApellidoP(alumno.getApellidoPat());
             datosPersonales.setApellidoM(alumno.getApellidoMat());
@@ -72,21 +70,23 @@ public class FormatoUnicoController {
             datosPersonalesFacade.create(datosPersonales);
             idDatosPersonales = datosPersonalesFacade.find(datosPersonales.getId()).getId();
             System.out.println("No estuvo");
+
+            FormatoUnico formatoUnico = new FormatoUnico();
+            formatoUnico.setDatosPersonalesId(datosPersonales);
+            formatoUnico.setNumeroCreditos(alumno.getCreditosAcumulados());
+            formatoUnico.setPorcentajeCreditos(Double.valueOf(alumno.getPorcentaje()));
+            formatoUnicoFacade.create(formatoUnico);
         } else {
             //idDatosPersonales = datosExistentes.getId();
-            System.out.println("Tu alumno ya está, su id de datos es ");// + idDatosPersonales);
+            System.out.println("Tu alumno ya está, su id de datos es " + listaDatosPersonales.get(0).getId());// + idDatosPersonales);
             DatosPersonales datosExistentes = listaDatosPersonales.get(0);
-            
-            
+
+
         }
 
         //Para insertar en formato único es necesario recuperar el id de datos personales.
 
-//        FormatoUnico formatoUnico = new FormatoUnico();
-//        formatoUnico.setDatosPersonalesId(datosPersonales);
-//        formatoUnico.setNumeroCreditos(alumno.getCreditosAcumulados());
-//        formatoUnico.setPorcentajeCreditos(Double.valueOf(alumno.getPorcentaje()));
-//        formatoUnicoFacade.create(formatoUnico);
+
 
 
         return "/FormatoUnico/formatoUnicoUsuario";
