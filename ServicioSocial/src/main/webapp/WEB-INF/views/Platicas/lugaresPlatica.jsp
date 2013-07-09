@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Catálogo de lugares</title>
     </head>
-    <body  onload="MM_preloadImages('imagenes/logo_tec_r.png');document.alta.lugar.focus()">
+    <body  onload="document.alta.lugar.focus()" class="background">
         <jsp:include page="../Template/banner.jsp" />
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
@@ -30,18 +30,20 @@
                                     <label for="Lugar"><fmt:message key="lugar" /></label> 
                                 </td>
 
-                                
+
 
                             </tr>
-                           
-                               
+
+
                             <tr>
-                              <td>  <form:textarea  path="lugar" rows="3" cols="60" /></td>    
+                                <td>  <form:textarea  path="lugar" rows="3" cols="60" /></td>    
                             </tr>
 
                             <tr> 
+                                <td> </td>
                                 <td> <input type ="submit" value = "Guardar " /> </td>
-                                <td> <input type ="reset" value = "Limpiar" /></td>
+                                <td><input type ="reset" value = "Limpiar" /></td>
+
                             </tr>
                         </table>
                     </form:form>

@@ -11,6 +11,7 @@ import edu.servicio.toluca.sesion.PlaticaFacade;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
 import edu.servicio.toluca.beans.ValidacionAsistenciaPlatica;
 import edu.servicio.toluca.entidades.FoliosPlatica;
+import java.beans.PropertyEditorSupport;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -85,9 +86,9 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
-    public String capturarAsistencia(Model a) {
+    public String capturarAsistencia(Model modelo) {
 
-
+       modelo.addAttribute("folio", new FoliosPlatica() );
         return "/Platicas/capturarAsistencia";
     }
 
@@ -105,10 +106,13 @@ public class PlaticaController {
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true);
         binder.registerCustomEditor(Date.class, editor);
+       // binder.registerCustomEditor(LugaresPlatica.class, new PropertyEditorSupport());
     }
+ 
+    
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
-    public String insertarPlatica( Platica platica) throws ParseException {
+    public String insertarPlatica(@Valid Platica platica, BindingResult result) throws ParseException {
         //@Valid Platica platica, BindingResult result
         //parametros se recben en el metodo
         //inyectar en lapagina
@@ -122,9 +126,10 @@ public class PlaticaController {
 //        platica1.setFecha(df.parse(fecha1));
 //        platica1.setFecha(platica.getFecha());
 //        platica1.setHora(platica.getHora());
-       platica1=platica;
-//        
-      System.out.println(platica.getIdLugar().getLugar());
+       //platica1=platica;
+//    
+      System.out.println(platica.getHora());
+      System.out.println(platica.getIdLugar().getId());
 //        
 //        platica1.setPeriodo(platica.getPeriodo());
 //        platica1.setAnio(platica.getAnio());
@@ -134,27 +139,27 @@ public class PlaticaController {
 //        platica1.setStatus(platica.getStatus());
 //        platica1.setFechaMxFui(platica.getFechaMxFui());
         //   platica1.setIdLugar(platica.getIdLugar());
-//        if (result.hasErrors()) {
-//            System.out.print("hubo errores");
+       if (result.hasErrors()) {
+         System.out.print("hubo errores");
 //            System.out.println(result.hasFieldErrors("fecha"));
 //            List<ObjectError> list = result.getAllErrors();
 //            for (int i = 0; i < list.size(); i++) {
 //                System.out.println(list.get(i).getDefaultMessage());
 //                System.out.println(list.get(i).getCode());
 //                System.out.println(platica.getIdLugar());
-//            }
+//          }
 //
-//            return "/Platicas/altaPlatica";
+          return "/Platicas/altaPlatica";
 //
-//        } else {
-       // System.out.print("no hubo errores");
+       } else {
+        System.out.print("no hubo errores");
 //        LugaresPlatica lugaresPlatica = new LugaresPlatica();
 //        lugaresPlatica.setId(BigDecimal.valueOf(1));
 //        platica.setIdLugar(lugaresPlatica);
-       // platicaFacade.create(platica);
+         platicaFacade.create(platica);
         //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
         return "/Platicas/redirectAltaPlatica";
-//    }
+  }
 
 
     }

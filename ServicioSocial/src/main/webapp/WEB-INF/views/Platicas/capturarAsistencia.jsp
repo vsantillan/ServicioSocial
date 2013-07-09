@@ -26,20 +26,20 @@
         </script>
         <title>Capturar Asistencia a Plática</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png')">
+    <body class="background" onload="document.casistencia.numeroFolio.focus()">
         <jsp:include page="../Template/banner.jsp" />
         <div id="contenido" >  
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <center><h2>Capturar Asistencia a Plática</h2></center>  
-                <center>
-                    <form:form name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="folio">
-                        <label for="alumno">Folio</label>
+
+                <form:form name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="folio">
+                    <center><label for="alumno">Folio</label>
                         <form:input type="text" path="numeroFolio" id="numeroFolio" size="15" />   
                         <form:errors path="numeroFolio" />
-                        <button type="submit">Asistió</button>
+                        <button type="submit">Asistió</button> </center>
                     </form:form>
-                </center>
+
             </div>
             <div style="clear:both;"></div>
         </div>

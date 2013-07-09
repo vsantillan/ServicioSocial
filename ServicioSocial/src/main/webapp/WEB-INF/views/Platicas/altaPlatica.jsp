@@ -87,13 +87,16 @@
                                 <td>  <label for="lugar"><fmt:message key="lugar" /></label></td>
 
                                 <td>  
-                                    <form:select path="idLugar" id="idLugar" >
+                               
+                                      <form:select path="idLugar.id">
 
-                                      <%--  <core:forEach items="${lugares}" var="lugares" >
-                                            <form:option value="${lugares}">${lugares.lugar}</form:option> --%>
-                                            <form:options items="${lugares}" itemValue="id" itemLabel="lugar" />
-                                    <%--    </core:forEach> --%>
-                                    </form:select> </td>  
+                                        <core:forEach items="${lugares}" var="lugares" >
+                                            <form:option value="${lugares.id}">${lugares.lugar}</form:option>
+                                           <%--  <form:options items="${lugares}" itemValue="id" itemLabel="lugar" /> --%>
+                                       </core:forEach>
+                                    </form:select>
+                               
+                                  </td>  
                              
                             </tr>
 

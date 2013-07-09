@@ -53,14 +53,14 @@
 
         <title>Consultas y Bajas de Pláticas</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png')">
+    <body class="background">
         <jsp:include page="../Template/banner.jsp" />
         <%-- <jsp:include page="../../../menus/menuPanelAdministrador.jsp" flush="true" />--%>
         <%--<jsp:include page="../panelAdministrador/menuPanelAdministrador.jsp" /> --%>
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
-                <center> <h1 id="h1p">Consultas y Bajas de Pláticas</h1></center>
+                <center> <h2 id="h1p">Consultas y Bajas de Pláticas</h2></center>
                 <p></p>
                 <p></p>
 
