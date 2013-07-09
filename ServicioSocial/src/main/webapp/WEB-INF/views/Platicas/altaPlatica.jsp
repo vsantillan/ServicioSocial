@@ -53,11 +53,9 @@
 
         <title>Alta Plática</title>
     </head>
-<<<<<<< HEAD
-    <body class="background" >
-=======
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');document.platica.fecha.focus()" >
->>>>>>> lugares platica
+
+    <body class="background" onload="document.platica.fecha.focus()" >
+
         <jsp:include page="../Template/banner.jsp" />
 
         <%-- inicio del contenido --%>
@@ -91,9 +89,10 @@
                                 <td>  
                                     <form:select path="idLugar" id="idLugar" >
 
-                                        <core:forEach items="${lugares}" var="lugares" >
-                                            <form:option value="${lugares}">${lugares.lugar}</form:option>
-                                        </core:forEach>
+                                      <%--  <core:forEach items="${lugares}" var="lugares" >
+                                            <form:option value="${lugares}">${lugares.lugar}</form:option> --%>
+                                            <form:options items="${lugares}" itemValue="id" itemLabel="lugar" />
+                                    <%--    </core:forEach> --%>
                                     </form:select> </td>  
                              
                             </tr>

@@ -108,11 +108,12 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
-    public String insertarPlatica(@Valid Platica platica, BindingResult result) throws ParseException {
+    public String insertarPlatica( Platica platica) throws ParseException {
+        //@Valid Platica platica, BindingResult result
         //parametros se recben en el metodo
         //inyectar en lapagina
         //instanciar clase del modelo para hacer el calculo de los numeros
-        //  Platica platica1 = new Platica();
+         Platica platica1 = new Platica();
 //        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 //        String fecha1 = df.format(platica.getFecha());
 //        String fecha2 = df.format(platica.getFechaMxFui());
@@ -121,9 +122,9 @@ public class PlaticaController {
 //        platica1.setFecha(df.parse(fecha1));
 //        platica1.setFecha(platica.getFecha());
 //        platica1.setHora(platica.getHora());
-//        platica1.setIdLugar(platica.getIdLugar());
+       platica1.setIdLugar(platica.getIdLugar());
 //        
-//        System.out.println(platica.getIdLugar());
+      System.out.println(platica.getIdLugar().getLugar());
 //        
 //        platica1.setPeriodo(platica.getPeriodo());
 //        platica1.setAnio(platica.getAnio());
@@ -146,11 +147,11 @@ public class PlaticaController {
 //            return "/Platicas/altaPlatica";
 //
 //        } else {
-        System.out.print("no hubo errores");
-        LugaresPlatica lugaresPlatica = new LugaresPlatica();
-        lugaresPlatica.setId(BigDecimal.valueOf(1));
-        platica.setIdLugar(lugaresPlatica);
-        platicaFacade.create(platica);
+       // System.out.print("no hubo errores");
+//        LugaresPlatica lugaresPlatica = new LugaresPlatica();
+//        lugaresPlatica.setId(BigDecimal.valueOf(1));
+//        platica.setIdLugar(lugaresPlatica);
+       // platicaFacade.create(platica);
         //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
         return "/Platicas/redirectAltaPlatica";
 //    }
