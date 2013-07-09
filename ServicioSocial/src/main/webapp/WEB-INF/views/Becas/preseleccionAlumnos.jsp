@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <head>
+    <head>
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <script type="text/javascript" >
@@ -33,68 +33,68 @@
 
             function contar() {
 
-            var checkboxes = form1.checkbox; //Array que contiene los checkbox
-            var cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
+                var checkboxes = document.getElementById("form1").checkbox; //Array que contiene los checkbox
 
-            for (var x=0; x < checkboxes.length; x++) {
-            if (checkboxes[x].checked) {
-            cont = cont + 1;
+                var cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
+                alert (checkboxes);
+                for (var x = 0; x < checkboxes.length; x++) {
+                    if (checkboxes[x].checked) {
+                        cont = cont + 1;
+                    }
+                }
+            alert("El número de alumnos seleccionados es: " + cont);
+
             }
-            }
-
-            alert ("El número de alumnos seleccionados es: " + cont);
-
-            }
-            </script>
+        </script>
 
 
-           <title>Preselecci&oacute;n de Alumnos Becados</title>
+        <title>Preselecci&oacute;n de Alumnos Becados</title>
     </head>
-    <body>
+    <body >
         <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
-               <form:form id="form1" action="#" method="POST" onsubmit="window.parent.Shadowbox.close();">
-                   <div >
-                            <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
-                                <thead>
-                                    <tr>
-                                        <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
-                                        <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
-                                        <th>&nbsp;Apellido Paterno&nbsp;</th>
-                                        <th>&nbsp;Apellido Materno&nbsp;</th>
-                                        <th>&nbsp;Nombre&nbsp;</th>
-                                        <th>&nbsp;Carrera&nbsp;</th>
-                                        <th>&nbsp;Promedio&nbsp;</th>
-                                        <th>&nbsp;Tipo Servicio&nbsp;</th>
-                                        <th>&nbsp;Sexo&nbsp;</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <core:forEach items="${alumno}" var="current">
-                                    <tr class='gradeX'>
-                                      <td><core:out value="${current.datosPersonalesId.id}" /></td>
-                                      <td><core:out value="${current.datosPersonalesId.alumnoId.id}" /></td>
-                                      <td><core:out value="${current.datosPersonalesId.apellidoP}"  /></td>
-                                      <td><core:out value="${current.datosPersonalesId.apellidoM}"  /></td>
-                                      <td><core:out value="${current.datosPersonalesId.nombre}"  /></td>
-                                      <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
-                                      <td><core:out value="${current.datosPersonalesId.alumnoId.promedio}" /></td>
-                                      <td><core:out value="${current.tipoServicio}" /></td>
-                                      <td><core:out value="${current.datosPersonalesId.sexo}" /></td>
-                                      <td><form:checkbox path="preseleccionados" value="${current.id}"/></td> 
-                                    </tr>
-                                  </core:forEach>
-                                </tbody>
-                            </table>
-                       <br>
-                            <table>
-                                 <tr>
-                                     <td> <input type ="submit" value = "Aceptar " /> </td>                                
-                                     <td> <input type="button" value="Contar Alumnos" onClick="contar();"></td>
-                                 </tr>
-                             </table>
-                 </form:form>            
-            </div>
-            <div style="clear:both;"></div>
+        <form:form id="form1" action="preseleccionadoBD.do" commandname="alumnoPre" method="POST" onsubmit="window.parent.Shadowbox.close();">
+            <div >
+                <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
+                    <thead>
+                        <tr>
+                            <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
+                            <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
+                            <th>&nbsp;Apellido Paterno&nbsp;</th>
+                            <th>&nbsp;Apellido Materno&nbsp;</th>
+                            <th>&nbsp;Nombre&nbsp;</th>
+                            <th>&nbsp;Carrera&nbsp;</th>
+                            <th>&nbsp;Promedio&nbsp;</th>
+                            <th>&nbsp;Tipo Servicio&nbsp;</th>
+                            <th>&nbsp;Sexo&nbsp;</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <core:forEach items="${alumno}" var="current">
+                            <tr class='gradeX'>
+                                <td><core:out value="${current.datosPersonalesId.id}" /></td>
+                                <td><core:out value="${current.datosPersonalesId.alumnoId.id}" /></td>
+                                <td><core:out value="${current.datosPersonalesId.apellidoP}"  /></td>
+                                <td><core:out value="${current.datosPersonalesId.apellidoM}"  /></td>
+                                <td><core:out value="${current.datosPersonalesId.nombre}"  /></td>
+                                <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
+                                <td><core:out value="${current.datosPersonalesId.alumnoId.promedio}" /></td>
+                                <td><core:out value="${current.tipoServicio}" /></td>
+                                <td><core:out value="${current.datosPersonalesId.sexo}" /></td>
+                                <td><form:checkbox path="alumno" items="${current.id}"/></td> 
+                            </tr>
+                        </core:forEach>
+                    </tbody>
+                </table>
+                <br>
+                <table>
+                    <tr>
+                        <td> <input type ="submit" value = "Aceptar " /> </td>                                
+                        <td> <input type="button" value="Contar Alumnos" onClick="contar();"></td>
+                    </tr>
+                </table>
+            </form:form>            
+        </div>
+        <div style="clear:both;"></div>
     </body>
 </html>

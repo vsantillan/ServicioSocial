@@ -29,7 +29,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $("#tabs").tabs();
-                $('#Rev').dataTable({
+                $('#NoAceptados').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
                     "sScrollX": "100%",
@@ -37,7 +37,7 @@
                     "bScrollCollapse": true
 
                 });
-                $('#NoRev').dataTable({
+                $('#Aceptados').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
                     "sScrollXInner": "100%",
@@ -60,7 +60,7 @@
                         <li><a href="#aceptados">Alumnos Becados</a></li>
                     </ul>
                     <div id="preseleccion">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="Rev" width='100%'>
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="Aceptados" width='100%'>
                             <thead>
                                 <tr>
                                     <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
@@ -73,7 +73,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <core:forEach items="${authors}" var="current">
+                              <!--  <core:forEach items="${authors}" var="current">
                                     <tr class='gradeX'>
                                         <td><core:out value="${current.name}" /></td>
                                         <td><core:out value="${current.id}" /></td>
@@ -83,7 +83,7 @@
                                         <td><core:out value="${current.id}" /></td>
                                         <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
-                                </core:forEach>
+                                </core:forEach>-->
                             </tbody>
                         </table>
                         <table>
@@ -97,7 +97,7 @@
                         </table>
                     </div>
                     <div id="aceptados">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="NoRev" width='100%'>
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="NoAceptados" width='100%'>
                             <thead>
                                 <tr>
                                     <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
@@ -110,7 +110,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <core:forEach items="${authors}" var="current">
+                                <!--<core:forEach items="${authors}" var="current">
                                     <tr class='gradeX'>
                                         <td><core:out value="${current.name}" /></td>
                                         <td><core:out value="${current.id}" /></td>
@@ -120,7 +120,7 @@
                                         <td><core:out value="${current.id}" /></td>
                                         <td><input type="checkbox" name="checkbox" value="checkbox"></td> 
                                     </tr>
-                                </core:forEach>
+                                </core:forEach>-->
                             </tbody>
                         </table>
                         <table>
