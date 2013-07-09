@@ -32,7 +32,7 @@
         
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body class ="background">
         <%@ include file="../Template/banner.jsp" %>
 
         <%-- inicio del contenido --%>
