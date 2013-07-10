@@ -9,6 +9,8 @@ import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
@@ -24,30 +26,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class BecasController {
-     
-     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
-     private VistaAlumnoFacade vistaAlumno;
-     
-     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
-     private FormatoUnicoFacade formatoUnico;
-     
-      @ModelAttribute("alumnoP")
-    public Becado prueba() {
-         return new Becado(); // creamos el bean para que se pueda popular
-    }
+
+    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+    private VistaAlumnoFacade vistaAlumno;
+    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
+    private FormatoUnicoFacade formatoUnico;
 
     @RequestMapping(method = RequestMethod.GET, value = "/preseleccionAlumnos.do")
-    public String preseleccionAlumnos(Model model) {
-        Fecha fecha= new Fecha ();
-        model.addAttribute("alumno",formatoUnico.findAll());    
+    public String preseleccionAlumnos(@ModelAttribute(value = "alumnoP") Becado alumnoP, BindingResult result, Model model) {
+        Fecha fecha = new Fecha();
+        model.addAttribute("alumno", formatoUnico.findAll());
         return "/Becas/preseleccionAlumnos";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/administracionAlumnosBecados.do")
     public String administracionAlumnosBecados(Model model) {
         FormatoUnico form = new FormatoUnico();
-        //form.setTipoServicio(6);
-        //formatoUnico.edit(form);
+
         return "/Becas/administracionAlumnosBecados";
     }
 
@@ -62,19 +57,30 @@ public class BecasController {
 
         return "/Becas/correo";
     }
-    
-     @RequestMapping(method = RequestMethod.GET, value = "/excel.do")
-     public String generaExcel(Model model) {
+
+    @RequestMapping(method = RequestMethod.GET, value = "/excel.do")
+    public String generaExcel(Model model) {
         return "/Becas/excel";
     }
-     
-@RequestMapping(method = RequestMethod.POST, value = "/preseleccionadoBD.do")
-    public String updateBecados(Becado alumnoP) {
 
-       System.out.print(alumnoP);
-        
-        return "/Becas/admistracionAlumnosBecados";
+    @RequestMapping(method = RequestMethod.POST, value = "/preseleccionadoBD.do")
+    public String updateBecados(Becado alumnoP, Model model) {
+
+        if (alumnoP.getAlumno()!=null) {
+            for (String current : alumnoP.getAlumno()) {
+                FormatoUnico form = new FormatoUnico();
+                BigDecimal id = new BigDecimal(current);
+                BigInteger tipoServicio = new BigInteger(String.valueOf(4));
+                form.setId(id);
+                form.setTipoServicio(tipoServicio);
+                formatoUnico.edit(form);
+            }
+            return "/Becas/error";
+
+        } else {
+            return "/Becas/error";
+        }
+
+
     }
-
-    
 }

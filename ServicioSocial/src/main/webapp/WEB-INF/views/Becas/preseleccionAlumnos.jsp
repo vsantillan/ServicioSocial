@@ -33,10 +33,8 @@
 
             function contar() {
 
-                var checkboxes = document.getElementById("form1").checkbox; //Array que contiene los checkbox
-
+                var checkboxes =  form1.alumno; //Array que contiene los checkbox
                 var cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
-                alert (checkboxes);
                 for (var x = 0; x < checkboxes.length; x++) {
                     if (checkboxes[x].checked) {
                         cont = cont + 1;
@@ -52,8 +50,9 @@
     </head>
     <body >
         <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
-        <form:form id="form1" action="preseleccionadoBD.do" commandname="alumnoPre" method="POST" onsubmit="window.parent.Shadowbox.close();">
-            <div >
+         <div >
+        <form:form id="form1" action="preseleccionadoBD.do" commandName="alumnoP" method="POST" >
+           
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
@@ -64,7 +63,7 @@
                             <th>&nbsp;Nombre&nbsp;</th>
                             <th>&nbsp;Carrera&nbsp;</th>
                             <th>&nbsp;Promedio&nbsp;</th>
-                            <th>&nbsp;Tipo Servicio&nbsp;</th>
+                            <th>&nbsp;Modalidad&nbsp;</th>
                             <th>&nbsp;Sexo&nbsp;</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -79,9 +78,9 @@
                                 <td><core:out value="${current.datosPersonalesId.nombre}"  /></td>
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.promedio}" /></td>
-                                <td><core:out value="${current.tipoServicio}" /></td>
+                                <td><core:out value="${current.modalidad}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.sexo}" /></td>
-                                <td><form:checkbox path="alumno" items="${current.id}"/></td> 
+                                <td><form:checkbox path="alumno" value="${current.id}"/></td> 
                             </tr>
                         </core:forEach>
                     </tbody>
