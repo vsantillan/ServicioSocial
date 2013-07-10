@@ -87,33 +87,30 @@
                             <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                             <td>
                                 <select id="tipo_proyecto" name="tipo_proyecto">
-                                    <option value="1">Interno</option>
-                                    <option value="2">Interno Becado</option>
-                                    <option value="3">Externo</option>
-                                    <option value="4">Externo Becado</option>
-                                </select>    
+                                    <core:forEach items="${tipoProyecto}" var="current">
+                                        <core:choose>
+                                            <core:when test="${current.idTipoProyecto==proyectos.idTipoProyecto.idTipoProyecto}">
+                                                <option value="${current.idTipoProyecto}" selected="selected">${current.descripcion}</option>  
+                                            </core:when>
+                                            <core:otherwise>
+                                                <option value="${current.idTipoProyecto}">${current.descripcion}</option>
+                                            </core:otherwise>    
+                                        </core:choose>
+                                    </core:forEach>
+                                </select>
                             </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Perfil Buscado:</label></td>
                             <td>
-                                <select id="organizacion" name="organizacion">
-                                    <option value="1">Cualquiera</option>
-                                    <option value="2">Ingeniero en Sistemas Computacionales</option>
-                                    <option value="3">Ingeniero Industrial</option>
-                                    <option value="4">Ingeniero en Gesti&oacute;n Empresarial</option>
-                                    <option value="5">Ingeniero Electr&oacute;nica</option>
-                                    <option value="6">Ingeniero en Mecatr&oacute;nica</option>
-                                    <option value="7">Ingeniero Qu&iacute;mico</option>
-                                </select>
                                 <select id="perfil" name="perfil">
                                     <core:forEach items="${perfil}" var="current">
                                         <core:choose>
                                             <core:when test="${1==1}">
-                                                <option value="${current.idPerfil}">${current.nombre}</option>  
+                                                <option value="${current.idPerfil}" selected="selected">${current.nombre}</option>  
                                             </core:when>
                                             <core:otherwise>
-                                                <!--Falta el constraint-->
+                                                <option value="${current.idPerfil}">${current.nombre}</option>
                                             </core:otherwise>    
                                         </core:choose>
                                     </core:forEach>
@@ -121,8 +118,8 @@
                             </td>  
                         </tr>                   
                         <tr> 
-                            <td> <input type ="submit" value = "Guardar " /> </td>
-                            <td> <input type ="reset" value = "Limpiar" /></td>
+                            <td> <input type ="submit" value = "Guardar cambios" /> </td>
+                            <td> <input type ="button" value = "Cancelar" onclick="window.parent.Shadowbox.close();"/></td>
                         </tr>
                     </table>
                 </form:form> 
