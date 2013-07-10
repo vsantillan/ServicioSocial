@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.servicio.toluca.beans.organizaciones;
+package edu.servicio.toluca.beans;
 
 import java.util.Properties;
 import javax.mail.Message;
@@ -13,24 +13,26 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author ekt
+ * @author Regules
  */
-public class EnviaRetroalimentacion 
+public class EnviarCorreo 
 {
-    String remitente;
-    String correo;
-    String mensaje;
-    String asunto;
+    private String remitente;
+    private String destinatario;
+    private String mensaje;
+    private String asunto;
+    private String pass;
     
-    public EnviaRetroalimentacion(String asunto,String remitente,String correo,String mensaje)
+    public EnviarCorreo(String asunto,String remitente,String destinatario,String mensaje,String pass)
     {
         this.remitente=remitente;
-        this.correo=correo;
+        this.destinatario=destinatario;
         this.mensaje=mensaje;
         this.asunto=asunto;
+        this.pass=pass;
     }
-    
-    public boolean enviarCorreo()
+        public boolean enviaCorreo()
+
     {
         try
         {
@@ -39,7 +41,7 @@ public class EnviaRetroalimentacion
             props.setProperty("mail.smtp.host", "smtp.gmail.com");
             props.setProperty("mail.smtp.starttls.enable", "true");
             props.setProperty("mail.smtp.port", "587");
-            props.setProperty("mail.smtp.user", "regulesteban@gmail.com");
+            props.setProperty("mail.smtp.user", remitente);
             props.setProperty("mail.smtp.auth", "true");
 
             // Preparamos la sesion
@@ -47,17 +49,16 @@ public class EnviaRetroalimentacion
 
             // Construimos el mensaje
             MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("yo@yo.com"));
+            message.setFrom(new InternetAddress(remitente));
             message.addRecipient(
                 Message.RecipientType.TO,
-                new InternetAddress("roy_006@hotmail.com"));
-            message.setSubject("Hola "+asunto);
-            message.setText(
-                "Mensajito con Java Mail" + "de los buenos." + "poque si");
+                new InternetAddress(destinatario));
+            message.setSubject(asunto);
+            message.setText(mensaje);
 
             // Lo enviamos.
             Transport t = session.getTransport("smtp");
-            t.connect("regulesteban@gmail.com", "liliwiko");
+            t.connect(remitente, pass);
             t.sendMessage(message, message.getAllRecipients());
 
             // Cierre.

@@ -15,15 +15,10 @@
 <html>
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-        <!--CSS-->
-        <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
-        <link rel="shortcut icon" type="image/icon" href="imagenes/favicon.ico" />         
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+        <jsp:include page="../Template/metas.jsp" />
 
         <!--Scripts para shadowbox-->
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
+        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
 
@@ -48,11 +43,7 @@
         <title>Administracion de Proyectos</title>
     </head>
     <body class="background">
-        <div class="pagina" align="center">
-            <div class="banner" align="left">
-                <a href="http://www.ittoluca.edu.mx/version10/index.php" onmouseout="MM_swapImgRestore();" ><img src="imagenes/logo_tec_r.png" name="itt_logo" width="100" height="100" border="0" id="itt_logo" /></a>
-            </div>
-        </div>
+        <jsp:include page="../Template/banner.jsp" />
 
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
@@ -88,9 +79,7 @@
             <div style="clear: both;"/>
         </div>
     </div>
-    <div id="footer">
-        <img  src="imagenes/foter.png"/>
-    </div>
+    <jsp:include page="../Template/footer.jsp" />
 </body>
 
 
