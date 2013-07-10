@@ -88,7 +88,7 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
     public String capturarAsistencia(Model modelo) {
 
-       modelo.addAttribute("folio", new FoliosPlatica() );
+        modelo.addAttribute("folio", new FoliosPlatica());
         return "/Platicas/capturarAsistencia";
     }
 
@@ -106,41 +106,19 @@ public class PlaticaController {
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true);
         binder.registerCustomEditor(Date.class, editor);
-       // binder.registerCustomEditor(LugaresPlatica.class, new PropertyEditorSupport());
+        // binder.registerCustomEditor(LugaresPlatica.class, new PropertyEditorSupport());
     }
- 
-    
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
     public String insertarPlatica(@Valid Platica platica, BindingResult result) throws ParseException {
         //@Valid Platica platica, BindingResult result
-        //parametros se recben en el metodo
-        //inyectar en lapagina
-        //instanciar clase del modelo para hacer el calculo de los numeros
-         Platica platica1 = new Platica();
-//        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-//        String fecha1 = df.format(platica.getFecha());
-//        String fecha2 = df.format(platica.getFechaMxFui());
-//
-//
-//        platica1.setFecha(df.parse(fecha1));
-//        platica1.setFecha(platica.getFecha());
-//        platica1.setHora(platica.getHora());
-       //platica1=platica;
-//    
-      System.out.println(platica.getHora());
-      System.out.println(platica.getIdLugar().getId());
-//        
-//        platica1.setPeriodo(platica.getPeriodo());
-//        platica1.setAnio(platica.getAnio());
-//        platica1.setDescripcion(platica.getDescripcion());
-//        platica1.setTipo(platica.getTipo());
-////        platica1.setId(platica.getId());
-//        platica1.setStatus(platica.getStatus());
-//        platica1.setFechaMxFui(platica.getFechaMxFui());
-        //   platica1.setIdLugar(platica.getIdLugar());
-       if (result.hasErrors()) {
-         System.out.print("hubo errores");
+
+
+        System.out.println(platica.getHora());
+        System.out.println(platica.getIdLugar().getId());
+
+        if (result.hasErrors()) {
+            System.out.print("hubo errores");
 //            System.out.println(result.hasFieldErrors("fecha"));
 //            List<ObjectError> list = result.getAllErrors();
 //            for (int i = 0; i < list.size(); i++) {
@@ -149,17 +127,15 @@ public class PlaticaController {
 //                System.out.println(platica.getIdLugar());
 //          }
 //
-          return "/Platicas/altaPlatica";
+            return "/Platicas/altaPlatica";
 //
-       } else {
-        System.out.print("no hubo errores");
-//        LugaresPlatica lugaresPlatica = new LugaresPlatica();
-//        lugaresPlatica.setId(BigDecimal.valueOf(1));
-//        platica.setIdLugar(lugaresPlatica);
-         platicaFacade.create(platica);
-        //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
-        return "/Platicas/redirectAltaPlatica";
-  }
+        } else {
+            System.out.print("no hubo errores");
+
+            platicaFacade.create(platica);
+            //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
+            return "/Platicas/redirectAltaPlatica";
+        }
 
 
     }

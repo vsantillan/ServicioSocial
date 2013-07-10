@@ -27,7 +27,7 @@
                 <li><a href="consultasBajas.do">1.2 Bajas | Consultas</a></li>
                 <li><a href="capturarAsistencia.do">1.3 Capturar Asistencia</a></li>
                 <li><a href="asistenciaPosteriorEspecial.do">1.4 Alta Posterior</a></li>
-                <li><a href="catalogoLugares.do">1.4 Catálogo lugares</a></li>
+                <li><a href="altaLugares.do">1.4 Catálogo lugares</a></li>
             </ul>
         </li>
         <li><a href="formatoUnicoAdministrador.do">Formato &Uacute;nico</a></li>
