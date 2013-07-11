@@ -19,12 +19,12 @@
                 </tr>
                 <tr>
                     <td><p>Nombre del Proyecto:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.nombre}"/></p></td>
+                    <td><p>${proyectoDetalle.nombre}</p></td>
                 </tr>
                 <tr>
                     <td><p>N&uacute;mero de vacantes:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.vacantes}"/></p></td>
-                </tr>
+                    <td><p><core:out value="${proyectoDetalle.vacantes}" /></p></td>
+                </tr> 
                 <tr>
                     <td><p>N&uacute;mero de vacantes disponibles:</p></td>
                     <td><p><core:out value="${proyectoDetalle.vacantesDisponibles}"/></p></td>
@@ -52,20 +52,20 @@
                 <tr>
                     <td><p>Actividades:</p></td>
                     <td><p>
-                            <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
-                                <core:out  value="${actividades.detalle}"/>
-                            </core:forEach>
-                            
+                            <%-- <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
+                                 <core:out  value="${actividades.detalle}"/>
+                             </core:forEach>--%>
+
                         </p>
                     </td>
                 </tr>
                 <tr>
                     <td><p>Horario:</p></td>
                     <td><p>
-                            <core:forEach items="${proyectoDetalle.horarioCollection}" var="horarios">
-                                <core:out  value="${horarios.dia}"/>
-                                <core:out  value="${horarios.hora}"/>
-                            </core:forEach> 
+                            <%--     <core:forEach items="${proyectoDetalle.horarioCollection}" var="horarios">
+                                      <core:out  value="${horarios.dia}"/>
+                                      <core:out  value="${horarios.hora}"/>
+                                  </core:forEach> --%>
                         </p>
                     </td>
                 </tr>
@@ -95,7 +95,11 @@
                 </tr>
                 <tr>
                     <td><p>Perfil buscado:</p></td>
-                    <td><p>Alg&uacute;n Domicilio</p></td>
+                    <td><p>
+                            <%--<core:forEach items="${proyectoDetalle.proyectoPerfilCollection}" var="perfiles">
+                                <core:out value="${perfiles.idProyectoPerfil}"/>
+                            </core:forEach>--%>
+                        </p></td>
                 </tr>
             </table>
         </div> 

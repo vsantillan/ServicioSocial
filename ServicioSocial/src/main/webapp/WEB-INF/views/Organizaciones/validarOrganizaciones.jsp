@@ -30,6 +30,7 @@
 
         <!--        Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+         <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
                 $('#example').dataTable({
@@ -76,7 +77,7 @@
                     <tbody>
                         <core:forEach items="${organizacion}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-org"><img src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                                <th><a href="#" class="btn-validar-org"><img class="edit" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
                                 <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
@@ -95,5 +96,6 @@
     <jsp:include page="../Template/footer.jsp" />
 
 </body>
-
+<!-- 0 no validados 1 ya validados  cuando lo rechace cambia a 2 en validacion y ya no lo ve con retroalimentacion y cuando corrija 
+lo regresamos a 0-->
 </html>

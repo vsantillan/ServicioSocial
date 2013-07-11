@@ -67,10 +67,15 @@ public class OrganizacionesController {
         model.addAttribute("organizacion", instanciaFacade.findAll());
         return "/Organizaciones/validarOrganizaciones";
     }
+    @RequestMapping(method = RequestMethod.POST, value = "/updateStatus.do")  
+    public @ResponseBody  String actualizarStatusOrganizaciones(int id,Model model){
+        
+     return "";
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/validarProyectos.do")
     public String panelAdministradorProyectos(Model model) {
-        model.addAttribute("proyecto", proyectosFacade.findAll());
+        model.addAttribute("proyecto", proyectosFacade.findBySpecificField("validacionAdmin", "0", "equal", null, null));
         return "/Organizaciones/validarProyectos";
     }
 
@@ -104,7 +109,7 @@ public class OrganizacionesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/detalleProyecto.do")
     public String detalleProyecto(BigDecimal id, Model model) {
-        model.addAttribute("proyectoDetalle", proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("proyectoDetalle", proyectosFacade.find(id));
         return "/Organizaciones/detalleProyecto";
     }
 

@@ -31,19 +31,19 @@ text-shadow: #003E8B 0 1px 1px;
 
 .ddsmoothmenu-v ul li a:link, .ddsmoothmenu-v ul li a:visited, .ddsmoothmenu-v ul li a:active{
 /*background: #1c5a80; /*background of menu items (default state)*/
-background: #F1A044;
+background: #555555;
 color: white;
 }
 
 
 .ddsmoothmenu-v ul li a.selected{ /*CSS class that's dynamically added to the currently active menu items' LI A element*/
-background: lightblue !important; 
-color: navy;
+background: #555555 !important; 
+color: white;
 }
 
 .ddsmoothmenu-v ul li a:hover{
-background: lightblue; /*background of menu items during onmouseover (hover state)*/
-color: navy;
+background: #0792D2; /*background of menu items during onmouseover (hover state)*/
+color: white;
 }
 
 /*Sub level menu items */
