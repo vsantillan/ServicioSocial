@@ -46,7 +46,7 @@ public class FormatoUnicoController {
     public String formatoUnico(Model modelo) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
         //id de alumno provisional en lo que nos dan lo de sesión
-        String alumno_id = "09280435";
+        String alumno_id = "09280436";
         //select * from ...where
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //objeto que voy a insertar
@@ -54,6 +54,7 @@ public class FormatoUnicoController {
 
         DatosPersonales datosPersonales = new DatosPersonales();
         datosPersonales.setAlumnoId(alumno);
+        FormatoUnico formatoUnico = new FormatoUnico();
         //verificar si ya está en datos personales
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         BigDecimal idDatosPersonales;
@@ -71,22 +72,26 @@ public class FormatoUnicoController {
             idDatosPersonales = datosPersonalesFacade.find(datosPersonales.getId()).getId();
             System.out.println("No estuvo");
 
-            FormatoUnico formatoUnico = new FormatoUnico();
+
             formatoUnico.setDatosPersonalesId(datosPersonales);
             formatoUnico.setNumeroCreditos(alumno.getCreditosAcumulados());
             formatoUnico.setPorcentajeCreditos(Double.valueOf(alumno.getPorcentaje()));
             formatoUnicoFacade.create(formatoUnico);
         } else {
-            //idDatosPersonales = datosExistentes.getId();
+            idDatosPersonales = listaDatosPersonales.get(0).getId();
+            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", idDatosPersonales, "equal", null, null);
             System.out.println("Tu alumno ya está, su id de datos es " + listaDatosPersonales.get(0).getId());// + idDatosPersonales);
-            DatosPersonales datosExistentes = listaDatosPersonales.get(0);
+            datosPersonales = listaDatosPersonales.get(0);
+            formatoUnico = listaFormatoUnico.get(0);
 
 
         }
 
         //Para insertar en formato único es necesario recuperar el id de datos personales.
 
-
+//        modelo.addAttribute("datosPersonales", datosPersonales);
+//        modelo.addAttribute("formatoUnico", formatoUnico);
+        
 
 
         return "/FormatoUnico/formatoUnicoUsuario";

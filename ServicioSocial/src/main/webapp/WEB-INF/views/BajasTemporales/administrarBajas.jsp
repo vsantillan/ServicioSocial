@@ -54,8 +54,8 @@
                     <h1>Asignar Bajas Temporales</h1>
                     <p>En esta secci&oacute;n usted podra asginar bajas temporales</p>
                     <ul>
-                        <li><a href="#AsignarBaja">Asignar Bajas</a></li>
-                        <li><a href="#QuitarBaja">Quitar Bajas</a></li>
+                        <li><a href="javascript:void(0)" onclick="redirecciona('#AsignarBaja')">Asignar Bajas</a></li>
+                        <li><a href="javascript:void(0)" onclick="redirecciona('#QuitarBaja')">Quitar Bajas</a></li>
                     </ul>
                     <div id="AsignarBaja">
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="Asignar" width='100%'>
@@ -69,13 +69,13 @@
                             </thead>
                             <tbody>
                                 <tr class='gradeX'>
-                                    <th><a href="retroalimentacionReportesBimestrales.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/baja.png" width="30"/></a></th>
+                                    <th><a href="javascript:void(0)" onclick="redirecciona('retroalimentacionReportesBimestrales.do')" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/baja.png" width="30"/></a></th>
                                     <th>José Antonio Villanueva Gonzalez</th>
                                     <th>09280536</th>
                                     <th>Ago-Dic 2014</th>
                                 </tr>
                                 <tr class='gradeC'>
-                                    <th><a href="retroalimentacionReportesBimestrales.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/baja.png" width="30"/></a></th>
+                                    <th><a href="javascript:void(0)" onclick="redirecciona('retroalimentacionReportesBimestrales.do')" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/baja.png" width="30"/></a></th>
                                     <th>Alberto Martinez Behumea</th>
                                     <th>09280545</th>
                                     <th>Ago-Dic 2014</th>
@@ -96,13 +96,13 @@
                                 </thead>
                                 <tbody>
                                     <tr class='gradeX'>
-                                        <th><a href="retroalimentacionReportesBimestrales.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/alta.png" width="30"/></a></th>
+                                        <th><a href="javascript:void(0)" onclick="redirecciona('retroalimentacionReportesBimestrales.do')" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/alta.png" width="30"/></a></th>
                                         <th>José Antonio Villanueva Gonzalez</th>
                                         <th>09280536</th>
                                         <th>Ago-Dic 2014</th>
                                     </tr>
                                     <tr class='gradeC'>
-                                        <th><a href="retroalimentacionReportesBimestrales.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/alta.png" width="30"/></a></th>
+                                        <th><a href="javascript:void(0)" onclick="redirecciona('retroalimentacionReportesBimestrales.do')" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/alta.png" width="30"/></a></th>
                                          <th>Alberto Martinez Behumea</th>
                                         <th>09280545</th>
                                         <th>Ago-Dic 2014</th>
