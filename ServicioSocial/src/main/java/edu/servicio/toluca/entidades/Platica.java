@@ -57,7 +57,7 @@ public class Platica implements Serializable {
     private Long id;
     
     @Basic(optional = false)
-    @NotBlank
+    @NotNull
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
@@ -83,7 +83,7 @@ public class Platica implements Serializable {
     
     @Column(name = "STATUS")
     private Short status;
-    @NotBlank
+    @NotNull
     @Column(name = "FECHA_MX_FUI")
     @Temporal(TemporalType.DATE)
     private Date fechaMxFui;

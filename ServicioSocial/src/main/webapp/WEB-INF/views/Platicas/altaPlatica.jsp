@@ -15,15 +15,15 @@
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.timepicker.css"/>
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
 
-     
-    <script>
 
-    $(document).ready(function() {
+        <script>
 
-                    $('#formPlatica').formly();
-                });
+            $(document).ready(function() {
 
-</script>
+                $('#formPlatica').formly();
+            });
+
+        </script>
         <script>
             var fecha = new Date();
             var anio = fecha.getFullYear();
@@ -87,17 +87,17 @@
                                 <td>  <label for="lugar"><fmt:message key="lugar" /></label></td>
 
                                 <td>  
-                               
-                                      <form:select path="idLugar.id">
+
+                                    <form:select path="idLugar.id">
 
                                         <core:forEach items="${lugares}" var="lugares" >
                                             <form:option value="${lugares.id}">${lugares.lugar}</form:option>
-                                           <%--  <form:options items="${lugares}" itemValue="id" itemLabel="lugar" /> --%>
-                                       </core:forEach>
+                                            <%--  <form:options items="${lugares}" itemValue="id" itemLabel="lugar" /> --%>
+                                        </core:forEach>
                                     </form:select>
-                               
-                                  </td>  
-                             
+
+                                </td>  
+
                             </tr>
 
                             <tr>

@@ -64,17 +64,7 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/consultasBajas.do")
     public String consultasBajas(Model model) {
-        // Platica platica = new Platica();
-//       platica.setAnio("2015");
-//       platica.setFecha(new Date("20/05/2013"));
-//       platica.setFechaMxFui(new Date("25/05/2013"));
-//       platica.setHora("05:00");
-        //  platica.setId(2L);
-//       platica.setLugar("Edificio kkkkkk");
-//       platica.setNumeroAsistentes(200);
-//       platica.setPeriodo("Ago-Diciembre!");
-//       platica.setStatus((short)2);
-//       platica.setTipo((short)2);
+
 
 
         // System.out.println("Conteo de registros Platica:"+platicaFacade.count()); 
@@ -98,7 +88,8 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
-    public String seleccionarPlatica(Model a) {
+    public String seleccionarPlatica(Model modelo) {
+        modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
         return "/Platicas/seleccionarPlatica";
     }
 
@@ -110,9 +101,7 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
-    public String insertarPlatica(@Valid Platica platica, BindingResult result) throws ParseException {
-        //@Valid Platica platica, BindingResult result
-
+    public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException {
 
         System.out.println(platica.getHora());
         System.out.println(platica.getIdLugar().getId());
@@ -126,13 +115,22 @@ public class PlaticaController {
 //                System.out.println(list.get(i).getCode());
 //                System.out.println(platica.getIdLugar());
 //          }
-//
+
+
+            Fecha anio = new Fecha();
+            modelo.addAttribute("anioInicio", anio.anioActual());
+            modelo.addAttribute("anioFin", anio.anioFin());
+
+
+            modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
+//  
             return "/Platicas/altaPlatica";
 //
         } else {
             System.out.print("no hubo errores");
 
             platicaFacade.create(platica);
+            
             //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
             return "/Platicas/redirectAltaPlatica";
         }
@@ -148,7 +146,7 @@ public class PlaticaController {
     }
 
     @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
-    public String Asistencia(@Valid ValidacionAsistenciaPlatica folio, BindingResult result) {
+    public String Asistencia(@Valid ValidacionAsistenciaPlatica folio, BindingResult result, Model modelo) {
 
 
         if (result.hasErrors()) {
@@ -156,8 +154,9 @@ public class PlaticaController {
             return "/Platicas/capturarAsistencia";
 
         } else {
-
-            return "/Platicas/redirectAltaPlatica";
+            
+             modelo.addAttribute("folio", new ValidacionAsistenciaPlatica());
+            return "/Platicas/capturarAsistencia";
         }
 
     }

@@ -46,7 +46,8 @@ public class FoliosPlatica implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NUMERO_FOLIO")
-    private long numeroFolio;
+    private Long numeroFolio;
+    
     @Column(name = "STATUS")
     private Short status;
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
@@ -84,11 +85,11 @@ public class FoliosPlatica implements Serializable {
         this.asistencia = asistencia;
     }
 
-    public long getNumeroFolio() {
+    public Long getNumeroFolio() {
         return numeroFolio;
     }
 
-    public void setNumeroFolio(long numeroFolio) {
+    public void setNumeroFolio(Long numeroFolio) {
         this.numeroFolio = numeroFolio;
     }
 

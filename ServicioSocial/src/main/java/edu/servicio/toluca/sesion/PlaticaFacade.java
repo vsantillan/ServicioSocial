@@ -4,12 +4,17 @@
  */
 package edu.servicio.toluca.sesion;
 
+import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.entidades.Platica;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +32,34 @@ public class PlaticaFacade extends AbstractFacade<Platica> {
 
     public PlaticaFacade() {
         super(Platica.class);
+    }
+    
+    public List<Platica> platicasPeriodo(){
+        Fecha fecha= new Fecha();
+        String periodo= fecha.CalculaPeriodoPrueba();
+        System.out.println("periodo platica actual_" + periodo);
+
+        String sql = "select * from platica where status=1 and periodo='"+periodo+"'"+"  and fecha >=(select sysdate from dual)";
+        Query query =  (Query) em.createNativeQuery(sql) ;
+       List<Platica>  lista  = query.getResultList();
+       List<Platica> listaPlatica =  new ArrayList<Platica>();
+ 
+    
+    for (Object[] objects : lista) { 
+     System.out.println("-------------------------"); 
+     Platica platica  =  new Platica(); 
+     platica.setId((Long) objects[0]); 
+     platica.setFecha((Date) objects[1]); 
+     platica.setHora((String) objects[2]); 
+     platica.setPeriodo((String) objects[3]); 
+     platica.setAnio((String) objects[4]); 
+     platica.setNumeroAsistentes((Integer) objects[5]); 
+     platica.setTipo((Short) objects[6]); 
+     listaPlaticaes.add(platica); 
+ 
+ }
+    return listaPlatica; 
+        
     }
     
 }

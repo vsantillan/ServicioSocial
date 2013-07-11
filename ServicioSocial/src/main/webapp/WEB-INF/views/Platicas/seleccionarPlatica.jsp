@@ -27,6 +27,12 @@
                     <br>
 
                 </form>
+                <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
+              
+                ${platicasPeriodo}                     
+                </core:forEach>
+                
+                
                 <table border="0">
 
                     <tr>
