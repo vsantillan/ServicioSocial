@@ -27,7 +27,7 @@
         </script>
         <title>Cancelaci&oacute;n de Organizaci&oacute;n </title>
     </head>
-    <body>
+    <body class="background">
         <div id="contenido">
             <h2>Cancelacion de Organizaci&oacute;n</h2>
             <div id="tabs">
@@ -35,15 +35,16 @@
                     <li><a href="#">Enviar Retroalimentaci&oacute;n</a></li>
                 </ul>
                 <div>
-                    <form:form commandName="borrarInstancia" id="MyForm" action="borrarInstancia.do" method="POST" onsubmit="return borrarInstancia.do;" >
+                    <form:form commandName="retroalimentacionInstancia" id="MyForm" action="borrarInstancia.do" method="POST">
                         <table>
                             <tr>
+                                <form:hidden path="id" id="id" value="${instancia.idInstancia}"/>
                                 <td>Nombre de la Organizaci&oacute;n:</td>
-                                <td><form:input type ="text" path="nombre" id="nombre" value="${instancia.nombre}"/> </td>
+                                <td><form:input type ="text" path="nombre" disabled="true" id="nombre" value="${instancia.nombre}"/> </td>
                             </tr>
                             <tr>
                                 <td>E-Mail:</td>
-                                <td><form:input type ="text" path="correo" id="correo" value="${instancia.correo}"/> </td>
+                                <td><form:input type ="text" path="correo" disabled="true" id="correo" value="${instancia.correo}"/> </td>
                             </tr>
                             <tr>
                                 <td>Descripci&oacute;n:</td>

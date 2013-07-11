@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
 import edu.servicio.toluca.beans.organizaciones.EditarOrganizacion;
 import edu.servicio.toluca.entidades.Instancia;
@@ -22,6 +23,7 @@ import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,7 +54,6 @@ public class OrganizacionesController {
     public String administradorOrganizaciones(Model model)
     {
         model.addAttribute("organizaciones", instanciaFacade.findAll());
-        System.out.println("Despues del Js");
         return "/Organizaciones/administrarOrganizaciones";
     }
 
@@ -79,13 +80,19 @@ public class OrganizacionesController {
         return "/Organizaciones/validarProyectos";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/retroalimentacionOrganizacion.do")
-    public String retoalimentacionOrganizaciones(Model a) {
-        return "/Organizaciones/retroalimentacionOrganizacion";
+    @RequestMapping(method = RequestMethod.GET, value = "/retroalimentacionInstancia.do")
+    public String retroalimentacionInstancia(int id,Model model) 
+    {
+        model.addAttribute("instancia", instanciaFacade.find(BigDecimal.valueOf(id)));
+        model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
+        return "/Organizaciones/retroalimentacionInstancia";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/retroalimentacionProyecto.do")
-    public String retoalimentacionProyectos(Model a) {
+    public String retoalimentacionProyectos(int id,Model model)
+    {
+        model.addAttribute("proyectos", proyectosFacade.find(BigDecimal.valueOf(id)));
+        model.addAttribute("borrarProyecto", new BorrarProyecto());
         return "/Organizaciones/retroalimentacionProyectos";
     }
 
@@ -144,16 +151,19 @@ public class OrganizacionesController {
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/modificarOrganizacion.do")
-    public String modificarOrganizacion(EditarOrganizacion editaOrganizacion,BindingResult result)
+    public String modificarOrganizacion(int id,BindingResult result)
     {
         if(result.hasErrors())
         {
             System.out.println("Con errores");
             return "/Organizaciones/editarOrganizacion";
         }else{
-            //instanciaFacade.edit(instancia);
+            Instancia instancia;
+            instancia=instanciaFacade.find(id);
+            instancia.setEstatus(BigInteger.valueOf(0));
+            instanciaFacade.edit(instancia);
             System.out.println("Sin errores");
-            System.out.println(editaOrganizacion.getEstatus());
+            //System.out.println(editaOrganizacion.getEstatus());
             return "/Organizaciones/administrarOrganizaciones";
         }
     }
@@ -169,29 +179,43 @@ public class OrganizacionesController {
     }
 
     //Borrar Organizacion & Proyecto
-    @RequestMapping(method = RequestMethod.GET, value = "/borrarInstancia.do")
-    public @ResponseBody String borrarInstancia(int id,Model model)
+    @RequestMapping(method = RequestMethod.POST, value = "/borrarInstancia.do")
+    public @ResponseBody String borrarInstancia(@Valid BorrarInstancia retroalimentacionInstancia,BindingResult resultado)
     {
-        String returnText="Se modifico objeto instancia, con un id de: "+id;
-        Instancia instancia=instanciaFacade.find(BigDecimal.valueOf(id));
-        instancia.setIdInstancia(BigDecimal.valueOf(id));
-        instancia.setEstatus(BigInteger.valueOf(0));
-        System.out.println("Antes del update");
-        //instanciaFacade.edit(instancia);
-        System.out.println("Despues del update"); 
-        return returnText;
+        if(resultado.hasErrors())
+        {
+            for (ObjectError error : resultado.getAllErrors()) 
+            {
+                System.out.println(error.getDefaultMessage());
+            }
+            return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
+        }else{
+            System.out.println("Antes del update");
+            Instancia instancia;
+            instancia=instanciaFacade.find(BigDecimal.valueOf(retroalimentacionInstancia.getId()));
+            instancia.setEstatus(BigInteger.valueOf(0));
+            instanciaFacade.edit(instancia);
+            System.out.println("Despues del update"); 
+            return "<script>alert('¡Correo enviado exitosamente a: "+retroalimentacionInstancia.getCorreo()+"!');window.parent.Shadowbox.close();</script>";
+        }
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/borrarProyecto.do")
-    public @ResponseBody String borrarProyecto(BorrarProyecto borrarProyecto,Model model)
+    public @ResponseBody String borrarProyecto(BorrarProyecto retroalimentacionProyecto,BindingResult resultado)
     {
-        String returnText="Correo enviado exitosamente a: "+borrarProyecto.getEmail()+".";
-        System.out.println("Antes del update");
-        //instanciaFacade.edit(instancia);
-        //EnviaRetroalimentacion obj = new EnviaRetroalimentacion(Integer.toString(i),"",borrarProyecto.getEmail(),borrarProyecto.getDescripcion());
-        //obj.enviarCorreo();
-        System.out.println("Despues del update"); 
-        return returnText;
+        if(resultado.hasErrors())
+        {
+            for (ObjectError error : resultado.getAllErrors()) 
+            {
+                System.out.println(error.getDefaultMessage());
+            }
+            return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
+        }else{
+            System.out.println("Antes del update");
+            //instanciaFacade.edit(instancia);
+            System.out.println("Despues del update"); 
+            return "<script>alert('¡Correo enviado exitosamente a: "+retroalimentacionProyecto.getEmail()+"!');window.parent.Shadowbox.close();</script>";
+        }
     }
 
     //Alta Organizaicon visitante

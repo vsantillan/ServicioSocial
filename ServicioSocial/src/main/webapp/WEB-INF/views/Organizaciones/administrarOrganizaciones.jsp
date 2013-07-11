@@ -16,15 +16,13 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />       
-
-        <!--Scripts para shadowbox-->
+        <jsp:include page="../Template/headsJQueryUI.jsp" />
+        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        <script type="text/javascript" src="js/editaOrganizacion.js"></script>
+        <link type="text/css" href="shadowbox/shadowbox.css" rel="stylesheet" />
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
-        <!--        Scripts para tablas-->
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-
         <script type="text/javascript" >
             $(document).ready(function() {
                 $('#example').dataTable({
@@ -64,8 +62,7 @@
                         <core:forEach items="${organizaciones}" var="current">
                             <tr class='gradeX'>
                                 <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
-                                
-                                <th><a href="editarOrganizacion.do?id=${current.idInstancia}" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="borrarOrganizacion.do?id=${current.idInstancia}" class="borrar" onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" ><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
+                                <th><a href="editarOrganizacion.do?id=${current.idInstancia}" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="retroalimentacionInstancia.do?id=${current.idInstancia}" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
                                 <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.titular}" /></th>

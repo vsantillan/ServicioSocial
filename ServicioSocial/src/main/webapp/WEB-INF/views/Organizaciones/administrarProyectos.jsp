@@ -19,6 +19,7 @@
 
         <!--Scripts para shadowbox-->
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
 

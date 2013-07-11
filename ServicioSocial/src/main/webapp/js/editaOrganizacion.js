@@ -1,26 +1,17 @@
 $(document).ready(listo);
 var retroalimentacionProyecto = {};
-var tabla = {};
-
-function borrarFila()
-{
-    alert(tabla[2]);
-    $("form#MyForm :input").each(function()
-    {
-
-    });
-}
+var retroalimentacionInstancia = {};
 
 function listo()
 {
     $('.borrarProyecto').on('click', function()
     {
-        enviarDatosProyecto();
+        
     });
 
     $('.borrarInstancia').on('click', function()
     {
-        enviarDatosInstancia();
+        alert("click");
     });
 }
 
@@ -36,7 +27,6 @@ function enviarDatosProyecto()
         alert(respuesta);
         console.log(respuesta);
     });
-    borrarFila();
     window.parent.Shadowbox.close();
     //    return false;
 }
@@ -45,7 +35,7 @@ function preparaJSON($atributo)
 {
     if ($atributo.attr("type") !== "submit")
     {
-        retroalimentacionProyecto[$atributo.attr("path")] = $atributo.val();
+        retroalimentacionProyecto[$atributo.attr("id")] = $atributo.val();
     }
 }
 
@@ -53,15 +43,20 @@ function enviarDatosInstancia()
 {
     $("form#MyForm :input").each(function()
     {
-        preparaJSON($(this));
+        preparaJSONInstancia($(this));
     });
-
-    $.post("borrarInstancia.do", retroalimentacionProyecto, function(respuesta) {
+    $.POST("borrarInstancia.do", retroalimentacionInstancia, function(respuesta) {
         alert(respuesta);
         console.log(respuesta);
     });
-    window.onload = cargarContenido("administrarOrganizaciones.do");
-    alert("se recargo la tabla de instancias");
-    window.parent.Shadowbox.close();
+    //window.parent.Shadowbox.close();
 //    return false;
+}
+
+function preparaJSONInstancia($atributo)
+{
+    if ($atributo.attr("type") !== "submit")
+    {
+        retroalimentacionInstancia[$atributo.attr("id")] = $atributo.val();
+    }
 }
