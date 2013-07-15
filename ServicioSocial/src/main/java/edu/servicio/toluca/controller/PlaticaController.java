@@ -11,31 +11,22 @@ import edu.servicio.toluca.sesion.PlaticaFacade;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
 import edu.servicio.toluca.beans.ValidacionAsistenciaPlatica;
 import edu.servicio.toluca.entidades.FoliosPlatica;
-import java.beans.PropertyEditorSupport;
-import java.math.BigDecimal;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
+import org.springframework.web.bind.annotation.ResponseBody;
+import edu.servicio.toluca.beans.PlaticaJson;
 /**
  *
  * @author Jonny
@@ -184,5 +175,16 @@ public class PlaticaController {
         lugaresPlaticaFacade.create(lugares);
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
         return "/Platicas/lugaresPlatica";
+    }
+     @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
+    public @ResponseBody PlaticaJson actualizarDetalle(String fecha, Model modelo) {
+         System.out.println("fecha:"+fecha);
+         PlaticaJson platicaJson= new PlaticaJson();
+        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+        
+         Platica platica= platicaFacade.find(Long.parseLong(fecha));
+         platicaJson.setDetalle("Hora:"+platica.getHora()+"\t"+"Lugar:"+platica.getIdLugar().getLugar());
+         platicaJson.setDescripcion("Descripción:"+platica.getDescripcion());
+        return platicaJson;
     }
 }
