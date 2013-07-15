@@ -25,43 +25,7 @@
                     'wmp', 'swf', 'flv']});</script> 
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#noRevisadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#noAceptadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#enCorreccionDT').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#aceptadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script>
+          
         <title>Administrador</title>
         
     </head>
@@ -102,7 +66,7 @@
                                     <td>Ene-Feb</td>
                                     <td>09271024</td>
                                     <td>Hector Guzman Nava</td>
-                                    <td><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"/></a></td>
+                                    <td><a href="#a" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
                                     <td>13-06-07</td>
                                     <td>fui.pdf</td>
                                     <td>
@@ -119,7 +83,7 @@
                                     <td>Ene-Feb</td>
                                     <td>09271024</td>
                                     <td>Hector Guzman Nava</td>
-                                    <td><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"/></a></td>
+                                    <td><a href="algunLado.do" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
                                     <td>13-06-07</td>
                                     <td>fui.pdf</td>
                                     <td>
@@ -136,7 +100,7 @@
                                     <td>Ene-Feb</td>
                                     <td>09271024</td>
                                     <td>Hector Guzman Nava</td>
-                                    <td><a href="algunLado.do" rel="shadowbox"><img src="imagenes/lupa.png"/></a></td>
+                                    <td><a href="algunLado.do" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
                                     <td>13-06-07</td>
                                     <td>fui.pdf</td>
                                     <td>
@@ -147,7 +111,7 @@
                                             <option>Correcci&oacute;n</option>
                                         </select>
                                     </td>
-                                    <td><input type="button" value="Modificar"/></td>
+                                    <td><input  class="modificarNR"  type="button" value="Modificar"/></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -214,7 +178,7 @@
                                     <th>Nombre</th>
                                     <th>Documento</th>
                                     <th>Fecha Subida</th>
-                                    <th>Fecha Aceptaci&oacute;n</th>
+                                    
 
                                 </tr>
                             </thead>
@@ -225,7 +189,7 @@
                                     <td>Hector Guzman Nava</td>
                                     <td>fui.pdf</td>
                                     <td>13-06-07</td>
-                                    <td>13-06-12</td>
+                                    
                                     
                                 </tr>
                             </tbody>
@@ -234,11 +198,22 @@
                 </div>
                 
             </div>
+            
+            <div id="a" style="visibility: hidden">
+                <h1>Motivos de Rechazo</h1>
+                <table>
+                    <tr>
+                        
+                        <td><textarea style="width: 180px; height:120px; "></textarea></td>
+                    </tr>
+                </table>
+            </div>
             <div style="clear:both;"></div>
             
         </div>
         <%-- fin del contenido --%>
         <jsp:include page="../Template/footer.jsp" />
+        <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
     </body>
 </html>
 
