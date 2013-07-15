@@ -29,7 +29,8 @@
                 </form>
                 <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
               
-                ${platicasPeriodo}                     
+                ${platicasPeriodo.fecha} 
+                ${platicasPeriodo.idLugar.lugar}  
                 </core:forEach>
                 
                 
@@ -42,36 +43,19 @@
                             <%--  <input type="text" id="Caja" value="Hola"></input>
     <button onclick=<%String x="document.write(document.getElementById('texto').value)";out.print(x);%>>Pasar valor</button>  --%>
 
-                            <form:form action="folioPlatica.do" method="get"  id="MyForm">
+                            <form:form action="folioPlatica.do" method="post"  id="MyForm" commandName="platica" >
 
                                 <h1>Fechas Disponibles</h1>
 
 
-                                <select name="fechas" id="fechas" onchange=""> 
+                                 <form:select path="fecha" >
 
-
-
-                                    <%--   <%
-                              Platica instancia=new Platica();
-                              ArrayList<Platica> lista=instancia.ConsultarPlaticasSemestre(usuario, password);
-                              String hora="";
-                              String lugar="En:";
-                                for (int i=0;i<lista.size();i++){
-                                    int id=lista.get(i).getId_platica();
-                                    String fecha=lista.get(i).getFecha();
-                                   
-                               
-                              
-                                    %>
-                                    --%>
-                                    <option value="0">1
-                                        <%--   <%}
-                                       if(lista.size()!=0){
-                                      hora=lista.get(0).getHora();
-                                      lugar+=lista.get(0).getLugar();}
-                                       %> --%>
-                                    </option>
-                                </select><br>
+                                        <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
+                                            <form:option value="${platicasPeriodo.id}">${platicasPeriodo.fecha}</form:option>
+                                            <%--  <form:options items="${lugares}" itemValue="id" itemLabel="lugar" /> --%>
+                                        </core:forEach>
+                                    </form:select>
+                                <br>
                                 <input type=text name="hora" id="hora" value="Hora:" readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>
                                 <input type="checkbox" name="aceptacionleer" value="aceptacionleer"> Acépto haber leído el manual donde se describe el uso del<br>
                                 sistema via web sobre como dar de alta mi servicio social<br>

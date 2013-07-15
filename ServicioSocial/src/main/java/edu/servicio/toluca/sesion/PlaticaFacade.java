@@ -22,7 +22,8 @@ import javax.persistence.Query;
  */
 @Stateful
 public class PlaticaFacade extends AbstractFacade<Platica> {
-    @PersistenceContext(unitName = "servicioPU", type= PersistenceContextType.EXTENDED)
+
+    @PersistenceContext(unitName = "servicioPU", type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override
@@ -33,33 +34,22 @@ public class PlaticaFacade extends AbstractFacade<Platica> {
     public PlaticaFacade() {
         super(Platica.class);
     }
-    
-    public List<Platica> platicasPeriodo(){
-        Fecha fecha= new Fecha();
-        String periodo= fecha.CalculaPeriodoPrueba();
+
+    public List<Platica> platicasPeriodo() {
+        Fecha fecha = new Fecha();
+        String periodo = fecha.CalculaPeriodoPrueba();
         System.out.println("periodo platica actual_" + periodo);
 
-        String sql = "select * from platica where status=1 and periodo='"+periodo+"'"+"  and fecha >=(select sysdate from dual)";
-        Query query =  (Query) em.createNativeQuery(sql) ;
-       List<Platica>  lista  = query.getResultList();
-       List<Platica> listaPlatica =  new ArrayList<Platica>();
- 
-    
-    for (Object[] objects : lista) { 
-     System.out.println("-------------------------"); 
-     Platica platica  =  new Platica(); 
-     platica.setId((Long) objects[0]); 
-     platica.setFecha((Date) objects[1]); 
-     platica.setHora((String) objects[2]); 
-     platica.setPeriodo((String) objects[3]); 
-     platica.setAnio((String) objects[4]); 
-     platica.setNumeroAsistentes((Integer) objects[5]); 
-     platica.setTipo((Short) objects[6]); 
-     listaPlaticaes.add(platica); 
- 
- }
-    return listaPlatica; 
-        
+        String sql = "select * from platica where status=1 and periodo='" + periodo + "'" + "  and fecha >=(select sysdate from dual)";
+        Query query = (Query) em.createNativeQuery(sql, Platica.class);
+        List<Platica> lista = query.getResultList();
+        List<Platica> listaPlatica = new ArrayList<Platica>();
+
+//    System.out.println("-------------------------"+lista.size()); 
+        for (int i = 0; i < lista.size(); i++) {
+            listaPlatica.add(lista.get(i));
+        }
+        return listaPlatica;
+
     }
-    
 }

@@ -90,6 +90,7 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
     public String seleccionarPlatica(Model modelo) {
         modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+        modelo.addAttribute("platica", new Platica());
         return "/Platicas/seleccionarPlatica";
     }
 
