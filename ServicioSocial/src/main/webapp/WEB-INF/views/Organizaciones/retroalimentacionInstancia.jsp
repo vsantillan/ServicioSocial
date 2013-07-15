@@ -40,11 +40,11 @@
                             <tr>
                                 <form:hidden path="id" id="id" value="${instancia.idInstancia}"/>
                                 <td>Nombre de la Organizaci&oacute;n:</td>
-                                <td><form:input type ="text" path="nombre" disabled="true" id="nombre" value="${instancia.nombre}"/> </td>
+                                <td><form:input type ="text" path="nombre" id="nombre" value="${instancia.nombre}"/> </td>
                             </tr>
                             <tr>
                                 <td>E-Mail:</td>
-                                <td><form:input type ="text" path="correo" disabled="true" id="correo" value="${instancia.correo}"/> </td>
+                                <td><form:input type ="text" path="correo" id="correo" value="${instancia.correo}"/> </td>
                             </tr>
                             <tr>
                                 <td>Descripci&oacute;n:</td>

@@ -12,121 +12,177 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />       
-        <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
+        <%@ include file="../Template/headsMenuUsuario.jsp" %>
+        <%@ include file="../Template/metas.jsp" %>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+
         
-        <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>  
+        <link rel="stylesheet" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
+        <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
+        <script src="js/cargaCodigosPostalesParaEditarOP.js"></script>
+        <script src="js/jquery.manolo.js"></script>
+        <script>
+            $(document).ready(function() {
+                $(".MyForm").formly();
+            })
+        </script>
         <title>Editar Organizaci&oacute;n</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body class="background">
 
         <%-- inicio del contenido --%>
         <div id="contenido">
                 <h1>Editar Organizacion</h1>
-                <form:form commandName="editaOrganizacion" id="MyForm" action="modificarOrganizacion.do" method="POST">
+                <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAltaOrganizacion.do"  method="POST" style="width:60%;" >
                     <table>
                         <tr>
-                            <form:hidden path="idInstancia" value="${instancia.idInstancia}"/>
-                            <td><label for="nombre">Nombre de la Organizaci&oacute;n:</label></td>
-                            <td><form:input type="text" path="nombre" id="nombre" size="20" require="true" value="${instancia.nombre}"/></td>  
-                            <td><form:errors path="nombre" cssClass="error" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="hora">RFC:</label> </td>
-                            <td><form:input type="text" path="rfc" id="rfc" size="20" require="true" value="${instancia.rfc}" /></td>  
-                            <td><form:errors path="rfc" cssClass="error" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="lugar">Titular:</label></td>
-                            <td><form:input type="text" path="titular" id="titular" size="20" require="true" value="${instancia.titular}"/> </td>  
-                            <td><form:errors path="titular" cssClass="error" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="lugar">Puesto:</label></td>
-                            <td><form:input type="text" path="puesto" id="puesto" size="20" require="true" value="${instancia.puesto}"/> </td>  
-                            <td><form:errors path="puesto" cssClass="error" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="lugar">Correo:</label></td>
-                            <td><form:input type="text" path="correo" id="correo" size="20" require="true" value="${instancia.correo}"/> </td>  
-                            <td><form:errors path="correo" cssClass="error" /></td>
-                        </tr>
-                        <tr>
-                            <td><label for="lugar">Contrase&ntilde;a</label></td>
-                            <td><form:input type="text" path="password" id="contrasena" size="20" require="true" value="${instancia.password}"/> </td>  
-                            <td><form:errors path="password" cssClass="error" /></td>
-                        </tr>
-                        <tr>
-                            <td>  <label for="lugar">Status:</label></td>
-                            <td>
-                                <core:choose>
-                                    <core:when test="${instancia.estatus==1}">
-                                        <form:input type="text" path="estatus" id="status" size="20" require="true" value="${instancia.estatus}"/>
-                                    </core:when>
-                                    <core:otherwise>
-                                        <form:input type="text" path="estatus" id="status" size="20" require="true" value="${instancia.estatus}"/>
-                                    </core:otherwise>
-                                </core:choose>
-                                    
+                            <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
+                            <td> 
+                                <form:input path="nombre" id="nombre" size="20"/>
+                                <form:errors path="nombre" cssClass="error"/>
+                                <!--input type="text" name="name" id="nombre" size="20" require="true" /-->                                
                             </td>  
                         </tr>
                         <tr>
-                            <td><label for="lugar">Tel&eacute;fono:</label></td>
-                            <td><form:input type="text" path="telefono" id="telefono" size="20" require="true" value="${instancia.telefono}"/> </td>  
-                            <td><form:errors path="telefono" cssClass="error" /></td>
+                            <td>  <label for="rfc">RFC:</label> </td>
+                            <td>  
+                                <form:input path="rfc" id="rfc" size="20"/>
+                                <form:errors path="rfc" cssClass="error"/>
+                                <!--input type="text" name="rfc" id="rfc" size="20" require="true" /-->
+                            </td>  
                         </tr>
                         <tr>
-                            <td><label for="lugar">Domicilio:</label></td>
-                            <td><form:input type="text" path="domicilio" id="domicilio" size="20" require="true" value="${instancia.domicilio}"/> </td>  
-                            <td><form:errors path="domicilio" cssClass="error" /></td>
+                            <td>  <label for="titular">Titular:</label></td>
+                            <td>  
+                                <form:input path="titular" id="titular" size="20"/>
+                                <form:errors path="titular" cssClass="error"/>
+                                <!--input type="text" name="titlar" id="titular" size="20" require="true"/--> 
+                            </td>  
                         </tr>
                         <tr>
-                            <td><label for="lugar">C&oacute;digo Postal:</label></td>
-                            <!--<td><input type="text" path="codigoPostal" id="cp" size="20" require="true" value="${instancia.idColonia.idCp.cp}"/> </td>-->
-                            <form:hidden path="idCodigoPostal" value="${instancia.idColonia.idCp.idCp}"/>
+                            <td>  <label for="puesto">Puesto:</label></td>
+                            <td>  
+                                <form:input path="puesto" id="puesto" size="20"/>
+                                <form:errors path="puesto" cssClass="error"/>
+                                <!--input type="text" name="lugar" id="puesto" size="20" require="true"/--> 
+                            </td>  
                         </tr>
                         <tr>
-                            <td><label for="lugar">Colonia:</label></td>
-                            <!--<td><input type="text" name="colonia" id="colonia" size="20" require="true" value="${instancia.idColonia.nombre}"/> </td>--> 
-                            <td><form:hidden path="idColonia" id="colonia" size="20" require="true" value="${instancia.idColonia.idColonia}"/> </td> 
-                            <td><form:errors path="idColonia" cssClass="error" /></td>
-                        </tr>
-<!--                        <tr>
-                            <td>  <label for="lugar">Estado:</label></td>
-                            <td>  <input type="text" name="estado" id="estado" size="20" require="true" value="${instancia.idColonia.idCp.idEstado.nombre}"/> </td>  
+                            <td>  <label for="telefono">Tel&eacute;fono:</label></td>
+                            <td>  
+                                <form:input path="telefono" id="telefono" size="20"/>
+                                <form:errors path="telefono" cssClass="error"/>
+                                <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Municipio:</label></td>
-                            <td>  <input type="text" name="municipio" id="municipio" size="20" require="true" value="${instancia.idColonia.idCp.idMunicipio.nombre}"/> </td>  
+                            <td>  <label for="calle">Calle:</label></td>
+                            <td>  
+                                <form:input path="domicilio" id="domicilio" size="20"/>
+                                <form:errors path="domicilio" cssClass="error"/>
+                                <!--input type="text" name="lugar" id="domicilio" size="20" require="true"/--> 
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Ciudad</label></td>
-                            <td>  <input type="text" name="ciudad" id="ciudad" size="20" require="true" value="${instancia.idColonia.idCp.idCiudad.nombre}"/> </td>  
-                        </tr>-->
+                            <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
+                            <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${instancia.idColonia.idCp.cp}"></td>  
+                        </tr>
                         <tr>
-                            <td> <label for="semestre">Tipo de Organizaci&oacute;n:</label> </td>
+                            <td>  <label for="estado">Estado:</label></td>
+                            <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> 
+                                <select name="estado" id="estado" disabled="true">                                   
+                                    <core:forEach items="${estados}" var="estados">
+                                        <option value="${estados.idEstado}">${estados.nombre}</option>
+                                    </core:forEach> 
+                                </select>
+                            </td>  
+                        </tr>                        
+                        <tr>
+                            <td>  <label for="municipio">Municipio:</label></td>
+                            <td>  <!--input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/--> 
+                                <select name="municipio" id="municipio" disabled="true"></select>
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="ciudad">Ciudad</label></td>
+                            <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
+                                <select name="ciudad" id="ciudad" disabled="true"></select>
+                            </td>  
+                        </tr>
+                        <tr>
                             <td>
-                                <form:select path="tipoOrganizacion" id="tipo_organizacion" name="tipo_organizacion">
-                                    <core:forEach items="${tipoOrg}" var="current">
+                                <input id="nombre_colonia" path="nombre_colonia" value="${instancia.idColonia.nombre}" hidden="hidden"/>
+                                <label for="colonia">Colonia:</label></td>
+                            <td>  
+                                <div id="notice"></div>
+                                <!--select name="colonia" id="colonia" disabled="true"></select--> 
+                                <form:select id="idColonia" path="${colonia.idColonia}" name="idColonia"></form:select> 
+                                    <div id="otra_colonia" style="display:none;">
+                                        <input type="text" name="otra_colonia" id="otra_colonia"/>
+                                        <!--form:input path="usuario" id="usuario" size="20"/-->
+                                    </div>
+                                <form:errors path="idColonia" cssClass="error"/>
+                            </td>  
+                        </tr>                     
+                        <tr>
+                            <td> <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> </td>
+                            <td>
+                                <select id="tipoOrganizacion" name="tipoOrganizacion">
+                                    <core:forEach items="${tipoOrganizaciones}" var="current">
                                         <core:choose>
                                             <core:when test="${current.idTipoOrganizacion==instancia.tipoOrganizacion.idTipoOrganizacion}">
-                                                <form:option path="tipoOrganizacion" value="${current.idTipoOrganizacion}" selected="selected">${current.detalle}</form:option>
+                                                <option value="${current.idTipoOrganizacion}" selected="selected">${current.detalle}</option>  
                                             </core:when>
                                             <core:otherwise>
-                                                <form:option path="tipoOrganizacion" value="${current.idTipoOrganizacion}" >${current.detalle}</form:option>
+                                                <option value="${current.idTipoOrganizacion}">${current.detalle}</option>
                                             </core:otherwise>    
                                         </core:choose>
                                     </core:forEach>
-                                </form:select>
+                                </select>
+                                <form:errors path="tipoOrganizacion" cssClass="error"/>
                             </td>  
                         </tr>
-                        <tr> 
-                            <td> <input type ="submit" value = "Guardar cambios" /> </td>
-                            <td> <input type ="button" value = "Cancelar" onclick="window.parent.Shadowbox.close();"/></td>
+                        <tr>
+                            <td colspan="2"><h3>Datos de contacto y de acceso:</h3></td>
                         </tr>
+                        <tr>
+                            <td>  <label for="lugar">Nombre de Usuario:</label></td>
+                            <td>  
+                                <form:input path="usuario" id="usuario" size="20"/>
+                                <form:errors path="usuario" cssClass="error"/>
+                                <!--input type="text" name="lugar" id="puesto" size="20" require="true"/-->
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Correo:</label></td>
+                            <td>  
+                                <form:input path="correo" id="correo" size="20"/>
+                                <form:errors path="correo" cssClass="error"/>
+                                <!--input type="text" name="lugar" id="puesto" size="20" require="true"/--> 
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Contrase&ntilde;a:</label></td>
+                            <td>  
+                                <form:input path="password" id="password" size="20" type="password"/>
+                                <form:errors path="password" cssClass="error"/>
+                                <!--input type="password" name="lugar" id="puesto" size="20" require="true"/--> 
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Confirmar Contrase&ntilde;a:</label></td>
+                            <td>  <input type="password" name="lugar" id="puesto" size="20" require="true"/> </td>  
+                        </tr>                        
+                        <tr> 
+                            <td></td>
+                            <td><input type ="submit" value = "Guardar cambios" /></td>
+                        </tr>
+
                     </table>
-                </form:form> 
+                </form:form>
                 <br/>
         </div>
     </body>

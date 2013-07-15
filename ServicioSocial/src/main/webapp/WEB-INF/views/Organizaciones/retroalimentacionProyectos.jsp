@@ -43,15 +43,15 @@
                         <table>
                             <tr>
                                 <td>Nombre del Proyecto:</td>
-                                <td><form:input id="nombreProyecto" path="nombreProyecto" disabled="${isvisible}" value="${proyectos.nombre}" /></td>
+                                <td><form:input id="nombreProyecto" path="nombreProyecto" value="${proyectos.nombre}" /></td>
                             </tr>
                             <tr>
                                 <td>Nombre de la Organizaci&oacute;n:</td>
-                                <td><form:input id="nombreInstancia" path="nombreInstancia" disabled="${isvisible}" value="${proyectos.idInstancia.nombre}" /></td>
+                                <td><form:input id="nombreInstancia" path="nombreInstancia" value="${proyectos.idInstancia.nombre}" /></td>
                             </tr>
                             <tr>
                                 <td>E-Mail:</td>
-                                <td><form:input id="email" path="email" disabled="disabled" disabled="${isvisible}" value="${proyectos.idInstancia.correo}" /></td>
+                                <td><form:input id="email" path="email" disabled="disabled" value="${proyectos.idInstancia.correo}" /></td>
                             </tr>
                             <tr>
                                 <td>Descripci&oacute;n:</td>

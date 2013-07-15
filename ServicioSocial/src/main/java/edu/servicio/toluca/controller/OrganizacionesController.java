@@ -6,9 +6,13 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
+import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.EditarOrganizacion;
+import edu.servicio.toluca.entidades.Estados;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.sesion.ColoniaFacade;
+import edu.servicio.toluca.sesion.EstadosFacade;
+import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
@@ -16,6 +20,7 @@ import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.LinkedHashMap;
 import javax.validation.Valid;
 
 import javax.ejb.EJB;
@@ -49,6 +54,8 @@ public class OrganizacionesController {
     private ColoniaFacade coloniaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/TipoProyectoFacade")
     private TipoProyectoFacade tipoProyectoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
+    private EstadosSiaFacade estadosFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model)
@@ -144,9 +151,13 @@ public class OrganizacionesController {
     //Editar Organizacion
     @RequestMapping(method = RequestMethod.GET, value = "/editarOrganizacion.do")
     public String editarOrganizacion(int id, Model model) {
-        model.addAttribute("tipoOrg", tipoOrganizacionFacade.findAll());
         model.addAttribute("instancia", instanciaFacade.find(BigDecimal.valueOf(id)));
-        model.addAttribute("editaOrganizacion", new EditarOrganizacion());
+        model.addAttribute("editaOrganizacion", new EditarOrganizacion()); 
+        //model.addAttribute("instancia", new Instancia()); 
+        model.addAttribute("estados", estadosFacade.findAll());
+        //model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findAll());
+        
         return "/Organizaciones/editarOrganizacion";
     }
     
@@ -194,7 +205,7 @@ public class OrganizacionesController {
             Instancia instancia;
             instancia=instanciaFacade.find(BigDecimal.valueOf(retroalimentacionInstancia.getId()));
             instancia.setEstatus(BigInteger.valueOf(0));
-            instanciaFacade.edit(instancia);
+            //instanciaFacade.edit(instancia);
             System.out.println("Despues del update"); 
             return "<script>alert('¡Correo enviado exitosamente a: "+retroalimentacionInstancia.getCorreo()+"!');window.parent.Shadowbox.close();</script>";
         }
