@@ -4,6 +4,8 @@
  */
 package edu.servicio.toluca.beans;
 
+import java.math.BigDecimal;
+
 
 /**
  *
@@ -11,7 +13,7 @@ package edu.servicio.toluca.beans;
  */
 public class FormatoUnicoDatosPersonalesBean {
     
-
+    private BigDecimal id;
     private String nombre;
     private String apellidoP;
     private String apellidoM;
@@ -166,6 +168,20 @@ public class FormatoUnicoDatosPersonalesBean {
      */
     public void setAcuerdoC(boolean acuerdoC) {
         this.acuerdoC = acuerdoC;
+    }
+
+    /**
+     * @return the id
+     */
+    public BigDecimal getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(BigDecimal id) {
+        this.id = id;
     }
 
 }

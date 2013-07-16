@@ -44,11 +44,11 @@ public class FormatoUnicoController {
     private FormatoUnicoFacade formatoUnicoFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
-    public String formatoUnico(Model modelo) {
+    public String formatoUnico(Model modelo, String alumno_id) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
         FormatoUnicoDatosPersonalesBean formatoUnicoDatosPersonalesbean = new FormatoUnicoDatosPersonalesBean();
         //id de alumno provisional en lo que nos dan lo de sesión
-        String alumno_id = "98280347";
+        //String alumno_id = "09280531";
         //select * from ...where
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //objeto que voy a insertar
@@ -97,7 +97,7 @@ public class FormatoUnicoController {
 
 
         }
-
+        formatoUnicoDatosPersonalesbean.setId(datosPersonales.getId());
         formatoUnicoDatosPersonalesbean.setNombre(datosPersonales.getNombre());
         formatoUnicoDatosPersonalesbean.setApellidoP(datosPersonales.getApellidoP());
         formatoUnicoDatosPersonalesbean.setApellidoM(datosPersonales.getApellidoM());
@@ -128,7 +128,22 @@ public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
     public @ResponseBody
     FormatoUnicoErrores modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) {
+        System.out.println(dt.getId());
         System.out.println(dt.getSexo());
+        DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
+        datosPersonales.setNombre(dt.getNombre());
+        datosPersonales.setApellidoP(dt.getApellidoP());
+        datosPersonales.setApellidoM(dt.getApellidoM());
+        datosPersonales.setSexo(dt.getSexo());
+        datosPersonales.setEstadoCivil(dt.getEstado_civil());
+        datosPersonales.setOcupacion(dt.getOcupacion());
+        datosPersonales.setCurp(dt.getCurp());
+        datosPersonales.setFolioDocIdentificaciin(new BigInteger(dt.getFolioDocIdentificacion()));
+        datosPersonales.setClaveDocIdentificacion(dt.getClaveDocIdentificacion());
+        datosPersonalesFacade.edit(datosPersonales);
+                
+        
+        
         
         if (resultado.hasErrors()) {
             for (ObjectError error : resultado.getAllErrors()) {
