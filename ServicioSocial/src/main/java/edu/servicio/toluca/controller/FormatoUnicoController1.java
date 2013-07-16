@@ -41,6 +41,11 @@ public class FormatoUnicoController1 {
     private VistaAlumnoFacade vistaAlumnoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnicoFacade;
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
+    public String formatoUnicoAdministrador(Model a) {
 
+        return "/FormatoUnico/formatoUnicoAdministrador";
+    }
    
 }
