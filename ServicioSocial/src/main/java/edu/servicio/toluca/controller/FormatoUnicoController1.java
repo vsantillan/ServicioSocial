@@ -10,6 +10,7 @@ import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
@@ -35,16 +36,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class FormatoUnicoController1 {
 
-    @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
-    private DatosPersonalesFacade datosPersonalesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
-    private VistaAlumnoFacade vistaAlumnoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
-    private FormatoUnicoFacade formatoUnicoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
+    private CatalogoObservacionesFacade observacionesFacade;
+    
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
-    public String formatoUnicoAdministrador(Model a) {
-
+    public String formatoUnicoAdministrador(Model model) {
+        model.addAttribute("listadoObservaciones",observacionesFacade.findAll());
         return "/FormatoUnico/formatoUnicoAdministrador";
     }
    

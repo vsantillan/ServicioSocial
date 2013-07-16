@@ -203,89 +203,21 @@
                 <h1>Motivos de Rechazo</h1>
                 <div id="scroll" >
                     <table>
-                    <tr>
+                    
+                        <core:forEach items="${listadoObservaciones}" var="observacion">
+                        <tr>
+                            <td><label><input type="checkbox"/>&nbsp;&nbsp;&nbsp;
+                             <core:out value="${observacion.detalle}" /></label>
+                            </td>
+                        </tr>    
+                            
+                    </core:forEach>
+                        
+                        <tr>
                         <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
                        
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    </tr>
-                     <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
+                    
+        
                     </tr>
                  </table>
                     
