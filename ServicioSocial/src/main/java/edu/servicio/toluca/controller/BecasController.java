@@ -35,14 +35,19 @@ public class BecasController {
     @RequestMapping(method = RequestMethod.GET, value = "/preseleccionAlumnos.do")
     public String preseleccionAlumnos(@ModelAttribute(value = "alumnoP") Becado alumnoP, BindingResult result, Model model) {
         Fecha fecha = new Fecha();
+        fecha.CalculaPeriodo();
         model.addAttribute("alumno", formatoUnico.findAll());
         return "/Becas/preseleccionAlumnos";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/administracionAlumnosBecados.do")
     public String administracionAlumnosBecados(Model model) {
-        FormatoUnico form = new FormatoUnico();
-
+        
+       
+       model.addAttribute("preseleccionado",formatoUnico.findBySpecificField("tipoServicio","4", "equal", null, null));
+       //model.addAttribute("becado", formatoUnico.findBySpecificField("tipoServicio", "3", "equal", null, null));
+       //model.addAttribute("preseleccionado", formatoUnico.findAll());
+       model.addAttribute("espacio", " ");
         return "/Becas/administracionAlumnosBecados";
     }
 
@@ -68,19 +73,32 @@ public class BecasController {
 
         if (alumnoP.getAlumno()!=null) {
             for (String current : alumnoP.getAlumno()) {
-                FormatoUnico form = new FormatoUnico();
+                FormatoUnico form;
                 BigDecimal id = new BigDecimal(current);
                 BigInteger tipoServicio = new BigInteger(String.valueOf(4));
-                form.setId(id);
+                form = formatoUnico.find(id);
                 form.setTipoServicio(tipoServicio);
                 formatoUnico.edit(form);
             }
-            return "/Becas/error";
+            return "/Becas/exito";
 
         } else {
             return "/Becas/error";
         }
 
 
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/quitarAlumno.do")
+    public String quitarAlumno(String categorias[], Model model) {
+//        System.out.println(categorias[0]);
+//            for (String current : categorias) {
+//                FormatoUnico form;
+//                BigDecimal id = new BigDecimal(current);
+//                BigInteger tipoServicio = new BigInteger(String.valueOf(1));
+//                form = formatoUnico.find(id);
+//                form.setTipoServicio(tipoServicio);
+//                formatoUnico.edit(form);
+//            }
+            return "/Becas/exito";
     }
 }

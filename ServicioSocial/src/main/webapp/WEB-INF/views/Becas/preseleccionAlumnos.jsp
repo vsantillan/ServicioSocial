@@ -33,14 +33,14 @@
 
             function contar() {
 
-                var checkboxes =  form1.alumno; //Array que contiene los checkbox
+                var checkboxes = form1.alumno; //Array que contiene los checkbox
                 var cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
                 for (var x = 0; x < checkboxes.length; x++) {
                     if (checkboxes[x].checked) {
                         cont = cont + 1;
                     }
                 }
-            alert("El número de alumnos seleccionados es: " + cont);
+                alert("El número de alumnos seleccionados es: " + cont);
 
             }
         </script>
@@ -50,16 +50,14 @@
     </head>
     <body >
         <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
-         <div >
-        <form:form id="form1" action="preseleccionadoBD.do" commandName="alumnoP" method="POST" >
-           
+        <div >
+            <form:form id="form1" action="preseleccionadoBD.do" commandName="alumnoP" method="POST" >
+
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
                             <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
                             <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
-                            <th>&nbsp;Apellido Paterno&nbsp;</th>
-                            <th>&nbsp;Apellido Materno&nbsp;</th>
                             <th>&nbsp;Nombre&nbsp;</th>
                             <th>&nbsp;Carrera&nbsp;</th>
                             <th>&nbsp;Promedio&nbsp;</th>
@@ -73,9 +71,7 @@
                             <tr class='gradeX'>
                                 <td><core:out value="${current.datosPersonalesId.id}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.id}" /></td>
-                                <td><core:out value="${current.datosPersonalesId.apellidoP}"  /></td>
-                                <td><core:out value="${current.datosPersonalesId.apellidoM}"  /></td>
-                                <td><core:out value="${current.datosPersonalesId.nombre}"  /></td>
+                                <td><core:out value="${current.datosPersonalesId.apellidoP} ${espacio} ${current.datosPersonalesId.apellidoM} ${espacio} ${current.datosPersonalesId.nombre}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.promedio}" /></td>
                                 <td><core:out value="${current.modalidad}" /></td>
