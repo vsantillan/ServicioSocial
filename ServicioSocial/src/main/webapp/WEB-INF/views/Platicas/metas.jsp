@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
         <LINK rel="stylesheet" href="css/platicajquery.clockpick.1.2.7.css" type="text/css">
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
+        <link rel="stylesheet" type="text/css" href="css/apprise.css"/>
 
         <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="js/jquerycssmenu2.js"></script>
@@ -27,3 +28,4 @@
         <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.js"></script>
         <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.min.js"></script>
         <script type="text/javascript" src="js/platicajquery.clockpick.1.2.7.pack.js"></script>
+        <script type="text/javascript" src="js/apprise-1.5.full.js"></script>

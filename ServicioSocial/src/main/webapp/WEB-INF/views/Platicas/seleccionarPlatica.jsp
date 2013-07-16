@@ -22,10 +22,13 @@
  <script language="javascript">
 function marcado(){
 var opcion = document.getElementById("aceptacionleer"); //acceso al botón
-var platica=document.getElementById("fecha").html;
+
+//var platica=document.getElementById("fecha").html;
+var platica = $("#fecha option:selected").html();
          if (opcion.checked == true) { //botón seleccionado
             //alert("Esta seguro de registrarse a la plática de inducción:\nFecha \t "+platica)
              var statusConfirm = confirm("Está seguro de registrarse a la plática de inducción:\nFecha \t "+platica); 
+           //  apprise('Está seguro de registrarse a la plática de inducción:\nFecha \t '+platica, {'verify':true, 'textYes':'Si!', 'textNo':'No'});
             if (statusConfirm == true) 
             { 
                 alert ("A continuacion veras tu comprobante de registro"); 
