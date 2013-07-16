@@ -21,12 +21,23 @@
         </script>
  <script language="javascript">
 function marcado(){
-var opcion = document.forSelecciona.aceptacionleer; //acceso al botón
+var opcion = document.getElementById("aceptacionleer"); //acceso al botón
+var platica=document.getElementById("fecha").html;
          if (opcion.checked == true) { //botón seleccionado
-            alert("El Formulario ha sido enviado")
+            //alert("Esta seguro de registrarse a la plática de inducción:\nFecha \t "+platica)
+             var statusConfirm = confirm("Está seguro de registrarse a la plática de inducción:\nFecha \t "+platica); 
+            if (statusConfirm == true) 
+            { 
+                alert ("A continuacion veras tu comprobante de registro"); 
+            } 
+            else 
+            { 
+               // alert("Haces otra cos"); 
+               return false;
+            } 
             }
          else {  //botón no seleccionado
-            alert("El formulario no ha podido enviarse. \n Debe aceptar las condiciones para poder enviar el formulario");
+            alert("El formulario no ha podido enviarse. \n Debe aceptar haber leido el manual para poder enviar el formulario");
             return false; //el formulario no se envia
             }
 

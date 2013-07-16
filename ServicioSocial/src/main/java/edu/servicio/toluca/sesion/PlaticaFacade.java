@@ -40,7 +40,7 @@ public class PlaticaFacade extends AbstractFacade<Platica> {
         String periodo = fecha.CalculaPeriodoPrueba();
         System.out.println("periodo platica actual_" + periodo);
 
-        String sql = "select * from platica where status=1 and periodo='" + periodo + "'" + "  and fecha >=(select sysdate from dual)";
+        String sql = "select * from platica where status=1 and periodo='" + periodo + "'" + "  and fecha >=(select sysdate from dual) and tipo=1";
         Query query = (Query) em.createNativeQuery(sql, Platica.class);
         List<Platica> lista = query.getResultList();
         List<Platica> listaPlatica = new ArrayList<Platica>();
