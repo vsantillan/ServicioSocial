@@ -199,14 +199,100 @@
                 
             </div>
             
-            <div id="a" style="visibility: hidden">
+            <div id="a" style="visibility: hidden; font-size: 15px">
                 <h1>Motivos de Rechazo</h1>
-                <table>
+                <div id="scroll" >
+                    <table>
                     <tr>
-                        
-                        <td><textarea style="width: 180px; height:120px; "></textarea></td>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
                     </tr>
-                </table>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                     <tr>
+                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
+                       
+                    </tr>
+                 </table>
+                    
+                </div>
+                
+                <button>Guardar</button>
+                <button>Cancelar</button>
             </div>
             <div style="clear:both;"></div>
             
