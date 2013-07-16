@@ -95,11 +95,11 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
     public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException {
 
-        System.out.println(platica.getHora());
-        System.out.println(platica.getIdLugar().getId());
+        //System.out.println(platica.getHora());
+        //System.out.println(platica.getIdLugar().getId());
 
         if (result.hasErrors()) {
-            System.out.print("hubo errores");
+           // System.out.print("hubo errores");
 //            System.out.println(result.hasFieldErrors("fecha"));
 //            List<ObjectError> list = result.getAllErrors();
 //            for (int i = 0; i < list.size(); i++) {
@@ -119,7 +119,7 @@ public class PlaticaController {
             return "/Platicas/altaPlatica";
 //
         } else {
-            System.out.print("no hubo errores");
+            //System.out.print("no hubo errores");
 
             platicaFacade.create(platica);
             
@@ -155,7 +155,7 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/eliminarPlatica.do")
     public void eliminarPlatica(long id_platica) throws ParseException {
-        System.out.print("eliminar platica.do");
+        //System.out.print("eliminar platica.do");
         Platica platica = new Platica();
         platica.setId(id_platica);
         platicaFacade.remove(platica);
@@ -178,7 +178,7 @@ public class PlaticaController {
     }
      @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
     public @ResponseBody PlaticaJson actualizarDetalle(String fecha, Model modelo) {
-         System.out.println("fecha:"+fecha);
+         //System.out.println("fecha:"+fecha);
          PlaticaJson platicaJson= new PlaticaJson();
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
         
