@@ -13,6 +13,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,6 +27,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -51,7 +54,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Proyectos implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
+    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PROYECTO")
@@ -60,11 +65,13 @@ public class Proyectos implements Serializable {
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "DOMICILIO")
+    @NotBlank
     private String domicilio;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "NOMBRE_RESPONSABLE")
+    @NotBlank
     private String nombreResponsable;
     @Basic(optional = false)
     @NotNull
@@ -106,8 +113,6 @@ public class Proyectos implements Serializable {
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<ProyectoPerfil> proyectoPerfilCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
-    private Collection<Horario> horarioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Actividades> actividadesCollection;
     @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
@@ -250,16 +255,7 @@ public class Proyectos implements Serializable {
     public void setProyectoPerfilCollection(Collection<ProyectoPerfil> proyectoPerfilCollection) {
         this.proyectoPerfilCollection = proyectoPerfilCollection;
     }
-
-    @XmlTransient
-    public Collection<Horario> getHorarioCollection() {
-        return horarioCollection;
-    }
-
-    public void setHorarioCollection(Collection<Horario> horarioCollection) {
-        this.horarioCollection = horarioCollection;
-    }
-
+    
     @XmlTransient
     public Collection<Actividades> getActividadesCollection() {
         return actividadesCollection;

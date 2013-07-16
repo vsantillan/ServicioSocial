@@ -25,6 +25,12 @@
         <script type="text/javascript" src="js/platicasEstiloFormularioformly.js"></script>
         <script type="text/javascript" src="js/jqueryUI/jquery-ui.custom.js"></script>
         <script type="text/javascript" src="js/funcionesGenerales.js"></script>
+        
+        <script>
+            $(document).ready(function() {
+                $(".MyForm").formly();
+            })
+        </script>
 
 
       

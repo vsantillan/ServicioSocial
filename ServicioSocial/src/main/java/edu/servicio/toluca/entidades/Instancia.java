@@ -12,6 +12,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,10 +24,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Email;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
- * @author SATELLITE
+ * @author bustedvillain
  */
 @Entity
 @Table(name = "INSTANCIA", catalog = "", schema = "GES_VIN")
@@ -48,33 +52,34 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Instancia implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
+    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_INSTANCIA")
     private BigDecimal idInstancia;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 45, message="Nombre de la Organización vacía")
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 12)
+    @Size(min = 12, max = 12, message="El RFC debe tener una longitud de 12 caracteres")
     @Column(name = "RFC")
     private String rfc;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 45, message="Nombre del Titular vacío")
     @Column(name = "TITULAR")
     private String titular;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(min = 1, max = 45, message="Puesto vacío")
     @Column(name = "PUESTO")
     private String puesto;
     @Basic(optional = false)
-    @NotNull
+    @NotNull    
     @Column(name = "TELEFONO")
     private long telefono;
     @Basic(optional = false)
@@ -94,6 +99,7 @@ public class Instancia implements Serializable {
     private String password;
     @Size(max = 60)
     @Column(name = "CORREO")
+    @Email
     private String correo;
     @JoinColumn(name = "TIPO_ORGANIZACION", referencedColumnName = "ID_TIPO_ORGANIZACION")
     @ManyToOne(optional = false)
@@ -101,8 +107,6 @@ public class Instancia implements Serializable {
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "lugarDesarrollo")
-    private Collection<DetRepMen> detRepMenCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<Proyectos> proyectosCollection;
 
@@ -236,15 +240,6 @@ public class Instancia implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DetRepMen> getDetRepMenCollection() {
-        return detRepMenCollection;
-    }
-
-    public void setDetRepMenCollection(Collection<DetRepMen> detRepMenCollection) {
-        this.detRepMenCollection = detRepMenCollection;
-    }
-
-    @XmlTransient
     public Collection<Proyectos> getProyectosCollection() {
         return proyectosCollection;
     }
@@ -277,5 +272,5 @@ public class Instancia implements Serializable {
     public String toString() {
         return "edu.servicio.toluca.entidades.Instancia[ idInstancia=" + idInstancia + " ]";
     }
-    
+
 }

@@ -15,7 +15,11 @@
 <html>
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />       
+        <jsp:include page="../Template/metas.jsp" />
+
+        <script src="js/jquery.codigos.postales.js"></script>       
+        <script src="js/jquery.manolo.js"></script>
+        
         <title>Administrador</title>
     </head>
     <body class="background">
@@ -25,81 +29,121 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left; width: 80%">
-                <h1>Alta de Organizaciones</h1>
-                <form:form name="altaOrganizacion" id="MyForm" action="gdaAltaOrganizacion.do" method="POST">
+
+                <%-- Formulario Nueva Organizacion --%>
+                <center>
+                    <h1>Alta de Organizaciones</h1>
+                    <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAdminAltaOrganizacion.do"  method="POST" style="width:60%;" >
                     <table>
                         <tr>
                             <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
-                            <td> <input type="text" name="nombre" id="nombre" size="20" require="true" /></td>  
+                            <td> 
+                                <form:input path="nombre" id="nombre" size="20"/><br/>
+                                <form:errors path="nombre" cssClass="error"/>
+                                <!--input type="text" name="name" id="nombre" size="20" require="true" /-->                                
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="hora">RFC:</label> </td>
-                            <td>  <input type="text" name="rfc" id="rfc" size="20" require="true" /></td>  
+                            <td>  <label for="rfc">RFC:</label> </td>
+                            <td>  
+                                <form:input path="rfc" id="rfc" size="20" maxlength="12"/><br/>
+                                <form:errors path="rfc" cssClass="error"/>
+                                <!--input type="text" name="rfc" id="rfc" size="20" require="true" /-->
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Titular:</label></td>
-                            <td>  <input type="text" name="titular" id="titular" size="20" require="true"/> </td>  
+                            <td>  <label for="titular">Titular:</label></td>
+                            <td>  
+                                <form:input path="titular" id="titular" size="20"/><br/>
+                                <form:errors path="titular" cssClass="error"/>
+                                <!--input type="text" name="titlar" id="titular" size="20" require="true"/--> 
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Puesto:</label></td>
-                            <td>  <input type="text" name="puesto" id="puesto" size="20" require="true"/> </td>  
+                            <td>  <label for="puesto">Puesto:</label></td>
+                            <td>  
+                                <form:input path="puesto" id="puesto" size="20"/><br/>
+                                <form:errors path="puesto" cssClass="error"/>
+                                <!--input type="text" name="lugar" id="puesto" size="20" require="true"/--> 
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Correo:</label></td>
-                            <td>  <input type="text" name="correo" id="puesto" size="20" require="true"/> </td>  
+                            <td>  <label for="telefono">Tel&eacute;fono:</label></td>
+                            <td>  
+                                <form:input path="telefono" id="telefono" size="20" maxlength="10"/><br/>
+                                <form:errors path="telefono" cssClass="error"/>
+                                <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Tel&eacute;fono:</label></td>
-                            <td>  <input type="text" name="telefono" id="puesto" size="20" require="true"/> </td>  
+                            <td>  <label for="calle">Calle:</label></td>
+                            <td>  
+                                <form:input path="domicilio" id="domicilio" size="20"/><br/>
+                                <form:errors path="domicilio" cssClass="error"/>
+                                <!--input type="text" name="lugar" id="domicilio" size="20" require="true"/--> 
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Domicilio:</label></td>
-                            <td>  <input type="text" name="domicilio" id="domicilio" size="20" require="true"/> </td>  
+                            <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
+                            <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5"></td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">C&oacute;digo Postal:</label></td>
-                            <td>  <input type="text" name="lugar" id="cp" size="20" require="true"/> </td>  
-                        </tr>
-                        <tr>
-                            <td>  <label for="lugar">Colonia:</label></td>
-                            <td>  <select name="lugar" id="colonia" >
-                                    <option value="0">Vicente Guerrero</option>
-                                    <option value="1">Plazas de San Buenaventura</option>
-                                  </select> 
+                            <td>  <label for="estado">Estado:</label></td>
+                            <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> 
+                                <select name="estado" id="estado" disabled="true">                                   
+                                    <core:forEach items="${estados}" var="estados">
+                                        <option value="${estados.idEstado}">${estados.nombre}</option>
+                                    </core:forEach> 
+                                </select>
                             </td>  
                         </tr>                        
                         <tr>
-                            <td>  <label for="lugar">Estado:</label></td>
-                            <td>  <input type="text" name="lugar" id="estado" size="20" require="true"/> </td>  
+                            <td>  <label for="municipio">Municipio:</label></td>
+                            <td>  <!--input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/--> 
+                                <select name="municipio" id="municipio" disabled="true"></select>
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Municipio:</label></td>
-                            <td>  <input type="text" name="lugar" id="municipio" size="20" require="true"/> </td>  
+                            <td>  <label for="ciudad">Ciudad</label></td>
+                            <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
+                                <select name="ciudad" id="ciudad" disabled="true"></select>
+                            </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Ciudad</label></td>
-                            <td>  <input type="text" name="lugar" id="ciudad" size="20" require="true"/> </td>  
-                        </tr>                        
+                            <td>  <label for="colonia">Colonia:</label></td>
+                            <td>  
+                                <div id="notice"></div>
+                                <!--select name="colonia" id="colonia" disabled="true"></select--> 
+                                <form:select id="idColonia" path="idColonia.idColonia" name="idColonia"></form:select> 
+                                    <div id="otra_colonia" style="display:none;">
+                                        <input type="text" name="otra_colonia" id="otra_colonia" />
+                                        <!--form:input path="usuario" id="usuario" size="20"/-->
+                                    </div>
+                                <form:errors path="idColonia" cssClass="error"/>
+                            </td>  
+                        </tr>                     
                         <tr>
-                            <td> <label for="semestre">Tipo de Organizaci&oacute;n:</label> </td>
+                            <td> <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> </td>
                             <td>
-                                <select id="tipo_organizacion" name="tipo_organizacion">
-                                    <option value="1">Gobierno Federal</option>
-                                    <option value="2">Gobierno Estatal</option>
-                                    <option value="3">Gobierno Municipal</option>
-                                    <option value="4">Organizaci&oacute;n Civil</option>
-                                </select>    
+                                <form:select id="tipoOrganizacion" path="TipoOrganizacion.idTipoOrganizacion" name="tipoOrganizacion">
+                                    <core:forEach items="${tipoOrganizaciones}" var="tipoOrganizaciones">
+                                        <form:option  value="${tipoOrganizaciones.idTipoOrganizacion}">${tipoOrganizaciones.detalle}</form:option>
+                                    </core:forEach> 
+                                </form:select>  
+                                <form:errors path="tipoOrganizacion" cssClass="error"/>
                             </td>  
                         </tr>
                         <tr> 
                             <td> <input type ="submit" value = "Guardar " /> </td>
                             <td> <input type ="reset" value = "Limpiar" /></td>
                         </tr>
+
                     </table>
-                </form:form> 
-                <br/>
+                </form:form>
+                    <br/>
+                </center>
             </div>
-             <div style="clear:both;"></div>
+            <div style="clear:both;"></div>
         </div>
         <%-- fin del contenido --%>
         <jsp:include page="../Template/footer.jsp" />

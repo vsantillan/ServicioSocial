@@ -9,7 +9,9 @@ package edu.servicio.toluca.controller;
  * @author bustedvillain
  */
 
+import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
@@ -62,13 +64,10 @@ public class NavegacionPrincipalController {
     
     @RequestMapping(method = RequestMethod.GET, value = "/registroOrganizaciones.do")
     public String registroOrganizaciones(Model model){ 
-//        ConsultasOrganizaciones consultasOrganizaciones = new ConsultasOrganizaciones();        
+
         model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));      
         model.addAttribute("instancia", new Instancia()); 
         model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
-//        model.addAttribute("colonia", new Colonia()); 
-//        model.addAttribute("tipoOrganizacionesObj", new TipoOrganizacion());
-        model.addAttribute("estados", estadosFacade.findAll());
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
         model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
