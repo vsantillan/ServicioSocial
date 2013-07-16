@@ -14,6 +14,7 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.validation.Valid;
@@ -45,8 +46,9 @@ public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
+        FormatoUnicoDatosPersonalesBean formatoUnicoDatosPersonalesbean = new FormatoUnicoDatosPersonalesBean();
         //id de alumno provisional en lo que nos dan lo de sesión
-        String alumno_id = "09280436";
+        String alumno_id = "98280347";
         //select * from ...where
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //objeto que voy a insertar
@@ -66,6 +68,11 @@ public class FormatoUnicoController {
             datosPersonales.setSexo(alumno.getSexo());
             datosPersonales.setTelefonoCasa(alumno.getTelefono());
             datosPersonales.setCorreoElectronico(alumno.getEMail());
+            datosPersonales.setEstadoCivil("SOLTERO");
+            datosPersonales.setOcupacion("");
+            datosPersonales.setClaveDocIdentificacion("");
+            datosPersonales.setFolioDocIdentificaciin(BigInteger.ZERO);
+
             //inserción del objeto en el facade
 
             datosPersonalesFacade.create(datosPersonales);
@@ -77,21 +84,38 @@ public class FormatoUnicoController {
             formatoUnico.setNumeroCreditos(alumno.getCreditosAcumulados());
             formatoUnico.setPorcentajeCreditos(Double.valueOf(alumno.getPorcentaje()));
             formatoUnicoFacade.create(formatoUnico);
+
+
         } else {
             idDatosPersonales = listaDatosPersonales.get(0).getId();
-            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", idDatosPersonales, "equal", null, null);
+            DatosPersonales dp2 = listaDatosPersonales.get(0);
+            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp2, "equal", null, null);
             System.out.println("Tu alumno ya está, su id de datos es " + listaDatosPersonales.get(0).getId());// + idDatosPersonales);
             datosPersonales = listaDatosPersonales.get(0);
             formatoUnico = listaFormatoUnico.get(0);
 
 
+
         }
+
+        formatoUnicoDatosPersonalesbean.setNombre(datosPersonales.getNombre());
+        formatoUnicoDatosPersonalesbean.setApellidoP(datosPersonales.getApellidoP());
+        formatoUnicoDatosPersonalesbean.setApellidoM(datosPersonales.getApellidoM());
+        formatoUnicoDatosPersonalesbean.setSexo(datosPersonales.getSexo());
+        formatoUnicoDatosPersonalesbean.setCurp(datosPersonales.getCurp());
+        formatoUnicoDatosPersonalesbean.setEstado_civil(datosPersonales.getEstadoCivil());
+        formatoUnicoDatosPersonalesbean.setOcupacion(datosPersonales.getOcupacion());
+        formatoUnicoDatosPersonalesbean.setClaveDocIdentificacion(datosPersonales.getClaveDocIdentificacion());
+        formatoUnicoDatosPersonalesbean.setFolioDocIdentificacion(datosPersonales.getFolioDocIdentificaciin().toString());
+
+        modelo.addAttribute("formatoUnicoDatosPersonales", formatoUnicoDatosPersonalesbean);
+
 
         //Para insertar en formato único es necesario recuperar el id de datos personales.
 
 //        modelo.addAttribute("datosPersonales", datosPersonales);
 //        modelo.addAttribute("formatoUnico", formatoUnico);
-        
+
 
 
         return "/FormatoUnico/formatoUnicoUsuario";
@@ -105,6 +129,7 @@ public class FormatoUnicoController {
     public @ResponseBody
     FormatoUnicoErrores modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) {
         System.out.println(dt.getSexo());
+        
         if (resultado.hasErrors()) {
             for (ObjectError error : resultado.getAllErrors()) {
                 System.out.println(error.getDefaultMessage());
