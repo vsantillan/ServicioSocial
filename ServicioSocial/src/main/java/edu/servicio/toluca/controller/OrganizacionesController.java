@@ -215,26 +215,5 @@ public class OrganizacionesController {
         return "/Organizaciones/editarOrganizacion";
     }
 
-    //Alta de organizacion por pre-registro
-    @RequestMapping(method = RequestMethod.GET, value = "/confirmaOrganizacionVisitante.do")
-    public String confirmaOrganizacionVisitante(Model model) {
-
-
-        return "/Organizaciones/editarOrganizacion";
-    }
-
-    
-
-    //Alta de organizacion por pre-registro
-    @RequestMapping(method = RequestMethod.GET, value = "/confirmaRegOrganizacion.do")
-    public String confirmaRegOrganizacion(Model model) {
-        return "/Organizaciones/confirmaRegOrganizacion";
-    }
-
-    //Alta de organizacion por pre-registro
-    @RequestMapping(method = RequestMethod.GET, value = "/confirmaAdminRegOrganizacion.do")
-    public String confirmaAdminRegOrganizacion(Model model) {
-        return "/Organizaciones/confirmaAdminRegOrganizacion";
-    }
 
 }
