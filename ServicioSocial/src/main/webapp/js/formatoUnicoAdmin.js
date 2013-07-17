@@ -11,7 +11,7 @@ $(document).ready(listo);
 function listo()
 {
     inicializarDataTables();
-   
+    $("#guardarObservaciones").on("click",obtenerDatos);
     $(document).on("click",".modificarNR",modificarFormatoUnico);    
 }
 
@@ -82,6 +82,13 @@ function modificarFormatoUnico(event)
     tablaNRevisados.fnDeleteRow(fila);
     tablaAceptados.fnAddData(arrayAcptadosFilaTemp);
     
+}
+
+function obtenerDatos()
+{
+  $("form#observacionesCat :input[name='checkbox']:checked").each(function() {
+         console.log($(this));              
+   });   
 }
 
 

@@ -202,28 +202,20 @@
             <div id="a" style="visibility: hidden; font-size: 15px">
                 <h1>Motivos de Rechazo</h1>
                 <div id="scroll" >
+                    <form id="observacionesCat">
                     <table>
-                    
                         <core:forEach items="${listadoObservaciones}" var="observacion">
                         <tr>
                             <td><label><input type="checkbox"/>&nbsp;&nbsp;&nbsp;
                              <core:out value="${observacion.detalle}" /></label>
                             </td>
-                        </tr>    
-                            
+                        </tr> 
                     </core:forEach>
-                        
-                        <tr>
-                        <td><label><input  type="checkbox"/>&nbsp;&nbsp;Observacón</label></td>
-                       
-                    
-        
-                    </tr>
-                 </table>
-                    
+                   </table>
+                    </form>
                 </div>
                 
-                <button>Guardar</button>
+                <button id="guardarObservaciones">Guardar</button>
                 <button>Cancelar</button>
             </div>
             <div style="clear:both;"></div>
