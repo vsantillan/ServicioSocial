@@ -16,7 +16,7 @@
         <%@ include file="../Template/metas.jsp" %>
         <title>Panel Organizaci&oacute;n</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');" >
+    <body class="background" >
 
         <%@ include file="../Template/banner.jsp" %>
 

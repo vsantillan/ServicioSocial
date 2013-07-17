@@ -86,12 +86,12 @@ $(document).ready(function() {
     //Actualiza el campo hidden que almacena el numero de actividades
     function masActividad(){
         nActividades++;
-        document.getElementById("nActividades").value=nActividades;
+        //document.getElementById("nActividades").value=nActividades;
     }
     
     function menosActividad(){
         nActividades--;
-        document.getElementById("nActividades").value=nActividades;
+        //document.getElementById("nActividades").value=nActividades;
     }
 
     $("body").on("click", ".borrar", function(event) {
@@ -150,12 +150,12 @@ $(document).ready(function() {
     //Actualiza un el campo hidden de nPerfil
     function masPerfil(){
         nPerfiles++;
-        document.getElementById("nPerfiles").value=nPerfiles;
+        //document.getElementById("nPerfiles").value=nPerfiles;
     }
     
     function menosPerfil(){
         nPerfiles--;
-        document.getElementById("nActividades").value=nPerfiles;
+        //document.getElementById("nActividades").value=nPerfiles;
     }
 
     $("#agregaPerfil").click(function(event) {
