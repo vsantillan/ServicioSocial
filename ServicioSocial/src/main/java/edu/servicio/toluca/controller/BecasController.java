@@ -19,6 +19,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -42,12 +44,12 @@ public class BecasController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/administracionAlumnosBecados.do")
     public String administracionAlumnosBecados(Model model) {
-        
-       
-       model.addAttribute("preseleccionado",formatoUnico.findBySpecificField("tipoServicio","4", "equal", null, null));
-       //model.addAttribute("becado", formatoUnico.findBySpecificField("tipoServicio", "3", "equal", null, null));
-       //model.addAttribute("preseleccionado", formatoUnico.findAll());
-       model.addAttribute("espacio", " ");
+
+
+        // model.addAttribute("preseleccionado", formatoUnico.findBySpecificField("tipoServicio", "4", "equal", null, null));
+        //model.addAttribute("becado", formatoUnico.findBySpecificField("tipoServicio", "3", "equal", null, null));
+        model.addAttribute("preseleccionado", formatoUnico.findAll());
+        model.addAttribute("espacio", " ");
         return "/Becas/administracionAlumnosBecados";
     }
 
@@ -71,7 +73,7 @@ public class BecasController {
     @RequestMapping(method = RequestMethod.POST, value = "/preseleccionadoBD.do")
     public String updateBecados(Becado alumnoP, Model model) {
 
-        if (alumnoP.getAlumno()!=null) {
+        if (alumnoP.getAlumno() != null) {
             for (String current : alumnoP.getAlumno()) {
                 FormatoUnico form;
                 BigDecimal id = new BigDecimal(current);
@@ -88,17 +90,23 @@ public class BecasController {
 
 
     }
+
     @RequestMapping(method = RequestMethod.POST, value = "/quitarAlumno.do")
-    public String quitarAlumno(String categorias[], Model model) {
-//        System.out.println(categorias[0]);
-//            for (String current : categorias) {
-//                FormatoUnico form;
-//                BigDecimal id = new BigDecimal(current);
-//                BigInteger tipoServicio = new BigInteger(String.valueOf(1));
-//                form = formatoUnico.find(id);
-//                form.setTipoServicio(tipoServicio);
-//                formatoUnico.edit(form);
-//            }
-            return "/Becas/exito";
+    public @ResponseBody
+    String quitarAlumno(@RequestParam(value = "alumno[]", required = false) String[] alumno, Model model) {
+        if (alumno != null) {
+            for (String current : alumno) {
+                FormatoUnico form;
+                BigDecimal id = new BigDecimal(current);
+                BigInteger tipoServicio = new BigInteger(String.valueOf(1));
+                form = formatoUnico.find(id);
+                form.setTipoServicio(tipoServicio);
+                formatoUnico.edit(form);
+            }
+            return "Exito";
+
+        } else {
+            return "Error";
+        }
     }
 }

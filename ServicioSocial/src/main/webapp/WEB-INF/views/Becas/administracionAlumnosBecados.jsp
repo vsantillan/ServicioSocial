@@ -57,16 +57,23 @@
 
             $(function() {
                 $('#quitarAlumno').click(function() {
-                    var categorias = new Array();
-
+                    var alumno = [];
                     $("input[name='checkbox']:checked").each(function() {
-                        categorias.push($(this).val());
+                        alumno.push($(this).val());
                     });
-                    console.log(categorias);
-                    console.log("categorias");
-                    $.post("quitarAlumno.do", {categorias: categorias}, function(respuesta) {
-                        console.log(respuesta);
-                    });
+                    //console.log(categorias);
+                    if(categorias.length===0)
+                        {
+                            aletr("No se selecciono ningun alumno");
+                        }
+                        else
+                            {
+                                $.post("quitarAlumno.do",{'alumno':alumno}, function(respuesta) {
+                                    location.reload();
+                        alert(respuesta);
+                    }); 
+                            }
+                   
                 });
             });
         </script>
@@ -123,6 +130,7 @@
                                 <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
                             </tr>
                         </table>
+                         <input type ="button" value = "Guardar "  id="guardar"/> 
                     </div>
                     <div id="aceptados">
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="Aceptados" width='100%'>
