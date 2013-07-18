@@ -202,11 +202,11 @@
             <div id="a" style="visibility: hidden; font-size: 15px">
                 <h1>Motivos de Rechazo</h1>
                 <div id="scroll" >
-                    <form id="observacionesCat">
+                    <form id="observacionesCat" action="#">
                     <table>
                         <core:forEach items="${listadoObservaciones}" var="observacion">
                         <tr>
-                            <td><label><input type="checkbox"/>&nbsp;&nbsp;&nbsp;
+                            <td style="width: 150px"><label><input name="${observacion.id}" type="checkbox"/>&nbsp;&nbsp;&nbsp;
                              <core:out value="${observacion.detalle}" /></label>
                             </td>
                         </tr> 
@@ -216,7 +216,7 @@
                 </div>
                 
                 <button id="guardarObservaciones">Guardar</button>
-                <button>Cancelar</button>
+                
             </div>
             <div style="clear:both;"></div>
             

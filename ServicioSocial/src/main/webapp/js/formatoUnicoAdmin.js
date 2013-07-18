@@ -11,7 +11,7 @@ $(document).ready(listo);
 function listo()
 {
     inicializarDataTables();
-    $("#guardarObservaciones").on("click",obtenerDatos);
+    $(document).on("click","#guardarObservaciones",obtenerDatos);
     $(document).on("click",".modificarNR",modificarFormatoUnico);    
 }
 
@@ -86,9 +86,20 @@ function modificarFormatoUnico(event)
 
 function obtenerDatos()
 {
-  $("form#observacionesCat :input[name='checkbox']:checked").each(function() {
-         console.log($(this));              
-   });   
+     console.log("----");  
+     
+  $("form#observacionesCat input").each(function() {
+      if( $(this).is(":checked") )
+      {
+          console.log($(this).attr("name"));
+      }
+  });
+  
+  $.post("modificarFormatoUnico.do",{id:[{id:"1"},{id:"2"}]},function(respuesta)
+    {
+        console.log(respuesta);
+    }
+    );
 }
 
 

@@ -7,6 +7,7 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
+import edu.servicio.toluca.beans.Observaciones;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.VistaAlumno;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -45,5 +47,13 @@ public class FormatoUnicoController1 {
         model.addAttribute("listadoObservaciones",observacionesFacade.findAll());
         return "/FormatoUnico/formatoUnicoAdministrador";
     }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnico.do")
+    public @ResponseBody String modificarFormatoUnico(Observaciones id[]) {
+        System.out.println("O");
+        System.out.println(id);
+        return "OK";
+    }
    
+    
 }
