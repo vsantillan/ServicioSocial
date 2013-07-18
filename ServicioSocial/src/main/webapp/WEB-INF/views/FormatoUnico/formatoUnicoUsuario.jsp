@@ -29,7 +29,7 @@
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
         <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
         <script type="text/javascript" src="js/jqueryUI/i18n/ui.datepicker-es.js"></script>
-
+        <script src="js/jquery.codigos.postales.js"></script>
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
     <body class ="background">
@@ -68,7 +68,7 @@
                             <tr>
                                 <td>Sexo</td>
                                 <td>
-                                    
+
 
 
                                     <select name="sexo">
@@ -138,21 +138,21 @@
                     </form:form>
                 </div>
                 <div id="datosContacto">
-                    <form>
+                    <form id="frmDatosContacto" modelAttribute="formatoUnicoDatosContacto">
                         <table>
                             <tr>
                                 <td>Calle:</td>
-                                <td><input type ="text" name ="calle"> </td>
+                                <td><input  path ="calle" /> </td>
                             </tr>
                             <tr>
                                 <td>No. Int.</td>
-                                <td><input type ="text" name ="numero_i"> </td>
+                                <td><input  path ="numero_i" /> </td>
                             </tr>
                             <tr>
                                 <td>No. Ext.</td>
-                                <td><input type ="text" name ="numero_e"> </td>
+                                <td><input  path ="numero_e"/> </td>
                             </tr>
-                            <tr>
+                            <!--<tr>
                                 <td>Colonia:</td>
                                 <td><input type ="text" name ="colonia"> </td>
                             </tr>
@@ -165,28 +165,73 @@
                                 <td><input type ="text" name ="cp"> </td>
                             </tr>
                             <tr>
+                                <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
+                                <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5"></td>  
+                            </tr>
+                            <tr>
+                                <td>  <label for="estado">Estado:</label></td>
+                                <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> <!--
+                                    <select name="estado" id="estado" disabled="true">                                   
+                                        <core:forEach items="${estados}" var="estados">
+                                            <option value="${estados.idEstado}">${estados.nombre}</option>
+                                        </core:forEach> 
+                                    </select>
+                                </td>  
+                            </tr>                        
+                            <tr>
+                                <td>  <label for="municipio">Municipio:</label></td>
+                                <td>  <!--input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/--> <!--
+                                    <select name="municipio" id="municipio" disabled="true"></select>
+                                </td>  
+                            </tr>
+                            <tr>
+                                <td>  <label for="ciudad">Ciudad</label></td>
+                                <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> <!--
+                                    <select name="ciudad" id="ciudad" disabled="true"></select>
+                                </td>  
+                            </tr>
+                            <tr>
+                                <td>  <label for="colonia">Colonia:</label></td>
+                                <td>  
+                                    <div id="notice"></div>
+                                    <!--select name="colonia" id="colonia" disabled="true"></select--> <!--
+                                    <//form:select id="idColonia" path="idColonia.idColonia" name="idColonia"><///form:select> 
+                                        <div id="otra_colonia" style="display:none;">
+                                            <input type="text" name="otra_colonia" id="otra_colonia" />
+                                            <!--form:input path="usuario" id="usuario" size="20"/--><!--
+                                        </div>
+                                    <//form:errors path="idColonia" cssClass="error"/>
+                                </td>  
+                            </tr>-->
+                            <tr>
+                                                            
+
                                 <td>Entre Calles:</td>
-                                <td><input type ="text" name ="entre_calles"> </td>
+                                <td><input  path ="entre_calles"/> </td>
+                            </tr>
+                            <tr>
+                                <td>Referencias:</td>
+                                <td><input  path ="referencias"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono casa:</td>
-                                <td><input type ="text" name ="telefono_casa"> </td>
+                                <td><input  path ="telefono_casa"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono cel:</td>
-                                <td><input type ="text" name ="telefono_cel"> </td>
+                                <td><input  path ="telefono_cel"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono oficina:</td>
-                                <td><input type ="text" name ="telefono_oficina"> </td>
+                                <td><input  path ="telefono_oficina"/> </td>
                             </tr>
                             <tr>
                                 <td>Twitter:</td>
-                                <td><input type ="text" name ="twitter"> </td>
+                                <td><input  path ="twitter"/> </td>
                             </tr>
                             <tr>
                                 <td>Facebook:</td>
-                                <td><input type ="text" name ="facebook"> </td>
+                                <td><input  path ="facebook"/> </td>
                             </tr>
                             <tr>
                                 <td></td>
