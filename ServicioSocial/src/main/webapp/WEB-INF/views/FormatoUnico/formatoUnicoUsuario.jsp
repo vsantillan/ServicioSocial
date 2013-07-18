@@ -241,34 +241,34 @@
                     </form>
                 </div>
                 <div id="datosAcademicos">
-                    <form>
+                    <form:form modelAttribute="academicos">
                         <table class="tablaInput300">
                             <tr> 
                                 <td>Numero de control</td>
-                                <td><input type ="text" name ="ncontrol" readonly/></td>
+                                <td><form:input path="ncontrol" readonly="true" /></td>
                             </tr>
                             <tr>
                                 <td>Carrera</td>
-                                <td><input type ="text" name ="carrera" readonly/></td>
+                                <td><form:input path  ="carrera" readonly="true"/></td>
                             </tr>
                             <tr>
                                 <td>Periodo</td>
-                                <td><input type ="text" name ="carrera" readonly/></td>
+                                <td><form:input path ="periodo" readonly="true"/></td>
                             </tr>
                             <tr>
                                 <td>Semestre</td>
-                                <td><input type ="text" name ="carrera" readonly/></td>
+                                <td><form:input path ="semestre" readonly="true"/></td>
                             </tr>
                             <tr>
                                 <td>Total de cr&eacute;ditos cubiertos</td>
-                                <td><input type ="text" name ="carrera" readonly/></td>
+                                <td><form:input path ="cc" readonly="true"/></td>
                             </tr>
                             <tr>
                                 <td>Porcentaje del total de cr&eacute;ditos cubiertos</td>
-                                <td><input type ="text" name ="carrera" readonly/></td>
+                                <td><form:input path ="pcc" readonly="true"/></td>
                             </tr>
                         </table>
-                    </form>
+                    </form:form>
                 </div>
                 <div id="datosOrganizaciones">
                     <form>

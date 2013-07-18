@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.FormatoUnicoDatosAcademicosBean;
 import edu.servicio.toluca.beans.FormatoUnicoDatosContactoBean;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
@@ -59,7 +60,10 @@ public class FormatoUnicoController {
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //objeto que voy a insertar
         VistaAlumno alumno = listaAlumnos.get(0);
-
+        if(Float.parseFloat(alumno.getPorcentaje()) < 70)
+        {
+            return "PanelUsuario/panelUsuario";
+        }
         DatosPersonales datosPersonales = new DatosPersonales();
         datosPersonales.setAlumnoId(alumno);
         FormatoUnico formatoUnico = new FormatoUnico();
@@ -79,7 +83,7 @@ public class FormatoUnicoController {
             datosPersonales.setClaveDocIdentificacion("");
             datosPersonales.setFolioDocIdentificaciin(BigInteger.ZERO);
             ///
-//            datosPersonales.setCalle("");
+            datosPersonales.setCalle("");
 //            datosPersonales.setNumeroI("");
 //            datosPersonales.setNumeroE("");
 //            datosPersonales.setIdColonia(null);
@@ -147,7 +151,15 @@ public class FormatoUnicoController {
 //        modelo.addAttribute("formatoUnico", formatoUnico);
 
 
-        
+        //Llenado del bean de datos de contacto para mostrarlo con los jstl en la vista 
+        FormatoUnicoDatosAcademicosBean formatoUnicoDatosAcademicos = new FormatoUnicoDatosAcademicosBean();
+        formatoUnicoDatosAcademicos.setNcontrol(alumno.getId());
+        formatoUnicoDatosAcademicos.setCarrera(alumno.getCarrera());
+        formatoUnicoDatosAcademicos.setPeriodo("Ago-Dic");
+        formatoUnicoDatosAcademicos.setSemestre(alumno.getSemActual());
+        formatoUnicoDatosAcademicos.setCc(alumno.getCreditosAcumulados());
+        formatoUnicoDatosAcademicos.setPcc(alumno.getPorcentaje());
+        modelo.addAttribute("academicos",formatoUnicoDatosAcademicos);
         
         
         //Estados
