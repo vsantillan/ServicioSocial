@@ -84,16 +84,16 @@ public class FormatoUnicoController {
             datosPersonales.setFolioDocIdentificaciin(BigInteger.ZERO);
             ///
             datosPersonales.setCalle("");
-//            datosPersonales.setNumeroI("");
-//            datosPersonales.setNumeroE("");
-//            datosPersonales.setIdColonia(null);
-//            datosPersonales.setEntreCalles("");
-//            datosPersonales.setReferencia("");
-//            datosPersonales.setTelefonoCasa("");
-//            datosPersonales.setTelefonoCel("");
-//            datosPersonales.setTelefonoOficina("");
-//            datosPersonales.setTwitter("");
-//            datosPersonales.setFacebook("");
+            datosPersonales.setNumeroI("");
+            datosPersonales.setNumeroE("");
+            //datosPersonales.setIdColonia(null);
+            datosPersonales.setEntreCalles("");
+            datosPersonales.setReferencia("");
+            datosPersonales.setTelefonoCasa("");
+            datosPersonales.setTelefonoCel("");
+            datosPersonales.setTelefonoOficina("");
+            datosPersonales.setTwitter("");
+            datosPersonales.setFacebook("");
             //inserción del objeto en el facade
 
             datosPersonalesFacade.create(datosPersonales);
@@ -131,19 +131,19 @@ public class FormatoUnicoController {
         
         modelo.addAttribute("formatoUnicoDatosPersonales", formatoUnicoDatosPersonalesbean);
 ///////////////////////
-//        formatoUnicoDatosContacoBean.setCalle(datosPersonales.getCalle());
-//        System.out.println("Numero i " + datosPersonales.getNumeroI());
-//        //formatoUnicoDatosContacoBean.setNumeroI(datosPersonales.getNumeroI());
-//        formatoUnicoDatosContacoBean.setNumeroE(datosPersonales.getNumeroE());
-//        formatoUnicoDatosContacoBean.setColonia(datosPersonales.getIdColonia());
-//        formatoUnicoDatosContacoBean.setEntreCalles(datosPersonales.getEntreCalles());
-//        formatoUnicoDatosContacoBean.setReferencias(datosPersonales.getReferencia());
-//        formatoUnicoDatosContacoBean.setTelefono_casa(datosPersonales.getTelefonoCasa());
-//        formatoUnicoDatosContacoBean.setTelefono_cel(datosPersonales.getTelefonoCel());
-//        formatoUnicoDatosContacoBean.setTelefono_oficina(datosPersonales.getTelefonoOficina());
-//        formatoUnicoDatosContacoBean.setTwitter(datosPersonales.getTwitter());
-//        formatoUnicoDatosContacoBean.setFacebook(datosPersonales.getFacebook());
-//        modelo.addAttribute("formatoUnicoDatosContacto", formatoUnicoDatosContacoBean);
+        formatoUnicoDatosContacoBean.setCalle(datosPersonales.getCalle());
+        System.out.println("Numero i " + datosPersonales.getNumeroI());
+        //formatoUnicoDatosContacoBean.setNumeroI(datosPersonales.getNumeroI());
+        formatoUnicoDatosContacoBean.setNumeroE(datosPersonales.getNumeroE());
+        formatoUnicoDatosContacoBean.setColonia(datosPersonales.getIdColonia());
+        formatoUnicoDatosContacoBean.setEntreCalles(datosPersonales.getEntreCalles());
+        formatoUnicoDatosContacoBean.setReferencias(datosPersonales.getReferencia());
+        formatoUnicoDatosContacoBean.setTelefono_casa(datosPersonales.getTelefonoCasa());
+        formatoUnicoDatosContacoBean.setTelefono_cel(datosPersonales.getTelefonoCel());
+        formatoUnicoDatosContacoBean.setTelefono_oficina(datosPersonales.getTelefonoOficina());
+        formatoUnicoDatosContacoBean.setTwitter(datosPersonales.getTwitter());
+        formatoUnicoDatosContacoBean.setFacebook(datosPersonales.getFacebook());
+        modelo.addAttribute("formatoUnicoDatosContacto", formatoUnicoDatosContacoBean);
 
         //Para insertar en formato único es necesario recuperar el id de datos personales.
 
@@ -163,9 +163,9 @@ public class FormatoUnicoController {
         
         
         //Estados
-        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-        ordenamiento.put("nombre", "asc");
-        modelo.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+//        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+//        ordenamiento.put("nombre", "asc");
+//        modelo.addAttribute("estados", estadosFacade.findAll(ordenamiento));
 
         return "/FormatoUnico/formatoUnicoUsuario";
     }
@@ -174,7 +174,7 @@ public class FormatoUnicoController {
 //    protected void initBinder(WebDataBinder binder) {
 //        binder.setValidator(new FormatoUnicoDatosPersoValidaciones()); // registramos el validador
 //    }
-    @RequestMapping(method = RequestMethod.POST, value = "/modificarFormato.do")
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosPersonales.do")
     public @ResponseBody
     FormatoUnicoErrores modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) {
         System.out.println(dt.getId());
@@ -191,6 +191,22 @@ public class FormatoUnicoController {
         datosPersonales.setClaveDocIdentificacion(dt.getClaveDocIdentificacion());
         datosPersonalesFacade.edit(datosPersonales);
                 
+        
+        
+        
+        if (resultado.hasErrors()) {
+            for (ObjectError error : resultado.getAllErrors()) {
+                System.out.println(error.getDefaultMessage());
+            }
+        }
+        return new FormatoUnicoErrores();
+    }
+    
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosContacto.do")
+    public @ResponseBody
+    FormatoUnicoErrores modificarDatosContactoAlumno(@Valid FormatoUnicoDatosContactoBean dt, BindingResult resultado) {
+        
         
         
         

@@ -138,19 +138,19 @@
                     </form:form>
                 </div>
                 <div id="datosContacto">
-                    <form id="frmDatosContacto" modelAttribute="formatoUnicoDatosContacto">
+                    <form:form id="frmDatosContacto" modelAttribute="formatoUnicoDatosContacto">
                         <table>
                             <tr>
                                 <td>Calle:</td>
-                                <td><input  path ="calle" /> </td>
+                                <td><form:input  path ="calle" /> </td>
                             </tr>
                             <tr>
                                 <td>No. Int.</td>
-                                <td><input  path ="numero_i" /> </td>
+                                <td><form:input  path ="numeroI" /> </td>
                             </tr>
                             <tr>
                                 <td>No. Ext.</td>
-                                <td><input  path ="numero_e"/> </td>
+                                <td><form:input  path ="numeroE"/> </td>
                             </tr>
                             <!--<tr>
                                 <td>Colonia:</td>
@@ -172,9 +172,7 @@
                                 <td>  <label for="estado">Estado:</label></td>
                                 <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> <!--
                                     <select name="estado" id="estado" disabled="true">                                   
-                                        <core:forEach items="${estados}" var="estados">
-                                            <option value="${estados.idEstado}">${estados.nombre}</option>
-                                        </core:forEach> 
+                                        aqui va el core
                                     </select>
                                 </td>  
                             </tr>                        
@@ -207,38 +205,38 @@
                                                             
 
                                 <td>Entre Calles:</td>
-                                <td><input  path ="entre_calles"/> </td>
+                                <td><form:input  path ="entreCalles"/> </td>
                             </tr>
                             <tr>
                                 <td>Referencias:</td>
-                                <td><input  path ="referencias"/> </td>
+                                <td><form:input  path ="referencias"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono casa:</td>
-                                <td><input  path ="telefono_casa"/> </td>
+                                <td><form:input  path ="telefono_casa"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono cel:</td>
-                                <td><input  path ="telefono_cel"/> </td>
+                                <td><form:input  path ="telefono_cel"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono oficina:</td>
-                                <td><input  path ="telefono_oficina"/> </td>
+                                <td><form:input  path ="telefono_oficina"/> </td>
                             </tr>
                             <tr>
                                 <td>Twitter:</td>
-                                <td><input  path ="twitter"/> </td>
+                                <td><form:input  path ="twitter"/> </td>
                             </tr>
                             <tr>
                                 <td>Facebook:</td>
-                                <td><input  path ="facebook"/> </td>
+                                <td><form:input  path ="facebook"/> </td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td><input type ="submit" value="Guardar Datos de Contacto" > </td>
                             </tr>
                         </table>
-                    </form>
+                    </form:form>
                 </div>
                 <div id="datosAcademicos">
                     <form:form modelAttribute="academicos">

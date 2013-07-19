@@ -11,7 +11,20 @@ function enviarDatosAlumno()
     $("form#frmDatosPersonales :input").each(function(){
         prepararJSON($(this));   });
     
-    $.post("modificarFormato.do",alumno,function(respuesta){
+    $.post("modificarDatosPersonales.do",alumno,function(respuesta){
+        alert(respuesta);
+        console.log(respuesta);
+    });
+    
+    
+    return false;
+}
+function enviarDatosContactoAlumno()
+{
+    $("form#frmDatosContacto :input").each(function(){
+        prepararJSON($(this));   });
+    
+    $.post("modificarDatosContacto.do",alumno,function(respuesta){
         alert(respuesta);
         console.log(respuesta);
     });

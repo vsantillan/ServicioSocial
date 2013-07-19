@@ -11,6 +11,7 @@ import java.math.BigInteger;
  * @author SATELLITE
  */
 public class FormatoUnicoDatosAcademicosBean {
+ 
     private String ncontrol;
     private String carrera;
     private String periodo;
