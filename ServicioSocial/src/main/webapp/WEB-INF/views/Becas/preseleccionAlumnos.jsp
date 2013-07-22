@@ -43,6 +43,11 @@
                 alert("El número de alumnos seleccionados es: " + cont);
 
             }
+            function contar() {
+
+                location.reload();
+
+            }
         </script>
 
 
@@ -84,7 +89,7 @@
                 <br>
                 <table>
                     <tr>
-                        <td> <input type ="submit" value = "Aceptar " /> </td>                                
+                        <td> <input type ="submit" value = "Aceptar " onClick="recargar();" /> </td>                                
                         <td> <input type="button" value="Contar Alumnos" onClick="contar();"></td>
                     </tr>
                 </table>

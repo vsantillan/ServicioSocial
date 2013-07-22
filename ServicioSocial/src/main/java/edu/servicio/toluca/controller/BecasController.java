@@ -38,7 +38,8 @@ public class BecasController {
     public String preseleccionAlumnos(@ModelAttribute(value = "alumnoP") Becado alumnoP, BindingResult result, Model model) {
         Fecha fecha = new Fecha();
         fecha.CalculaPeriodo();
-        model.addAttribute("alumno", formatoUnico.findAll());
+//        model.addAttribute("alumno", formatoUnico.findAll());
+         model.addAttribute("alumno", formatoUnico.findBySpecificField("tipoServicio", "1", "equal", null, null));
         return "/Becas/preseleccionAlumnos";
     }
 
@@ -46,9 +47,9 @@ public class BecasController {
     public String administracionAlumnosBecados(Model model) {
 
 
-        // model.addAttribute("preseleccionado", formatoUnico.findBySpecificField("tipoServicio", "4", "equal", null, null));
-        //model.addAttribute("becado", formatoUnico.findBySpecificField("tipoServicio", "3", "equal", null, null));
-        model.addAttribute("preseleccionado", formatoUnico.findAll());
+         model.addAttribute("preseleccionado", formatoUnico.findBySpecificField("tipoServicio", "4", "equal", null, null));
+        model.addAttribute("becado", formatoUnico.findBySpecificField("tipoServicio", "3", "equal", null, null));
+      //  model.addAttribute("preseleccionado", formatoUnico.findAll());
         model.addAttribute("espacio", " ");
         return "/Becas/administracionAlumnosBecados";
     }
@@ -97,16 +98,48 @@ public class BecasController {
         if (alumno != null) {
             for (String current : alumno) {
                 FormatoUnico form;
+                //System.out.println(current);
                 BigDecimal id = new BigDecimal(current);
                 BigInteger tipoServicio = new BigInteger(String.valueOf(1));
                 form = formatoUnico.find(id);
                 form.setTipoServicio(tipoServicio);
                 formatoUnico.edit(form);
             }
-            return "Exito";
+            return "Se a quitado el alumno de la lista de preseleccion";
 
         } else {
-            return "Error";
+            return "Error no se pudo queitar el alumno de la lista de preseleccion";
+        }
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/enviarCorreo.do")
+    public @ResponseBody
+    String enviarCorreo(@RequestParam(value = "alumno[]", required = false) String[] alumno, Model model) {
+        if (alumno != null) {
+            for (String current : alumno) {
+               
+            }
+            return "Se ha enviado el correo exitosamente";
+
+        } else {
+            return "Error no se a podido enviar el correo";
+        }
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/aceptarAlumno.do")
+    public @ResponseBody
+    String aceptarAlumno(@RequestParam(value = "alumno[]", required = false) String[] alumno, Model model) {
+        if (alumno != null) {
+            for (String current : alumno) {
+                FormatoUnico form;
+                BigDecimal id = new BigDecimal(current);
+                BigInteger tipoServicio = new BigInteger(String.valueOf(3));
+                form = formatoUnico.find(id);
+                form.setTipoServicio(tipoServicio);
+                formatoUnico.edit(form);
+            }
+            return "El alumno(s) fue agrado correctamente a la lista de becados";
+
+        } else {
+            return "Error no se a podido agregar el alumno a la lista de becados";
         }
     }
 }

@@ -26,57 +26,6 @@
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
 
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $("#tabs").tabs();
-                $('#NoAceptados').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "200%",
-                    "bScrollCollapse": true,
-                    "bDestroy": true
-
-
-                });
-                $('#Aceptados').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "200%",
-                    "bScrollCollapse": true,
-                    "bDestroy": true
-
-                });
-            });
-
-
-        </script> 
-        
-        <script>
-
-            $(function() {
-                $('#quitarAlumno').click(function() {
-                    var alumno = [];
-                    $("input[name='checkbox']:checked").each(function() {
-                        alumno.push($(this).val());
-                    });
-                    //console.log(categorias);
-                    if(categorias.length===0)
-                        {
-                            aletr("No se selecciono ningun alumno");
-                        }
-                        else
-                            {
-                                $.post("quitarAlumno.do",{'alumno':alumno}, function(respuesta) {
-                                    location.reload();
-                        alert(respuesta);
-                    }); 
-                            }
-                   
-                });
-            });
-        </script>
         <title>Administraci&oacute;n de Alumnos Becados</title>
     </head>
     <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
@@ -125,12 +74,11 @@
                             <tr>
                                 <td><a href="preseleccionAlumnos.do" rel="shadowbox"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></td>
                                 <td><a id="quitarAlumno" href="#" ><img src="imagenes/eliminar.jpg" title="Eliminar" width="29"/></td>
-                                <td><a id="enviar" href="correo.do" rel="shadowbox"><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
-                                <td><a href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></td>
+                                <td><a  href="correo.do" rel="shadowbox"><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></td>
+                                <td><a id="aceptarAlumno" href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></td>
                                 <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></td>
                             </tr>
                         </table>
-                         <input type ="button" value = "Guardar "  id="guardar"/> 
                     </div>
                     <div id="aceptados">
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="Aceptados" width='100%'>
@@ -148,7 +96,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <core:forEach items="${preseleccionado}" var="current">
+                                <core:forEach items="${becado}" var="current">
                                     <tr class='gradeX'>
                                         <td><core:out value="${current.id}" /></td>
                                         <td><core:out value="${current.datosPersonalesId.apellidoP} ${espacio} ${current.datosPersonalesId.apellidoM} ${espacio} ${current.datosPersonalesId.nombre}" /></td>
@@ -179,6 +127,6 @@
         </div>
         <jsp:include page="../Template/footer.jsp" />
 
-
+         <script type="text/javascript" language="javascript" src="js/becados.js"></script> 
     </body>
 </html>
