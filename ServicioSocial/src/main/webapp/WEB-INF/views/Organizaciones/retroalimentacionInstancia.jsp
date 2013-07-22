@@ -20,6 +20,8 @@
         <script type="text/javascript" src="js/baner.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
         <script type="text/javascript" src="js/jquery.validate.js" ></script>
+        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
+
         <script>
             $(function() {
                 $("#tabs").tabs();
@@ -35,10 +37,11 @@
                     <li><a href="#">Enviar Retroalimentaci&oacute;n</a></li>
                 </ul>
                 <div>
-                    <form:form commandName="retroalimentacionInstancia" id="MyForm" action="borrarInstancia.do" method="POST">
+                    <form:form commandName="retroalimentacionInstancia" id="MyForm" action="borrarInstancia.do" method="POST" onsubmit="return validarOrganizaciones.do">
                         <table>
                             <tr>
-                                <form:hidden path="id" id="id" value="${instancia.idInstancia}"/>
+                                <form:hidden path="id" value="${instancia.idInstancia}" class="idIns" />
+                                <form:hidden path="control" value="0" />
                                 <td>Nombre de la Organizaci&oacute;n:</td>
                                 <td><form:input type ="text" path="nombre" id="nombre" value="${instancia.nombre}"/> </td>
                             </tr>
@@ -52,7 +55,7 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n" class="borrarInstancia"> </td>
+                                <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n" class="editShadow borrarInstancia" > </td>
                             </tr>
                         </table>
                     </form:form>

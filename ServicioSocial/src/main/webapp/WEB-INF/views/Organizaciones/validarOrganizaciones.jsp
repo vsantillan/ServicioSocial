@@ -14,6 +14,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+
+        /* Attach the Reveal CSS */
+        <link rel="stylesheet" href="modal/reveal.css">
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
         <jsp:include page="../Template/headsJQueryUI.jsp" />
@@ -23,6 +26,13 @@
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
+        <!--Heads Modal--->
+
+
+
+        /* Then just attach the Reveal plugin */
+        <script src="modal/jquery.reveal.js" type="text/javascript"></script>
+
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
@@ -30,7 +40,7 @@
 
         <!--        Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
-         <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
+        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
                 $('#example').dataTable({
@@ -44,15 +54,30 @@
 
             });
         </script>   
+        <script>
+            function pru(algo) {
+                if (algo)
+                    window.location = "validarOrganizaciones.do";
+            }
+        </script>
+        <script src="js/jquery.manolo.js"></script>     
 
-        <script src="js/jquery.manolo.js"></script>        
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
-    <body class="background">
+    <body class="background" onload="pru();" ide="d">
+        <a href="#" data-reveal-id="myModal">Click Me For A Modal</a>
+
         <jsp:include page="../Template/banner.jsp" />
+        <div id="myModal" class="reveal-modal">
+            <h1>Modal Title</h1>
+            <p>Any content could go in here.</p>
+            <a class="close-reveal-modal">&#215;</a>
+        </div>
 
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
+
+
             <div style="float:left;width: 80%">
                 <h1>Validar Organizaciones</h1>
 
@@ -77,7 +102,7 @@
                     <tbody>
                         <core:forEach items="${organizacion}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-org"><img class="edit" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionOrganizacion.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"></a></th>
+                                <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionValidacionInstancia.do?id=${current.idInstancia}" rel="shadowbox"><img class="uSh" src="imagenes/tache.png" width="30"></a></th>
                                 <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
@@ -93,6 +118,7 @@
             <%-- fin del contenido --%>
         </div>
     </div>
+
     <jsp:include page="../Template/footer.jsp" />
 
 </body>

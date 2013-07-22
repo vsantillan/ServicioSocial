@@ -1,13 +1,12 @@
 <%-- 
-    Document   : retroalimentacionProyectos
-    Created on : 5/06/2013, 10:43:26 AM
-    Author     : ekt
+    Document   : retroalimentacionOrganizacion
+    Created on : 4/06/2013, 02:24:00 PM
+    Author     : Regules
 --%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,53 +20,49 @@
         <script type="text/javascript" src="js/baner.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
         <script type="text/javascript" src="js/jquery.validate.js" ></script>
+        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
+
         <script>
             $(function() {
                 $("#tabs").tabs();
-                $('#timepicker').timepicker();
             });
-        </script>
+            
 
-        <title>Cancelacion de Proyecto</title>
+        </script>
+        <title>Cancelaci&oacute;n de Organizaci&oacute;n </title>
     </head>
     <body class="background">
-
         <div id="contenido">
-            <h2>Cancelacion de Proyecto</h2>
+            <h2>Cancelacion de Organizaci&oacute;n</h2>
             <div id="tabs">
                 <ul>
                     <li><a href="#">Enviar Retroalimentaci&oacute;n</a></li>
                 </ul>
                 <div>
-                    <form:form commandName="borrarProyecto" id="MyForm" action="borrarProyecto.do" method="POST">
+                    <form:form commandName="retroalimentacionInstancia" id="MyForm" action="borrarInstancia.do" method="POST">
                         <table>
                             <tr>
-                                <form:hidden path="id" value="${proyectos.idProyecto}" class="idIns" />
-                                <form:hidden path="control" value="0" />
-                                <td>Nombre del Proyecto:</td>
-                                <td><form:input id="nombreProyecto" path="nombreProyecto" value="${proyectos.nombre}" /></td>
-                            </tr>
-                            <tr>
+                                <form:hidden path="id" value="${instancia.idInstancia}" class="idIns" />
+                                <form:hidden path="control" value="2" />
                                 <td>Nombre de la Organizaci&oacute;n:</td>
-                                <td><form:input id="nombreInstancia" path="nombreInstancia" value="${proyectos.idInstancia.nombre}" /></td>
+                                <td><form:input type ="text" path="nombre" id="nombre" value="${instancia.nombre}"/> </td>
                             </tr>
                             <tr>
                                 <td>E-Mail:</td>
-                                <td><form:input id="email" path="email" disabled="disabled" value="${proyectos.idInstancia.correo}" /></td>
+                                <td><form:input type ="text" path="correo" id="correo" value="${instancia.correo}"/> </td>
                             </tr>
                             <tr>
                                 <td>Descripci&oacute;n:</td>
-                                <td><form:textarea rows="10" cols="70" id="descripcion" path="descripcion" /></td>
+                                <td><form:textarea path="descripcion" id="descripcion" rows="10" cols="70"/></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><input type="submit" value="Enviar Retroalimentaci&oacute;n" class="borrarProyecto" /></td>
+                                <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n" class="redir borrarInstancia" /> </td>
                             </tr>
                         </table>
                     </form:form>
                 </div>
             </div>
         </div>
-
     </body>
 </html>

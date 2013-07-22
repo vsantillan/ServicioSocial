@@ -30,6 +30,7 @@
 
         <!--        Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
+        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
         <script type="text/javascript" charset="utf-8">
             $(document).ready(function() {
                 $('#example').dataTable({
@@ -77,7 +78,7 @@
                     <tbody>
                         <core:forEach items="${proyecto}" var="current">
                                     <tr class='gradeX'>
-                                        <th><a href="#" class="btn-validar-proyecto"><img src="imagenes/paloma.png" width="30"/><a href="retroalimentacionProyecto.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
+                                        <th><a href="#" class="btn-validar-proyecto"><img class="editProy" ide="${current.idProyecto}" src="imagenes/paloma.png" width="30"/><a href="retroalimentacionProyecto.do" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
                                         <th><a href="detalleProyecto.do?id=${current.idProyecto}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                         <th><core:out value="${current.nombre}" /></th>
                                         <th><core:out value="${current.idInstancia.nombre}" /></th>

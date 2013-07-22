@@ -14,6 +14,7 @@ public class BorrarInstancia
     private String nombre;
     private String correo;
     private String descripcion;
+    private int control;
 
     /**
      * @return the nombre
@@ -70,4 +71,19 @@ public class BorrarInstancia
     public void setId(int id) {
         this.id = id;
     }
+
+    /**
+     * @return the control
+     */
+    public int getControl() {
+        return control;
+    }
+
+    /**
+     * @param control the control to set
+     */
+    public void setControl(int control) {
+        this.control = control;
+    }
+
 }

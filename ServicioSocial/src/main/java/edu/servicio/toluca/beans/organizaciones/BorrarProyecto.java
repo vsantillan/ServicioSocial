@@ -10,10 +10,12 @@ package edu.servicio.toluca.beans.organizaciones;
  */
 public class BorrarProyecto 
 {
+    private int    id;
     private String nombreProyecto;
     private String nombreInstancia;
     private String email;
     private String descripcion;
+    private int    control;
 
     /**
      * @return the nombreProyecto
@@ -70,4 +72,36 @@ public class BorrarProyecto
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the control
+     */
+    public int getControl() {
+        return control;
+    }
+
+    /**
+     * @param control the control to set
+     */
+    public void setControl(int control) {
+        this.control = control;
+    }
+    
+    
+    
 }

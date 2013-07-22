@@ -1,8 +1,9 @@
 <%-- 
-    Document   : retroalimentacionProyectos
-    Created on : 5/06/2013, 10:43:26 AM
-    Author     : ekt
+    Document   : retroalimentacionValidacionProyecto
+    Created on : 17/07/2013, 02:21:33 PM
+    Author     : rodrigo
 --%>
+
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -43,7 +44,7 @@
                         <table>
                             <tr>
                                 <form:hidden path="id" value="${proyectos.idProyecto}" class="idIns" />
-                                <form:hidden path="control" value="0" />
+                                <form:hidden path="control" value="2" />
                                 <td>Nombre del Proyecto:</td>
                                 <td><form:input id="nombreProyecto" path="nombreProyecto" value="${proyectos.nombre}" /></td>
                             </tr>
