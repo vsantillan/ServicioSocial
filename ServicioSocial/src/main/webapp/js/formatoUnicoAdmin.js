@@ -86,18 +86,30 @@ function modificarFormatoUnico(event)
 
 function obtenerDatos()
 {
-     console.log("----");  
+     var array = [];
+     
+     
+                        
      
   $("form#observacionesCat input").each(function() {
+     
       if( $(this).is(":checked") )
       {
-          console.log($(this).attr("name"));
+          array.push($(this).attr("ide")); // id de Obserbacion
       }
   });
   
-  $.post("modificarFormatoUnico.do",{id:[{id:"1"},{id:"2"}]},function(respuesta)
+  $.post("modificarFormatoUnicoNR.do",{id:array},function(respuesta)
     {
         console.log(respuesta);
+        
+        if(respuesta==="OK")
+        {
+            window.parent.Shadowbox.close();
+        }else
+        {
+            alert("Imposible Borrar Consulte a Team Developer");
+        }
     }
     );
 }

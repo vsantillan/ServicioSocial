@@ -16,6 +16,7 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.validation.Valid;
@@ -41,19 +42,44 @@ public class FormatoUnicoController1 {
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade observacionesFacade;
     
+    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
+    private FormatoUnicoFacade formatoUnico;
+    
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
+        final int VALOR_NO_REVISADOS=4; 
+        
         model.addAttribute("listadoObservaciones",observacionesFacade.findAll());
+        
+         
+        model.addAttribute("listadoFormatoUnicoNORevisados",
+                           formatoUnico.findBySpecificField("statusFui",
+                                                           BigInteger.valueOf(VALOR_NO_REVISADOS),
+                                                           "equal", null, null)); 
+      
+        
         return "/FormatoUnico/formatoUnicoAdministrador";
     }
     
-    @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnico.do")
-    public @ResponseBody String modificarFormatoUnico(Observaciones id[]) {
-        System.out.println("O");
+   
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR.do")
+    public @ResponseBody String modificarFormatoUnico(@RequestParam(value = "id[]", required = false) String[] id) {
+        
         System.out.println(id);
         return "OK";
     }
-   
+    
+    
+     @RequestMapping(method = RequestMethod.GET, value = "/olaqe.do")
+    public @ResponseBody String listadoFormatoUnicoNRevisados(Model modelo) {
+         
+        
+        
+        
+       
+        return "OK";
+    }
+    
     
 }

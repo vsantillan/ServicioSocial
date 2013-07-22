@@ -62,6 +62,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                
+                                <core:forEach items="${listadoFormatoUnicoNORevisados}" var="filaNR">
+                                    <tr class='gradeX'>
+                                    <td>Pendiente!!</td>
+                                    <td></td>
+                                    <td>Hector Guzman Nava</td>
+                                    <td><a href="#a" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                    <td>13-06-07</td>
+                                    <td>fui.pdf</td>
+                                    <td>
+                                        <select>
+                                            <option>Selecionar...</option>
+                                            <option>Aceptar</option>
+                                            <option>Rechazar</option>
+                                            <option>Correcci&oacute;n</option>
+                                        </select>
+                                    </td>
+                                    <td><input type="button" value="Modificar"/></td>
+                                    </tr>
+                                    
+                                </core:forEach>
+                                
+                                
                                 <tr class='gradeX'>
                                     <td>Ene-Feb</td>
                                     <td>09271024</td>
@@ -199,14 +222,22 @@
                 
             </div>
             
-            <div id="a" style="visibility: hidden; font-size: 15px">
+            
+            <div style="clear:both;"></div>
+            
+        </div>
+        <%-- fin del contenido --%>
+        <jsp:include page="../Template/footer.jsp" />
+        <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
+        
+        <div id="a" style="display: none; font-size: 15px">
                 <h1>Motivos de Rechazo</h1>
                 <div id="scroll" >
                     <form id="observacionesCat" action="#">
                     <table>
                         <core:forEach items="${listadoObservaciones}" var="observacion">
                         <tr>
-                            <td style="width: 150px"><label><input name="${observacion.id}" type="checkbox"/>&nbsp;&nbsp;&nbsp;
+                            <td style="width: 150px"><label><input ide="${observacion.id}" type="checkbox"/>&nbsp;&nbsp;&nbsp;
                              <core:out value="${observacion.detalle}" /></label>
                             </td>
                         </tr> 
@@ -218,12 +249,6 @@
                 <button id="guardarObservaciones">Guardar</button>
                 
             </div>
-            <div style="clear:both;"></div>
-            
-        </div>
-        <%-- fin del contenido --%>
-        <jsp:include page="../Template/footer.jsp" />
-        <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
     </body>
 </html>
 
