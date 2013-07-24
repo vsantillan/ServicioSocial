@@ -27,9 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import edu.servicio.toluca.beans.PlaticaJson;
+
 /**
  *
- * @author Jonny
+ * @author Mary
  */
 @Controller
 public class PlaticaController {
@@ -69,7 +70,7 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
     public String capturarAsistencia(Model modelo) {
 
-        modelo.addAttribute("folio", new FoliosPlatica());
+        modelo.addAttribute("foliosPlatica", new FoliosPlatica());
         return "/Platicas/capturarAsistencia";
     }
 
@@ -97,33 +98,16 @@ public class PlaticaController {
 
         //System.out.println(platica.getHora());
         //System.out.println(platica.getIdLugar().getId());
+        platica.setNumeroAsistentes(0);
 
         if (result.hasErrors()) {
-           // System.out.print("hubo errores");
-//            System.out.println(result.hasFieldErrors("fecha"));
-//            List<ObjectError> list = result.getAllErrors();
-//            for (int i = 0; i < list.size(); i++) {
-//                System.out.println(list.get(i).getDefaultMessage());
-//                System.out.println(list.get(i).getCode());
-//                System.out.println(platica.getIdLugar());
-//          }
-
-
             Fecha anio = new Fecha();
             modelo.addAttribute("anioInicio", anio.anioActual());
             modelo.addAttribute("anioFin", anio.anioFin());
-
-
             modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
-//  
             return "/Platicas/altaPlatica";
-//
         } else {
-            //System.out.print("no hubo errores");
-
             platicaFacade.create(platica);
-            
-            //modelo.addAttribute("notificacion", "platica dada de alta correctamente");
             return "/Platicas/redirectAltaPlatica";
         }
 
@@ -138,16 +122,16 @@ public class PlaticaController {
     }
 
     @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
-    public String Asistencia(@Valid ValidacionAsistenciaPlatica folio, BindingResult result, Model modelo) {
-
-
+    public String Asistencia(@Valid FoliosPlatica foliosPlatica, BindingResult result, Model modelo) {
+        
         if (result.hasErrors()) {
-
+            //modelo.addAttribute("folio", new FoliosPlatica());
+            System.out.println("hubo errores asistencia do");
             return "/Platicas/capturarAsistencia";
 
         } else {
-            
-             modelo.addAttribute("folio", new ValidacionAsistenciaPlatica());
+            System.out.println("no hubo errores asistencia do");
+            modelo.addAttribute("foliosPlatica", new FoliosPlatica());
             return "/Platicas/capturarAsistencia";
         }
 
@@ -176,15 +160,17 @@ public class PlaticaController {
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
         return "/Platicas/lugaresPlatica";
     }
-     @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
-    public @ResponseBody PlaticaJson actualizarDetalle(String fecha, Model modelo) {
-         //System.out.println("fecha:"+fecha);
-         PlaticaJson platicaJson= new PlaticaJson();
+
+    @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
+    public @ResponseBody
+    PlaticaJson actualizarDetalle(String fecha, Model modelo) {
+        //System.out.println("fecha:"+fecha);
+        PlaticaJson platicaJson = new PlaticaJson();
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-        
-         Platica platica= platicaFacade.find(Long.parseLong(fecha));
-         platicaJson.setDetalle("Hora:"+platica.getHora()+"\t"+"Lugar:"+platica.getIdLugar().getLugar());
-         platicaJson.setDescripcion("Descripción:"+platica.getDescripcion());
+
+        Platica platica = platicaFacade.find(Long.parseLong(fecha));
+        platicaJson.setDetalle("Hora:" + platica.getHora() + "\t" + "Lugar:" + platica.getIdLugar().getLugar());
+        platicaJson.setDescripcion("Descripción:" + platica.getDescripcion());
         return platicaJson;
     }
 }

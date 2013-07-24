@@ -15,9 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -38,15 +41,15 @@ public class FoliosPlatica implements Serializable {
     @Id
     @GeneratedValue(generator = "generator")
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private Long id;
     @Column(name = "ASISTENCIA")
     private Short asistencia;
     @Basic(optional = false)
-    @NotNull
+    
+    @Size(min =13, max =13, message="El tamaño debe ser de 13 digitos")
     @Column(name = "NUMERO_FOLIO")
-    private Long numeroFolio;
+    private String numeroFolio;
     
     @Column(name = "STATUS")
     private Short status;
@@ -64,7 +67,7 @@ public class FoliosPlatica implements Serializable {
         this.id = id;
     }
 
-    public FoliosPlatica(Long id, long numeroFolio) {
+    public FoliosPlatica(Long id, String numeroFolio) {
         this.id = id;
         this.numeroFolio = numeroFolio;
     }
@@ -85,11 +88,11 @@ public class FoliosPlatica implements Serializable {
         this.asistencia = asistencia;
     }
 
-    public Long getNumeroFolio() {
+    public String getNumeroFolio() {
         return numeroFolio;
     }
 
-    public void setNumeroFolio(Long numeroFolio) {
+    public void setNumeroFolio(String numeroFolio) {
         this.numeroFolio = numeroFolio;
     }
 
