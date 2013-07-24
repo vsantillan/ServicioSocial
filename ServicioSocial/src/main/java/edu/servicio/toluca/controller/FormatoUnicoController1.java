@@ -14,6 +14,7 @@ import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
+import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -45,6 +46,11 @@ public class FormatoUnicoController1 {
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnico;
     
+    @EJB(mappedName = "java:global/ServicioSocial/DocumentosFacade")
+    private DocumentosFacade documentoFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
+    private DatosPersonalesFacade datosPersonalesFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
@@ -52,12 +58,20 @@ public class FormatoUnicoController1 {
         
         model.addAttribute("listadoObservaciones",observacionesFacade.findAll());
         
-         
+        //Formatos Unicos No Revisados 
         model.addAttribute("listadoFormatoUnicoNORevisados",
                            formatoUnico.findBySpecificField("statusFui",
                                                            BigInteger.valueOf(VALOR_NO_REVISADOS),
                                                            "equal", null, null)); 
-      
+        
+        
+        datosPersonalesFacade.find(1);
+        
+        
+        documentoFacade.findBySpecificField("datosPersonalesId", model, "equal", null, null);
+        
+        
+        //Formatos Unicos No Revisados
         
         return "/FormatoUnico/formatoUnicoAdministrador";
     }

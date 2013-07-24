@@ -66,8 +66,12 @@
                                 <core:forEach items="${listadoFormatoUnicoNORevisados}" var="filaNR">
                                     <tr class='gradeX'>
                                     <td>Pendiente!!</td>
-                                    <td></td>
-                                    <td>Hector Guzman Nava</td>
+                                    <td> <core:out value="${filaNR.datosPersonalesId.alumnoId.id}"/>  </td>
+                                    <td>
+                                        <core:out value="${filaNR.datosPersonalesId.nombre}"/>&nbsp;
+                                        <core:out value="${filaNR.datosPersonalesId.apellidoP}"/>&nbsp;
+                                        <core:out value="${filaNR.datosPersonalesId.apellidoM}"/>
+                                    </td>
                                     <td><a href="#a" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
                                     <td>13-06-07</td>
                                     <td>fui.pdf</td>
