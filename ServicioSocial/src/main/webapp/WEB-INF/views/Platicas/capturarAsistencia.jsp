@@ -32,7 +32,9 @@
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <center><h2>Capturar Asistencia a Plática</h2></center>  
-
+                <div class="error">
+                ${existe}
+                </div>
                 <form:form  name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="foliosPlatica">
                     <center>
                         <table >

@@ -47,7 +47,7 @@ public class FoliosPlatica implements Serializable {
     private Short asistencia;
     @Basic(optional = false)
     
-    @Size(min =13, max =13, message="El tamaño debe ser de 13 digitos")
+    @NotBlank
     @Column(name = "NUMERO_FOLIO")
     private String numeroFolio;
     

@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import edu.servicio.toluca.beans.PlaticaJson;
+import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
+import java.util.List;
 
 /**
  *
@@ -39,6 +41,8 @@ public class PlaticaController {
     private PlaticaFacade platicaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/LugaresPlaticaFacade")
     private LugaresPlaticaFacade lugaresPlaticaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
+    private FoliosPlaticaFacade foliosPlaticaFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/altaPlatica.do")
     public String altaPlatica(Model modelo) {
@@ -81,6 +85,7 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
     public String seleccionarPlatica(Model modelo) {
+        
         modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
         modelo.addAttribute("platica", new Platica());
         return "/Platicas/seleccionarPlatica";
@@ -115,27 +120,54 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/folioPlatica.do")
-    public String folioPlatica(Model a) {
-
-
-        return "/Platicas/reporte";
+    public String folioPlatica(Model a, String fecha) {
+        
+        System.out.println("fecha platica id:"+fecha);
+        FoliosPlatica foliosPlatica= new FoliosPlatica();
+        Platica platica= new Platica();
+        platica.setId(Long.parseLong(fecha));
+        
+        foliosPlatica.setPlaticaId(platica);
+        foliosPlatica.setNumeroFolio("hola");
+        foliosPlatica.setStatus((short)1);
+        
+        foliosPlaticaFacade.create(foliosPlatica);
+    
+ 
+        //return "/Platicas/reporte";
+         return "/PanelUsuario/panelUsuario";
     }
-
+/////////ASISTENCIA.DO////////////////////
     @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
     public String Asistencia(@Valid FoliosPlatica foliosPlatica, BindingResult result, Model modelo) {
         
         if (result.hasErrors()) {
             //modelo.addAttribute("folio", new FoliosPlatica());
-            System.out.println("hubo errores asistencia do");
+            //System.out.println("hubo errores asistencia do");
             return "/Platicas/capturarAsistencia";
 
         } else {
-            System.out.println("no hubo errores asistencia do");
+           // System.out.println("no hubo errores asistencia do---"+foliosPlatica.getNumeroFolio());
+            List<FoliosPlatica> lista= foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
+          
+          /// System.out.println("despues de facade---");
+           if(lista.size()>0){
+          foliosPlatica= foliosPlaticaFacade.find(lista.get(0).getId());
+           System.out.println("find folio---"+lista.get(0).getId());
+           foliosPlatica.setAsistencia((short)1);
+           foliosPlaticaFacade.edit(foliosPlatica);
             modelo.addAttribute("foliosPlatica", new FoliosPlatica());
             return "/Platicas/capturarAsistencia";
+           }
+           else{
+            modelo.addAttribute("foliosPlatica", new FoliosPlatica());
+            modelo.addAttribute("existe","No existe numero de folio" );
+            return "/Platicas/capturarAsistencia";   
+           }
         }
 
     }
+    /////////ASISTENCIA.DO  finnnnnnnnnnnnnnnnnnnnnnnn////////////////////
 
     @RequestMapping(method = RequestMethod.POST, value = "/eliminarPlatica.do")
     public void eliminarPlatica(long id_platica) throws ParseException {
@@ -162,8 +194,7 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
-    public @ResponseBody
-    PlaticaJson actualizarDetalle(String fecha, Model modelo) {
+    public @ResponseBody PlaticaJson actualizarDetalle(String fecha, Model modelo) {
         //System.out.println("fecha:"+fecha);
         PlaticaJson platicaJson = new PlaticaJson();
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());

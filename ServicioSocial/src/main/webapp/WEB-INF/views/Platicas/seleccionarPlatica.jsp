@@ -47,14 +47,14 @@ var platica = $("#fecha option:selected").html();
 }
 </script>
         <script src="js/actualizaPlatica.js"></script>
-        <title>Seleciona Plática</title>
+        <title>Selecciona Plática</title>
     </head>
     <body class="background">
         <%@ include file="../Template/banner.jsp" %>
         <%-- inicio del contenido --%>
         <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />
         <div id="contenido">
-            <center> 
+           
                 <h1>Selecciona Plática</h1>
 
                 <%--  <form name="periodoActual" action="" method="post">
