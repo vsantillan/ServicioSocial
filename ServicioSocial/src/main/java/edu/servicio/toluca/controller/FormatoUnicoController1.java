@@ -63,32 +63,32 @@ public class FormatoUnicoController1 {
         
         
         
-        for (FormatoUnico formato : formatoUnico.findBySpecificField("statusFui",
-                                                           BigInteger.valueOf(VALOR_NO_REVISADOS),
-                                                           "equal", null, null)) 
-        {
-             
-             
-            List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
-                                                           formato.getDatosPersonalesId(),
-                                                           "equal", null, null);
-            Documentos formatoUnicoReal = null;
-            for (Documentos docu : listaDocumentos) {
-                if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
-                {
-                    formatoUnicoReal = docu;
-                    System.out.println(docu);
-                    break;
-                }
-            }
-             
-             System.out.println("aaaa");
-//            documentoFacade.findBySpecificField("datosPersonalesId",
-//                    formato.getDatosPersonalesId().getId(),
-//                    "egual", null, null);
-            
-            
-        }
+//        for (FormatoUnico formato : formatoUnico.findBySpecificField("statusFui",
+//                                                           BigInteger.valueOf(VALOR_NO_REVISADOS),
+//                                                           "equal", null, null)) 
+//        {
+//             
+//             
+//            List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
+//                                                           formato.getDatosPersonalesId(),
+//                                                           "equal", null, null);
+//            Documentos formatoUnicoReal = null;
+//            for (Documentos docu : listaDocumentos) {
+//                if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
+//                {
+//                    formatoUnicoReal = docu;
+//                    System.out.println(docu);
+//                    break;
+//                }
+//            }
+//             
+//             System.out.println("aaaa");
+////            documentoFacade.findBySpecificField("datosPersonalesId",
+////                    formato.getDatosPersonalesId().getId(),
+////                    "egual", null, null);
+//            
+//            
+//        }
         
         
         
