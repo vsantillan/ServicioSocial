@@ -1,9 +1,12 @@
 $(document).ready(listo);
 var alumno = {};
+var contacto = {};
 function listo()
 {
     timePicker();//Inicializa campos JQuery
     $('#frmDatosPersonales').submit(enviarDatosAlumno);
+    $('#frmDatosContacto').submit(enviarDatosContactoAlumno);
+   
 }
 
 function enviarDatosAlumno()
@@ -42,6 +45,15 @@ function prepararJSON($atributo)
     {
         alumno[$atributo.attr ("name")] = $("#"+$atributo.attr ("name")+"1" ).is(":checked");
     }
+}
+function prepararJSONC($atributo)
+{
+    alert("fdsfsfsfds");
+    if($atributo.attr("type") !== "submit")
+    {
+        concacto[$atributo.attr ("name")] = $atributo.val();
+    }
+    
 }
 function timePicker()
 {

@@ -49,6 +49,7 @@ public class FormatoUnicoController {
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
 
+
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo, String alumno_id) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
@@ -60,8 +61,7 @@ public class FormatoUnicoController {
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //objeto que voy a insertar
         VistaAlumno alumno = listaAlumnos.get(0);
-        if(Float.parseFloat(alumno.getPorcentaje()) < 70)
-        {
+        if (Float.parseFloat(alumno.getPorcentaje()) < 70) {
             return "PanelUsuario/panelUsuario";
         }
         DatosPersonales datosPersonales = new DatosPersonales();
@@ -128,14 +128,16 @@ public class FormatoUnicoController {
         formatoUnicoDatosPersonalesbean.setOcupacion(datosPersonales.getOcupacion());
         formatoUnicoDatosPersonalesbean.setClaveDocIdentificacion(datosPersonales.getClaveDocIdentificacion());
         formatoUnicoDatosPersonalesbean.setFolioDocIdentificacion(datosPersonales.getFolioDocIdentificaciin().toString());
-        
+
         modelo.addAttribute("formatoUnicoDatosPersonales", formatoUnicoDatosPersonalesbean);
 ///////////////////////
         formatoUnicoDatosContacoBean.setCalle(datosPersonales.getCalle());
         System.out.println("Numero i " + datosPersonales.getNumeroI());
         //formatoUnicoDatosContacoBean.setNumeroI(datosPersonales.getNumeroI());
+        formatoUnicoDatosContacoBean.setId(datosPersonales.getId());
         formatoUnicoDatosContacoBean.setNumeroE(datosPersonales.getNumeroE());
-        formatoUnicoDatosContacoBean.setColonia(datosPersonales.getIdColonia());
+        formatoUnicoDatosContacoBean.setNumeroI(datosPersonales.getNumeroI());
+        //formatoUnicoDatosContacoBean.setColonia(datosPersonales.getIdColonia());
         formatoUnicoDatosContacoBean.setEntreCalles(datosPersonales.getEntreCalles());
         formatoUnicoDatosContacoBean.setReferencias(datosPersonales.getReferencia());
         formatoUnicoDatosContacoBean.setTelefono_casa(datosPersonales.getTelefonoCasa());
@@ -144,11 +146,6 @@ public class FormatoUnicoController {
         formatoUnicoDatosContacoBean.setTwitter(datosPersonales.getTwitter());
         formatoUnicoDatosContacoBean.setFacebook(datosPersonales.getFacebook());
         modelo.addAttribute("formatoUnicoDatosContacto", formatoUnicoDatosContacoBean);
-
-        //Para insertar en formato único es necesario recuperar el id de datos personales.
-
-//        modelo.addAttribute("datosPersonales", datosPersonales);
-//        modelo.addAttribute("formatoUnico", formatoUnico);
 
 
         //Llenado del bean de datos de contacto para mostrarlo con los jstl en la vista 
@@ -159,13 +156,13 @@ public class FormatoUnicoController {
         formatoUnicoDatosAcademicos.setSemestre(alumno.getSemActual());
         formatoUnicoDatosAcademicos.setCc(alumno.getCreditosAcumulados());
         formatoUnicoDatosAcademicos.setPcc(alumno.getPorcentaje());
-        modelo.addAttribute("academicos",formatoUnicoDatosAcademicos);
-        
-        
+        modelo.addAttribute("academicos", formatoUnicoDatosAcademicos);
+
+
         //Estados
-//        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-//        ordenamiento.put("nombre", "asc");
-//        modelo.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        ordenamiento.put("nombre", "asc");
+        modelo.addAttribute("estados", estadosFacade.findAll(ordenamiento));
 
         return "/FormatoUnico/formatoUnicoUsuario";
     }
@@ -190,10 +187,10 @@ public class FormatoUnicoController {
         datosPersonales.setFolioDocIdentificaciin(new BigInteger(dt.getFolioDocIdentificacion()));
         datosPersonales.setClaveDocIdentificacion(dt.getClaveDocIdentificacion());
         datosPersonalesFacade.edit(datosPersonales);
-                
-        
-        
-        
+
+
+
+
         if (resultado.hasErrors()) {
             for (ObjectError error : resultado.getAllErrors()) {
                 System.out.println(error.getDefaultMessage());
@@ -201,12 +198,22 @@ public class FormatoUnicoController {
         }
         return new FormatoUnicoErrores();
     }
-    
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosContacto.do")
     public @ResponseBody
-    FormatoUnicoErrores modificarDatosContactoAlumno(@Valid FormatoUnicoDatosContactoBean dt, BindingResult resultado) {
-        
+    FormatoUnicoErrores modificarDatosContactoAlumno(FormatoUnicoDatosContactoBean dt, BindingResult resultado) {
+        DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
+        datosPersonales.setCalle(dt.getCalle());
+        datosPersonales.setNumeroI(dt.getNumeroI());
+        datosPersonales.setNumeroE(dt.getNumeroE());
+        datosPersonales.setEntreCalles(dt.getEntreCalles());
+        datosPersonales.setReferencia(dt.getReferencias());
+        datosPersonales.setTelefonoCasa(dt.getTelefono_casa());
+        datosPersonales.setTelefonoCel(dt.getTelefono_cel());
+        datosPersonales.setTelefonoOficina(dt.getTelefono_oficina());
+        datosPersonales.setFacebook(dt.getFacebook());
+        datosPersonales.setTwitter(dt.getTwitter());
+        datosPersonalesFacade.edit(datosPersonales);
         
         
         
@@ -216,6 +223,7 @@ public class FormatoUnicoController {
             }
         }
         return new FormatoUnicoErrores();
+
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuarioObservaciones.do")
@@ -224,9 +232,7 @@ public class FormatoUnicoController {
         return "/FormatoUnico/formatoUnicoUsuarioObservaciones";
     }
 
-    
-
-    @RequestMapping(method = RequestMethod.GET, value = "/pruebaDT.do")
+    @RequestMapping(method = RequestMethod.POST, value = "/pruebaDT.do")
     public String formatoUnicoPruebaDT(Model a) {
 
         return "/FormatoUnico/pruebaDT";
