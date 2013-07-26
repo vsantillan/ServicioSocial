@@ -15,6 +15,7 @@ import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
+import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -48,6 +49,8 @@ public class FormatoUnicoController {
     private FormatoUnicoFacade formatoUnicoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
+    private InstanciaFacade instanciaFacade;
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
@@ -164,6 +167,11 @@ public class FormatoUnicoController {
         ordenamiento.put("nombre", "asc");
         modelo.addAttribute("estados", estadosFacade.findAll(ordenamiento));
 
+        
+        //Carga de datos de organizaciones
+        modelo.addAttribute("instancias", instanciaFacade.findAll());
+        
+        
         return "/FormatoUnico/formatoUnicoUsuario";
     }
 

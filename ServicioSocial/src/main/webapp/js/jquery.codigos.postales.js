@@ -15,9 +15,9 @@ $(document).ready(function() {
 
         var notice = document.getElementById("notice");
 
-        //notice.innerHTML = "<img src='imagenes/loading.gif' width='30'>";
+        notice.innerHTML = "<img src='imagenes/loading.gif' width='30'>";
         $.get("cargarColonias.do?cp=" + cp, null, function(respuesta) {
-            //notice.innerHTML = "";
+            notice.innerHTML = "";
             console.log(respuesta);
             comboColonias.length = 0;
             comboCiudad.length = 0;

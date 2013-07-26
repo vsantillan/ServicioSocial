@@ -4,10 +4,15 @@
  */
 package edu.servicio.toluca.beans;
 
+import edu.servicio.toluca.entidades.Instancia;
+
 /**
  *
  * @author SATELLITE
  */
+
 public class FormatoUnicoDatosOrganizacionesBean {
+    Instancia instancia = new Instancia();
+    
     
 }

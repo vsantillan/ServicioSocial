@@ -263,9 +263,9 @@
                                 <td>Organizaci&oacute;n:</td>
                                 <td>
                                     <select name="organizacion">
-                                        <option value="">ORG 1</option>
-                                        <option value="">ORG 2</option>
-                                        <option value="">ORG 3</option>
+                                        <core:forEach items="${instancias}" var="instancia">
+                                            <option value="${instancia.idInstancia}">${instancia.nombre}</option>
+                                        </core:forEach> 
                                     </select> 
                                 </td>
                                 <td>
