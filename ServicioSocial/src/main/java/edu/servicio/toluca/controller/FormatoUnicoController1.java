@@ -9,6 +9,7 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import edu.servicio.toluca.beans.Observaciones;
 import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
@@ -54,21 +55,54 @@ public class FormatoUnicoController1 {
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
+        
         final int VALOR_NO_REVISADOS=4; 
         
         model.addAttribute("listadoObservaciones",observacionesFacade.findAll());
         
-        //Formatos Unicos No Revisados 
-        model.addAttribute("listadoFormatoUnicoNORevisados",
-                           formatoUnico.findBySpecificField("statusFui",
+        
+        
+        
+        for (FormatoUnico formato : formatoUnico.findBySpecificField("statusFui",
                                                            BigInteger.valueOf(VALOR_NO_REVISADOS),
-                                                           "equal", null, null)); 
+                                                           "equal", null, null)) 
+        {
+             
+             
+            List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
+                                                           formato.getDatosPersonalesId(),
+                                                           "equal", null, null);
+            Documentos formatoUnicoReal = null;
+            for (Documentos docu : listaDocumentos) {
+                if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
+                {
+                    formatoUnicoReal = docu;
+                    System.out.println(docu);
+                    break;
+                }
+            }
+             
+             System.out.println("aaaa");
+//            documentoFacade.findBySpecificField("datosPersonalesId",
+//                    formato.getDatosPersonalesId().getId(),
+//                    "egual", null, null);
+            
+            
+        }
         
         
-        datosPersonalesFacade.find(1);
+        
+        //Formatos Unicos No Revisados 
+//        model.addAttribute("listadoFormatoUnicoNORevisados",
+//                           formatoUnico.findBySpecificField("statusFui",
+//                                                           BigInteger.valueOf(VALOR_NO_REVISADOS),
+//                                                           "equal", null, null)); 
         
         
-        documentoFacade.findBySpecificField("datosPersonalesId", model, "equal", null, null);
+       System.out.println();
+        
+        
+        //documentoFacade.findBySpecificField("datosPersonalesId", model, "equal", null, null);
         
         
         //Formatos Unicos No Revisados
