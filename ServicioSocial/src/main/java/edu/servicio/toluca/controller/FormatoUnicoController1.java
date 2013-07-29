@@ -8,7 +8,9 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import edu.servicio.toluca.beans.Observaciones;
+import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoAceptados;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoNRevisado;
+import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoRechazados;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
@@ -59,43 +61,96 @@ public class FormatoUnicoController1 {
     public String formatoUnicoAdministrador(Model model) {
         
         List<FormatoUnicoNRevisado> listadoFormatosNoRevisados=new ArrayList<FormatoUnicoNRevisado>();
-        final int VALOR_NO_REVISADOS=4; 
+        List<FormatoUnicoAceptados> listadoFormatosAceptados=new ArrayList<FormatoUnicoAceptados>();
+        List<FormatoUnicoRechazados> listadoFormatosRechazados=new ArrayList<FormatoUnicoRechazados>();
         
-        for (FormatoUnico formato : formatoUnico.findBySpecificField("statusFui",
-                                                           BigInteger.valueOf(VALOR_NO_REVISADOS),
-                                                           "equal", null, null)) 
+        
+        
+        
+        final int VALOR_NO_REVISADOS = 4;
+        final int VALOR_ACEPTADOS = 1;
+        final int VALOR_RECHAZADOS = 2;
+        
+        for (FormatoUnico formato : formatoUnico.findAll()) 
         {
-        
-            FormatoUnicoNRevisado formatoNR=new FormatoUnicoNRevisado();
-            
-            formatoNR.setIdFormatoUnico(formato.getId().toString());
-            formatoNR.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
-            formatoNR.setNombre(formato.getDatosPersonalesId().getNombre()
-                                +" "+formato.getDatosPersonalesId().getApellidoP()
-                                +" "+formato.getDatosPersonalesId().getApellidoM());
-             
-            List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
-                                                           formato.getDatosPersonalesId(),
-                                                           "equal", null, null);
-            
-            for (Documentos docu : listaDocumentos) {
-                if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
+                if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS)))//Formatos No Revisados
                 {
-                    
-                    formatoNR.setFechaSubida(docu.getFechaSubida().toString());
-                    listadoFormatosNoRevisados.add(formatoNR);
-                    break;
+                    FormatoUnicoNRevisado formatoNR=new FormatoUnicoNRevisado();
+
+                formatoNR.setIdFormatoUnico(formato.getId().toString());
+                formatoNR.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
+                formatoNR.setNombre(formato.getDatosPersonalesId().getNombre()
+                                    +" "+formato.getDatosPersonalesId().getApellidoP()
+                                    +" "+formato.getDatosPersonalesId().getApellidoM());
+
+                List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
+                                                               formato.getDatosPersonalesId(),
+                                                               "equal", null, null);
+
+                String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
+                if(fechaSubida != null)
+                {
+                     formatoNR.setFechaSubida(fechaSubida);
+                     listadoFormatosNoRevisados.add(formatoNR);
+                
                 }
             }
-            
+                
+            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_ACEPTADOS)))//Formatos Aceptados
+            {
+                FormatoUnicoAceptados formatoAceptados = new FormatoUnicoAceptados();
+                
+                formatoAceptados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
+                formatoAceptados.setNombre(formato.getDatosPersonalesId().getNombre()
+                                    +" "+formato.getDatosPersonalesId().getApellidoP()
+                                    +" "+formato.getDatosPersonalesId().getApellidoM());
+                
+                List<Documentos> listaDocumentos2 = documentoFacade.findBySpecificField("datosPersonalesId",
+                                                               formato.getDatosPersonalesId(),
+                                                               "equal", null, null);
+
+                String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos2);
+                if(fechaSubida != null)
+                {
+                     formatoAceptados.setFechaSubida(fechaSubida);
+                     listadoFormatosAceptados.add(formatoAceptados);
+                }
+            }
+            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//Formatos Aceptados
+            {
+                FormatoUnicoRechazados formatoRechazados = new FormatoUnicoRechazados();
+                formatoRechazados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
+                formatoRechazados.setNombre(formato.getDatosPersonalesId().getNombre()
+                                    +" "+formato.getDatosPersonalesId().getApellidoP()
+                                    +" "+formato.getDatosPersonalesId().getApellidoM());   
+                List<Documentos> listaDocumentos2 = documentoFacade.findBySpecificField("datosPersonalesId",
+                                                               formato.getDatosPersonalesId(),
+                                                               "equal", null, null);
+                String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos2);
+                if(fechaSubida != null)
+                {
+                     formatoRechazados.setFechaSubida(fechaSubida);
+                     listadoFormatosRechazados.add(formatoRechazados);
+                }
+                
+                
+            }
         }
+        
+       
+        
+        
+        
         
         
         //Formatos Unicos No Revisados 
         model.addAttribute("listadoFormatoUnicoNORevisados",listadoFormatosNoRevisados);
         
         //Formato Unico Aceptados
-        model.addAttribute("listadoFormatoUnicoAceptados",null);
+        model.addAttribute("listadoFormatoUnicoAceptados",listadoFormatosAceptados);
+        
+        //Formato Rechazados
+        model.addAttribute("listadoFormatoUnicoRechazados",listadoFormatosRechazados);
         
         return "/FormatoUnico/formatoUnicoAdministrador";
     }
@@ -132,5 +187,21 @@ public class FormatoUnicoController1 {
         return "OK";
     }
     
+     
+    //Metodos Estaticos
+     
+     private static String  obtenerFechaSubidaFormatoU(List<Documentos> listaDocumentos)
+     {
+         System.out.println("OKAS");
+         for (Documentos docu : listaDocumentos) 
+         {
+                    if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
+                    {
+
+                        return docu.getFechaSubida().toString();
+                    }
+         }
+         return null;
+     }
     
 }

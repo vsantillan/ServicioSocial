@@ -91,24 +91,20 @@
                                     <th>Periodo</th>
                                     <td>n. Control</td>
                                     <th>Nombre</th>
-                                    <th>Documento</th>
                                     <th>Fecha Subida</th>
-                                    <th>Fecha Rechazo</th>
                                     <th>Motivo</th>
-                                   
-
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class='gradeX'>
-                                    <td>Ene-Feb</td>
-                                    <td>09271024</td>
-                                    <td>Hector Guzman Nava</td>
-                                    <td>fui.pdf</td>
-                                    <td>13-06-07</td>
-                                    <td>13-08-09</td>
-                                    <td>Instancia no v&aacute;lida</td>
-                                </tr>
+                                <core:forEach items="${listadoFormatoUnicoRechazados}" var="filaRech">
+                                    <tr class='gradeX'>
+                                        <td>Pendiente!!</td>
+                                        <td> <core:out value="${filaRech.noControl}"/>  </td>
+                                        <td><core:out value="${filaRech.nombre}"/></td>                                        
+                                        <td><core:out value="${filaRech.fechaSubida}"/></td>
+                                        <td>Pendiente</td>
+                                    </tr>
+                                </core:forEach>
                             </tbody>
                         </table>
                     </div>    
@@ -144,20 +140,18 @@
                                     <th>Periodo</th>
                                     <th>n. Control</th>
                                     <th>Nombre</th>
-                                    <th>Documento</th>
                                     <th>Fecha Subida</th>
-                                    
-
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class='gradeX'>
-                                    <td>Ene-Feb</td>
-                                    <td>09271024</td>
-                                    <td>Hector Guzman Nava</td>
-                                    <td>fui.pdf</td>
-                                    <td>13-06-07</td>
-                                </tr>
+                               <core:forEach items="${listadoFormatoUnicoAceptados}" var="filaA">
+                                    <tr class='gradeX'>
+                                    <td>Pendiente!!</td>
+                                    <td> <core:out value="${filaA.noControl}"/>  </td>
+                                    <td><core:out value="${filaA.nombre}"/></td>
+                                    <td><core:out value="${filaA.fechaSubida}"/></td>                                    
+                                    </tr>
+                                </core:forEach>
                             </tbody>
                         </table>
                     </div>    
