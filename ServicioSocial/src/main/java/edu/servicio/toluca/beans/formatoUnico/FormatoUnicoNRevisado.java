@@ -12,7 +12,8 @@ public class FormatoUnicoNRevisado {
     private String idFormatoUnico;
     private String noControl;
     private String nombre;
-    private String fechaSubida;   
+    private String fechaSubida;
+    private String idDatosPersonales;
 
     /**
      * @return the noControl
@@ -68,5 +69,19 @@ public class FormatoUnicoNRevisado {
      */
     public void setIdFormatoUnico(String idFormatoUnico) {
         this.idFormatoUnico = idFormatoUnico;
+    }
+
+    /**
+     * @return the idDatosPersonales
+     */
+    public String getIdDatosPersonales() {
+        return idDatosPersonales;
+    }
+
+    /**
+     * @param idDatosPersonales the idDatosPersonales to set
+     */
+    public void setIdDatosPersonales(String idDatosPersonales) {
+        this.idDatosPersonales = idDatosPersonales;
     }
 }

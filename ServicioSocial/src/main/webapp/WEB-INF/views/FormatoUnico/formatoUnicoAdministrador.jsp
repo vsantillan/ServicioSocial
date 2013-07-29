@@ -55,10 +55,7 @@
                                     <th>Nombre</th>
                                     <th>Documento</th>
                                     <th>Fecha Subida</th>
-                                   
                                     <th>Acci&oacute;nes</th>
-                                    
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -74,9 +71,9 @@
                                     <td><core:out value="${filaNR.fechaSubida}"/></td>
                                     
                                     <td>
-                                        <input type="button" value="Aceptar" class="aceptar" ide="${filaNR.idFormatoUnico}"/>
-                                        <input type="button" value="Rechazar" class="rechazar" ide="${filaNR.idFormatoUnico}" />
-                                        <input type="button" value="Corrección" class="corrección" ide="${filaNR.idFormatoUnico}" />
+                                        <input type="button" value="Aceptar" class="aceptar" ide="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
+                                        <input type="button" value="Rechazar" class="rechazar" ide="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" />
+                                        <input type="button" value="Corrección" class="correccion" ide="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
                                     </td>
                                     
                                     </tr>
@@ -112,24 +109,23 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="enCorreccionDT" width='100%'>
                             <thead>
                                 <tr>
-                                    <th>Periodo</th>
-                                    <th>n. Control</th>
+                                   <th>Periodo</th>
+                                    <td>n. Control</td>
                                     <th>Nombre</th>
-                                    <th>Documento</th>
                                     <th>Fecha Subida</th>
                                     <th>Motivo</th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class='gradeX'>
-                                    <td>Ene-Feb</td>
-                                    <td>09271024</td>
-                                    <td>Hector Guzman Nava</td>
-                                    <td>fui.pdf</td>
-                                    <td>13-06-07</td>
-                                    <td>Faltas</td>
-                                </tr>
+                                <core:forEach items="${listadoFormatoUnicoCorreccion}" var="filaCorrec">
+                                    <tr class='gradeX'>
+                                        <td>Pendiente!!</td>
+                                        <td> <core:out value="${filaCorrec.noControl}"/>  </td>
+                                        <td><core:out value="${filaCorrec.nombre}"/></td>                                        
+                                        <td><core:out value="${filaCorrec.fechaSubida}"/></td>
+                                        <td>Pendiente</td>
+                                    </tr>
+                                </core:forEach>
                             </tbody>
                         </table>
                     </div>    
@@ -170,11 +166,11 @@
         <div id="a" style="display: none; font-size: 15px">
                 <h1>Motivos de Rechazo</h1>
                 <div id="scroll" >
-                    <form id="observacionesCat" action="#">
+                    <form id="observacionesCat" action="#" onsubmit="return  false;">
                     <table>
                         <core:forEach items="${listadoObservaciones}" var="observacion">
                         <tr>
-                            <td style="width: 150px"><label><input ide="${observacion.id}" type="checkbox"/>&nbsp;&nbsp;&nbsp;
+                            <td style="width: 150px"><label><input name="id[]" value="${observacion.id}" type="checkbox"/>&nbsp;&nbsp;&nbsp;
                              <core:out value="${observacion.detalle}" /></label>
                             </td>
                         </tr> 
@@ -182,9 +178,7 @@
                    </table>
                     </form>
                 </div>
-                
                 <button id="guardarObservaciones">Guardar</button>
-                
             </div>
         
         <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>

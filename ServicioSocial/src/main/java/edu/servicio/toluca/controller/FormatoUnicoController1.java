@@ -14,15 +14,18 @@ import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoRechazados;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
+import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
+import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.validation.Valid;
@@ -57,12 +60,18 @@ public class FormatoUnicoController1 {
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
     
+    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
+    private RegObservacionesFacade regisObservacionesFacade;
+    
+    
+    
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
         
         List<FormatoUnicoNRevisado> listadoFormatosNoRevisados=new ArrayList<FormatoUnicoNRevisado>();
         List<FormatoUnicoAceptados> listadoFormatosAceptados=new ArrayList<FormatoUnicoAceptados>();
         List<FormatoUnicoRechazados> listadoFormatosRechazados=new ArrayList<FormatoUnicoRechazados>();
+        List<FormatoUnicoRechazados> listadoFormatosCorreccion=new ArrayList<FormatoUnicoRechazados>();
         
         
         
@@ -70,6 +79,7 @@ public class FormatoUnicoController1 {
         final int VALOR_NO_REVISADOS = 4;
         final int VALOR_ACEPTADOS = 1;
         final int VALOR_RECHAZADOS = 2;
+        final int VALOR_CORRECCION = 3;
         
         for (FormatoUnico formato : formatoUnico.findAll()) 
         {
@@ -82,6 +92,8 @@ public class FormatoUnicoController1 {
                 formatoNR.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());
+                formatoNR.setIdDatosPersonales(formato.getDatosPersonalesId().getId().toString());
+                
 
                 List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
@@ -92,7 +104,6 @@ public class FormatoUnicoController1 {
                 {
                      formatoNR.setFechaSubida(fechaSubida);
                      listadoFormatosNoRevisados.add(formatoNR);
-                
                 }
             }
                 
@@ -116,7 +127,7 @@ public class FormatoUnicoController1 {
                      listadoFormatosAceptados.add(formatoAceptados);
                 }
             }
-            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//Formatos Aceptados
+            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//Formatos Rechazados
             {
                 FormatoUnicoRechazados formatoRechazados = new FormatoUnicoRechazados();
                 formatoRechazados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
@@ -132,8 +143,23 @@ public class FormatoUnicoController1 {
                      formatoRechazados.setFechaSubida(fechaSubida);
                      listadoFormatosRechazados.add(formatoRechazados);
                 }
-                
-                
+            }
+            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION)))//Formatos Correccion
+            {
+                FormatoUnicoRechazados formatoRechazados = new FormatoUnicoRechazados();
+                formatoRechazados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
+                formatoRechazados.setNombre(formato.getDatosPersonalesId().getNombre()
+                                    +" "+formato.getDatosPersonalesId().getApellidoP()
+                                    +" "+formato.getDatosPersonalesId().getApellidoM());   
+                List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
+                                                               formato.getDatosPersonalesId(),
+                                                               "equal", null, null);
+                String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
+                if(fechaSubida != null)
+                {
+                     formatoRechazados.setFechaSubida(fechaSubida);
+                     listadoFormatosCorreccion.add(formatoRechazados);
+                }
             }
         }
         
@@ -152,6 +178,10 @@ public class FormatoUnicoController1 {
         //Formato Rechazados
         model.addAttribute("listadoFormatoUnicoRechazados",listadoFormatosRechazados);
         
+        //Formato Correccion
+        model.addAttribute("listadoFormatoUnicoCorreccion",listadoFormatosCorreccion);
+        
+        model.addAttribute("listadoObservaciones", observacionesFacade.findAll());
         return "/FormatoUnico/formatoUnicoAdministrador";
     }
     
@@ -170,20 +200,21 @@ public class FormatoUnicoController1 {
     
    
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR.do")
-    public @ResponseBody String modificarFormatoUnico(@RequestParam(value = "id[]", required = false) String[] id) {
+    public @ResponseBody String modificarFormatoUnico(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,String alumno) {
         
-        System.out.println(id);
+        for(String i:observaciones)
+        {
+            RegObservaciones registro=new RegObservaciones();
+            registro.setCatalogoObservacionId(observacionesFacade.find(BigDecimal.valueOf(Long.valueOf(i))));
+            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(alumno))));
+            registro.setFecha(new Date());
+        }
         return "OK";
     }
     
     
      @RequestMapping(method = RequestMethod.GET, value = "/olaqe.do")
     public @ResponseBody String listadoFormatoUnicoNRevisados(Model modelo) {
-         
-        
-        
-        
-       
         return "OK";
     }
     
@@ -192,12 +223,10 @@ public class FormatoUnicoController1 {
      
      private static String  obtenerFechaSubidaFormatoU(List<Documentos> listaDocumentos)
      {
-         System.out.println("OKAS");
          for (Documentos docu : listaDocumentos) 
          {
                     if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
                     {
-
                         return docu.getFechaSubida().toString();
                     }
          }

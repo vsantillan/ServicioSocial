@@ -6,6 +6,8 @@ var tablaAceptados;
 
 var arrayAcptadosFilaTemp = new Array();
 
+var idDatosPersonales = "";
+
 
 $(document).ready(listo);
 function listo()
@@ -13,8 +15,8 @@ function listo()
     inicializarDataTables();
     $(document).on("click","#guardarObservaciones",obtenerDatos);
     $(document).on("click",".aceptar",cambiarEstadoFormatoAceptado);
-    $(document).on("click",".correccion",modificarFormatoUnico);
-    $(document).on("click",".rechazar",modificarFormatoUnico);
+    $(document).on("click",".correccion",cambiarEstadoFormatoCorreccion);
+    //$(document).on("click",".rechazar",modificarFormatoUnico);
 }
 
 
@@ -77,6 +79,21 @@ function cambiarEstadoFormatoAceptado(event)
     
 }
 
+function cambiarEstadoFormatoCorreccion(event)
+{
+    if(confirmacionEvento())
+    {
+       idDatosPersonales =$(this).attr('idDP');
+       console.log(idDatosPersonales); 
+       Shadowbox.open(
+               { content:$("#a").html(), 
+                 player:'html'
+                }
+         );
+    }
+    
+}
+
 
 
 
@@ -124,20 +141,17 @@ function modificarFormatoUnico(event)
 
 function obtenerDatos()
 {
-     var array = [];
-     
-     
-                        
+  var array = [];
      
   $("form#observacionesCat input").each(function() {
      
       if( $(this).is(":checked") )
       {
-          array.push($(this).attr("ide")); // id de Obserbacion
+          array.push($(this).attr("value")); // id de Obserbacion
       }
   });
   
-  $.post("modificarFormatoUnicoNR.do",{id:array},function(respuesta)
+  $.post("modificarFormatoUnicoNR.do",{alumno:idDatosPersonales,observaciones:array},function(respuesta)
     {
         console.log(respuesta);
         
