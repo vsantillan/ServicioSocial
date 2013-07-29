@@ -12,7 +12,9 @@ function listo()
 {
     inicializarDataTables();
     $(document).on("click","#guardarObservaciones",obtenerDatos);
-    $(document).on("click",".modificarNR",modificarFormatoUnico);    
+    $(document).on("click",".aceptar",cambiarEstadoFormatoAceptado);
+    $(document).on("click",".correccion",modificarFormatoUnico);
+    $(document).on("click",".rechazar",modificarFormatoUnico);
 }
 
 
@@ -52,35 +54,71 @@ function inicializarDataTables()
 
                 });
 }
-function modificarFormatoUnico(event)
+
+function confirmacionEvento()
 {
     if(! window.confirm("¿Desea realizar esta acción?"))
     {
-        return;
+        return false;
+    }
+    return true;
+}
+
+function cambiarEstadoFormatoAceptado(event)
+{
+    if(confirmacionEvento())
+    {
+        console.log();
+        $.post("modificarFormatoUnicoNR_Aceptado.do",{id:$(this).attr('ide')},function(respuesta)
+        {
+            console.log(respuesta);
+        });
     }
     
-    var fila = $(this).parents('tr')[0];
-    var iTemp=0; 
-     $(fila).find('td').each(function(index) 
-     {
-         if(index!==3 && index!==6 && index!==7)
-         {//Descarta Campos:Documento,Accion, Modificar 
-            arrayAcptadosFilaTemp[iTemp]=$(this).text();
-            //console.log();
-            iTemp++;
-         }
-         
-        
-     });
-     
-     
-    var temp=arrayAcptadosFilaTemp[3];
-    arrayAcptadosFilaTemp[3]=arrayAcptadosFilaTemp[4];
-    arrayAcptadosFilaTemp[4]=temp;
-    console.log(arrayAcptadosFilaTemp);
+}
+
+
+
+
+function modificarFormatoUnico(event)
+{
     
-    tablaNRevisados.fnDeleteRow(fila);
-    tablaAceptados.fnAddData(arrayAcptadosFilaTemp);
+//    var fila = $(this).parents('tr')[0];
+//    var iTemp=0;
+//    
+//     $(fila).find('td').each(function(index) 
+//     {
+//         if(index!==3 && index!==6 && index!==7)
+//         {//Descarta Campos:Documento,Accion, Modificar 
+//            arrayAcptadosFilaTemp[iTemp]=$(this).text();
+//            //console.log();
+//            iTemp++;
+//         }
+//         
+//        
+//     });
+    
+    
+//     $(fila).find('td').each(function(index) 
+//     {
+//         if(index!==3 && index!==6 && index!==7)
+//         {//Descarta Campos:Documento,Accion, Modificar 
+//            arrayAcptadosFilaTemp[iTemp]=$(this).text();
+//            //console.log();
+//            iTemp++;
+//         }
+//         
+//        
+//     });
+//     
+//     
+//    var temp=arrayAcptadosFilaTemp[3];
+//    arrayAcptadosFilaTemp[3]=arrayAcptadosFilaTemp[4];
+//    arrayAcptadosFilaTemp[4]=temp;
+//    console.log(arrayAcptadosFilaTemp);
+//    
+//    tablaNRevisados.fnDeleteRow(fila);
+//    tablaAceptados.fnAddData(arrayAcptadosFilaTemp);
     
 }
 

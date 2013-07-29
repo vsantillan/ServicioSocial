@@ -55,9 +55,9 @@
                                     <th>Nombre</th>
                                     <th>Documento</th>
                                     <th>Fecha Subida</th>
-                                    <th>Archivo</th>
-                                    <th>Acci&oacute;n</th>
-                                    <th>Establecer</th>
+                                   
+                                    <th>Acci&oacute;nes</th>
+                                    
 
                                 </tr>
                             </thead>
@@ -66,80 +66,21 @@
                                 <core:forEach items="${listadoFormatoUnicoNORevisados}" var="filaNR">
                                     <tr class='gradeX'>
                                     <td>Pendiente!!</td>
-                                    <td> <core:out value="${filaNR.datosPersonalesId.alumnoId.id}"/>  </td>
+                                    <td> <core:out value="${filaNR.noControl}"/>  </td>
                                     <td>
-                                        <core:out value="${filaNR.datosPersonalesId.nombre}"/>&nbsp;
-                                        <core:out value="${filaNR.datosPersonalesId.apellidoP}"/>&nbsp;
-                                        <core:out value="${filaNR.datosPersonalesId.apellidoM}"/>
+                                        <core:out value="${filaNR.nombre}"/>
                                     </td>
                                     <td><a href="#a" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
-                                    <td>13-06-07</td>
-                                    <td>fui.pdf</td>
-                                    <td>
-                                        <select>
-                                            <option>Selecionar...</option>
-                                            <option>Aceptar</option>
-                                            <option>Rechazar</option>
-                                            <option>Correcci&oacute;n</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="button" value="Modificar"/></td>
-                                    </tr>
+                                    <td><core:out value="${filaNR.fechaSubida}"/></td>
                                     
+                                    <td>
+                                        <input type="button" value="Aceptar" class="aceptar" ide="${filaNR.idFormatoUnico}"/>
+                                        <input type="button" value="Rechazar" class="rechazar" ide="${filaNR.idFormatoUnico}" />
+                                        <input type="button" value="Corrección" class="corrección" ide="${filaNR.idFormatoUnico}" />
+                                    </td>
+                                    
+                                    </tr>
                                 </core:forEach>
-                                
-                                
-                                <tr class='gradeX'>
-                                    <td>Ene-Feb</td>
-                                    <td>09271024</td>
-                                    <td>Hector Guzman Nava</td>
-                                    <td><a href="#a" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
-                                    <td>13-06-07</td>
-                                    <td>fui.pdf</td>
-                                    <td>
-                                        <select>
-                                            <option>Selecionar...</option>
-                                            <option>Aceptar</option>
-                                            <option>Rechazar</option>
-                                            <option>Correcci&oacute;n</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="button" value="Modificar"/></td>
-                                </tr>
-                                <tr class='gradeX'>
-                                    <td>Ene-Feb</td>
-                                    <td>09271024</td>
-                                    <td>Hector Guzman Nava</td>
-                                    <td><a href="algunLado.do" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
-                                    <td>13-06-07</td>
-                                    <td>fui.pdf</td>
-                                    <td>
-                                        <select>
-                                            <option>Selecionar...</option>
-                                            <option>Aceptar</option>
-                                            <option>Rechazar</option>
-                                            <option>Correcci&oacute;n</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="button" value="Modificar"/></td>
-                                </tr>
-                                <tr class='gradeX'>
-                                    <td>Ene-Feb</td>
-                                    <td>09271024</td>
-                                    <td>Hector Guzman Nava</td>
-                                    <td><a href="algunLado.do" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
-                                    <td>13-06-07</td>
-                                    <td>fui.pdf</td>
-                                    <td>
-                                        <select>
-                                            <option>Selecionar...</option>
-                                            <option>Aceptar</option>
-                                            <option>Rechazar</option>
-                                            <option>Correcci&oacute;n</option>
-                                        </select>
-                                    </td>
-                                    <td><input  class="modificarNR"  type="button" value="Modificar"/></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -216,8 +157,6 @@
                                     <td>Hector Guzman Nava</td>
                                     <td>fui.pdf</td>
                                     <td>13-06-07</td>
-                                    
-                                    
                                 </tr>
                             </tbody>
                         </table>
@@ -232,7 +171,7 @@
         </div>
         <%-- fin del contenido --%>
         <jsp:include page="../Template/footer.jsp" />
-        <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
+        
         
         <div id="a" style="display: none; font-size: 15px">
                 <h1>Motivos de Rechazo</h1>
@@ -253,6 +192,8 @@
                 <button id="guardarObservaciones">Guardar</button>
                 
             </div>
+        
+        <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
     </body>
 </html>
 
