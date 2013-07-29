@@ -7,8 +7,23 @@ function listo()
     $('#frmDatosPersonales').submit(enviarDatosAlumno);
     $('#frmDatosContacto').submit(enviarDatosContactoAlumno);
    
+   $("#comboOrganizaciones").change(function(event) {
+       var idInstancia = $("#comboOrganizaciones").val()
+        recargaProyectos(idInstancia);
+    })
+   
 }
-
+function recargaProyectos(idInstancia)
+{
+    console.log('el id de la isntancia es'+idInstancia);
+    $.get("cargarProyectos.do?id_instancia=" + idInstancia, null, function(respuesta) {
+        console.log('entro');
+        for (i = 0; i < respuesta.domicilio.length; i++) {
+            console.log(respuesta.nombre);
+            $("#proyectos").append('<option value='+ respuesta.id_proyecto +'>'+ respuesta.nombre +'</option>');
+        }
+    });
+}
 function enviarDatosAlumno()
 {
     $("form#frmDatosPersonales :input").each(function(){

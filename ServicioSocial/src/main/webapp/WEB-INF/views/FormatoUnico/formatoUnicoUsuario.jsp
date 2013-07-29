@@ -262,7 +262,7 @@
                             <tr>
                                 <td>Organizaci&oacute;n:</td>
                                 <td>
-                                    <select name="organizacion">
+                                    <select id="comboOrganizaciones" name="organizacion">
                                         <core:forEach items="${instancias}" var="instancia">
                                             <option value="${instancia.idInstancia}">${instancia.nombre}</option>
                                         </core:forEach> 
@@ -279,7 +279,7 @@
                             <tr>
                                 <td>Proyecto:</td>
                                 <td>
-                                    <select name="proyecto">
+                                    <select id="proyectos" name="proyecto">
                                         <option value="">Proy 1</option>
                                         <option value="">Proy 2</option>
                                         <option value="">Proy 3</option>
@@ -289,7 +289,7 @@
 
                         </table>
                         <table class="tablaInput300">
-                            <tr>
+                            <!--<tr>
                                 <td>Calle</td>
                                 <td><input type ="text"/></td> 
                                 <td colspan="2">N&uacute;mero exterior <input style="width:50px"  type ="text"/>
@@ -306,6 +306,10 @@
                                 <td><input type ="text"/></td> 
                                 <td>C.P.</td>
                                 <td><input type ="text"/></td> 
+                            </tr>-->
+                            <tr>
+                                <td>Domicilio</td>
+                                <td colspan="3"><input id="domicilioOrg" type ="text" style="width:99%" /></td> 
                             </tr>
                             <tr>
                                 <td>Titular</td>
