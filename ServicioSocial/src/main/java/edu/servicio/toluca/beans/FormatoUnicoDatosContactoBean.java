@@ -12,10 +12,11 @@ import java.math.BigDecimal;
  * @author SATELLITE
  */
 public class FormatoUnicoDatosContactoBean {
+    private BigDecimal id;
     private String calle;
     private String numeroI;
     private String numeroE;
-    private Colonia colonia;
+  //  private Colonia colonia;
     private String entreCalles;
     private String referencias;
     private String telefono_casa;
@@ -66,9 +67,6 @@ public class FormatoUnicoDatosContactoBean {
         this.numeroE = numeroE;
     }
 
-    /**
-     * @return the idColonia
-     */
 
 
     /**
@@ -169,18 +167,20 @@ public class FormatoUnicoDatosContactoBean {
         this.facebook = facebook;
     }
 
+
+
     /**
-     * @return the colonia
+     * @return the id
      */
-    public Colonia getColonia() {
-        return colonia;
+    public BigDecimal getId() {
+        return id;
     }
 
     /**
-     * @param colonia the colonia to set
+     * @param id the id to set
      */
-    public void setColonia(Colonia colonia) {
-        this.colonia = colonia;
+    public void setId(BigDecimal id) {
+        this.id = id;
     }
     
     

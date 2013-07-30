@@ -32,12 +32,24 @@
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <center><h2>Capturar Asistencia a Plática</h2></center>  
-
-                <form:form name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="folio">
-                    <center><label for="alumno">Folio</label>
-                        <form:input type="text" path="numeroFolio" id="numeroFolio" size="15" />   
-                        <form:errors path="numeroFolio" />
-                        <button type="submit">Asistió</button> </center>
+                <div class="error">
+                ${existe}
+                </div>
+                <form:form  name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="foliosPlatica">
+                    <center>
+                        <table >
+                            <tr>
+                                <td><label for="alumno">Número de Folio</label></td>
+                                 <td><form:input type="text" path="numeroFolio" size="25" name="numeroFolio" /></td>
+                            </tr>
+                      
+                            <tr>
+                               <td><button type="submit">Asistió</button></td>  
+                            </tr>
+                        
+                        </table>
+                            <form:errors path="numeroFolio" cssClass="error"/>
+                    </center>
                     </form:form>
 
             </div>
