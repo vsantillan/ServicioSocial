@@ -1,8 +1,8 @@
 <%-- 
-    Document   : envioCorreo
+-    Document   : envioCorreo
     Created on : 3/06/2013, 01:01:28 PM
     Author     : Jonny
---%>
+---%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!--Css -->
         <link rel="stylesheet" type="text/css" href="css/estilo_sia.css" />
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
@@ -26,14 +26,14 @@
         <title>Envio Correos</title>
     </head>
     <body >
-         
-      
+
+
         <%-- inicio del contenido --%>
         <div id="contenido">
             <center> 
-            <h1>Envio Correos</h1>
-             <%-- Envio Correos --%>
-            <div>
+                <h1>Envio Correos</h1>
+                <%-- Envio Correos --%>
+                <div>
                     <form>
                         <table>
                             <tr>
@@ -55,7 +55,7 @@
                         </table>
                     </form>
                 </div>
-          </center>
+            </center>
         </div>
         <%-- fin del contenido --%>
     </body>

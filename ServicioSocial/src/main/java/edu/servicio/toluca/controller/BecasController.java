@@ -33,6 +33,11 @@ public class BecasController {
     private VistaAlumnoFacade vistaAlumno;
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnico;
+    
+        @RequestMapping(method = RequestMethod.GET, value = "/progaramaGeneralAlumno.do")
+    public String progaramaGeneralAlumno( Model model) {
+        return "/Becas/progaramaGeneralAlumno";
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/preseleccionAlumnos.do")
     public String preseleccionAlumnos(@ModelAttribute(value = "alumnoP") Becado alumnoP, BindingResult result, Model model) {
@@ -44,13 +49,14 @@ public class BecasController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/administracionAlumnosBecados.do")
-    public String administracionAlumnosBecados(Model model) {
+    public String administracionAlumnosBecados(@ModelAttribute(value = "alumnoP") Becado alumnoP, BindingResult result, Model model) {
 
-
+         model.addAttribute("alumno", formatoUnico.findBySpecificField("tipoServicio", "1", "equal", null, null));
          model.addAttribute("preseleccionado", formatoUnico.findBySpecificField("tipoServicio", "4", "equal", null, null));
         model.addAttribute("becado", formatoUnico.findBySpecificField("tipoServicio", "3", "equal", null, null));
       //  model.addAttribute("preseleccionado", formatoUnico.findAll());
         model.addAttribute("espacio", " ");
+        
         return "/Becas/administracionAlumnosBecados";
     }
 
@@ -72,7 +78,7 @@ public class BecasController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/preseleccionadoBD.do")
-    public String updateBecados(Becado alumnoP, Model model) {
+    public  @ResponseBody String updateBecados(Becado alumnoP, Model model) {
 
         if (alumnoP.getAlumno() != null) {
             for (String current : alumnoP.getAlumno()) {
@@ -83,10 +89,10 @@ public class BecasController {
                 form.setTipoServicio(tipoServicio);
                 formatoUnico.edit(form);
             }
-            return "/Becas/exito";
+            return "Alumno(s) agregados a la lista de preseleccion de becados";
 
         } else {
-            return "/Becas/error";
+            return "ERROR no se pudo agregar alumno(s) agregados a la lista de preselelcion de becados";
         }
 
 
@@ -108,7 +114,7 @@ public class BecasController {
             return "Se a quitado el alumno de la lista de preseleccion";
 
         } else {
-            return "Error no se pudo queitar el alumno de la lista de preseleccion";
+            return "ERROR no se pudo queitar el alumno de la lista de preseleccion";
         }
     }
     @RequestMapping(method = RequestMethod.POST, value = "/enviarCorreo.do")
@@ -121,7 +127,7 @@ public class BecasController {
             return "Se ha enviado el correo exitosamente";
 
         } else {
-            return "Error no se a podido enviar el correo";
+            return "ERROR no se a podido enviar el correo";
         }
     }
     @RequestMapping(method = RequestMethod.POST, value = "/aceptarAlumno.do")
@@ -139,7 +145,7 @@ public class BecasController {
             return "El alumno(s) fue agrado correctamente a la lista de becados";
 
         } else {
-            return "Error no se a podido agregar el alumno a la lista de becados";
+            return "ERROR no se a podido agregar el alumno a la lista de becados";
         }
     }
 }

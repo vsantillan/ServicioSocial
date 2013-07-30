@@ -1,6 +1,6 @@
 <%-- 
-    Document   : administracionAlumnosBecados
-    Created on : 7/06/2013, 02:29:54 PM
+    Document   : programaGeneralAlumno
+    Created on : 26/07/2013, 12:40:00 PM
     Author     : Jonny
 --%>
 
@@ -75,7 +75,7 @@
                         </table>
                         <table>
                             <tr>
-                                <td><a href="preseleccionAlumnos.do" rel="shadowbox"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></a></td>
+                                <td><a href="#preseleccionado" rel="shadowbox"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></a></td>
                                 <td><a id="quitarAlumno" href="#" ><img src="imagenes/eliminar.jpg" title="Eliminar" width="29"/></a></td>
                                 <td><a  href="correo.do" rel="shadowbox"><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></a></td>
                                 <td><a id="aceptarAlumno" href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></a></td>
@@ -227,3 +227,4 @@
 
     </body>
 </html>
+

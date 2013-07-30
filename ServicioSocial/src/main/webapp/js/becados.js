@@ -81,4 +81,19 @@ $(document).ready(function() {
         }
 
     });
+//    $('#sb-nav-close').click(function() {
+
+//    $(".seleccionar").click(function() {
+//
+//        $("input:checkbox").attr('checked', true);
+//        $("input[type=checkbox]").attr('checked', true);
+//    });
+//    $(".desseelcionar").click(function() {
+//
+//        $("input:checkbox").attr('checked', false);
+//        $("input[type=checkbox]").attr('checked', false);
+//    });
 });
+
+
+  
