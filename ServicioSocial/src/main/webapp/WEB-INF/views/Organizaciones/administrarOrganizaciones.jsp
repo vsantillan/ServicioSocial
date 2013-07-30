@@ -36,10 +36,9 @@
 
             });
         </script>
-        <script type="text/javascript" src="js/editaOrganizacion.js"></script>
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
-    <body class="background">
+    <body class="background" onmousedown="elemento(event);">
         <jsp:include page="../Template/banner.jsp" />
 
         <div id="contenido">
@@ -62,8 +61,8 @@
                         <core:forEach items="${organizaciones}" var="current">
                             <tr class='gradeX'>
                                 <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
-                                <th><a href="editarOrganizacion.do?id=${current.idInstancia}" rel="shadowbox"><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="retroalimentacionInstancia.do?id=${current.idInstancia}" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
-                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                <th><a href="editarOrganizacion.do?id=${current.idInstancia}" ><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="#prueba" class="retroalimentacion" rel="shadowbox" idInstancia="${current.idInstancia}" nombreInstancia="${current.nombre}" correo="${current.correo}" ><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
+                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=740px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
@@ -72,14 +71,43 @@
                         </core:forEach>
                     </tbody>
                 </table>
-
                 <%-- fin del contenido --%>
             </div>
             <div style="clear: both;"/>
         </div>
     </div>
+    <div id="prueba" style="display: none">
+        <h2>Cancelacion de Organizaci&oacute;n</h2>
+        <div id="tabas">
+            <ul>
+                <li><a href="#">Enviar Retroalimentaci&oacute;n</a></li>
+            </ul>
+            <div>
+                <form id="MyForm" action="">
+                    <table>
+                        <tr>
+                            <input id="idInstancia" type="hidden"/>
+                            <td>Nombre de la Organizaci&oacute;n:</td>
+                            <td><input type ="text" id="nombre" /> </td>
+                        </tr>
+                        <tr>
+                            <td>E-Mail:</td>
+                            <td><input type ="text" id="correo" /> </td>
+                        </tr>
+                        <tr>
+                            <td>Descripci&oacute;n:</td>
+                            <td><textarea id="descripcion" name="descripcion" rows="10" cols="70"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td><input type ="submit" class="borrarInstancia" value="Enviar Retroalimentaci&oacute;n" /> </td>
+                            <td><input type ="button" value="Cancelar" onclick="window.parent.Shadowbox.close();"/> </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
     <jsp:include page="../Template/footer.jsp" />
-
 </body>
 
 

@@ -96,7 +96,7 @@ public class Proyectos implements Serializable {
     @Column(name = "MODALIDAD")
     private String modalidad;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Column(name = "FECHA_ALTA")
     @Temporal(TemporalType.DATE)
     private Date fechaAlta;

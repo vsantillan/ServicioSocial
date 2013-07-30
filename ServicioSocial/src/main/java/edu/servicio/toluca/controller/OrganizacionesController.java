@@ -19,12 +19,15 @@ import edu.servicio.toluca.sesion.EstadosFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
+import edu.servicio.toluca.sesion.ProgramaFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.validation.Valid;
@@ -62,15 +65,20 @@ public class OrganizacionesController {
     private TipoProyectoFacade tipoProyectoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ProgramaFacade")
+    private ProgramaFacade programaFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
-    public String administradorOrganizaciones(Model model) {
+    public String administradorOrganizaciones(Model model)
+    {
         model.addAttribute("organizaciones", instanciaFacade.findAll());
+        model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
         return "/Organizaciones/administrarOrganizaciones";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarProyectos.do")
-    public String administradorProyectos(Model model) {
+    public String administradorProyectos(Model model) 
+    {
         model.addAttribute("proyectos", proyectosFacade.findAll());
         return "/Organizaciones/administrarProyectos";
     }
@@ -150,40 +158,92 @@ public class OrganizacionesController {
 
     //Editar Organizacion
     @RequestMapping(method = RequestMethod.GET, value = "/editarOrganizacion.do")
-    public String editarOrganizacion(int id, Model model) {
+    public String editarOrganizacion(int id, Model model) 
+    {
         model.addAttribute("instancia", instanciaFacade.find(BigDecimal.valueOf(id)));
-        model.addAttribute("editaOrganizacion", new EditarOrganizacion());
-        //model.addAttribute("instancia", new Instancia()); 
+        model.addAttribute("instanciaDireccion", instanciaFacade.find(BigDecimal.valueOf(id)));
         model.addAttribute("estados", estadosFacade.findAll());
-        //model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
-        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findAll());
-
+        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
         return "/Organizaciones/editarOrganizacion";
     }
-
+    
     @RequestMapping(method = RequestMethod.POST, value = "/modificarOrganizacion.do")
-    public String modificarOrganizacion(int id, BindingResult result) {
-        if (result.hasErrors()) {
+    public String modificarOrganizacion(@Valid Instancia instancia,BindingResult result,Model model,String confirma_password,int valid_pass)
+    {
+        System.out.println("contraseña:" + instancia.getPassword());
+        System.out.println("confirma_contraseña:" + confirma_password);
+
+        if(valid_pass==1)
+        {
+            if (!confirma_password.equals(instancia.getPassword())) 
+            {
+                result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
+                model.addAttribute("confirma_password", "<div class='error'>Las contraseñas no coinciden</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
+            }
+        }
+        
+        if(result.hasErrors())
+        {
             System.out.println("Con errores");
+            System.out.println("Los errores son: "+result.toString());
+            model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+            model.addAttribute("estados", estadosFacade.findAll());
+            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
             return "/Organizaciones/editarOrganizacion";
-        } else {
-            Instancia instancia;
-            instancia = instanciaFacade.find(id);
-            instancia.setEstatus(BigInteger.valueOf(0));
+        }else{
             instanciaFacade.edit(instancia);
             System.out.println("Sin errores");
             //System.out.println(editaOrganizacion.getEstatus());
+            model.addAttribute("organizaciones", instanciaFacade.findAll());
+            model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
             return "/Organizaciones/administrarOrganizaciones";
         }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/editarProyecto.do")
-    public String editarProyectos(int id, Model model) {
-        model.addAttribute("proyectos", proyectosFacade.find(BigDecimal.valueOf(id)));
-        model.addAttribute("instancias", instanciaFacade.findAll());
+    public String editarProyectos(int id,Model model)
+    {
+        Proyectos proyecto=proyectosFacade.find(BigDecimal.valueOf(id));
+        model.addAttribute("proyecto", proyecto);
+        //model.addAttribute("proyectoAux", proyectosFacade.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("instancia", instanciaFacade.findAll());
+        model.addAttribute("estados", estadosFacade.findAll());
         model.addAttribute("perfil", perfilFacade.findAll());
-        model.addAttribute("tipoProyecto", tipoProyectoFacade.findAll());
+        model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+        Iterator iter = proyecto.getProyectoPerfilCollection().iterator();
+        while (iter.hasNext()) 
+        {
+            System.out.println("perfil: "+iter.next());
+        }
         return "/Organizaciones/editarProyecto";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarProyecto.do")
+    public String modificarProyecto(@Valid Proyectos proyecto,BindingResult result, Model model)
+    {
+        proyecto.setFechaAlta(new Date());
+        proyecto.setIdPrograma(programaFacade.find(BigDecimal.ONE));
+        //proyecto.setValidacionAdmin(BigInteger.ONE);
+        if(result.hasErrors())
+        {
+            System.out.println("Con errores");
+            System.out.println("Los errores son: "+result.toString());
+            //model.addAttribute("proyecto", proyectosFacade.find(proyecto.getIdProyecto()));
+            model.addAttribute("proyectoAux", proyectosFacade.find(proyecto.getIdProyecto()));
+            model.addAttribute("instancia", instanciaFacade.findAll());
+            model.addAttribute("estados", estadosFacade.findAll());
+            //model.addAttribute("perfil", perfilFacade.findAll());
+            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+            //model.addAttribute("proyectos", proyectosFacade.findAll());
+            return "/Organizaciones/editarProyecto";
+        }else{
+            proyectosFacade.edit(proyecto);
+            System.out.println("Sin errores");
+            //System.out.println(editaOrganizacion.getEstatus());
+            //model.addAttribute("cierraShadowbox", "<script>window.parent.Shadowbox.close();</script>");
+            model.addAttribute("proyectos", proyectosFacade.findAll());
+            return "/Organizaciones/administrarProyectos";
+        }
     }
 
     //Borrar Organizacion & Proyecto
