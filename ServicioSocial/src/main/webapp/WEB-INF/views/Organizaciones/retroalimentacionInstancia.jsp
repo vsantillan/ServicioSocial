@@ -37,7 +37,7 @@
                     <li><a href="#">Enviar Retroalimentaci&oacute;n</a></li>
                 </ul>
                 <div>
-                    <form:form commandName="retroalimentacionInstancia" id="MyForm" action="borrarInstancia.do" method="POST" onsubmit="return validarOrganizaciones.do">
+                    <form:form commandName="retroalimentacionInstancia" id="MyForm" action="borrarInstancia.do" method="POST">
                         <table>
                             <tr>
                                 <form:hidden path="id" value="${instancia.idInstancia}" class="idIns" />

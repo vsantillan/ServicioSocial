@@ -2,7 +2,9 @@
 
 $(document).on('click', ".editOrg", updateOrganisation);
 $(document).on('click', ".editProy", updateProyecto);
-//$(document).on('click', ".redir", reloadPage);
+//$(document).on('click', ".enviarRetro", enviaDatos);
+$(document).ready(retroalimentacion);
+
 
 
 
@@ -26,21 +28,38 @@ function updateOrganisation(e) {
     var idUpdate = $(e.target).attr('ide');
     var tabla = $('#example').dataTable();
     tabla.fnDeleteRow(row);
-    //ajax(idUpdate);
     $.post("updateStatus.do", {id: idUpdate}, function(response) {
-        alert("Ya hizo el update");
+  
     });
 }
-function reloadPage(e) {
-    $('body').attr("ide","sss");
-    alert("asd");
-    //url = "http://taller-de-scripts.com.ar";
-    //$(location).attr('href',url);
-    //document.location.href = "http://www.miweb.com/Compra/PanelControl.aspx";
-     //  window.parent.Shadowbox.close();
-    //alert("Ya la hiciste");
+
+function retroalimentacion() {
+    $(".mandaRetro").click(function() {
+        $("input#nombre").attr("value", $(this).attr("nombre"));
+        $("input#nombreProyecto").attr("value", $(this).attr("nombreProyecto"));
+        $("input#correo").attr("value", $(this).attr("correo"));
+        $("input#idI").attr("value", $(this).attr("idO"));
+
+    });
+
+
+
+
+
 }
 
+function enviaDatos() {
+//    alert("work it");
+  //  var tabla = $('#example').dataTable();
+ //   tabla.fnDeleteRow(row);
+//    var str = $("#MyForm").serialize();
+//    console.log(str);
+//    $.post("borrarOrganizacion.do", {id: "1", descripcion: "ola k ase", correo: "roy_006@hotmail.com"}, function(response) {
+//        alert("Ya mando Post: " + response);
+//    });
+
+
+}
 
 
 

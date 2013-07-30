@@ -15,8 +15,6 @@
 <html>
     <head>
 
-        /* Attach the Reveal CSS */
-        <link rel="stylesheet" href="modal/reveal.css">
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
         <jsp:include page="../Template/headsJQueryUI.jsp" />
@@ -26,12 +24,6 @@
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
-        <!--Heads Modal--->
-
-
-
-        /* Then just attach the Reveal plugin */
-        <script src="modal/jquery.reveal.js" type="text/javascript"></script>
 
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
@@ -54,25 +46,15 @@
 
             });
         </script>   
-        <script>
-            function pru(algo) {
-                if (algo)
-                    window.location = "validarOrganizaciones.do";
-            }
-        </script>
+
         <script src="js/jquery.manolo.js"></script>     
 
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
-    <body class="background" onload="pru();" ide="d">
-        <a href="#" data-reveal-id="myModal">Click Me For A Modal</a>
+    <body class="background" >
 
         <jsp:include page="../Template/banner.jsp" />
-        <div id="myModal" class="reveal-modal">
-            <h1>Modal Title</h1>
-            <p>Any content could go in here.</p>
-            <a class="close-reveal-modal">&#215;</a>
-        </div>
+
 
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
@@ -102,14 +84,16 @@
                     <tbody>
                         <core:forEach items="${organizacion}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="retroalimentacionValidacionInstancia.do?id=${current.idInstancia}" rel="shadowbox"><img class="uSh" src="imagenes/tache.png" width="30"></a></th>
+                                <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}"  rel="shadowbox"><img  src="imagenes/tache.png" width="30"></a></th>
                                 <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
                                 <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
+                        <input type="hidden" value="${current.correo}" x="${current.idInstancia}"/>
+                        <input type="hidden" value="${current.nombre}" x="${current.idInstancia}"/>
 
-                            </tr>
-                        </core:forEach>
+                        </tr>
+                    </core:forEach>
                     </tbody>
                 </table>
 
@@ -117,11 +101,36 @@
             <div style="clear:both;"></div>
             <%-- fin del contenido --%>
         </div>
-    </div>
+        <div id="a" style="display: none; font-size: 15px">
+            <h1>Motivos de Rechazo</h1>
+            <form:form commandName="retroalimentacionInstancia"  id="MyForm" method="POST"  action="borrarInstancia.do">
+                <table >
+                    <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
+                    <form:input hidden="hidden" id="control" path="control" value="1" />
+                    <tr>
 
-    <jsp:include page="../Template/footer.jsp" />
+                        <td>Nombre de la Organizaci&oacute;n:</td>
+                        <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" /> </td>
+                    </tr>
+                    <tr>
+                        <td>E-Mail:</td>
+                        <td><form:input type ="text"  id="correo" path="correo" name="correo" /> </td>
+                    </tr>
+                    <tr>
+                        <td>Descripci&oacute;n:</td>
+                        <td><form:textarea  id="descripcion" path="descripcion" rows="10" cols="70" name="descripcion" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n"  class="enviarRetro" > </td>
+                    </tr>
+                </table>
+            </form:form>>
+        </div>
 
-</body>
-<!-- 0 no validados 1 ya validados  cuando lo rechace cambia a 2 en validacion y ya no lo ve con retroalimentacion y cuando corrija 
-lo regresamos a 0-->
+        <jsp:include page="../Template/footer.jsp" />
+
+    </body>
+    <!-- 0 no validados 1 ya validados  cuando lo rechace cambia a 2 en validacion y ya no lo ve con retroalimentacion y cuando corrija 
+    lo regresamos a 0-->
 </html>
