@@ -77,20 +77,37 @@ public class OrganizacionesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/validarOrganizaciones.do")
     public String panelAdministradorOrganizaciones(Model model) {
-        model.addAttribute("organizacion", instanciaFacade.findAll());
+        model.addAttribute("organizacion", instanciaFacade.findBySpecificField("validacionAdmin", "0", "equal", null, null));
+        model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
         return "/Organizaciones/validarOrganizaciones";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/updateStatus.do")
     public @ResponseBody
     String actualizarStatusOrganizaciones(int id, Model model) {
+        Instancia instancia;
+        instancia = instanciaFacade.find(BigDecimal.valueOf(id));
+        instancia.setValidacionAdmin(BigInteger.valueOf(1));
+        System.out.println("Ya actualizo");
+        // instanciaFacade.edit(instancia);
 
-        return "";
+        return "ok";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/updateProyecto.do")
+    public @ResponseBody
+    String actualizarStatusProyecto(int id, Model model) {
+        Proyectos proyecto;
+        proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
+        proyecto.setValidacionAdmin(BigInteger.valueOf(1));
+        // proyectosFacade.edit(proyecto);
+        return "ok";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/validarProyectos.do")
     public String panelAdministradorProyectos(Model model) {
         model.addAttribute("proyecto", proyectosFacade.findBySpecificField("validacionAdmin", "0", "equal", null, null));
+        model.addAttribute("borrarProyecto", new BorrarProyecto());
         return "/Organizaciones/validarProyectos";
     }
 
@@ -114,8 +131,6 @@ public class OrganizacionesController {
         return "/PanelOrganizacion/panelOrganizacion";
     }
 
-    
-
     @RequestMapping(method = RequestMethod.GET, value = "/detalleProyecto.do")
     public String detalleProyecto(BigDecimal id, Model model) {
         model.addAttribute("proyectoDetalle", proyectosFacade.find(id));
@@ -126,7 +141,7 @@ public class OrganizacionesController {
     public String detalleOrganizacion(BigDecimal id, Model model) {
         model.addAttribute("instancia", instanciaFacade.find(id));
         return "/Organizaciones/detalleOrganizacion";
-    }    
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/mensajeOrganizacion.do")
     public String mensajeOrganizacion(Model a) {
@@ -174,20 +189,33 @@ public class OrganizacionesController {
     //Borrar Organizacion & Proyecto
     @RequestMapping(method = RequestMethod.POST, value = "/borrarInstancia.do")
     public @ResponseBody
-    String borrarInstancia(@Valid BorrarInstancia retroalimentacionInstancia, BindingResult resultado) {
+    String borrarInstancia(BorrarInstancia retroalimentacionInstancia, BindingResult resultado) {
         if (resultado.hasErrors()) {
             for (ObjectError error : resultado.getAllErrors()) {
                 System.out.println(error.getDefaultMessage());
             }
             return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
         } else {
-            System.out.println("Antes del update");
             Instancia instancia;
             instancia = instanciaFacade.find(BigDecimal.valueOf(retroalimentacionInstancia.getId()));
-            instancia.setEstatus(BigInteger.valueOf(0));
-            //instanciaFacade.edit(instancia);
-            System.out.println("Despues del update");
-            return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');window.parent.Shadowbox.close();</script>";
+//            instancia.setEstatus(BigInteger.valueOf(0));
+            if (retroalimentacionInstancia.getControl() == 0) {
+                instancia.setEstatus(BigInteger.valueOf(0));
+                return "<script>"
+                        + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
+                        + "location.href='administrarOrganizaciones.do';"
+                        + "</script>";
+            } else {
+                instancia.setValidacionAdmin(BigInteger.valueOf(2));
+                return "<script>"
+                        + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
+                        + "location.href='validarOrganizaciones.do';"
+                        + "</script>";
+            }
+//            instanciaFacade.edit(instancia);
+
+
+
         }
     }
 
@@ -200,10 +228,22 @@ public class OrganizacionesController {
             }
             return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
         } else {
-            System.out.println("Antes del update");
-            //instanciaFacade.edit(instancia);
-            System.out.println("Despues del update");
-            return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');window.parent.Shadowbox.close();</script>";
+            Proyectos proyecto;
+            proyecto = proyectosFacade.find(BigDecimal.valueOf(retroalimentacionProyecto.getId()));
+
+            if (retroalimentacionProyecto.getControl() == 0) {
+                proyecto.setEstatus(BigInteger.valueOf(0));
+                return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
+                        + "location.href='administrarProyectos.do';"
+                        + "</script>";
+            } else {
+
+                proyecto.setValidacionAdmin(BigInteger.valueOf(2));
+                return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
+                        + "location.href='validarProyectos.do';"
+                        + "</script>";
+            }
+
         }
     }
 
@@ -214,6 +254,4 @@ public class OrganizacionesController {
 
         return "/Organizaciones/editarOrganizacion";
     }
-
-
 }
