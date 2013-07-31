@@ -210,13 +210,17 @@ public class PlaticaController {
  
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaLugarBD.do")
-    public String altaLugaresBD(LugaresPlatica lugares, Model modelo) {
-
+  public String altaLugaresBD(@Valid LugaresPlatica lugares, BindingResult result,Model modelo) {
+  if (result.hasErrors()) {
+      
+        return "/Platicas/lugaresPlatica";
+  }
+  else{
         lugaresPlaticaFacade.create(lugares);
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
         return "/Platicas/lugaresPlatica";
     }
-
+    }
     //metodo para cambiar informacion de platica dinamicamente en seleccionarPlatica
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
     public @ResponseBody

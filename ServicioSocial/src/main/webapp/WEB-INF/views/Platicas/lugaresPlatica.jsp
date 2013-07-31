@@ -38,7 +38,9 @@
                             <tr>
                                 <td>  <form:textarea  path="lugar" rows="3" cols="60" /></td>    
                             </tr>
-
+                            <tr>
+                                 <td><form:errors path="lugar" cssClass="error" /></td>   
+                            </tr>
                             <tr> 
                                 <td> </td>
                                 <td> <input type ="submit" value = "Guardar " /> </td>
