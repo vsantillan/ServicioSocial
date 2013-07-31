@@ -43,11 +43,6 @@
                 alert("El número de alumnos seleccionados es: " + cont);
 
             }
-            function contar() {
-
-                location.reload();
-
-            }
         </script>
 
 
