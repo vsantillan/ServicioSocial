@@ -14,6 +14,7 @@ public class FormatoUnicoBean {
     private String nombre;
     private String fechaSubida;
     private String idDatosPersonales;
+    private String periodo;
 
     /**
      * @return the noControl
@@ -83,5 +84,19 @@ public class FormatoUnicoBean {
      */
     public void setIdDatosPersonales(String idDatosPersonales) {
         this.idDatosPersonales = idDatosPersonales;
+    }
+
+    /**
+     * @return the periodo
+     */
+    public String getPeriodo() {
+        return periodo;
+    }
+
+    /**
+     * @param periodo the periodo to set
+     */
+    public void setPeriodo(String periodo) {
+        this.periodo = periodo;
     }
 }

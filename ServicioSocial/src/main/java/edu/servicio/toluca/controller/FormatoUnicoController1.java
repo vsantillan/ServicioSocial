@@ -93,7 +93,7 @@ public class FormatoUnicoController1 {
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());
                 formatoNR.setIdDatosPersonales(formato.getDatosPersonalesId().getId().toString());
-                
+                formatoNR.setPeriodo(formato.getPeriodoInicio());
 
                 List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
@@ -115,7 +115,7 @@ public class FormatoUnicoController1 {
                 formatoAceptados.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());
-                
+                formatoAceptados.setPeriodo(formato.getPeriodoInicio());
                 List<Documentos> listaDocumentos2 = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
@@ -134,6 +134,7 @@ public class FormatoUnicoController1 {
                 formatoRechazados.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());   
+                formatoRechazados.setPeriodo(formato.getPeriodoInicio());
                 List<Documentos> listaDocumentos2 = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
@@ -146,19 +147,20 @@ public class FormatoUnicoController1 {
             }
             if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION)))//Formatos Correccion
             {
-                FormatoUnicoBean formatoRechazados = new FormatoUnicoBean();
-                formatoRechazados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
-                formatoRechazados.setNombre(formato.getDatosPersonalesId().getNombre()
+                FormatoUnicoBean formatoCorreccion = new FormatoUnicoBean();
+                formatoCorreccion.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
+                formatoCorreccion.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());   
+                formatoCorreccion.setPeriodo(formato.getPeriodoInicio());
                 List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
                 if(fechaSubida != null)
                 {
-                     formatoRechazados.setFechaSubida(fechaSubida);
-                     listadoFormatosCorreccion.add(formatoRechazados);
+                     formatoCorreccion.setFechaSubida(fechaSubida);
+                     listadoFormatosCorreccion.add(formatoCorreccion);
                 }
             }
         }
