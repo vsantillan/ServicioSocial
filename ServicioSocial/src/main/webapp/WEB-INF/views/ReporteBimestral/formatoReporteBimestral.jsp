@@ -4,10 +4,7 @@
     Author     : roy
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../Template/taglibs.jsp" %>
 
 <!DOCTYPE html>
 <html>
@@ -18,11 +15,12 @@
         <%@ include file="../Template/metas.jsp" %>
 
         <!--Script para DataTables-->
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
+        <jsp:include page="../Template/headsJQueryUI.jsp" /><!--Hay conflicto de datatables con estilo forms--->
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
 
         <!--Scripts Datapicker-->
         <script src="js/jqueryUI/jquery.ui.datepicker.js"></script>
+        <script type="text/javascript" language="javascript" src="js/reportesBimestrales.js"></script>
         <script type="text/javascript">
 
             $(document).ready(function() {
@@ -48,7 +46,8 @@
         </script> 
         <script>
             $(function() {
-                $("#datepicker").datepicker();
+                $('#datepicker').datepicker({dateFormat: 'dd/mm/yy'});
+                $('#formPlatica').formly();
             });
         </script>
 
@@ -69,14 +68,14 @@
                 <div id="Generar">
                      <h1>Generar Reporte</h1>
                      <p>Introduzca los datos requeridos para llenar su formulario</p>
-                    <form:form name="altaPlatica" id="MyForm" action="#" method="POST">
+                    <form:form name="reportesBimestrales" id="reportesBimestrales"  action="#" method="POST">
 
                         <table>
                             <tr>
                                 <td> <label for="fecha">Fecha de Inicio del Reporte</label> </td>
-                                <td><input type="text"  name="fechaInicio"id="datepicker" /></td>  
+                                <td><input type="text"  name="fechaInicio"id="datepicker" onchange="actualizaFecha(this)" /></td>  
                                 <td> <label for="fecha">Fecha de Fin del Reporte</label> </td>
-                                <td><input type="text" name="fechaFin" disabled="disabled" value="13/03/1991"/></td> 
+                                <td><input type="text" name="fechaFin" id="fechaFin" value=""/></td> 
                             </tr>
                             <tr>
                                 <td><label for="horasA">Horas del Reporte</label></td>

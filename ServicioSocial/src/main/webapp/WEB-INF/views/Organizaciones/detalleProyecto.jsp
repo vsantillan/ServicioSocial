@@ -51,21 +51,27 @@
                 </tr>
                 <tr>
                     <td><p>Actividades:</p></td>
-                    <td><p>
-                            <%-- <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
-                                 <core:out  value="${actividades.detalle}"/>
-                             </core:forEach>--%>
-
+                    <td><p>                        
+                           <core:choose>
+                                <core:when test="${empty proyectoDetalle.actividadesCollection}">
+                                    <p>No hay actividades</p>
+                                </core:when>
+                                <core:otherwise>
+                                    <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
+                                    <p>${actividades.detalle}</p>
+                                      </core:forEach>
+                                </core:otherwise>
+                           </core:choose>                                                          
                         </p>
                     </td>
                 </tr>
                 <tr>
                     <td><p>Horario:</p></td>
                     <td><p>
-                            <%--     <core:forEach items="${proyectoDetalle.horarioCollection}" var="horarios">
-                                      <core:out  value="${horarios.dia}"/>
-                                      <core:out  value="${horarios.hora}"/>
-                                  </core:forEach> --%>
+                            <%-- <core:forEach items="${proyectoDetalle.horarioCollection}" var="horarios">
+                             <p>Dia: value="${horarios.dia}"/></p>
+                             <p>Hora: <core:out  value="${horarios.hora}"/></p>
+                         </core:forEach> --%>
                         </p>
                     </td>
                 </tr>
@@ -96,9 +102,11 @@
                 <tr>
                     <td><p>Perfil buscado:</p></td>
                     <td><p>
-                            <%--<core:forEach items="${proyectoDetalle.proyectoPerfilCollection}" var="perfiles">
-                                <core:out value="${perfiles.idProyectoPerfil}"/>
-                            </core:forEach>--%>
+                            <core:forEach items="${proyectoDetalle.proyectoPerfilCollection}" var="perfiles">
+                            <ul>
+                                <li>  <p>Perfil: ${perfiles.idPerfil.nombre}</p></li>
+                            </ul>
+                        </core:forEach>
                         </p></td>
                 </tr>
             </table>
