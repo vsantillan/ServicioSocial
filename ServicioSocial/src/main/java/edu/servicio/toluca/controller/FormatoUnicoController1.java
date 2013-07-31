@@ -63,7 +63,10 @@ public class FormatoUnicoController1 {
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     private RegObservacionesFacade regisObservacionesFacade;
     
-    
+        final int VALOR_NO_REVISADOS = 4;
+        final int VALOR_ACEPTADOS = 1;
+        final int VALOR_RECHAZADOS = 2;
+        final int VALOR_CORRECCION = 3;
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
@@ -76,10 +79,7 @@ public class FormatoUnicoController1 {
         
         
         
-        final int VALOR_NO_REVISADOS = 4;
-        final int VALOR_ACEPTADOS = 1;
-        final int VALOR_RECHAZADOS = 2;
-        final int VALOR_CORRECCION = 3;
+      
         
         for (FormatoUnico formato : formatoUnico.findAll()) 
         {
@@ -192,7 +192,7 @@ public class FormatoUnicoController1 {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR_Aceptado.do")
     public @ResponseBody String modificarFU_NR_Aceptados(String id) {
         
-        formatoUnico.find(BigDecimal.valueOf(Long.valueOf(id))).setStatusFui(BigInteger.valueOf(1));
+        formatoUnico.find(BigDecimal.valueOf(Long.valueOf(id))).setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
         
         
         return "OK";
@@ -202,14 +202,27 @@ public class FormatoUnicoController1 {
     
    
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR.do")
-    public @ResponseBody String modificarFormatoUnico(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,String alumno) {
+    public @ResponseBody String modificarFormatoUnico(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,String idDatosPersonales,String idFormatoUnico,String tipo) {
         
-        for(String i:observaciones)
+        switch(Integer.parseInt(tipo))
+        {
+            case 1://Correccion
+                formatoUnico.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico))).setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
+                break;
+            case 2://Rechazo
+                formatoUnico.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico))).setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
+                break;
+        }
+        
+        
+        for(String idObservacion:observaciones)
         {
             RegObservaciones registro=new RegObservaciones();
-            registro.setCatalogoObservacionId(observacionesFacade.find(BigDecimal.valueOf(Long.valueOf(i))));
-            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(alumno))));
+            registro.setCatalogoObservacionId(observacionesFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatosPersonales))));
             registro.setFecha(new Date());
+            
+            regisObservacionesFacade.create(registro);
         }
         return "OK";
     }

@@ -112,10 +112,8 @@ function obtenerDatos()
       }
   });
   
-  $.post("modificarFormatoUnicoNR.do",{alumno:idDatosPersonales,observaciones:array},function(respuesta)
-    {
-        console.log(respuesta);
-        
+  $.post("modificarFormatoUnicoNR.do",{idDatoPersonales:idDatosPersonales,idFormatoUnico:idFormatoUnico,tipo:tipo,observaciones:array},function(respuesta)
+    {        
         if(respuesta==="OK")
         {
             window.parent.Shadowbox.close();
