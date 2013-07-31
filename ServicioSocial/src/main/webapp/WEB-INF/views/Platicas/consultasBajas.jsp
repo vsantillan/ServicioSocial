@@ -64,13 +64,6 @@
                 <p></p>
                 <p></p>
 
-                <%-- <c:forEach items="${platica}" var="platica">
-                    <b>ID:</b>${platica.id}<br/>
-                    <b>Fecha</b>${platica.fecha}<br/>
-                    <b>Hora</b>${platica.hora}<br/>
-                </c:forEach> --%>
-
-
 
                 <div style="width:700px;overflow:scroll">
 
@@ -94,11 +87,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%--  <%        
-                       if (lista.size() > 0){
-                       for (int i=0; i < lista.size(); i++){
-                          
-                           %> --%>
+             
                                 <c:forEach items="${platica}" var="platica">
                                     <tr>
                                         <td><a class="elimina"><img src="imagenes/trash.png" height="40" width="45" /></a></td>
@@ -118,18 +107,6 @@
 
                                     </tr>
                                 </c:forEach>
-
-
-                                <%--     <%
-                           
-                       }
-                    }
-                    
-                    
-                           else{
-                        out.println("no hay platicas dadas de alta");
-                           }
-                     %>    --%>
 
                             </tbody>
 

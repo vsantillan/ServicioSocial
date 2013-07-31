@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Catálogo de lugares</title>
     </head>
-    <body  onload="document.alta.lugar.focus()" class="background">
+    <body  onload="document.altaLugares.lugar.focus()" class="background">
         <jsp:include page="../Template/banner.jsp" />
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
@@ -22,7 +22,7 @@
                 <center>
                     <h1>Catálogo de lugares</h1>
                     <%-- Formulario Nueva lugar para platica de inducción --%>
-                    <form:form action="altaLugarBD.do" method="post"  id="MyForm" modelAttribute="lugaresPlatica" name="alta">  
+                    <form:form action="altaLugarBD.do" method="post"  id="MyForm" modelAttribute="lugaresPlatica" name="altaLugares">  
                         <table style="width:500px">
                             <tr>
                                 <td>

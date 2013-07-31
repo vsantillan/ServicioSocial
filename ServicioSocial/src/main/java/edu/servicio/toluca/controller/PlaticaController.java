@@ -71,10 +71,6 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/consultasBajas.do")
     public String consultasBajas(Model model) {
-
-
-
-        // System.out.println("Conteo de registros Platica:"+platicaFacade.count()); 
         LinkedHashMap ordenarDesc = new LinkedHashMap();
         ordenarDesc.put("fecha", "desc");
 
@@ -101,7 +97,13 @@ public class PlaticaController {
         modelo.addAttribute("platica", new Platica());
         return "/Platicas/seleccionarPlatica";
     }
+       @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
+    public String altaLugares(Model modelo) {
+        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+        return "/Platicas/lugaresPlatica";
+    }
 
+    // metodo para validar fecha, va colocado antes del metodo que invoca a @valid
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true);
@@ -112,8 +114,6 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
     public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException {
 
-        //System.out.println(platica.getHora());
-        //System.out.println(platica.getIdLugar().getId());
         platica.setNumeroAsistentes(0);
 
         if (result.hasErrors()) {
@@ -139,14 +139,16 @@ public class PlaticaController {
         platica.setId(Long.parseLong(fecha));
 
         foliosPlatica.setPlaticaId(platica);
+        //folio: numero de control+idPlatica
         foliosPlatica.setNumeroFolio("hola");
         foliosPlatica.setStatus((short) 1);
+        //incrementar numero de asistentes +1
 
         foliosPlaticaFacade.create(foliosPlatica);
 
 
-        //return "/Platicas/reporte";
-        return "/PanelUsuario/panelUsuario";
+        return "/Platicas/reporte";
+        //return "/PanelUsuario/panelUsuario";
     }
 /////////ASISTENCIA.DO////////////////////
 
@@ -205,11 +207,7 @@ public class PlaticaController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
-    public String altaLugares(Model modelo) {
-        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-        return "/Platicas/lugaresPlatica";
-    }
+ 
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaLugarBD.do")
     public String altaLugaresBD(LugaresPlatica lugares, Model modelo) {
@@ -219,6 +217,7 @@ public class PlaticaController {
         return "/Platicas/lugaresPlatica";
     }
 
+    //metodo para cambiar informacion de platica dinamicamente en seleccionarPlatica
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
     public @ResponseBody
     PlaticaJson actualizarDetalle(String fecha, Model modelo) {

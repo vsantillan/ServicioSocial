@@ -7,44 +7,8 @@
                // $("#frm_usu").validate();
             });
 			
-			/*function fn_cantidad(){
-				cantidad = $("#grilla tbody").find("tr").length;
-				$("#span_cantidad").html(cantidad);
-			};*/
-            
-            function fn_agregar(){
-                cadena = "<tr Bgcolor='#FBF2EF'>";
-                cadena = cadena + "<td><div  contenteditable >" + $("#id_platica").val() + "</div></td>";
-                cadena = cadena + "<td><div  contenteditable >" + $("#fecha").val() + "</div></td>";
-                cadena = cadena + "<td><div  contenteditable >" + $("#hora").val() + "</div></td>";
-                cadena = cadena + "<td><div  contenteditable >" + $("#lugar").val() + "</div></td>";
-                cadena = cadena + "<td><div  contenteditable >" + $("#semestre").val() + "</div></td>";
-                cadena = cadena + "<td><div  contenteditable >" + $("#num_asis").val() + "</div></td>";
-                
-                
-                cadena = cadena + "<td><a class='elimina'><img src='images/delete.png' /></a></td>";
-               // cadena = cadena + "<td><a class='edita'><img src='./images/page_white_edit.png' /></a></td>";
-                $("#grilla tbody").append(cadena);
-                
-                var rfc = $("#id_platica").val();
-                var razon=$("#razon").val();
-                var titular=$("#titular").val();
-                var direccion=$("#direccion").val();
-                var pagina=$("#pagina").val();
-                var email=$("#email").val();
-                var telefono1=$("#telefono1").val();
-                var telefono2=$("#telefono2").val();
-                var contacto=$("#contacto").val();
-         
-      ///
-                /*mandar a agregar  la instancia*/
-      //   $.post("AgregarInstanciaC.jsp", {rfc: rfc, razon: razon, titular: titular, direccion: direccion, pagina: pagina, email:email, telefono1: telefono1, telefono2: telefono2, contacto:contacto});
-                
-                
-              fn_dar_eliminar();
-               // fn_cantidad();
-                alert("Usuario agregado");
-            };
+	
+
             
             function fn_dar_eliminar(){
                 $("a.elimina").click(function(){

@@ -19,33 +19,33 @@
             });
 
         </script>
- <script language="javascript">
-function marcado(){
-var opcion = document.getElementById("aceptacionleer"); //acceso al botón
+        <script language="javascript">
+            function marcado() {
+                var opcion = document.getElementById("aceptacionleer"); //acceso al botón
 
-//var platica=document.getElementById("fecha").html;
-var platica = $("#fecha option:selected").html();
-         if (opcion.checked == true) { //botón seleccionado
-            //alert("Esta seguro de registrarse a la plática de inducción:\nFecha \t "+platica)
-             var statusConfirm = confirm("Está seguro de registrarse a la plática de inducción:\nFecha \t "+platica); 
-           //  apprise('Está seguro de registrarse a la plática de inducción:\nFecha \t '+platica, {'verify':true, 'textYes':'Si!', 'textNo':'No'});
-            if (statusConfirm == true) 
-            { 
-                alert ("A continuacion veras tu comprobante de registro"); 
-            } 
-            else 
-            { 
-               // alert("Haces otra cos"); 
-               return false;
-            } 
-            }
-         else {  //botón no seleccionado
-            alert("El formulario no ha podido enviarse. \n Debe aceptar haber leido el manual para poder enviar el formulario");
-            return false; //el formulario no se envia
-            }
+                //var platica=document.getElementById("fecha").html;
+                var platica = $("#fecha option:selected").html();
+                if (opcion.checked == true) { //botón seleccionado
+                    //alert("Esta seguro de registrarse a la plática de inducción:\nFecha \t "+platica)
+                    var statusConfirm = confirm("Está seguro de registrarse a la plática de inducción:\nFecha \t " + platica);
+                    //  apprise('Está seguro de registrarse a la plática de inducción:\nFecha \t '+platica, {'verify':true, 'textYes':'Si!', 'textNo':'No'});
+                    if (statusConfirm == true)
+                    {
+                        alert("A continuacion veras tu comprobante de registro");
+                    }
+                    else
+                    {
+                        // alert("Haces otra cos"); 
+                        return false;
+                    }
+                }
+                else {  //botón no seleccionado
+                    alert("El formulario no ha podido enviarse. \n Debe aceptar haber leido el manual para poder enviar el formulario");
+                    return false; //el formulario no se envia
+                }
 
-}
-</script>
+            }
+        </script>
         <script src="js/actualizaPlatica.js"></script>
         <title>Selecciona Plática</title>
     </head>
@@ -54,56 +54,55 @@ var platica = $("#fecha option:selected").html();
         <%-- inicio del contenido --%>
         <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />
         <div id="contenido">
-           
-                <h1>Selecciona Plática</h1>
 
-                <%--  <form name="periodoActual" action="" method="post">
+            <h1>Selecciona Plática</h1>
 
-                    <input type=text name="texto2" id="texto2" value="MES" readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48">
-                    <br>
-
-                </form> 
-                <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
-
-                    ${platicasPeriodo.fecha} 
-                    ${platicasPeriodo.idLugar.lugar}  
-                    ${platicasPeriodo.hora}
-                </core:forEach>--%>
+            <c:choose>
 
 
-                <table border="0">
-
-                    <tr>
-                        <td align="center">
+                <c:when test="${empty platicasPeriodo}">
 
 
-                            <%--  <input type="text" id="Caja" value="Hola"></input>
-    <button onclick=<%String x="document.write(document.getElementById('texto').value)";out.print(x);%>>Pasar valor</button>  --%>
+                    <h1>No pláticas activas</h1>
 
-                            <form:form action="folioPlatica.do" method="get"  id="formSelecciona" commandName="platica" onsubmit="return marcado();">
+                </c:when>
 
-                                <h1>Fechas Disponibles</h1>
+                <c:otherwise>
+
+                    <table border="0">
+
+                        <tr>
+                            <td align="center">
 
 
-                                <form:select path="fecha" >
+                                <form:form action="folioPlatica.do" method="get"  id="formSelecciona" commandName="platica" onsubmit="return marcado();" name="seleccionaPlatica">
 
-                                    <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
-                                        <form:option value="${platicasPeriodo.id}">${platicasPeriodo.fecha}</form:option>                                    
-                                    </core:forEach>
-                                </form:select>
-                                <p></p>
-                                <input type=text name="horat" id="hora" value="Hora:${platicasPeriodo.get(0).hora}   Lugar: ${platicasPeriodo.get(0).idLugar.lugar}  " readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>
-                                <input type=text name="descripcion" id="descripcion" value="Descripción:${platicasPeriodo.get(0).descripcion}  " readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>
-                                <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"> Acépto haber leído el manual donde se describe el uso del<br>
-                                sistema via web sobre como dar de alta mi servicio social<p></p>
-                                <input type="submit" value="Generar Folio" /> <br>
+                                    <h1>Fechas Disponibles</h1>
 
-                            </form:form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div style="clear:both;"></div>
+
+                                    <form:select path="fecha" >
+
+                                        <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
+                                            <form:option value="${platicasPeriodo.id}">${platicasPeriodo.fecha}</form:option>                                    
+                                        </core:forEach>
+                                    </form:select>
+                                    <p></p>
+                                    <input type=text name="horat" id="hora" value="Hora:${platicasPeriodo.get(0).hora}   Lugar: ${platicasPeriodo.get(0).idLugar.lugar}  " readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>
+                                    <input type=text name="descripcion" id="descripcion" value="Descripción:${platicasPeriodo.get(0).descripcion}  " readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>
+                                    <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"> Acépto haber leído el manual donde se describe el uso del<br>
+                                    sistema via web sobre como dar de alta mi servicio social<p></p>
+                                    <input type="submit" value="Generar Folio" /> <br>
+
+                                </form:form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table> 
+
+                </c:otherwise>
+            </c:choose>
+
+            <div style="clear:both;"></div>
         </div>
 
         <%-- fin del contenido --%>
