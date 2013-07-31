@@ -8,10 +8,12 @@ package edu.servicio.toluca.beans.formatoUnico;
  *
  * @author Héctor
  */
-public class FormatoUnicoRechazados {
+public class FormatoUnicoBean {
+    private String idFormatoUnico;
     private String noControl;
     private String nombre;
-    private String fechaSubida;   
+    private String fechaSubida;
+    private String idDatosPersonales;
 
     /**
      * @return the noControl
@@ -53,5 +55,33 @@ public class FormatoUnicoRechazados {
      */
     public void setFechaSubida(String fechaSubida) {
         this.fechaSubida = fechaSubida;
+    }
+
+    /**
+     * @return the idFormatoUnico
+     */
+    public String getIdFormatoUnico() {
+        return idFormatoUnico;
+    }
+
+    /**
+     * @param idFormatoUnico the idFormatoUnico to set
+     */
+    public void setIdFormatoUnico(String idFormatoUnico) {
+        this.idFormatoUnico = idFormatoUnico;
+    }
+
+    /**
+     * @return the idDatosPersonales
+     */
+    public String getIdDatosPersonales() {
+        return idDatosPersonales;
+    }
+
+    /**
+     * @param idDatosPersonales the idDatosPersonales to set
+     */
+    public void setIdDatosPersonales(String idDatosPersonales) {
+        this.idDatosPersonales = idDatosPersonales;
     }
 }

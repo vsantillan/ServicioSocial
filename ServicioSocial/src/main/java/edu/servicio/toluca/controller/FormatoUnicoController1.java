@@ -8,9 +8,9 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import edu.servicio.toluca.beans.Observaciones;
-import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoAceptados;
-import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoNRevisado;
-import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoRechazados;
+
+import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoBean;
+
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
@@ -68,10 +68,10 @@ public class FormatoUnicoController1 {
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
         
-        List<FormatoUnicoNRevisado> listadoFormatosNoRevisados=new ArrayList<FormatoUnicoNRevisado>();
-        List<FormatoUnicoAceptados> listadoFormatosAceptados=new ArrayList<FormatoUnicoAceptados>();
-        List<FormatoUnicoRechazados> listadoFormatosRechazados=new ArrayList<FormatoUnicoRechazados>();
-        List<FormatoUnicoRechazados> listadoFormatosCorreccion=new ArrayList<FormatoUnicoRechazados>();
+        List<FormatoUnicoBean> listadoFormatosNoRevisados=new ArrayList<FormatoUnicoBean>();
+        List<FormatoUnicoBean> listadoFormatosAceptados=new ArrayList<FormatoUnicoBean>();
+        List<FormatoUnicoBean> listadoFormatosRechazados=new ArrayList<FormatoUnicoBean>();
+        List<FormatoUnicoBean> listadoFormatosCorreccion=new ArrayList<FormatoUnicoBean>();
         
         
         
@@ -85,7 +85,7 @@ public class FormatoUnicoController1 {
         {
                 if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS)))//Formatos No Revisados
                 {
-                    FormatoUnicoNRevisado formatoNR=new FormatoUnicoNRevisado();
+                    FormatoUnicoBean formatoNR=new FormatoUnicoBean();
 
                 formatoNR.setIdFormatoUnico(formato.getId().toString());
                 formatoNR.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
@@ -109,7 +109,7 @@ public class FormatoUnicoController1 {
                 
             if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_ACEPTADOS)))//Formatos Aceptados
             {
-                FormatoUnicoAceptados formatoAceptados = new FormatoUnicoAceptados();
+                FormatoUnicoBean formatoAceptados = new FormatoUnicoBean();
                 
                 formatoAceptados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
                 formatoAceptados.setNombre(formato.getDatosPersonalesId().getNombre()
@@ -129,7 +129,7 @@ public class FormatoUnicoController1 {
             }
             if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//Formatos Rechazados
             {
-                FormatoUnicoRechazados formatoRechazados = new FormatoUnicoRechazados();
+                FormatoUnicoBean formatoRechazados = new FormatoUnicoBean();
                 formatoRechazados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
                 formatoRechazados.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
@@ -146,7 +146,7 @@ public class FormatoUnicoController1 {
             }
             if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION)))//Formatos Correccion
             {
-                FormatoUnicoRechazados formatoRechazados = new FormatoUnicoRechazados();
+                FormatoUnicoBean formatoRechazados = new FormatoUnicoBean();
                 formatoRechazados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
                 formatoRechazados.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
