@@ -76,11 +76,7 @@ public class FormatoUnicoController1 {
         List<FormatoUnicoBean> listadoFormatosRechazados=new ArrayList<FormatoUnicoBean>();
         List<FormatoUnicoBean> listadoFormatosCorreccion=new ArrayList<FormatoUnicoBean>();
         
-        
-        
-        
-      
-        
+
         for (FormatoUnico formato : formatoUnico.findAll()) 
         {
                 if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS)))//Formatos No Revisados
@@ -164,13 +160,7 @@ public class FormatoUnicoController1 {
                 }
             }
         }
-        
-       
-        
-        
-        
-        
-        
+
         //Formatos Unicos No Revisados 
         model.addAttribute("listadoFormatoUnicoNORevisados",listadoFormatosNoRevisados);
         
@@ -202,8 +192,14 @@ public class FormatoUnicoController1 {
     
    
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR.do")
-    public @ResponseBody String modificarFormatoUnico(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,String idDatosPersonales,String idFormatoUnico,String tipo) {
+    public @ResponseBody String modificarFormatoUnico(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
+                         String idDatoPersonales,
+                         String idFormatoUnico,
+                         String tipo) {
         
+        System.out.println(tipo+" tipo");
+        System.out.println(idDatoPersonales+" DP");
+        System.out.println(idFormatoUnico+" FU");
         switch(Integer.parseInt(tipo))
         {
             case 1://Correccion
@@ -219,7 +215,7 @@ public class FormatoUnicoController1 {
         {
             RegObservaciones registro=new RegObservaciones();
             registro.setCatalogoObservacionId(observacionesFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
-            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatosPersonales))));
+            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico))));
             registro.setFecha(new Date());
             
             regisObservacionesFacade.create(registro);

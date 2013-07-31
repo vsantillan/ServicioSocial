@@ -1,7 +1,7 @@
 var arrayAcptadosFilaTemp = new Array();
-var idDatosPersonales = "";
-var idFormatoUnico = "";
-var tipo="";
+var idDatosPersonales2 = "";
+var idFormatoUnico2 = "";
+var tipo2="";
 
 $(document).ready(listo);
 function listo()
@@ -72,9 +72,9 @@ function cambiarEstadoFormatoCorreccion(event)
 {
     if(confirmacionEvento())
     {
-       idDatosPersonales =$(this).attr('idDP');
-       idFormatoUnico=$(this).attr('idFU');
-       tipo="1";
+       idDatosPersonales2 =$(this).attr('idDP');
+       idFormatoUnico2=$(this).attr('idFU');
+       tipo2="1";
        mostrarDIVMotivos();
     }
     
@@ -83,9 +83,9 @@ function cambiarEstadoFormatoRechazado()
 {
     if(confirmacionEvento())
     {
-       idDatosPersonales =$(this).attr('idDP');
-       idFormatoUnico=$(this).attr('idFU');
-       tipo="2";
+       idDatosPersonales2 =$(this).attr('idDP');
+       idFormatoUnico2=$(this).attr('idFU');
+       tipo2="2";
        mostrarDIVMotivos();
     }
 }
@@ -112,11 +112,12 @@ function obtenerDatos()
       }
   });
   
-  $.post("modificarFormatoUnicoNR.do",{idDatoPersonales:idDatosPersonales,idFormatoUnico:idFormatoUnico,tipo:tipo,observaciones:array},function(respuesta)
+  $.post("modificarFormatoUnicoNR.do",{idDatoPersonales:idDatosPersonales2,idFormatoUnico:idFormatoUnico2,tipo:tipo2,observaciones:array},function(respuesta)
     {        
         if(respuesta==="OK")
         {
             window.parent.Shadowbox.close();
+            window.location.reload();
         }else
         {
             alert("Imposible Borrar Consulte a Team Developer");
