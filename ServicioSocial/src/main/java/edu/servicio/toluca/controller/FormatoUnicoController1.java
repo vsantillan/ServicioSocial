@@ -49,7 +49,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class FormatoUnicoController1 {
 
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
-    private CatalogoObservacionesFacade observacionesFacade;
+    private CatalogoObservacionesFacade observacionesCatalogoFacade;
     
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnico;
@@ -62,6 +62,10 @@ public class FormatoUnicoController1 {
     
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     private RegObservacionesFacade regisObservacionesFacade;
+    
+    
+    
+    
     
         final int VALOR_NO_REVISADOS = 4;
         final int VALOR_ACEPTADOS = 1;
@@ -152,7 +156,22 @@ public class FormatoUnicoController1 {
                 List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
+                for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId", 
+                                                            formato.getDatosPersonalesId(),
+                                                            "equal", null, null)) {
+                     
+                     String detalle=observacionesCatalogoFacade.find(reg.getId()).getDetalle();
+                     System.out.println(detalle);
+                     formatoCorreccion.añadirObservacion(detalle);
+                }
+                
+                
+                
+                
+                
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
+                
+                
                 if(fechaSubida != null)
                 {
                      formatoCorreccion.setFechaSubida(fechaSubida);
@@ -173,7 +192,7 @@ public class FormatoUnicoController1 {
         //Formato Correccion
         model.addAttribute("listadoFormatoUnicoCorreccion",listadoFormatosCorreccion);
         
-        model.addAttribute("listadoObservaciones", observacionesFacade.findAll());
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll());
         return "/FormatoUnico/formatoUnicoAdministrador";
     }
     
@@ -214,7 +233,7 @@ public class FormatoUnicoController1 {
         for(String idObservacion:observaciones)
         {
             RegObservaciones registro=new RegObservaciones();
-            registro.setCatalogoObservacionId(observacionesFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
             registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico))));
             registro.setFecha(new Date());
             

@@ -99,7 +99,13 @@
                                         <td> <core:out value="${filaRech.noControl}"/>  </td>
                                         <td><core:out value="${filaRech.nombre}"/></td>                                        
                                         <td><core:out value="${filaRech.fechaSubida}"/></td>
-                                        <td>Pendiente</td>
+                                        <td>
+                                             <ul>
+                                            <core:forEach items="${filaCorrec.listaObservaciones}" var="observacion">
+                                                <li>${observacion}</li>
+                                            </core:forEach>
+                                            </ul>
+                                        </td>
                                     </tr>
                                 </core:forEach>
                             </tbody>
@@ -123,7 +129,17 @@
                                         <td> <core:out value="${filaCorrec.noControl}"/>  </td>
                                         <td><core:out value="${filaCorrec.nombre}"/></td>                                        
                                         <td><core:out value="${filaCorrec.fechaSubida}"/></td>
-                                        <td>Pendiente</td>
+                                        <td>
+                                            <ul>
+                                            
+                                            <core:forEach items="${filaCorrec.listaObservaciones}" var="observacion">
+                                                <li>${observacion}</li>
+                                            </core:forEach>
+                                            
+                                            </ul>
+                                            
+                                            
+                                        </td>
                                     </tr>
                                 </core:forEach>
                             </tbody>

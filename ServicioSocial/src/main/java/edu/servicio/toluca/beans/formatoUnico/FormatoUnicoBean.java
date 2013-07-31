@@ -4,6 +4,9 @@
  */
 package edu.servicio.toluca.beans.formatoUnico;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Héctor
@@ -15,7 +18,14 @@ public class FormatoUnicoBean {
     private String fechaSubida;
     private String idDatosPersonales;
     private String periodo;
+    private List<String> listaObservaciones; 
 
+    public FormatoUnicoBean() {
+        listaObservaciones = new ArrayList<String>();
+    }
+    
+    
+    
     /**
      * @return the noControl
      */
@@ -98,5 +108,24 @@ public class FormatoUnicoBean {
      */
     public void setPeriodo(String periodo) {
         this.periodo = periodo;
+    }
+    
+    public void añadirObservacion(String observacion)
+    {
+        getListaObservaciones().add(observacion);
+    }
+
+    /**
+     * @return the listaObservaciones
+     */
+    public List<String> getListaObservaciones() {
+        return listaObservaciones;
+    }
+
+    /**
+     * @param listaObservaciones the listaObservaciones to set
+     */
+    public void setListaObservaciones(List<String> listaObservaciones) {
+        this.listaObservaciones = listaObservaciones;
     }
 }
