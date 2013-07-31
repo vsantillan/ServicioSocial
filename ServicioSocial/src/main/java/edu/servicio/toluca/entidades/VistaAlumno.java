@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -51,6 +52,14 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "VistaAlumno.findByPorcentaje", query = "SELECT v FROM VistaAlumno v WHERE v.porcentaje = :porcentaje"),
     @NamedQuery(name = "VistaAlumno.findByPromedio", query = "SELECT v FROM VistaAlumno v WHERE v.promedio = :promedio")})
 public class VistaAlumno implements Serializable {
+    @Column(name = "PROMEDIO")
+    private Double promedio;
+    
+    @Lob
+    @Column(name = "FOTO")
+    private Serializable foto;
+    
+    
     private static final long serialVersionUID = 1L;
     @GenericGenerator(name = "vaGen" , strategy = "increment")
     @Id
@@ -60,6 +69,7 @@ public class VistaAlumno implements Serializable {
     @Size(min = 1, max = 10)
     @Column(name = "ID")
     private String id;
+    
     @Size(max = 18)
     @Column(name = "CURP")
     private String curp;
@@ -114,8 +124,6 @@ public class VistaAlumno implements Serializable {
     @Size(max = 7)
     @Column(name = "PORCENTAJE")
     private String porcentaje;
-    @Column(name = "PROMEDIO")
-    private Double promedio;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<Egresado> egresadoCollection;
     @OneToMany(mappedBy = "alumnoId")
@@ -283,14 +291,6 @@ public class VistaAlumno implements Serializable {
         this.porcentaje = porcentaje;
     }
 
-    public Double getPromedio() {
-        return promedio;
-    }
-
-    public void setPromedio(Double promedio) {
-        this.promedio = promedio;
-    }
-
     @XmlTransient
     public Collection<Egresado> getEgresadoCollection() {
         return egresadoCollection;
@@ -350,6 +350,22 @@ public class VistaAlumno implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.VistaAlumno[ id=" + id + " ]";
+    }
+
+    public Double getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(Double promedio) {
+        this.promedio = promedio;
+    }
+
+    public Serializable getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Serializable foto) {
+        this.foto = foto;
     }
     
 }
