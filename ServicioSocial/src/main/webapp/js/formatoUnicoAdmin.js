@@ -1,13 +1,7 @@
-var empresa = {};
-var tablaNRevisados;
-var tablaNAceptados;
-var tablaEnCorreccion;
-var tablaAceptados;
-
 var arrayAcptadosFilaTemp = new Array();
-
 var idDatosPersonales = "";
-
+var idFormatoUnico = "";
+var tipo="";
 
 $(document).ready(listo);
 function listo()
@@ -16,14 +10,12 @@ function listo()
     $(document).on("click","#guardarObservaciones",obtenerDatos);
     $(document).on("click",".aceptar",cambiarEstadoFormatoAceptado);
     $(document).on("click",".correccion",cambiarEstadoFormatoCorreccion);
-    //$(document).on("click",".rechazar",modificarFormatoUnico);
+    $(document).on("click",".rechazar",cambiarEstadoFormatoRechazado);
 }
-
-
 
 function inicializarDataTables()
 {
-    tablaNRevisados=$('#noRevisadosDT').dataTable({
+    $('#noRevisadosDT').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
                     "sScrollX": "100%",
@@ -31,7 +23,7 @@ function inicializarDataTables()
                     "bScrollCollapse": true
 
                 });
-    tablaNAceptados=$('#noAceptadosDT').dataTable({
+    $('#noAceptadosDT').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
 
@@ -39,7 +31,7 @@ function inicializarDataTables()
                     "bScrollCollapse": true
 
                 });
-    tablaEnCorreccion=$('#enCorreccionDT').dataTable({
+    $('#enCorreccionDT').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
 
@@ -47,13 +39,11 @@ function inicializarDataTables()
                     "bScrollCollapse": true
 
                 });
-     tablaAceptados=$('#aceptadosDT').dataTable({
+     $('#aceptadosDT').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
-
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
-
                 });
 }
 
@@ -70,7 +60,6 @@ function cambiarEstadoFormatoAceptado(event)
 {
     if(confirmacionEvento())
     {
-        console.log();
         $.post("modificarFormatoUnicoNR_Aceptado.do",{id:$(this).attr('ide')},function(respuesta)
         {
             console.log(respuesta);
@@ -84,60 +73,32 @@ function cambiarEstadoFormatoCorreccion(event)
     if(confirmacionEvento())
     {
        idDatosPersonales =$(this).attr('idDP');
-       console.log(idDatosPersonales); 
-       Shadowbox.open(
-               { content:$("#a").html(), 
-                 player:'html'
-                }
-         );
+       idFormatoUnico=$(this).attr('idFU');
+       tipo="1";
+       mostrarDIVMotivos();
     }
     
 }
-
-
-
-
-function modificarFormatoUnico(event)
+function cambiarEstadoFormatoRechazado()
 {
-    
-//    var fila = $(this).parents('tr')[0];
-//    var iTemp=0;
-//    
-//     $(fila).find('td').each(function(index) 
-//     {
-//         if(index!==3 && index!==6 && index!==7)
-//         {//Descarta Campos:Documento,Accion, Modificar 
-//            arrayAcptadosFilaTemp[iTemp]=$(this).text();
-//            //console.log();
-//            iTemp++;
-//         }
-//         
-//        
-//     });
-    
-    
-//     $(fila).find('td').each(function(index) 
-//     {
-//         if(index!==3 && index!==6 && index!==7)
-//         {//Descarta Campos:Documento,Accion, Modificar 
-//            arrayAcptadosFilaTemp[iTemp]=$(this).text();
-//            //console.log();
-//            iTemp++;
-//         }
-//         
-//        
-//     });
-//     
-//     
-//    var temp=arrayAcptadosFilaTemp[3];
-//    arrayAcptadosFilaTemp[3]=arrayAcptadosFilaTemp[4];
-//    arrayAcptadosFilaTemp[4]=temp;
-//    console.log(arrayAcptadosFilaTemp);
-//    
-//    tablaNRevisados.fnDeleteRow(fila);
-//    tablaAceptados.fnAddData(arrayAcptadosFilaTemp);
-    
+    if(confirmacionEvento())
+    {
+       idDatosPersonales =$(this).attr('idDP');
+       idFormatoUnico=$(this).attr('idFU');
+       tipo="2";
+       mostrarDIVMotivos();
+    }
 }
+
+function  mostrarDIVMotivos()
+{
+    Shadowbox.open(
+               { content:$("#motivos").html(), 
+                 player:'html'
+                }
+         );
+}
+
 
 function obtenerDatos()
 {

@@ -62,7 +62,7 @@
                                 
                                 <core:forEach items="${listadoFormatoUnicoNORevisados}" var="filaNR">
                                     <tr class='gradeX'>
-                                    <td>Pendiente!!</td>
+                                    <td>${filaNR.periodo}</td>
                                     <td> <core:out value="${filaNR.noControl}"/>  </td>
                                     <td>
                                         <core:out value="${filaNR.nombre}"/>
@@ -71,9 +71,9 @@
                                     <td><core:out value="${filaNR.fechaSubida}"/></td>
                                     
                                     <td>
-                                        <input type="button" value="Aceptar" class="aceptar" ide="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
-                                        <input type="button" value="Rechazar" class="rechazar" ide="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" />
-                                        <input type="button" value="Corrección" class="correccion" ide="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
+                                        <input type="button" value="Aceptar" class="aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
+                                        <input type="button" value="Rechazar" class="rechazar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" />
+                                        <input type="button" value="Corrección" class="correccion" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
                                     </td>
                                     
                                     </tr>
@@ -95,7 +95,7 @@
                             <tbody>
                                 <core:forEach items="${listadoFormatoUnicoRechazados}" var="filaRech">
                                     <tr class='gradeX'>
-                                        <td>Pendiente!!</td>
+                                        <td>${filaRech.periodo}</td>
                                         <td> <core:out value="${filaRech.noControl}"/>  </td>
                                         <td><core:out value="${filaRech.nombre}"/></td>                                        
                                         <td><core:out value="${filaRech.fechaSubida}"/></td>
@@ -119,7 +119,7 @@
                             <tbody>
                                 <core:forEach items="${listadoFormatoUnicoCorreccion}" var="filaCorrec">
                                     <tr class='gradeX'>
-                                        <td>Pendiente!!</td>
+                                        <td>${filaCorrec.periodo}</td>
                                         <td> <core:out value="${filaCorrec.noControl}"/>  </td>
                                         <td><core:out value="${filaCorrec.nombre}"/></td>                                        
                                         <td><core:out value="${filaCorrec.fechaSubida}"/></td>
@@ -142,7 +142,7 @@
                             <tbody>
                                <core:forEach items="${listadoFormatoUnicoAceptados}" var="filaA">
                                     <tr class='gradeX'>
-                                    <td>Pendiente!!</td>
+                                    <td>${filaA.periodo}</td>
                                     <td> <core:out value="${filaA.noControl}"/>  </td>
                                     <td><core:out value="${filaA.nombre}"/></td>
                                     <td><core:out value="${filaA.fechaSubida}"/></td>                                    
@@ -163,7 +163,7 @@
         <jsp:include page="../Template/footer.jsp" />
         
         
-        <div id="a" style="display: none; font-size: 15px">
+        <div id="motivos" style="display: none; font-size: 15px">
                 <h1>Motivos de Rechazo</h1>
                 <div id="scroll" >
                     <form id="observacionesCat" action="#" onsubmit="return  false;">
