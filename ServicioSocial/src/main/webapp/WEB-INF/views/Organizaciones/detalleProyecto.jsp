@@ -65,7 +65,7 @@
                         </p>
                     </td>
                 </tr>
-                <tr>
+<!--                <tr>
                     <td><p>Horario:</p></td>
                     <td><p>
                             <%-- <core:forEach items="${proyectoDetalle.horarioCollection}" var="horarios">
@@ -74,7 +74,7 @@
                          </core:forEach> --%>
                         </p>
                     </td>
-                </tr>
+                </tr>-->
                 <tr>
                     <td><p>Responsable del Programa:</p></td>
                     <td><p><core:out value="${proyectoDetalle.nombreResponsable}"/></p></td>
