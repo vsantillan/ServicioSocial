@@ -101,7 +101,7 @@
                                         <td><core:out value="${filaRech.fechaSubida}"/></td>
                                         <td>
                                              <ul>
-                                            <core:forEach items="${filaCorrec.listaObservaciones}" var="observacion">
+                                            <core:forEach items="${filaRech.listaObservaciones}" var="observacion">
                                                 <li>${observacion}</li>
                                             </core:forEach>
                                             </ul>

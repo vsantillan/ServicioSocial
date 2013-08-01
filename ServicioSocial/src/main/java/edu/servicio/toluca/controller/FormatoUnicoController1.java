@@ -138,6 +138,17 @@ public class FormatoUnicoController1 {
                 List<Documentos> listaDocumentos2 = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
+                for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId", 
+                                                            formato.getDatosPersonalesId(),
+                                                            "equal", null, null)) {
+                     
+                     String detalle=observacionesCatalogoFacade.find(reg.getId()).getDetalle();
+                     System.out.println(detalle);
+                     formatoRechazados.añadirObservacion(detalle);
+                }
+                
+                
+                
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos2);
                 if(fechaSubida != null)
                 {
