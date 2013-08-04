@@ -58,8 +58,8 @@
 
         <jsp:include page="../Template/banner.jsp" />
 
-        <%-- inicio del contenido --%>
-        <div id="contenido">
+        <%-- inicio del contenido style="width:500"--%>
+        <div id="contenido" >
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <center> 
@@ -67,16 +67,12 @@
                     ${notificacion}
                     <%-- Formulario Nueva Plática --%>
                     <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica" name="altaPlatica" > 
-                        <table style="width:500px">
+                        <table>
                             <tr>
-                                <td>
-                                    <form:input type="hidden" value="1" path="status"/>
-                                    <label for="fecha"><fmt:message key="fecha" /></label> 
-                                </td>
-
+                                <td> <label for="fecha"><fmt:message key="fecha" /></label></td>
                                 <td> <form:input path="fecha" id="datepicker" size="15"/></td> 
                                 <td><form:errors path="fecha" cssClass="error" /></td>
-
+                                <td> <form:input type="hidden" value="1" path="status"/></td>
                             </tr>
                             <tr>
                                 <td>  <label for="hora"><fmt:message key="hora" /></label> </td>
@@ -99,7 +95,7 @@
                                 </td>  
 
                             </tr>
-
+                            <td></td>
                             <tr>
                                 <td> <label for="periodo"><fmt:message key="periodo" /></label> </td>
                                 <td>
@@ -107,7 +103,8 @@
                                         <form:option value="ENE-JUN"/>
                                         <form:option value="AGO-DIC"/>
                                     </form:select>    
-                                </td>  
+                                </td> 
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>  <label for="ano"> <fmt:message key="anio" />  </label> </td>   
@@ -118,7 +115,7 @@
                                         </core:forEach>
                                     </form:select>
                                 </td>
-
+                                <td></td>
                             </tr>
                             <tr>
                                 <td> <label for="tipoPlatica"><fmt:message key="tipo" /></label> </td>
@@ -128,10 +125,12 @@
                                         <form:option  value="3">Especial</form:option>
                                     </form:select>    
                                 </td>  
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>  <label for="descripcion"> <fmt:message key="descripcion" /> </label> </td>
-                                <td>  <form:textarea  path="descripcion" rows="6" cols="15" id="descripcion"/></td>  
+                                <td>  <form:textarea  path="descripcion" rows="10" cols="40" id="descripcion"/></td> 
+                                <td></td>
                             </tr>
 
                             <tr> 
@@ -141,6 +140,7 @@
                             </tr>
                             <tr> 
                                 <td> <input type ="submit" value = "Guardar " /> </td>
+                                <td></td>
                                 <td> <input type ="reset" value = "Limpiar" /></td>
                             </tr>
                         </table>

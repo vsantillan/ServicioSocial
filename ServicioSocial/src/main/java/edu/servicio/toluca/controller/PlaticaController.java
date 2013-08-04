@@ -61,11 +61,7 @@ public class PlaticaController {
         modelo.addAttribute("anioInicio", anio.anioActual());
         modelo.addAttribute("anioFin", anio.anioFin());
         modelo.addAttribute("platica", new Platica());
-        //lista de lugares platica de induccion
-
         modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
-
-
         return "/Platicas/altaPlatica";
     }
 

@@ -57,12 +57,12 @@ public class Platica implements Serializable {
     private Long id;
     
     @Basic(optional = false)
-    @NotNull
+    @NotNull (message="La fecha es requerida")
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Size(max = 8)
-    @NotNull
+    @NotNull(message="La hora es requerida")
     @NotBlank
     @Column(name = "HORA")
     private String hora;
@@ -83,7 +83,7 @@ public class Platica implements Serializable {
     
     @Column(name = "STATUS")
     private Short status;
-    @NotNull
+    @NotNull (message="La fecha es requerida")
     @Column(name = "FECHA_MX_FUI")
     @Temporal(TemporalType.DATE)
     private Date fechaMxFui;
