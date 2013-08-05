@@ -18,7 +18,7 @@
         <jsp:include page="../Template/metas.jsp" />       
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <script type="text/javascript" src="js/editaOrganizacion.js"></script>
+        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
         <link type="text/css" href="shadowbox/shadowbox.css" rel="stylesheet" />
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
         <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
@@ -61,7 +61,7 @@
                         <core:forEach items="${organizaciones}" var="current">
                             <tr class='gradeX'>
                                 <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
-                                <th><a href="editarOrganizacion.do?id=${current.idInstancia}" ><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="#prueba" class="retroalimentacion" rel="shadowbox" idInstancia="${current.idInstancia}" nombreInstancia="${current.nombre}" correo="${current.correo}" ><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
+                                <th><a href="editarOrganizacion.do?id=${current.idInstancia}" ><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="#a" class="mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}"  rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
                                 <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=740px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.titular}" /></th>
@@ -76,37 +76,32 @@
             <div style="clear: both;"/>
         </div>
     </div>
-    <div id="prueba" style="display: none">
-        <h2>Cancelacion de Organizaci&oacute;n</h2>
-        <div id="tabas">
-            <ul>
-                <li><a href="#">Enviar Retroalimentaci&oacute;n</a></li>
-            </ul>
-            <div>
-                <form id="MyForm" action="">
-                    <table>
-                        <tr>
-                            <input id="idInstancia" type="hidden"/>
-                            <td>Nombre de la Organizaci&oacute;n:</td>
-                            <td><input type ="text" id="nombre" /> </td>
-                        </tr>
-                        <tr>
-                            <td>E-Mail:</td>
-                            <td><input type ="text" id="correo" /> </td>
-                        </tr>
-                        <tr>
-                            <td>Descripci&oacute;n:</td>
-                            <td><textarea id="descripcion" name="descripcion" rows="10" cols="70"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td><input type ="submit" class="borrarInstancia" value="Enviar Retroalimentaci&oacute;n" /> </td>
-                            <td><input type ="button" value="Cancelar" onclick="window.parent.Shadowbox.close();"/> </td>
-                        </tr>
-                    </table>
-                </form>
-            </div>
+    <div id="a" style="display: none; font-size: 15px">
+            <h1>Motivos de Rechazo</h1>
+            <form:form commandName="retroalimentacionInstancia"  id="MyForm" method="POST"  action="borrarInstancia.do">
+                <table >
+                    <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
+                    <form:input hidden="hidden" id="control" path="control" value="0" />
+                    <tr>
+
+                        <td>Nombre de la Organizaci&oacute;n:</td>
+                        <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" /> </td>
+                    </tr>
+                    <tr>
+                        <td>E-Mail:</td>
+                        <td><form:input type ="text"  id="correo" path="correo" name="correo" /> </td>
+                    </tr>
+                    <tr>
+                        <td>Descripci&oacute;n:</td>
+                        <td><form:textarea  id="descripcion" path="descripcion" rows="10" cols="70" name="descripcion" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n"  class="enviarRetro" > </td>
+                    </tr>
+                </table>
+            </form:form>
         </div>
-    </div>
     <jsp:include page="../Template/footer.jsp" />
 </body>
 

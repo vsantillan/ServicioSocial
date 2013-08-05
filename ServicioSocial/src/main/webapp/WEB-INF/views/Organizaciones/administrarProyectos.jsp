@@ -24,6 +24,7 @@
                     'wmp', 'swf', 'flv']});</script> 
 
         <!--        Scripts para tablas-->
+        
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <script type="text/javascript" >
@@ -40,7 +41,7 @@
             });
         </script>   
 
-
+        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
         <title>Administracion de Proyectos</title>
     </head>
     <body class="background">
@@ -65,7 +66,7 @@
                     <tbody>
                         <core:forEach items="${proyectos}" var="current">
                             <tr class='gradeX' id="${current.idProyecto}">
-                                <th><a href="editarProyecto.do?id=${current.idProyecto}" ><img src="imagenes/editar.png" width="30" title="Editar Proyecto"/></a><a href="retroalimentacionProyecto.do?id=${current.idProyecto}" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Proyecto"></a></th>
+                                <th><a href="editarProyecto.do?id=${current.idProyecto}" ><img src="imagenes/editar.png" width="30" title="Editar Proyecto"/></a><a href="#a" class="mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Proyecto"></a></th>
                                 <th><a href="detalleProyecto.do?id=${current.idProyecto}" rel="shadowbox; width=740px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.idInstancia.nombre}" /></th>
                                 <th><core:out value="${current.nombre}" /></th>
@@ -80,6 +81,34 @@
             <div style="clear: both;"/>
         </div>
     </div>
+            <div id="a" style="display: none; font-size: 15px">
+                <form:form commandName="retroalimentacionProyecto" id="MyForm" action="borrarProyecto.do" method="POST">
+                    <table>
+                        <tr>
+                            <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
+                            <form:input hidden="hidden" id="control" path="control" value="0" />
+                            <td>Nombre del Proyecto:</td>
+                            <td><form:input id="nombreProyecto" path="nombreProyecto"  /></td>
+                        </tr>
+                        <tr>
+                            <td>Nombre de la Organizaci&oacute;n:</td>
+                            <td><form:input id="nombre" path="nombreInstancia"  /></td>
+                        </tr>
+                        <tr>
+                            <td>E-Mail:</td>
+                            <td><form:input id="correo" path="email" disabled="disabled"  /></td>
+                        </tr>
+                        <tr>
+                            <td>Descripci&oacute;n:</td>
+                            <td><form:textarea rows="10" cols="70" id="descripcion" path="descripcion" /></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" value="Enviar Retroalimentaci&oacute;n" class="borrarProyecto" /></td>
+                        </tr>
+                    </table>
+                </form:form>
+            </div>
     <jsp:include page="../Template/footer.jsp" />
 </body>
 

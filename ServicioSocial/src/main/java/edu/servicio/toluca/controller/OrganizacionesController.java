@@ -13,6 +13,7 @@ import edu.servicio.toluca.beans.organizaciones.EditarOrganizacion;
 import edu.servicio.toluca.entidades.Estados;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Perfil;
+import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.EstadosFacade;
@@ -80,6 +81,7 @@ public class OrganizacionesController {
     public String administradorProyectos(Model model) 
     {
         model.addAttribute("proyectos", proyectosFacade.findAll());
+        model.addAttribute("retroalimentacionProyecto", new BorrarProyecto());
         return "/Organizaciones/administrarProyectos";
     }
 
@@ -190,6 +192,7 @@ public class OrganizacionesController {
             model.addAttribute("estados", estadosFacade.findAll());
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
             return "/Organizaciones/editarOrganizacion";
+            
         }else{
             instanciaFacade.edit(instancia);
             System.out.println("Sin errores");
@@ -210,10 +213,21 @@ public class OrganizacionesController {
         model.addAttribute("estados", estadosFacade.findAll());
         model.addAttribute("perfil", perfilFacade.findAll());
         model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
-        Iterator iter = proyecto.getProyectoPerfilCollection().iterator();
-        while (iter.hasNext()) 
+        List<Perfil> l;
+        Iterator<ProyectoPerfil> ih;
+        
+        l=perfilFacade.findAll();
+        
+        for(int i=0;i<l.size();i++)
         {
-            System.out.println("perfil: "+iter.next());
+            ih=proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().iterator();
+            for(int j=0;j<proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().size();j++)
+            {
+                if(l.get(i).getIdPerfil()==ih.next().getIdProyectoPerfil())
+                {
+                    System.out.println("Perfil "+l.get(i).getNombre());
+                }
+            }
         }
         return "/Organizaciones/editarProyecto";
     }
@@ -239,9 +253,8 @@ public class OrganizacionesController {
         }else{
             proyectosFacade.edit(proyecto);
             System.out.println("Sin errores");
-            //System.out.println(editaOrganizacion.getEstatus());
-            //model.addAttribute("cierraShadowbox", "<script>window.parent.Shadowbox.close();</script>");
             model.addAttribute("proyectos", proyectosFacade.findAll());
+            model.addAttribute("retroalimentacionProyecto", new BorrarProyecto());
             return "/Organizaciones/administrarProyectos";
         }
     }

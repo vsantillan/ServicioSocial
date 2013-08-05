@@ -149,31 +149,48 @@
                             </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="lugar">Tipo de Proyecto:</label></td>
+                            <td><label for="lugar">Tipo de Proyecto:</label></td>
                             <td>
                                 <form:select id="tipo_proyecto" path="idTipoProyecto.idTipoProyecto" name="tipo_proyecto">
                                     <core:forEach items="${tipoProyecto}" var="current">
                                         <core:choose>
                                             <core:when test="${current.idTipoProyecto==proyecto.idTipoProyecto.idTipoProyecto}">
-                                                <option value="${current.idTipoProyecto}" selected="selected">${current.descripcion}</option>  
-                                            </core:when>
-                                            <core:otherwise>
-                                                <option value="${current.idTipoProyecto}">${current.descripcion}</option>
-                                            </core:otherwise>    
-                                        </core:choose>
-                                    </core:forEach>
-                                </form:select><br/>
-                                <form:errors path="idTipoProyecto.idTipoProyecto" cssClass="error"/>
-                            </td>  
+                                        <option value="${current.idTipoProyecto}" selected="selected">${current.descripcion}</option>  
+                                    </core:when>
+                                    <core:otherwise>
+                                        <option value="${current.idTipoProyecto}">${current.descripcion}</option>
+                                    </core:otherwise>    
+                                </core:choose>
+                            </core:forEach>
+                        </form:select><br/>
+                        <form:errors path="idTipoProyecto.idTipoProyecto" cssClass="error"/>
+                        </td>  
                         </tr>
                         <tr>
-                            <td></td>
+                            <td><label for="lugar">Perfiles para el proyecto:</label></td>
                             <td>
-                                <select id="perfil" name="perfil">
-                                    <core:forEach items="${proyecto.proyectoPerfilCollection}" var="current">
-                                        <option value="${current.idPerfil.idPerfil}">${current.idPerfil.nombre}</option>
-                                    </core:forEach>
-                                </select><br/>
+                                <fieldset>
+                                    <select name="selectfrom" id="select-from" multiple size="5">
+                                        <core:forEach items="${proyecto.proyectoPerfilCollection}" var="current">
+                                            <option value="${current.idPerfil.idPerfil}">${current.idPerfil.nombre}</option>
+                                        </core:forEach>
+                                    </select>
+
+                                    <a href="JavaScript:void(0);" id="btn-add">Quitar &raquo;</a>
+                                    <a href="JavaScript:void(0);" id="btn-remove">&laquo; Agregar</a>
+
+                                    <select name="selectto" id="select-to" multiple size="5">
+                                        <core:forEach items="${perfil}" var="current">
+                                            <core:forEach items="${proyecto.proyectoPerfilCollection}" var="colleccion">
+                                                <core:choose>
+                                                    <core:when test="${current.idPerfil==colleccion.idPerfil.idPerfil}">
+                                                        <option value="${current.idPerfil}">${current.nombre}</option>
+                                                    </core:when>
+                                                </core:choose>
+                                            </core:forEach>
+                                        </core:forEach>
+                                    </select>
+                                </fieldset>
                             </td>
                         </tr>
                         <tr> 
@@ -187,6 +204,21 @@
             <div style="clear: both;"/>
         </div>
     </div>
+    <script>
+            $('a#btn-add').click(function() {
+                $('#select-from option:selected').each(function() {
+                    $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+                    $(this).remove();
+                });
+            });
+            $('a#btn-remove').click(function() {
+                $('#select-to option:selected').each(function() {
+                    $('#select-from').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+                    $(this).remove();
+                });
+            });
+    </script>
     <jsp:include page="../Template/footer.jsp" />
 </body>
+
 </html>
