@@ -92,7 +92,7 @@ public class FormatoUnicoController {
             datosPersonales.setOcupacion("");
             datosPersonales.setClaveDocIdentificacion("");
             datosPersonales.setFolioDocIdentificaciin(BigInteger.ZERO);
-            ///
+            ///Setea en vacío datos contactos
             datosPersonales.setCalle("");
             datosPersonales.setNumeroI("");
             datosPersonales.setNumeroE("");
@@ -104,6 +104,7 @@ public class FormatoUnicoController {
             datosPersonales.setTelefonoOficina("");
             datosPersonales.setTwitter("");
             datosPersonales.setFacebook("");
+            
             //inserción del objeto en el facade
 
             datosPersonalesFacade.create(datosPersonales);
@@ -114,6 +115,10 @@ public class FormatoUnicoController {
             formatoUnico.setDatosPersonalesId(datosPersonales);
             formatoUnico.setNumeroCreditos(alumno.getCreditosAcumulados());
             formatoUnico.setPorcentajeCreditos(Double.valueOf(alumno.getPorcentaje()));
+            //Setea en vació el dato personal
+            Proyectos proyecto = new Proyectos();
+            proyecto.setIdProyecto(BigDecimal.ONE);
+            formatoUnico.setIdproyecto(proyecto);
             formatoUnicoFacade.create(formatoUnico);
 
 
@@ -124,7 +129,7 @@ public class FormatoUnicoController {
             System.out.println("Tu alumno ya está, su id de datos es " + listaDatosPersonales.get(0).getId());// + idDatosPersonales);
             datosPersonales = listaDatosPersonales.get(0);
             formatoUnico = listaFormatoUnico.get(0);
-
+            
 
 
         }
@@ -169,17 +174,28 @@ public class FormatoUnicoController {
         modelo.addAttribute("academicos", formatoUnicoDatosAcademicos);
 
 
+        FormatoUnicoProyectosJSON formatoUnicoProyectosJON = new FormatoUnicoProyectosJSON();
+        formatoUnicoProyectosJON.setId(datosPersonales.getId());
+        formatoUnicoProyectosJON.setIdProyecto(formatoUnico.getIdproyecto().getIdProyecto());
+        modelo.addAttribute("formatoUnicoDatosOrganizaciones", formatoUnicoProyectosJON);
+        
         //Estados
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
         modelo.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-
         
         //Carga de datos de organizaciones
-        modelo.addAttribute("instancias", instanciaFacade.findAll());
-        
-        
-        
+        //Organizacion
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
+
+        for (int i = 0; i < listaInstancias.size(); i++) {
+            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+                filtroInstancias.add(listaInstancias.get(i));
+            }
+        }
+        modelo.addAttribute("instancias", filtroInstancias);
+
         return "/FormatoUnico/formatoUnicoUsuario";
     }
 
@@ -241,6 +257,30 @@ public class FormatoUnicoController {
         return new FormatoUnicoErrores();
 
     }
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosOrganizaciones.do")
+    public @ResponseBody
+    FormatoUnicoErrores modificarDatosOrganizaciones(FormatoUnicoDatosContactoBean dt, BigDecimal organizacion, BindingResult resultado) {
+        
+       DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
+       System.out.println("Datos per" + datosPersonales.getNombre());
+       System.out.println("Rec" + dt.getId());
+       List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+       FormatoUnico formatoUnico = listaFormatoUnico.get(0);
+       // System.out.println("Recibí" + organizacion);
+        Proyectos proyecto = new Proyectos();
+        proyecto.setIdProyecto(organizacion);
+        formatoUnico.setIdproyecto(proyecto);
+        formatoUnicoFacade.edit(formatoUnico);
+        
+        
+        if (resultado.hasErrors()) {
+            for (ObjectError error : resultado.getAllErrors()) {
+                System.out.println(error.getDefaultMessage());
+            }
+        }
+        return new FormatoUnicoErrores();
+
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuarioObservaciones.do")
     public String formatoUnicoObservaciones(Model a) {
@@ -257,20 +297,51 @@ public class FormatoUnicoController {
     public @ResponseBody FormatoUnicoProyectosJSON cargarProyectos(Model a, String id_instancia) {
         Proyectos pr = null;
         System.out.println("Traigo el id"+id_instancia);
-        Instancia instancia = instanciaFacade.findBySpecificField("id_instancia", id_instancia, "equal", null, null).get(0);
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("idInstancia", id_instancia, "equal", null, null);
+        Instancia instancia = listaInstancias.get(0);
         ArrayList<FormatoUnicoProyectosJSON> fuiProyectos = new ArrayList<FormatoUnicoProyectosJSON>();
         FormatoUnicoProyectosJSON fuiJSON = new FormatoUnicoProyectosJSON();
+        System.out.println("iis" + instancia.getNombre());
+        System.out.println("tamaño" +  instancia.getProyectosCollection().size());
         for(Proyectos proy: instancia.getProyectosCollection() )
         {
+            System.out.println("Aquiii");
             fuiJSON.getId_instancia().add(instancia.getIdInstancia());
             fuiJSON.getId_proyecto().add(proy.getIdProyecto());
+            fuiJSON.getNombre().add(proy.getNombre());
             fuiJSON.getDomicilio().add(proy.getDomicilio());
             fuiJSON.getNombre_responsable().add(proy.getNombreResponsable());
             fuiJSON.getTelefono_responsable().add(proy.getTelefonoResponsable());
         }
+        return fuiJSON;
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/idInstancia.do")
+    public @ResponseBody FormatoUnicoProyectosJSON idInstancia(Model a, BigDecimal idProyecto) {
+        
+        List<Proyectos> listaProys = proyectoFacade.findBySpecificField("idProyecto", idProyecto, "equal", null, null);
+        Proyectos pr = listaProys.get(0);
+        
+        System.out.println("..Id proyecto="+pr.getIdProyecto()+"..IdInstancia="+pr.getIdInstancia().getIdInstancia());
         
         
-      //  List<Proyectos> proyectos = proyectoFacade.findBySpecificField("id_instancia", fuiProyectos, null, null, null)
+        
+//        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("idInstancia", id_instancia, "equal", null, null);
+//        Instancia instancia = listaInstancias.get(0);
+//        ArrayList<FormatoUnicoProyectosJSON> fuiProyectos = new ArrayList<FormatoUnicoProyectosJSON>();
+        FormatoUnicoProyectosJSON fuiJSON = new FormatoUnicoProyectosJSON();
+        fuiJSON.setIdProyecto(pr.getIdInstancia().getIdInstancia());
+//        System.out.println("iis" + instancia.getNombre());
+//        System.out.println("tamaño" +  instancia.getProyectosCollection().size());
+//        for(Proyectos proy: instancia.getProyectosCollection() )
+//        {
+//            System.out.println("Aquiii");
+//            fuiJSON.getId_instancia().add(instancia.getIdInstancia());
+//            fuiJSON.getId_proyecto().add(proy.getIdProyecto());
+//            fuiJSON.getNombre().add(proy.getNombre());
+//            fuiJSON.getDomicilio().add(proy.getDomicilio());
+//            fuiJSON.getNombre_responsable().add(proy.getNombreResponsable());
+//            fuiJSON.getTelefono_responsable().add(proy.getTelefonoResponsable());
+//        }
         return fuiJSON;
     }
     

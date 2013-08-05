@@ -12,11 +12,14 @@ import java.util.ArrayList;
  * @author SATELLITE
  */
 public class FormatoUnicoProyectosJSON {
-    private ArrayList<BigDecimal> id_proyecto;
-    private ArrayList<BigDecimal> id_instancia;
-    private ArrayList<String> domicilio;
-    private ArrayList<Long> telefono_responsable;
-    private ArrayList<String> nombre_responsable;
+    private BigDecimal id;
+    private BigDecimal idProyecto;
+    private ArrayList<BigDecimal> id_proyecto = new ArrayList<BigDecimal>();
+    private ArrayList<BigDecimal> id_instancia = new ArrayList<BigDecimal>();
+    private ArrayList<String> domicilio = new ArrayList<String>();
+    private ArrayList<Long> telefono_responsable = new ArrayList<Long>();
+    private ArrayList<String> nombre_responsable = new ArrayList<String>();
+    private ArrayList<String> nombre = new ArrayList<String>();
 
     /**
      * @return the id_proyecto
@@ -86,6 +89,48 @@ public class FormatoUnicoProyectosJSON {
      */
     public void setNombre_responsable(ArrayList<String> nombre_responsable) {
         this.nombre_responsable = nombre_responsable;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public ArrayList<String> getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(ArrayList<String> nombre) {
+        this.nombre = nombre;
+    }
+
+    /**
+     * @return the id
+     */
+    public BigDecimal getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(BigDecimal id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the idProyecto
+     */
+    public BigDecimal getIdProyecto() {
+        return idProyecto;
+    }
+
+    /**
+     * @param idProyecto the idProyecto to set
+     */
+    public void setIdProyecto(BigDecimal idProyecto) {
+        this.idProyecto = idProyecto;
     }
     
     

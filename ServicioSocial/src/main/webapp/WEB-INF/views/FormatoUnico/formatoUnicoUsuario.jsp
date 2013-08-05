@@ -30,10 +30,10 @@
         <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
         <script type="text/javascript" src="js/jqueryUI/i18n/ui.datepicker-es.js"></script>
         <script src="js/jquery.codigos.postales.js"></script>       
-        
+
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
-    <body class ="background">
+    <body class ="background" onload="recargaProyectos(2); recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto})">
         <%@ include file="../Template/banner.jsp" %>
 
         <%-- inicio del contenido --%>
@@ -139,7 +139,7 @@
                     </form:form>
                 </div>
                 <div id="datosContacto">
-                    <form:form id="frmDatosContacto" modelAttribute="formatoUnicoDatosContacto" >
+                    <form:form id="frmDatosContacto" commandName="formatoUnicoDatosContacto" >
                         <table>
                             <tr>
                                 <form:input  type="hidden" path ="id" />
@@ -154,18 +154,18 @@
                                 <td>No. Ext.</td>
                                 <td><form:input  path ="numeroE"/> </td>
                             </tr>
+
                             <tr>
                                 <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
-                                <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5"></td>  
+                                <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${instanciaDireccion.idColonia.idCp.cp}"></td>  
                             </tr>
                             <tr>
                                 <td>  <label for="estado">Estado:</label></td>
                                 <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> 
-                                    <select name="estado" id="estado" disabled="false">                                   
+                                    <select name="estado" id="estado" disabled="true">                                   
                                         <core:forEach items="${estados}" var="estados">
                                             <option value="${estados.idEstado}">${estados.nombre}</option>
                                         </core:forEach> 
-                                            <option value ="">otra </option>
                                     </select>
                                 </td>  
                             </tr>                        
@@ -182,13 +182,22 @@
                                 </td>  
                             </tr>
                             <tr>
-                                <td>  <label for="colonia">Colonia:</label></td>
+                                <td>
+                                    <input id="nombre_colonia" path="nombre_colonia" value="${instanciaDireccion.idColonia.nombre}" hidden="hidden"/>
+                                    <label for="colonia">Colonia:</label></td>
                                 <td>  
                                     <div id="notice"></div>
                                     <!--select name="colonia" id="colonia" disabled="true"></select--> 
-                                    
+                                    <form:select id="idColonia" path="idColonia.idColonia" name="idColonia"></form:select> 
+                                        <div id="otra_colonia" style="display:none;">
+                                            <input type="text" name="otra_colonia" id="otra_colonia"/>
+                                            <!--form:input path="usuario" id="usuario" size="20"/-->
+                                        </div>
+                                    <form:errors path="idColonia.idColonia" cssClass="error"/>
                                 </td>  
-                            </tr>    
+                            </tr>        
+
+
                             <tr>
 
 
@@ -257,9 +266,10 @@
                     </form:form>
                 </div>
                 <div id="datosOrganizaciones">
-                    <form:form id="frmDatosOrganizaciones" modelAttribute="academicos" >
+                    <form:form id="frmDatosOrganizaciones" modelAttribute="formatoUnicoDatosOrganizaciones" >
                         <table>
                             <tr>
+                                <form:input  type="text" path ="id" />
                                 <td>Organizaci&oacute;n:</td>
                                 <td>
                                     <select id="comboOrganizaciones" name="organizacion">
@@ -280,9 +290,7 @@
                                 <td>Proyecto:</td>
                                 <td>
                                     <select id="proyectos" name="proyecto">
-                                        <option value="">Proy 1</option>
-                                        <option value="">Proy 2</option>
-                                        <option value="">Proy 3</option>
+
                                     </select> 
                                 </td>
                             </tr>
@@ -309,17 +317,17 @@
                             </tr>-->
                             <tr>
                                 <td>Domicilio</td>
-                                <td colspan="3"><input id="domicilioOrg" type ="text" style="width:99%" /></td> 
+                                <td colspan="3"><input id="domicilioOrg" type ="text" style="width:99%" readonly="true" /></td> 
                             </tr>
                             <tr>
                                 <td>Titular</td>
-                                <td><input type ="text"/></td> 
+                                <td><input id="nombre_responsable" type ="text" readonly="true" /></td> 
                                 <td>Puesto</td>
-                                <td><input type ="text"/></td> 
+                                <td><input id="responsable_puesto"type ="text" readonly="true" /></td> 
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono del titular</td>
-                                <td><input type ="text"/></td> 
+                                <td><input id="telefono_responsable" type ="text" readonly="true" /></td> 
 
                             </tr>
                             <tr>
@@ -327,72 +335,72 @@
                                 <td><input type ="submit" value="Guardar Datos de Organizaci&oacute;n" > </td>
                             </tr>
                         </table>
-                        </form:form>
-                    </div>
-                    <div id="horarios">
-                        <form>
-                            <table>
-                                <tr>
-                                    <th></th>
-                                    <th>Lunes</th>
-                                    <th>Martes</th>
-                                    <th>Mi&eacute;rcoles</th>
-                                    <th>Jueves</th>
-                                    <th>Viernes</th>
-                                    <th>S&aacute;bado</th>
-                                    <th>Domingo</th> 
-                                </tr>
-                                <tr>
-                                    <th>Horario Inicio:</th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[1]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[2]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[3]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[4]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[5]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[6]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[7]" value="" /></th>
-                                </tr>
-                                <tr>
-                                    <th>Horario Final</th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[8]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[9]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[10]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[11]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[12]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[13]" value="" /></th>
-                                    <th><input type="text" style="width: 70px;" id="timepicker.[14]" value="" /></th>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td colspan="8"><input type ="submit" value="Guardar Datos de Horario" ></td>
-                                </tr>
-                            </table>
-                        </form>
-                    </div>
-                    <div id="imprimirFui">
-                        <h1>Presiona el bot&oacute;n para descargar</h1>
-                        <a href=""><img src="imagenes/descargar.png" /></a>
-                    </div>
-                    <div id="subirFui">
-                        <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
-                        <form>
-                            <input type="file"  /> <br/>
-                            <input type="submit" value="Subir" />
-                        </form>
-                    </div>
+                    </form:form>
                 </div>
-                <div id="observaciones">
-                    <b>Debes atender los siguientes puntos</b><br/>
-                    <ul>
-                        <li>El nombre no fue escrito correctamente</li>
-                        <li>La Tu direcci&oacute;n est&aacute; vac&iacute;a</li>
-                    </ul>
-
+                <div id="horarios">
+                    <form>
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>Lunes</th>
+                                <th>Martes</th>
+                                <th>Mi&eacute;rcoles</th>
+                                <th>Jueves</th>
+                                <th>Viernes</th>
+                                <th>S&aacute;bado</th>
+                                <th>Domingo</th> 
+                            </tr>
+                            <tr>
+                                <th>Horario Inicio:</th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[1]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[2]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[3]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[4]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[5]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[6]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[7]" value="" /></th>
+                            </tr>
+                            <tr>
+                                <th>Horario Final</th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[8]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[9]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[10]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[11]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[12]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[13]" value="" /></th>
+                                <th><input type="text" style="width: 70px;" id="timepicker.[14]" value="" /></th>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td colspan="8"><input type ="submit" value="Guardar Datos de Horario" ></td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
-
-                <div style="clear:both;"></div>
+                <div id="imprimirFui">
+                    <h1>Presiona el bot&oacute;n para descargar</h1>
+                    <a href=""><img src="imagenes/descargar.png" /></a>
+                </div>
+                <div id="subirFui">
+                    <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
+                    <form>
+                        <input type="file"  /> <br/>
+                        <input type="submit" value="Subir" />
+                    </form>
+                </div>
             </div>
-            <%-- fin del contenido --%>
-            <%@ include file="../Template/footer.jsp" %>
-        </body>
-    </html>
+            <div id="observaciones">
+                <b>Debes atender los siguientes puntos</b><br/>
+                <ul>
+                    <li>El nombre no fue escrito correctamente</li>
+                    <li>La Tu direcci&oacute;n est&aacute; vac&iacute;a</li>
+                </ul>
+
+            </div>
+
+            <div style="clear:both;"></div>
+        </div>
+        <%-- fin del contenido --%>
+        <%@ include file="../Template/footer.jsp" %>
+    </body>
+</html>

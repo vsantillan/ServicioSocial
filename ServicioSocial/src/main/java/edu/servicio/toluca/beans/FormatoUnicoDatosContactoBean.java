@@ -6,6 +6,7 @@ package edu.servicio.toluca.beans;
 
 import edu.servicio.toluca.entidades.Colonia;
 import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
  */
 public class FormatoUnicoDatosContactoBean {
     private BigDecimal id;
+    @NotNull
     private String calle;
     private String numeroI;
     private String numeroE;
@@ -24,6 +26,7 @@ public class FormatoUnicoDatosContactoBean {
     private String telefono_oficina;
     private String twitter;
     private String facebook;
+    private Colonia idColonia;
 
     /**
      * @return the calle
@@ -181,6 +184,20 @@ public class FormatoUnicoDatosContactoBean {
      */
     public void setId(BigDecimal id) {
         this.id = id;
+    }
+
+    /**
+     * @return the idColonia
+     */
+    public Colonia getIdColonia() {
+        return idColonia;
+    }
+
+    /**
+     * @param idColonia the idColonia to set
+     */
+    public void setIdColonia(Colonia idColonia) {
+        this.idColonia = idColonia;
     }
     
     
