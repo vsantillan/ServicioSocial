@@ -55,7 +55,7 @@ $(document).ready(function() {
                 option.value = 0;
                 comboColonias.appendChild(option);
 
-                if (comboColonias.options[comboColonias.selectedIndex].value == 0) {
+                if (comboColonias.options[comboColonias.selectedIndex].value === 0) {
                     $("#otra_colonia").show("slow");
                 }
                 comboEstado.disabled = true;
@@ -63,9 +63,10 @@ $(document).ready(function() {
 
             } else {
                 existeCP = false;
-                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>"
+                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>";
                 $("#otra_colonia").show("slow");
                 comboEstado.disabled = false;
+                comboMunicipio.disabled=false;
                 comboColonias.disabled = true;
                 cargarMunicipios();
 
@@ -83,7 +84,7 @@ $(document).ready(function() {
         var comboColonias = document.getElementById("idColonia");
         //console.log("")
         
-        if (comboColonias.value == 0) {
+        if (comboColonias.value === 0) {
             $("#otra_colonia").show("slow");
             if (existeCP) {
                 document.getElementById("estado").disabled = true;
@@ -101,24 +102,24 @@ $(document).ready(function() {
             document.getElementById("municipio").disabled = true;
             document.getElementById("ciudad").disabled = true;
         }
-    })
+    });
 
 //Evento para cambio en el estado
     $("#estado").change(function(event) {
         if (!existeCP) {
-            cargarMunicipios()
+            cargarMunicipios();
         }
-    })
+    });
 //Evento de teclado para codigos postales registroOrganizacion.do
     $("#codigo_postal").keyup(function(event) {
         $("#otra_colonia").hide("slow");
-        var cp = document.getElementById("codigo_postal").value
-        if (cp.length == 5)
+        var cp = document.getElementById("codigo_postal").value;
+        if (cp.length === 5)
             cargarColonias(cp);
-    })
+    });
 
     function ubicarEstado(value) {
-        console.log("value:" + value)
+        console.log("value:" + value);
         //Ubicar el indice en el estado correspondiente
         var comboEstado = document.getElementById("estado");
         var encontrado = false;
@@ -126,7 +127,7 @@ $(document).ready(function() {
         while (!encontrado)
         {
 //            console.log("if " + comboEstado.options[i].value + "== " + value)
-            if (comboEstado.options[i].value == value)
+            if (comboEstado.options[i].value === value)
             {
                 comboEstado.selectedIndex = i;
                 encontrado = true;
@@ -172,7 +173,7 @@ $(document).ready(function() {
                         comboMunicipio.appendChild(option);
                     }
                 } else {
-                    alert("Error al cargar los municipios del estado")
+                    alert("Error al cargar los municipios del estado");
                 }
 
             });

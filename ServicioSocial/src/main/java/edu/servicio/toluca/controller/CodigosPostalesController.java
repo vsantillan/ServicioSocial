@@ -111,7 +111,8 @@ public class CodigosPostalesController {
         try {
             System.out.println("Antes del query");
 //            CodigosPostales codigosPostales = codigosPostalesFacade.find(Integer.parseInt(cp));
-            List<EstadosSia> estados = estadosFacade.findBySpecificField("idEstado", idEstado, "equal", null, null);
+//            List<EstadosSia> estados = estadosFacade.findBySpecificField("idEstado", idEstado, "equal", null, null);
+            List<EstadosSia> estados = estadosFacade.findAll();
             System.out.println("Despues del query");
             ArrayList<CodigosPostales> codigosPostales = new ArrayList(estados.get(0).getCodigosPostalesCollection());
             for (int i = 0; i < codigosPostales.size(); i++) {
