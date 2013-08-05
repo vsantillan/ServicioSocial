@@ -22,12 +22,17 @@ import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +45,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -103,6 +109,8 @@ public class FormatoUnicoController1 {
                 if(fechaSubida != null)
                 {
                      formatoNR.setFechaSubida(fechaSubida);
+                     String idDocumento=obtenerIDDocumentoFormatoU(listaDocumentos);
+                     formatoNR.setIdDocumentoFormatoUnico(idDocumento);
                      listadoFormatosNoRevisados.add(formatoNR);
                 }
             }
@@ -175,14 +183,8 @@ public class FormatoUnicoController1 {
                      System.out.println(detalle);
                      formatoCorreccion.añadirObservacion(detalle);
                 }
-                
-                
-                
-                
-                
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
-                
-                
+ 
                 if(fechaSubida != null)
                 {
                      formatoCorreccion.setFechaSubida(fechaSubida);
@@ -273,5 +275,76 @@ public class FormatoUnicoController1 {
          }
          return null;
      }
+     
+     private static String  obtenerIDDocumentoFormatoU(List<Documentos> listaDocumentos)
+     {
+         for (Documentos docu : listaDocumentos) 
+         {
+                    if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
+                    {
+                        return docu.getId().toString();
+                    }
+         }
+         return null;
+     }
+     
+     ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
+    @RequestMapping(value = "/guardarPDF.do", method = RequestMethod.POST)
+    public String save(
+            @RequestParam("file") MultipartFile file,String id) throws IOException { 
+//        System.out.println("id:" + vistaAlumno.getId());
+//        String id=vistaAlumno.getId();
+//        
+//        VistaAlumno vistaAlumno1;
+//        vistaAlumno1 = vistaAlumnoFacade.find(id);
+//        System.out.println("find:" + vistaAlumno.getApellidoPat());
+//        vistaAlumno1.setFoto(file.getBytes());
+//
+//        vistaAlumnoFacade.edit(vistaAlumno1);
+        System.out.println(file.getOriginalFilename());
+        System.out.println(file.getSize());
+        Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
+        System.out.println(doc);
+        doc.setArchivo(file.getBytes());
+        doc.setExtension("pdf");
+        
+        return "redirect:subirpdf.do";
+    }
+
+    @RequestMapping(value = "/subirpdf.do",method = RequestMethod.GET)
+    public String guardaFotoPrueba(Model modelo) {
+        //modelo.addAttribute("vistaAlumno", new VistaAlumno());
+        return "/FormatoUnico/guardarFoto";
+    }
+    
+    @RequestMapping(value = "/mostarPDF.do", method = RequestMethod.GET)
+    @ResponseBody
+    public void showPDF(String id,HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
+        
+        httpServletResponse.setContentType("application/pdf");
+        Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
+        byte[] pdfImage = serialize(doc.getArchivo());
+        httpServletResponse.getOutputStream().write(pdfImage);
+    }
+    
+    
+    
+    @RequestMapping(value = "/eeeee.do", method = RequestMethod.GET)
+    @ResponseBody
+    public void saveAndShowPDF( HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
+        
+        httpServletResponse.setContentType("application/pdf");
+         Documentos doc=documentoFacade.find(BigDecimal.valueOf(1l));
+        byte[] pdfImage = serialize(doc.getArchivo());
+        httpServletResponse.getOutputStream().write(pdfImage);
+    }
+    
+    public static byte[] serialize(Object obj) throws IOException {
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+        ObjectOutputStream o = new ObjectOutputStream(b);
+        o.writeObject(obj);
+        return b.toByteArray();
+    }
+     
     
 }

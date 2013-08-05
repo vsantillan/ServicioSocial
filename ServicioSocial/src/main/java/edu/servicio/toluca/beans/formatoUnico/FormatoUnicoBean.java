@@ -18,7 +18,8 @@ public class FormatoUnicoBean {
     private String fechaSubida;
     private String idDatosPersonales;
     private String periodo;
-    private List<String> listaObservaciones; 
+    private List<String> listaObservaciones;
+    private String idDocumentoFormatoUnico;
 
     public FormatoUnicoBean() {
         listaObservaciones = new ArrayList<String>();
@@ -127,5 +128,19 @@ public class FormatoUnicoBean {
      */
     public void setListaObservaciones(List<String> listaObservaciones) {
         this.listaObservaciones = listaObservaciones;
+    }
+
+    /**
+     * @return the idDocumentoFormatoUnico
+     */
+    public String getIdDocumentoFormatoUnico() {
+        return idDocumentoFormatoUnico;
+    }
+
+    /**
+     * @param idDocumentoFormatoUnico the idDocumentoFormatoUnico to set
+     */
+    public void setIdDocumentoFormatoUnico(String idDocumentoFormatoUnico) {
+        this.idDocumentoFormatoUnico = idDocumentoFormatoUnico;
     }
 }
