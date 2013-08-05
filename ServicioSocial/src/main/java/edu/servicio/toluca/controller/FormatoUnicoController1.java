@@ -58,7 +58,7 @@ public class FormatoUnicoController1 {
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
     
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
-    private FormatoUnicoFacade formatoUnico;
+    private FormatoUnicoFacade formatoUnicoFacade;
     
     @EJB(mappedName = "java:global/ServicioSocial/DocumentosFacade")
     private DocumentosFacade documentoFacade;
@@ -87,7 +87,7 @@ public class FormatoUnicoController1 {
         List<FormatoUnicoBean> listadoFormatosCorreccion=new ArrayList<FormatoUnicoBean>();
         
 
-        for (FormatoUnico formato : formatoUnico.findAll()) 
+        for (FormatoUnico formato : formatoUnicoFacade.findAll()) 
         {
                 if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS)))//Formatos No Revisados
                 {
@@ -214,8 +214,9 @@ public class FormatoUnicoController1 {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR_Aceptado.do")
     public @ResponseBody String modificarFU_NR_Aceptados(String id) {
         
-        formatoUnico.find(BigDecimal.valueOf(Long.valueOf(id))).setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
-        
+        FormatoUnico fA=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
+        fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
+        formatoUnicoFacade.edit(fA);
         
         return "OK";
     }
@@ -229,16 +230,18 @@ public class FormatoUnicoController1 {
                          String idFormatoUnico,
                          String tipo) {
         
-        System.out.println(tipo+" tipo");
-        System.out.println(idDatoPersonales+" DP");
-        System.out.println(idFormatoUnico+" FU");
+
         switch(Integer.parseInt(tipo))
         {
             case 1://Correccion
-                formatoUnico.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico))).setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
+                FormatoUnico fu=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
+                fu.setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
+                formatoUnicoFacade.edit(fu);
                 break;
             case 2://Rechazo
-                formatoUnico.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico))).setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
+                FormatoUnico fuR=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
+                fuR.setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
+                formatoUnicoFacade.edit(fuR);
                 break;
         }
         
@@ -307,6 +310,8 @@ public class FormatoUnicoController1 {
         System.out.println(doc);
         doc.setArchivo(file.getBytes());
         doc.setExtension("pdf");
+        documentoFacade.edit(doc);
+        
         
         return "redirect:subirpdf.do";
     }
