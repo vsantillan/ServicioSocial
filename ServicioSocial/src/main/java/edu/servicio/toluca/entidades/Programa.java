@@ -7,24 +7,20 @@ package edu.servicio.toluca.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author SATELLITE
+ * @author bustedvillain
  */
 @Entity
 @Table(name = "PROGRAMA", catalog = "", schema = "GES_VIN")
@@ -33,7 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Programa.findAll", query = "SELECT p FROM Programa p"),
     @NamedQuery(name = "Programa.findByIdPrograma", query = "SELECT p FROM Programa p WHERE p.idPrograma = :idPrograma"),
     @NamedQuery(name = "Programa.findByDescripcion", query = "SELECT p FROM Programa p WHERE p.descripcion = :descripcion"),
-    @NamedQuery(name = "Programa.findByStatus", query = "SELECT p FROM Programa p WHERE p.status = :status")})
+    @NamedQuery(name = "Programa.findByStatus", query = "SELECT p FROM Programa p WHERE p.status = :status"),
+    @NamedQuery(name = "Programa.findBySiglas", query = "SELECT p FROM Programa p WHERE p.siglas = :siglas")})
 public class Programa implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -51,8 +48,9 @@ public class Programa implements Serializable {
     @NotNull
     @Column(name = "STATUS")
     private BigInteger status;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPrograma")
-    private Collection<Proyectos> proyectosCollection;
+    @Size(max = 4)
+    @Column(name = "SIGLAS")
+    private String siglas;
 
     public Programa() {
     }
@@ -91,13 +89,12 @@ public class Programa implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
-    public Collection<Proyectos> getProyectosCollection() {
-        return proyectosCollection;
+    public String getSiglas() {
+        return siglas;
     }
 
-    public void setProyectosCollection(Collection<Proyectos> proyectosCollection) {
-        this.proyectosCollection = proyectosCollection;
+    public void setSiglas(String siglas) {
+        this.siglas = siglas;
     }
 
     @Override

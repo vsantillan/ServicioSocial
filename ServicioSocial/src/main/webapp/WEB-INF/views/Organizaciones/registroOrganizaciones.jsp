@@ -33,7 +33,7 @@
         <div id="contenido">
             <center>
                 <br/>
-                <format:message key="fecha_max_fui"/>
+                <!--format:message key="fecha_max_fui"/-->
                 <h1>Registro de Organizaciones</h1>
                 <p><h4>Busque si la Organizaci&oacute;n ya esta pre-registrada</h4></p>
                 <form:form name="altaOrganizacion" class="MyForm" action="confirmaOrganizacionVisitante.do" method="POST" style="width:60%;">
@@ -42,7 +42,7 @@
                             <td> <label for="nombre-organizacion">Organizaci&oacute;n:</label> </td>
                             <td> 
                                 <div class="ui-widget">
-                                    <select class="combobox-autocomplete">
+                                    <select name="instancia" class="combobox-autocomplete">
                                         <option value="">Busqueda de Organizaci&oacute;n</option>
                                         <core:forEach items="${preOrganizaciones}" var="organizacion">
                                             <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>

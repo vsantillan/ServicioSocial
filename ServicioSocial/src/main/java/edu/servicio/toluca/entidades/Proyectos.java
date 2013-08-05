@@ -58,14 +58,11 @@ public class Proyectos implements Serializable {
     @Id
     @GeneratedValue(generator = "generator")
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID_PROYECTO")
     private BigDecimal idProyecto;
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "DOMICILIO")
-    @NotBlank
     private String domicilio;
     @Basic(optional = false)
     @NotNull
@@ -83,16 +80,12 @@ public class Proyectos implements Serializable {
     @Column(name = "TELEFONO_RESPONSABLE")
     private long telefonoResponsable;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "VALIDACION_ADMIN")
     private BigInteger validacionAdmin;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ESTATUS")
     private BigInteger estatus;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 2)
     @Column(name = "MODALIDAD")
     private String modalidad;
     @Basic(optional = false)
@@ -105,7 +98,6 @@ public class Proyectos implements Serializable {
     @Column(name = "VACANTES")
     private BigInteger vacantes;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "VACANTES_DISPONIBLES")
     private BigInteger vacantesDisponibles;
     @Size(max = 60)

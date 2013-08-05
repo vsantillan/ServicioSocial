@@ -13,11 +13,11 @@ import javax.persistence.PersistenceContextType;
 
 /**
  *
- * @author SATELLITE
+ * @author bustedvillain
  */
 @Stateful
 public class ProgramaFacade extends AbstractFacade<Programa> {
-    @PersistenceContext(unitName = "servicioPU", type= PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "servicioPU", type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override

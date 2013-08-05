@@ -16,6 +16,7 @@ import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
+import edu.servicio.toluca.sesion.ProgramaFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
@@ -56,6 +57,8 @@ public class OrganizacionesController2 {
     private TipoProyectoFacade tipoProyectoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ProgramaFacade")
+    private ProgramaFacade programaFacade;
 
     //Alta de Organizacion
     @RequestMapping(method = RequestMethod.GET, value = "/altaOrganizacion.do")
@@ -107,6 +110,8 @@ public class OrganizacionesController2 {
         model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
         //Perfil
         model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        //Programa
+        model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
 
         return "/Organizaciones/altaAdminProyecto";
     }
@@ -140,6 +145,14 @@ public class OrganizacionesController2 {
             instancia.setValidacionAdmin(BigInteger.ZERO);
             instancia.setEstatus(BigInteger.ONE);
             instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
+            
+            ///Convirtiendo a mayusculas
+            instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
+            instancia.setNombre(instancia.getNombre().toUpperCase());
+            instancia.setPuesto(instancia.getPuesto().toUpperCase());
+            instancia.setRfc(instancia.getRfc().toUpperCase());
+            instancia.setTitular(instancia.getTitular().toUpperCase());
+            
             instanciaFacade.create(instancia);
             return "/Organizaciones/confirmaRegOrganizacion";
         }
@@ -166,6 +179,14 @@ public class OrganizacionesController2 {
             instancia.setValidacionAdmin(BigInteger.ZERO);
             instancia.setEstatus(BigInteger.valueOf(2));
             instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
+            
+            //Convirtiendo a mayusculas
+            instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
+            instancia.setNombre(instancia.getNombre().toUpperCase());
+            instancia.setPuesto(instancia.getPuesto().toUpperCase());
+            instancia.setRfc(instancia.getRfc().toUpperCase());
+            instancia.setTitular(instancia.getTitular().toUpperCase());
+            
             instanciaFacade.create(instancia);
             System.out.println("Insercion correcta!");
             return "/Organizaciones/confirmaAdminRegOrganizacion";
@@ -275,6 +296,8 @@ public class OrganizacionesController2 {
             model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
             //Perfil
             model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            //Programa
+            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
 
             //return "redirect:altaAdminProyectos.do";
             return "/Organizaciones/altaAdminProyecto";
@@ -285,6 +308,14 @@ public class OrganizacionesController2 {
             proyecto.setEstatus(BigInteger.ONE);
             proyecto.setFechaAlta(new Date());
             proyecto.setVacantesDisponibles(proyecto.getVacantes());
+            
+            //Convertir a mayuscular
+            proyecto.setDomicilio(proyecto.getDomicilio().toUpperCase());
+            proyecto.setNombre(proyecto.getNombre().toUpperCase());
+            proyecto.setNombreResponsable(proyecto.getNombreResponsable().toUpperCase());
+            proyecto.setResponsablePuesto(proyecto.getResponsablePuesto().toUpperCase());
+            
+            proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
             return "/Organizaciones/confirmaAltaAdminProyectos";
         }
@@ -307,11 +338,11 @@ public class OrganizacionesController2 {
     }
 
     //Alta de organizacion por pre-registro
-    @RequestMapping(method = RequestMethod.GET, value = "/confirmaOrganizacionVisitante.do")
-    public String confirmaOrganizacionVisitante(Model model) {
+    @RequestMapping(method = RequestMethod.POST, value = "/confirmaOrganizacionVisitante.do")
+    public void confirmaOrganizacionVisitante(Model model, String instancia) {
+        System.out.println("Id instancia:"+instancia);
 
-
-        return "/Organizaciones/editarOrganizacion";
+        //return "/Organizaciones/editarOrganizacion";
     }
 
     //Alta de organizacion por pre-registro

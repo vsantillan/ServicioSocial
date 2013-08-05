@@ -68,33 +68,50 @@ $(document).ready(function() {
     }
 
     //Formulario alta admin proyectos
-    var nActividades = 0;
+    if (iniciarAltaAdminProyecto) {
+        console.log("Iniciando alta admin proyecto")
+        iniciarPerfiles();
+        nActividades = 0
+        console.log("Agregar actividad 1");
+        agregarActividad();
+        console.log("Agregar actividad 2");
+        agregarActividad();
+        document.getElementById("ningunPerfil").checked = true;
+        validarCheck();
 
-    agregarActividad();
-    agregarActividad();
+    }
+    var nActividades;
     $("#agregarActividad").click(function(event) {
         agregarActividad();
     })
 
     function agregarActividad() {
+        console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
         if (nActividades < 5) {
-            $("#actividades").append("<li style='float:left;'><input type='text' size='35' class='actividad' id='" + nActividades + "'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
+            $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
             masActividad();
+            console.log("Actividad agregada");
         }
     }
-    
+
     //Actualiza el campo hidden que almacena el numero de actividades
-    function masActividad(){
+    function masActividad() {
         nActividades++;
-        //document.getElementById("nActividades").value=nActividades;
+        document.getElementById("nActividades").value = nActividades;
+        console.log("nActividades local:" + nActividades);
+        console.log("nActividades form:" + document.getElementById("nActividades").value);
     }
-    
-    function menosActividad(){
+
+    function menosActividad() {
         nActividades--;
-        //document.getElementById("nActividades").value=nActividades;
+        document.getElementById("nActividades").value = nActividades;
+        console.log("nActividades local:" + nActividades);
+        console.log("nActividades form:" + document.getElementById("nActividades").value);
+
     }
 
     $("body").on("click", ".borrar", function(event) {
+        console.log("Borrar actividad, nActividades:" + nActividades);
         if (nActividades > 2) {
             $(this).closest('li').remove();
             menosActividad();
@@ -103,6 +120,7 @@ $(document).ready(function() {
 
     //Arreglo de perfiles
     var perfiles = new Array();
+    var maxPerfiles = 0;
 
     function iniciarPerfiles() {
         console.log("Perfiles");
@@ -111,34 +129,39 @@ $(document).ready(function() {
             for (i = 0; i < respuesta.nombre.length; i++) {
                 console.log(respuesta.nombre[i] + " " + respuesta.idPerfil[i]);
                 perfiles.push(new Perfil(respuesta.idPerfil[i], respuesta.nombre[i]));
+                maxPerfiles++;
             }
 
         });
     }
-    iniciarPerfiles();
-    var nPerfiles=0;
+
+    var nPerfiles = 0;
     function agregaComboPerfil() {
-        console.log("Agregando combo");
-        //$("#perfiles").append("<li style='float:left;'><select>");
-        var li = document.createElement("li");
-        var select = document.createElement("select");
-        var button = document.createElement("button");
-        button.appendChild(document.createTextNode("Quitar"));
-        $(button).attr("class", "borrarPerfil");
-        for (i = 0; i < perfiles.length; i++) {
-            console.log("<option value='" + perfiles[i].id + "'>" + perfiles[i].nombre + "</option>");
-            var option = document.createElement("option");
-            option.text = perfiles[i].nombre;
-            option.value = perfiles[i].id;
-            $(option).attr("class", "opPerfil");
-            select.appendChild(option);
-            //$("#perfiles").append("<option value='" + perfiles[i].id + "'>" + perfiles[i].nombre + "</option>");
+        if (nPerfiles < maxPerfiles) {
+            console.log("Agregando combo");
+            //$("#perfiles").append("<li style='float:left;'><select>");
+            var li = document.createElement("li");
+            var select = document.createElement("select");
+            var button = document.createElement("button");
+            button.appendChild(document.createTextNode("Quitar"));
+            $(button).attr("class", "borrarPerfil");
+            for (i = 0; i < perfiles.length; i++) {
+                console.log("<option value='" + perfiles[i].id + "'>" + perfiles[i].nombre + "</option>");
+                var option = document.createElement("option");
+                option.text = perfiles[i].nombre;
+                option.value = perfiles[i].id;
+                $(option).attr("class", "opPerfil");
+                select.appendChild(option);
+                //$("#perfiles").append("<option value='" + perfiles[i].id + "'>" + perfiles[i].nombre + "</option>");
+            }
+            $(select).attr("name", "perfiles[" + nPerfiles + "]")
+            $(select).attr("class", "perfil");
+            //$("#perfiles").append("</select><input type ='button' class='borrarPerfil' value = 'Quitar'/></li>");
+            li.appendChild(select);
+            li.appendChild(button);
+            document.getElementById("perfiles").appendChild(li);
+            masPerfil();
         }
-        //$("#perfiles").append("</select><input type ='button' class='borrarPerfil' value = 'Quitar'/></li>");
-        li.appendChild(select);
-        li.appendChild(button);
-        document.getElementById("perfiles").appendChild(li);
-        masPerfil();
     }
 
     //Clase Perfil
@@ -146,16 +169,21 @@ $(document).ready(function() {
         this.id = id;
         this.nombre = nombre;
     }
-    
+
     //Actualiza un el campo hidden de nPerfil
-    function masPerfil(){
+    function masPerfil() {
         nPerfiles++;
-        //document.getElementById("nPerfiles").value=nPerfiles;
+        document.getElementById("nPerfiles").value = nPerfiles;
+        console.log("nPerfiles local:" + nPerfiles);
+        console.log("nPerfiles form:" + document.getElementById("nPerfiles").value);
+
     }
-    
-    function menosPerfil(){
+
+    function menosPerfil() {
         nPerfiles--;
-        //document.getElementById("nActividades").value=nPerfiles;
+        document.getElementById("nActividades").value = nPerfiles;
+        console.log("nPerfiles local:" + nPerfiles);
+        console.log("nPerfiles form:" + document.getElementById("nPerfiles").value);
     }
 
     $("#agregaPerfil").click(function(event) {
@@ -165,25 +193,64 @@ $(document).ready(function() {
     $("body").on("click", ".borrarPerfil", function(event) {
         $(this).closest('li').remove();
         menosPerfil();
-    });
-    var habilCheck=true;
-    $("#ningunPerfil").click(function(event){
-        habilCheck= !habilCheck;
-        var btnAgregarPerfil=document.getElementById("agregaPerfil");
-        var ol = document.getElementById("perfiles");
-        
-        if(habilCheck){
-            btnAgregarPerfil.disabled=false;
-            btnAgregarPerfil.style.opacity = 1;
-            ol.style.opacity=1;
-            console.log("Habilitando!");
-        }else{
-            btnAgregarPerfil.disabled=true;
-            btnAgregarPerfil.style.opacity = .5;
-            ol.style.opacity=.5;            
-            console.log("Deshabilitado");
+        if (nPerfiles === 0) {
+            document.getElementById("ningunPerfil").checked = true;
+            validarCheck();
         }
     });
+
+    $("#ningunPerfil").click(function(event) {
+        validarCheck();
+    });
+
+    function validarCheck() {
+        var habilCheck = document.getElementById("ningunPerfil").checked;
+        //alert(habilCheck);
+        var btnAgregarPerfil = document.getElementById("agregaPerfil");
+        var ol = document.getElementById("perfiles");
+
+        if (!habilCheck) {
+            btnAgregarPerfil.disabled = false;
+            btnAgregarPerfil.style.opacity = 1;
+            ol.style.opacity = 1;
+            console.log("Habilitando!");
+            if (nPerfiles === 0) {
+                agregaComboPerfil();
+            }
+        } else {
+            btnAgregarPerfil.disabled = true;
+            btnAgregarPerfil.style.opacity = .5;
+            ol.style.opacity = .5;
+            console.log("Deshabilitado");
+        }
+    }
+
+    $("#btnGdaAdminProyecto").click(function(event) {
+        console.log("Guardar");
+        var cadenaPerfiles = "";
+        var cadenaActividades = "";
+
+        $(".actividad").each(function() {
+            console.log("Actividad:" + $(this).val());
+            cadenaActividades += $(this).val() + ";";
+        });
+        console.log("Cadena actividades:" + cadenaActividades);
+        document.getElementById("cadenaActividades").value = cadenaActividades;
+        var habilCheck = document.getElementById("ningunPerfil").checked;
+
+        if (!habilCheck) {
+            $(".perfil").each(function() {
+                console.log("Perfil:" + $(this).val());
+                cadenaPerfiles += $(this).val() + ";";
+            });
+            console.log("Cadena perfiles:" + cadenaPerfiles);
+            document.getElementById("cadenaPerfiles").value = cadenaPerfiles;
+        } else {
+            console.log("No hay perfiles");
+            document.getElementById("cadenaPerfiles").value = "null";
+        }
+        document.forms["altaOrganizacion"].submit();
+    })
 
 
 });

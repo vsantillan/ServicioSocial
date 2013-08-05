@@ -76,7 +76,7 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
     public String capturarAsistencia(Model modelo) {
-        System.out.println("foto"+ vistaAlumnoFacade.foto());
+        //System.out.println("foto"+ vistaAlumnoFacade.foto());
 //        modelo.addAttribute("foto", vistaAlumnoFacade.foto());
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
         return "/Platicas/capturarAsistencia";
@@ -155,8 +155,8 @@ public class PlaticaController {
 //        if (result.hasErrors()) {
             //modelo.addAttribute("folio", new FoliosPlatica());
             //System.out.println("hubo errores asistencia do");
-        System.out.println("foto"+ vistaAlumnoFacade.foto("11280476"));
-        modelo.addAttribute("foto", vistaAlumnoFacade.foto("11280476"));
+       // System.out.println("foto"+ vistaAlumnoFacade.foto("11280476"));
+        //modelo.addAttribute("foto", vistaAlumnoFacade.foto("11280476"));
     
        
             return "/Platicas/capturarAsistencia";

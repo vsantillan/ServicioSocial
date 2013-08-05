@@ -3,7 +3,11 @@
  * and open the template in the editor.*/
 
 $(document).ready(function() {
-
+    //Checa si inicia ya con valores para cargar codigos postales
+    if(document.getElementById("codigo_postal").length===5){
+        cargarColonias(document.getElementById("codigo_postal").value);
+    }
+    
     var existeCP = true;
 //Cargar colonias con JSON
     function cargarColonias(cp) {

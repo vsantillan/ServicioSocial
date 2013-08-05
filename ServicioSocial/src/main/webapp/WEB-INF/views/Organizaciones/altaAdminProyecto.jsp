@@ -19,7 +19,10 @@
         <script src="js/jquery.codigos.postales.js"></script>
         <script src="js/jquery.manolo.js"></script>
 
-        <title>Administrador</title>       
+        <title>Administrador</title> 
+        <script>
+            var iniciarAltaAdminProyecto=true;
+        </script>
     </head>
     <body class="background">
         <jsp:include page="../Template/banner.jsp" />
@@ -30,8 +33,8 @@
             <div style="float:left; width: 80%">
                 <center>
                     <h1>Alta de Proyecto</h1>
-                    <div style="float:left; width: 80%">
-                        <form:form  name="altaOrganizacion" commandName="proyecto" class="MyForm" action="gdaAltaAdminProyecto.do" method="POST">
+                    <div style="float:left; width: 87%">
+                        <form:form  name="altaOrganizacion" modelAttribute="proyecto" class="MyForm" action="gdaAltaAdminProyecto.do" method="POST">
                             <table>
                                 <tr>
                                     <td> <label for="nombre">Nombre del Proyecto:</label> </td>
@@ -45,14 +48,14 @@
                                     <td>  <label for="vacantes">N&uacute;mero de Vacantes:</label> </td>
                                     <td>  
                                         <!--input type="text" name="rfc" id="vacacntes" size="20" require="true" /-->
-                                        <form:input path="vacantesDisponibles" id="rfc" size="20"/><br/>
-                                        <form:errors path="vacantesDisponibles" cssClass="error"/>
+                                        <form:input path="vacantes" id="vacantes" size="20"/><br/>
+                                        <form:errors path="vacantes" cssClass="error"/>
                                     </td>  
                                 </tr>                        
                                 <tr>
                                     <td> <label for="semestre">Instancia/Organizaci&oacute;n:</label> </td>
                                     <td>
-                                        <form:select id="instancia" path="idInstancia.idInstancia" name="instancia">
+                                        <form:select id="idInstancia" path="idInstancia.idInstancia" name="idInstancia">
                                             <core:forEach items="${instancias}" var="instancia">
                                                 <form:option  value="${instancia.idInstancia}">${instancia.nombre}</form:option>
                                             </core:forEach> 
@@ -63,15 +66,23 @@
                                     <td>  <label for="lugar">Responsable del Programa:</label></td>
                                     <td>  
                                         <!--input type="text" name="titular" id="titular" size="20" require="true"/--> 
-                                        <form:input path="nombreResponsable" id="rfc" size="20"/><br/>
+                                        <form:input path="nombreResponsable" id="nombreResponsable" size="20"/><br/>
                                         <form:errors path="nombreResponsable" cssClass="error"/>
+                                    </td>  
+                                </tr>
+                                <tr>
+                                    <td>  <label for="lugar">Puesto del Responsable:</label></td>
+                                    <td>  
+                                        <!--input type="text" name="titular" id="titular" size="20" require="true"/--> 
+                                        <form:input path="responsablePuesto" id="responsablePuesto" size="20"/><br/>
+                                        <form:errors path="responsablePuesto" cssClass="error"/>
                                     </td>  
                                 </tr>
                                 <tr>
                                     <td>  <label for="lugar">Tel&eacute;fono del Responsable:</label></td>
                                     <td>  
                                         <!--input type="text" name="puesto" id="puesto" size="20" require="true"/--> 
-                                        <form:input path="telefonoResponsable" id="rfc" size="20"maxlength="10"/><br/>
+                                        <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10"/><br/>
                                         <form:errors path="telefonoResponsable" cssClass="error"/>
                                     </td>  
                                 </tr>
@@ -85,7 +96,10 @@
                                 </tr>
                                 <tr>
                                     <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
-                                    <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5"></td>  
+                                    <td> 
+                                        <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5">
+                                        <br>${error_codigo_postal}
+                                    </td>  
                                 </tr>
                                 <tr>
                                     <td>  <label for="estado">Estado:</label></td>
@@ -122,16 +136,7 @@
                                         <form:errors path="idColonia" cssClass="error"/>
                                     </td>  
                                 </tr>
-                                <!--tr>
-                                    <td>  <label for="lugar">Modalidad:</label></td>
-                                    <td>
-                                        <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto">
-                                            <form:option  value="I">I</form:option>
-                                            <form:option  value="E">E</form:option>                                            
-                                        </form:select>
-                                    </td>  
-                                </tr-->
-                                <tr>
+                               <tr>
                                     <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                                     <td>
                                         <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto">
@@ -142,34 +147,53 @@
                                     </td>  
                                 </tr>
                                 <tr>
+                                    <td>  <label for="lugar">Programa:</label></td>
+                                    <td>
+                                        <form:select id="programa" path="idPrograma.idPrograma" name="programa">
+                                            <core:forEach items="${programas}" var="programa">
+                                                <form:option  value="${programa.idPrograma}">${programa.descripcion}</form:option>
+                                            </core:forEach> 
+                                        </form:select>
+                                    </td>  
+                                </tr>
+                                <tr>
+                                    <td>  <label for="modalidad">Modalidad</label></td>
+                                    <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
+                                        <form:select id="modalidad" path="modalidad" name="modalidad">
+                                            <form:option  value="I">INTERNO</form:option>
+                                            <form:option  value="E">EXTERNO</form:option>
+                                        </form:select>
+                                    </td>  
+                                </tr>
+                                <tr>
                                     <td>  <label for="lugar">Perfil Buscado:</label></td>
                                     <td>
                                         <p><input type="checkbox" id="ningunPerfil" name="ningunPerfil"/>Ninguno<input type ="button" id="agregaPerfil" value = "Agregar Perfil" /></p>
-                                        <ol id="perfiles"></ol> 
-                                        <!--select id="perfil"  name="perfil"-->
-                                            <!--core:forEach items="${perfiles}" var="perfil"-->
-                                                <!--option value="${perfil.idPerfil}">${perfil.nombre}</option-->
-                                        <!--/core:forEach--> 
-                                        <!--select-->
+                                        <ol id="perfiles"></ol>  
+                                        <input type="hidden" name="nPerfiles" id="nPerfiles" value="2">
+                                        <input type="hidden" name="cadenaPerfiles" id="cadenaPerfiles">
+                                        <br/>${validacion_perfiles}
                                     </td>  
                                 </tr> 
                                 <tr>
                                     <td style="vertical-align: top; text-align: left;">  
                                         <label for="lugar">Actividades:</label><br/>
-
                                     </td>
                                     <td>
                                         <p><input type ="button" id="agregarActividad" value = "Agregar Actividad" /></p>
                                         <ol id="actividades"></ol>  
+                                        <input type="hidden" name="nActividades" id="nActividades" value="0">
+                                        <input type="hidden" name="cadenaActividades" id="cadenaActividades">
+                                        <br/>${validacion_actividades}
                                     </td>  
                                 </tr>                               
                                 <tr> 
-                                    <td> <input type ="submit" value = "Guardar " /> </td>
+                                    <td> <input type ="button" value = "Guardar " id="btnGdaAdminProyecto"/> </td>
                                     <td> <input type ="reset" value = "Limpiar" /></td>
                                 </tr>
                             </table>
-                                        <input type="hidden" name="nActividades" value="0">
-                                        <input type="hidden" name="nPerfiles" value="0">
+                            <input type="hidden" name="nActividades" value="0">
+                            <input type="hidden" name="nPerfiles" value="0">
                         </form:form>
                     </div>
                 </center>
@@ -184,6 +208,6 @@
     </div>
     <%-- fin del contenido --%>
     <jsp:include page="../Template/footer.jsp" />
-    
+
 </body>
 </html>
