@@ -76,7 +76,8 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
     public String capturarAsistencia(Model modelo) {
-
+        System.out.println("foto"+ vistaAlumnoFacade.foto());
+//        modelo.addAttribute("foto", vistaAlumnoFacade.foto());
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
         return "/Platicas/capturarAsistencia";
     }
@@ -151,44 +152,48 @@ public class PlaticaController {
     @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
     public String Asistencia(@Valid FoliosPlatica foliosPlatica, BindingResult result, Model modelo) throws IOException {
 
-        if (result.hasErrors()) {
+//        if (result.hasErrors()) {
             //modelo.addAttribute("folio", new FoliosPlatica());
             //System.out.println("hubo errores asistencia do");
+        System.out.println("foto"+ vistaAlumnoFacade.foto("11280476"));
+        modelo.addAttribute("foto", vistaAlumnoFacade.foto("11280476"));
+    
+       
             return "/Platicas/capturarAsistencia";
 
-        } else {
-            // System.out.println("no hubo errores asistencia do---"+foliosPlatica.getNumeroFolio());
-            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
-
-            /// System.out.println("despues de facade---");
-            if (lista.size() > 0) {
-                foliosPlatica = foliosPlaticaFacade.find(lista.get(0).getId());
-                System.out.println("find folio---" + lista.get(0).getId());
-                foliosPlatica.setAsistencia((short) 1);
-                foliosPlaticaFacade.edit(foliosPlatica);
-                
-                String id="11280476";
-        
-                VistaAlumno vistaAlumno1;
-                vistaAlumno1 = vistaAlumnoFacade.find(id);
-                System.out.print("alumno"+vistaAlumno1.getCurp());
-                ByteArrayOutputStream bs= new ByteArrayOutputStream();
-                ObjectOutputStream os = new ObjectOutputStream (bs);
-                os.writeObject(vistaAlumno1.getFoto());  // this es de tipo DatoUdp
-                os.close();
-                
-                byte[] bytes =  bs.toByteArray(); // devuelve byte[]
-                
-                
-                modelo.addAttribute("foto", Base64.encodeBase64String(bytes));
-               // modelo.addAttribute("foto", bytes);
-                return "/Platicas/capturarAsistencia2";
-            } else {
-                modelo.addAttribute("foliosPlatica", new FoliosPlatica());
-                modelo.addAttribute("existe", "No existe numero de folio");
-                return "/Platicas/capturarAsistencia";
-            }
-        }
+//        } else {
+//            // System.out.println("no hubo errores asistencia do---"+foliosPlatica.getNumeroFolio());
+//            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
+//
+//            /// System.out.println("despues de facade---");
+//            if (lista.size() > 0) {
+//                foliosPlatica = foliosPlaticaFacade.find(lista.get(0).getId());
+//                System.out.println("find folio---" + lista.get(0).getId());
+//                foliosPlatica.setAsistencia((short) 1);
+//                foliosPlaticaFacade.edit(foliosPlatica);
+//                
+//                String id="11280476";
+//        
+////                VistaAlumno vistaAlumno1;
+////                vistaAlumno1 = vistaAlumnoFacade.find(id);
+////                System.out.print("alumno"+vistaAlumno1.getCurp());
+////                ByteArrayOutputStream bs= new ByteArrayOutputStream();
+////                ObjectOutputStream os = new ObjectOutputStream (bs);
+////                os.writeObject(vistaAlumno1.getFoto());  // this es de tipo DatoUdp
+////                os.close();
+////                
+////                byte[] bytes =  bs.toByteArray(); // devuelve byte[]
+////                
+////                
+////                modelo.addAttribute("foto", Base64.encodeBase64String(bytes));
+//               // modelo.addAttribute("foto", bytes);
+//                return "/Platicas/capturarAsistencia2";
+//            } else {
+//                modelo.addAttribute("foliosPlatica", new FoliosPlatica());
+//                modelo.addAttribute("existe", "No existe numero de folio");
+//                return "/Platicas/capturarAsistencia";
+//            }
+//        }
 
     }
     /////////ASISTENCIA.DO  finnnnnnnnnnnnnnnnnnnnnnnn////////////////////
