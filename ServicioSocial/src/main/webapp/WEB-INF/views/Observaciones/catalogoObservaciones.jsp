@@ -85,7 +85,7 @@
                                 <table>
                                     <tr>
                                         <td> <p><label for="descripcion">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:textarea id="descripcion"  name="descripcion" path="descripcion" rows="4" cols="50"  /> </td>
+                                        <td>  <form:textarea id="descripcion"  name="descripcion" path="descripcion" rows="8" cols="50"  /> </td>
                                     </tr>
                                     <tr> 
                                         <td> <input type ="submit" value = "Guardar " /> </td>
