@@ -70,14 +70,14 @@ $(document).ready(function() {
     //Formulario alta admin proyectos
     if (iniciarAltaAdminProyecto) {
         console.log("Iniciando alta admin proyecto")
-        iniciarPerfiles();
+        //iniciarPerfiles();
         nActividades = 0
         console.log("Agregar actividad 1");
         agregarActividad();
         console.log("Agregar actividad 2");
         agregarActividad();
-        document.getElementById("ningunPerfil").checked = true;
-        validarCheck();
+        //document.getElementById("ningunPerfil").checked = true;
+        //validarCheck();
 
     }
     var nActividades;
@@ -227,7 +227,7 @@ $(document).ready(function() {
 
     $("#btnGdaAdminProyecto").click(function(event) {
         console.log("Guardar");
-        var cadenaPerfiles = "";
+        //var cadenaPerfiles = "";
         var cadenaActividades = "";
 
         $(".actividad").each(function() {
@@ -236,21 +236,28 @@ $(document).ready(function() {
         });
         console.log("Cadena actividades:" + cadenaActividades);
         document.getElementById("cadenaActividades").value = cadenaActividades;
-        var habilCheck = document.getElementById("ningunPerfil").checked;
+//        var habilCheck = document.getElementById("ningunPerfil").checked;
 
-        if (!habilCheck) {
-            $(".perfil").each(function() {
-                console.log("Perfil:" + $(this).val());
-                cadenaPerfiles += $(this).val() + ";";
-            });
-            console.log("Cadena perfiles:" + cadenaPerfiles);
-            document.getElementById("cadenaPerfiles").value = cadenaPerfiles;
-        } else {
-            console.log("No hay perfiles");
-            document.getElementById("cadenaPerfiles").value = "null";
+//        if (!habilCheck) {
+//            $(".perfil").each(function() {
+//                console.log("Perfil:" + $(this).val());
+//                cadenaPerfiles += $(this).val() + ";";
+//            });
+//            console.log("Cadena perfiles:" + cadenaPerfiles);
+//            document.getElementById("cadenaPerfiles").value = cadenaPerfiles;
+//        } else {
+//            console.log("No hay perfiles");
+//            document.getElementById("cadenaPerfiles").value = "null";
+//        }
+
+        //Preparar perfiles seleccionados
+        var perfiles = document.getElementById("select-to");
+        for (i = 0; i < perfiles.length; i++) {
+            console.log("Seleccionando:"+perfiles.options[i].text)
+            perfiles.options[i].selected=true;
         }
         document.forms["altaOrganizacion"].submit();
-    })
+    });   
 
 
 });

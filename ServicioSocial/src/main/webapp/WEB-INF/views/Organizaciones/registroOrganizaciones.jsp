@@ -21,13 +21,13 @@
         <script src="js/jquery.manolo.js"></script>
         <link rel="stylesheet" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
         <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
-        
+
 
         <title>Departamento de Servicio Social :: Organizaciones ::</title>
     </head>
     <body class="background">
         <%@ include file="../Template/banner.jsp" %>
-        
+
         <%-- inicio del contenido --%>
         <jsp:include page="../NavegacionPrincipal/menuPrincipal.jsp" />
         <div id="contenido">
@@ -61,6 +61,7 @@
                 <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h4></p>
                 <%-- Formulario Nueva Organizacion --%>
                 <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAltaOrganizacion.do"  method="POST" style="width:60%;" >
+                    <p>${error_sql}</p>
                     <table>
                         <tr>
                             <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
@@ -146,7 +147,7 @@
                                         <input type="text" name="otra_colonia" id="otra_colonia" />
                                         <!--form:input path="usuario" id="usuario" size="20"/-->
                                     </div>
-                                <br/><form:errors path="idColonia" cssClass="error"/>
+                                    <br/><form:errors path="idColonia" cssClass="error"/>
                             </td>  
                         </tr>                     
                         <tr>

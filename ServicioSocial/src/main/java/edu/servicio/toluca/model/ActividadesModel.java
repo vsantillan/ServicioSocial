@@ -27,7 +27,7 @@ public class ActividadesModel {
     private ActividadesFacade actividadesFacade;
     
     Proyectos proyecto;
-    ArrayList<String> actividades = new ArrayList<String>();
+    public ArrayList<String> actividades = new ArrayList<String>();
 
     public ActividadesModel(String cadenaActividades) {        
 

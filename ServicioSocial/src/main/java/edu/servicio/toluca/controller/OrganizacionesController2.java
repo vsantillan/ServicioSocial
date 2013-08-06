@@ -7,25 +7,30 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.PerfilJSON;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
+import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Perfil;
+import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.model.ActividadesModel;
-import edu.servicio.toluca.model.ProyectoPerfilModel;
+import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
+import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -59,6 +64,10 @@ public class OrganizacionesController2 {
     private EstadosSiaFacade estadosFacade;
     @EJB(mappedName = "java:global/ServicioSocial/ProgramaFacade")
     private ProgramaFacade programaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ProyectoPerfilFacade")
+    private ProyectoPerfilFacade proyectoPerfilFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
+    private ActividadesFacade actividadesFacade;
 
     //Alta de Organizacion
     @RequestMapping(method = RequestMethod.GET, value = "/altaOrganizacion.do")
@@ -145,15 +154,23 @@ public class OrganizacionesController2 {
             instancia.setValidacionAdmin(BigInteger.ZERO);
             instancia.setEstatus(BigInteger.ONE);
             instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
-            
+            System.out.println("Pass encriptado:" + instancia.getPassword());
+
             ///Convirtiendo a mayusculas
             instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
             instancia.setNombre(instancia.getNombre().toUpperCase());
             instancia.setPuesto(instancia.getPuesto().toUpperCase());
             instancia.setRfc(instancia.getRfc().toUpperCase());
             instancia.setTitular(instancia.getTitular().toUpperCase());
-            
-            instanciaFacade.create(instancia);
+
+            try {
+                instanciaFacade.create(instancia);
+            } catch (Exception e) {
+                result.addError(new ObjectError("error_sql", "Error de llave unica"));
+                model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
+                
+                return "/Organizaciones/registroOrganizaciones";
+            }
             return "/Organizaciones/confirmaRegOrganizacion";
         }
     }
@@ -178,15 +195,14 @@ public class OrganizacionesController2 {
             System.out.print("no hubo errores");
             instancia.setValidacionAdmin(BigInteger.ZERO);
             instancia.setEstatus(BigInteger.valueOf(2));
-            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
-            
+
             //Convirtiendo a mayusculas
             instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
             instancia.setNombre(instancia.getNombre().toUpperCase());
             instancia.setPuesto(instancia.getPuesto().toUpperCase());
             instancia.setRfc(instancia.getRfc().toUpperCase());
             instancia.setTitular(instancia.getTitular().toUpperCase());
-            
+
             instanciaFacade.create(instancia);
             System.out.println("Insercion correcta!");
             return "/Organizaciones/confirmaAdminRegOrganizacion";
@@ -194,7 +210,7 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaAdminProyecto.do")
-    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaPerfiles, String cadenaActividades, boolean ningunPerfil) {
+    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto) {
         System.out.println("hola admin gda alta organizacion");
         //Mexican Debugger
         try {
@@ -247,21 +263,8 @@ public class OrganizacionesController2 {
 
         System.out.println("nPerfiles:" + nPerfiles.charAt(0));
         System.out.println("nActividades:" + nActividades.charAt(0));
-        System.out.println("Perfiles:" + cadenaPerfiles);
+        System.out.println("Perfiles:" + selectto);
         System.out.println("Actividades:" + cadenaActividades);
-
-        //Desglose de perfiles
-        if (!ningunPerfil) {
-            //        ProyectoPerfilModel proyectoPerfilModel = new ProyectoPerfilModel(cadenaPerfiles);
-            //Valida perfiles
-//        if(!proyectoPerfilModel.validarInsercionProyectoPerfil().isSuccess()){
-//            result.addError(new ObjectError("perfiles", proyectoPerfilModel.validarInsercionProyectoPerfil().getMensaje()));
-//            model.addAttribute("validacion_perfiles", proyectoPerfilModel.validarInsercionProyectoPerfil().getMensaje());
-//        }
-        } else {
-            System.out.println("No se agregaran perfiles");
-        }
-
 
         //Desglose de Actividades
         ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
@@ -308,15 +311,60 @@ public class OrganizacionesController2 {
             proyecto.setEstatus(BigInteger.ONE);
             proyecto.setFechaAlta(new Date());
             proyecto.setVacantesDisponibles(proyecto.getVacantes());
-            
+
             //Convertir a mayuscular
             proyecto.setDomicilio(proyecto.getDomicilio().toUpperCase());
             proyecto.setNombre(proyecto.getNombre().toUpperCase());
             proyecto.setNombreResponsable(proyecto.getNombreResponsable().toUpperCase());
             proyecto.setResponsablePuesto(proyecto.getResponsablePuesto().toUpperCase());
-            
+
             proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
+
+            //Obtenemos el proyecto creado
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("idProyecto", "asc");
+            Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
+
+            //Insercion de Actividades
+            for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                Actividades actividad = new Actividades();
+                actividad.setDetalle(actividadesModel.actividades.get(i));
+                actividad.setEstatus(BigInteger.ONE);
+                actividad.setIdProyecto(newProyecto);
+                actividadesFacade.create(actividad);
+                System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
+            }
+            //Insercion de Perfiles
+            //ProyectoPerfilModel proyectoPerfilModel;
+            if (selectto != null) {
+                //proyectoPerfilModel = new ProyectoPerfilModel(selectto);                
+                //Analisis de la cadena
+                StringTokenizer token = new StringTokenizer(selectto, ",");
+                ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
+
+                System.out.println("Analizar cadena:" + selectto);
+                System.out.println("No de tokens:" + token.countTokens());
+                while (token.hasMoreTokens()) {
+                    String perfil = token.nextToken();
+                    System.out.println("Token:" + perfil);
+                    if (perfil != null && !perfil.equals("")) {
+                        perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
+                    }
+                }
+                for (int i = 0; i < perfiles.size(); i++) {
+                    ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
+                    proyectoPerfil.setIdPerfil(perfiles.get(i));
+                    proyectoPerfil.setIdProyecto(newProyecto);
+                    proyectoPerfilFacade.create(proyectoPerfil);
+                    System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
+                }
+            } else {
+                System.out.println("No se agregaran perfiles");
+            }
+
+
+
             return "/Organizaciones/confirmaAltaAdminProyectos";
         }
     }
@@ -340,7 +388,7 @@ public class OrganizacionesController2 {
     //Alta de organizacion por pre-registro
     @RequestMapping(method = RequestMethod.POST, value = "/confirmaOrganizacionVisitante.do")
     public void confirmaOrganizacionVisitante(Model model, String instancia) {
-        System.out.println("Id instancia:"+instancia);
+        System.out.println("Id instancia:" + instancia);
 
         //return "/Organizaciones/editarOrganizacion";
     }

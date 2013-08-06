@@ -21,7 +21,7 @@
 
         <title>Administrador</title> 
         <script>
-            var iniciarAltaAdminProyecto=true;
+            var iniciarAltaAdminProyecto = true;
         </script>
     </head>
     <body class="background">
@@ -136,7 +136,7 @@
                                         <form:errors path="idColonia" cssClass="error"/>
                                     </td>  
                                 </tr>
-                               <tr>
+                                <tr>
                                     <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                                     <td>
                                         <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto">
@@ -165,7 +165,7 @@
                                         </form:select>
                                     </td>  
                                 </tr>
-                                <tr>
+                                <!--tr>
                                     <td>  <label for="lugar">Perfil Buscado:</label></td>
                                     <td>
                                         <p><input type="checkbox" id="ningunPerfil" name="ningunPerfil"/>Ninguno<input type ="button" id="agregaPerfil" value = "Agregar Perfil" /></p>
@@ -174,7 +174,27 @@
                                         <input type="hidden" name="cadenaPerfiles" id="cadenaPerfiles">
                                         <br/>${validacion_perfiles}
                                     </td>  
-                                </tr> 
+                                </tr--> 
+                                <tr>
+                                    <td><label for="perfil">Perfil buscado:</label></td>
+                                    <td>
+                                        <fieldset>
+                                            <p>Perfiles Disponibles:</p>
+                                            <select name="selectfrom" id="select-from" multiple size="8">
+                                                <core:forEach items="${perfiles}" var="perfil">
+                                                    <option value="${perfil.idPerfil}">${perfil.nombre}</option>
+                                                </core:forEach>
+                                            </select>
+
+                                            <a href="JavaScript:void(0);" id="btn-add">Agregar &raquo; </a>
+                                            
+                                            <p>Perfiles Seleccionados:</p>
+                                            <select name="selectto" id="select-to" multiple size="8"></select>                                            
+                                            <a href="JavaScript:void(0);" id="btn-remove">&laquo; Quitar</a>
+                                        </fieldset>
+                                        <h5>Nota: Escoja el perfil que desea de los disponibles y de click Agregar para moverlo a los seleccionados. Y a su vez si desea remover un perfil seleccionado, escojalo en los seleccionados y de click en Quitar.</h5>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td style="vertical-align: top; text-align: left;">  
                                         <label for="lugar">Actividades:</label><br/>
@@ -202,11 +222,23 @@
 
             <div style="clear:both;"></div>
             <br/><br/><br/><br/>
-        </div>
-
-
+        </div>      
     </div>
     <%-- fin del contenido --%>
+    <script>
+        $('a#btn-add').click(function() {
+            $('#select-from option:selected').each(function() {
+                $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+                $(this).remove();
+            });
+        });
+        $('a#btn-remove').click(function() {
+            $('#select-to option:selected').each(function() {
+                $('#select-from').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+                $(this).remove();
+            });
+        });
+    </script>   
     <jsp:include page="../Template/footer.jsp" />
 
 </body>

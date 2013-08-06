@@ -94,7 +94,7 @@ public class Instancia implements Serializable {
     @Size(max = 30)
     @Column(name = "USUARIO")
     private String usuario;
-    @Size(max = 30)
+    @Size(max = 120)
     @Column(name = "PASSWORD")
     private String password;
     @Size(max = 60)

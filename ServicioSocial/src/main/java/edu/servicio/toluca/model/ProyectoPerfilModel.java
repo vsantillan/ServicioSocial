@@ -29,12 +29,13 @@ public class ProyectoPerfilModel {
     private ProyectoPerfilFacade proyectoPerfilFacade;
     //Recibe una cadena de id's de perfiles que desea agregar a cierto proyecto
     Proyectos proyecto;
-    ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
+    public ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
+    String tok = ",";
 
     public ProyectoPerfilModel(String cadenaPerfiles) {       
 
         //Analisis de la cadena
-        StringTokenizer token = new StringTokenizer(cadenaPerfiles, ";");
+        StringTokenizer token = new StringTokenizer(cadenaPerfiles, tok);
 
         System.out.println("Analizar cadena:" + cadenaPerfiles);
         System.out.println("No de tokens:" + token.countTokens());
