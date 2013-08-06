@@ -323,7 +323,7 @@ public class OrganizacionesController2 {
 
             //Obtenemos el proyecto creado
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-            ordenamiento.put("idProyecto", "asc");
+            ordenamiento.put("idProyecto", "desc");
             Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
 
             //Insercion de Actividades
