@@ -285,12 +285,14 @@ public class OrganizacionesController {
 //            instancia.setEstatus(BigInteger.valueOf(0));
             if (retroalimentacionInstancia.getControl() == 0) {
                 instancia.setEstatus(BigInteger.valueOf(0));
+                instanciaFacade.edit(instancia);
                 return "<script>"
                         + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
                         + "location.href='administrarOrganizaciones.do';"
                         + "</script>";
             } else {
                 instancia.setValidacionAdmin(BigInteger.valueOf(2));
+                instanciaFacade.edit(instancia);
                 return "<script>"
                         + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
                         + "location.href='validarOrganizaciones.do';"
@@ -317,12 +319,13 @@ public class OrganizacionesController {
 
             if (retroalimentacionProyecto.getControl() == 0) {
                 proyecto.setEstatus(BigInteger.valueOf(0));
+                proyectosFacade.edit(proyecto);
                 return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
                         + "location.href='administrarProyectos.do';"
                         + "</script>";
             } else {
-
                 proyecto.setValidacionAdmin(BigInteger.valueOf(2));
+                proyectosFacade.edit(proyecto);
                 return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
                         + "location.href='validarProyectos.do';"
                         + "</script>";
