@@ -213,27 +213,38 @@ public class OrganizacionesController {
         model.addAttribute("estados", estadosFacade.findAll());
         model.addAttribute("perfil", perfilFacade.findAll());
         model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
-        List<Perfil> l;
-        Iterator<ProyectoPerfil> ih;
-        
-        l=perfilFacade.findAll();
-        
-        for(int i=0;i<l.size();i++)
+        List<Perfil> perfilesNoSonDelProyecto = new ArrayList<Perfil>();
+        List<Perfil> listaPerfil;
+        Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
+        listaPerfil=perfilFacade.findAll();
+        boolean agregar;
+        String nombrePerfilCollection;
+        for(int i=0;i<listaPerfil.size();i++)
         {
-            ih=proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().iterator();
-            for(int j=0;j<proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().size();j++)
+            agregar=true;
+            iteratorProyectosPerfilCollection=proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().iterator();
+            while(iteratorProyectosPerfilCollection.hasNext())
             {
-                if(l.get(i).getIdPerfil()==ih.next().getIdProyectoPerfil())
-                {
-                    System.out.println("Perfil "+l.get(i).getNombre());
+                nombrePerfilCollection=iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre();
+                if(!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
+                {                    
+                    agregar=true;
+                }else{
+                    agregar=false;
                 }
             }
+            if(agregar)
+            {
+                //System.out.println("Agregar: "+listaPerfil.get(i).getNombre());
+                perfilesNoSonDelProyecto.add(listaPerfil.get(i));
+            }
         }
+        model.addAttribute("perfilesProyectoEx", perfilesNoSonDelProyecto);
         return "/Organizaciones/editarProyecto";
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/modificarProyecto.do")
-    public String modificarProyecto(@Valid Proyectos proyecto,BindingResult result, Model model)
+    public String modificarProyecto(@Valid Proyectos proyecto,BindingResult  result, Model model)
     {
         proyecto.setFechaAlta(new Date());
         proyecto.setIdPrograma(programaFacade.find(BigDecimal.ONE));

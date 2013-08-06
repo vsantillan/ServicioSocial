@@ -180,14 +180,8 @@
                                     <a href="JavaScript:void(0);" id="btn-remove">&laquo; Agregar</a>
 
                                     <select name="selectto" id="select-to" multiple size="5">
-                                        <core:forEach items="${perfil}" var="current">
-                                            <core:forEach items="${proyecto.proyectoPerfilCollection}" var="colleccion">
-                                                <core:choose>
-                                                    <core:when test="${current.idPerfil==colleccion.idPerfil.idPerfil}">
-                                                        <option value="${current.idPerfil}">${current.nombre}</option>
-                                                    </core:when>
-                                                </core:choose>
-                                            </core:forEach>
+                                        <core:forEach items="${perfilesProyectoEx}" var="current">
+                                            <option value="${current.idPerfil}">${current.nombre}</option>
                                         </core:forEach>
                                     </select>
                                 </fieldset>
