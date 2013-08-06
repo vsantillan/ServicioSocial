@@ -269,7 +269,7 @@
                     <form:form id="frmDatosOrganizaciones" modelAttribute="formatoUnicoDatosOrganizaciones" >
                         <table>
                             <tr>
-                                <form:input  type="text" path ="id" />
+                                <form:input  type="hidden" path ="id" />
                                 <td>Organizaci&oacute;n:</td>
                                 <td>
                                     <select id="comboOrganizaciones" name="organizacion">
@@ -338,44 +338,41 @@
                     </form:form>
                 </div>
                 <div id="horarios">
-                    <form>
+                    <form:form id="frmHorarios"  modelAttribute="formatoUnicoHorarios">
                         <table>
                             <tr>
-                                <th></th>
+                                <th><form:input type = "hidden" path="id" /></th>
                                 <th>Lunes</th>
                                 <th>Martes</th>
                                 <th>Mi&eacute;rcoles</th>
                                 <th>Jueves</th>
                                 <th>Viernes</th>
-                                <th>S&aacute;bado</th>
-                                <th>Domingo</th> 
+                                
                             </tr>
                             <tr>
                                 <th>Horario Inicio:</th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[1]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[2]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[3]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[4]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[5]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[6]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[7]" value="" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[1]" path="luI" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[3]" path="maI" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[5]" path="miI" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[7]" path="juI" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[9]" path="viI" /></th>
+                                
                             </tr>
                             <tr>
                                 <th>Horario Final</th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[8]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[9]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[10]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[11]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[12]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[13]" value="" /></th>
-                                <th><input type="text" style="width: 70px;" id="timepicker.[14]" value="" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[2]" path="luF" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[4]" path="maF" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[6]" path="miF" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[8]" path="juF" /></th>
+                                <th><form:input type="text" style="width: 70px;" class="timepicker.[10]" path="viF" /></th>
+                                
                             </tr>
                             <tr>
                                 <td></td>
                                 <td colspan="8"><input type ="submit" value="Guardar Datos de Horario" ></td>
                             </tr>
                         </table>
-                    </form>
+                    </form:form>
                 </div>
                 <div id="imprimirFui">
                     <h1>Presiona el bot&oacute;n para descargar</h1>

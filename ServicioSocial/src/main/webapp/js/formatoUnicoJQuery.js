@@ -7,6 +7,7 @@ function listo()
     $('#frmDatosPersonales').submit(enviarDatosAlumno);
     $('#frmDatosContacto').submit(enviarDatosContactoAlumno);
     $('#frmDatosOrganizaciones').submit(enviarDatosOrganizaciones);
+    $('#frmHorarios').submit(enviarHorarios);
     
     $("#comboOrganizaciones").change(function(event) {
         var idInstancia = $("#comboOrganizaciones").val()
@@ -76,6 +77,20 @@ function enviarDatosContactoAlumno()
 
     return false;
 }
+function enviarHorarios()
+{
+    $("form#frmHorarios :input").each(function() {
+        prepararJSON($(this));
+    });
+
+    $.post("modificarHorarios.do", alumno, function(respuesta) {
+        alert(respuesta);
+        console.log(respuesta);
+    });
+
+
+    return false;
+}
 function enviarDatosOrganizaciones()
 {
     $("form#frmDatosOrganizaciones :input").each(function() {
@@ -118,7 +133,7 @@ function timePicker()
         minutes: {interval: 15}, showAnim: 'blind'};
     for (var i = 0; i <= idTimePicker; i++)
     {
-        idCadena = "#timepicker\\.\\[" + i + "\\]";
+        idCadena = ".timepicker\\.\\[" + i + "\\]";
         $(idCadena).timepicker(parametros);
     }
 }
