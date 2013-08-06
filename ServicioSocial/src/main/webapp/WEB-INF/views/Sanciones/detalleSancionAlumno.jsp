@@ -10,17 +10,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-    // Create an ArrayList with test data
-    ArrayList list = new ArrayList();
-    Map detalleSancionAlumno1 = new HashMap();
-    detalleSancionAlumno1.put("noReporte", new Integer(1));
-    detalleSancionAlumno1.put("fecha", "12 Ago 2014");
-    detalleSancionAlumno1.put("horas", new Integer(360));
-    detalleSancionAlumno1.put("descripcion", "Barriendo todo el Tec");
-    list.add(detalleSancionAlumno1);
-    pageContext.setAttribute("detalleSancionAlumno", list);
-%>
 <!DOCTYPE html>
 <html>
     <head>

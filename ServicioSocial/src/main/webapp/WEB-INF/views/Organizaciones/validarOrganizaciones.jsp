@@ -27,7 +27,7 @@
 
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
+        <script type="text/javascript"> Shadowbox.init({enableKeys: false,language: "es", players: ['img', 'html', 'iframe', 'qt',
                     'wmp', 'swf', 'flv']});</script> 
 
         <!--        Scripts para tablas-->
@@ -76,6 +76,7 @@
                         <tr>
                             <th>Acci&oacute;n</th>
                             <th>Detalle</th>
+                            <th>Organizaci&oacute;n</th>
                             <th>Titular</th>
                             <th>RFC</th>
                             <th>Tipo de Organizaci&oacute;n</th>                        
@@ -86,6 +87,7 @@
                             <tr class='gradeX'>
                                 <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}"  rel="shadowbox"><img  src="imagenes/tache.png" width="30"></a></th>
                                 <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                               <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
                                 <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
@@ -122,15 +124,13 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n"  class="enviarRetro" > </td>
+                        <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n"  > </td>
                     </tr>
                 </table>
-            </form:form>>
+            </form:form>
         </div>
 
         <jsp:include page="../Template/footer.jsp" />
 
     </body>
-    <!-- 0 no validados 1 ya validados  cuando lo rechace cambia a 2 en validacion y ya no lo ve con retroalimentacion y cuando corrija 
-    lo regresamos a 0-->
 </html>

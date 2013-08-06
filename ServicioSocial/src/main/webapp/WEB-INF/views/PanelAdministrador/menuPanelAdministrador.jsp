@@ -49,7 +49,7 @@
                 <li><a href="javascript:void(0)" onclick="redirecciona('catalogoSanciones.do')">6.2 Cat&aacute;logo de Sanciones</a></li>
             </ul>
         </li>
-         <li><a href="javascript:void(0)" onclick="redirecciona('#')">Observaciones</a>
+        <li><a href="javascript:void(0)" onclick="redirecciona('#')">Observaciones</a>
             <ul>
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')"> Administrar Observaciones</a></li>
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')">Cat&aacute;logo  Observaciones</a></li>
@@ -86,10 +86,11 @@
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')">13.2 Especiales</a></li>
             </ul>
         </li>
+        <li><a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do')">Observaciones</a></li>
         <li><a href="javascript:void(0)" onclick="redirecciona('#')">Acerca De</a>
             <ul>
-                <li><a href="javascript:void(0)" onclick="redirecciona('#')">14.1 Ayuda</a></li>
-                <li><a href="javascript:void(0)" onclick="redirecciona('#')">14.2 Acerca De</a></li>
+                <li><a href="javascript:void(0)" onclick="redirecciona('#')">15.1 Ayuda</a></li>
+                <li><a href="javascript:void(0)" onclick="redirecciona('#')">15.2 Acerca De</a></li>
             </ul>
         </li>
         <li><a href="javascript:void(0)" onclick="redirecciona('index.do')">Cerrar Sesi&oacute;n</a></li>

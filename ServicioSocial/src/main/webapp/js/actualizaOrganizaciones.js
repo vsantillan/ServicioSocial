@@ -40,11 +40,6 @@ function retroalimentacion() {
         $("input#correo").attr("value", $(this).attr("correo"));
         $("input#idI").attr("value", $(this).attr("idO"));
     });
-
-
-
-
-
 }
 
 function enviaDatos() {
