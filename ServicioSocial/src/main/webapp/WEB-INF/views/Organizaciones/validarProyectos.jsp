@@ -23,10 +23,8 @@
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
-        <!--Scripts para shadowbox-->
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({enableKeys: false,language: "es", players: ['img', 'html', 'iframe', 'qt',
-                    'wmp', 'swf', 'flv']});</script> 
+        <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" />
 
         <!--        Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
@@ -78,8 +76,8 @@
                     <tbody>
                         <core:forEach items="${proyecto}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-proyecto"><img class="editProy" ide="${current.idProyecto}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
-                                <th><a href="detalleProyecto.do?id=${current.idProyecto}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                <th><a href="#" class="btn-validar-proyecto"><img class="editProy" ide="${current.idProyecto}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
+                                <th><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.idInstancia.nombre}" /></th>
                                 <th><core:out value="${current.vacantes}" /></th>                                      
@@ -89,38 +87,40 @@
                     </tbody>
                 </table>
             </div>
-            
+
             <div style="clear:both;"></div>
             <%-- fin del contenido --%>
         </div>
-                    <div id="a" style="display: none; font-size: 15px">
-                <form:form commandName="borrarProyecto" id="MyForm" action="borrarProyecto.do" method="POST">
-                    <table>
-                        <tr>
-                            <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
-                            <form:input hidden="hidden" id="control" path="control" value="1" />
-                            <td>Nombre del Proyecto:</td>
-                            <td><form:input id="nombreProyecto" path="nombreProyecto"  /></td>
-                        </tr>
-                        <tr>
-                            <td>Nombre de la Organizaci&oacute;n:</td>
-                            <td><form:input id="nombre" path="nombreInstancia"  /></td>
-                        </tr>
-                        <tr>
-                            <td>E-Mail:</td>
-                            <td><form:input id="correo" path="email" disabled="disabled"  /></td>
-                        </tr>
-                        <tr>
-                            <td>Descripci&oacute;n:</td>
-                            <td><form:textarea rows="10" cols="70" id="descripcion" path="descripcion" /></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td><input type="submit" value="Enviar Retroalimentaci&oacute;n" class="borrarProyecto" /></td>
-                        </tr>
-                    </table>
-                </form:form>
-            </div>
+        <div id="a" style="display: none; font-size: 15px">
+            <form:form commandName="borrarProyecto" id="MyForm" action="borrarProyecto.do" method="POST">
+                <h1>Envio de Retroalimentaci&oacute;n</h1>
+                <h2>Motivos de Rechazo</h2>
+                <table>
+                    <tr>
+                        <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
+                        <form:input hidden="hidden" id="control" path="control" value="1" />
+                        <td>Nombre del Proyecto:</td>
+                        <td><form:input id="nombreProyecto" path="nombreProyecto"  /></td>
+                    </tr>
+                    <tr>
+                        <td>Nombre de la Organizaci&oacute;n:</td>
+                        <td><form:input id="nombre" path="nombreInstancia"  /></td>
+                    </tr>
+                    <tr>
+                        <td>E-Mail:</td>
+                        <td><form:input id="correo" path="email" disabled="disabled"  /></td>
+                    </tr>
+                    <tr>
+                        <td>Descripci&oacute;n:</td>
+                        <td><form:textarea rows="10" cols="70" id="descripcion" path="descripcion" /></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Enviar Retroalimentaci&oacute;n" class="borrarProyecto" /></td>
+                    </tr>
+                </table>
+            </form:form>
+        </div>
         <jsp:include page="../Template/footer.jsp" />
 
     </body>

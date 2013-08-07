@@ -25,10 +25,8 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
 
-        <!--Scripts para shadowbox-->
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({enableKeys: false,language: "es", players: ['img', 'html', 'iframe', 'qt',
-                    'wmp', 'swf', 'flv']});</script> 
+       <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" />
 
         <!--        Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
@@ -46,13 +44,11 @@
 
             });
         </script>   
-
         <script src="js/jquery.manolo.js"></script>     
 
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
     <body class="background" >
-
         <jsp:include page="../Template/banner.jsp" />
 
 
@@ -85,8 +81,8 @@
                     <tbody>
                         <core:forEach items="${organizacion}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}"  rel="shadowbox"><img  src="imagenes/tache.png" width="30"></a></th>
-                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}"  rel="shadowbox"><img  src="imagenes/tache.png" width="30"></a></th>
+                                <th><a class="fancy" href="detalleOrganizacion.do?id=${current.idInstancia}" ><img src="imagenes/lupa.png" width="30"/></a></th>
                                <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
@@ -104,7 +100,8 @@
             <%-- fin del contenido --%>
         </div>
         <div id="a" style="display: none; font-size: 15px">
-            <h1>Motivos de Rechazo</h1>
+            <h1>Envio de Retroalimentaci&oacute;n</h1>
+            <h2>Motivos de Rechazo</h2>
             <form:form commandName="retroalimentacionInstancia"  id="MyForm" method="POST"  action="borrarInstancia.do">
                 <table >
                     <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
