@@ -33,7 +33,7 @@
 
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
-    <body class ="background" onload="recargaProyectos(2); recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto})">
+    <body class ="background" onload=" recargaProyectos(2); recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto});  ">
         <%@ include file="../Template/banner.jsp" %>
 
         <%-- inicio del contenido --%>
@@ -156,6 +156,9 @@
                             </tr>
 
                             <tr>
+                                <input type="hidden" id="preCP" value="${codigoPostal}" />
+                                <input type="hidden" id="preColonia" value="${preColonia}" />
+                                
                                 <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
                                 <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${instanciaDireccion.idColonia.idCp.cp}"></td>  
                             </tr>

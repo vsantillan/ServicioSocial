@@ -1,14 +1,40 @@
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.*/
+function remagia(cp)
+{
 
+}
 $(document).ready(function() {
+    if ($('#preCP').length > 0 && document.getElementById("preCP").value != "")
+    {
+        var cp = document.getElementById("preCP").value;
+        cargarColonias(cp);
+        document.getElementById("codigo_postal").value = cp;
+        console.log('que trae' + document.getElementById("idColonia").value);
+    }
+
+
+
     //Checa si inicia ya con valores para cargar codigos postales
-    if(document.getElementById("codigo_postal").length===5){
+    if (document.getElementById("codigo_postal").length === 5) {
+
         cargarColonias(document.getElementById("codigo_postal").value);
     }
-    
+//    if ($('#preColonia').length > 0 && document.getElementById("preColonia").value !== "")
+//    {
+//        var preColonia = document.getElementById("preColonia").value;
+//
+//        console.log('precolonua' + preColonia);
+//        console.log('tamañp' + $('#idColonia').length);
+//        console.log('tam' + comboColonias.length);
+//        $('#idColonia.idColonia option:eq(' + preColonia + ')').prop('selected', true);
+//    }
+
+
+
     var existeCP = true;
+
 //Cargar colonias con JSON
     function cargarColonias(cp) {
 
@@ -53,6 +79,10 @@ $(document).ready(function() {
                     option.text = respuesta.nombreColonia[i];
                     option.value = respuesta.idColonia[i];
                     comboColonias.appendChild(option);
+                    if ($('#preColonia').length > 0 && document.getElementById("preColonia").value !== "" && document.getElementById("preColonia").value === respuesta.idColonia[i] )
+                    {
+                        option.selected = "selected";
+                    }
                 }
                 var option = document.createElement("option");
                 option.text = "Otra (Especifique)";
@@ -62,6 +92,12 @@ $(document).ready(function() {
                 if (comboColonias.options[comboColonias.selectedIndex].value === 0) {
                     $("#otra_colonia").show("slow");
                 }
+
+
+
+
+
+
                 comboEstado.disabled = true;
                 comboColonias.disabled = false;
 
@@ -70,7 +106,7 @@ $(document).ready(function() {
                 notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>";
                 $("#otra_colonia").show("slow");
                 comboEstado.disabled = false;
-                comboMunicipio.disabled=false;
+                comboMunicipio.disabled = false;
                 comboColonias.disabled = true;
                 cargarMunicipios();
 
@@ -78,6 +114,11 @@ $(document).ready(function() {
 //                inputEstado.value = "No disponible";
 //                inputMunicipio.value = "No disponible";
             }
+
+
+
+
+
 
         });
 
@@ -87,7 +128,7 @@ $(document).ready(function() {
         //Actualiza los demas campos de acuerdo a la colonia
         var comboColonias = document.getElementById("idColonia");
         //console.log("")
-        
+
         if (comboColonias.value === 0) {
             $("#otra_colonia").show("slow");
             if (existeCP) {
@@ -106,6 +147,9 @@ $(document).ready(function() {
             document.getElementById("municipio").disabled = true;
             document.getElementById("ciudad").disabled = true;
         }
+
+
+
     });
 
 //Evento para cambio en el estado
@@ -169,7 +213,7 @@ $(document).ready(function() {
                 console.log(respuesta);
                 var comboMunicipio = document.getElementById("municipio");
                 if (respuesta.statusJSON) {
-                    comboMunicipio.length=0;
+                    comboMunicipio.length = 0;
                     for (i = 0; i < respuesta.municipios.length; i++) {
                         var option = document.createElement("option");
                         option.text = respuesta.municipios[i];

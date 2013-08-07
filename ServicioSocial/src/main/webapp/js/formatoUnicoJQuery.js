@@ -35,6 +35,7 @@ function recargaProyectos(idInstancia)
         }
     });
 }
+
 function recargaCombosOrgs(idProyecto)
 {
     console.log("el id del proyecto es:"+ idProyecto);

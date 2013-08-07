@@ -11,12 +11,14 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoHorariosBean;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoProyectosJSON;
+import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.HorariosAlumno;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
@@ -64,6 +66,8 @@ public class FormatoUnicoController {
     private ProyectosFacade proyectoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/HorariosAlumnoFacade")
     private HorariosAlumnoFacade horarioFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
+    private ColoniaFacade coloniaFacade;
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
@@ -255,6 +259,12 @@ public class FormatoUnicoController {
             }
         }
         modelo.addAttribute("instancias", filtroInstancias);
+        System.out.println("lo que mando al facade es: "+ datosPersonales.getIdColonia().getIdColonia() );
+       // modelo.addAttribute("instanciaDireccion", instanciaFacade.findBySpecificField("idColonia", datosPersonales.getIdColonia(), "equal" , null, null));
+        Colonia col = coloniaFacade.find(datosPersonales.getIdColonia().getIdColonia());
+        System.out.println("Cp" + col.getIdCp().getCp());
+        modelo.addAttribute("codigoPostal" , col.getIdCp().getCp());
+        modelo.addAttribute("preColonia" , datosPersonales.getIdColonia().getIdColonia());
 
         /////Carga la información que se tiene en la bd del alumno
         FormatoUnicoProyectosJSON formatoUnicoProyectosJON = new FormatoUnicoProyectosJSON();
@@ -351,6 +361,8 @@ public class FormatoUnicoController {
         datosPersonales.setTelefonoOficina(dt.getTelefono_oficina());
         datosPersonales.setFacebook(dt.getFacebook());
         datosPersonales.setTwitter(dt.getTwitter());
+        System.out.println("coloonia" + dt.getIdColonia() + "  " + dt.getIdColonia().getNombre());
+        datosPersonales.setIdColonia(dt.getIdColonia());
         datosPersonalesFacade.edit(datosPersonales);
         
         
