@@ -6,13 +6,15 @@ function remagia(cp)
 
 }
 $(document).ready(function() {
-    if ($('#preCP').length > 0 && document.getElementById("preCP").value != "")
+    //usado por formato unico para la edición
+    if ($('#preCP').length > 0 && document.getElementById("preCP").value !== "")
     {
         var cp = document.getElementById("preCP").value;
         cargarColonias(cp);
         document.getElementById("codigo_postal").value = cp;
         console.log('que trae' + document.getElementById("idColonia").value);
     }
+    //fin usado por formato unico
 
 
 
@@ -21,15 +23,7 @@ $(document).ready(function() {
 
         cargarColonias(document.getElementById("codigo_postal").value);
     }
-//    if ($('#preColonia').length > 0 && document.getElementById("preColonia").value !== "")
-//    {
-//        var preColonia = document.getElementById("preColonia").value;
-//
-//        console.log('precolonua' + preColonia);
-//        console.log('tamañp' + $('#idColonia').length);
-//        console.log('tam' + comboColonias.length);
-//        $('#idColonia.idColonia option:eq(' + preColonia + ')').prop('selected', true);
-//    }
+
 
 
 
@@ -79,10 +73,12 @@ $(document).ready(function() {
                     option.text = respuesta.nombreColonia[i];
                     option.value = respuesta.idColonia[i];
                     comboColonias.appendChild(option);
+                    //usado por formato unico para la edición
                     if ($('#preColonia').length > 0 && document.getElementById("preColonia").value !== "" && document.getElementById("preColonia").value === respuesta.idColonia[i] )
                     {
                         option.selected = "selected";
                     }
+                    //fin usado por formato unico
                 }
                 var option = document.createElement("option");
                 option.text = "Otra (Especifique)";
