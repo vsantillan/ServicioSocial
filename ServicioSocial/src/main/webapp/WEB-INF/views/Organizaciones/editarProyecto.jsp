@@ -40,7 +40,6 @@
                                 <form:hidden path="idProyecto" id="idProyecto" size="20"/>
                                 <form:hidden path="estatus" id="estatus" size="20"/>
                                 <form:hidden path="validacionAdmin" id="validacionAdmin" size="20"/>
-                                <form:hidden path="modalidad" id="modalidad" size="20"/>
                             </td>
                             <td>
                                 <form:input path="nombre" id="nombre" size="20"/><br/>
@@ -155,16 +154,43 @@
                                     <core:forEach items="${tipoProyecto}" var="current">
                                         <core:choose>
                                             <core:when test="${current.idTipoProyecto==proyecto.idTipoProyecto.idTipoProyecto}">
-                                        <option value="${current.idTipoProyecto}" selected="selected">${current.descripcion}</option>  
-                                    </core:when>
-                                    <core:otherwise>
-                                        <option value="${current.idTipoProyecto}">${current.descripcion}</option>
-                                    </core:otherwise>    
-                                </core:choose>
-                            </core:forEach>
-                        </form:select><br/>
-                        <form:errors path="idTipoProyecto.idTipoProyecto" cssClass="error"/>
-                        </td>  
+                                                <option value="${current.idTipoProyecto}" selected="selected">${current.descripcion}</option>  
+                                            </core:when>
+                                            <core:otherwise>
+                                                <option value="${current.idTipoProyecto}">${current.descripcion}</option>
+                                            </core:otherwise>    
+                                        </core:choose>
+                                    </core:forEach>
+                                </form:select><br/>
+                            <form:errors path="idTipoProyecto.idTipoProyecto" cssClass="error"/>
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="lugar">Programa:</label></td>
+                            <td>
+                                <form:select id="programa" path="idPrograma.idPrograma" name="programa">
+                                    <core:forEach items="${programas}" var="programa">
+                                        <core:choose>
+                                            <core:when test="${programa.idPrograma==proyecto.idPrograma.idPrograma}">
+                                                <option value="${programa.idPrograma}" selected="selected">${programa.descripcion}</option>
+                                            </core:when>
+                                            <core:otherwise>
+                                                <option value="${programa.idPrograma}">${programa.descripcion}</option>
+                                            </core:otherwise>    
+                                        </core:choose>
+                                    </core:forEach>
+                                </form:select><br/>
+                                <form:errors path="idPrograma.idPrograma" cssClass="error"/>
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="modalidad">Modalidad</label></td>
+                            <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
+                                <form:select id="modalidad" path="modalidad" name="modalidad">
+                                    <form:option  value="I">INTERNO</form:option>
+                                    <form:option  value="E">EXTERNO</form:option>
+                                </form:select>
+                            </td>  
                         </tr>
                         <tr>
                             <td><label for="lugar">Perfiles para el proyecto:</label></td>
@@ -188,7 +214,7 @@
                             </td>
                         </tr>
                         <tr> 
-                            <td> <input type ="submit" value = "Guardar cambios" /> </td>
+                            <td> <input type ="submit" value = "Guardar cambios" id="envia"/> </td>
                             <td> <input type ="button" value = "Cancelar" onclick="window.parent.Shadowbox.close();"/></td>
                         </tr>
                     </table>
@@ -209,6 +235,12 @@
                 $('#select-to option:selected').each(function() {
                     $('#select-from').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
                     $(this).remove();
+                });
+            });
+            $('input#envia').click(function (){
+                $('#select-from option').each(function() 
+                {
+                    $(this).attr("selected", "selected");
                 });
             });
     </script>

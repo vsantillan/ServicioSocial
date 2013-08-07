@@ -21,6 +21,7 @@ import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
+import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
@@ -31,6 +32,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.StringTokenizer;
 import javax.validation.Valid;
 
 import javax.ejb.EJB;
@@ -60,8 +62,8 @@ public class OrganizacionesController {
     private TipoOrganizacionFacade tipoOrganizacionFacade;
     @EJB(mappedName = "java:global/ServicioSocial/PerfilFacade")
     private PerfilFacade perfilFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
-    private ColoniaFacade coloniaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ProyectoPerfilFacade")
+    private ProyectoPerfilFacade proyectoPerfilFacade;
     @EJB(mappedName = "java:global/ServicioSocial/TipoProyectoFacade")
     private TipoProyectoFacade tipoProyectoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
@@ -72,7 +74,16 @@ public class OrganizacionesController {
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model)
     {
-        model.addAttribute("organizaciones", instanciaFacade.findAll());
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
+        for (int i = 0; i < listaInstancias.size(); i++) 
+        {
+            if ((listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) || (listaInstancias.get(i).getValidacionAdmin() == BigInteger.valueOf(2)))
+            {
+                filtroInstancias.add(listaInstancias.get(i));
+            }
+        }        
+        model.addAttribute("organizaciones", filtroInstancias);
         model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
         return "/Organizaciones/administrarOrganizaciones";
     }
@@ -80,7 +91,16 @@ public class OrganizacionesController {
     @RequestMapping(method = RequestMethod.GET, value = "/administrarProyectos.do")
     public String administradorProyectos(Model model) 
     {
-        model.addAttribute("proyectos", proyectosFacade.findAll());
+        List<Proyectos> listaProyectos = proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
+        for (int i = 0; i < listaProyectos.size(); i++) 
+        {
+            if (listaProyectos.get(i).getValidacionAdmin() == BigInteger.ONE)
+            {
+                filtroDeProyectos.add(listaProyectos.get(i));
+            }
+        }
+        model.addAttribute("proyectos", filtroDeProyectos);
         model.addAttribute("retroalimentacionProyecto", new BorrarProyecto());
         return "/Organizaciones/administrarProyectos";
     }
@@ -208,11 +228,18 @@ public class OrganizacionesController {
     {
         Proyectos proyecto=proyectosFacade.find(BigDecimal.valueOf(id));
         model.addAttribute("proyecto", proyecto);
-        //model.addAttribute("proyectoAux", proyectosFacade.findBySpecificField("status", "1", "equal", null, null));
-        model.addAttribute("instancia", instanciaFacade.findAll());
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
+        for (int i = 0; i < listaInstancias.size(); i++) {
+            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+                filtroInstancias.add(listaInstancias.get(i));
+            }
+        }        
+        model.addAttribute("instancia", filtroInstancias);
         model.addAttribute("estados", estadosFacade.findAll());
-        model.addAttribute("perfil", perfilFacade.findAll());
+        model.addAttribute("perfil", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
         model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
         List<Perfil> perfilesNoSonDelProyecto = new ArrayList<Perfil>();
         List<Perfil> listaPerfil;
         Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
@@ -227,28 +254,70 @@ public class OrganizacionesController {
             {
                 nombrePerfilCollection=iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre();
                 if(!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
-                {                    
                     agregar=true;
-                }else{
+                else
                     agregar=false;
-                }
             }
             if(agregar)
-            {
-                //System.out.println("Agregar: "+listaPerfil.get(i).getNombre());
                 perfilesNoSonDelProyecto.add(listaPerfil.get(i));
-            }
         }
         model.addAttribute("perfilesProyectoEx", perfilesNoSonDelProyecto);
         return "/Organizaciones/editarProyecto";
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/modificarProyecto.do")
-    public String modificarProyecto(@Valid Proyectos proyecto,BindingResult  result, Model model)
+    public String modificarProyecto(@Valid Proyectos proyecto,BindingResult  result, Model model, String selectfrom)
     {
         proyecto.setFechaAlta(new Date());
-        proyecto.setIdPrograma(programaFacade.find(BigDecimal.ONE));
-        //proyecto.setValidacionAdmin(BigInteger.ONE);
+        System.out.println("select de perfiles "+selectfrom);
+        try {
+            System.out.println("Nombre:" + proyecto.getNombre());
+        } catch (Exception e) {
+            System.out.println("No hay nombre de proyecto");
+        }
+        try {
+            System.out.println("No Vacantes:" + proyecto.getVacantes());
+        } catch (Exception e) {
+            System.out.println("No hay vacantes de proyecto");
+        }
+        try {
+            System.out.println("Instancia:" + proyecto.getIdInstancia().getIdInstancia());
+        } catch (Exception e) {
+            System.out.println("No hay id de instancia");
+        }
+        try {
+            System.out.println("Nombre responsable:" + proyecto.getNombreResponsable());
+        } catch (Exception e) {
+            System.out.println("No hay nombre de responsable");
+        }
+        try {
+            System.out.println("Puesto responsable:" + proyecto.getResponsablePuesto());
+        } catch (Exception e) {
+            System.out.println("No hay nombre de responsable");
+        }
+        try {
+            System.out.println("Telefono Responsable:" + proyecto.getTelefonoResponsable());
+        } catch (Exception e) {
+            System.out.println("No hay telefono del responsable");
+        }
+        try {
+            System.out.println("Domicilio:" + proyecto.getDomicilio());
+        } catch (Exception e) {
+            System.out.println("No hay domicilio");
+        }
+        try {
+            System.out.println("Colonia:" + proyecto.getIdColonia().getIdColonia());
+        } catch (Exception e) {
+            System.out.println("No hay colonia");
+            model.addAttribute("error_codigo_postal", "Ingresar un código postal válido");
+            result.addError(new ObjectError("codigo_postal", "Error en codigo postal"));
+        }
+        try {
+            System.out.println("Tipo Proyecto:" + proyecto.getIdTipoProyecto().getIdTipoProyecto());
+        } catch (Exception e) {
+            System.out.println("No hay tipo de proyecto");
+        }
+        
         if(result.hasErrors())
         {
             System.out.println("Con errores");
@@ -262,6 +331,32 @@ public class OrganizacionesController {
             //model.addAttribute("proyectos", proyectosFacade.findAll());
             return "/Organizaciones/editarProyecto";
         }else{
+            
+            List<ProyectoPerfil> listaProyectosPerfil=proyectoPerfilFacade.findBySpecificField("idProyecto", proyecto, "equal", null, null);
+            Iterator<ProyectoPerfil> recorreProyectosPerfil=listaProyectosPerfil.iterator();
+            while(recorreProyectosPerfil.hasNext())
+            {
+                ProyectoPerfil borrarPerfilDeProyecto;
+                borrarPerfilDeProyecto=recorreProyectosPerfil.next();
+                proyectoPerfilFacade.remove(borrarPerfilDeProyecto);
+            }
+            if(selectfrom!=null)
+            {
+                List<String> listaIds=new ArrayList<String>();
+                StringTokenizer palabra=new StringTokenizer(selectfrom,",");
+                while(palabra.hasMoreTokens())
+                {
+                    listaIds.add(palabra.nextToken());
+                }
+                Iterator inserta=listaIds.iterator();
+                while(inserta.hasNext())
+                {
+                    ProyectoPerfil proyectoPerfil=new ProyectoPerfil();
+                    proyectoPerfil.setIdPerfil(perfilFacade.find(BigDecimal.valueOf(Integer.parseInt(inserta.next().toString())))); //Perfil
+                    proyectoPerfil.setIdProyecto(proyecto); //Proyecto
+                    proyectoPerfilFacade.create(proyectoPerfil);
+                }
+            }
             proyectosFacade.edit(proyecto);
             System.out.println("Sin errores");
             model.addAttribute("proyectos", proyectosFacade.findAll());
