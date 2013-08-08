@@ -25,7 +25,7 @@
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
 
 
-       <!--Include para Ventanas Modales-->
+        <!--Include para Ventanas Modales-->
         <jsp:include page="../Template/headsModal.jsp" />
 
         <!--        Scripts para tablas-->
@@ -50,16 +50,10 @@
     </head>
     <body class="background" >
         <jsp:include page="../Template/banner.jsp" />
-
-
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-
-
             <div style="float:left;width: 80%">
                 <h1>Validar Organizaciones</h1>
-
-
                 <p>A continuaci&oacute;n se muestran las organizaciones pendientes por validar.</p>
                 <div id="div-validar-organizacion" style="display:none;">
                     <center>
@@ -81,9 +75,9 @@
                     <tbody>
                         <core:forEach items="${organizacion}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}"  rel="shadowbox"><img  src="imagenes/tache.png" width="30"></a></th>
-                                <th><a class="fancy" href="detalleOrganizacion.do?id=${current.idInstancia}" ><img src="imagenes/lupa.png" width="30"/></a></th>
-                               <th><core:out value="${current.nombre}" /></th>
+                                <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}" ><img  src="imagenes/tache.png" width="30"></a></th>
+                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" class="fancy" ><img src="imagenes/lupa.png" width="30"/></a></th>
+                                <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
                                 <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
@@ -100,9 +94,9 @@
             <%-- fin del contenido --%>
         </div>
         <div id="a" style="display: none; font-size: 15px">
-            <h1>Envio de Retroalimentaci&oacute;n</h1>
-            <h2>Motivos de Rechazo</h2>
             <form:form commandName="retroalimentacionInstancia"  id="MyForm" method="POST"  action="borrarInstancia.do">
+                <h1>Envio de Retroalimentaci&oacute;n</h1>
+                <h2>Motivos de Rechazo</h2>
                 <table >
                     <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
                     <form:input hidden="hidden" id="control" path="control" value="1" />

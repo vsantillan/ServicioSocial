@@ -66,7 +66,7 @@
                             <tbody>
                                 <core:forEach items="${Observaciones}" var="current">
                                     <tr class='gradeX'>
-                                        <th><a href="#a" class="fancybox-effects-a  actualizaObservacion" detalle="${current.detalle}" idO="${current.id}" ><img src="imagenes/editar.png" width="30" /></a><a href="#" ><img class="borrarObservacion" ide="${current.id}" src="imagenes/trash.png" width="30" /></a></th>
+                                        <th><a href="#a" class="fancybox-effects-a  actualizaObservacion" detalle="${current.detalle}" idO="${current.id}"><img src="imagenes/editar.png" width="30" /></a><a href="#" ><img class="borrarObservacion" ide="${current.id}" src="imagenes/trash.png" width="30" /></a></th>
                                         <th><core:out value="${current.id}" /></th>
                                         <th><core:out value="${current.detalle}" /></th>
                                     </tr>
@@ -99,7 +99,7 @@
     <div id="a" style="display: none; font-size: 15px">
         <center> 
             <h1>Editar Observaci&oacute;n</h1>
-            <form:form  commandName="Observacion" name="nuevaObservacion" action="actualizaObservacion.do" method="POST" onsubmit="window.parent.Shadowbox.close();">
+            <form:form  commandName="Observacion" action="actualizaObservacion.do" method="POST" >
                 <table>
                     <form:input hidden="hidden" id="id" name="name" path="id" />
                     <tr>

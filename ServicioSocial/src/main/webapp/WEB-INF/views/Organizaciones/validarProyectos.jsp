@@ -76,7 +76,7 @@
                     <tbody>
                         <core:forEach items="${proyecto}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-proyecto"><img class="editProy" ide="${current.idProyecto}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}" rel="shadowbox"><img src="imagenes/tache.png" width="30"/></a></th>
+                                <th><a href="#" class="btn-validar-proyecto"><img class="editProy" ide="${current.idProyecto}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}"><img src="imagenes/tache.png" width="30"/></a></th>
                                 <th><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.idInstancia.nombre}" /></th>

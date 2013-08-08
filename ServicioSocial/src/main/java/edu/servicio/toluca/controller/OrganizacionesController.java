@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.PerfilJSON;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
@@ -375,6 +376,7 @@ public class OrganizacionesController {
             }
             return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
         } else {
+           // EnviarCorreo correo = new EnviarCorreo("alguien@gmail.com", retroalimentacionInstancia.getCorreo(), retroalimentacionInstancia.getDescripcion(), "Servicio Social", "pass");
             Instancia instancia;
             instancia = instanciaFacade.find(BigDecimal.valueOf(retroalimentacionInstancia.getId()));
 //            instancia.setEstatus(BigInteger.valueOf(0));
@@ -388,12 +390,13 @@ public class OrganizacionesController {
             } else {
                 instancia.setValidacionAdmin(BigInteger.valueOf(2));
                 instanciaFacade.edit(instancia);
+             // correo.enviaCorreo();
                 return "<script>"
                         + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
                         + "location.href='validarOrganizaciones.do';"
                         + "</script>";
             }
-//            instanciaFacade.edit(instancia);
+
 
 
 
@@ -409,6 +412,7 @@ public class OrganizacionesController {
             }
             return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
         } else {
+         // EnviarCorreo correo = new EnviarCorreo("alguien@gmail.com", retroalimentacionInstancia.getCorreo(), retroalimentacionInstancia.getDescripcion(), "Servicio Social", "pass");
             Proyectos proyecto;
             proyecto = proyectosFacade.find(BigDecimal.valueOf(retroalimentacionProyecto.getId()));
 
@@ -421,6 +425,7 @@ public class OrganizacionesController {
             } else {
                 proyecto.setValidacionAdmin(BigInteger.valueOf(2));
                 proyectosFacade.edit(proyecto);
+             // correo.enviaCorreo();
                 return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
                         + "location.href='validarProyectos.do';"
                         + "</script>";
