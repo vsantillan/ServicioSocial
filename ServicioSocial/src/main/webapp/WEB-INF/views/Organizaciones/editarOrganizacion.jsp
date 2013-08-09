@@ -48,10 +48,12 @@
             <div style="float:left;width:80%">
                 <h1>Editar Organizacion</h1>
                 <form:form name="modificarOrganizacion" commandName="instancia" class="MyForm" action="modificarOrganizacion.do"  method="POST" >
+                    <p>${error_sql}</p>
                     <table>
                         <tr>
                             <td><label for="nombre">Nombre de la Organizaci&oacute;n:</label> 
                                 <form:hidden path="idInstancia" id="idInstancia" size="20"/><br/>
+                                <form:hidden path="estatus" id="estatus" size="20"/><br/>
                             </td>
                             <td> 
                                 <form:input path="nombre" id="nombre" size="20"/><br/>
@@ -157,6 +159,16 @@
                         </form:select><br/>
                         <form:errors path="tipoOrganizacion.idTipoOrganizacion" cssClass="error"/>
                         </td>  
+                        </tr>
+                        <tr>
+                            <td>  <label for="validacionAdmin">Validación:</label></td>
+                            <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
+                                <form:select id="validacionAdmin" path="validacionAdmin" name="validacionAdmin">
+                                    <form:option  value="0">Rechazada</form:option>
+                                    <form:option  value="1">Aceptada</form:option>
+                                    <form:option  value="2">Pre-registrada</form:option>
+                                </form:select>
+                            </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Nombre de Usuario:</label></td>

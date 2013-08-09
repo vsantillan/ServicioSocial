@@ -32,14 +32,14 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;width:80%">
-                <h1>Alta de Proyecto</h1>
+                <h1>Alta de Proyecto</h1>                
                 <form:form name="modificarProyecto" commandName="proyecto" class="MyForm" action="modificarProyecto.do" method="POST" >
+                    <p>${error_sql}</p>
                     <table>
                         <tr>
                             <td><label for="nombre">Nombre del Proyecto:</label>
                                 <form:hidden path="idProyecto" id="idProyecto" size="20"/>
                                 <form:hidden path="estatus" id="estatus" size="20"/>
-                                <form:hidden path="validacionAdmin" id="validacionAdmin" size="20"/>
                             </td>
                             <td>
                                 <form:input path="nombre" id="nombre" size="20"/><br/>
@@ -193,6 +193,15 @@
                             </td>  
                         </tr>
                         <tr>
+                            <td>  <label for="validacionAdmin">Validación:</label></td>
+                            <td>
+                                <form:select id="validacionAdmin" path="validacionAdmin" name="validacionAdmin">
+                                    <form:option  value="0">Rechzada</form:option>
+                                    <form:option  value="1">Aceptada</form:option>
+                                </form:select>
+                            </td>  
+                        </tr>
+                        <tr>
                             <td><label for="lugar">Perfiles para el proyecto:</label></td>
                             <td>
                                 <fieldset>
@@ -212,6 +221,23 @@
                                     </select>
                                 </fieldset>
                             </td>
+                        </tr>
+                        <tr>
+                            <td><label for="lugar">Actividades:</label></td>
+                            <td>
+                                <select name="prueba01" id="prueba01" hidden="hidden">
+                                    <core:forEach items="${proyecto.actividadesCollection}" var="actividades">
+                                        <option value="${actividades.detalle}"></option>
+                                    </core:forEach>
+                                </select>
+                                <p><input type ="button" id="agregarActividad" value = "Agregar Actividad" /></p>
+                                        <ol id="actividades"></ol>
+                                        <input type="hidden" name="nActividades" id="nActividades" value="0">
+                                        <input type="hidden" name="cadenaActividades" id="cadenaActividades">
+                                <%--<core:forEach items="${proyecto.actividadesCollection}" var="actividades">
+                                    <input type="text" value="${actividades.detalle}" /><br/>
+                                </core:forEach>--%>
+                            </td>  
                         </tr>
                         <tr> 
                             <td> <input type ="submit" value = "Guardar cambios" id="envia"/> </td>
@@ -242,7 +268,69 @@
                 {
                     $(this).attr("selected", "selected");
                 });
+                
+                var cadenaActividades = "";
+
+        $(".actividad").each(function() {
+            console.log("Actividad:" + $(this).val());
+            cadenaActividades += $(this).val() + ";";
+        });
+        console.log("Cadena actividades:" + cadenaActividades);
+        document.getElementById("cadenaActividades").value = cadenaActividades;
             });
+            
+            var nActividades=0;
+            $('#prueba01 option').each(function() 
+                {
+                    agregarActividadIniciales($(this).attr("value"));
+                });
+                
+            
+    $("input#agregarActividad").click(function() {
+        agregarActividad();
+    });
+
+    function agregarActividadIniciales(valor) 
+    {
+        console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
+        if (nActividades < 5) {
+            $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true' value='"+valor+"'/><input type ='button' class='borrar' value = 'Quitar'  /></li><br/>");
+            masActividad();
+            console.log("Actividad agregada");
+        }
+    }
+    
+    function agregarActividad() {
+        console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
+        if (nActividades < 5) {
+            $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true'/><input type ='button' class='borrar' value = 'Quitar'  /></li><br/>");
+            masActividad();
+            console.log("Actividad agregada");
+        }
+    }
+    
+    function masActividad() {
+        nActividades++;
+        document.getElementById("nActividades").value = nActividades;
+        console.log("nActividades local:" + nActividades);
+        console.log("nActividades form:" + document.getElementById("nActividades").value);
+    }
+
+    function menosActividad() {
+        nActividades--;
+        document.getElementById("nActividades").value = nActividades;
+        console.log("nActividades local:" + nActividades);
+        console.log("nActividades form:" + document.getElementById("nActividades").value);
+
+    }
+
+    $("body").on("click", ".borrar", function(event) {
+        console.log("Borrar actividad, nActividades:" + nActividades);
+        if (nActividades > 2) {
+            $(this).closest('li').remove();
+            menosActividad();
+        }
+    });
     </script>
     <jsp:include page="../Template/footer.jsp" />
 </body>

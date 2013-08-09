@@ -18,6 +18,7 @@
         <jsp:include page="../Template/metas.jsp" />       
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        <jsp:include page="../Template/headsModal.jsp" />
         <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
         <link type="text/css" href="shadowbox/shadowbox.css" rel="stylesheet" />
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
@@ -62,7 +63,7 @@
                             <tr class='gradeX'>
                                 <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
                                 <th><a href="editarOrganizacion.do?id=${current.idInstancia}" ><img src="imagenes/editar.png" width="30" title="Editar Organizaci&oacute;n"/></a><a href="#a" class="mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}"  rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></th>
-                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" rel="shadowbox; width=740px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.titular}" /></th>
                                 <th><core:out value="${current.rfc}" /></th>
