@@ -49,19 +49,19 @@ public class ActividadesModel {
             if (validarUnicaActividad()) {
                 if (validarConsistenciaCadenas()) {
                     respuesta.setSuccess(true);
-                    respuesta.setMensaje("Perfiles insertados correctamente");
+                    respuesta.setMensaje("");
                 } else {
                     respuesta.setSuccess(false);
-                    respuesta.setMensaje("Hay actividades vacías");
+                    respuesta.setMensaje("<div class='error'>Hay actividades vacías</div>");
                 }
             } else {
                 respuesta.setSuccess(false);
-                respuesta.setMensaje("Hay actividades repetidas");
+                respuesta.setMensaje("<div class='error'>Hay actividades repetidas</div>");
             }
 
         } else {
             respuesta.setSuccess(false);
-            respuesta.setMensaje("Actividades vacías");
+            respuesta.setMensaje("<div class='error'>Actividades vacías</div>");
         }
 
         return respuesta;

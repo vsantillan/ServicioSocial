@@ -6,6 +6,7 @@ function remagia(cp)
 
 }
 $(document).ready(function() {
+    
     //usado por formato unico para la edición
     if ($('#preCP').length > 0 && document.getElementById("preCP").value !== "")
     {
@@ -18,14 +19,10 @@ $(document).ready(function() {
 
 
 
-    //Checa si inicia ya con valores para cargar codigos postales
-    if (document.getElementById("codigo_postal").length === 5) {
-
-        cargarColonias(document.getElementById("codigo_postal").value);
-    }
-
-
-
+//    //Checa si inicia ya con valores para cargar codigos postales
+//    if (document.getElementById("codigo_postal").length === 5) {
+//        cargarColonias(document.getElementById("codigo_postal").value);
+//    }
 
     var existeCP = true;
 
@@ -89,11 +86,6 @@ $(document).ready(function() {
                     $("#otra_colonia").show("slow");
                 }
 
-
-
-
-
-
                 comboEstado.disabled = true;
                 comboColonias.disabled = false;
 
@@ -110,11 +102,6 @@ $(document).ready(function() {
 //                inputEstado.value = "No disponible";
 //                inputMunicipio.value = "No disponible";
             }
-
-
-
-
-
 
         });
 

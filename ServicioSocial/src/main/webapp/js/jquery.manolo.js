@@ -68,27 +68,45 @@ $(document).ready(function() {
     }
 
     //Formulario alta admin proyectos
-    if (iniciarAltaAdminProyecto) {
-        console.log("Iniciando alta admin proyecto")
+    if (typeof(iniciarAltaAdminProyecto) !== 'undefined') {
+        console.log("Iniciando alta admin proyecto");
         //iniciarPerfiles();
-        nActividades = 0
-        console.log("Agregar actividad 1");
-        agregarActividad();
-        console.log("Agregar actividad 2");
-        agregarActividad();
-        //document.getElementById("ningunPerfil").checked = true;
-        //validarCheck();
-
+        var nActHidden = document.getElementById("PrenActividades");
+        nActHidden.value = Number(nActHidden.value);
+        nActividades = 0;
+        
+        for (var i = 0; i < 5; i++) {
+            var actHidden = document.getElementById("actividad" + i);
+            if (i < 2) {
+                if (actHidden.value === 'undefined') {
+                    agregarActividad();
+                } else {
+                    agregarActividad(actHidden.value);
+                }
+            } else {
+                if (nActHidden.value > 2) {
+                    if (actHidden.value !== '') {
+                        agregarActividad(actHidden.value);
+                    }
+                }
+            }
+        }
     }
     var nActividades;
     $("#agregarActividad").click(function(event) {
         agregarActividad();
     })
 
-    function agregarActividad() {
+    function agregarActividad(actividad) {
         console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
+        console.log("actividad:" + actividad);
         if (nActividades < 5) {
-            $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
+            if (typeof(actividad) === 'undefined') {
+                $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
+            }
+            else {
+                $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true' value='" + actividad + "'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
+            }
             masActividad();
             console.log("Actividad agregada");
         }
@@ -253,12 +271,20 @@ $(document).ready(function() {
         //Preparar perfiles seleccionados
         var perfiles = document.getElementById("select-to");
         for (i = 0; i < perfiles.length; i++) {
-            console.log("Seleccionando:"+perfiles.options[i].text)
-            perfiles.options[i].selected=true;
+            console.log("Seleccionando:" + perfiles.options[i].text)
+            perfiles.options[i].selected = true;
         }
         document.forms["altaOrganizacion"].submit();
-    });   
+    });
 
+    $("#btnPreInstancia").click(function(event) {
+
+        var select = document.getElementById("idInstancia");
+
+        if (select.selectedIndex > 0) {
+            document.forms["altaOrganizacion"].submit();
+        }
+    });
 
 });
 

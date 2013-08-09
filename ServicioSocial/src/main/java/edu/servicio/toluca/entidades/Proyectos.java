@@ -102,6 +102,7 @@ public class Proyectos implements Serializable {
     private BigInteger vacantesDisponibles;
     @Size(max = 60)
     @Column(name = "NOMBRE")
+    @NotBlank
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<ProyectoPerfil> proyectoPerfilCollection;

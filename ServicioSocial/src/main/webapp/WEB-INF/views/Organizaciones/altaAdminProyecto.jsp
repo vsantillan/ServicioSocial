@@ -41,7 +41,7 @@
                                     <td> 
                                         <!--input type="text" name="nombre" id="nombre" size="20" require="true" /-->
                                         <form:input path="nombre" id="nombre" size="20"/><br/>
-                                        <form:errors path="nombre" cssClass="error"/>
+                                        <form:errors path="nombre" cssClass="error"/>${nombre}
                                     </td>  
                                 </tr>
                                 <tr>
@@ -49,7 +49,7 @@
                                     <td>  
                                         <!--input type="text" name="rfc" id="vacacntes" size="20" require="true" /-->
                                         <form:input path="vacantes" id="vacantes" size="20"/><br/>
-                                        <form:errors path="vacantes" cssClass="error"/>
+                                        <form:errors path="vacantes" cssClass="error"/>${vacantes}
                                     </td>  
                                 </tr>                        
                                 <tr>
@@ -67,7 +67,7 @@
                                     <td>  
                                         <!--input type="text" name="titular" id="titular" size="20" require="true"/--> 
                                         <form:input path="nombreResponsable" id="nombreResponsable" size="20"/><br/>
-                                        <form:errors path="nombreResponsable" cssClass="error"/>
+                                        <form:errors path="nombreResponsable" cssClass="error"/>${responsable}
                                     </td>  
                                 </tr>
                                 <tr>
@@ -75,7 +75,7 @@
                                     <td>  
                                         <!--input type="text" name="titular" id="titular" size="20" require="true"/--> 
                                         <form:input path="responsablePuesto" id="responsablePuesto" size="20"/><br/>
-                                        <form:errors path="responsablePuesto" cssClass="error"/>
+                                        <form:errors path="responsablePuesto" cssClass="error"/>${puesto}
                                     </td>  
                                 </tr>
                                 <tr>
@@ -83,7 +83,7 @@
                                     <td>  
                                         <!--input type="text" name="puesto" id="puesto" size="20" require="true"/--> 
                                         <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10"/><br/>
-                                        <form:errors path="telefonoResponsable" cssClass="error"/>
+                                        <form:errors path="telefonoResponsable" cssClass="error"/>${telefono}
                                     </td>  
                                 </tr>
                                 <tr>
@@ -91,14 +91,14 @@
                                     <td>  
                                         <!--input type="text" name="correo" id="puesto" size="20" require="true"/--> 
                                         <form:input path="domicilio" id="rfc" size="20"/><br/>
-                                        <form:errors path="domicilio" cssClass="error"/>
+                                        <form:errors path="domicilio" cssClass="error"/>${domicilio}
                                     </td>  
                                 </tr>
                                 <tr>
                                     <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
                                     <td> 
                                         <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5">
-                                        <br>${error_codigo_postal}
+                                        <input type="hidden" id="preCP" value="${cp}"/><br>${error_codigo_postal}
                                     </td>  
                                 </tr>
                                 <tr>
@@ -133,6 +133,7 @@
                                                 <input type="text" name="otra_colonia" id="otra_colonia" />
                                                 <!--form:input path="usuario" id="usuario" size="20"/-->
                                             </div>
+                                            <input type="hidden" id="preColonia" value="${idColonia}"/>
                                         <form:errors path="idColonia" cssClass="error"/>
                                     </td>  
                                 </tr>
@@ -187,7 +188,7 @@
                                             </select>
 
                                             <a href="JavaScript:void(0);" id="btn-add">Agregar &raquo; </a>
-                                            
+
                                             <p>Perfiles Seleccionados:</p>
                                             <select name="selectto" id="select-to" multiple size="8"></select>                                            
                                             <a href="JavaScript:void(0);" id="btn-remove">&laquo; Quitar</a>
@@ -200,11 +201,20 @@
                                         <label for="lugar">Actividades:</label><br/>
                                     </td>
                                     <td>
+                                        
                                         <p><input type ="button" id="agregarActividad" value = "Agregar Actividad" /></p>
-                                        <ol id="actividades"></ol>  
+                                        <ol id="actividades"></ol>                                       
                                         <input type="hidden" name="nActividades" id="nActividades" value="0">
+                                        <input type="hidden" name="PrenActividades" id="PrenActividades" value="${nActividades}">
                                         <input type="hidden" name="cadenaActividades" id="cadenaActividades">
-                                        <br/>${validacion_actividades}
+                                        
+                                        <input type="hidden" id="actividad0" value="${actividad0}">
+                                        <input type="hidden" id="actividad1" value="${actividad1}">
+                                        <input type="hidden" id="actividad2" value="${actividad2}">
+                                        <input type="hidden" id="actividad3" value="${actividad3}">
+                                        <input type="hidden" id="actividad4" value="${actividad4}">
+                                        <p>${validacion_actividades}</p>
+                                        
                                     </td>  
                                 </tr>                               
                                 <tr> 

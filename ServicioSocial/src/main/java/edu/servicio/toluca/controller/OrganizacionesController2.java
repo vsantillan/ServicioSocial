@@ -13,6 +13,7 @@ import edu.servicio.toluca.entidades.Perfil;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.model.ActividadesModel;
+import edu.servicio.toluca.model.ValidacionesOrganizaciones;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
@@ -25,7 +26,6 @@ import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -126,13 +126,10 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaOrganizacion.do")
-    public String gdaAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String otra_colonia, String existe_colonia) {
+    public String gdaAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia) {
 
-
-        if (!confirma_password.equals(instancia.getPassword())) {
-            result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
-            model.addAttribute("confirma_password", "<div class='error'>Las contraseñas no coinciden</div>");
-        }
+        //Validacion
+        new ValidacionesOrganizaciones().valGdaAltaInst(instancia, result, model, codigo_postal, otra_colonia, existe_colonia, confirma_password);
 
         if (result.hasErrors()) {
             System.out.print("hubo errores");
@@ -168,7 +165,56 @@ public class OrganizacionesController2 {
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
                 model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
-                
+
+                return "/Organizaciones/registroOrganizaciones";
+            }
+            return "/Organizaciones/confirmaRegOrganizacion";
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaPreOrganizacion.do")
+    public String gdaAltaPreOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia, String idInstancia) {
+        System.out.println("idInstancia:" + idInstancia);
+        //Validacion
+        new ValidacionesOrganizaciones().valGdaAltaInst(instancia, result, model, codigo_postal, otra_colonia, existe_colonia, confirma_password);
+
+        if (result.hasErrors()) {
+            System.out.print("hubo errores");
+            System.out.println(instancia.toString());
+            System.out.println(result.toString());
+
+            //Agregamos atributos al formulario
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("nombre", "asc");
+            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("idInstancia", idInstancia);
+            model.addAttribute("cp", codigo_postal);
+            model.addAttribute("instancia", instancia);
+
+            return "/Organizaciones/confirmaOrganizacionVisitante";
+
+        } else {
+            System.out.print("no hubo errores");
+            instancia.setIdInstancia(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            instancia.setValidacionAdmin(BigInteger.ZERO);
+            instancia.setEstatus(BigInteger.ONE);
+            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
+            System.out.println("Pass encriptado:" + instancia.getPassword());
+
+            ///Convirtiendo a mayusculas
+            instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
+            instancia.setNombre(instancia.getNombre().toUpperCase());
+            instancia.setPuesto(instancia.getPuesto().toUpperCase());
+            instancia.setRfc(instancia.getRfc().toUpperCase());
+            instancia.setTitular(instancia.getTitular().toUpperCase());
+
+            try {
+                instanciaFacade.edit(instancia);
+            } catch (Exception e) {
+                result.addError(new ObjectError("error_sql", "Error de llave unica"));
+                model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
+
                 return "/Organizaciones/registroOrganizaciones";
             }
             return "/Organizaciones/confirmaRegOrganizacion";
@@ -176,8 +222,11 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAdminAltaOrganizacion.do")
-    public String gdaAdminAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model) {
+    public String gdaAdminAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia) {
         System.out.println("hola admin gda alta organizacion");
+
+        //Validacion
+        new ValidacionesOrganizaciones().valAltaAdminInst(instancia, result, model, codigo_postal);
 
         if (result.hasErrors()) {
             System.out.print("hubo errores");
@@ -210,62 +259,13 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaAdminProyecto.do")
-    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto) {
+    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal) {
         System.out.println("hola admin gda alta organizacion");
-        //Mexican Debugger
-        try {
-            System.out.println("Nombre:" + proyecto.getNombre());
-        } catch (Exception e) {
-            System.out.println("No hay nombre de proyecto");
-        }
-        try {
-            System.out.println("No Vacantes:" + proyecto.getVacantes());
-        } catch (Exception e) {
-            System.out.println("No hay vacantes de proyecto");
-        }
-        try {
-            System.out.println("Instancia:" + proyecto.getIdInstancia().getIdInstancia());
-        } catch (Exception e) {
-            System.out.println("No hay id de instancia");
-        }
-        try {
-            System.out.println("Nombre responsable:" + proyecto.getNombreResponsable());
-        } catch (Exception e) {
-            System.out.println("No hay nombre de responsable");
-        }
-        try {
-            System.out.println("Puesto responsable:" + proyecto.getResponsablePuesto());
-        } catch (Exception e) {
-            System.out.println("No hay nombre de responsable");
-        }
-        try {
-            System.out.println("Telefono Responsable:" + proyecto.getTelefonoResponsable());
-        } catch (Exception e) {
-            System.out.println("No hay telefono del responsable");
-        }
-        try {
-            System.out.println("Domicilio:" + proyecto.getDomicilio());
-        } catch (Exception e) {
-            System.out.println("No hay domicilio");
-        }
-        try {
-            System.out.println("Colonia:" + proyecto.getIdColonia().getIdColonia());
-        } catch (Exception e) {
-            System.out.println("No hay colonia");
-            model.addAttribute("error_codigo_postal", "Ingresar un código postal válido");
-            result.addError(new ObjectError("codigo_postal", "Error en codigo postal"));
-        }
-        try {
-            System.out.println("Tipo Proyecto:" + proyecto.getIdTipoProyecto().getIdTipoProyecto());
-        } catch (Exception e) {
-            System.out.println("No hay tipo de proyecto");
-        }
-
-        System.out.println("nPerfiles:" + nPerfiles.charAt(0));
-        System.out.println("nActividades:" + nActividades.charAt(0));
-        System.out.println("Perfiles:" + selectto);
-        System.out.println("Actividades:" + cadenaActividades);
-
+        
+        //Validaciones
+        System.out.println("Validar");
+        new ValidacionesOrganizaciones().valAltaAdminProy(proyecto, result, model, codigo_postal);
+        
         //Desglose de Actividades
         ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
 
@@ -301,8 +301,24 @@ public class OrganizacionesController2 {
             model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
             //Programa
             model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
-
-            //return "redirect:altaAdminProyectos.do";
+            //Regresar codigo postal
+            model.addAttribute("cp", codigo_postal);
+            try{
+                model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
+            }catch(Exception e){
+                
+            }
+            
+            //Regresar actividades
+            model.addAttribute("nActividades", nActividades.substring(0, 1));
+            System.out.println("nActividades:"+ nActividades.substring(0, 1));
+            
+            for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
+                System.out.println("Regresando Actividad:"+actividadesModel.actividades.get(i));
+            }
+            model.addAttribute("proyecto", proyecto);
+            
             return "/Organizaciones/altaAdminProyecto";
         } else {
 
@@ -363,8 +379,6 @@ public class OrganizacionesController2 {
                 System.out.println("No se agregaran perfiles");
             }
 
-
-
             return "/Organizaciones/confirmaAltaAdminProyectos";
         }
     }
@@ -387,10 +401,19 @@ public class OrganizacionesController2 {
 
     //Alta de organizacion por pre-registro
     @RequestMapping(method = RequestMethod.POST, value = "/confirmaOrganizacionVisitante.do")
-    public void confirmaOrganizacionVisitante(Model model, String instancia) {
-        System.out.println("Id instancia:" + instancia);
+    public String confirmaOrganizacionVisitante(Model model, String idInstancia) {
+        System.out.println("Id instancia:" + idInstancia);
 
-        //return "/Organizaciones/editarOrganizacion";
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        ordenamiento.put("nombre", "asc");
+        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("idInstancia", idInstancia);
+        Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+        model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
+        model.addAttribute("instancia", instancia);
+
+        return "/Organizaciones/confirmaOrganizacionVisitante";
     }
 
     //Alta de organizacion por pre-registro

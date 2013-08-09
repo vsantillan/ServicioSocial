@@ -85,7 +85,10 @@
                         </tr>
                         <tr>
                             <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
-                            <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5"></td>  
+                            <td> 
+                                <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5">
+                                <br/>${error_codigo_postal}
+                            </td>  
                         </tr>
                         <tr>
                             <td>  <label for="estado">Estado:</label></td>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : registroOrganizaciones
-    Created on : 10-jun-2013, 11:59:36
+    Document   : confirmaOrganizacionVisitante
+    Created on : 07-ago-2013, 12:25:52
     Author     : bustedvillain
 --%>
 
@@ -21,8 +21,8 @@
         <%@ include file="../Template/metas.jsp" %>   
         <script src="js/jquery.codigos.postales.js"></script>
         <script src="js/jquery.manolo.js"></script>
-         
-        <title>Departamento de Servicio Social :: Organizaciones ::</title>
+
+        <title>Administrador</title>
     </head>
     <body class="background">
         <%@ include file="../Template/banner.jsp" %>
@@ -32,41 +32,14 @@
         <div id="contenido">
             <center>
                 <br/>
-                <!--format:message key="fecha_max_fui"/-->
-                <h1>Registro de Organizaciones</h1>
-                <p><h4>Busque si la Organizaci&oacute;n ya esta pre-registrada</h4></p>
-                <form:form name="altaOrganizacion" class="MyForm" action="confirmaOrganizacionVisitante.do" method="POST" style="width:60%;">
-                    <table>
-                        <tr> 
-                            <td> <label for="nombre-organizacion">Organizaci&oacute;n:</label> </td>
-                            <td> 
-                                <div class="ui-widget">
-                                    <select name="idInstancia" id="idInstancia" class="combobox-autocomplete">
-                                        <option value="">Busqueda de Organizaci&oacute;n</option>
-                                        <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                            <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                        </core:forEach> 
-                                    </select>
-                                    <br/>${pre_registro}
-                                </div>
-                            </td>
-                        </tr>
-                        <tr> 
-                            <td colspan="2"> <input type ="button" id="btnPreInstancia" value = "Seleccionar Organizaci&oacute;n" /> </td>                            
-                        </tr>
-                    </table>
-                </form:form>
-                <br/>
-
-                <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h4></p>
-                <%-- Formulario Nueva Organizacion --%>
-                <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAltaOrganizacion.do"  method="POST" style="width:60%;" >
-                    <p>${error_sql}</p>
+                <h1>Completando Pre-registro</h1>
+                <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAltaPreOrganizacion.do"  method="POST" style="width:60%;" >
+                    <input type="hidden" id="idInstancia" name="idInstancia" value="${idInstancia}">
                     <table>
                         <tr>
                             <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
                             <td> 
-                                <form:input path="nombre" id="nombre" size="20"/><br/>
+                                <form:input path="nombre" id="nombre" size="20" value="${instancia.nombre}"/><br/>
                                 <form:errors path="nombre" cssClass="error"/>
                                 <!--input type="text" name="name" id="nombre" size="20" require="true" /-->                                
                             </td>  
@@ -74,7 +47,7 @@
                         <tr>
                             <td>  <label for="rfc">RFC:</label> </td>
                             <td>  
-                                <form:input path="rfc" id="rfc" size="20" maxlength="12"/><br/>
+                                <form:input path="rfc" id="rfc" size="20" maxlength="12" value="${instancia.rfc}"/><br/>
                                 <form:errors path="rfc" cssClass="error"/>
                                 <!--input type="text" name="rfc" id="rfc" size="20" require="true" /-->
                             </td>  
@@ -82,7 +55,7 @@
                         <tr>
                             <td>  <label for="titular">Titular:</label></td>
                             <td>  
-                                <form:input path="titular" id="titular" size="20"/><br/>
+                                <form:input path="titular" id="titular" size="20" value="${instancia.titular}"/><br/>
                                 <form:errors path="titular" cssClass="error"/>
                                 <!--input type="text" name="titlar" id="titular" size="20" require="true"/--> 
                             </td>  
@@ -90,7 +63,7 @@
                         <tr>
                             <td>  <label for="puesto">Puesto:</label></td>
                             <td>  
-                                <form:input path="puesto" id="puesto" size="20"/><br/>
+                                <form:input path="puesto" id="puesto" size="20" value="${instancia.puesto}"/><br/>
                                 <form:errors path="puesto" cssClass="error"/>
                                 <!--input type="text" name="lugar" id="puesto" size="20" require="true"/--> 
                             </td>  
@@ -98,7 +71,7 @@
                         <tr>
                             <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                             <td>  
-                                <form:input path="telefono" id="telefono" size="20"maxlength="10"/><br/>
+                                <form:input path="telefono" id="telefono" size="20" maxlength="10" value="${instancia.telefono}"/><br/>
                                 <form:errors path="telefono" cssClass="error"/>
                                 <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
                             </td>  
@@ -106,7 +79,7 @@
                         <tr>
                             <td>  <label for="calle">Calle:</label></td>
                             <td>  
-                                <form:input path="domicilio" id="domicilio" size="20"/><br/>
+                                <form:input path="domicilio" id="domicilio" size="20" value="${instancia.domicilio}"/><br/>
                                 <form:errors path="domicilio" cssClass="error"/>
                                 <!--input type="text" name="lugar" id="domicilio" size="20" require="true"/--> 
                             </td>  
@@ -114,8 +87,9 @@
                         <tr>
                             <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
                             <td> 
-                                <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5"><br/>
-                                ${codigo_postal}
+                                <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" value="${instancia.idColonia.idCp.cp}">
+                                <br/>${error_codigo_postal}
+                                <input type="hidden" id="preCP" value="${cp}"/>
                             </td>  
                         </tr>
                         <tr>
@@ -150,7 +124,8 @@
                                         <input type="text" name="otra_colonia" id="otra_colonia" />
                                         <!--form:input path="usuario" id="usuario" size="20"/-->
                                     </div>
-                                    <br/><form:errors path="idColonia" cssClass="error"/>
+                                <form:errors path="idColonia" cssClass="error"/>
+                                <input type="hidden" id="preColonia" value="${instancia.idColonia.idColonia}"/>
                             </td>  
                         </tr>                     
                         <tr>
@@ -161,7 +136,7 @@
                                         <form:option  value="${tipoOrganizaciones.idTipoOrganizacion}">${tipoOrganizaciones.detalle}</form:option>
                                     </core:forEach> 
                                 </form:select>  
-                                <br/><form:errors path="tipoOrganizacion" cssClass="error"/>
+                                <form:errors path="tipoOrganizacion" cssClass="error"/>
                             </td>  
                         </tr>
                         <tr>
@@ -172,7 +147,6 @@
                             <td>  
                                 <form:input path="usuario" id="usuario" size="20"/><br/>
                                 ${usuario}
-
                             </td>  
                         </tr>
                         <tr>
@@ -180,7 +154,6 @@
                             <td>  
                                 <form:input path="correo" id="correo" size="20"/><br/>
                                 <form:errors path="correo" cssClass="error"/>${correo}
-
                             </td>  
                         </tr>
                         <tr>
@@ -188,7 +161,6 @@
                             <td>  
                                 <form:input path="password" id="password" size="20" type="password"/><br/>
                                 ${password}
-
                             </td>  
                         </tr>
                         <tr>
@@ -197,12 +169,11 @@
                                 <input type="password" name="confirma_password" id="confirma_password" size="20"/> <br>
                                 ${confirma_password}                           
                             </td>  
-                        </tr>                        
+                        </tr>   
                         <tr> 
                             <td> <input type ="submit" value = "Guardar " /> </td>
                             <td> <input type ="reset" value = "Limpiar" /></td>
                         </tr>
-
                     </table>
                 </form:form>
                 <br/>

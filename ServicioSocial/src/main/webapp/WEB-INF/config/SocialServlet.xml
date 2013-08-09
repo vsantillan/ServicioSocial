@@ -45,21 +45,10 @@ schemaLocation son las definiciones de XMLS
         <property name="basename">
             <value>messages</value>
         </property>
-    </bean>
+    </bean>    
     
-    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
-        <property name="customEditors">
-            <map>
-                <entry key="edu.servicio.toluca.entidades.Colonia">
-                    <bean class="edu.servicio.toluca.model.ColoniaEditor">
-                    </bean>
-                </entry>
-            </map>
-        </property>
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="268435456"/> <!-- 256 megs -->
     </bean>
-
- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-    <property name="maxUploadSize" value="268435456"/> <!-- 256 megs -->
-</bean>
  
 </beans>
