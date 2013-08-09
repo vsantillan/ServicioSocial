@@ -46,8 +46,21 @@
         </script> 
         <script>
             $(function() {
-               // $('#datepicker').datepicker();
-                $('#datepicker').datepicker({dateFormat: 'dd/mm/yy'});
+                // $('#datepicker').datepicker();
+                $('#datepicker').datepicker({
+                    closeText: 'Cerrar',
+                    prevText: 'Anterior',
+                    nextText: 'Siguiente',
+                    currentText: 'Hoy',
+                    dateFormat: 'yy-mm-dd',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                    minDate: 0
+                   
+                    
+                });
                 $('#formPlatica').formly();
             });
         </script>
@@ -67,8 +80,8 @@
                     <li><a href="#Subir">Anexar Reporte</a></li>
                 </ul>
                 <div id="Generar">
-                     <h1>Generar Reporte</h1>
-                     <p>Introduzca los datos requeridos para llenar su formulario</p>
+                    <h1>Generar Reporte</h1>
+                    <p>Introduzca los datos requeridos para llenar su formulario</p>
                     <form:form name="reportesBimestrales" id="reportesBimestrales"  action="#" method="POST">
 
                         <table>
@@ -117,3 +130,4 @@
         <%@ include file="../Template/footer.jsp" %>
     </body>
 </html>
+<!--Id 1 Id2 ---!>
