@@ -6,6 +6,8 @@ package edu.servicio.toluca.beans.formatoUnico;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
+
 
 /**
  *
@@ -20,6 +22,7 @@ public class FormatoUnicoProyectosJSON {
     private ArrayList<Long> telefono_responsable = new ArrayList<Long>();
     private ArrayList<String> nombre_responsable = new ArrayList<String>();
     private ArrayList<String> nombre = new ArrayList<String>();
+    private Date fecha_inicio;
 
     /**
      * @return the id_proyecto
@@ -131,6 +134,20 @@ public class FormatoUnicoProyectosJSON {
      */
     public void setIdProyecto(BigDecimal idProyecto) {
         this.idProyecto = idProyecto;
+    }
+
+    /**
+     * @return the fecha_inicio
+     */
+    public Date getFecha_inicio() {
+        return fecha_inicio;
+    }
+
+    /**
+     * @param fecha_inicio the fecha_inicio to set
+     */
+    public void setFecha_inicio(Date fecha_inicio) {
+        this.fecha_inicio = fecha_inicio;
     }
     
     

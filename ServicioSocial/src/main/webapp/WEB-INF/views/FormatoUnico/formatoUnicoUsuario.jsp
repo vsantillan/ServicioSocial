@@ -9,31 +9,54 @@
     <head>
         <%@ include file="../Template/headsMenuUsuario.jsp" %>
         <%@ include file="../Template/metas.jsp" %>
+        <jsp:include page="js.jsp" />
+        <jsp:include page="../Template/headsJQueryUI.jsp" /><!--Hay conflicto de datatables con estilo forms--->
+        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
         <!--css de tabs-->
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/demos.css"/>
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.timepicker.css"/>
 
+
         <!-- Javascripts -->
         <script src="js/jqueryUI/jquery-1.9.1.js"></script>
+
         <script src="js/jqueryUI/jquery.ui.core.js"></script>
         <script src="js/jqueryUI/jquery.ui.widget.js"></script>
+        <script src="js/jqueryUI/jquery.ui.datepicker.js"></script>
         <script src="js/jqueryUI/jquery.ui.tabs.js"></script>
         <script>
             $(function() {
                 $("#tabs").tabs();
                 $('#timepicker').timepicker();
+                $('#fecha_inicio').datepicker(
+                        {
+                            closeText: 'Cerrar',
+                            prevText: 'Anterior',
+                            nextText: 'Siguiente',
+                            currentText: 'Hoy',
+                            dateFormat: 'yy-mm-dd',
+                            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                            minDate: 0
+
+                        });
+
             });
         </script>
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
         <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
-        <script type="text/javascript" src="js/jqueryUI/i18n/ui.datepicker-es.js"></script>
-        <script src="js/jquery.codigos.postales.js"></script>       
+        <script type="text/javascript" src="js/jqueryUI/i18n/jquery.ui.datepicker-es.js"></script>
+        <script src="js/jquery.codigos.postales.js"></script>   
+
 
         <title>Formato &Uacute;nico - Usuario</title>
     </head>
-    <body class ="background" onload=" recargaProyectos(2); recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto});  ">
+    <body class ="background" onload=" recargaProyectos(2);
+                recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto});">
         <%@ include file="../Template/banner.jsp" %>
 
         <%-- inicio del contenido --%>
@@ -156,11 +179,11 @@
                             </tr>
 
                             <tr>
-                                <input type="hidden" id="preCP" value="${codigoPostal}" />
-                                <input type="hidden" id="preColonia" value="${preColonia}" />
-                                
-                                <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
-                                <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${instanciaDireccion.idColonia.idCp.cp}"></td>  
+                            <input type="hidden" id="preCP" value="${codigoPostal}" />
+                            <input type="hidden" id="preColonia" value="${preColonia}" />
+
+                            <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
+                            <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${instanciaDireccion.idColonia.idCp.cp}"></td>  
                             </tr>
                             <tr>
                                 <td>  <label for="estado">Estado:</label></td>
@@ -282,11 +305,8 @@
                                     </select> 
                                 </td>
                                 <td>
-                                    Modalidad 
-                                    <select name="modalidad">
-                                        <option value="">Interno</option>
-                                        <option value="">Externo</option>
-                                    </select>
+                                    Fecha de Inicio 
+                                    <form:input  type="text"  size="15" path ="fecha_inicio"  />
                                 </td>
                             </tr>
                             <tr>
@@ -350,7 +370,7 @@
                                 <th>Mi&eacute;rcoles</th>
                                 <th>Jueves</th>
                                 <th>Viernes</th>
-                                
+
                             </tr>
                             <tr>
                                 <th>Horario Inicio:</th>
@@ -359,7 +379,7 @@
                                 <th><form:input type="text" style="width: 70px;" class="timepicker.[5]" path="miI" /></th>
                                 <th><form:input type="text" style="width: 70px;" class="timepicker.[7]" path="juI" /></th>
                                 <th><form:input type="text" style="width: 70px;" class="timepicker.[9]" path="viI" /></th>
-                                
+
                             </tr>
                             <tr>
                                 <th>Horario Final</th>
@@ -368,7 +388,7 @@
                                 <th><form:input type="text" style="width: 70px;" class="timepicker.[6]" path="miF" /></th>
                                 <th><form:input type="text" style="width: 70px;" class="timepicker.[8]" path="juF" /></th>
                                 <th><form:input type="text" style="width: 70px;" class="timepicker.[10]" path="viF" /></th>
-                                
+
                             </tr>
                             <tr>
                                 <td></td>
@@ -383,7 +403,8 @@
                 </div>
                 <div id="subirFui">
                     <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
-                    <form>
+                    <form method="post" action="subirFui.do"  enctype="multipart/form-data">
+                        <input type="hidden" name ="id" value="${idDatSubida}"
                         <input type="file"  /> <br/>
                         <input type="submit" value="Subir" />
                     </form>

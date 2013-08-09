@@ -45,7 +45,7 @@ function recargaCombosOrgs(idProyecto)
             console.log('el id de la isnt es' + respuesta.idProyecto);
             idInstancia = respuesta.idProyecto;
             $('#comboOrganizaciones option:eq(' + idInstancia + ')').prop('selected',true);
-            recargaProyectos(idProyecto);
+            recargaProyectos(idInstancia);
             $('#proyectos option:eq(' + idProyecto + ')').prop('selected',true);
         });
     }
@@ -94,6 +94,7 @@ function enviarHorarios()
 }
 function enviarDatosOrganizaciones()
 {
+    console.log('el id de proy que subo '+ $('#proyectos').val());
     $("form#frmDatosOrganizaciones :input").each(function() {
         prepararJSON($(this));
     });
