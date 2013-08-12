@@ -9,7 +9,6 @@
     <head>
         <%@ include file="../Template/headsMenuUsuario.jsp" %>
         <%@ include file="../Template/metas.jsp" %>
-        <jsp:include page="js.jsp" />
         <jsp:include page="../Template/headsJQueryUI.jsp" /><!--Hay conflicto de datatables con estilo forms--->
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
@@ -404,8 +403,8 @@
                 <div id="subirFui">
                     <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
                     <form method="post" action="subirFui.do"  enctype="multipart/form-data">
-                        <input type="hidden" name ="id" value="${idDatSubida}"
-                        <input type="file"  /> <br/>
+                        <input type="hidden" name ="id" value="${idDatSubida}"/>
+                        <input type="file"  name ="file"/> <br/>
                         <input type="submit" value="Subir" />
                     </form>
                 </div>

@@ -53,7 +53,9 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "VistaAlumno.findByPromedio", query = "SELECT v FROM VistaAlumno v WHERE v.promedio = :promedio")})
 public class VistaAlumno implements Serializable {
     @Column(name = "PROMEDIO")
-    private Double promedio;
+    private BigInteger promedio;
+    @Column(name = "PLAN_ID")
+    private BigInteger planId;
     
     @Lob
     @Column(name = "FOTO")
@@ -352,20 +354,28 @@ public class VistaAlumno implements Serializable {
         return "edu.servicio.toluca.entidades.VistaAlumno[ id=" + id + " ]";
     }
 
-    public Double getPromedio() {
-        return promedio;
-    }
-
-    public void setPromedio(Double promedio) {
-        this.promedio = promedio;
-    }
-
     public Serializable getFoto() {
         return foto;
     }
 
     public void setFoto(Serializable foto) {
         this.foto = foto;
+    }
+
+    public BigInteger getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(BigInteger promedio) {
+        this.promedio = promedio;
+    }
+
+    public BigInteger getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(BigInteger planId) {
+        this.planId = planId;
     }
     
 }

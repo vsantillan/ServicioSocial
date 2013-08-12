@@ -11,18 +11,24 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoHorariosBean;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoProyectosJSON;
+import edu.servicio.toluca.entidades.CatalogoDocumento;
+import edu.servicio.toluca.entidades.CatalogoPlan;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
+import edu.servicio.toluca.entidades.FoliosPlatica;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.HorariosAlumno;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
+import edu.servicio.toluca.sesion.CatalogoPlanFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
+import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.HorarioFacade;
 import edu.servicio.toluca.sesion.HorariosAlumnoFacade;
@@ -76,6 +82,12 @@ public class FormatoUnicoController {
     private ColoniaFacade coloniaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/DocumentosFacade")
     private DocumentosFacade documentoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoDocumentoFacade")
+    private CatalogoDocumentoFacade catalogoDocumentoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoPlanFacade")
+    private CatalogoPlanFacade catalogoPlanFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
+    private FoliosPlaticaFacade foliosPlaticaFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo, String alumno_id) {
@@ -147,6 +159,15 @@ public class FormatoUnicoController {
             formatoUnico.setDatosPersonalesId(datosPersonales);
             formatoUnico.setNumeroCreditos(alumno.getCreditosAcumulados());
             formatoUnico.setPorcentajeCreditos(Double.valueOf(alumno.getPorcentaje()));
+            formatoUnico.setStatusServicio(BigInteger.ONE);
+            CatalogoPlan plan = catalogoPlanFacade.find(alumno.getPlanId());
+            formatoUnico.setCatalogoPlanId(plan);
+            List<FoliosPlatica> listaFolios = foliosPlaticaFacade.findBySpecificField("alumno_id", alumno, "equal", null, null);
+            FoliosPlatica platica = listaFolios.get(0);
+            formatoUnico.setPeriodoInicio(platica.getPlaticaId().getPeriodo());
+            
+            
+            
 
             //seteo del proyecto al alumno a través del banco
             Proyectos proyecto = new Proyectos();
@@ -499,8 +520,47 @@ public class FormatoUnicoController {
 
     @RequestMapping(value = "/subirFui.do", method = RequestMethod.POST)
     public String save(
-            @RequestParam("file") MultipartFile file, String id) throws IOException {
-        //documentoFacade.findBySpecificField("", file, id, null, null)
+            @RequestParam("file") MultipartFile file, BigDecimal id) throws IOException {
+        List<Documentos> listaDocumento = documentoFacade.findBySpecificField("datosPersonalesId", id, "equal", null, null);
+        List<CatalogoDocumento> listaCatalogoDocumento = catalogoDocumentoFacade.findBySpecificField("tipo", "Formato_Unico", "equal", null, null);
+        System.out.println("Inicia subida de info");
+        System.out.println("Original filename: " + file.getOriginalFilename());
+        System.out.println("File:" + file.getName());
+        System.out.println("Size:" + file.getSize());
+        System.out.println("ContentType:" + file.getContentType());
+        if(listaDocumento.isEmpty())
+        {
+            System.out.println("Subida nueva");
+            Documentos doc = new Documentos();
+            doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
+            doc.setArchivo(file.getBytes());
+            doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
+            doc.setExtension("pdf");
+            doc.setFechaSubida(new java.util.Date());
+            DatosPersonales dp = datosPersonalesFacade.find(id);
+            List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
+            FormatoUnico fui = listaFui.get(0);
+            fui.setStatusFui(new BigInteger("4"));
+            formatoUnicoFacade.edit(fui);
+            documentoFacade.create(doc);
+        }
+        else
+        {
+            System.out.println("Ya estaba");
+            Documentos doc = listaDocumento.get(0);
+            doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
+            doc.setArchivo(file.getBytes());
+            doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
+            doc.setExtension("pdf");
+            doc.setFechaSubida(new java.util.Date());
+            DatosPersonales dp = datosPersonalesFacade.find(id);
+            List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
+            FormatoUnico fui = listaFui.get(0);
+            fui.setStatusFui(new BigInteger("4"));
+            formatoUnicoFacade.edit(fui);
+            documentoFacade.edit(doc);
+            
+        }
 //        System.out.println("id:" + vistaAlumno.getId());
 //        String id=vistaAlumno.getId();
 //        
@@ -510,15 +570,16 @@ public class FormatoUnicoController {
 //        vistaAlumno1.setFoto(file.getBytes());
 //
 //        vistaAlumnoFacade.edit(vistaAlumno1);
-        System.out.println(file.getOriginalFilename());
-        System.out.println(file.getSize());
-        Documentos doc = documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
-        System.out.println(doc);
-        doc.setArchivo(file.getBytes());
-        doc.setExtension("pdf");
-        documentoFacade.edit(doc);
+        
+//        System.out.println(file.getOriginalFilename());
+//        System.out.println(file.getSize());
+//        Documentos doc = documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
+//        System.out.println(doc);
+//        doc.setArchivo(file.getBytes());
+//        doc.setExtension("pdf");
+//        documentoFacade.edit(doc);
 
 
-        return "redirect:subirpdf.do";
+        return "redirect:panelUsuario.do";
     }
 }
