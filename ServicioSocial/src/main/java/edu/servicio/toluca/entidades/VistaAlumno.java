@@ -56,6 +56,10 @@ public class VistaAlumno implements Serializable {
     @Column(name = "PROMEDIO")
     private Double promedio;
     
+    @Column(name = "PLAN_ID")
+    private BigInteger planId;
+
+    
     @Lob 
     @Column(name = "FOTO")
 //    private Serializable foto;
@@ -368,6 +372,20 @@ public class VistaAlumno implements Serializable {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+
+    /**
+     * @return the planId
+     */
+    public BigInteger getPlanId() {
+        return planId;
+    }
+
+    /**
+     * @param planId the planId to set
+     */
+    public void setPlanId(BigInteger planId) {
+        this.planId = planId;
     }
     
 }
