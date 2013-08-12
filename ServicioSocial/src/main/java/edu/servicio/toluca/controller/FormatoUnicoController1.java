@@ -8,7 +8,7 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
 import edu.servicio.toluca.beans.Observaciones;
-
+import org.hibernate.Hibernate;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoBean;
 
 import edu.servicio.toluca.entidades.DatosPersonales;
@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.SerializationUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -69,8 +70,8 @@ public class FormatoUnicoController1 {
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     private RegObservacionesFacade regisObservacionesFacade;
     
-    
-    
+    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+    private VistaAlumnoFacade vistaAlumnoFacade;
     
     
         final int VALOR_NO_REVISADOS = 4;
@@ -295,15 +296,7 @@ public class FormatoUnicoController1 {
     @RequestMapping(value = "/guardarPDF.do", method = RequestMethod.POST)
     public String save(
             @RequestParam("file") MultipartFile file,String id) throws IOException { 
-//        System.out.println("id:" + vistaAlumno.getId());
-//        String id=vistaAlumno.getId();
-//        
-//        VistaAlumno vistaAlumno1;
-//        vistaAlumno1 = vistaAlumnoFacade.find(id);
-//        System.out.println("find:" + vistaAlumno.getApellidoPat());
-//        vistaAlumno1.setFoto(file.getBytes());
-//
-//        vistaAlumnoFacade.edit(vistaAlumno1);
+
         System.out.println(file.getOriginalFilename());
         System.out.println(file.getSize());
         Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
@@ -311,15 +304,27 @@ public class FormatoUnicoController1 {
         doc.setArchivo(file.getBytes());
         doc.setExtension("pdf");
         documentoFacade.edit(doc);
-        
-        
         return "redirect:subirpdf.do";
+    }
+    @RequestMapping(value = "/guardarIMG.do", method = RequestMethod.POST)
+    public String saveImage(
+            @RequestParam("file") MultipartFile file,String id) throws IOException { 
+        
+        VistaAlumno alumno= vistaAlumnoFacade.find(id);
+        System.out.println(file.getSize());
+        alumno.setFoto(file.getBytes());
+        vistaAlumnoFacade.edit(alumno);
+        return "redirect:subirIMG.do";
     }
 
     @RequestMapping(value = "/subirpdf.do",method = RequestMethod.GET)
     public String guardaFotoPrueba(Model modelo) {
-        //modelo.addAttribute("vistaAlumno", new VistaAlumno());
         return "/FormatoUnico/guardarFoto";
+    }
+    
+    @RequestMapping(value = "/subirIMG.do",method = RequestMethod.GET)
+    public String guardaIMGPrueba(Model modelo) {
+        return "/FormatoUnico/guardarIMG";
     }
     
     @RequestMapping(value = "/mostarPDF.do", method = RequestMethod.GET)
