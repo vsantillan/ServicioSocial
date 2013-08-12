@@ -39,7 +39,7 @@
                         <tr>
                             <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
                             <td> 
-                                <form:input path="nombre" id="nombre" size="20" value="${instancia.nombre}"/><br/>
+                                <form:input path="nombre" id="nombre" size="20" /><br/>
                                 <form:errors path="nombre" cssClass="error"/>
                                 <!--input type="text" name="name" id="nombre" size="20" require="true" /-->                                
                             </td>  
@@ -47,7 +47,7 @@
                         <tr>
                             <td>  <label for="rfc">RFC:</label> </td>
                             <td>  
-                                <form:input path="rfc" id="rfc" size="20" maxlength="12" value="${instancia.rfc}"/><br/>
+                                <form:input path="rfc" id="rfc" size="20" maxlength="12"/><br/>
                                 <form:errors path="rfc" cssClass="error"/>
                                 <!--input type="text" name="rfc" id="rfc" size="20" require="true" /-->
                             </td>  
@@ -55,7 +55,7 @@
                         <tr>
                             <td>  <label for="titular">Titular:</label></td>
                             <td>  
-                                <form:input path="titular" id="titular" size="20" value="${instancia.titular}"/><br/>
+                                <form:input path="titular" id="titular" size="20" /><br/>
                                 <form:errors path="titular" cssClass="error"/>
                                 <!--input type="text" name="titlar" id="titular" size="20" require="true"/--> 
                             </td>  
@@ -63,7 +63,7 @@
                         <tr>
                             <td>  <label for="puesto">Puesto:</label></td>
                             <td>  
-                                <form:input path="puesto" id="puesto" size="20" value="${instancia.puesto}"/><br/>
+                                <form:input path="puesto" id="puesto" size="20"/><br/>
                                 <form:errors path="puesto" cssClass="error"/>
                                 <!--input type="text" name="lugar" id="puesto" size="20" require="true"/--> 
                             </td>  
@@ -71,7 +71,7 @@
                         <tr>
                             <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                             <td>  
-                                <form:input path="telefono" id="telefono" size="20" maxlength="10" value="${instancia.telefono}"/><br/>
+                                <form:input path="telefono" id="telefono" size="20" maxlength="10"/><br/>
                                 <form:errors path="telefono" cssClass="error"/>
                                 <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
                             </td>  
@@ -79,7 +79,7 @@
                         <tr>
                             <td>  <label for="calle">Calle:</label></td>
                             <td>  
-                                <form:input path="domicilio" id="domicilio" size="20" value="${instancia.domicilio}"/><br/>
+                                <form:input path="domicilio" id="domicilio" size="20" /><br/>
                                 <form:errors path="domicilio" cssClass="error"/>
                                 <!--input type="text" name="lugar" id="domicilio" size="20" require="true"/--> 
                             </td>  

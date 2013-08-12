@@ -26,7 +26,34 @@
             <center>
                 <br/>
                 <h1>Login</h1>
-                <p>Acceso al sistema de gesti&oacute;n del servicio social, recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</p>
+                <form:form name="formLoginOrg" class="MyForm" action="validaLogin.do" method="POST" style="width:400px; height:230px">
+                    <table>
+                        <tr>
+                            <td> <label for="usuario">Usuario (alu_00289999):</label> </td>
+                            <td> 
+                                <input type="text" name="usuario" id="usuario" size="20" require="true" />
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td><label for="password">Contrase&ntilde;a:</label></td>
+                            <td> 
+                                <input type="password" name="pass" id="pass" size="20" require="true" />
+                            </td> 
+                        </tr>
+                        <tr> 
+                            <td> <input type ="submit" value = "Entrar" /> </td>
+                            <td> <input type ="button" id="olvidoPassOrg"value = "Olvide mi Contrase&ntilde;a" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div id="respLoginOrg"></div>
+                            </td>
+                        </tr>
+                        ${error}
+                    </table>
+                    <h3>Acceso al sistema de gesti&oacute;n del servicio social, recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</h3>
+                </form:form> 
+                
                 <br/><br/><br/><br/><br/><br/><br/>
                 
             </center>

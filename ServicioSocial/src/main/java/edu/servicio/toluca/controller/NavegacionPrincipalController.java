@@ -9,13 +9,14 @@ package edu.servicio.toluca.controller;
  * @author bustedvillain
  */
 
-import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.Instancia;
-import edu.servicio.toluca.entidades.TipoOrganizacion;
+import edu.servicio.toluca.login.Conexion;
+import edu.servicio.toluca.login.Login;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
+import java.sql.Connection;
 import java.util.LinkedHashMap;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
@@ -77,5 +78,50 @@ public class NavegacionPrincipalController {
     @RequestMapping(method = RequestMethod.GET, value = "/login.do")
     public String loginAlumnos(Model a){
         return "/NavegacionPrincipal/loginPrincipal";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/validaLogin.do")
+    public String validaLogin(Model model, String usuario, String pass){
+        System.out.println("Usuario:"+ usuario);
+        System.out.println("Pass:"+pass);    
+        
+        if(usuario.equals("") || pass.equals("")){
+            model.addAttribute("error", "<div class='error'>Datos de acceso inválidos</div>");
+            return "/NavegacionPrincipal/loginPrincipal";
+        }
+        try{
+            String rol= new Login().ValidarUsuario(usuario, pass);
+            System.out.println("rol:"+rol);
+            
+            //ALUMNOS
+            if(rol.equals("ROLE_ALUMNOS")){
+                return "/PanelUsuario/panelUsuario";
+            }
+            //JOELITO
+            if(rol.equals("ROLE_GESVIN_OPERACION")){
+                return "/PanelAministrador/panelAdministrador";
+            }
+            //DIRECTORA
+            if(rol.equals("ROLE_GESVIN_CONSULTAS")){
+                
+            }
+            //BACKDOOR
+            if(rol.equals("ROLE_GESVIN_ADMIN")){
+                
+            }
+            //ASISTENTE
+            if(rol.equals("ROLE_GESVIN_REGISTRO")){
+                
+            }
+            return "/NavegacionPrincipal/loginPrincipal";
+            
+        }catch(Exception e) {
+            System.out.println(e.toString());
+            System.out.println("Error al conectar!");
+            model.addAttribute("error", "<div class='error'>Usuario o contraseña incorrecta</div>");
+            
+            return "/NavegacionPrincipal/loginPrincipal";
+        }        
+        
     }
 }

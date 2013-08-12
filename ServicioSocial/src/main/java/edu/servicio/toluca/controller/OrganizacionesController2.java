@@ -261,11 +261,11 @@ public class OrganizacionesController2 {
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaAdminProyecto.do")
     public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal) {
         System.out.println("hola admin gda alta organizacion");
-        
+
         //Validaciones
         System.out.println("Validar");
         new ValidacionesOrganizaciones().valAltaAdminProy(proyecto, result, model, codigo_postal);
-        
+
         //Desglose de Actividades
         ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
 
@@ -303,22 +303,21 @@ public class OrganizacionesController2 {
             model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
-            try{
+            try {
                 model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
-            }catch(Exception e){
-                
+            } catch (Exception e) {
             }
-            
+
             //Regresar actividades
             model.addAttribute("nActividades", nActividades.substring(0, 1));
-            System.out.println("nActividades:"+ nActividades.substring(0, 1));
-            
+            System.out.println("nActividades:" + nActividades.substring(0, 1));
+
             for (int i = 0; i < actividadesModel.actividades.size(); i++) {
                 model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
-                System.out.println("Regresando Actividad:"+actividadesModel.actividades.get(i));
+                System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
             }
             model.addAttribute("proyecto", proyecto);
-            
+
             return "/Organizaciones/altaAdminProyecto";
         } else {
 
@@ -434,5 +433,78 @@ public class OrganizacionesController2 {
         ConsultasOrganizaciones consulta = new ConsultasOrganizaciones();
         //model.addAttribute("organizaciones", consulta.getOrganizacionesPreRegistradas());
         return "/paginaPrueba";
+    }
+
+    //Panel de organizaciones (usuarios)
+    @RequestMapping(method = RequestMethod.GET, value = "/panelOrganizacion.do")
+    public String panelOrganizacion(Model model) {
+        String idInstancia = "19";
+        System.out.println("idInstancia:" + idInstancia);
+
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        ordenamiento.put("nombre", "asc");
+        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("idInstancia", idInstancia);
+        Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+        model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
+        model.addAttribute("instancia", instancia);
+        return "/PanelOrganizacion/panelOrganizacion";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/gdaEdicionOrganizacion.do")
+    public String gdaEdicionOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia, String idInstancia, String antiguoPass) {
+        System.out.println("idInstancia:" + idInstancia);
+        //Validacion
+        new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existe_colonia, confirma_password);
+
+        //Agregamos atributos al formulario
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        ordenamiento.put("nombre", "asc");
+        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("idInstancia", idInstancia);
+        model.addAttribute("cp", codigo_postal);
+        model.addAttribute("instancia", instancia);
+
+        if (result.hasErrors()) {
+            System.out.print("hubo errores");
+            System.out.println(instancia.toString());
+            System.out.println(result.toString());
+
+            return "/PanelOrganizacion/panelOrganizacion";
+
+        } else {
+            System.out.print("no hubo errores");
+            instancia.setIdInstancia(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            instancia.setValidacionAdmin(BigInteger.ZERO);
+            instancia.setEstatus(BigInteger.ONE);
+            if (!instancia.getPassword().equals("")) {
+                instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
+            } else {
+                instancia.setPassword(antiguoPass);
+            }
+
+            System.out.println("Pass encriptado:" + instancia.getPassword());
+
+            ///Convirtiendo a mayusculas
+            instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
+            instancia.setNombre(instancia.getNombre().toUpperCase());
+            instancia.setPuesto(instancia.getPuesto().toUpperCase());
+            instancia.setRfc(instancia.getRfc().toUpperCase());
+            instancia.setTitular(instancia.getTitular().toUpperCase());
+
+            try {
+                instanciaFacade.edit(instancia);
+                model.addAttribute("mensaje", "<p><img src='imagenes/paloma.png' width='70'></p><h2>Información editada correctamente</h2>");
+                model.addAttribute("idInstancia", idInstancia);
+                model.addAttribute("instancia", instancia);
+
+            } catch (Exception e) {
+                result.addError(new ObjectError("error_sql", "Error de llave unica"));
+                model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
+            }
+            return "/PanelOrganizacion/panelOrganizacion";
+        }
     }
 }

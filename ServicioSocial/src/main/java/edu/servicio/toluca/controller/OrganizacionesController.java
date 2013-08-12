@@ -159,13 +159,7 @@ public class OrganizacionesController {
         model.addAttribute("borrarProyecto", new BorrarProyecto());
         return "/Organizaciones/retroalimentacionProyectos";
     }
-
-    //Panel de organizaciones (usuarios)
-    @RequestMapping(method = RequestMethod.GET, value = "/panelOrganizacion.do")
-    public String panelOrganizacion(Model a) {
-        return "/PanelOrganizacion/panelOrganizacion";
-    }
-
+    
     @RequestMapping(method = RequestMethod.GET, value = "/detalleProyecto.do")
     public String detalleProyecto(BigDecimal id, Model model) {
         model.addAttribute("proyectoDetalle", proyectosFacade.find(id));

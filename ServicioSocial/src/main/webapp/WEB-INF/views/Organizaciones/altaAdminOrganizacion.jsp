@@ -33,7 +33,7 @@
                 <%-- Formulario Nueva Organizacion --%>
                 <center>
                     <h1>Alta de Organizaciones</h1>
-                    <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAdminAltaOrganizacion.do"  method="POST" style="width:60%;" >
+                    <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAdminAltaOrganizacion.do"  method="POST" style="width:70%;" >
                     <table>
                         <tr>
                             <td> <label for="nombre">Nombre de la Organizaci&oacute;n:</label> </td>
