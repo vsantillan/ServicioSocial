@@ -10,6 +10,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
@@ -53,13 +54,12 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "VistaAlumno.findByPromedio", query = "SELECT v FROM VistaAlumno v WHERE v.promedio = :promedio")})
 public class VistaAlumno implements Serializable {
     @Column(name = "PROMEDIO")
-    private BigInteger promedio;
-    @Column(name = "PLAN_ID")
-    private BigInteger planId;
+    private Double promedio;
     
-    @Lob
+    @Lob 
     @Column(name = "FOTO")
-    private Serializable foto;
+//    private Serializable foto;
+    private byte[] foto;
     
     
     private static final long serialVersionUID = 1L;
@@ -354,28 +354,20 @@ public class VistaAlumno implements Serializable {
         return "edu.servicio.toluca.entidades.VistaAlumno[ id=" + id + " ]";
     }
 
-    public Serializable getFoto() {
-        return foto;
-    }
-
-    public void setFoto(Serializable foto) {
-        this.foto = foto;
-    }
-
-    public BigInteger getPromedio() {
+    public Double getPromedio() {
         return promedio;
     }
 
-    public void setPromedio(BigInteger promedio) {
+    public void setPromedio(Double promedio) {
         this.promedio = promedio;
     }
 
-    public BigInteger getPlanId() {
-        return planId;
+    public byte[]  getFoto() {
+        return foto;
     }
 
-    public void setPlanId(BigInteger planId) {
-        this.planId = planId;
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
     
 }

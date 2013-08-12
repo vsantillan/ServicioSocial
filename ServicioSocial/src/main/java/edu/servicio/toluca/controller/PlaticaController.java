@@ -34,6 +34,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,8 +78,6 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
     public String capturarAsistencia(Model modelo) {
-        //System.out.println("foto"+ vistaAlumnoFacade.foto());
-//        modelo.addAttribute("foto", vistaAlumnoFacade.foto());
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
         return "/Platicas/capturarAsistencia";
     }
@@ -94,7 +94,8 @@ public class PlaticaController {
         modelo.addAttribute("platica", new Platica());
         return "/Platicas/seleccionarPlatica";
     }
-       @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
+
+    @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
     public String altaLugares(Model modelo) {
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
         return "/Platicas/lugaresPlatica";
@@ -129,71 +130,89 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/folioPlatica.do")
     public String folioPlatica(Model a, String fecha) {
-
-        System.out.println("fecha platica id:" + fecha);
         FoliosPlatica foliosPlatica = new FoliosPlatica();
         Platica platica = new Platica();
+        VistaAlumno alumno = new VistaAlumno();
+        alumno.setId("09280531");
+        System.out.println("platica id:"+fecha);
         platica.setId(Long.parseLong(fecha));
-
         foliosPlatica.setPlaticaId(platica);
+        foliosPlatica.setAlumnoId(alumno);
         //folio: numero de control+idPlatica
-        foliosPlatica.setNumeroFolio("hola");
+        foliosPlatica.setNumeroFolio(fecha + "09280531");
+        System.out.println(fecha + "09280531");
         foliosPlatica.setStatus((short) 1);
-        //incrementar numero de asistentes +1
-
         foliosPlaticaFacade.create(foliosPlatica);
 
+        //incrementar numero de asistentes +1
+        platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
+        int numero = platica.getNumeroAsistentes();
+        numero = numero + 1;
+        System.out.println("numero" + numero);
+        platica.setNumeroAsistentes(numero);
+        platicaFacade.edit(platica);
 
-        return "/Platicas/reporte";
-        //return "/PanelUsuario/panelUsuario";
+        // return "/Platicas/reporte";
+        return "/Platicas/seleccionarPlatica";
     }
 /////////ASISTENCIA.DO////////////////////
 
     @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
     public String Asistencia(@Valid FoliosPlatica foliosPlatica, BindingResult result, Model modelo) throws IOException {
 
-//        if (result.hasErrors()) {
-            //modelo.addAttribute("folio", new FoliosPlatica());
-            //System.out.println("hubo errores asistencia do");
-       // System.out.println("foto"+ vistaAlumnoFacade.foto("11280476"));
-        //modelo.addAttribute("foto", vistaAlumnoFacade.foto("11280476"));
-    
-       
+        if (result.hasErrors()) {
+            modelo.addAttribute("folio", new FoliosPlatica());
+            System.out.println("hubo errores asistencia do");
             return "/Platicas/capturarAsistencia";
 
-//        } else {
-//            // System.out.println("no hubo errores asistencia do---"+foliosPlatica.getNumeroFolio());
-//            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
-//
-//            /// System.out.println("despues de facade---");
-//            if (lista.size() > 0) {
-//                foliosPlatica = foliosPlaticaFacade.find(lista.get(0).getId());
-//                System.out.println("find folio---" + lista.get(0).getId());
-//                foliosPlatica.setAsistencia((short) 1);
-//                foliosPlaticaFacade.edit(foliosPlatica);
-//                
-//                String id="11280476";
-//        
-////                VistaAlumno vistaAlumno1;
-////                vistaAlumno1 = vistaAlumnoFacade.find(id);
-////                System.out.print("alumno"+vistaAlumno1.getCurp());
-////                ByteArrayOutputStream bs= new ByteArrayOutputStream();
-////                ObjectOutputStream os = new ObjectOutputStream (bs);
-////                os.writeObject(vistaAlumno1.getFoto());  // this es de tipo DatoUdp
-////                os.close();
-////                
-////                byte[] bytes =  bs.toByteArray(); // devuelve byte[]
-////                
-////                
-////                modelo.addAttribute("foto", Base64.encodeBase64String(bytes));
-//               // modelo.addAttribute("foto", bytes);
-//                return "/Platicas/capturarAsistencia2";
-//            } else {
-//                modelo.addAttribute("foliosPlatica", new FoliosPlatica());
-//                modelo.addAttribute("existe", "No existe numero de folio");
-//                return "/Platicas/capturarAsistencia";
-//            }
-//        }
+        } else {
+               List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
+
+            if (lista.size() > 0) {
+                    VistaAlumno vistaAlumno1;
+                vistaAlumno1 = vistaAlumnoFacade.find(lista.get(0).getAlumnoId()+""); //id se toma de sa sesion
+                modelo.addAttribute("alumno", vistaAlumno1);
+                modelo.addAttribute("espacio", " ");
+                return "/Platicas/capturarAsistencia2";
+            } else {
+                modelo.addAttribute("foliosPlatica", new FoliosPlatica());
+                modelo.addAttribute("existe", "<div class='error'>No existe numero de folio</div>");
+                return "/Platicas/capturarAsistencia";
+            }  
+        }
+    }
+
+    @RequestMapping(value = "ponerAsistencia.do", method = RequestMethod.POST)
+    public String ponerAsistencia(@Valid FoliosPlatica foliosPlatica, BindingResult result, Model modelo) throws IOException {
+
+        if (result.hasErrors()) {
+            modelo.addAttribute("folio", new FoliosPlatica());
+            System.out.println("hubo errores asistencia do");
+            return "/Platicas/capturarAsistencia";
+
+        } else {
+            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
+
+            if (lista.size() > 0) {
+                foliosPlatica = foliosPlaticaFacade.find(lista.get(0).getId());
+                foliosPlatica.setAsistencia((short) 1);
+                foliosPlaticaFacade.edit(foliosPlatica);
+                return "/Platicas/capturarAsistencia";
+            } else {
+                modelo.addAttribute("foliosPlatica", new FoliosPlatica());
+                modelo.addAttribute("existe", "<div class='error'>No existe numero de folio</div>");
+                return "/Platicas/capturarAsistencia";
+            }
+        }
+    }
+
+    @RequestMapping(value = "/mostrarFoto.do", method = RequestMethod.GET)
+    @ResponseBody
+    public void saveAndShowPDF(String id, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException, Exception {
+
+        httpServletResponse.setContentType("image/jpg");
+        httpServletResponse.getOutputStream().write(vistaAlumnoFacade.find(id).getFoto());
+        httpServletResponse.getOutputStream().close();
 
     }
     /////////ASISTENCIA.DO  finnnnnnnnnnnnnnnnnnnnnnnn////////////////////
@@ -208,21 +227,19 @@ public class PlaticaController {
 
     }
 
- 
-
     @RequestMapping(method = RequestMethod.POST, value = "/altaLugarBD.do")
-  public String altaLugaresBD(@Valid LugaresPlatica lugares, BindingResult result,Model modelo) {
-  if (result.hasErrors()) {
-      
-        return "/Platicas/lugaresPlatica";
-  }
-  else{
-        lugaresPlaticaFacade.create(lugares);
-        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-        return "/Platicas/lugaresPlatica";
-    }
+    public String altaLugaresBD(@Valid LugaresPlatica lugares, BindingResult result, Model modelo) {
+        if (result.hasErrors()) {
+
+            return "/Platicas/lugaresPlatica";
+        } else {
+            lugaresPlaticaFacade.create(lugares);
+            modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+            return "/Platicas/lugaresPlatica";
+        }
     }
     //metodo para cambiar informacion de platica dinamicamente en seleccionarPlatica
+
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
     public @ResponseBody
     PlaticaJson actualizarDetalle(String fecha, Model modelo) {
@@ -236,26 +253,18 @@ public class PlaticaController {
         return platicaJson;
     }
 ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
-    @RequestMapping(value = "/guardarFoto.do", method = RequestMethod.POST)
+
+    @RequestMapping(value = "/subirFoto.do", method = RequestMethod.POST)
     public String save(
-            @ModelAttribute("vistaAlumno") VistaAlumno vistaAlumno,
-            @RequestParam("file") MultipartFile file) throws IOException {
-        
-        System.out.println("id:" + vistaAlumno.getId());
-        String id=vistaAlumno.getId();
-        
+            @RequestParam("file") MultipartFile file, String id) throws IOException {
         VistaAlumno vistaAlumno1;
         vistaAlumno1 = vistaAlumnoFacade.find(id);
-        System.out.println("find:" + vistaAlumno.getApellidoPat());
         vistaAlumno1.setFoto(file.getBytes());
-
         vistaAlumnoFacade.edit(vistaAlumno1);
-
-
         return "/Platicas/guardarFoto";
     }
 
-    @RequestMapping(value = "/guardaFotoPrueba.do")
+    @RequestMapping(value = "/guardaFoto.do")
     public String guardaFotoPrueba(Model modelo) {
         modelo.addAttribute("vistaAlumno", new VistaAlumno());
         return "/Platicas/guardarFoto";

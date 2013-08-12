@@ -32,9 +32,7 @@
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <center><h2>Capturar Asistencia a Plática</h2></center>  
-                <div class="error">
                 ${existe}
-                </div>
                 <form:form  name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="foliosPlatica">
                     <center>
                         <table >
@@ -44,13 +42,14 @@
                             </tr>
                       
                             <tr>
-                               <td><button type="submit">Asistió</button></td>  
+                               <td><button type="submit">Enviar</button></td>  
                             </tr>
                         
                         </table>
                             <form:errors path="numeroFolio" cssClass="error"/>
                     </center>
                     </form:form>
+                <image src="${foto}"/>
 
             </div>
             <div style="clear:both;"></div>

@@ -16,18 +16,18 @@
 <h2>Document Manager</h2>
  
 <h3>Add new document</h3>
-<form:form method="post" action="guardarFoto.do" commandName="vistaAlumno" enctype="multipart/form-data">
+<form:form method="post" action="subirFoto.do" enctype="multipart/form-data">
     <form:errors path="*" cssClass="error"/>
     <table>
-        <tr>
-        <td><form:label path="id">id</form:label></td>
-        <td><form:input path="id" value="11280476"/></td> 
+         <tr>
+        <td>Id</td>
+        <td>
+            <input name="id"/>    
+        </td> 
     </tr>
-
-
     <tr>
-        <td><form:label path="foto">Document</form:label></td>
-        <td><input type="file" name="file" id="file"></input></td>
+        <td>Foto</td>
+        <td><input type="file" name="file"></td>
     </tr>
     <tr>
         <td colspan="2">

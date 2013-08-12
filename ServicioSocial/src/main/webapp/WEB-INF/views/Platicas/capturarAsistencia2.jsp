@@ -21,13 +21,46 @@
     </head>
     <body class="background">
         <jsp:include page="../Template/banner.jsp" />
-        <div id="contenido" >  
+      <div id="contenido" >  
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <center><h2>Capturar Asistencia a Plática</h2></center>  
-                
-             <img src="data:image/jpg;base64, ${foto}">
-             <img src="<c:out value='${foto}'/>" />
+                ${existe}
+                <form:form  name="casistencia" id="casistencia" action="ponerAsistencia.do" method="post" commandName="foliosPlatica">
+                    <center>
+                        <table >
+                            <tr>
+                                <td><label for="alumno">Número de Folio</label></td>
+                                <td><form:input type="text"  path="numeroFolio" size="25" name="numeroFolio" /></td>
+                            </tr>
+                      
+                            <tr>
+                                <td><button type="submit" autofocus="true">Asistió</button></td>  
+                               <td><button type="button" id="regresar" onclick="redirecciona('capturarAsistencia.do')">Regresar</button></td>
+                            </tr>
+                        
+                        </table>
+                            <form:errors path="numeroFolio" cssClass="error"/>
+                    </center>
+                    </form:form>
+                <table>
+                    <tr>
+                        <td><img src="mostrarFoto.do?id=${alumno.id}"  width="80px" alt="${alumno.id}"/></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Nombre:</td>
+                        <td>${alumno.nombre}${espacio}${alumno.apellidoPat}${espacio}${alumno.apellidoMat}</td>
+                    </tr>
+                    <tr>
+                        <td>Carrera:</td>
+                        <td>${alumno.carrera}</td>
+                    </tr>
+                    <tr>
+                        <td>Porcentaje de Créditos:</td>
+                        <td>${alumno.porcentaje}</td>
+                    </tr>
+                </table>
 
             </div>
             <div style="clear:both;"></div>
