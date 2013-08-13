@@ -160,11 +160,13 @@ public class FormatoUnicoController {
             formatoUnico.setNumeroCreditos(alumno.getCreditosAcumulados());
             formatoUnico.setPorcentajeCreditos(Double.valueOf(alumno.getPorcentaje()));
             formatoUnico.setStatusServicio(BigInteger.ONE);
-            CatalogoPlan plan = catalogoPlanFacade.find(alumno.getPlanId());
+            CatalogoPlan plan = catalogoPlanFacade.find(new BigDecimal(alumno.getPlanId()));
             formatoUnico.setCatalogoPlanId(plan);
-            List<FoliosPlatica> listaFolios = foliosPlaticaFacade.findBySpecificField("alumno_id", alumno, "equal", null, null);
+            List<FoliosPlatica> listaFolios = foliosPlaticaFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
             FoliosPlatica platica = listaFolios.get(0);
             formatoUnico.setPeriodoInicio(platica.getPlaticaId().getPeriodo());
+            formatoUnico.setTipoServicio(BigInteger.ONE);
+            formatoUnico.setStatusServicio(BigInteger.ONE);
             
             
             

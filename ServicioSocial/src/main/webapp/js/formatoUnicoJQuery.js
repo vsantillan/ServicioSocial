@@ -1,6 +1,7 @@
 $(document).ready(listo);
 var alumno = {};
 var contacto = {};
+var proyecto = {};
 function listo()
 {
     timePicker();//Inicializa campos JQuery
@@ -8,17 +9,37 @@ function listo()
     $('#frmDatosContacto').submit(enviarDatosContactoAlumno);
     $('#frmDatosOrganizaciones').submit(enviarDatosOrganizaciones);
     $('#frmHorarios').submit(enviarHorarios);
-    
+
     $("#comboOrganizaciones").change(function(event) {
         var idInstancia = $("#comboOrganizaciones").val()
         recargaProyectos(idInstancia);
     })
+    $("#proyectos").change(function(event) {
+        var idProyActual = $("#proyectos").val()
+        recargaInfoProyectos(idProyActual);
+    })
+
+}
+function recargaInfoProyectos(idProyActual)
+{
+    console.log('--IdProyactual:' + idProyActual);
+    for (i = 0; i < proyecto.nombre_responsable.length; i++) {
+        if (idProyActual == proyecto.id_proyecto[i])
+        {
+            console.log('--soniguales');
+            $('#domicilioOrg').val(proyecto.domicilio[i]);
+            $('#nombre_responsable').val(proyecto.nombre_responsable[i]);
+            $('#responsable_puesto').val(proyecto.nombre_responsable[i]);
+            $('#telefono_responsable').val(proyecto.telefono_responsable[i]);
+        }
+    }
+
 
 }
 function recargaProyectos(idInstancia)
 {
     console.log('el id de la isntancia es' + idInstancia);
-    
+
     $.get("cargarProyectos.do?id_instancia=" + idInstancia, null, function(respuesta) {
         $("#proyectos").empty();
         $('#domicilioOrg').empty();
@@ -27,26 +48,35 @@ function recargaProyectos(idInstancia)
         $('#telefono_responsable').empty();
         console.log('entro');
         for (i = 0; i < respuesta.nombre_responsable.length; i++) {
-            $("#proyectos").append('<option value=' + respuesta.id_proyecto + '>' + respuesta.nombre + '</option>');
-            $('#domicilioOrg').val(respuesta.domicilio);
-            $('#nombre_responsable').val(respuesta.nombre_responsable);
-            $('#responsable_puesto').val(respuesta.nombre_responsable);
-            $('#telefono_responsable').val(respuesta.telefono_responsable);
+            proyecto = null;
+            proyecto = respuesta;
+            //$("#proyectos").append('<option value=' + respuesta.id_proyecto + '>' + respuesta.nombre + '</option>');
+            console.log('Respuesda.id_proyecto es:' + respuesta.id_proyecto[i]);
+            console.log('Respuesda.nombre es:' + respuesta.nombre[i]);
+            $('<option value=' + respuesta.id_proyecto[i] + '>' + respuesta.nombre[i] + '</option>').appendTo("#proyectos");
+            $('#domicilioOrg').val('');
+            $('#nombre_responsable').val('');
+            $('#responsable_puesto').val('');
+            $('#telefono_responsable').val('');
+            $('#domicilioOrg').val(respuesta.domicilio[i]);
+            $('#nombre_responsable').val(respuesta.nombre_responsable[i]);
+            $('#responsable_puesto').val(respuesta.nombre_responsable[i]);
+            $('#telefono_responsable').val(respuesta.telefono_responsable[i]);
         }
     });
 }
 
 function recargaCombosOrgs(idProyecto)
 {
-    console.log("el id del proyecto es:"+ idProyecto);
+    console.log("el id del proyecto es:" + idProyecto);
     {
         //Obtener el id de la instancia para seleccionarlo en el combo
         $.get("idInstancia.do?idProyecto=" + idProyecto, null, function(respuesta) {
             console.log('el id de la isnt es' + respuesta.idProyecto);
             idInstancia = respuesta.idProyecto;
-            $('#comboOrganizaciones option:eq(' + idInstancia + ')').prop('selected',true);
+            $('#comboOrganizaciones option:eq(' + idInstancia + ')').prop('selected', true);
             recargaProyectos(idInstancia);
-            $('#proyectos option:eq(' + idProyecto + ')').prop('selected',true);
+            $('#proyectos option:eq(' + idProyecto + ')').prop('selected', true);
         });
     }
 }
@@ -94,7 +124,7 @@ function enviarHorarios()
 }
 function enviarDatosOrganizaciones()
 {
-    console.log('el id de proy que subo '+ $('#proyectos').val());
+    console.log('el id de proy que subo ' + $('#proyectos').val());
     $("form#frmDatosOrganizaciones :input").each(function() {
         prepararJSON($(this));
     });
@@ -120,7 +150,7 @@ function prepararJSON($atributo)
 }
 function prepararJSONC($atributo)
 {
-   
+
     if ($atributo.attr("type") !== "submit")
     {
         concacto[$atributo.attr("name")] = $atributo.val();
