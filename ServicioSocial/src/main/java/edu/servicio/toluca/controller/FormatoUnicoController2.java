@@ -90,7 +90,7 @@ public class FormatoUnicoController2 {
     private FoliosPlaticaFacade foliosPlaticaFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario2.do")
-    public String formatoUnico(Model modelo, String alumno_id) {
+    public String formatoUnico2(Model modelo, String alumno_id) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
         FormatoUnicoDatosPersonalesBean formatoUnicoDatosPersonalesbean = new FormatoUnicoDatosPersonalesBean();
         FormatoUnicoDatosContactoBean formatoUnicoDatosContacoBean = new FormatoUnicoDatosContactoBean();
