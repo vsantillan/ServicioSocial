@@ -102,7 +102,7 @@
                                         <core:forEach items="${current.formatoUnicoCollection}" var="formato">
                                             <select name="actividad">
                                                 <core:forEach items="${formato.idproyecto.actividadesCollection}" var="actividades" >
-                                                    <option value="1">${actividades.detalle}</option>
+                                                    <option value="${actividades.idActividad}">${actividades.detalle}</option>
                                                 </core:forEach>
                                             </select>
                                         </core:forEach>
