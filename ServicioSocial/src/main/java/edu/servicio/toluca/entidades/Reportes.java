@@ -7,8 +7,10 @@ package edu.servicio.toluca.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -16,11 +18,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,6 +47,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Reportes.findByNumeroBeneficiados", query = "SELECT r FROM Reportes r WHERE r.numeroBeneficiados = :numeroBeneficiados"),
     @NamedQuery(name = "Reportes.findByTipo", query = "SELECT r FROM Reportes r WHERE r.tipo = :tipo")})
 public class Reportes implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idReporte")
+    private Collection<BimestralesActividades> bimestralesActividadesCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -203,6 +209,15 @@ public class Reportes implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Reportes[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<BimestralesActividades> getBimestralesActividadesCollection() {
+        return bimestralesActividadesCollection;
+    }
+
+    public void setBimestralesActividadesCollection(Collection<BimestralesActividades> bimestralesActividadesCollection) {
+        this.bimestralesActividadesCollection = bimestralesActividadesCollection;
     }
     
 }

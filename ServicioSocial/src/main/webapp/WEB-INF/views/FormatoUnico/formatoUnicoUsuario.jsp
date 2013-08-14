@@ -78,7 +78,7 @@
                             <tr>
                                 <form:input  type="hidden" path ="id" />
                                 <td>Nombre:</td>
-                                <td><form:input  path ="nombre" /> </td>
+                                <td><form:input  path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Apellido Paterno</td>

@@ -355,45 +355,43 @@ public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosPersonales.do")
     public @ResponseBody
     String modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) {
+
         String arrJSON = "[";
+        dt.arregla();
         ArrayList<String> listaErrores = dt.Valida();
-        if(listaErrores.isEmpty())
-        {
-            System.out.println("No hubo errores");
+        if (!dt.isAcuerdoC()) {
+            listaErrores.add("No has seleccionado la opción del Acuerdo de confidencialidad");
         }
-        else
-        {
+        if (listaErrores.isEmpty()) {
+            System.out.println("No hubo errores");
+            System.out.println(dt.getId());
+            System.out.println(dt.getSexo());
+            DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
+            datosPersonales.setNombre(dt.getNombre());
+            datosPersonales.setApellidoP(dt.getApellidoP());
+            datosPersonales.setApellidoM(dt.getApellidoM());
+            datosPersonales.setSexo(dt.getSexo());
+            datosPersonales.setEstadoCivil(dt.getEstado_civil());
+            datosPersonales.setOcupacion(dt.getOcupacion());
+            datosPersonales.setCurp(dt.getCurp());
+            datosPersonales.setFolioDocIdentificaciin(new BigInteger(dt.getFolioDocIdentificacion()));
+            datosPersonales.setClaveDocIdentificacion(dt.getClaveDocIdentificacion());
+            datosPersonalesFacade.edit(datosPersonales);
+        } else {
             int i = 1;
-            for(String s : listaErrores)
-            {
-                arrJSON = arrJSON + "{\"observacion\":\""+s+"\"},";
-                System.out.println("Error " + i + " " + s );
+            for (String s : listaErrores) {
+                arrJSON = arrJSON + "{\"observacion\":\"" + s + "\"},";
+                System.out.println("Error " + i + " " + s);
                 i++;
             }
         }
-        arrJSON = arrJSON.substring(0, arrJSON.length()-1) + "]";
-        System.out.println(dt.getId());
-        System.out.println(dt.getSexo());
-        DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
-        datosPersonales.setNombre(dt.getNombre());
-        datosPersonales.setApellidoP(dt.getApellidoP());
-        datosPersonales.setApellidoM(dt.getApellidoM());
-        datosPersonales.setSexo(dt.getSexo());
-        datosPersonales.setEstadoCivil(dt.getEstado_civil());
-        datosPersonales.setOcupacion(dt.getOcupacion());
-        datosPersonales.setCurp(dt.getCurp());
-        datosPersonales.setFolioDocIdentificaciin(new BigInteger(dt.getFolioDocIdentificacion()));
-        datosPersonales.setClaveDocIdentificacion(dt.getClaveDocIdentificacion());
-        datosPersonalesFacade.edit(datosPersonales);
-
-
-
-
-        if (resultado.hasErrors()) {
-            for (ObjectError error : resultado.getAllErrors()) {
-                System.out.println(error.getDefaultMessage());
-            }
+        if (arrJSON.equals("[")) {
+            arrJSON = "noInfo";
+        } else {
+            arrJSON = arrJSON.substring(0, arrJSON.length() - 1) + "]";
         }
+
+
         System.out.println("Arrjson" + arrJSON);
         return arrJSON;
     }
@@ -401,6 +399,8 @@ public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosContacto.do")
     public @ResponseBody
     FormatoUnicoErrores modificarDatosContactoAlumno(FormatoUnicoDatosContactoBean dt, BindingResult resultado) {
+        
+        
         DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
         datosPersonales.setCalle(dt.getCalle());
         datosPersonales.setNumeroI(dt.getNumeroI());

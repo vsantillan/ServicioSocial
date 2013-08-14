@@ -83,20 +83,23 @@ function recargaCombosOrgs(idProyecto)
 }
 function enviarDatosAlumno()
 {
+    $('#observaciones').hide("fast");
     $("form#frmDatosPersonales :input").each(function() {
         prepararJSON($(this));
     });
 
     $.post("modificarDatosPersonales.do", alumno, function(respuesta) {
         var respJ = {};
-        respJ = jQuery.parseJSON(respuesta);
-        if (respJ.length > 1)
+        if (respuesta !== "noInfo")
+        {
+            respJ = jQuery.parseJSON(respuesta);
+        }
+        if (respJ.length > 0)
         {
             alert('Tienes errores');
             $('.observacion').remove();
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');
-                
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
             });
         }

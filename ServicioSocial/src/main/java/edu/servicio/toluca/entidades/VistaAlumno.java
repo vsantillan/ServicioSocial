@@ -55,15 +55,12 @@ import org.hibernate.annotations.GenericGenerator;
 public class VistaAlumno implements Serializable {
     @Column(name = "PROMEDIO")
     private Double promedio;
+    @Lob
+    @Column(name = "FOTO")
+    private byte[] foto;
     
     @Column(name = "PLAN_ID")
     private BigInteger planId;
-
-    
-    @Lob 
-    @Column(name = "FOTO")
-//    private Serializable foto;
-    private byte[] foto;
     
     
     private static final long serialVersionUID = 1L;
@@ -358,22 +355,6 @@ public class VistaAlumno implements Serializable {
         return "edu.servicio.toluca.entidades.VistaAlumno[ id=" + id + " ]";
     }
 
-    public Double getPromedio() {
-        return promedio;
-    }
-
-    public void setPromedio(Double promedio) {
-        this.promedio = promedio;
-    }
-
-    public byte[]  getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
-
     /**
      * @return the planId
      */
@@ -386,6 +367,22 @@ public class VistaAlumno implements Serializable {
      */
     public void setPlanId(BigInteger planId) {
         this.planId = planId;
+    }
+
+    public Double getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(Double promedio) {
+        this.promedio = promedio;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
     
 }

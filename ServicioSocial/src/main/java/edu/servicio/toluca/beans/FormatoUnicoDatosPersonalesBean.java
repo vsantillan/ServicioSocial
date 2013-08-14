@@ -27,6 +27,7 @@ public class FormatoUnicoDatosPersonalesBean {
     private String folioDocIdentificacion;
     private boolean acuerdoC;
     private ArrayList<String> listaErrores = new ArrayList<String>();
+    MetodosValidacion mv = new MetodosValidacion();
     
     public FormatoUnicoDatosPersonalesBean()
     {
@@ -35,19 +36,39 @@ public class FormatoUnicoDatosPersonalesBean {
     
     public ArrayList<String> Valida()
     {
+        
         boolean r = true;
-        MetodosValidacion mv = new MetodosValidacion();
+        
+        //Validar que no estén vacíos
         if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); r = false;}
         if(nombre == null || nombre.equals("")){listaErrores.add("El campo nombre no puede estar vacío"); r = false;}
         if(apellidoP == null || apellidoP.equals("")){listaErrores.add("El campo Apellido Paterno no puede estar vacío"); r = false;}
         if(apellidoM == null || apellidoM.equals("")){listaErrores.add("El campo Apellido Materno no puede estar vacío"); r = false;}
         if(ocupacion == null || ocupacion.equals("")){listaErrores.add("El campo ocupacion no puede estar vacío"); r = false;}
         if(curp == null || curp.equals("")){listaErrores.add("El campo curp no puede estar vacío"); r = false;}
-        if(claveDocIdentificacion == null || claveDocIdentificacion.equals("")){listaErrores.add("El campo Clave del Documento de indentificación no puede estar vacío"); r = false;}
+        if(claveDocIdentificacion.equals("")){listaErrores.add("El campo Clave del Documento de indentificación no puede estar vacío"); r = false;}
         if(folioDocIdentificacion == null || folioDocIdentificacion.equals("0")){listaErrores.add("El campo folio del Documento de indentificación no puede estar vacío"); r = false;}
+        //Validar tamaños de texto
+        if(!mv.minimoString(nombre, 1) && !mv.maximoString(nombre, 28)){listaErrores.add("El campo nombre debe tener entre 1 y 28 letras");}
         
         
         return listaErrores;
+    }
+    public void arregla()
+    {
+        this.nombre = mv.tuneaStringParaBD(nombre);
+        this.apellidoP = mv.tuneaStringParaBD(apellidoP);
+        this.apellidoM = mv.tuneaStringParaBD(apellidoM);
+        this.sexo = mv.pasaMayusculas(sexo);
+        this.sexo = mv.quitaAcentos(sexo);
+        this.estado_civil = mv.pasaMayusculas(estado_civil);
+        this.estado_civil = mv.quitaAcentos(estado_civil);
+        this.ocupacion = mv.tuneaStringParaBD(ocupacion);
+        this.curp = mv.tuneaStringParaBD(curp);
+        this.claveDocIdentificacion = mv.tuneaStringParaBD(claveDocIdentificacion);
+        this.folioDocIdentificacion = mv.dejarSoloNumeros(folioDocIdentificacion);
+        setFolioDocIdentificacion(mv.dejarSoloNumeros(folioDocIdentificacion));
+        
     }
     /**
      * @return the nombre
