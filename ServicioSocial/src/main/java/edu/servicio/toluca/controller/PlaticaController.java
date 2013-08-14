@@ -83,13 +83,13 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/asistenciaPosteriorEspecial.do")
-    public String AsistenciaPosteriorEspecial(Model a) {
+    public String AsistenciaPosteriorEspecial(Model modelo) {
+        modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
         return "/Platicas/asistenciaPosteriorEspecial";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
     public String seleccionarPlatica(Model modelo) {
-
         modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
         modelo.addAttribute("platica", new Platica());
         return "/Platicas/seleccionarPlatica";
@@ -134,7 +134,7 @@ public class PlaticaController {
         Platica platica = new Platica();
         VistaAlumno alumno = new VistaAlumno();
         alumno.setId("09280531");
-        System.out.println("platica id:"+fecha);
+        System.out.println("platica id:" + fecha);
         platica.setId(Long.parseLong(fecha));
         foliosPlatica.setPlaticaId(platica);
         foliosPlatica.setAlumnoId(alumno);
@@ -166,11 +166,11 @@ public class PlaticaController {
             return "/Platicas/capturarAsistencia";
 
         } else {
-               List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
+            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
 
             if (lista.size() > 0) {
-                    VistaAlumno vistaAlumno1;
-                vistaAlumno1 = vistaAlumnoFacade.find(lista.get(0).getAlumnoId()+""); //id se toma de sa sesion
+                VistaAlumno vistaAlumno1;
+                vistaAlumno1 = vistaAlumnoFacade.find(lista.get(0).getAlumnoId() + ""); //id se toma de sa sesion
                 modelo.addAttribute("alumno", vistaAlumno1);
                 modelo.addAttribute("espacio", " ");
                 return "/Platicas/capturarAsistencia2";
@@ -178,7 +178,7 @@ public class PlaticaController {
                 modelo.addAttribute("foliosPlatica", new FoliosPlatica());
                 modelo.addAttribute("existe", "<div class='error'>No existe numero de folio</div>");
                 return "/Platicas/capturarAsistencia";
-            }  
+            }
         }
     }
 
@@ -204,6 +204,41 @@ public class PlaticaController {
                 return "/Platicas/capturarAsistencia";
             }
         }
+    }
+
+    @RequestMapping(value = "ponerAsistenciaEspecial.do", method = RequestMethod.POST)
+    public String ponerAsistenciaEspecial(String idPlatica, String no_control, Model modelo) {
+
+        if (no_control.length() > 7 && no_control.length() < 9) {
+            FoliosPlatica foliosPlatica = new FoliosPlatica();
+            Platica platica = new Platica();
+            VistaAlumno alumno = new VistaAlumno();
+            alumno.setId(no_control);
+            System.out.println("platica id:" + idPlatica);
+            platica.setId(Long.parseLong(idPlatica));
+            foliosPlatica.setPlaticaId(platica);
+            foliosPlatica.setAlumnoId(alumno);
+            //folio: numero de control+idPlatica
+            foliosPlatica.setNumeroFolio(idPlatica + no_control);
+            System.out.println(idPlatica + no_control);
+            foliosPlatica.setStatus((short) 1);
+            foliosPlatica.setAsistencia((short) 1);
+        foliosPlaticaFacade.create(foliosPlatica);
+
+        //incrementar numero de asistentes +1
+       platica = platicaFacade.findBySpecificField("id",idPlatica, "equal", null, null).get(0);
+        int numero = platica.getNumeroAsistentes();
+        numero = numero + 1;
+        System.out.println("numero" + numero);
+        platica.setNumeroAsistentes(numero);
+        platicaFacade.edit(platica);
+          modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+          return "/Platicas/asistenciaPosteriorEspecial";
+        } else {
+            modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+            modelo.addAttribute("error", "<div class='error'>Numero de control incorrecto</div>");
+        }
+        return "/Platicas/asistenciaPosteriorEspecial";
     }
 
     @RequestMapping(value = "/mostrarFoto.do", method = RequestMethod.GET)

@@ -47,8 +47,8 @@ public class FoliosPlatica implements Serializable {
     private Short asistencia;
     @Basic(optional = false)
     
-    @NotNull(message="Ingrese numero de Folio")
-    @NotBlank  
+    @NotNull
+    @NotBlank  (message="Ingrese numero de Folio")
     @Column(name = "NUMERO_FOLIO")
     private String numeroFolio;
     

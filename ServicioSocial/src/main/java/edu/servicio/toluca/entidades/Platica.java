@@ -62,8 +62,8 @@ public class Platica implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Size(max = 8)
-    @NotNull(message="La hora es requerida")
-    @NotBlank
+    @NotNull
+    @NotBlank (message="La hora es requerida")
     @Column(name = "HORA")
     private String hora;
     @Basic(optional = false)

@@ -32,10 +32,28 @@
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <center><h2>Capturar Asistencia Especial Posterior</h2></center>  
-                <center><form:form name="casistenciaespecial" id="casistenciaespecial" action="#">
-                        <label for="alumno">Número de control</label>
-                        <input type="text" name="no_control" id="no_control" size="15" />   
-                        <button type="submit">Asistió</button>
+                <center> ${error}
+                    <form:form name="casistenciaespecial" id="casistenciaespecial" action="ponerAsistenciaEspecial.do" method="Post">
+                        <table>
+                            <tr>
+                                <td><label>Seleciona la platica</label></td>
+                                <td>
+                                    <select name="idPlatica" id="idPlatica">
+                                        <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
+                                            <option value="${platicasPeriodo.id}"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option>                                    
+                                        </core:forEach>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="alumno">Número de control</label></td>
+                                <td> <input type="text" name="no_control" id="no_control" size="15" /> </td>
+                            </tr>
+                            <tr>
+                                <td><button type="submit">Asistió</button></td>
+                                <td><button type="reset">Limpiar</button></td>
+                            </tr>
+                        </table>
                     </form:form>
                 </center>
             </div>
