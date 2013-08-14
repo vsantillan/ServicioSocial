@@ -19,11 +19,7 @@
         <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
         <script src="js/cargaCodigosPostalesParaEditarOP.js"></script>
         <script src="js/jquery.manolo.js"></script>
-        <script>
-            $(document).ready(function() {
-                $(".MyForm").formly();
-            })
-        </script>
+
         <title>Editar Proyecto</title>
     </head>
     <body class="background" onmousedown="elemento(event);">
@@ -32,7 +28,7 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;width:80%">
-                <h1>Alta de Proyecto</h1>                
+                <h1>Editar Proyecto</h1>
                 <form:form name="modificarProyecto" commandName="proyecto" class="MyForm" action="modificarProyecto.do" method="POST" >
                     <p>${error_sql}</p>
                     <table>
@@ -43,21 +39,21 @@
                             </td>
                             <td>
                                 <form:input path="nombre" id="nombre" size="20"/><br/>
-                                <form:errors path="nombre" cssClass="error"/>
+                                <form:errors path="nombre" cssClass="error"/>${nombre}
                             </td>
                         </tr>
                         <tr>
                             <td>  <label for="vacantes">N&uacute;mero de Vacantes:</label> </td>
                             <td>
                                 <form:input path="vacantes" id="vacantes" size="20"/><br/>
-                                <form:errors path="vacantes" cssClass="error"/>
+                                <form:errors path="vacantes" cssClass="error"/>${vacantes}
                             </td>  
                         </tr>
                         <tr>
                             <td>  <label for="vacantes">N&uacute;mero de Vacantes disponibles:</label> </td>
                             <td>
                                 <form:input path="vacantesDisponibles" id="vacantesDisponibles" size="20"/><br/>
-                                <form:errors path="vacantesDisponibles" cssClass="error"/>
+                                <form:errors path="vacantesDisponibles" cssClass="error"/>${error_vacantes_disponibles}
                             </td>  
                         </tr>
                         <tr>
@@ -82,33 +78,35 @@
                             <td>  <label for="lugar">Responsable del Programa:</label></td>
                             <td>
                                 <form:input path="nombreResponsable" id="nombreResponsable" size="20"/><br/>
-                                <form:errors path="nombreResponsable" cssClass="error"/>
+                                <form:errors path="nombreResponsable" cssClass="error"/>${responsable}
                             </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Puesto del responsable:</label></td>
                             <td>
                                 <form:input path="responsablePuesto" id="responsablePuesto" size="20"/><br/>
-                                <form:errors path="responsablePuesto" cssClass="error"/>
+                                <form:errors path="responsablePuesto" cssClass="error"/>${puesto}
                             </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Tel&eacute;fono del Responsable:</label></td>
                             <td>
                                 <form:input path="telefonoResponsable" id="telefonoResponsable" size="20"/><br/>
-                                <form:errors path="telefonoResponsable" cssClass="error"/>
+                                <form:errors path="telefonoResponsable" cssClass="error"/>${telefono}
                             </td>
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Domicilio del Programa:</label></td>
                             <td>
                                 <form:input path="domicilio" id="domicilio" size="20"/><br/>
-                                <form:errors path="domicilio" cssClass="error"/>
+                                <form:errors path="domicilio" cssClass="error"/>${domicilio}
                             </td>
                         </tr>
                         <tr>
                             <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
-                            <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${proyecto.idColonia.idCp.cp}"></td>  
+                            <td><input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${proyectoDireccion.idColonia.idCp.cp}">
+                                <input type="hidden" id="preCP" value="${cp}"/><br>${error_codigo_postal}
+                            </td> 
                         </tr>
                         <tr>
                             <td>  <label for="estado">Estado:</label></td>
@@ -154,16 +152,16 @@
                                     <core:forEach items="${tipoProyecto}" var="current">
                                         <core:choose>
                                             <core:when test="${current.idTipoProyecto==proyecto.idTipoProyecto.idTipoProyecto}">
-                                                <option value="${current.idTipoProyecto}" selected="selected">${current.descripcion}</option>  
-                                            </core:when>
-                                            <core:otherwise>
-                                                <option value="${current.idTipoProyecto}">${current.descripcion}</option>
-                                            </core:otherwise>    
-                                        </core:choose>
-                                    </core:forEach>
-                                </form:select><br/>
-                            <form:errors path="idTipoProyecto.idTipoProyecto" cssClass="error"/>
-                            </td>  
+                                        <option value="${current.idTipoProyecto}" selected="selected">${current.descripcion}</option>  
+                                    </core:when>
+                                    <core:otherwise>
+                                        <option value="${current.idTipoProyecto}">${current.descripcion}</option>
+                                    </core:otherwise>    
+                                </core:choose>
+                            </core:forEach>
+                        </form:select><br/>
+                        <form:errors path="idTipoProyecto.idTipoProyecto" cssClass="error"/>
+                        </td>  
                         </tr>
                         <tr>
                             <td>  <label for="lugar">Programa:</label></td>
@@ -172,16 +170,16 @@
                                     <core:forEach items="${programas}" var="programa">
                                         <core:choose>
                                             <core:when test="${programa.idPrograma==proyecto.idPrograma.idPrograma}">
-                                                <option value="${programa.idPrograma}" selected="selected">${programa.descripcion}</option>
-                                            </core:when>
-                                            <core:otherwise>
-                                                <option value="${programa.idPrograma}">${programa.descripcion}</option>
-                                            </core:otherwise>    
-                                        </core:choose>
-                                    </core:forEach>
-                                </form:select><br/>
-                                <form:errors path="idPrograma.idPrograma" cssClass="error"/>
-                            </td>  
+                                        <option value="${programa.idPrograma}" selected="selected">${programa.descripcion}</option>
+                                    </core:when>
+                                    <core:otherwise>
+                                        <option value="${programa.idPrograma}">${programa.descripcion}</option>
+                                    </core:otherwise>    
+                                </core:choose>
+                            </core:forEach>
+                        </form:select><br/>
+                        <form:errors path="idPrograma.idPrograma" cssClass="error"/>
+                        </td>  
                         </tr>
                         <tr>
                             <td>  <label for="modalidad">Modalidad</label></td>
@@ -209,6 +207,9 @@
                                         <core:forEach items="${proyecto.proyectoPerfilCollection}" var="current">
                                             <option value="${current.idPerfil.idPerfil}">${current.idPerfil.nombre}</option>
                                         </core:forEach>
+                                        <core:forEach items="${perfilesSonProyecto}" var="current">
+                                            <option value="${current.idPerfil}">${current.nombre}</option>
+                                        </core:forEach>
                                     </select>
 
                                     <a href="JavaScript:void(0);" id="btn-add">Quitar &raquo;</a>
@@ -229,14 +230,15 @@
                                     <core:forEach items="${proyecto.actividadesCollection}" var="actividades">
                                         <option value="${actividades.detalle}"></option>
                                     </core:forEach>
+                                    <core:forEach items="${actividadAux}" var="actividades">
+                                        <option value="${actividades}"></option>
+                                    </core:forEach>
                                 </select>
                                 <p><input type ="button" id="agregarActividad" value = "Agregar Actividad" /></p>
-                                        <ol id="actividades"></ol>
-                                        <input type="hidden" name="nActividades" id="nActividades" value="0">
-                                        <input type="hidden" name="cadenaActividades" id="cadenaActividades">
-                                <%--<core:forEach items="${proyecto.actividadesCollection}" var="actividades">
-                                    <input type="text" value="${actividades.detalle}" /><br/>
-                                </core:forEach>--%>
+                                <ol id="actividades"></ol>
+                                <input type="hidden" name="nActividades" id="nActividades" value="0">
+                                <input type="hidden" name="cadenaActividades" id="cadenaActividades">
+
                             </td>  
                         </tr>
                         <tr> 
@@ -251,86 +253,86 @@
         </div>
     </div>
     <script>
-            $('a#btn-add').click(function() {
-                $('#select-from option:selected').each(function() {
-                    $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
-                    $(this).remove();
-                });
+        $('a#btn-add').click(function() {
+            $('#select-from option:selected').each(function() {
+                $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+                $(this).remove();
             });
-            $('a#btn-remove').click(function() {
-                $('#select-to option:selected').each(function() {
-                    $('#select-from').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
-                    $(this).remove();
-                });
-            });
-            $('input#envia').click(function (){
-                $('#select-from option').each(function() 
-                {
-                    $(this).attr("selected", "selected");
-                });
-                
-                var cadenaActividades = "";
-
-        $(".actividad").each(function() {
-            console.log("Actividad:" + $(this).val());
-            cadenaActividades += $(this).val() + ";";
         });
-        console.log("Cadena actividades:" + cadenaActividades);
-        document.getElementById("cadenaActividades").value = cadenaActividades;
+        $('a#btn-remove').click(function() {
+            $('#select-to option:selected').each(function() {
+                $('#select-from').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+                $(this).remove();
             });
-            
-            var nActividades=0;
-            $('#prueba01 option').each(function() 
-                {
-                    agregarActividadIniciales($(this).attr("value"));
-                });
-                
-            
-    $("input#agregarActividad").click(function() {
-        agregarActividad();
-    });
+        });
+        $('input#envia').click(function() {
+            $('#select-from option').each(function()
+            {
+                $(this).attr("selected", "selected");
+            });
 
-    function agregarActividadIniciales(valor) 
-    {
-        console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
-        if (nActividades < 5) {
-            $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true' value='"+valor+"'/><input type ='button' class='borrar' value = 'Quitar'  /></li><br/>");
-            masActividad();
-            console.log("Actividad agregada");
+            var cadenaActividades = "";
+
+            $(".actividad").each(function() {
+                console.log("Actividad:" + $(this).val());
+                cadenaActividades += $(this).val() + ";";
+            });
+            console.log("Cadena actividades:" + cadenaActividades);
+            document.getElementById("cadenaActividades").value = cadenaActividades;
+        });
+
+        var nActividades = 0;
+        $('#prueba01 option').each(function()
+        {
+            agregarActividadIniciales($(this).attr("value"));
+        });
+
+
+        $("input#agregarActividad").click(function() {
+            agregarActividad();
+        });
+
+        function agregarActividadIniciales(valor)
+        {
+            console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
+            if (nActividades < 5) {
+                $("#actividades").append("<li style='float:left;'><input type='text' size='40' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true' value='" + valor + "'/><input type ='button' class='borrar' value = 'Quitar'  /></li><br/>");
+                masActividad();
+                console.log("Actividad agregada");
+            }
         }
-    }
-    
-    function agregarActividad() {
-        console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
-        if (nActividades < 5) {
-            $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true'/><input type ='button' class='borrar' value = 'Quitar'  /></li><br/>");
-            masActividad();
-            console.log("Actividad agregada");
+
+        function agregarActividad() {
+            console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
+            if (nActividades < 5) {
+                $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true'/><input type ='button' class='borrar' value = 'Quitar'  /></li><br/>");
+                masActividad();
+                console.log("Actividad agregada");
+            }
         }
-    }
-    
-    function masActividad() {
-        nActividades++;
-        document.getElementById("nActividades").value = nActividades;
-        console.log("nActividades local:" + nActividades);
-        console.log("nActividades form:" + document.getElementById("nActividades").value);
-    }
 
-    function menosActividad() {
-        nActividades--;
-        document.getElementById("nActividades").value = nActividades;
-        console.log("nActividades local:" + nActividades);
-        console.log("nActividades form:" + document.getElementById("nActividades").value);
-
-    }
-
-    $("body").on("click", ".borrar", function(event) {
-        console.log("Borrar actividad, nActividades:" + nActividades);
-        if (nActividades > 2) {
-            $(this).closest('li').remove();
-            menosActividad();
+        function masActividad() {
+            nActividades++;
+            document.getElementById("nActividades").value = nActividades;
+            console.log("nActividades local:" + nActividades);
+            console.log("nActividades form:" + document.getElementById("nActividades").value);
         }
-    });
+
+        function menosActividad() {
+            nActividades--;
+            document.getElementById("nActividades").value = nActividades;
+            console.log("nActividades local:" + nActividades);
+            console.log("nActividades form:" + document.getElementById("nActividades").value);
+
+        }
+
+        $("body").on("click", ".borrar", function(event) {
+            console.log("Borrar actividad, nActividades:" + nActividades);
+            if (nActividades > 2) {
+                $(this).closest('li').remove();
+                menosActividad();
+            }
+        });
     </script>
     <jsp:include page="../Template/footer.jsp" />
 </body>

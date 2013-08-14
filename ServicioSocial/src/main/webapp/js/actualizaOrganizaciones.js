@@ -2,13 +2,37 @@
 
 $(document).on('click', ".editOrg", updateOrganisation);
 $(document).on('click', ".editProy", updateProyecto);
-//$(document).on('click', ".enviarRetro", enviaDatos);
+$(document).on('click', ".cambiaStatusInstancia", editarStatusInstancia);
+$(document).on('click', ".cambiaStatusProyecto", editarStatusProyecto);
 $(document).ready(retroalimentacion);
 
+function editarStatusInstancia(e)
+{
+    if(confirm('¿Seguro que desea eliminar instancia?'))
+    {
+        var row = $(this).parents('tr')[0];
+        var idUpdate = $(e.target).attr('ide');
+        var tabla = $('#example').dataTable();
+        $.post("cambiaStatusInstancia.do", {id: idUpdate}, function(response) 
+        {
+            tabla.fnDeleteRow(row);
+        });
+    }
+}
 
-
-
-
+function editarStatusProyecto(e)
+{
+    if(confirm('¿Seguro que desea eliminar proyecto?'))
+    {
+        var row = $(this).parents('tr')[0];
+        var idUpdate = $(e.target).attr('ide');
+        var tabla = $('#example').dataTable();
+        $.post("cambiaStatusProyecto.do", {id: idUpdate}, function(response) 
+        {
+            tabla.fnDeleteRow(row);
+        });
+    }
+}
 
 function updateProyecto(e) {
     var row = $(this).parents('tr')[0];

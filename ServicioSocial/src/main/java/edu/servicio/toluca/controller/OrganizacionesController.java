@@ -17,6 +17,9 @@ import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Perfil;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.model.ActividadesModel;
+import edu.servicio.toluca.model.ValidacionesOrganizaciones;
+import edu.servicio.toluca.model.ValidarProyectos;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.EstadosFacade;
@@ -124,7 +127,7 @@ public class OrganizacionesController {
         instancia = instanciaFacade.find(BigDecimal.valueOf(id));
         instancia.setValidacionAdmin(BigInteger.valueOf(1));
         System.out.println("Ya actualizo");
-        // instanciaFacade.edit(instancia);
+        instanciaFacade.edit(instancia);
 
         return "ok";
     }
@@ -135,7 +138,7 @@ public class OrganizacionesController {
         Proyectos proyecto;
         proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
         proyecto.setValidacionAdmin(BigInteger.valueOf(1));
-        // proyectosFacade.edit(proyecto);
+        proyectosFacade.edit(proyecto);
         return "ok";
     }
 
@@ -253,6 +256,7 @@ public class OrganizacionesController {
     {
         Proyectos proyecto=proyectosFacade.find(BigDecimal.valueOf(id));
         model.addAttribute("proyecto", proyecto);
+        model.addAttribute("proyectoDireccion", proyecto);
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         for (int i = 0; i < listaInstancias.size(); i++) {
@@ -291,59 +295,32 @@ public class OrganizacionesController {
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/modificarProyecto.do")
-    public String modificarProyecto(@Valid Proyectos proyecto,BindingResult  result, Model model, String selectfrom,String nActividades,String cadenaActividades)
+    public String modificarProyecto(@Valid Proyectos proyecto,BindingResult  result, Model model, String selectfrom,String nActividades,String cadenaActividades, String codigo_postal)
     {
         proyecto.setFechaAlta(new Date());
-        try {
-            System.out.println("Nombre:" + proyecto.getNombre());
-        } catch (Exception e) {
-            System.out.println("No hay nombre de proyecto");
-        }
-        try {
-            System.out.println("No Vacantes:" + proyecto.getVacantes());
-        } catch (Exception e) {
-            System.out.println("No hay vacantes de proyecto");
-        }
-        try {
-            System.out.println("Instancia:" + proyecto.getIdInstancia().getIdInstancia());
-        } catch (Exception e) {
-            System.out.println("No hay id de instancia");
-        }
-        try {
-            System.out.println("Nombre responsable:" + proyecto.getNombreResponsable());
-        } catch (Exception e) {
-            System.out.println("No hay nombre de responsable");
-        }
-        try {
-            System.out.println("Puesto responsable:" + proyecto.getResponsablePuesto());
-        } catch (Exception e) {
-            System.out.println("No hay nombre de responsable");
-        }
-        try {
-            System.out.println("Telefono Responsable:" + proyecto.getTelefonoResponsable());
-        } catch (Exception e) {
-            System.out.println("No hay telefono del responsable");
-        }
-        try {
-            System.out.println("Domicilio:" + proyecto.getDomicilio());
-        } catch (Exception e) {
-            System.out.println("No hay domicilio");
-        }
-        try {
-            System.out.println("Colonia:" + proyecto.getIdColonia().getIdColonia());
-        } catch (Exception e) {
-            System.out.println("No hay colonia");
-            model.addAttribute("error_codigo_postal", "Ingresar un código postal válido");
-            result.addError(new ObjectError("codigo_postal", "Error en codigo postal"));
-        }
-        try {
-            System.out.println("Tipo Proyecto:" + proyecto.getIdTipoProyecto().getIdTipoProyecto());
-        } catch (Exception e) {
-            System.out.println("No hay tipo de proyecto");
-        }
+        //Validaciones
+        System.out.println("Validarr");
+        new ValidarProyectos().valAltaAdminProy(proyecto, result, model, codigo_postal);
         
+        //Desglose de Actividades
+        ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
+
+        //Valida Actividades
+        if (!actividadesModel.validarInsercionActividades().isSuccess()) {
+            result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
+        }
+        model.addAttribute("validacion_actividades", actividadesModel.validarInsercionActividades().getMensaje());
+        //++++++++++++++++++++++++++++++++Si hubo un error+++++++++++++++++++++++++++++++++++
         if(result.hasErrors())
         {
+            System.out.println("Entroooooooooo aquiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+            //Regresar codigo postal
+            model.addAttribute("cp", codigo_postal);
+            try{
+                model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
+            }catch(Exception e){
+                
+            }
             List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             for (int i = 0; i < listaInstancias.size(); i++) {
@@ -357,6 +334,7 @@ public class OrganizacionesController {
             model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
             model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
             List<Perfil> perfilesNoSonDelProyecto = new ArrayList<Perfil>();
+            List<Perfil> perfilesSonDelProyecto = new ArrayList<Perfil>();
             List<Perfil> listaPerfil;
             Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
             listaPerfil=perfilFacade.findAll();
@@ -376,8 +354,22 @@ public class OrganizacionesController {
                 }
                 if(agregar)
                     perfilesNoSonDelProyecto.add(listaPerfil.get(i));
+                else
+                    perfilesSonDelProyecto.add(listaPerfil.get(i));
             }
             model.addAttribute("perfilesProyectoEx", perfilesNoSonDelProyecto);
+            model.addAttribute("perfilesSonProyecto", perfilesSonDelProyecto);
+            //Regresar actividades
+            model.addAttribute("nActividades", nActividades.substring(0, 1));
+            System.out.println("nActividades:"+ nActividades.substring(0, 1));
+            
+            for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
+                System.out.println("Regresando Actividad:"+actividadesModel.actividades.get(i));
+            }
+            model.addAttribute("actividadAux", actividadesModel.actividades);
+            model.addAttribute("proyectoDireccion", proyectosFacade.find(proyecto.getIdProyecto()));
+            model.addAttribute("proyecto", proyecto);
             return "/Organizaciones/editarProyecto";
         }else{
             //**********************Insertar los Perfiles del proyecto**********************************
@@ -535,6 +527,31 @@ public class OrganizacionesController {
             }
 
         }
+    }
+    
+    //Eliminar instancia y proyecto (solo cambia el estatus a 0)
+    @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusInstancia.do")
+    public @ResponseBody
+    String cambiaStatusInstancia(int id, Model model) 
+    {
+        Instancia instancia;
+        instancia = instanciaFacade.find(BigDecimal.valueOf(id));
+        instancia.setEstatus(BigInteger.ZERO);
+        instanciaFacade.edit(instancia);
+        System.out.println("Ya actualizo");
+        return "ok";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusProyecto.do")
+    public @ResponseBody
+    String cambiaStatusProyecto(int id, Model model) 
+    {
+        Proyectos proyecto;
+        proyecto=proyectosFacade.find(BigDecimal.valueOf(id));
+        proyecto.setEstatus(BigInteger.ZERO);
+        proyectosFacade.edit(proyecto);
+        System.out.println("Ya actualizo");
+        return "ok";
     }
 
     //Alta Organizaicon visitante

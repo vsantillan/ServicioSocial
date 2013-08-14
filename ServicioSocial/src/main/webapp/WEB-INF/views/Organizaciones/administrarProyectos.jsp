@@ -16,17 +16,9 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
-        <jsp:include page="../Template/headsModal.jsp" />
-        <!--Scripts para shadowbox-->
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
-                    'wmp', 'swf', 'flv']});</script> 
-
-        <!--        Scripts para tablas-->
-        
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        <jsp:include page="../Template/headsModal.jsp" />
         <script type="text/javascript" >
             $(document).ready(function() {
                 $('#example').dataTable({
@@ -66,7 +58,7 @@
                     <tbody>
                         <core:forEach items="${proyectos}" var="current">
                             <tr class='gradeX' id="${current.idProyecto}">
-                                <th><a href="editarProyecto.do?id=${current.idProyecto}" ><img src="imagenes/editar.png" width="30" title="Editar Proyecto"/></a><a href="#a" class="mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}" rel="shadowbox"><img src="imagenes/trash.png" width="30" title="Borrar Proyecto"></a></th>
+                                <th><a href="editarProyecto.do?id=${current.idProyecto}" ><img src="imagenes/editar.png" width="30" title="Editar Proyecto"/></a><a href="#" class="btn-validar-proyecto"><img class="cambiaStatusProyecto" ide="${current.idProyecto}" src="imagenes/trash.png" width="30" title="Borrar Proyecto"></a></th>
                                 <th><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.idInstancia.nombre}" /></th>
                                 <th><core:out value="${current.nombre}" /></th>
