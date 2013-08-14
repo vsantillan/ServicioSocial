@@ -10,14 +10,16 @@ package edu.servicio.toluca.controller;
  */
 
 import edu.servicio.toluca.entidades.Instancia;
-import edu.servicio.toluca.login.Conexion;
+import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Login;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
-import java.sql.Connection;
+import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +39,9 @@ public class NavegacionPrincipalController {
     
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     public EstadosSiaFacade estadosFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+    public VistaAlumnoFacade vistaAlumnoFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model a){
@@ -95,13 +100,23 @@ public class NavegacionPrincipalController {
             
             //ALUMNOS
             if(rol.equals("ROLE_ALUMNOS")){
-                return "/PanelUsuario/panelUsuario";
+                System.out.println("buscar:"+usuario.substring(4));
+                List<VistaAlumno> alumno = vistaAlumnoFacade.findBySpecificField("id", usuario.substring(4), "equal", null, null);
+                System.out.println("tamaño lista:"+alumno.size());
+                Double porcentaje= Double.parseDouble(alumno.get(0).getPorcentaje());
+                System.out.println("Porcentaje del alumno:"+porcentaje);
+                if( porcentaje >= 70){
+                    return "redirect:panelUsuario.do";
+                }else{
+                    model.addAttribute("error", "<div class='error'>Lo sentimos no cumples con el minimo de 70% de créditos para tramitar tu servicio social</div>");
+                    return "/NavegacionPrincipal/loginPrincipal";
+                }                
             }
             //JOELITO
             if(rol.equals("ROLE_GESVIN_OPERACION")){
-                return "/PanelAministrador/panelAdministrador";
+                return "redirect:panelAdministrador.do";
             }
-            //DIRECTORA
+            //DIRECTIVOS
             if(rol.equals("ROLE_GESVIN_CONSULTAS")){
                 
             }
@@ -113,6 +128,11 @@ public class NavegacionPrincipalController {
             if(rol.equals("ROLE_GESVIN_REGISTRO")){
                 
             }
+            //OTRO
+            if(rol.equals("OTRO")){
+              model.addAttribute("error", "<div class='error'>Lo sentimos no tiene los permisos necesarios para accesar al sistema.</div>");  
+            }
+             
             return "/NavegacionPrincipal/loginPrincipal";
             
         }catch(Exception e) {

@@ -66,9 +66,9 @@ $(document).ready(function() {
         return xmlhttp;
 
     }
-
+    
     //Formulario alta admin proyectos
-    if (typeof(iniciarAltaAdminProyecto) !== 'undefined') {
+    if (typeof(iniciarAltaAdminProyecto) !== 'undefined' || typeof(iniciarAltaPropuestaInstancia) !== 'undefined') {
         console.log("Iniciando alta admin proyecto");
         //iniciarPerfiles();
         var nActHidden = document.getElementById("PrenActividades");
@@ -92,6 +92,7 @@ $(document).ready(function() {
             }
         }
     }
+    
     var nActividades;
     $("#agregarActividad").click(function(event) {
         agregarActividad();
@@ -102,10 +103,10 @@ $(document).ready(function() {
         console.log("actividad:" + actividad);
         if (nActividades < 5) {
             if (typeof(actividad) === 'undefined') {
-                $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
+                $("#actividades").append("<li style='float:left;'><input type='text' size='35' maxlength='60' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' /><input type ='button' class='borrar' value = 'Quitar'  /></li>");
             }
             else {
-                $("#actividades").append("<li style='float:left;'><input type='text' size='35' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' required='true' value='" + actividad + "'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
+                $("#actividades").append("<li style='float:left;'><input type='text' size='35' maxlength='60' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' value='" + actividad + "'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
             }
             masActividad();
             console.log("Actividad agregada");
@@ -242,8 +243,8 @@ $(document).ready(function() {
             console.log("Deshabilitado");
         }
     }
-
-    $("#btnGdaAdminProyecto").click(function(event) {
+    
+    function preparaActividadesPerfiles(){
         console.log("Guardar");
         //var cadenaPerfiles = "";
         var cadenaActividades = "";
@@ -254,27 +255,23 @@ $(document).ready(function() {
         });
         console.log("Cadena actividades:" + cadenaActividades);
         document.getElementById("cadenaActividades").value = cadenaActividades;
-//        var habilCheck = document.getElementById("ningunPerfil").checked;
-
-//        if (!habilCheck) {
-//            $(".perfil").each(function() {
-//                console.log("Perfil:" + $(this).val());
-//                cadenaPerfiles += $(this).val() + ";";
-//            });
-//            console.log("Cadena perfiles:" + cadenaPerfiles);
-//            document.getElementById("cadenaPerfiles").value = cadenaPerfiles;
-//        } else {
-//            console.log("No hay perfiles");
-//            document.getElementById("cadenaPerfiles").value = "null";
-//        }
 
         //Preparar perfiles seleccionados
         var perfiles = document.getElementById("select-to");
         for (i = 0; i < perfiles.length; i++) {
-            console.log("Seleccionando:" + perfiles.options[i].text)
+            console.log("Seleccionando:" + perfiles.options[i].text);
             perfiles.options[i].selected = true;
         }
+    }
+
+    $("#btnGdaAdminProyecto").click(function(event) {
+        preparaActividadesPerfiles();
         document.forms["altaOrganizacion"].submit();
+    });
+    
+    $("#btnGdaPropAlInst").click(function(event){
+        preparaActividadesPerfiles();
+        document.forms["altaPropInstancia"].submit();
     });
 
     $("#btnPreInstancia").click(function(event) {

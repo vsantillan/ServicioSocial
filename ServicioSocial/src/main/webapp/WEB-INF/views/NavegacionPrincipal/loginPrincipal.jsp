@@ -41,8 +41,7 @@
                             </td> 
                         </tr>
                         <tr> 
-                            <td> <input type ="submit" value = "Entrar" /> </td>
-                            <td> <input type ="button" id="olvidoPassOrg"value = "Olvide mi Contrase&ntilde;a" /></td>
+                            <td colspan="2"> <input type ="submit" value = "Entrar" /> </td>
                         </tr>
                         <tr>
                             <td colspan="2">
@@ -51,7 +50,7 @@
                         </tr>
                         ${error}
                     </table>
-                    <h3>Acceso al sistema de gesti&oacute;n del servicio social, recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</h3>
+                    <h3>Recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</h3>
                 </form:form> 
                 
                 <br/><br/><br/><br/><br/><br/><br/>

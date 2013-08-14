@@ -7,6 +7,7 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.PerfilJSON;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
+import edu.servicio.toluca.beans.organizaciones.PropAluInstProyBean;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Perfil;
@@ -438,6 +439,8 @@ public class OrganizacionesController2 {
     //Panel de organizaciones (usuarios)
     @RequestMapping(method = RequestMethod.GET, value = "/panelOrganizacion.do")
     public String panelOrganizacion(Model model) {
+
+        //HARDCODEADO hasta que se haga lo de las sesiones
         String idInstancia = "19";
         System.out.println("idInstancia:" + idInstancia);
 
@@ -505,6 +508,83 @@ public class OrganizacionesController2 {
                 model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
             }
             return "/PanelOrganizacion/panelOrganizacion";
+        }
+    }
+
+    //Propuesta del alumno para dar de alta Instancia/Proyecto
+    @RequestMapping(method = RequestMethod.GET, value = "/propAlInstancia.do")
+    public String propAlInstancia(Model model, String formato_unico) {
+        System.out.println("idFormatoUnico:" + formato_unico);
+
+        //Formato Unico
+        model.addAttribute("formato_unico", formato_unico);        
+        //Tipo organizacion
+        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        //Estados
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        ordenamiento.put("nombre", "asc");
+        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        //TipoProyecto
+        model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+        //Perfil
+        model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        //Programa
+        model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+        //Command
+        model.addAttribute("propuesta", new PropAluInstProyBean());
+        return "/Organizaciones/propAlInstancia";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/gdaPropAlInstancia.do")
+    public String gdaPropAlInstancia(@Valid PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2, String formato_unico, String nActividades) {
+        System.out.println("Guardando propuesta de alumno de instancia");
+        
+        //Validacion
+        new ValidacionesOrganizaciones().valPropAlInstancia(propuesta, result, model, codigo_postal, otra_colonia, existe_colonia, selectfrom, cadenaActividades, codigo_postal2, formato_unico);
+
+        //Desglose de Actividades
+        ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
+        
+        
+        //Valida Actividades
+        if (!actividadesModel.validarInsercionActividades().isSuccess()) {
+            result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
+            model.addAttribute("validacion_actividades", actividadesModel.validarInsercionActividades().getMensaje());
+        }        
+        
+        if (result.hasErrors()) {
+            System.out.println(result.toString());
+            //Formato Unico
+            model.addAttribute("formato_unico", formato_unico);
+            //Command
+            model.addAttribute("propuesta", propuesta);
+            //Tipo organizacion
+            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            //Estados
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("nombre", "asc");
+            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            //TipoProyecto
+            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+            //Perfil
+            model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            //Programa
+            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+            //Regresar actividades
+            model.addAttribute("nActividades", nActividades.substring(0, 1));
+            System.out.println("nActividades:" + nActividades.substring(0, 1));
+
+            for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
+                System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
+            }
+            
+            
+            return "/Organizaciones/propAlInstancia";
+
+        } else {
+            model.addAttribute("hola", "que paso");
+            return "/Organizaciones/confirmaAltaPropuesta";            
         }
     }
 }

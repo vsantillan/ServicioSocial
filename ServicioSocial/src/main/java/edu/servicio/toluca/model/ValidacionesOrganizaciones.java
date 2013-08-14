@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.model;
 
+import edu.servicio.toluca.beans.organizaciones.PropAluInstProyBean;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Proyectos;
 import org.springframework.ui.Model;
@@ -53,7 +54,6 @@ public class ValidacionesOrganizaciones {
 
     }
     //Validacion cuando una organizacion edita su informacion
-
     public void valGdaEditaInst(Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String confirma_password) {
         //Valida contraseñas
         if (!instancia.getPassword().equals("")) {
@@ -137,6 +137,80 @@ public class ValidacionesOrganizaciones {
             System.out.println("No hay error en domicilio");
         }
 
+    }
+    
+    public void valPropAlInstancia(PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2, String formato_unico){
+        //Agregando errores
+        if (codigo_postal.equals("") || codigo_postal.length() != 5) {
+            result.addError(new ObjectError("error_codigo_postal", "Ingrese un código postal válido."));
+            model.addAttribute("error_codigo_postal1", error("Ingrese un código postal válido."));
+        }
+        if (codigo_postal2.equals("") || codigo_postal2.length() != 5) {
+            result.addError(new ObjectError("error_codigo_postal2", "Ingrese un código postal válido."));
+            model.addAttribute("error_codigo_postal2", error("Ingrese un código postal válido."));
+        }
+        //Validacion instancia
+        try {
+            model.addAttribute("nombre_instancia", error(result.getFieldError("nombre_instancia").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en el nombre instancia");
+        }
+        try {
+            model.addAttribute("domicilio_instancia", error(result.getFieldError("domicilio_instancia").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en el nombre");
+        }
+        try {
+            model.addAttribute("titular", error(result.getFieldError("titular").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en el nombre");
+        }
+        try {
+            model.addAttribute("puesto_titular", error(result.getFieldError("puesto_titular").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en el nombre");
+        }
+        try {
+            model.addAttribute("telefono_titular", error(result.getFieldError("telefono_titular").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en el nombre");
+        }
+        try {
+            model.addAttribute("rfc", error(result.getFieldError("rfc").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en el nombre");
+        }
+        //Validacion proyecto
+        try {
+            model.addAttribute("nombre_proyecto", error(result.getFieldError("nombre_proyecto").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en el nombre");
+        }
+        try {
+            model.addAttribute("vacantes", error(result.getFieldError("vacantes").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en vacantes");
+        }
+        try {
+            model.addAttribute("nombreResponsable", error(result.getFieldError("nombreResponsable").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en responsable");
+        }
+        try {
+            model.addAttribute("responsablePuesto", error(result.getFieldError("responsablePuesto").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en puesto");
+        }
+        try {
+            model.addAttribute("telefono_responsable", error(result.getFieldError("telefonoResponsable").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hubo error en telefono");
+        }
+        try {
+            model.addAttribute("domicilio_proyecto", error(result.getFieldError("domicilio_proyecto").getDefaultMessage()));
+        } catch (Exception e) {
+            System.out.println("No hay error en domicilio");
+        }
     }
 
     public String error(String error) {
