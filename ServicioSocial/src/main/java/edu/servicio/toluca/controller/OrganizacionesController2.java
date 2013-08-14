@@ -4,20 +4,27 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.PerfilJSON;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.PropAluInstProyBean;
 import edu.servicio.toluca.entidades.Actividades;
+import edu.servicio.toluca.entidades.Colonia;
+import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Perfil;
+import edu.servicio.toluca.entidades.Programa;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.entidades.TipoOrganizacion;
+import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.model.ValidacionesOrganizaciones;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
+import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
@@ -69,7 +76,10 @@ public class OrganizacionesController2 {
     private ProyectoPerfilFacade proyectoPerfilFacade;
     @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
     private ActividadesFacade actividadesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
+    private FormatoUnicoFacade formatoUnicoFacade;
 
+    MetodosValidacion limpiar = new MetodosValidacion();
     //Alta de Organizacion
     @RequestMapping(method = RequestMethod.GET, value = "/altaOrganizacion.do")
     public String altaOrganizacion(Model model) {
@@ -154,12 +164,12 @@ public class OrganizacionesController2 {
             instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
             System.out.println("Pass encriptado:" + instancia.getPassword());
 
-            ///Convirtiendo a mayusculas
-            instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
-            instancia.setNombre(instancia.getNombre().toUpperCase());
-            instancia.setPuesto(instancia.getPuesto().toUpperCase());
-            instancia.setRfc(instancia.getRfc().toUpperCase());
-            instancia.setTitular(instancia.getTitular().toUpperCase());
+            ///Limpiando codigo
+            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
+            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
+            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
+            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
+            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
 
             try {
                 instanciaFacade.create(instancia);
@@ -203,12 +213,12 @@ public class OrganizacionesController2 {
             instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
             System.out.println("Pass encriptado:" + instancia.getPassword());
 
-            ///Convirtiendo a mayusculas
-            instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
-            instancia.setNombre(instancia.getNombre().toUpperCase());
-            instancia.setPuesto(instancia.getPuesto().toUpperCase());
-            instancia.setRfc(instancia.getRfc().toUpperCase());
-            instancia.setTitular(instancia.getTitular().toUpperCase());
+            ///Limpiando codigo
+            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
+            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
+            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
+            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
+            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
 
             try {
                 instanciaFacade.edit(instancia);
@@ -246,12 +256,12 @@ public class OrganizacionesController2 {
             instancia.setValidacionAdmin(BigInteger.ZERO);
             instancia.setEstatus(BigInteger.valueOf(2));
 
-            //Convirtiendo a mayusculas
-            instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
-            instancia.setNombre(instancia.getNombre().toUpperCase());
-            instancia.setPuesto(instancia.getPuesto().toUpperCase());
-            instancia.setRfc(instancia.getRfc().toUpperCase());
-            instancia.setTitular(instancia.getTitular().toUpperCase());
+            ///Limpiando codigo
+            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
+            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
+            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
+            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
+            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
 
             instanciaFacade.create(instancia);
             System.out.println("Insercion correcta!");
@@ -329,10 +339,10 @@ public class OrganizacionesController2 {
             proyecto.setVacantesDisponibles(proyecto.getVacantes());
 
             //Convertir a mayuscular
-            proyecto.setDomicilio(proyecto.getDomicilio().toUpperCase());
-            proyecto.setNombre(proyecto.getNombre().toUpperCase());
-            proyecto.setNombreResponsable(proyecto.getNombreResponsable().toUpperCase());
-            proyecto.setResponsablePuesto(proyecto.getResponsablePuesto().toUpperCase());
+            proyecto.setDomicilio(limpiar.tuneaStringParaBD(proyecto.getDomicilio()));
+            proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
+            proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
+            proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
 
             proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
@@ -345,7 +355,7 @@ public class OrganizacionesController2 {
             //Insercion de Actividades
             for (int i = 0; i < actividadesModel.actividades.size(); i++) {
                 Actividades actividad = new Actividades();
-                actividad.setDetalle(actividadesModel.actividades.get(i));
+                actividad.setDetalle(limpiar.tuneaStringParaBD(actividadesModel.actividades.get(i)));
                 actividad.setEstatus(BigInteger.ONE);
                 actividad.setIdProyecto(newProyecto);
                 actividadesFacade.create(actividad);
@@ -490,12 +500,12 @@ public class OrganizacionesController2 {
 
             System.out.println("Pass encriptado:" + instancia.getPassword());
 
-            ///Convirtiendo a mayusculas
-            instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
-            instancia.setNombre(instancia.getNombre().toUpperCase());
-            instancia.setPuesto(instancia.getPuesto().toUpperCase());
-            instancia.setRfc(instancia.getRfc().toUpperCase());
-            instancia.setTitular(instancia.getTitular().toUpperCase());
+            ///Limpiando codigo
+            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
+            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
+            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
+            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
+            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
 
             try {
                 instanciaFacade.edit(instancia);
@@ -536,7 +546,7 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaPropAlInstancia.do")
-    public String gdaPropAlInstancia(@Valid PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2, String formato_unico, String nActividades) {
+    public String gdaPropAlInstancia(@Valid PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2, String formato_unico, String nActividades, String selectto) {
         System.out.println("Guardando propuesta de alumno de instancia");
         
         //Validacion
@@ -583,7 +593,101 @@ public class OrganizacionesController2 {
             return "/Organizaciones/propAlInstancia";
 
         } else {
-            model.addAttribute("hola", "que paso");
+            //Se crea instancia
+            Instancia instancia = new Instancia();
+            instancia.setNombre(limpiar.tuneaStringParaBD(propuesta.getNombre_instancia()));
+            instancia.setRfc(limpiar.tuneaStringParaBD(propuesta.getRfc()));
+            instancia.setTitular(limpiar.tuneaStringParaBD(propuesta.getTitular()));
+            instancia.setPuesto(limpiar.tuneaStringParaBD(propuesta.getPuesto_titular()));
+            instancia.setTelefono(propuesta.getTelefono_titular());
+            instancia.setDomicilio(limpiar.tuneaStringParaBD(propuesta.getDomicilio_instancia()));
+            instancia.setValidacionAdmin(BigInteger.valueOf(0)); //No validado
+            instancia.setEstatus(BigInteger.valueOf(3)); //Propuesta de alumno
+            instancia.setTipoOrganizacion(new TipoOrganizacion());
+            instancia.getTipoOrganizacion().setIdTipoOrganizacion(propuesta.getTipoOrganizacion().getIdTipoOrganizacion());
+            instancia.setIdColonia(new Colonia());
+            instancia.getIdColonia().setIdColonia(propuesta.getIdColonia_instancia().getIdColonia());
+            
+            instanciaFacade.create(instancia);
+            System.out.println("Insercion  de intancia correcta!");
+
+            //Obtenemos la instancia creada
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("idInstancia", "desc");
+            Instancia newInstancia = instanciaFacade.findAll(ordenamiento).get(0);
+            
+            //Creamos el proyecto
+            Proyectos proyecto = new Proyectos();
+            proyecto.setNombre(limpiar.tuneaStringParaBD(propuesta.getNombre_proyecto()));
+            proyecto.setDomicilio(limpiar.tuneaStringParaBD(propuesta.getDomicilio_proyecto()));
+            proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(propuesta.getNombreResponsable()));
+            proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(propuesta.getResponsablePuesto()));
+            proyecto.setTelefonoResponsable(propuesta.getTelefonoResponsable());
+            proyecto.setValidacionAdmin(BigInteger.ZERO); //NO validado
+            proyecto.setEstatus(BigInteger.valueOf(2));
+            proyecto.setModalidad(limpiar.tuneaStringParaBD(propuesta.getModalidad()));
+            proyecto.setFechaAlta(new Date());
+            proyecto.setVacantes(propuesta.getVacantes());
+            proyecto.setVacantesDisponibles(propuesta.getVacantes());
+            proyecto.setIdTipoProyecto(new TipoProyecto());
+            proyecto.getIdTipoProyecto().setIdTipoProyecto(propuesta.getIdTipoProyecto().getIdTipoProyecto());
+            proyecto.setIdPrograma(new Programa());
+            proyecto.getIdPrograma().setIdPrograma(propuesta.getIdPrograma().getIdPrograma());
+            proyecto.setIdColonia(new Colonia());
+            proyecto.getIdColonia().setIdColonia(propuesta.getIdColonia_proyecto().getIdColonia());
+            proyecto.setIdInstancia(newInstancia);
+            
+            proyectosFacade.create(proyecto);
+            System.out.println("Insercion de proyecto correcta");
+            
+            //Obtenemos el proyecto creado
+            LinkedHashMap<String, String> ordenamiento2 = new LinkedHashMap<String, String>();
+            ordenamiento2.put("idProyecto", "desc");
+            Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
+            
+            //Insercion de Actividades
+            for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                Actividades actividad = new Actividades();
+                actividad.setDetalle(limpiar.tuneaStringParaBD(actividadesModel.actividades.get(i)));
+                actividad.setEstatus(BigInteger.ONE);
+                actividad.setIdProyecto(newProyecto);
+                actividadesFacade.create(actividad);
+                System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
+            }
+            //Insercion de Perfiles
+            //ProyectoPerfilModel proyectoPerfilModel;
+            if (selectto != null) {
+                //proyectoPerfilModel = new ProyectoPerfilModel(selectto);                
+                //Analisis de la cadena
+                StringTokenizer token = new StringTokenizer(selectto, ",");
+                ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
+
+                System.out.println("Analizar cadena:" + selectto);
+                System.out.println("No de tokens:" + token.countTokens());
+                while (token.hasMoreTokens()) {
+                    String perfil = token.nextToken();
+                    System.out.println("Token:" + perfil);
+                    if (perfil != null && !perfil.equals("")) {
+                        perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
+                    }
+                }
+                for (int i = 0; i < perfiles.size(); i++) {
+                    ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
+                    proyectoPerfil.setIdPerfil(perfiles.get(i));
+                    proyectoPerfil.setIdProyecto(newProyecto);
+                    proyectoPerfilFacade.create(proyectoPerfil);
+                    System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
+                }
+            } else {
+                System.out.println("No se agregaran perfiles");
+            }
+            
+            //Relacionar proyecto con formato unico
+            FormatoUnico formatoUnico = formatoUnicoFacade.find(BigDecimal.valueOf(Double.parseDouble(formato_unico)));
+            formatoUnico.setIdproyecto(newProyecto);
+            formatoUnicoFacade.edit(formatoUnico);
+            System.out.println("Relacion a formato unico correcta");
+            
             return "/Organizaciones/confirmaAltaPropuesta";            
         }
     }
