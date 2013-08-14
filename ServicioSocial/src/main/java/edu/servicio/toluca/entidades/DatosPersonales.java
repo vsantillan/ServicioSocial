@@ -469,5 +469,9 @@ public class DatosPersonales implements Serializable {
     public String toString() {
         return "edu.servicio.toluca.entidades.DatosPersonales[ id=" + id + " ]";
     }
+
+    public void setAlumnoId(String string) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

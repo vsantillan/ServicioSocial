@@ -58,8 +58,8 @@
                     dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
                     dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
                     minDate: 0
-                   
-                    
+
+
                 });
                 $('#formPlatica').formly();
             });
@@ -97,13 +97,32 @@
                             </tr>
                             <tr>
                                 <td><label for="actividad">Actividad</label></td>
-                                <td><select name="actividad">
-                                        <option value="1">Cierta Actividad1</option>
-                                        <option value="2">Cierta Actividad2</option>
-                                        <option value="3">Cierta Actividad3</option>
-                                    </select></td>
+                                <td>
+                                    <core:forEach items="${datosPersonales}" var="current">
+                                        <core:forEach items="${current.formatoUnicoCollection}" var="formato">
+                                            <select name="actividad">
+                                                <core:forEach items="${formato.idproyecto.actividadesCollection}" var="actividades" >
+                                                    <option value="1">${actividades.detalle}</option>
+                                                </core:forEach>
+                                            </select>
+                                        </core:forEach>
+                                    </core:forEach>
+                                </td>
                             </tr>
+                            <core:forEach items="${datosPersonales}" var="current">
+                                <core:forEach items="${current.formatoUnicoCollection}" var="formato">
+                                    <core:choose>
+                                        <core:when test="${formato.catalogoPlanId.detalle=='S'}" >
+                                            <tr>
+                                                <td><label for="calificacion">Calificaci&oacute;n</label></td>
+                                                <td><input type="text" name="actividad" /></td>
+                                                                               
+                                            </tr>
+                                        </core:when> 
+                                    </core:choose>
 
+                                </core:forEach>
+                            </core:forEach>  
                             <tr> 
                                 <td> <input type ="submit" value = "Generar Reporte" /> </td>
                                 <td> <input type ="reset" value = "Limpiar" /></td>

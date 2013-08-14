@@ -14,17 +14,14 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
-        <!-- CSS  Shadowbox-->
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+
 
         <!--Script para DataTables-->
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
         
-         <!--Scripts para shadowbox-->
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
-                    'wmp', 'swf', 'flv']});</script> 
+     <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" />
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -93,17 +90,9 @@
                                 </thead>
                                 <tbody>
                                     <tr class='gradeX'>
-                                        <th><a href="retroalimentacionReportesBimestrales.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                        <th><a href="retroalimentacionReportesBimestrales.do" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
                                         <th>José Antonio Villanueva Gonzalez</th>
                                         <th>09280536</th>
-                                        <th>Ago-Dic 2014</th>
-                                        <th>En proceso</th>
-                                        <th>360</th>
-                                    </tr>
-                                    <tr class='gradeC'>
-                                        <th><a href="retroalimentacionReportesBimestrales.do" rel="shadowbox; width=500px; height=500px;"><img src="imagenes/lupa.png" width="30"/></a></th>
-                                         <th>Alberto Martinez Behumea</th>
-                                        <th>09280545</th>
                                         <th>Ago-Dic 2014</th>
                                         <th>En proceso</th>
                                         <th>360</th>
