@@ -39,8 +39,9 @@ function recargaInfoProyectos(idProyActual)
 function recargaProyectos(idInstancia)
 {
     console.log('el id de la isntancia es' + idInstancia);
-
-    $.get("cargarProyectos.do?id_instancia=" + idInstancia, null, function(respuesta) {
+    var idDP = $('.idDatosPersonalesOrg').val();
+    console.log('El id de los datos personales = ' + idDP);
+    $.get("cargarProyectos.do?id_instancia=" + idInstancia + "&id_datos_personales=" + idDP, null, function(respuesta) {
         $("#proyectos").empty();
         $('#domicilioOrg').empty();
         $('#nombre_responsable').empty();
@@ -87,8 +88,22 @@ function enviarDatosAlumno()
     });
 
     $.post("modificarDatosPersonales.do", alumno, function(respuesta) {
-        alert(respuesta);
-        console.log(respuesta);
+        var respJ = {};
+        respJ = jQuery.parseJSON(respuesta);
+        if (respJ.length > 1)
+        {
+            alert('Tienes errores');
+            $('.observacion').remove();
+            $.each(respJ, function(i, accion) {
+                $('#observaciones').show('slow');
+                
+                $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
+            });
+        }
+        else
+        {
+            alert('Informacion almacenada correctamente');
+        }
     });
 
 

@@ -5,6 +5,8 @@
 package edu.servicio.toluca.beans;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -24,11 +26,28 @@ public class FormatoUnicoDatosPersonalesBean {
     private String claveDocIdentificacion;
     private String folioDocIdentificacion;
     private boolean acuerdoC;
-    
+    private ArrayList<String> listaErrores = new ArrayList<String>();
     
     public FormatoUnicoDatosPersonalesBean()
     {
        
+    }
+    
+    public ArrayList<String> Valida()
+    {
+        boolean r = true;
+        MetodosValidacion mv = new MetodosValidacion();
+        if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); r = false;}
+        if(nombre == null || nombre.equals("")){listaErrores.add("El campo nombre no puede estar vacío"); r = false;}
+        if(apellidoP == null || apellidoP.equals("")){listaErrores.add("El campo Apellido Paterno no puede estar vacío"); r = false;}
+        if(apellidoM == null || apellidoM.equals("")){listaErrores.add("El campo Apellido Materno no puede estar vacío"); r = false;}
+        if(ocupacion == null || ocupacion.equals("")){listaErrores.add("El campo ocupacion no puede estar vacío"); r = false;}
+        if(curp == null || curp.equals("")){listaErrores.add("El campo curp no puede estar vacío"); r = false;}
+        if(claveDocIdentificacion == null || claveDocIdentificacion.equals("")){listaErrores.add("El campo Clave del Documento de indentificación no puede estar vacío"); r = false;}
+        if(folioDocIdentificacion == null || folioDocIdentificacion.equals("0")){listaErrores.add("El campo folio del Documento de indentificación no puede estar vacío"); r = false;}
+        
+        
+        return listaErrores;
     }
     /**
      * @return the nombre

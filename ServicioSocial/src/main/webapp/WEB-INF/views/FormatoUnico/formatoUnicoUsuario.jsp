@@ -294,7 +294,7 @@
                     <form:form id="frmDatosOrganizaciones" modelAttribute="formatoUnicoDatosOrganizaciones" >
                         <table>
                             <tr>
-                                <form:input  type="hidden" path ="id" />
+                                <form:input class="idDatosPersonalesOrg" type="hidden" path ="id" />
                                 <td>Organizaci&oacute;n:</td>
                                 <td>
                                     <select id="comboOrganizaciones" name="organizacion">
@@ -409,11 +409,10 @@
                     </form>
                 </div>
             </div>
-            <div id="observaciones">
+            <div id="observaciones" style="display: none">
                 <b>Debes atender los siguientes puntos</b><br/>
-                <ul>
-                    <li>El nombre no fue escrito correctamente</li>
-                    <li>La Tu direcci&oacute;n est&aacute; vac&iacute;a</li>
+                <ul id="listaObservaciones" >
+                    
                 </ul>
 
             </div>

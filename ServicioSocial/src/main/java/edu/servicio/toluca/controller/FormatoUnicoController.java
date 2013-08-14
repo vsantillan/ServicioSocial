@@ -20,6 +20,7 @@ import edu.servicio.toluca.entidades.FoliosPlatica;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.HorariosAlumno;
 import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
@@ -167,9 +168,9 @@ public class FormatoUnicoController {
             formatoUnico.setPeriodoInicio(platica.getPlaticaId().getPeriodo());
             formatoUnico.setTipoServicio(BigInteger.ONE);
             formatoUnico.setStatusServicio(BigInteger.ONE);
-            
-            
-            
+
+
+
 
             //seteo del proyecto al alumno a través del banco
             Proyectos proyecto = new Proyectos();
@@ -342,7 +343,7 @@ public class FormatoUnicoController {
 ////////Para la subida de archivos/////////////////////
 //////////////////////////////////////////////////////////////////////////
         modelo.addAttribute("idDatSubida", datosPersonales.getId());
-        
+
 
         return "/FormatoUnico/formatoUnicoUsuario";
     }
@@ -353,7 +354,24 @@ public class FormatoUnicoController {
 //    }
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosPersonales.do")
     public @ResponseBody
-    FormatoUnicoErrores modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) {
+    String modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) {
+        String arrJSON = "[";
+        ArrayList<String> listaErrores = dt.Valida();
+        if(listaErrores.isEmpty())
+        {
+            System.out.println("No hubo errores");
+        }
+        else
+        {
+            int i = 1;
+            for(String s : listaErrores)
+            {
+                arrJSON = arrJSON + "{\"observacion\":\""+s+"\"},";
+                System.out.println("Error " + i + " " + s );
+                i++;
+            }
+        }
+        arrJSON = arrJSON.substring(0, arrJSON.length()-1) + "]";
         System.out.println(dt.getId());
         System.out.println(dt.getSexo());
         DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
@@ -376,7 +394,8 @@ public class FormatoUnicoController {
                 System.out.println(error.getDefaultMessage());
             }
         }
-        return new FormatoUnicoErrores();
+        System.out.println("Arrjson" + arrJSON);
+        return arrJSON;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosContacto.do")
@@ -450,23 +469,47 @@ public class FormatoUnicoController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarProyectos.do")
     public @ResponseBody
-    FormatoUnicoProyectosJSON cargarProyectos(Model a, String id_instancia) {
+    FormatoUnicoProyectosJSON cargarProyectos(Model a, String id_instancia, String id_datos_personales) {
         Proyectos pr = null;
+        BigDecimal idDP = new BigDecimal(id_datos_personales);
         //System.out.println("Traigo el id"+id_instancia);
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("idInstancia", id_instancia, "equal", null, null);
         Instancia instancia = listaInstancias.get(0);
         ArrayList<FormatoUnicoProyectosJSON> fuiProyectos = new ArrayList<FormatoUnicoProyectosJSON>();
         FormatoUnicoProyectosJSON fuiJSON = new FormatoUnicoProyectosJSON();
+        DatosPersonales dp = datosPersonalesFacade.find(idDP);
+        VistaAlumno alumno = vistaAlumnoFacade.find(dp.getAlumnoId().getId());
         //System.out.println("iis" + instancia.getNombre());
         //System.out.println("tamaño" +  instancia.getProyectosCollection().size());
         for (Proyectos proy : instancia.getProyectosCollection()) {
             //System.out.println("Aquiii");
-            fuiJSON.getId_instancia().add(instancia.getIdInstancia());
-            fuiJSON.getId_proyecto().add(proy.getIdProyecto());
-            fuiJSON.getNombre().add(proy.getNombre());
-            fuiJSON.getDomicilio().add(proy.getDomicilio());
-            fuiJSON.getNombre_responsable().add(proy.getNombreResponsable());
-            fuiJSON.getTelefono_responsable().add(proy.getTelefonoResponsable());
+            if (proy.getVacantesDisponibles().compareTo(BigInteger.ZERO) > 0) {
+                if (proy.getProyectoPerfilCollection().isEmpty()) {
+                    System.out.println("oxxAgregando uno sin coleccion perfiles");
+                    fuiJSON.getId_instancia().add(instancia.getIdInstancia());
+                    fuiJSON.getId_proyecto().add(proy.getIdProyecto());
+                    fuiJSON.getNombre().add(proy.getNombre());
+                    fuiJSON.getDomicilio().add(proy.getDomicilio());
+                    fuiJSON.getNombre_responsable().add(proy.getNombreResponsable());
+                    fuiJSON.getTelefono_responsable().add(proy.getTelefonoResponsable());
+                } else {
+                    for (ProyectoPerfil per : proy.getProyectoPerfilCollection()) {
+                        System.out.println("xxxCarrera id:" + alumno.getCarreraId());
+                        System.out.println("xxxPerfil p/proy" + per.getIdPerfil().getIdPerfil());
+                        System.out.println("xxxNombre" + per.getIdPerfil().getNombre());
+                        if (per.getIdPerfil().getIdPerfil().toString().equals(new BigDecimal(alumno.getCarreraId()).toString())) {
+                            System.out.println("oxxAgregando uno de perfil");
+                            fuiJSON.getId_instancia().add(instancia.getIdInstancia());
+                            fuiJSON.getId_proyecto().add(proy.getIdProyecto());
+                            fuiJSON.getNombre().add(proy.getNombre());
+                            fuiJSON.getDomicilio().add(proy.getDomicilio());
+                            fuiJSON.getNombre_responsable().add(proy.getNombreResponsable());
+                            fuiJSON.getTelefono_responsable().add(proy.getTelefonoResponsable());
+                        }
+                    }
+                }
+            }
+
         }
         return fuiJSON;
     }
@@ -530,8 +573,7 @@ public class FormatoUnicoController {
         System.out.println("File:" + file.getName());
         System.out.println("Size:" + file.getSize());
         System.out.println("ContentType:" + file.getContentType());
-        if(listaDocumento.isEmpty())
-        {
+        if (listaDocumento.isEmpty()) {
             System.out.println("Subida nueva");
             Documentos doc = new Documentos();
             doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
@@ -545,9 +587,7 @@ public class FormatoUnicoController {
             fui.setStatusFui(new BigInteger("4"));
             formatoUnicoFacade.edit(fui);
             documentoFacade.create(doc);
-        }
-        else
-        {
+        } else {
             System.out.println("Ya estaba");
             Documentos doc = listaDocumento.get(0);
             doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
@@ -561,7 +601,7 @@ public class FormatoUnicoController {
             fui.setStatusFui(new BigInteger("4"));
             formatoUnicoFacade.edit(fui);
             documentoFacade.edit(doc);
-            
+
         }
 //        System.out.println("id:" + vistaAlumno.getId());
 //        String id=vistaAlumno.getId();
@@ -572,7 +612,7 @@ public class FormatoUnicoController {
 //        vistaAlumno1.setFoto(file.getBytes());
 //
 //        vistaAlumnoFacade.edit(vistaAlumno1);
-        
+
 //        System.out.println(file.getOriginalFilename());
 //        System.out.println(file.getSize());
 //        Documentos doc = documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
