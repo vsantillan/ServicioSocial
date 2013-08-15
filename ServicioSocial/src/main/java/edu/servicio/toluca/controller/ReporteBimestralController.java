@@ -5,9 +5,12 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.FormatoUnico;
+import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
+import edu.servicio.toluca.sesion.ReportesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.util.List;
 import javax.ejb.EJB;
@@ -29,20 +32,34 @@ public class ReporteBimestralController {
     private VistaAlumnoFacade vistaAlumnoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnicoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ReportesFacade")
+    private ReportesFacade reportesFacade;
 
 //    @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
 //    public String reporteBimestralAdministrador(Model modelo) {
 //        return "/ReporteBimestral/reporteBimestralAdministrador";
 //    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model modelo) {
         String alumno_id = "09280028";
+        ///////////BUSCAR ALUMNO///////////
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
-        //objeto que voy a insertar
         VistaAlumno alumno = listaAlumnos.get(0);
-        modelo.addAttribute("datosPersonales", datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null));
-        //List<FormatoUnico>
+        List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        DatosPersonales DP = datosPersonales.get(0);
+        modelo.addAttribute("datosPersonales", datosPersonales);
+       
+        /////////////Validamos si es su primer reporte//////////////
+            List<Reportes> RB = reportesFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
+            if (RB.isEmpty()) {
+                List<FormatoUnico> formatoUnico =formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
+                FormatoUnico fechaInicioFU=formatoUnico.get(0);
+                modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
+            }else{
+                modelo.addAttribute("fechaInicio", "");
+            }       
+        //////////////////////////////////////////////////////////////
+
         return "/ReporteBimestral/formatoReporteBimestral";
     }
 

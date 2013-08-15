@@ -1,11 +1,8 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 function actualizaFecha(fechaInicio) {
     // Obtenemos la Fecha
     var fecha = fechaInicio.value;
+    alert(fecha);
     var arrayFecha = fecha.split('-');
     var año = arrayFecha[0];
     var mes = arrayFecha[1] - 1;

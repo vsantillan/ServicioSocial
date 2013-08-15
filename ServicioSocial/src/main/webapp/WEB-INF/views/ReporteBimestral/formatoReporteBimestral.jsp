@@ -87,9 +87,9 @@
                         <table>
                             <tr>
                                 <td> <label for="fecha">Fecha de Inicio del Reporte:</label> </td>
-                                <td><input type="text"  name="fechaInicio"id="datepicker" onchange="actualizaFecha(this)" /></td>  
+                                <td><input type="text"  name="fechaInicio"id="datepicker" value="${fechaInicio}" onchange="actualizaFecha(this)" /></td>  
                                 <td> <label for="fecha">Fecha Limite del  Reporte:</label> </td>
-                                <td><input type="text" name="fechaFin" id="fechaFin" disabled="disabled"value=""/></td> 
+                                <td><input type="text" name="fechaFin" id="fechaFin" disabled="disabled" value=""  /></td> 
                             </tr>
                             <tr>
                                 <td><label for="horasA">Horas del Reporte:</label></td>
