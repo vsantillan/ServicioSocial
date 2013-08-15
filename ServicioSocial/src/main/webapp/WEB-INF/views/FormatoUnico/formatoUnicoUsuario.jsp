@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <%@ include file="../Template/sinJavascript.jsp" %>
         <%@ include file="../Template/headsMenuUsuario.jsp" %>
         <%@ include file="../Template/metas.jsp" %>
         <jsp:include page="../Template/headsJQueryUI.jsp" /><!--Hay conflicto de datatables con estilo forms--->
@@ -53,17 +54,14 @@
 
 
         <title>Formato &Uacute;nico - Usuario</title>
-        <noscript> 
-        <META HTTP-EQUIV="Refresh" CONTENT="10;URL=http://www.google.es/"> 
-        </noscript> 
+        
     </head>
     <body class ="background" onload=" recargaProyectos(2);
                 recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto});">
 
-        <noscript> 
-        Te vas a chingar a tu madree
-        </noscript>
+        
         <%@ include file="../Template/banner.jsp" %>
+        
 
         <%-- inicio del contenido --%>
         <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />

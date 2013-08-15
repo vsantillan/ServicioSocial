@@ -212,3 +212,11 @@ table {margin-top: 0;margin-bottom: 10px; padding: 0 5px 0 15px; font-family:Ari
     background-color: red;
     padding-top: 5px;
 }
+#noJavaScript{
+    text-align:center;
+    width:70%;
+    height:6000px;
+    margin-left: 15%;
+    background: #C4C1C1;
+
+}
