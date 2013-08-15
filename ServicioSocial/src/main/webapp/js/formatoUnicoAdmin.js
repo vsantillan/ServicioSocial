@@ -92,11 +92,12 @@ function cambiarEstadoFormatoRechazado()
 
 function  mostrarDIVMotivos()
 {
-    Shadowbox.open(
-               { content:$("#motivos").html(), 
-                 player:'html'
-                }
-         );
+ $.fancybox(
+             $("#motivos").html(), //fancybox works perfect with hidden divs
+             {
+                  //fancybox options
+             }
+        );
 }
 
 
@@ -116,7 +117,7 @@ function obtenerDatos()
     {        
         if(respuesta==="OK")
         {
-            window.parent.Shadowbox.close();
+            //$.fancybox.close();
             window.location.reload();
         }else
         {

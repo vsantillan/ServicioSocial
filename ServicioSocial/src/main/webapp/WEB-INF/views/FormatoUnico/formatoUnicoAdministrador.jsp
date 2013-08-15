@@ -16,16 +16,16 @@
         
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
+
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-        <!--Scripts para shadowbox-->
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
-                    'wmp', 'swf', 'flv']});</script> 
+        
+        <jsp:include page="../Template/headsModal.jsp" />
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-          
+          <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" />
+        
         <title>Administrador</title>
         
     </head>
@@ -67,7 +67,7 @@
                                     <td>
                                         <core:out value="${filaNR.nombre}"/>
                                     </td>
-                                    <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" rel="shadowbox"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                    <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" class="fancy"><img width="30" src="imagenes/lupa.png"/></a></td>
                                     <td><core:out value="${filaNR.fechaSubida}"/></td>
                                     
                                     <td>
@@ -131,14 +131,10 @@
                                         <td><core:out value="${filaCorrec.fechaSubida}"/></td>
                                         <td>
                                             <ul>
-                                            
                                             <core:forEach items="${filaCorrec.listaObservaciones}" var="observacion">
                                                 <li>${observacion}</li>
                                             </core:forEach>
-                                            
                                             </ul>
-                                            
-                                            
                                         </td>
                                     </tr>
                                 </core:forEach>
