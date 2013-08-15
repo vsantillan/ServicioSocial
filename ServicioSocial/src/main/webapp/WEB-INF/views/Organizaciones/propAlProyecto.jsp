@@ -28,7 +28,7 @@
     <center>
         <h1>Propuesta de Alumno</h1>        
 
-        <form:form name="altaPropProyecto" commandName="proyecto" class="MyForm" action="gdaPropAlProyecto.do"  method="POST" style="width:60%;" id="contenido">
+        <form:form name="altaPropProyecto" commandName="proyecto" class="MyForm" action="gdaPropAlProyecto.do"  method="POST" style="width:80%;" id="contenido">
             <center>
                 <input type="hidden" name="datos_personales" value="${datos_personales}">
                 <form:input type="hidden" path="idInstancia.idInstancia"/>

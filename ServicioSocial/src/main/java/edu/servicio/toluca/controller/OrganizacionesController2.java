@@ -101,8 +101,14 @@ public class OrganizacionesController2 {
     public String altaProyecto(Model model, HttpSession session, HttpServletRequest request) {
 
         if (new ValidaSesion().validaOrganizacion(session, request)) {
+            String idInstancia=session.getAttribute("NCONTROL")+"";
+            System.out.println("idInstancia:"+idInstancia);
+            Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            Proyectos proyecto = new Proyectos();
+            proyecto.setIdInstancia(instancia);
+            
             //Objeto proyecto para el commandAttribute
-            model.addAttribute("proyecto", new Proyectos());
+            model.addAttribute("proyecto", proyecto);
             //Estados
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
@@ -299,7 +305,7 @@ public class OrganizacionesController2 {
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaProyecto.do")
     public String gdaAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, HttpSession session, HttpServletRequest request) {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
-            System.out.println("hola admin gda alta organizacion");
+            System.out.println("hola gda alta organizacion");
 
             //Validaciones
             System.out.println("Validar");
@@ -350,11 +356,11 @@ public class OrganizacionesController2 {
             } else {
 
                 System.out.print("no hubo errores");
-                proyecto.setValidacionAdmin(BigInteger.ONE);
+                proyecto.setValidacionAdmin(BigInteger.ZERO);
                 proyecto.setEstatus(BigInteger.ONE);
                 proyecto.setFechaAlta(new Date());
                 proyecto.setVacantesDisponibles(proyecto.getVacantes());
-
+                System.out.println("idInstancia:"+proyecto.getIdInstancia().getIdInstancia());
                 //Convertir a mayuscular
                 proyecto.setDomicilio(limpiar.tuneaStringParaBD(proyecto.getDomicilio()));
                 proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
@@ -406,7 +412,7 @@ public class OrganizacionesController2 {
                     System.out.println("No se agregaran perfiles");
                 }
 
-                return "/Organizaciones/confirmaAltaAdminProyectos";
+                return "/Organizaciones/confirmaAltaProyectos";
             }
         } else {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesió para acceder a esta sección.</div>");

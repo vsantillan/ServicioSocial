@@ -68,7 +68,7 @@ $(document).ready(function() {
     }
     
     //Formulario alta admin proyectos
-    if (typeof(iniciarAltaAdminProyecto) !== 'undefined' || typeof(iniciarAltaPropuestaInstancia) !== 'undefined') {
+    if (typeof(iniciarAltaAdminProyecto) !== 'undefined' || typeof(iniciarAltaPropuestaInstancia) !== 'undefined' || typeof (iniciarAltaProyecto) !== 'undefined') {
         console.log("Iniciando alta admin proyecto");
         //iniciarPerfiles();
         var nActHidden = document.getElementById("PrenActividades");
