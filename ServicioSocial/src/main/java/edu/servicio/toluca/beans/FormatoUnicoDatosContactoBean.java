@@ -6,6 +6,7 @@ package edu.servicio.toluca.beans;
 
 import edu.servicio.toluca.entidades.Colonia;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -14,7 +15,6 @@ import javax.validation.constraints.NotNull;
  */
 public class FormatoUnicoDatosContactoBean {
     private BigDecimal id;
-    @NotNull
     private String calle;
     private String numeroI;
     private String numeroE;
@@ -27,6 +27,44 @@ public class FormatoUnicoDatosContactoBean {
     private String twitter;
     private String facebook;
     private Colonia idColonia;
+    private ArrayList<String> listaErrores = new ArrayList<String>();
+    MetodosValidacion mv = new MetodosValidacion();
+    
+    public ArrayList<String> Valida()
+    { 
+        //Validar que no estén vacíos
+        if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); }
+        if(calle == null || calle.equals("")){listaErrores.add("El campo calle no puede estar vacío"); }
+        if(numeroE == null || numeroE.equals("")){listaErrores.add("El campo Numero Exterior no puede estar vacío"); }
+        if(entreCalles == null || entreCalles.equals("")){listaErrores.add("El campo Entre Calles no puede estar vacío"); }
+        if(referencias == null || referencias.equals("")){listaErrores.add("El campo Referencias no puede estar vacío"); }
+        //Validar tamaños de texto
+        if(!mv.minimoString(calle, 1) && !mv.maximoString(calle, 200)){listaErrores.add("El campo calle debe tener entre 1 y 200 letras");} 
+        if(!mv.minimoString(numeroE, 1) && !mv.maximoString(numeroE, 5)){listaErrores.add("El campo numero exterior debe tener entre 1 y 5 digitos");} 
+        if(!mv.minimoString(entreCalles, 1) && !mv.maximoString(entreCalles, 255)){listaErrores.add("El campo entre calles debe tener entre 1 y 255 letras");} 
+        if(!mv.minimoString(referencias, 1) && !mv.maximoString(referencias, 70)){listaErrores.add("El campo referencias debe tener entre 1 y 70 letras");}
+        
+        if(!mv.maximoString(numeroI, 5)){listaErrores.add("El campo numero interior no puede ser mayor a 5 digitos");} 
+        if(!mv.maximoString(telefono_casa, 50)){listaErrores.add("El campo Telefono de casa no puede ser mayor a 50 digitos");} 
+        if(!mv.maximoString(telefono_cel, 30)){listaErrores.add("El campo Telefono celular no puede ser mayor a 30 digitos");} 
+        if(!mv.maximoString(telefono_oficina, 30)){listaErrores.add("El campo Telefono oficina no puede ser mayor a 30 digitos");} 
+        if(!mv.maximoString(twitter, 25)){listaErrores.add("El campo Twitter no puede ser mayor a 25 letras");} 
+        if(!mv.maximoString(facebook, 30)){listaErrores.add("El campo Facebook no puede ser mayor a 30 letras");} 
+        
+        return listaErrores;
+    }
+    
+    public void arregla()
+    {
+        calle = mv.tuneaStringParaBD(calle);
+        numeroI = mv.dejarSoloNumeros(numeroI);
+        numeroE = mv.dejarSoloNumeros(numeroE);
+        entreCalles = mv.tuneaStringParaBD(entreCalles);
+        referencias = mv.tuneaStringParaBD(referencias);
+        telefono_casa = mv.dejarSoloNumeros(telefono_casa);
+        telefono_cel = mv.dejarSoloNumeros(telefono_cel);
+        telefono_oficina = mv.dejarSoloNumeros(telefono_oficina);
+    }
 
     /**
      * @return the calle

@@ -398,32 +398,44 @@ public class FormatoUnicoController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosContacto.do")
     public @ResponseBody
-    FormatoUnicoErrores modificarDatosContactoAlumno(FormatoUnicoDatosContactoBean dt, BindingResult resultado) {
-        
-        
-        DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
-        datosPersonales.setCalle(dt.getCalle());
-        datosPersonales.setNumeroI(dt.getNumeroI());
-        datosPersonales.setNumeroE(dt.getNumeroE());
-        datosPersonales.setEntreCalles(dt.getEntreCalles());
-        datosPersonales.setReferencia(dt.getReferencias());
-        datosPersonales.setTelefonoCasa(dt.getTelefono_casa());
-        datosPersonales.setTelefonoCel(dt.getTelefono_cel());
-        datosPersonales.setTelefonoOficina(dt.getTelefono_oficina());
-        datosPersonales.setFacebook(dt.getFacebook());
-        datosPersonales.setTwitter(dt.getTwitter());
-        System.out.println("coloonia" + dt.getIdColonia() + "  " + dt.getIdColonia().getNombre());
-        datosPersonales.setIdColonia(dt.getIdColonia());
-        datosPersonalesFacade.edit(datosPersonales);
+    String modificarDatosContactoAlumno(FormatoUnicoDatosContactoBean dt, BindingResult resultado) {
+        String arrJSON = "[";
+        dt.arregla();
 
-
-
-        if (resultado.hasErrors()) {
-            for (ObjectError error : resultado.getAllErrors()) {
-                System.out.println(error.getDefaultMessage());
+        ArrayList<String> listaErrores = dt.Valida();
+        if (listaErrores.isEmpty()) {
+            DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
+            datosPersonales.setCalle(dt.getCalle());
+            datosPersonales.setNumeroI(dt.getNumeroI());
+            datosPersonales.setNumeroE(dt.getNumeroE());
+            datosPersonales.setEntreCalles(dt.getEntreCalles());
+            datosPersonales.setReferencia(dt.getReferencias());
+            datosPersonales.setTelefonoCasa(dt.getTelefono_casa());
+            datosPersonales.setTelefonoCel(dt.getTelefono_cel());
+            datosPersonales.setTelefonoOficina(dt.getTelefono_oficina());
+            datosPersonales.setFacebook(dt.getFacebook());
+            datosPersonales.setTwitter(dt.getTwitter());
+            System.out.println("coloonia" + dt.getIdColonia() + "  " + dt.getIdColonia().getNombre());
+            datosPersonales.setIdColonia(dt.getIdColonia());
+            datosPersonalesFacade.edit(datosPersonales);
+        } else {
+            int i = 1;
+            for (String s : listaErrores) {
+                arrJSON = arrJSON + "{\"observacion\":\"" + s + "\"},";
+                System.out.println("Error " + i + " " + s);
+                i++;
             }
         }
-        return new FormatoUnicoErrores();
+        if (arrJSON.equals("[")) {
+            arrJSON = "noInfo";
+        } else {
+            arrJSON = arrJSON.substring(0, arrJSON.length() - 1) + "]";
+        }
+
+
+        System.out.println("Arrjson" + arrJSON);
+        return arrJSON;
+
 
     }
 

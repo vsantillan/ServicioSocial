@@ -35,21 +35,24 @@ public class FormatoUnicoDatosPersonalesBean {
     }
     
     public ArrayList<String> Valida()
-    {
-        
-        boolean r = true;
-        
+    { 
         //Validar que no estén vacíos
-        if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); r = false;}
-        if(nombre == null || nombre.equals("")){listaErrores.add("El campo nombre no puede estar vacío"); r = false;}
-        if(apellidoP == null || apellidoP.equals("")){listaErrores.add("El campo Apellido Paterno no puede estar vacío"); r = false;}
-        if(apellidoM == null || apellidoM.equals("")){listaErrores.add("El campo Apellido Materno no puede estar vacío"); r = false;}
-        if(ocupacion == null || ocupacion.equals("")){listaErrores.add("El campo ocupacion no puede estar vacío"); r = false;}
-        if(curp == null || curp.equals("")){listaErrores.add("El campo curp no puede estar vacío"); r = false;}
-        if(claveDocIdentificacion.equals("")){listaErrores.add("El campo Clave del Documento de indentificación no puede estar vacío"); r = false;}
-        if(folioDocIdentificacion == null || folioDocIdentificacion.equals("0")){listaErrores.add("El campo folio del Documento de indentificación no puede estar vacío"); r = false;}
+        if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); }
+        if(nombre == null || nombre.equals("")){listaErrores.add("El campo nombre no puede estar vacío"); }
+        if(apellidoP == null || apellidoP.equals("")){listaErrores.add("El campo Apellido Paterno no puede estar vacío"); }
+        if(apellidoM == null || apellidoM.equals("")){listaErrores.add("El campo Apellido Materno no puede estar vacío"); }
+        if(ocupacion == null || ocupacion.equals("")){listaErrores.add("El campo ocupacion no puede estar vacío"); }
+        if(curp == null || curp.equals("")){listaErrores.add("El campo curp no puede estar vacío"); }
+        if(claveDocIdentificacion.equals("")){listaErrores.add("El campo Clave del Documento de indentificación no puede estar vacío"); }
+        if(folioDocIdentificacion == null || folioDocIdentificacion.equals("0")){listaErrores.add("El campo folio del Documento de indentificación no puede estar vacío"); }
         //Validar tamaños de texto
-        if(!mv.minimoString(nombre, 1) && !mv.maximoString(nombre, 28)){listaErrores.add("El campo nombre debe tener entre 1 y 28 letras");}
+        if(!mv.minimoString(nombre, 1) && !mv.maximoString(nombre, 60)){listaErrores.add("El campo nombre debe tener entre 1 y 60 letras");}
+        if(!mv.minimoString(apellidoP, 1) && !mv.maximoString(apellidoP, 30)){listaErrores.add("El campo apellido paterno debe tener entre 1 y 30 letras");}
+        if(!mv.minimoString(apellidoM, 1) && !mv.maximoString(apellidoM, 30)){listaErrores.add("El campo apellido materno debe tener entre 1 y 30 letras");}
+        if(!mv.minimoString(ocupacion, 1) && !mv.maximoString(ocupacion, 30)){listaErrores.add("El campo ocupacion debe tener entre 1 y 30 letras");}
+        if(!mv.minimoString(curp, 18) && !mv.maximoString(curp, 18)){listaErrores.add("El campo CURP debe contener 18 caracteres");}
+        if(!mv.minimoString(claveDocIdentificacion, 1) && !mv.maximoString(claveDocIdentificacion, 30)){listaErrores.add("El campo Clave del Documento de identificacion debe tener entre 1 y 30 letras");}
+        if(!mv.minimoString(folioDocIdentificacion, 1) && !mv.maximoString(folioDocIdentificacion, 6)){listaErrores.add("El campo Folio del Documento de identificacion debe tener entre 1 y 6 digitos");}
         
         
         return listaErrores;

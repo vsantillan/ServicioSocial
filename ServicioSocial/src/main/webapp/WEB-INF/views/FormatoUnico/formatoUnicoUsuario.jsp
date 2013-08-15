@@ -82,11 +82,11 @@
                             </tr>
                             <tr>
                                 <td>Apellido Paterno</td>
-                                <td><form:input  path ="apellidoP" /> </td>
+                                <td><form:input  path ="apellidoP" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Apellido Materno:</td>
-                                <td><form:input  path ="apellidoM" /> </td>
+                                <td><form:input  path ="apellidoM" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Sexo</td>
@@ -134,19 +134,19 @@
                             </tr>
                             <tr>
                                 <td>Ocupaci&oacute;n:</td>
-                                <td><form:input  path ="ocupacion" /> </td>
+                                <td><form:input  path ="ocupacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>CURP:</td>
-                                <td><form:input  path ="curp" /> </td>
+                                <td><form:input  path ="curp" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Folio de Documento de Identificaci&oacute;n:</td>
-                                <td><form:input  path ="folioDocIdentificacion" /> </td>
+                                <td><form:input  path ="folioDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Clave de Documento de Identificaci&oacute;n:</td>
-                                <td><form:input  path ="claveDocIdentificacion" /> </td>
+                                <td><form:input  path ="claveDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -166,15 +166,15 @@
                             <tr>
                                 <form:input  type="hidden" path ="id" />
                                 <td>Calle:</td>
-                                <td><form:input  path ="calle" /> </td>
+                                <td><form:input  path ="calle" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>No. Int.</td>
-                                <td><form:input  path ="numeroI" /> </td>
+                                <td><form:input  path ="numeroI" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>No. Ext.</td>
-                                <td><form:input  path ="numeroE"/> </td>
+                                <td><form:input  path ="numeroE"onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
 
                             <tr>
@@ -227,31 +227,31 @@
 
 
                                 <td>Entre Calles:</td>
-                                <td><form:input  path ="entreCalles"/> </td>
+                                <td><form:input  path ="entreCalles" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Referencias:</td>
-                                <td><form:input  path ="referencias"/> </td>
+                                <td><form:input  path ="referencias" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono casa:</td>
-                                <td><form:input  path ="telefono_casa"/> </td>
+                                <td><form:input  path ="telefono_casa" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono cel:</td>
-                                <td><form:input  path ="telefono_cel"/> </td>
+                                <td><form:input  path ="telefono_cel" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono oficina:</td>
-                                <td><form:input  path ="telefono_oficina"/> </td>
+                                <td><form:input  path ="telefono_oficina" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Twitter:</td>
-                                <td><form:input  path ="twitter"/> </td>
+                                <td><form:input  path ="twitter" /> </td>
                             </tr>
                             <tr>
                                 <td>Facebook:</td>
-                                <td><form:input  path ="facebook"/> </td>
+                                <td><form:input  path ="facebook" /> </td>
                             </tr>
                             <tr>
                                 <td></td>
