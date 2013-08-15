@@ -2,16 +2,21 @@
 <%
 
     //Se define el nombre del reporte del jasperserver con su ruta
-    String reporte = "/reports/sia/folio1";
-    String idPlatica = request.getParameter("fecha");
-
+    String reporte = "/reports/sia/generarFolio2";
+    //String numeroControl = request.getParameter("fecha");
+    
+    String numeroControl="9280531";
+    String folio="9280531";
+    String Fecha="31/07/2013";
     com.jaspersoft.jasperserver.api.metadata.xml.domain.impl.ResourceDescriptor reportUnit = null;
     java.io.OutputStream os = null;
     try {
         java.util.Map parametros = new java.util.HashMap();
 
         //se crea la lista de parametros del reporte
-        parametros.put("id", idPlatica);
+        parametros.put(numeroControl, numeroControl);
+        parametros.put(folio, folio);
+        parametros.put(Fecha, Fecha);
 
         ClienteJasperReport client = new ClienteJasperReport();
         JasperPrint print = client.runReport(reporte, parametros);

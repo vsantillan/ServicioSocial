@@ -152,8 +152,8 @@ public class PlaticaController {
         platica.setNumeroAsistentes(numero);
         platicaFacade.edit(platica);
 
-        // return "/Platicas/reporte";
-        return "/Platicas/seleccionarPlatica";
+         return "/Platicas/reporte";
+       // return "/Platicas/seleccionarPlatica";
     }
 /////////ASISTENCIA.DO////////////////////
 
