@@ -17,14 +17,16 @@ import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 public class NavegacionPrincipalController {       
@@ -85,8 +87,17 @@ public class NavegacionPrincipalController {
         return "/NavegacionPrincipal/loginPrincipal";
     }
     
+    @RequestMapping(method = RequestMethod.GET, value = "cerrarSesion.do")
+    public String cerrarSesion(Model model, HttpSession session, HttpServletRequest request){
+        session = request.getSession();
+        session.invalidate();
+        return "redirect:index.do";
+    }
+    
     @RequestMapping(method = RequestMethod.POST, value = "/validaLogin.do")
-    public String validaLogin(Model model, String usuario, String pass){
+    public String validaLogin(Model model, String usuario, String pass, HttpSession session, HttpServletRequest request){
+        session = request.getSession();
+        
         System.out.println("Usuario:"+ usuario);
         System.out.println("Pass:"+pass);    
         
@@ -106,6 +117,9 @@ public class NavegacionPrincipalController {
                 Double porcentaje= Double.parseDouble(alumno.get(0).getPorcentaje());
                 System.out.println("Porcentaje del alumno:"+porcentaje);
                 if( porcentaje >= 70){
+                    //Sesion
+                    session.setAttribute("ROL", "ALUMNO");
+                    session.setAttribute(("NCONTROL"), usuario.substring(4));
                     return "redirect:panelUsuario.do";
                 }else{
                     model.addAttribute("error", "<div class='error'>Lo sentimos no cumples con el minimo de 70% de créditos para tramitar tu servicio social</div>");
@@ -114,19 +128,20 @@ public class NavegacionPrincipalController {
             }
             //JOELITO
             if(rol.equals("ROLE_GESVIN_OPERACION")){
+                session.setAttribute("ROL", "OPERACION");
                 return "redirect:panelAdministrador.do";
             }
             //DIRECTIVOS
             if(rol.equals("ROLE_GESVIN_CONSULTAS")){
-                
+                session.setAttribute("ROL", "CONSULTAS");
             }
             //BACKDOOR
             if(rol.equals("ROLE_GESVIN_ADMIN")){
-                
+                session.setAttribute("ROL", "ADMIN");
             }
             //ASISTENTE
             if(rol.equals("ROLE_GESVIN_REGISTRO")){
-                
+                session.setAttribute("ROL", "REGISTRO");
             }
             //OTRO
             if(rol.equals("OTRO")){

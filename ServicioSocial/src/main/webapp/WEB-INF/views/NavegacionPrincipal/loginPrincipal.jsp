@@ -3,7 +3,12 @@
     Created on : 10-jun-2013, 11:24:14
     Author     : bustedvillain
 --%>
-
+<%
+    String error="";
+    if(request.getParameter("error")!=null){
+        error=request.getParameter("error");
+    }
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
@@ -49,6 +54,7 @@
                             </td>
                         </tr>
                         ${error}
+                        <%=error%>
                     </table>
                     <h3>Recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</h3>
                 </form:form> 

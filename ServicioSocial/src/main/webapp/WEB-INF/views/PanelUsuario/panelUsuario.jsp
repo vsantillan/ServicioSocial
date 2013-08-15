@@ -3,7 +3,11 @@
     Created on : 3/06/2013, 10:52:04 AM
     Author     : roy
 --%>
-
+<%
+    HttpSession sesionOk = request.getSession();
+    String rol=sesionOk.getAttribute("ROL")+"";
+    String ncontrol=sesionOk.getAttribute("NCONTROL")+"";
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -50,7 +54,8 @@
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>                            
             </table>
-
+            <h3>ROL:<%=rol%></h3>
+            <h3>NCONTROL:<%=ncontrol%></h3>
         </div>
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>
