@@ -53,9 +53,16 @@
 
 
         <title>Formato &Uacute;nico - Usuario</title>
+        <noscript> 
+        <META HTTP-EQUIV="Refresh" CONTENT="10;URL=http://www.google.es/"> 
+        </noscript> 
     </head>
     <body class ="background" onload=" recargaProyectos(2);
                 recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto});">
+
+        <noscript> 
+        Te vas a chingar a tu madree
+        </noscript>
         <%@ include file="../Template/banner.jsp" %>
 
         <%-- inicio del contenido --%>
@@ -166,7 +173,7 @@
                             <tr>
                                 <form:input  type="hidden" path ="id" />
                                 <td>Calle:</td>
-                                <td><form:input  path ="calle" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input  path ="calle" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>No. Int.</td>
@@ -174,7 +181,7 @@
                             </tr>
                             <tr>
                                 <td>No. Ext.</td>
-                                <td><form:input  path ="numeroE"onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input  path ="numeroE" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
 
                             <tr>
@@ -227,11 +234,11 @@
 
 
                                 <td>Entre Calles:</td>
-                                <td><form:input  path ="entreCalles" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input  path ="entreCalles" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Referencias:</td>
-                                <td><form:input  path ="referencias" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input  path ="referencias" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono casa:</td>
@@ -305,7 +312,7 @@
                                 </td>
                                 <td>
                                     Fecha de Inicio 
-                                    <form:input  type="text"  size="15" path ="fecha_inicio"  />
+                                    <form:input  type="text" require="true"  size="15" path ="fecha_inicio"  />
                                 </td>
                             </tr>
                             <tr>
@@ -412,7 +419,7 @@
             <div id="observaciones" style="display: none">
                 <b>Debes atender los siguientes puntos</b><br/>
                 <ul id="listaObservaciones" >
-                    
+
                 </ul>
 
             </div>

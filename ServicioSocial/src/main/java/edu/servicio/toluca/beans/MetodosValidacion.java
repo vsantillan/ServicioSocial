@@ -16,6 +16,7 @@ public class MetodosValidacion {
     public boolean r = true;
 
     public boolean minimoString(String s, int tamanyo) {
+        r = true;
         if (s.length() < tamanyo) {
             r = false;
         }
@@ -23,7 +24,9 @@ public class MetodosValidacion {
     }
 
     public boolean maximoString(String s, int tamanyo) {
+        r = true;
         if (s.length() > tamanyo) {
+            System.out.println("Tamaño:" + tamanyo + " Longitud:"+s.length());
             r = false;
         }
         return r;
