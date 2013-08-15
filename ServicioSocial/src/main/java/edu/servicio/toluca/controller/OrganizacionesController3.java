@@ -10,6 +10,8 @@ import edu.servicio.toluca.sesion.InstanciaFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,7 +32,7 @@ public class OrganizacionesController3 {
 
     @RequestMapping(method = RequestMethod.POST, value = "/borrarOrganizacion.do")
     public @ResponseBody
-    String borrarOrganizacion(int id, String descripcion,String correo) {
+    String borrarOrganizacion(int id, String descripcion,String correo, HttpSession session, HttpServletRequest request) {
         System.out.println("Mando el POST--id: "+id);
 
 //            System.out.println("Antes del update");

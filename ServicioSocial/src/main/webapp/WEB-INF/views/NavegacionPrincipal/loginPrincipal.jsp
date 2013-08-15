@@ -20,6 +20,7 @@
     <head>
         <%@ include file="../Template/headsMenuUsuario.jsp" %>
         <%@ include file="../Template/metas.jsp" %>
+        <script src="js/jquery.manolo.js"></script>
         <title>Departamento de Servicio Social :: Organizaciones ::</title>
     </head>
     <body class="background">
@@ -31,7 +32,7 @@
             <center>
                 <br/>
                 <h1>Login</h1>
-                <form:form name="formLoginOrg" class="MyForm" action="validaLogin.do" method="POST" style="width:400px; height:230px">
+                <form:form name="formLogin" class="MyForm" action="validaLogin.do" method="POST" style="width:400px; height:230px">
                     <table>
                         <tr>
                             <td> <label for="usuario">Usuario (alu_00289999):</label> </td>
@@ -46,7 +47,7 @@
                             </td> 
                         </tr>
                         <tr> 
-                            <td colspan="2"> <input type ="submit" value = "Entrar" /> </td>
+                            <td colspan="2"> <input type ="button" value = "Entrar" id="btnLogin"/> </td>
                         </tr>
                         <tr>
                             <td colspan="2">

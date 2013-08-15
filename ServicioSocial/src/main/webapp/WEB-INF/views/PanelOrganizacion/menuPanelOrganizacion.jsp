@@ -3,7 +3,10 @@
     Created on : 06-jun-2013, 10:26:34
     Author     : bustedvillain
 --%>
-
+<%
+    HttpSession sesionOk = request.getSession();
+    String nombre=sesionOk.getAttribute("NOMBRE")+"";
+%>
 
 <div id="menu">
     <div class="jquerycssmenu">
@@ -15,7 +18,7 @@
                 <li><a href="ayuda.do">Ayuda</a>
 
                 </li>
-                <li><a href="panelOrganizacion.do">Organizacion X</a>
+                <li><a href="panelOrganizacion.do">Organizacion <%=nombre%></a>
                     <ul>
                         <li><a href="panelOrganizacion.do">Ver Perfil</a></li>
                         <li><a href="mensajeOrganizacion.do">Mensajes</a></li>

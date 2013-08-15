@@ -11,7 +11,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
-        <h1>Alta de prpuesta exitosa</h1>
+    <body class="background">
+        <div id="contenido" style="width:60%">
+            <center>
+                <br/>
+                <h1>Propuesta registrada correctamente</h1>
+                <img src="imagenes/paloma.png"/>
+                <h3>Esta propuesta aún tiene que ser validada por el administrador.</h3>
+                <input type="button" value="Continuar con mi formato unico" onclick="parent.$.fn.fancybox.close();">
+                <br/>
+            </center>
+        </div>
+
     </body>
 </html>

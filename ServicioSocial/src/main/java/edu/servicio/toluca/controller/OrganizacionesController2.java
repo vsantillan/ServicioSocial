@@ -11,6 +11,7 @@ import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.PropAluInstProyBean;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Colonia;
+import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Perfil;
@@ -20,9 +21,11 @@ import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.model.ActividadesModel;
+import edu.servicio.toluca.model.ValidaSesion;
 import edu.servicio.toluca.model.ValidacionesOrganizaciones;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
+import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
@@ -40,6 +43,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,9 +83,11 @@ public class OrganizacionesController2 {
     private ActividadesFacade actividadesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnicoFacade;
-
+    @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
+    private DatosPersonalesFacade datosPersonalesFacade;
     MetodosValidacion limpiar = new MetodosValidacion();
     //Alta de Organizacion
+
     @RequestMapping(method = RequestMethod.GET, value = "/altaOrganizacion.do")
     public String altaOrganizacion(Model model) {
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
@@ -91,12 +98,31 @@ public class OrganizacionesController2 {
 
     //Alta de Proyecto
     @RequestMapping(method = RequestMethod.GET, value = "/altaProyecto.do")
-    public String altaProyecto(Model a) {
-        return "/Organizaciones/altaProyecto";
+    public String altaProyecto(Model model, HttpSession session, HttpServletRequest request) {
+
+        if (new ValidaSesion().validaOrganizacion(session, request)) {
+            //Objeto proyecto para el commandAttribute
+            model.addAttribute("proyecto", new Proyectos());
+            //Estados
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("nombre", "asc");
+            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            //TipoProyecto
+            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+            //Perfil
+            model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            //Programa
+            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+
+            return "/Organizaciones/altaProyecto";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesió para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/altaAdminOrganizacion.do")
-    public String altaAdminOrganizacion(Model model) {
+    public String altaAdminOrganizacion(Model model, HttpSession session, HttpServletRequest request) {
         model.addAttribute("instancia", new Instancia());
         model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
 
@@ -108,14 +134,14 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/altaAdminProyectos.do")
-    public String altaAdminProyectos(Model model) {
+    public String altaAdminProyectos(Model model, HttpSession session, HttpServletRequest request) {
 
         //Organizacion
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
 
         for (int i = 0; i < listaInstancias.size(); i++) {
-            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+            if (listaInstancias.get(i).getEstatus() == BigInteger.ONE || listaInstancias.get(i).getEstatus() == BigInteger.valueOf(2)) {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
@@ -137,7 +163,7 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaOrganizacion.do")
-    public String gdaAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia) {
+    public String gdaAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia, HttpSession session, HttpServletRequest request) {
 
         //Validacion
         new ValidacionesOrganizaciones().valGdaAltaInst(instancia, result, model, codigo_postal, otra_colonia, existe_colonia, confirma_password);
@@ -233,7 +259,7 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAdminAltaOrganizacion.do")
-    public String gdaAdminAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia) {
+    public String gdaAdminAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, HttpSession session, HttpServletRequest request) {
         System.out.println("hola admin gda alta organizacion");
 
         //Validacion
@@ -253,7 +279,7 @@ public class OrganizacionesController2 {
             return "/Organizaciones/altaAdminOrganizacion";
         } else {
             System.out.print("no hubo errores");
-            instancia.setValidacionAdmin(BigInteger.ZERO);
+            instancia.setValidacionAdmin(BigInteger.ONE);
             instancia.setEstatus(BigInteger.valueOf(2));
 
             ///Limpiando codigo
@@ -268,9 +294,129 @@ public class OrganizacionesController2 {
             return "/Organizaciones/confirmaAdminRegOrganizacion";
         }
     }
+    //Una organizacion da de alta un proyecto
+
+    @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaProyecto.do")
+    public String gdaAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, HttpSession session, HttpServletRequest request) {
+        if (new ValidaSesion().validaOrganizacion(session, request)) {
+            System.out.println("hola admin gda alta organizacion");
+
+            //Validaciones
+            System.out.println("Validar");
+            new ValidacionesOrganizaciones().valAltaAdminProy(proyecto, result, model, codigo_postal);
+
+            //Desglose de Actividades
+            ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
+
+            //Valida Actividades
+            if (!actividadesModel.validarInsercionActividades().isSuccess()) {
+                result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
+            }
+            model.addAttribute("validacion_actividades", actividadesModel.validarInsercionActividades().getMensaje());
+
+            if (result.hasErrors()) {
+                System.out.print("hubo errores");
+                System.out.println(proyecto.toString());
+                System.out.println("Error:" + result.toString());
+
+                //Estados
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("nombre", "asc");
+                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                //TipoProyecto
+                model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+                //Perfil
+                model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                //Programa
+                model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+                //Regresar codigo postal
+                model.addAttribute("cp", codigo_postal);
+                try {
+                    model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
+                } catch (Exception e) {
+                }
+
+                //Regresar actividades
+                model.addAttribute("nActividades", nActividades.substring(0, 1));
+                System.out.println("nActividades:" + nActividades.substring(0, 1));
+
+                for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                    model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
+                    System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
+                }
+                model.addAttribute("proyecto", proyecto);
+
+                return "/Organizaciones/altaProyecto";
+            } else {
+
+                System.out.print("no hubo errores");
+                proyecto.setValidacionAdmin(BigInteger.ONE);
+                proyecto.setEstatus(BigInteger.ONE);
+                proyecto.setFechaAlta(new Date());
+                proyecto.setVacantesDisponibles(proyecto.getVacantes());
+
+                //Convertir a mayuscular
+                proyecto.setDomicilio(limpiar.tuneaStringParaBD(proyecto.getDomicilio()));
+                proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
+                proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
+                proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
+
+                proyectosFacade.create(proyecto);
+                System.out.println("Insercion correcta!");
+
+                //Obtenemos el proyecto creado
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("idProyecto", "desc");
+                Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
+
+                //Insercion de Actividades
+                for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                    Actividades actividad = new Actividades();
+                    actividad.setDetalle(limpiar.tuneaStringParaBD(actividadesModel.actividades.get(i)));
+                    actividad.setEstatus(BigInteger.ONE);
+                    actividad.setIdProyecto(newProyecto);
+                    actividadesFacade.create(actividad);
+                    System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
+                }
+                //Insercion de Perfiles
+                //ProyectoPerfilModel proyectoPerfilModel;
+                if (selectto != null) {
+                    //proyectoPerfilModel = new ProyectoPerfilModel(selectto);                
+                    //Analisis de la cadena
+                    StringTokenizer token = new StringTokenizer(selectto, ",");
+                    ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
+
+                    System.out.println("Analizar cadena:" + selectto);
+                    System.out.println("No de tokens:" + token.countTokens());
+                    while (token.hasMoreTokens()) {
+                        String perfil = token.nextToken();
+                        System.out.println("Token:" + perfil);
+                        if (perfil != null && !perfil.equals("")) {
+                            perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
+                        }
+                    }
+                    for (int i = 0; i < perfiles.size(); i++) {
+                        ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
+                        proyectoPerfil.setIdPerfil(perfiles.get(i));
+                        proyectoPerfil.setIdProyecto(newProyecto);
+                        proyectoPerfilFacade.create(proyectoPerfil);
+                        System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
+                    }
+                } else {
+                    System.out.println("No se agregaran perfiles");
+                }
+
+                return "/Organizaciones/confirmaAltaAdminProyectos";
+            }
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesió para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaAdminProyecto.do")
-    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal) {
+    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, HttpSession session, HttpServletRequest request) {
         System.out.println("hola admin gda alta organizacion");
 
         //Validaciones
@@ -448,25 +594,30 @@ public class OrganizacionesController2 {
 
     //Panel de organizaciones (usuarios)
     @RequestMapping(method = RequestMethod.GET, value = "/panelOrganizacion.do")
-    public String panelOrganizacion(Model model) {
+    public String panelOrganizacion(Model model, HttpSession session, HttpServletRequest request) {
+        if (new ValidaSesion().validaOrganizacion(session, request)) {
+            String idInstancia = session.getAttribute("NCONTROL") + "";
+            //idInstancia=idInstancia.trim();
+            System.out.println("idInstancia:" + idInstancia);
 
-        //HARDCODEADO hasta que se haga lo de las sesiones
-        String idInstancia = "19";
-        System.out.println("idInstancia:" + idInstancia);
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("nombre", "asc");
+            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("idInstancia", idInstancia);
+            Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
+            model.addAttribute("instancia", instancia);
+            return "/PanelOrganizacion/panelOrganizacion";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesió para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
 
-        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-        ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
-        model.addAttribute("idInstancia", idInstancia);
-        Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
-        model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
-        model.addAttribute("instancia", instancia);
-        return "/PanelOrganizacion/panelOrganizacion";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaEdicionOrganizacion.do")
-    public String gdaEdicionOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia, String idInstancia, String antiguoPass) {
+    public String gdaEdicionOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia, String idInstancia, String antiguoPass, HttpSession session, HttpServletRequest request) {
         System.out.println("idInstancia:" + idInstancia);
         //Validacion
         new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existe_colonia, confirma_password);
@@ -523,11 +674,11 @@ public class OrganizacionesController2 {
 
     //Propuesta del alumno para dar de alta Instancia/Proyecto
     @RequestMapping(method = RequestMethod.GET, value = "/propAlInstancia.do")
-    public String propAlInstancia(Model model, String formato_unico) {
-        System.out.println("idFormatoUnico:" + formato_unico);
+    public String propAlInstancia(Model model, String datos_personales, HttpSession session, HttpServletRequest request) {
+        System.out.println("idDatosPersonales:" + datos_personales);
 
         //Formato Unico
-        model.addAttribute("formato_unico", formato_unico);        
+        model.addAttribute("datos_personales", datos_personales);
         //Tipo organizacion
         model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
         //Estados
@@ -544,28 +695,56 @@ public class OrganizacionesController2 {
         model.addAttribute("propuesta", new PropAluInstProyBean());
         return "/Organizaciones/propAlInstancia";
     }
+    
+    //Propuesta del alumno para dar de alta Instancia/Proyecto
+    @RequestMapping(method = RequestMethod.GET, value = "/propAlProyecto.do")
+    public String propAlProyecto(Model model, String datos_personales, String idInstancia, HttpSession session, HttpServletRequest request) {
+        System.out.println("idDatosPersonales:" + datos_personales);
+        System.out.println("idInstancia:"+idInstancia);
+        
+        Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+        model.addAttribute("nombreInstancia", instancia.getNombre());
+        //Formato Unico
+        model.addAttribute("datos_personales", datos_personales);        
+        //Estados
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        ordenamiento.put("nombre", "asc");
+        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        //TipoProyecto
+        model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+        //Perfil
+        model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        //Programa
+        model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+        //Command
+        Proyectos proyecto = new Proyectos();
+        proyecto.setIdInstancia(instancia);
+        model.addAttribute("proyecto", proyecto);
+        
+        return "/Organizaciones/propAlProyecto";
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaPropAlInstancia.do")
-    public String gdaPropAlInstancia(@Valid PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2, String formato_unico, String nActividades, String selectto) {
+    public String gdaPropAlInstancia(@Valid PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2, String datos_personales, String nActividades, String selectto, HttpSession session, HttpServletRequest request) {
         System.out.println("Guardando propuesta de alumno de instancia");
-        
+        System.out.println("idDatos_personales:"+datos_personales);
         //Validacion
-        new ValidacionesOrganizaciones().valPropAlInstancia(propuesta, result, model, codigo_postal, otra_colonia, existe_colonia, selectfrom, cadenaActividades, codigo_postal2, formato_unico);
+        new ValidacionesOrganizaciones().valPropAlInstancia(propuesta, result, model, codigo_postal, otra_colonia, existe_colonia, selectfrom, cadenaActividades, codigo_postal2);
 
         //Desglose de Actividades
         ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
-        
-        
+
+
         //Valida Actividades
         if (!actividadesModel.validarInsercionActividades().isSuccess()) {
             result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
             model.addAttribute("validacion_actividades", actividadesModel.validarInsercionActividades().getMensaje());
-        }        
-        
+        }
+
         if (result.hasErrors()) {
             System.out.println(result.toString());
             //Formato Unico
-            model.addAttribute("formato_unico", formato_unico);
+            model.addAttribute("datos_personales", datos_personales);
             //Command
             model.addAttribute("propuesta", propuesta);
             //Tipo organizacion
@@ -588,8 +767,8 @@ public class OrganizacionesController2 {
                 model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
                 System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
             }
-            
-            
+
+
             return "/Organizaciones/propAlInstancia";
 
         } else {
@@ -607,7 +786,7 @@ public class OrganizacionesController2 {
             instancia.getTipoOrganizacion().setIdTipoOrganizacion(propuesta.getTipoOrganizacion().getIdTipoOrganizacion());
             instancia.setIdColonia(new Colonia());
             instancia.getIdColonia().setIdColonia(propuesta.getIdColonia_instancia().getIdColonia());
-            
+
             instanciaFacade.create(instancia);
             System.out.println("Insercion  de intancia correcta!");
 
@@ -615,7 +794,7 @@ public class OrganizacionesController2 {
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idInstancia", "desc");
             Instancia newInstancia = instanciaFacade.findAll(ordenamiento).get(0);
-            
+
             //Creamos el proyecto
             Proyectos proyecto = new Proyectos();
             proyecto.setNombre(limpiar.tuneaStringParaBD(propuesta.getNombre_proyecto()));
@@ -636,15 +815,15 @@ public class OrganizacionesController2 {
             proyecto.setIdColonia(new Colonia());
             proyecto.getIdColonia().setIdColonia(propuesta.getIdColonia_proyecto().getIdColonia());
             proyecto.setIdInstancia(newInstancia);
-            
+
             proyectosFacade.create(proyecto);
             System.out.println("Insercion de proyecto correcta");
-            
+
             //Obtenemos el proyecto creado
             LinkedHashMap<String, String> ordenamiento2 = new LinkedHashMap<String, String>();
             ordenamiento2.put("idProyecto", "desc");
             Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
-            
+
             //Insercion de Actividades
             for (int i = 0; i < actividadesModel.actividades.size(); i++) {
                 Actividades actividad = new Actividades();
@@ -681,14 +860,143 @@ public class OrganizacionesController2 {
             } else {
                 System.out.println("No se agregaran perfiles");
             }
-            
+
             //Relacionar proyecto con formato unico
-            FormatoUnico formatoUnico = formatoUnicoFacade.find(BigDecimal.valueOf(Double.parseDouble(formato_unico)));
+            DatosPersonales datosPersonales = datosPersonalesFacade.find(BigDecimal.valueOf(Double.parseDouble(datos_personales)));
+            System.out.println("Datos per" + datosPersonales.getNombre());
+            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+            FormatoUnico formatoUnico = listaFormatoUnico.get(0);
+            
             formatoUnico.setIdproyecto(newProyecto);
             formatoUnicoFacade.edit(formatoUnico);
             System.out.println("Relacion a formato unico correcta");
+
+            return "/Organizaciones/confirmaAltaPropuesta";
+        }
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/gdaPropAlProyecto.do")
+    public String gdaPropAlProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, String datos_personales,HttpSession session, HttpServletRequest request) {
+        System.out.println("hola admin gda alta organizacion");
+
+        //Validaciones
+        System.out.println("Validar");
+        new ValidacionesOrganizaciones().valAltaAdminProy(proyecto, result, model, codigo_postal);
+
+        //Desglose de Actividades
+        ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
+
+        //Valida Actividades
+        if (!actividadesModel.validarInsercionActividades().isSuccess()) {
+            result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
+        }
+        model.addAttribute("validacion_actividades", actividadesModel.validarInsercionActividades().getMensaje());
+
+        if (result.hasErrors()) {
+            System.out.print("hubo errores");
+            System.out.println(proyecto.toString());
+            System.out.println("Error:" + result.toString());
             
-            return "/Organizaciones/confirmaAltaPropuesta";            
+            model.addAttribute("datos_personales", datos_personales);
+            model.addAttribute("nombreInstancia", proyecto.getIdInstancia().getNombre());
+            //Estados
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("nombre", "asc");
+            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            //TipoProyecto
+            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+            //Perfil
+            model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            //Programa
+            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+            //Regresar codigo postal
+            model.addAttribute("cp", codigo_postal);
+            try {
+                model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
+            } catch (Exception e) {
+            }
+
+            //Regresar actividades
+            model.addAttribute("nActividades", nActividades.substring(0, 1));
+            System.out.println("nActividades:" + nActividades.substring(0, 1));
+
+            for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
+                System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
+            }
+            model.addAttribute("proyecto", proyecto);
+
+            return "/Organizaciones/propAlProyecto";
+        } else {
+
+            System.out.print("no hubo errores");
+            proyecto.setValidacionAdmin(BigInteger.valueOf(2)); //Proyecto propuesto por alumno
+            proyecto.setEstatus(BigInteger.ZERO); //No validado
+            proyecto.setFechaAlta(new Date());
+            proyecto.setVacantesDisponibles(proyecto.getVacantes());
+
+            //Convertir a mayuscular
+            proyecto.setDomicilio(limpiar.tuneaStringParaBD(proyecto.getDomicilio()));
+            proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
+            proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
+            proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
+
+            proyectosFacade.create(proyecto);
+            System.out.println("Insercion correcta!");
+
+            //Obtenemos el proyecto creado
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("idProyecto", "desc");
+            Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
+
+            //Insercion de Actividades
+            for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                Actividades actividad = new Actividades();
+                actividad.setDetalle(limpiar.tuneaStringParaBD(actividadesModel.actividades.get(i)));
+                actividad.setEstatus(BigInteger.ONE);
+                actividad.setIdProyecto(newProyecto);
+                actividadesFacade.create(actividad);
+                System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
+            }
+            //Insercion de Perfiles
+            //ProyectoPerfilModel proyectoPerfilModel;
+            if (selectto != null) {
+                //proyectoPerfilModel = new ProyectoPerfilModel(selectto);                
+                //Analisis de la cadena
+                StringTokenizer token = new StringTokenizer(selectto, ",");
+                ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
+
+                System.out.println("Analizar cadena:" + selectto);
+                System.out.println("No de tokens:" + token.countTokens());
+                while (token.hasMoreTokens()) {
+                    String perfil = token.nextToken();
+                    System.out.println("Token:" + perfil);
+                    if (perfil != null && !perfil.equals("")) {
+                        perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
+                    }
+                }
+                for (int i = 0; i < perfiles.size(); i++) {
+                    ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
+                    proyectoPerfil.setIdPerfil(perfiles.get(i));
+                    proyectoPerfil.setIdProyecto(newProyecto);
+                    proyectoPerfilFacade.create(proyectoPerfil);
+                    System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
+                }
+            } else {
+                System.out.println("No se agregaran perfiles");
+            }
+
+            //Relacionar proyecto con formato unico
+            DatosPersonales datosPersonales = datosPersonalesFacade.find(BigDecimal.valueOf(Double.parseDouble(datos_personales)));
+            System.out.println("Datos per" + datosPersonales.getNombre());
+            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+            FormatoUnico formatoUnico = listaFormatoUnico.get(0);
+            
+            formatoUnico.setIdproyecto(newProyecto);
+            formatoUnicoFacade.edit(formatoUnico);
+            System.out.println("Relacion a formato unico correcta");
+
+            return "/Organizaciones/confirmaAltaPropuesta";
         }
     }
 }

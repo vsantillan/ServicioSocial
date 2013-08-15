@@ -139,7 +139,7 @@ public class ValidacionesOrganizaciones {
 
     }
     
-    public void valPropAlInstancia(PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2, String formato_unico){
+    public void valPropAlInstancia(PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2){
         //Agregando errores
         if (codigo_postal.equals("") || codigo_postal.length() != 5) {
             result.addError(new ObjectError("error_codigo_postal", "Ingrese un código postal válido."));

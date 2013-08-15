@@ -39,7 +39,7 @@ $(document).ready(function() {
             $("#div_pass_organizacion").show("slow")
         }
         if (ok) {
-            $("#respLoginOrg").html("<center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center>")
+            $("#respLoginOrg").html("<center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center>");
             setTimeout(function() {
                 window.location.href = "panelOrganizacion.do";
             }, 3000)
@@ -269,6 +269,11 @@ $(document).ready(function() {
         document.forms["altaOrganizacion"].submit();
     });
     
+    $("#btnGdaPropProyecto").click(function(event) {
+        preparaActividadesPerfiles();
+        document.forms["altaPropProyecto"].submit();
+    });
+    
     $("#btnGdaPropAlInst").click(function(event){
         preparaActividadesPerfiles();
         document.forms["altaPropInstancia"].submit();
@@ -281,6 +286,11 @@ $(document).ready(function() {
         if (select.selectedIndex > 0) {
             document.forms["altaOrganizacion"].submit();
         }
+    });
+    
+    $("#btnLogin").click(function(event){
+        $("#respLoginOrg").html("<center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center>");
+        document.forms["formLogin"].submit();
     });
 
 });

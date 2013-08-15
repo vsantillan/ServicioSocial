@@ -26,11 +26,11 @@
     </head>
     <body class="background">
     <center>
-        <h1>Propuesta de Alumno ${prueba}</h1>        
+        <h1>Propuesta de Alumno</h1>        
 
         <form:form name="altaPropInstancia" commandName="propuesta" class="MyForm" action="gdaPropAlInstancia.do"  method="POST" style="width:60%;" id="contenido">
             <center>
-                <input type="hidden" name="formato_unico" value="${formato_unico}">
+                <input type="hidden" name="datos_personales" value="${datos_personales}">
                 <table>
                     <tr>
                         <td colspan="2">

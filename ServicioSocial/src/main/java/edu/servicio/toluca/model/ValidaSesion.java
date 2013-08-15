@@ -37,6 +37,10 @@ public class ValidaSesion {
     public boolean validaRegistro(HttpSession session, HttpServletRequest request) {
         return validaSesion(session, request, "OPERACION");
     }
+    //Valida sesion para organizaciones
+    public boolean validaOrganizacion(HttpSession session, HttpServletRequest request) {
+        return validaSesion(session, request, "ORGANIZACION");
+    }
 
     public boolean validaSesion(HttpSession session, HttpServletRequest request, String rol) {
         session = request.getSession();
