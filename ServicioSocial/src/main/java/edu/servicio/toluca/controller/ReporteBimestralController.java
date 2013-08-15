@@ -7,6 +7,7 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
+import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,11 +27,13 @@ public class ReporteBimestralController {
     private DatosPersonalesFacade datosPersonalesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     private VistaAlumnoFacade vistaAlumnoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
+    private FormatoUnicoFacade formatoUnicoFacade;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
-    public String reporteBimestralAdministrador(Model modelo) {
-        return "/ReporteBimestral/reporteBimestralAdministrador";
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
+//    public String reporteBimestralAdministrador(Model modelo) {
+//        return "/ReporteBimestral/reporteBimestralAdministrador";
+//    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model modelo) {
@@ -39,6 +42,7 @@ public class ReporteBimestralController {
         //objeto que voy a insertar
         VistaAlumno alumno = listaAlumnos.get(0);
         modelo.addAttribute("datosPersonales", datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null));
+        //List<FormatoUnico>
         return "/ReporteBimestral/formatoReporteBimestral";
     }
 

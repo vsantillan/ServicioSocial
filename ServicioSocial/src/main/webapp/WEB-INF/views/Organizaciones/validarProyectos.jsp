@@ -8,9 +8,7 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ include file="../Template/taglibs.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -75,13 +73,17 @@
                     </thead>
                     <tbody>
                         <core:forEach items="${proyecto}" var="current">
-                            <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-proyecto"><img class="editProy" ide="${current.idProyecto}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}"><img src="imagenes/tache.png" width="30"/></a></th>
-                                <th><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
-                                <th><core:out value="${current.nombre}" /></th>
-                                <th><core:out value="${current.idInstancia.nombre}" /></th>
-                                <th><core:out value="${current.vacantes}" /></th>                                      
-                            </tr>
+                            <core:choose>
+                                <core:when test="${current.estatus==1}">
+                                    <tr class='gradeX'>
+                                        <th><a href="#" class="btn-validar-proyecto"><img class="editProy" ide="${current.idProyecto}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}"><img src="imagenes/tache.png" width="30"/></a></th>
+                                        <th><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                        <th><core:out value="${current.nombre}" /></th>
+                                        <th><core:out value="${current.idInstancia.nombre}" /></th>
+                                        <th><core:out value="${current.vacantes}" /></th>                                      
+                                    </tr>
+                                </core:when>
+                            </core:choose>
                         </core:forEach>
 
                     </tbody>
@@ -127,3 +129,4 @@
 
 
 </html>
+

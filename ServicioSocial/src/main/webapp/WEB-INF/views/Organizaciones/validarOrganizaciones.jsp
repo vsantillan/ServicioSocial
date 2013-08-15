@@ -8,9 +8,7 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ include file="../Template/taglibs.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -72,17 +70,21 @@
                     </thead>
                     <tbody>
                         <core:forEach items="${organizacion}" var="current">
-                            <tr class='gradeX'>
-                                <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}" ><img  src="imagenes/tache.png" width="30"></a></th>
-                                <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" class="fancy" ><img src="imagenes/lupa.png" width="30"/></a></th>
-                                <th><core:out value="${current.nombre}" /></th>
-                                <th><core:out value="${current.titular}" /></th>
-                                <th><core:out value="${current.rfc}" /></th>
-                                <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
-                        <input type="hidden" value="${current.correo}" x="${current.idInstancia}"/>
-                        <input type="hidden" value="${current.nombre}" x="${current.idInstancia}"/>
+                            <core:choose>
+                                <core:when test="${current.estatus==1}">
+                                    <tr class='gradeX'>
+                                        <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}" ><img  src="imagenes/tache.png" width="30"></a></th>
+                                        <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" class="fancy" ><img src="imagenes/lupa.png" width="30"/></a></th>
+                                        <th><core:out value="${current.nombre}" /></th>
+                                        <th><core:out value="${current.titular}" /></th>
+                                        <th><core:out value="${current.rfc}" /></th>
+                                        <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
+                                <input type="hidden" value="${current.correo}" x="${current.idInstancia}"/>
+                                <input type="hidden" value="${current.nombre}" x="${current.idInstancia}"/>
 
-                        </tr>
+                                </tr>
+                            </core:when>
+                        </core:choose>
                     </core:forEach>
                     </tbody>
                 </table>

@@ -86,27 +86,37 @@
 
                         <table>
                             <tr>
-                                <td> <label for="fecha">Fecha de Inicio del Reporte</label> </td>
+                                <td> <label for="fecha">Fecha de Inicio del Reporte:</label> </td>
                                 <td><input type="text"  name="fechaInicio"id="datepicker" onchange="actualizaFecha(this)" /></td>  
-                                <td> <label for="fecha">Fecha Limite del  Reporte</label> </td>
+                                <td> <label for="fecha">Fecha Limite del  Reporte:</label> </td>
                                 <td><input type="text" name="fechaFin" id="fechaFin" disabled="disabled"value=""/></td> 
                             </tr>
                             <tr>
-                                <td><label for="horasA">Horas del Reporte</label></td>
+                                <td><label for="horasA">Horas del Reporte:</label></td>
                                 <td><input type="text" name="horasReporte" /></td>
                             </tr>
                             <tr>
-                                <td><label for="actividad">Actividad</label></td>
+                                <td><label for="actividad">Actividades:</label></td>
                                 <td>
-                                    <core:forEach items="${datosPersonales}" var="current">
-                                        <core:forEach items="${current.formatoUnicoCollection}" var="formato">
-                                            <select name="actividad">
-                                                <core:forEach items="${formato.idproyecto.actividadesCollection}" var="actividades" >
-                                                    <option value="${actividades.idActividad}">${actividades.detalle}</option>
+                                    <fieldset>
+                                        <select name="selectfrom" id="select-from" multiple size="5">
+                                            <core:forEach items="${datosPersonales}" var="current">
+                                                <core:forEach items="${current.formatoUnicoCollection}" var="formato">
+                                                    <core:forEach items="${formato.idproyecto.actividadesCollection}" var="actividades" >
+                                                        <option value="${actividades.idActividad}">${actividades.detalle}</option>
+                                                    </core:forEach>
                                                 </core:forEach>
-                                            </select>
-                                        </core:forEach>
-                                    </core:forEach>
+                                            </core:forEach>
+                                        </select>
+
+                                        <a href="JavaScript:void(0);" id="btn-add">Agregar &raquo;</a>
+                                        <a href="JavaScript:void(0);" id="btn-remove">&laquo; Quitar</a>
+
+                                        <select name="selectto" id="select-to" multiple size="5">
+                                        </select>
+                                    </fieldset>
+
+
                                 </td>
                             </tr>
                             <core:forEach items="${datosPersonales}" var="current">
@@ -115,8 +125,7 @@
                                         <core:when test="${formato.catalogoPlanId.detalle=='S'}" >
                                             <tr>
                                                 <td><label for="calificacion">Calificaci&oacute;n</label></td>
-                                                <td><input type="text" name="actividad" /></td>
-                                                                               
+                                                <td><input type="text" name="actividad" /></td>                                            
                                             </tr>
                                         </core:when> 
                                     </core:choose>
@@ -147,6 +156,20 @@
         </div>
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>
+        <script>
+            $('a#btn-add').click(function() {
+                $('#select-from option:selected').each(function() {
+                    $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+                    $(this).remove();
+                });
+            });
+            $('a#btn-remove').click(function() {
+                $('#select-to option:selected').each(function() {
+                    $('#select-from').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
+                    $(this).remove();
+                });
+            });
+        </script>
     </body>
 </html>
 <!--Id 1 Id2 ---!>
