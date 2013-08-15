@@ -4,7 +4,13 @@
  */
 package edu.servicio.toluca.beans.formatoUnico;
 
+import edu.servicio.toluca.beans.MetodosValidacion;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -22,10 +28,90 @@ public class FormatoUnicoHorariosBean {
     private String juF;
     private String viI;
     private String viF;
+    private ArrayList<String> listaErrores = new ArrayList<String>();
+    MetodosValidacion mv = new MetodosValidacion();
 
     public void roy()
     {
         
+    }
+    public ArrayList<String> Valida() throws ParseException
+    {
+        boolean luih = true;
+        boolean lufh = true;
+        boolean maih = true;
+        boolean mafh = true;
+        boolean miih = true;
+        boolean mifh = true;
+        boolean juih = true;
+        boolean jufh = true;
+        boolean viih = true;
+        boolean vifh = true;
+        if(!luI.equals("") && !luI.equals(" ") && !mv.esHora(luI)){listaErrores.add("La hora de inicio del Lunes, no es una hora correcta, debe estar en el formato HH:MM"); luih = false;}
+        if(!maI.equals("") && !maI.equals(" ") && !mv.esHora(maI)){listaErrores.add("La hora de inicio del Martes, no es una hora correcta, debe estar en el formato HH:MM"); maih = false;}
+        if(!miI.equals("") && !miI.equals(" ") && !mv.esHora(miI)){listaErrores.add("La hora de inicio del Miercoles, no es una hora correcta, debe estar en el formato HH:MM"); miih = false;}
+        if(!juI.equals("") && !juI.equals(" ") && !mv.esHora(juI)){listaErrores.add("La hora de inicio del Jueves, no es una hora correcta, debe estar en el formato HH:MM"); juih = false;}
+        if(!viI.equals("") && !viI.equals(" ") && !mv.esHora(viI)){listaErrores.add("La hora de inicio del Viernes, no es una hora correcta, debe estar en el formato HH:MM"); viih = false;}
+        
+        if(!luF.equals("") && !luF.equals(" ") && !mv.esHora(luF)){listaErrores.add("La hora de fin del Lunes, no es una hora correcta, debe estar en el formato HH:MM"); lufh = false;}
+        if(!maF.equals("") && !maF.equals(" ") && !mv.esHora(maF)){listaErrores.add("La hora de fin del Martes, no es una hora correcta, debe estar en el formato HH:MM"); mafh = false;}
+        if(!miF.equals("") && !miF.equals(" ") && !mv.esHora(miF)){listaErrores.add("La hora de fin del Miercoles, no es una hora correcta, debe estar en el formato HH:MM"); mifh = false;}
+        if(!juF.equals("") && !juF.equals(" ") && !mv.esHora(juF)){listaErrores.add("La hora de fin del Jueves, no es una hora correcta, debe estar en el formato HH:MM"); jufh = false;}
+        if(!viF.equals("") && !viF.equals(" ") && !mv.esHora(viF)){listaErrores.add("La hora de fin del Viernes, no es una hora correcta, debe estar en el formato HH:MM"); vifh = false;}
+        
+        DateFormat formato = new SimpleDateFormat("hh:mm");
+        if(!luI.equals(" ") && !luF.equals(" ") && !luI.equals("") && !luF.equals(""))
+        {
+            Date h1 = (Date)formato.parse(luI);
+            Date h2 = (Date)formato.parse(luF);
+            if(h1.after(h2)){listaErrores.add("La hora de fin del Lunes, es menor a la de inicio");}
+        }
+        if(!maI.equals(" ") && !maF.equals(" ") && !maI.equals("") && !maF.equals(""))
+        {
+            Date h1 = (Date)formato.parse(maI);
+            Date h2 = (Date)formato.parse(maF);
+            if(h1.after(h2)){listaErrores.add("La hora de fin del Martes, es menor a la de inicio");}
+        }
+        if(!miI.equals(" ") && !miF.equals(" "))
+        {
+            Date h1 = (Date)formato.parse(miI);
+            Date h2 = (Date)formato.parse(miF);
+            if(h1.after(h2)){listaErrores.add("La hora de fin del Miercoles, es menor a la de inicio");}
+        }
+        if(!juI.equals(" ") && !juF.equals(" "))
+        {
+            Date h1 = (Date)formato.parse(juI);
+            Date h2 = (Date)formato.parse(juF);
+            if(h1.after(h2)){listaErrores.add("La hora de fin del Jueves, es menor a la de inicio");}
+        }
+        if(!viI.equals(" ") && !viF.equals(" "))
+        {
+            Date h1 = (Date)formato.parse(viI);
+            Date h2 = (Date)formato.parse(viF);
+            if(h1.after(h2)){listaErrores.add("La hora de fin del Viernes, es menor a la de inicio");}
+        }
+        if(luih && (luF.equals(" ") || luF.equals(""))){listaErrores.add("El lunes tiene hora de inicio pero no de fin");}
+        if(lufh && (luI.equals(" ") || luI.equals(""))){listaErrores.add("El lunes tiene hora de fin pero no de inicio");}
+        if(maih && (maF.equals(" ") || maF.equals(""))){listaErrores.add("El lunes tiene hora de inicio pero no de fin");}
+        if(mafh && (maI.equals(" ") || maI.equals(""))){listaErrores.add("El lunes tiene hora de fin pero no de inicio");}
+        if(miih && (miF.equals(" ") || miF.equals(""))){listaErrores.add("El lunes tiene hora de inicio pero no de fin");}
+        if(mifh && (miI.equals(" ") || miI.equals(""))){listaErrores.add("El lunes tiene hora de fin pero no de inicio");}
+        if(juih && (juF.equals(" ") || juF.equals(""))){listaErrores.add("El lunes tiene hora de inicio pero no de fin");}
+        if(jufh && (juI.equals(" ") || juI.equals(""))){listaErrores.add("El lunes tiene hora de fin pero no de inicio");}
+        if(viih && (viF.equals(" ") || viF.equals(""))){listaErrores.add("El lunes tiene hora de inicio pero no de fin");}
+        if(vifh && (viI.equals(" ") || viI.equals(""))){listaErrores.add("El lunes tiene hora de fin pero no de inicio");}
+        
+        if(mv.maximoString(luI, 5) && mv.minimoString(luI, 5)){listaErrores.add("La hora de inicio del Lunes, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(maI, 5) && mv.minimoString(maI, 5)){listaErrores.add("La hora de inicio del Martes, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(miI, 5) && mv.minimoString(miI, 5)){listaErrores.add("La hora de inicio del Miercoles, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(juI, 5) && mv.minimoString(juI, 5)){listaErrores.add("La hora de inicio del Jueves, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(viI, 5) && mv.minimoString(viI, 5)){listaErrores.add("La hora de inicio del Viernes, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(luF, 5) && mv.minimoString(luF, 5)){listaErrores.add("La hora de fin del Lunes, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(maF, 5) && mv.minimoString(maF, 5)){listaErrores.add("La hora de fin del Martes, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(miF, 5) && mv.minimoString(miF, 5)){listaErrores.add("La hora de fin del Miercoles, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(juF, 5) && mv.minimoString(juF, 5)){listaErrores.add("La hora de fin del Jueves, no es una hora correcta, debe estar en el formato HH:MM");}
+        if(mv.maximoString(viF, 5) && mv.minimoString(viF, 5)){listaErrores.add("La hora de fin del Viernes, no es una hora correcta, debe estar en el formato HH:MM");}
+        return listaErrores;
     }
     /**
      * @return the luI

@@ -145,13 +145,30 @@ function enviarDatosContactoAlumno()
 }
 function enviarHorarios()
 {
+    $('#observaciones').hide("fast");
     $("form#frmHorarios :input").each(function() {
         prepararJSON($(this));
     });
 
     $.post("modificarHorarios.do", alumno, function(respuesta) {
-        alert(respuesta);
-        console.log(respuesta);
+        var respJ = {};
+        if (respuesta !== "noInfo")
+        {
+            respJ = jQuery.parseJSON(respuesta);
+        }
+        if (respJ.length > 0)
+        {
+            alert('Tienes errores');
+            $('.observacion').remove();
+            $.each(respJ, function(i, accion) {
+                $('#observaciones').show('slow');
+                $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
+            });
+        }
+        else
+        {
+            alert('Informacion almacenada correctamente');
+        }
     });
 
 

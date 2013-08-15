@@ -4,8 +4,18 @@
  */
 package edu.servicio.toluca.beans;
 
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.openide.util.Exceptions;
+
 
 /**
  *
@@ -26,11 +36,16 @@ public class MetodosValidacion {
     public boolean maximoString(String s, int tamanyo) {
         r = true;
         if (s.length() > tamanyo) {
+
             System.out.println("Tamaño:" + tamanyo + " Longitud:"+s.length());
+
+            System.out.println("Tamaño:" + tamanyo + " Longitud:" + s.length());
+
             r = false;
         }
         return r;
     }
+
     public String tuneaStringParaBD(String s)
     {
         s = pasaMayusculas(s);
@@ -46,8 +61,10 @@ public class MetodosValidacion {
     {
         return s.toLowerCase();
     }
-    public  String quitaAcentos(String input) {
-        
+
+
+    public String quitaAcentos(String input) {
+
         // Cadena de caracteres original a sustituir.
         String original = "ÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑÇ";
         // Cadena de caracteres ASCII que reemplazarán los originales.
@@ -59,18 +76,42 @@ public class MetodosValidacion {
         }//for i
         return output;
     }//remove1
-    public String quitaCaracteresEspeciales(String s)
-    {
+
+
+    public String quitaCaracteresEspeciales(String s) {
+
         Pattern patron = Pattern.compile("[^A-Za-z 0-9]");
         Matcher encaja = patron.matcher(s);
         s = encaja.replaceAll("");
         return s;
     }
-    public String dejarSoloNumeros(String s)
-    {
+
+    public String dejarSoloNumeros(String s) {
         Pattern patron = Pattern.compile("[^0-9]");
         Matcher encaja = patron.matcher(s);
         s = encaja.replaceAll("");
         return s;
     }
+
+
+    public boolean esHora(String s) {
+        //Pattern patron = Pattern.compile("[0-9][0-9]:[0-9][0-9]");
+//        Pattern patron = Pattern.compile("\\|([0-9]|([0-1][0-9])|(2[0-3]))\\:[0-5][0-9]\\|");
+//        Matcher encaja = patron.matcher(s);
+//        if (encaja.find()) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+        boolean r = true;
+        DateFormat formato = new SimpleDateFormat("hh:mm");
+        try {
+            Date h1 = (Date)formato.parse(s);
+        } catch (ParseException ex) {
+            r= false;
+            Exceptions.printStackTrace(ex);
+        }
+        return r;
+    }
+
 }

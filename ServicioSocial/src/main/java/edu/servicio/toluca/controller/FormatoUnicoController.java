@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -539,39 +540,61 @@ public class FormatoUnicoController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarHorarios.do")
     public @ResponseBody
-    FormatoUnicoErrores modificarHorarios(Model a, FormatoUnicoHorariosBean hb) {
-        List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("id", hb.getId(), "equal", null, null);
-        FormatoUnico formatoUnico = listaFui.get(0);
-        List<HorariosAlumno> listaHorariosAlumno = horarioFacade.findBySpecificField("formatoUnicoId", formatoUnico, "equal", null, null);
-        for (HorariosAlumno hor : listaHorariosAlumno) {
-            if (hor.getDia().equals("1")) {
-                hor.setHoraInicio(hb.getLuI());
-                hor.setHoraFin(hb.getLuF());
-                horarioFacade.edit(hor);
-            }
-            if (hor.getDia().equals("2")) {
-                hor.setHoraInicio(hb.getMaI());
-                hor.setHoraFin(hb.getMaF());
-                horarioFacade.edit(hor);
-            }
-            if (hor.getDia().equals("3")) {
-                hor.setHoraInicio(hb.getMiI());
-                hor.setHoraFin(hb.getMiF());
-                horarioFacade.edit(hor);
-            }
-            if (hor.getDia().equals("4")) {
-                hor.setHoraInicio(hb.getJuI());
-                hor.setHoraFin(hb.getJuF());
-                horarioFacade.edit(hor);
-            }
-            if (hor.getDia().equals("5")) {
-                hor.setHoraInicio(hb.getViI());
-                hor.setHoraFin(hb.getViF());
-                horarioFacade.edit(hor);
-            }
+    String modificarHorarios(Model a, FormatoUnicoHorariosBean hb) throws ParseException {
+        String arrJSON = "[";
+        //hb.arregla();
+        ArrayList<String> listaErrores = hb.Valida();
+        if (listaErrores.isEmpty()) {
+            System.out.println("No hubo errores");
+            List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("id", hb.getId(), "equal", null, null);
+            FormatoUnico formatoUnico = listaFui.get(0);
+            List<HorariosAlumno> listaHorariosAlumno = horarioFacade.findBySpecificField("formatoUnicoId", formatoUnico, "equal", null, null);
+            for (HorariosAlumno hor : listaHorariosAlumno) {
+                if (hor.getDia().equals("1")) {
+                    hor.setHoraInicio(hb.getLuI());
+                    hor.setHoraFin(hb.getLuF());
+                    horarioFacade.edit(hor);
+                }
+                if (hor.getDia().equals("2")) {
+                    hor.setHoraInicio(hb.getMaI());
+                    hor.setHoraFin(hb.getMaF());
+                    horarioFacade.edit(hor);
+                }
+                if (hor.getDia().equals("3")) {
+                    hor.setHoraInicio(hb.getMiI());
+                    hor.setHoraFin(hb.getMiF());
+                    horarioFacade.edit(hor);
+                }
+                if (hor.getDia().equals("4")) {
+                    hor.setHoraInicio(hb.getJuI());
+                    hor.setHoraFin(hb.getJuF());
+                    horarioFacade.edit(hor);
+                }
+                if (hor.getDia().equals("5")) {
+                    hor.setHoraInicio(hb.getViI());
+                    hor.setHoraFin(hb.getViF());
+                    horarioFacade.edit(hor);
+                }
 
+            }
+        } else {
+            int i = 1;
+            for (String s : listaErrores) {
+                arrJSON = arrJSON + "{\"observacion\":\"" + s + "\"},";
+                System.out.println("Error " + i + " " + s);
+                i++;
+            }
         }
-        return new FormatoUnicoErrores();
+        if (arrJSON.equals("[")) {
+            arrJSON = "noInfo";
+        } else {
+            arrJSON = arrJSON.substring(0, arrJSON.length() - 1) + "]";
+        }
+
+
+        System.out.println("Arrjson" + arrJSON);
+        return arrJSON;
+
     }
     ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
 
