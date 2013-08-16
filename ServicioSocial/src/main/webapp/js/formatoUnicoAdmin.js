@@ -58,10 +58,12 @@ function confirmacionEvento()
 
 function cambiarEstadoFormatoAceptado(event)
 {
+    console.log($(this).attr('idFU'));
     if(confirmacionEvento())
     {
-        $.post("modificarFormatoUnicoNR_Aceptado.do",{id:$(this).attr('ide')},function(respuesta)
+        $.post("modificarFormatoUnicoNR_Aceptado.do",{id:$(this).attr('idFU')},function(respuesta)
         {
+            window.location.reload();
             console.log(respuesta);
         });
     }

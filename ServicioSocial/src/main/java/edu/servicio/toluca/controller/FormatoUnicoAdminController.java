@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.FormatoUnicoErrores;
@@ -236,6 +237,7 @@ public class FormatoUnicoAdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR_Aceptado.do")
     public @ResponseBody String modificarFU_NR_Aceptados(String id) {
         //Obtener FormatoUnico en especifico 
+        System.out.println(id);
         FormatoUnico fA=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
         //Se encontro el Objeto
         if(fA!=null)
@@ -243,6 +245,7 @@ public class FormatoUnicoAdminController {
             //Cambiar Estado de NO_ACEPTADO A ACEPTADO
             fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
             formatoUnicoFacade.edit(fA);
+            enviarCorreo(1,"rehoscript@gmail.com");
         }
         return "OK";
     }
@@ -389,14 +392,28 @@ public class FormatoUnicoAdminController {
         return "/FormatoUnico/guardarFoto";
     }
 
-
     
-    public static byte[] serialize(Object obj) throws IOException {
-        ByteArrayOutputStream b = new ByteArrayOutputStream();
-        ObjectOutputStream o = new ObjectOutputStream(b);
-        o.writeObject(obj);
-        return b.toByteArray();
-    }
+    private void enviarCorreo(int tipo,String correoDestinatario)
+    {
      
-    
+        String mensaje="";
+        switch(tipo)
+        {
+            case 1://Aceptados
+                mensaje="Aceptado";
+                break;
+            case 2://Correccion
+                break;
+            case 3://No aceptados
+                break;
+            default:
+                return;
+        }
+        EnviarCorreo correo = new EnviarCorreo("Notificacion  Servicio Social ",
+                                               "sapitotais@gmail.com",
+                                               correoDestinatario,
+                                               mensaje,
+                                               "sapitotais2");
+        correo.enviaCorreo();
+    }
 }
