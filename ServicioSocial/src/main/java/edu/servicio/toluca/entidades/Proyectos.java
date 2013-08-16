@@ -124,7 +124,9 @@ public class Proyectos implements Serializable {
     private Colonia idColonia;
     @OneToMany(mappedBy = "idproyecto")
     private Collection<FormatoUnico> formatoUnicoCollection;
-
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
+//    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;
+//    
     public Proyectos() {
     }
 

@@ -22,7 +22,7 @@
                     <ul>
                         <li><a href="panelOrganizacion.do">Ver Perfil</a></li>
                         <li><a href="mensajeOrganizacion.do">Mensajes</a></li>
-                        <li><a href="proyectosOrganizacion.do">Proyectos</a>
+                        <li><a href="javascript:void(0);">Proyectos</a>
                             <ul>
                                 <li><a href="altaProyecto.do">Alta Proyecto</a></li>
                                 <li><a href="verProyectos.do">Ver Proyectos</a></li>

@@ -109,6 +109,8 @@ public class Instancia implements Serializable {
     private Colonia idColonia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<Proyectos> proyectosCollection;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
+//    private Collection<RetroalimentacionInstancia> retroalimentacionInstanciaCollection;
 
     public Instancia() {
     }

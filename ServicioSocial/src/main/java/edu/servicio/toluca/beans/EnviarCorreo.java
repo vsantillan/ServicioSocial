@@ -17,19 +17,17 @@ import javax.mail.internet.MimeMessage;
  */
 public class EnviarCorreo 
 {
-    private String remitente;
+    private String remitente="sapitotais@gmail.com";
     private String destinatario;
     private String mensaje;
     private String asunto;
-    private String pass;
+    private String pass="sapitotais2";
     
-    public EnviarCorreo(String asunto,String remitente,String destinatario,String mensaje,String pass)
+    public EnviarCorreo(String asunto,String destinatario,String mensaje)
     {
-        this.remitente=remitente;
         this.destinatario=destinatario;
         this.mensaje=mensaje;
-        this.asunto=asunto;
-        this.pass=pass;
+        this.asunto=asunto;        
     }
         public boolean enviaCorreo()
 

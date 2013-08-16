@@ -35,7 +35,7 @@ public class ValidaSesion {
     //Valida sesion para alguien que registra, ASISTENTE
 
     public boolean validaRegistro(HttpSession session, HttpServletRequest request) {
-        return validaSesion(session, request, "OPERACION");
+        return validaSesion(session, request, "REGISTRO");
     }
     //Valida sesion para organizaciones
     public boolean validaOrganizacion(HttpSession session, HttpServletRequest request) {
@@ -45,14 +45,11 @@ public class ValidaSesion {
     public boolean validaSesion(HttpSession session, HttpServletRequest request, String rol) {
         session = request.getSession();
         boolean sessionOk = false;
-        if (session.getAttribute("ROL") != null) {
-            if (session.getAttribute("ROL").equals(rol)) {
+        if (session.getAttribute("ROL") != null && session.getAttribute("NCONTROL") != null) {
+            if (session.getAttribute("ROL").toString().equals(rol) ) {
                 sessionOk = true;
             }
-        }
-        if (session.getAttribute("NCONTROL") != null) {
-            sessionOk = true;
-        }
+        }        
         return sessionOk;
     }
 }

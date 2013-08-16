@@ -444,10 +444,10 @@ public class OrganizacionesController {
             }
             return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
         } else {
-            // EnviarCorreo correo = new EnviarCorreo("alguien@gmail.com", retroalimentacionInstancia.getCorreo(), retroalimentacionInstancia.getDescripcion(), "Servicio Social", "pass");
             Instancia instancia;
             instancia = instanciaFacade.find(BigDecimal.valueOf(retroalimentacionInstancia.getId()));
 //            instancia.setEstatus(BigInteger.valueOf(0));
+                        
             if (retroalimentacionInstancia.getControl() == 0) {
                 instancia.setEstatus(BigInteger.valueOf(0));
                 instanciaFacade.edit(instancia);
@@ -457,8 +457,17 @@ public class OrganizacionesController {
                         + "</script>";
             } else {
                 instancia.setValidacionAdmin(BigInteger.valueOf(2));
+                //Prepara retroalimentacion
+//                EnviarCorreo correo = new EnviarCorreo("Retroalimentacion de Instancia Rechazada", retroalimentacionInstancia.getDescripcion(), instancia.getCorreo());
+//                RetroalimentacionInstancia retro = new RetroalimentacionInstancia();
+//                retro.setEstatus(BigInteger.ONE);
+//                retro.setFecha(new Date());
+//                retro.setDetalle(retroalimentacionInstancia.getDescripcion());
+//                retro.setIdInstancia(instancia);
+//                retroalimentacionInstanciaFacade.create(retro);
+                
                 instanciaFacade.edit(instancia);
-                // correo.enviaCorreo();
+//                correo.enviaCorreo();
                 return "<script>"
                         + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
                         + "location.href='validarOrganizaciones.do';"
@@ -480,10 +489,10 @@ public class OrganizacionesController {
             }
             return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
         } else {
-            // EnviarCorreo correo = new EnviarCorreo("alguien@gmail.com", retroalimentacionInstancia.getCorreo(), retroalimentacionInstancia.getDescripcion(), "Servicio Social", "pass");
+            
             Proyectos proyecto;
             proyecto = proyectosFacade.find(BigDecimal.valueOf(retroalimentacionProyecto.getId()));
-
+            
             if (retroalimentacionProyecto.getControl() == 0) {
                 proyecto.setEstatus(BigInteger.valueOf(0));
                 proyectosFacade.edit(proyecto);
@@ -492,8 +501,19 @@ public class OrganizacionesController {
                         + "</script>";
             } else {
                 proyecto.setValidacionAdmin(BigInteger.valueOf(2));
+                
+                //Prepara retroalimentacion
+//                EnviarCorreo correo = new EnviarCorreo("Retroalimentacion de Proyecto Rechazado", proyecto.getIdInstancia().getCorreo(), retroalimentacionProyecto.getDescripcion());
+//                RetroalimentacionProyecto retro = new RetroalimentacionProyecto();
+//                retro.setDetalle(retroalimentacionProyecto.getDescripcion());
+//                retro.setEstatus(BigInteger.ONE);
+//                retro.setFecha(new Date());
+//                retro.setIdProyecto(proyecto);
+//                retroalimentacionProyectoFacade.create(retro);                
+                
                 proyectosFacade.edit(proyecto);
-                // correo.enviaCorreo();
+//                correo.enviaCorreo();
+                 
                 return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
                         + "location.href='validarProyectos.do';"
                         + "</script>";

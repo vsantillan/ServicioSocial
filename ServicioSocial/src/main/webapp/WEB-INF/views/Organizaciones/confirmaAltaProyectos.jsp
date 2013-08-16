@@ -30,7 +30,7 @@
                 
                 <h1>Proyecto registrado correctamente</h1>
                 <img src="imagenes/paloma.png"/>
-                <h3>Espere la confirmaci&oacute;n del administrador para validar su cuenta. Ser&aacute; notificado en la direcci&oacute;n de correo que nos ha proporcionado a la brevedad posible.</h3>
+                <h3>Espere la confirmaci&oacute;n del administrador para validar su proyecto. Ser&aacute; notificado en la direcci&oacute;n de correo que nos ha proporcionado o en su cuenta de usuario a la brevedad posible.</h3>
                 
                 <br/>
 

@@ -7,6 +7,7 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.PerfilJSON;
 import edu.servicio.toluca.beans.StringMD;
+import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
 import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.PropAluInstProyBean;
 import edu.servicio.toluca.entidades.Actividades;
@@ -38,6 +39,7 @@ import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -101,12 +103,12 @@ public class OrganizacionesController2 {
     public String altaProyecto(Model model, HttpSession session, HttpServletRequest request) {
 
         if (new ValidaSesion().validaOrganizacion(session, request)) {
-            String idInstancia=session.getAttribute("NCONTROL")+"";
-            System.out.println("idInstancia:"+idInstancia);
+            String idInstancia = session.getAttribute("NCONTROL") + "";
+            System.out.println("idInstancia:" + idInstancia);
             Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
             Proyectos proyecto = new Proyectos();
             proyecto.setIdInstancia(instancia);
-            
+
             //Objeto proyecto para el commandAttribute
             model.addAttribute("proyecto", proyecto);
             //Estados
@@ -360,7 +362,7 @@ public class OrganizacionesController2 {
                 proyecto.setEstatus(BigInteger.ONE);
                 proyecto.setFechaAlta(new Date());
                 proyecto.setVacantesDisponibles(proyecto.getVacantes());
-                System.out.println("idInstancia:"+proyecto.getIdInstancia().getIdInstancia());
+                System.out.println("idInstancia:" + proyecto.getIdInstancia().getIdInstancia());
                 //Convertir a mayuscular
                 proyecto.setDomicilio(limpiar.tuneaStringParaBD(proyecto.getDomicilio()));
                 proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
@@ -602,7 +604,7 @@ public class OrganizacionesController2 {
     @RequestMapping(method = RequestMethod.GET, value = "/panelOrganizacion.do")
     public String panelOrganizacion(Model model, HttpSession session, HttpServletRequest request) {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
-            String idInstancia = session.getAttribute("NCONTROL") + "";
+            String idInstancia = session.getAttribute("NCONTROL").toString();
             //idInstancia=idInstancia.trim();
             System.out.println("idInstancia:" + idInstancia);
 
@@ -616,7 +618,7 @@ public class OrganizacionesController2 {
             model.addAttribute("instancia", instancia);
             return "/PanelOrganizacion/panelOrganizacion";
         } else {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesió para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
 
@@ -701,17 +703,17 @@ public class OrganizacionesController2 {
         model.addAttribute("propuesta", new PropAluInstProyBean());
         return "/Organizaciones/propAlInstancia";
     }
-    
+
     //Propuesta del alumno para dar de alta Instancia/Proyecto
     @RequestMapping(method = RequestMethod.GET, value = "/propAlProyecto.do")
     public String propAlProyecto(Model model, String datos_personales, String idInstancia, HttpSession session, HttpServletRequest request) {
         System.out.println("idDatosPersonales:" + datos_personales);
-        System.out.println("idInstancia:"+idInstancia);
-        
+        System.out.println("idInstancia:" + idInstancia);
+
         Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
         model.addAttribute("nombreInstancia", instancia.getNombre());
         //Formato Unico
-        model.addAttribute("datos_personales", datos_personales);        
+        model.addAttribute("datos_personales", datos_personales);
         //Estados
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
@@ -726,14 +728,14 @@ public class OrganizacionesController2 {
         Proyectos proyecto = new Proyectos();
         proyecto.setIdInstancia(instancia);
         model.addAttribute("proyecto", proyecto);
-        
+
         return "/Organizaciones/propAlProyecto";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaPropAlInstancia.do")
     public String gdaPropAlInstancia(@Valid PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2, String datos_personales, String nActividades, String selectto, HttpSession session, HttpServletRequest request) {
         System.out.println("Guardando propuesta de alumno de instancia");
-        System.out.println("idDatos_personales:"+datos_personales);
+        System.out.println("idDatos_personales:" + datos_personales);
         //Validacion
         new ValidacionesOrganizaciones().valPropAlInstancia(propuesta, result, model, codigo_postal, otra_colonia, existe_colonia, selectfrom, cadenaActividades, codigo_postal2);
 
@@ -872,7 +874,7 @@ public class OrganizacionesController2 {
             System.out.println("Datos per" + datosPersonales.getNombre());
             List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
             FormatoUnico formatoUnico = listaFormatoUnico.get(0);
-            
+
             formatoUnico.setIdproyecto(newProyecto);
             formatoUnicoFacade.edit(formatoUnico);
             System.out.println("Relacion a formato unico correcta");
@@ -880,9 +882,9 @@ public class OrganizacionesController2 {
             return "/Organizaciones/confirmaAltaPropuesta";
         }
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/gdaPropAlProyecto.do")
-    public String gdaPropAlProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, String datos_personales,HttpSession session, HttpServletRequest request) {
+    public String gdaPropAlProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, String datos_personales, HttpSession session, HttpServletRequest request) {
         System.out.println("hola admin gda alta organizacion");
 
         //Validaciones
@@ -902,7 +904,7 @@ public class OrganizacionesController2 {
             System.out.print("hubo errores");
             System.out.println(proyecto.toString());
             System.out.println("Error:" + result.toString());
-            
+
             model.addAttribute("datos_personales", datos_personales);
             model.addAttribute("nombreInstancia", proyecto.getIdInstancia().getNombre());
             //Estados
@@ -997,7 +999,7 @@ public class OrganizacionesController2 {
             System.out.println("Datos per" + datosPersonales.getNombre());
             List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
             FormatoUnico formatoUnico = listaFormatoUnico.get(0);
-            
+
             formatoUnico.setIdproyecto(newProyecto);
             formatoUnicoFacade.edit(formatoUnico);
             System.out.println("Relacion a formato unico correcta");
@@ -1005,4 +1007,26 @@ public class OrganizacionesController2 {
             return "/Organizaciones/confirmaAltaPropuesta";
         }
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/verProyectos.do")
+    public String verProyectos(Model model, HttpSession session, HttpServletRequest request) {
+        if (new ValidaSesion().validaOrganizacion(session, request)) {
+            String idInstancia = session.getAttribute("NCONTROL").toString();
+            Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            ArrayList<Proyectos> listaProyectos = new ArrayList<Proyectos>(instancia.getProyectosCollection());
+            ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
+            //Muestra proyectos que esten activos, validados o no validados
+            for (int i = 0; i < listaProyectos.size(); i++) {
+                if (listaProyectos.get(i).getEstatus()== BigInteger.ONE) {
+                    filtroDeProyectos.add(listaProyectos.get(i));
+                }
+            }
+            model.addAttribute("proyectos", filtroDeProyectos);
+            return "/Organizaciones/verProyectos";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+    }
+
 }
