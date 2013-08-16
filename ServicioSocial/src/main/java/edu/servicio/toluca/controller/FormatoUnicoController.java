@@ -308,7 +308,7 @@ public class FormatoUnicoController {
         formatoUnicoProyectosJON.setIdProyecto(formatoUnico.getIdproyecto().getIdProyecto());
         formatoUnicoProyectosJON.setFecha_inicio(formatoUnico.getFechaInicio());
         modelo.addAttribute("formatoUnicoDatosOrganizaciones", formatoUnicoProyectosJON);
-
+        //modelo.addAttribute("idDeInstancia", formatoUnico.getIdproyecto().getIdInstancia().getIdInstancia());
 
 //////////////////////////////////////////////////////////////////////////
 ////////Preparar información de los horarios y enviar/////////////////////
@@ -378,6 +378,7 @@ public class FormatoUnicoController {
             datosPersonales.setFolioDocIdentificaciin(new BigInteger(dt.getFolioDocIdentificacion()));
             datosPersonales.setClaveDocIdentificacion(dt.getClaveDocIdentificacion());
             datosPersonalesFacade.edit(datosPersonales);
+            
         } else {
             int i = 1;
             for (String s : listaErrores) {

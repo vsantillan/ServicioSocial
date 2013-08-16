@@ -10,17 +10,26 @@ function listo()
     $('#frmDatosOrganizaciones').submit(enviarDatosOrganizaciones);
     $('#frmHorarios').submit(enviarHorarios);
 
+    $('.otraorg').click(function(event) {
+        alert('ola ke ase');
+    });
+
     $("#comboOrganizaciones").change(function(event) {
         var idInstancia = $("#comboOrganizaciones").val()
         recargaProyectos(idInstancia);
     })
     $("#proyectos").change(function(event) {
-        var idProyActual = $("#proyectos").val()
-        recargaInfoProyectos(idProyActual);
+
+        var idProyActual = $("#proyectos").val();
+        var idInstancia = $("#comboOrganizaciones").val();
+        var idDatosPer = $('.idDatosPersonalesOrg').val();
+
+        recargaInfoProyectos(idProyActual, idInstancia, idDatosPer);
+
     })
 
 }
-function recargaInfoProyectos(idProyActual)
+function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
 {
     console.log('--IdProyactual:' + idProyActual);
     for (i = 0; i < proyecto.nombre_responsable.length; i++) {
@@ -31,12 +40,17 @@ function recargaInfoProyectos(idProyActual)
             $('#nombre_responsable').val(proyecto.nombre_responsable[i]);
             $('#responsable_puesto').val(proyecto.nombre_responsable[i]);
             $('#telefono_responsable').val(proyecto.telefono_responsable[i]);
+            $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDP + "&idInstancia=" + idInstancia + "");
         }
     }
 
 
 }
-function recargaProyectos(idInstancia)
+function abreFancy()
+{
+    alert('asdad');
+}
+function recargaProyectos(idInstancia, idProyecto)
 {
     console.log('el id de la isntancia es' + idInstancia);
     var idDP = $('.idDatosPersonalesOrg').val();
@@ -63,24 +77,55 @@ function recargaProyectos(idInstancia)
             $('#nombre_responsable').val(respuesta.nombre_responsable[i]);
             $('#responsable_puesto').val(respuesta.nombre_responsable[i]);
             $('#telefono_responsable').val(respuesta.telefono_responsable[i]);
+            $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDP + "&idInstancia=" + idInstancia + "");
         }
+        console.log('Pasando a proyectos');
+        console.log('tamanio de proyec es' + $("#proyectos option").size());
+        $("#proyectos option").each(function() {
+            console.log('??');
+            console.log('tiene:' + $(this).attr('value') + '--');
+            if (parseInt($(this).attr('value')) === parseInt(idProyecto))
+            {
+
+                console.log('lo halle en ' + $(this).attr('value'));
+                $("#proyectos").val(idProyecto);
+            }
+        });
+
     });
+
 }
 
 function recargaCombosOrgs(idProyecto)
 {
     console.log("el id del proyecto es:" + idProyecto);
-    {
-        //Obtener el id de la instancia para seleccionarlo en el combo
-        $.get("idInstancia.do?idProyecto=" + idProyecto, null, function(respuesta) {
-            console.log('el id de la isnt es' + respuesta.idProyecto);
-            idInstancia = respuesta.idProyecto;
-            $('#comboOrganizaciones option:eq(' + idInstancia + ')').prop('selected', true);
-            recargaProyectos(idInstancia);
-            $('#proyectos option:eq(' + idProyecto + ')').prop('selected', true);
+
+    //Obtener el id de la instancia para seleccionarlo en el combo
+    $.get("idInstancia.do?idProyecto=" + idProyecto, null, function(respuesta) {
+        console.log('el id de la isnt es' + respuesta.idProyecto + '--');
+        var idInstancia = respuesta.idProyecto;
+        $('#comboOrganizaciones option:eq(' + idInstancia + ')').prop('selected', true);
+        recargaProyectos(idInstancia, idProyecto);
+
+        console.log('La org a seleccionar ' + idProyecto + "--");
+        console.log('tamanio de org es' + $("#comboOrganizaciones option").size());
+        $("#comboOrganizaciones option").each(function() {
+            console.log('::');
+            console.log('tiene:' + $(this).attr('value') + '--');
+            if (parseInt($(this).attr('value')) === parseInt(idInstancia))
+            {
+                console.log('lo halle en ' + $(this).attr('value'));
+                $("#comboOrganizaciones").val(idInstancia);
+            }
         });
-    }
+        
+
+    });
+
+
 }
+//Ubicar el indice en el numero de habitaciones correspondiente
+
 function enviarDatosAlumno()
 {
     $('#observaciones').hide("fast");

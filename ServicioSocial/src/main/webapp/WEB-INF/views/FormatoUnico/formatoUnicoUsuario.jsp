@@ -12,6 +12,8 @@
         <%@ include file="../Template/metas.jsp" %>
         <jsp:include page="../Template/headsJQueryUI.jsp" /><!--Hay conflicto de datatables con estilo forms--->
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+
+        
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
         <!--css de tabs-->
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
@@ -48,15 +50,17 @@
             });
         </script>
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
-        <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
+        
         <script type="text/javascript" src="js/jqueryUI/i18n/jquery.ui.datepicker-es.js"></script>
         <script src="js/jquery.codigos.postales.js"></script>   
-
+         <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" />
+        <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
 
         <title>Formato &Uacute;nico - Usuario</title>
         
     </head>
-    <body class ="background" onload=" recargaProyectos(2);
+    <body class ="background" onload=" //recargaProyectos(2);
                 recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto});">
 
         
@@ -319,6 +323,7 @@
                                     <select id="proyectos" name="proyecto">
 
                                     </select> 
+                                    <a id="linkNuevoP" href="propAlProyecto.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}&idInstancia=${idDeInstancia}" class="fancy" >Agregar un proyecto</a>
                                 </td>
                             </tr>
 
