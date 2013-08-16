@@ -410,10 +410,9 @@ public class FormatoUnicoAdminController {
                 return;
         }
         EnviarCorreo correo = new EnviarCorreo("Notificacion  Servicio Social ",
-                                               "sapitotais@gmail.com",
                                                correoDestinatario,
-                                               mensaje,
-                                               "sapitotais2");
+                                               mensaje
+                                               );
         correo.enviaCorreo();
     }
 }
