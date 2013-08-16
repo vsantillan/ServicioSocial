@@ -53,7 +53,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author WindSaber
  */
 @Controller
-public class FormatoUnicoController1 {
+public class FormatoUnicoAdminController {
 
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
@@ -73,15 +73,20 @@ public class FormatoUnicoController1 {
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     private VistaAlumnoFacade vistaAlumnoFacade;
     
+    //Status de FormatoUnico FUI en  base al documento status_DOC_1.doc
+    final int VALOR_NO_REVISADOS = 4;
+    final int VALOR_ACEPTADOS = 1;
+    final int VALOR_RECHAZADOS = 2;
+    final int VALOR_CORRECCION = 3;
     
-        final int VALOR_NO_REVISADOS = 4;
-        final int VALOR_ACEPTADOS = 1;
-        final int VALOR_RECHAZADOS = 2;
-        final int VALOR_CORRECCION = 3;
+    //ID CatalogoDocumentos FormatoUnico
+    
+    final long DOC_CAT_FU=1;
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
         
+        //Listas de Formato Unico en los diferentes Status
         List<FormatoUnicoBean> listadoFormatosNoRevisados=new ArrayList<FormatoUnicoBean>();
         List<FormatoUnicoBean> listadoFormatosAceptados=new ArrayList<FormatoUnicoBean>();
         List<FormatoUnicoBean> listadoFormatosRechazados=new ArrayList<FormatoUnicoBean>();
@@ -90,10 +95,13 @@ public class FormatoUnicoController1 {
 
         for (FormatoUnico formato : formatoUnicoFacade.findAll()) 
         {
-                if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS)))//Formatos No Revisados
+            
+             //------------------Formatos No Revisados------------------------
+                if(formato.getStatusFui()!=null && 
+                   formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS)))
                 {
-                    FormatoUnicoBean formatoNR=new FormatoUnicoBean();
-
+                //Asignando Datos A Formato Unico en estado NO_REVISADO
+                FormatoUnicoBean formatoNR=new FormatoUnicoBean();
                 formatoNR.setIdFormatoUnico(formato.getId().toString());
                 formatoNR.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
                 formatoNR.setNombre(formato.getDatosPersonalesId().getNombre()
@@ -101,22 +109,33 @@ public class FormatoUnicoController1 {
                                     +" "+formato.getDatosPersonalesId().getApellidoM());
                 formatoNR.setIdDatosPersonales(formato.getDatosPersonalesId().getId().toString());
                 formatoNR.setPeriodo(formato.getPeriodoInicio());
-
+                //Buscar FormatoUnico en Tabla Documentos Regresa todos los .pdf .jpg .png
+                //En caso de que HIBERNATE se generen consultas con AND, se tiene que modificar este query 
+                // y se reducen lineas de codigo
                 List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
-
+                //Filtrar Resultado 
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
                 if(fechaSubida != null)
                 {
+                     /*
+                      Si es diferente de null, el documento de FormatoUnico se encuentra en la tabla de Documentos
+                      */
                      formatoNR.setFechaSubida(fechaSubida);
-                     String idDocumento=obtenerIDDocumentoFormatoU(listaDocumentos);
-                     formatoNR.setIdDocumentoFormatoUnico(idDocumento);
-                     listadoFormatosNoRevisados.add(formatoNR);
+                     String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos);
+                     
+                     if(idDocumento!=null)
+                     {
+                        formatoNR.setIdDocumentoFormatoUnico(idDocumento);
+                        //Se Agrega El Objeto FormatoUnico a la lista de FomatoUnicos en estado NO_REVISADOS
+                        listadoFormatosNoRevisados.add(formatoNR);    
+                     }
+
                 }
             }
-                
-            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_ACEPTADOS)))//Formatos Aceptados
+            //------------------Formatos Aceptados------------------------    
+            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_ACEPTADOS)))//
             {
                 FormatoUnicoBean formatoAceptados = new FormatoUnicoBean();
                 
@@ -136,7 +155,8 @@ public class FormatoUnicoController1 {
                      listadoFormatosAceptados.add(formatoAceptados);
                 }
             }
-            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//Formatos Rechazados
+            //------------------Formatos Rechazados------------------------   
+            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//
             {
                 FormatoUnicoBean formatoRechazados = new FormatoUnicoBean();
                 formatoRechazados.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
@@ -155,9 +175,7 @@ public class FormatoUnicoController1 {
                      System.out.println(detalle);
                      formatoRechazados.añadirObservacion(detalle);
                 }
-                
-                
-                
+
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos2);
                 if(fechaSubida != null)
                 {
@@ -165,7 +183,8 @@ public class FormatoUnicoController1 {
                      listadoFormatosRechazados.add(formatoRechazados);
                 }
             }
-            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION)))//Formatos Correccion
+            //------------------//Formatos Correccion-----------------------   
+            if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION)))
             {
                 FormatoUnicoBean formatoCorreccion = new FormatoUnicoBean();
                 formatoCorreccion.setNoControl( formato.getDatosPersonalesId().getAlumnoId().getId() );
@@ -196,35 +215,55 @@ public class FormatoUnicoController1 {
 
         //Formatos Unicos No Revisados 
         model.addAttribute("listadoFormatoUnicoNORevisados",listadoFormatosNoRevisados);
-        
         //Formato Unico Aceptados
         model.addAttribute("listadoFormatoUnicoAceptados",listadoFormatosAceptados);
-        
         //Formato Rechazados
         model.addAttribute("listadoFormatoUnicoRechazados",listadoFormatosRechazados);
-        
         //Formato Correccion
         model.addAttribute("listadoFormatoUnicoCorreccion",listadoFormatosCorreccion);
-        
+        //Catalogo Sanciones
         model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll());
         return "/FormatoUnico/formatoUnicoAdministrador";
     }
     
     
-    ///Cambios de Datos 
+    /**
+     * 
+     * @param id
+     * @return Cambia el estado de un FormatoUnico de estado NO_REVISADO 
+     * a estado ACEPTADO
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR_Aceptado.do")
     public @ResponseBody String modificarFU_NR_Aceptados(String id) {
-        
+        //Obtener FormatoUnico en especifico 
         FormatoUnico fA=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
-        fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
-        formatoUnicoFacade.edit(fA);
+        //Se encontro el Objeto
+        if(fA!=null)
+        {
+            //Cambiar Estado de NO_ACEPTADO A ACEPTADO
+            fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
+            formatoUnicoFacade.edit(fA);
+        }
+        
+        
         
         return "OK";
     }
     
     
     
-   
+    /**
+     * @see  variable tipo indica que tipo de cambio de status realizara
+     *                     si es 1 cambiara de NO_REVISADO a CORRECCION
+     *                     si es 2 cambiara de NO_REVISADO a RECHAZO
+     *       variable observaciones es un array de id's de Observaciones en Base al Catalogo Observaciones
+     * 
+     * @param observaciones
+     * @param idDatoPersonales
+     * @param idFormatoUnico
+     * @param tipo
+     * @return 
+     */
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR.do")
     public @ResponseBody String modificarFormatoUnico(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
                          String idDatoPersonales,
@@ -235,56 +274,72 @@ public class FormatoUnicoController1 {
         switch(Integer.parseInt(tipo))
         {
             case 1://Correccion
+                //Buscar Formato Unico
                 FormatoUnico fu=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
+                //Cambiar Status
                 fu.setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
                 formatoUnicoFacade.edit(fu);
                 break;
             case 2://Rechazo
+                //Buscar Formato Unico
                 FormatoUnico fuR=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
+                //Cambiar Status
                 fuR.setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
                 formatoUnicoFacade.edit(fuR);
                 break;
         }
         
-        
         for(String idObservacion:observaciones)
         {
+            //Objeto a Registrar
             RegObservaciones registro=new RegObservaciones();
+            //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
             registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
             registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico))));
+            //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
-            
+            //Creacion de Registro
             regisObservacionesFacade.create(registro);
         }
         return "OK";
     }
-    
-    
-     @RequestMapping(method = RequestMethod.GET, value = "/olaqe.do")
-    public @ResponseBody String listadoFormatoUnicoNRevisados(Model modelo) {
-        return "OK";
-    }
+
     
      
-    //Metodos Estaticos
+    //Metodos 
      
-     private static String  obtenerFechaSubidaFormatoU(List<Documentos> listaDocumentos)
+     
+     /**
+      * 
+      * @param listaDocumentos
+      * @return Fecha de Subida de Formato Unico
+      * De todos los documentos, se obtiene solo los documentos con CATALOGO_ID= 1
+      * En caso de no encontrar nada devuelve null, en caso contrario la Fecha de Subida
+      */
+     
+     private  String  obtenerFechaSubidaFormatoU(List<Documentos> listaDocumentos)
      {
          for (Documentos docu : listaDocumentos) 
          {
-                    if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
+                    if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(DOC_CAT_FU)) )//Es igual a formato Unico
                     {
                         return docu.getFechaSubida().toString();
                     }
          }
          return null;
      }
+     /**
+      * 
+      * @param listaDocumentos
+      * @return ID_DOCUMENTO del FormatoUnico, en caso de no encontrarse retorna null
+      */
      
-     private static String  obtenerIDDocumentoFormatoU(List<Documentos> listaDocumentos)
+     private String  obtenerIDDocumentoFormatoU(List<Documentos> listaDocumentos)
      {
          for (Documentos docu : listaDocumentos) 
          {
-                    if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(1l)) )//Es igual a formato Unico
+                    if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(DOC_CAT_FU)) )//Es igual a formato Unico
                     {
                         return docu.getId().toString();
                     }

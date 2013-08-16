@@ -175,14 +175,14 @@
         <jsp:include page="../Template/footer.jsp" />
         
         
-        <div id="motivos" style="display: none; font-size: 15px">
+        <div id="motivos" style="display: none; ">
                 <h1>Motivos de Rechazo</h1>
                 <div id="scroll" >
                     <form id="observacionesCat" action="#" onsubmit="return  false;">
                     <table>
                         <core:forEach items="${listadoObservaciones}" var="observacion">
                         <tr>
-                            <td style="width: 150px"><label><input name="id[]" value="${observacion.id}" type="checkbox"/>&nbsp;&nbsp;&nbsp;
+                            <td style="width: 450px;font-size: 20px"><label><input name="id[]" value="${observacion.id}" type="checkbox"/>&nbsp;&nbsp;&nbsp;
                              <core:out value="${observacion.detalle}" /></label>
                             </td>
                         </tr> 
@@ -190,7 +190,7 @@
                    </table>
                     </form>
                 </div>
-                <button id="guardarObservaciones">Guardar</button>
+                    <button id="guardarObservaciones">Guardar</button>
             </div>
         
         <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>

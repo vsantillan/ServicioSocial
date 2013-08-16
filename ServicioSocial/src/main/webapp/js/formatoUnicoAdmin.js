@@ -94,9 +94,7 @@ function  mostrarDIVMotivos()
 {
  $.fancybox(
              $("#motivos").html(), //fancybox works perfect with hidden divs
-             {
-                  //fancybox options
-             }
+             {}
         );
 }
 
