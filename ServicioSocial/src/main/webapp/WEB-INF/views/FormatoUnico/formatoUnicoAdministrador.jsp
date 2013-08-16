@@ -67,7 +67,7 @@
                                     <td>
                                         <core:out value="${filaNR.nombre}"/>
                                     </td>
-                                    <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" class="fancy"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                    <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
                                     <td><core:out value="${filaNR.fechaSubida}"/></td>
                                     
                                     <td>

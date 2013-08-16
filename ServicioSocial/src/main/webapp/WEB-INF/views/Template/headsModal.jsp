@@ -28,6 +28,18 @@
         'width'         : 680,  
         'height'        : 450,  
         'type'          : 'iframe'  
-    }); 
+    });
+    
+    
+    $(".fancyFU").fancybox({  
+        'autoScale'     : false,  
+        'transitionIn'      : 'none',  
+        'transitionOut'     : 'none',  
+        'width'         : '90%',  
+        'height'        : '90%',  
+        'type'          : 'iframe'  
+    });
+    
+    
     });
 </script>

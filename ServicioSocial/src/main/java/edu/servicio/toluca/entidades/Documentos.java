@@ -49,7 +49,7 @@ public class Documentos implements Serializable {
     private BigDecimal id;
     @Lob
     @Column(name = "ARCHIVO")
-    private Serializable archivo;
+    private byte[] archivo;
     @Size(max = 10)
     @Column(name = "EXTENSION")
     private String extension;
@@ -78,11 +78,11 @@ public class Documentos implements Serializable {
         this.id = id;
     }
 
-    public Serializable getArchivo() {
+    public byte[] getArchivo() {
         return archivo;
     }
 
-    public void setArchivo(Serializable archivo) {
+    public void setArchivo(byte[] archivo) {
         this.archivo = archivo;
     }
 

@@ -244,9 +244,6 @@ public class FormatoUnicoAdminController {
             fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
             formatoUnicoFacade.edit(fA);
         }
-        
-        
-        
         return "OK";
     }
     
@@ -304,7 +301,34 @@ public class FormatoUnicoAdminController {
         }
         return "OK";
     }
+    @RequestMapping(value = "/mostarPDF.do", method = RequestMethod.GET)
+    @ResponseBody
+    public void showPDF(String id,HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
+        
+        //Buscar el Documento en base al ID
+        Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
+        
+        if(doc!=null)
+        {
+            if(doc.getExtension().equals("pdf"))
+            {//El Documento es PDF
+                httpServletResponse.setContentType("application/pdf");
+            }
+            else if(doc.getExtension().equals("jpg"))
+            {//Es imagen
+                httpServletResponse.setContentType("image/jpg");
+            }
+            else
+            {
+                return;
+            }
+            byte[] documentoBLOB =doc.getArchivo();
+            httpServletResponse.getOutputStream().write(documentoBLOB);
 
+        }
+        
+        
+    }
     
      
     //Metodos 
@@ -352,57 +376,20 @@ public class FormatoUnicoAdminController {
     public String save(
             @RequestParam("file") MultipartFile file,String id) throws IOException { 
 
-        System.out.println(file.getOriginalFilename());
-        System.out.println(file.getSize());
         Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
         System.out.println(doc);
         doc.setArchivo(file.getBytes());
         doc.setExtension("pdf");
         documentoFacade.edit(doc);
-        return "redirect:subirpdf.do";
-    }
-    @RequestMapping(value = "/guardarIMG2.do", method = RequestMethod.POST)
-    public String saveImage(
-            @RequestParam("file") MultipartFile file,String id) throws IOException { 
-        
-        VistaAlumno alumno= vistaAlumnoFacade.find(id);
-        System.out.println(file.getSize());
-        alumno.setFoto(file.getBytes());
-        vistaAlumnoFacade.edit(alumno);
-        return "redirect:subirIMG.do";
+        return "redirect:subirpdf2.do";
     }
 
     @RequestMapping(value = "/subirpdf2.do",method = RequestMethod.GET)
     public String guardaFotoPrueba(Model modelo) {
         return "/FormatoUnico/guardarFoto";
     }
-    
-    @RequestMapping(value = "/subirIMG2.do",method = RequestMethod.GET)
-    public String guardaIMGPrueba(Model modelo) {
-        return "/FormatoUnico/guardarIMG";
-    }
-    
-    @RequestMapping(value = "/mostarPDF.do", method = RequestMethod.GET)
-    @ResponseBody
-    public void showPDF(String id,HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
-        
-        httpServletResponse.setContentType("application/pdf");
-        Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
-        byte[] pdfImage = serialize(doc.getArchivo());
-        httpServletResponse.getOutputStream().write(pdfImage);
-    }
-    
-    
-    
-    @RequestMapping(value = "/eeeee2.do", method = RequestMethod.GET)
-    @ResponseBody
-    public void saveAndShowPDF( HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
-        
-        httpServletResponse.setContentType("application/pdf");
-         Documentos doc=documentoFacade.find(BigDecimal.valueOf(1l));
-        byte[] pdfImage = serialize(doc.getArchivo());
-        httpServletResponse.getOutputStream().write(pdfImage);
-    }
+
+
     
     public static byte[] serialize(Object obj) throws IOException {
         ByteArrayOutputStream b = new ByteArrayOutputStream();

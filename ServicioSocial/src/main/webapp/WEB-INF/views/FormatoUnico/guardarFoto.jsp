@@ -8,7 +8,7 @@
 <body>
 <h2>Document Manager</h2>
 <h3>Add new document</h3>
-<form method="post" action="guardarPDF.do"  enctype="multipart/form-data">
+<form method="post" action="guardarPDF2.do"  enctype="multipart/form-data">
     <table>
         <tr>
         <td>Id</td>
