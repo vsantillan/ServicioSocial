@@ -348,7 +348,7 @@ public class FormatoUnicoAdminController {
      }
      
      ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
-    @RequestMapping(value = "/guardarPDF.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/guardarPDF2.do", method = RequestMethod.POST)
     public String save(
             @RequestParam("file") MultipartFile file,String id) throws IOException { 
 
@@ -361,7 +361,7 @@ public class FormatoUnicoAdminController {
         documentoFacade.edit(doc);
         return "redirect:subirpdf.do";
     }
-    @RequestMapping(value = "/guardarIMG.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/guardarIMG2.do", method = RequestMethod.POST)
     public String saveImage(
             @RequestParam("file") MultipartFile file,String id) throws IOException { 
         
@@ -372,12 +372,12 @@ public class FormatoUnicoAdminController {
         return "redirect:subirIMG.do";
     }
 
-    @RequestMapping(value = "/subirpdf.do",method = RequestMethod.GET)
+    @RequestMapping(value = "/subirpdf2.do",method = RequestMethod.GET)
     public String guardaFotoPrueba(Model modelo) {
         return "/FormatoUnico/guardarFoto";
     }
     
-    @RequestMapping(value = "/subirIMG.do",method = RequestMethod.GET)
+    @RequestMapping(value = "/subirIMG2.do",method = RequestMethod.GET)
     public String guardaIMGPrueba(Model modelo) {
         return "/FormatoUnico/guardarIMG";
     }
@@ -394,7 +394,7 @@ public class FormatoUnicoAdminController {
     
     
     
-    @RequestMapping(value = "/eeeee.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/eeeee2.do", method = RequestMethod.GET)
     @ResponseBody
     public void saveAndShowPDF( HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
         
