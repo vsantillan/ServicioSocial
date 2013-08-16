@@ -88,12 +88,13 @@
                                         </core:forEach>
                                     </form:select>
                                     <p></p>
-<!--                                    <input type=text name="horat" id="hora" value="Hora:${platicasPeriodo.get(1).hora}   Lugar: ${platicasPeriodo.get(1).idLugar.lugar}  " readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>-->
+                             
                                     <textarea id="hora" rows="4" cols="50" disabled="true" style="background-color:#FFEBCD;border: 2px solid #CB8B07">Hora: ${platicasPeriodo.get(0).hora} Lugar: ${platicasPeriodo.get(0).idLugar.lugar}</textarea><br>
                                     <textarea  id="descripcion" rows="4" cols="50" disabled="true" style="background-color:#FFEBCD;border: 2px solid #CB8B07">Descripción:${platicasPeriodo.get(0).descripcion}</textarea><br>
-<!--                                    <input type=text name="descripcion" id="descripcion" value="Descripción:${platicasPeriodo.get(0).descripcion}  " readonly="readonly" style="background-color:#FFEBCD;border: 2px solid #CB8B07" size="48"><br>-->
+                                  
                                     <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"> Acépto haber leído el manual donde se describe el uso del<br>
                                     sistema via web sobre como dar de alta mi servicio social<p></p>
+                                    <input type="text" name="numeroC" id="numeroC"/><br>
                                     <input type="submit" value="Generar Folio" /> <br>
 
                                 </form:form>

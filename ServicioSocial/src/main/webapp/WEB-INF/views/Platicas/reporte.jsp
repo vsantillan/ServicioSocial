@@ -40,7 +40,6 @@
             out.write(ex.getMessage() + "<br><br>");
             ex.printStackTrace(new java.io.PrintWriter(out));
             out.write(ex.getMessage() + "</code>");
-
         }
 
         return;

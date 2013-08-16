@@ -129,18 +129,18 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/folioPlatica.do")
-    public String folioPlatica(Model a, String fecha) {
+    public String folioPlatica(Model a, String fecha,String numeroC) {
         FoliosPlatica foliosPlatica = new FoliosPlatica();
         Platica platica = new Platica();
         VistaAlumno alumno = new VistaAlumno();
-        alumno.setId("09280531");
+        alumno.setId(numeroC);
         System.out.println("platica id:" + fecha);
         platica.setId(Long.parseLong(fecha));
         foliosPlatica.setPlaticaId(platica);
         foliosPlatica.setAlumnoId(alumno);
         //folio: numero de control+idPlatica
-        foliosPlatica.setNumeroFolio(fecha + "09280531");
-        System.out.println(fecha + "09280531");
+        foliosPlatica.setNumeroFolio(fecha + numeroC);
+        System.out.println(fecha + numeroC);
         foliosPlatica.setStatus((short) 1);
         foliosPlaticaFacade.create(foliosPlatica);
 
@@ -152,8 +152,8 @@ public class PlaticaController {
         platica.setNumeroAsistentes(numero);
         platicaFacade.edit(platica);
 
-         return "/Platicas/reporte";
-       // return "/Platicas/seleccionarPlatica";
+       //  return "/Platicas/reporte";
+        return "/Platicas/seleccionarPlatica";
     }
 /////////ASISTENCIA.DO////////////////////
 
@@ -170,7 +170,9 @@ public class PlaticaController {
 
             if (lista.size() > 0) {
                 VistaAlumno vistaAlumno1;
-                vistaAlumno1 = vistaAlumnoFacade.find(lista.get(0).getAlumnoId() + ""); //id se toma de sa sesion
+               vistaAlumno1 = vistaAlumnoFacade.find(lista.get(0).getAlumnoId().getId()); 
+                System.out.println(lista.get(0).getAlumnoId());
+                //vistaAlumno1 = vistaAlumnoFacade.find("09280531");
                 modelo.addAttribute("alumno", vistaAlumno1);
                 modelo.addAttribute("espacio", " ");
                 return "/Platicas/capturarAsistencia2";
