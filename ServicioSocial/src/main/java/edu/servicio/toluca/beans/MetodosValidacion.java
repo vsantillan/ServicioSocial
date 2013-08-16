@@ -27,6 +27,7 @@ public class MetodosValidacion {
 
     public boolean minimoString(String s, int tamanyo) {
         r = true;
+        System.out.println("Tamaño:" + tamanyo + " Longitud:"+s.length());
         if (s.length() < tamanyo) {
             r = false;
         }
@@ -35,9 +36,10 @@ public class MetodosValidacion {
 
     public boolean maximoString(String s, int tamanyo) {
         r = true;
+        System.out.println("Tamaño:" + tamanyo + " Longitud:"+s.length());
         if (s.length() > tamanyo) {
 
-            System.out.println("Tamaño:" + tamanyo + " Longitud:"+s.length());
+            
 
             System.out.println("Tamaño:" + tamanyo + " Longitud:" + s.length());
 
@@ -107,11 +109,15 @@ public class MetodosValidacion {
         DateFormat formato = new SimpleDateFormat("hh:mm");
         try {
             Date h1 = (Date)formato.parse(s);
-        } catch (ParseException ex) {
+            System.out.println("Sin problema al parsear queda"+h1);
+            return true;
+        } catch (Exception ex) {
             r= false;
             Exceptions.printStackTrace(ex);
+            System.out.println("excepcion"+ex.getMessage());
+            return false;
         }
-        return r;
+        //return r;
     }
 
 }

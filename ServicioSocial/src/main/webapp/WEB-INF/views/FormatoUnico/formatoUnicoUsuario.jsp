@@ -311,10 +311,11 @@
                                             <option value="${instancia.idInstancia}">${instancia.nombre}</option>
                                         </core:forEach> 
                                     </select> 
+                                    <a id="linkNuevoI" href="propalinstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancy" >Agregar una Instancia/Proyecto Nuevo</a>
                                 </td>
-                                <td>
+                                <td style="padding-left: 50px; text-align:right">
                                     Fecha de Inicio 
-                                    <form:input  type="text" require="true"  size="15" path ="fecha_inicio"  />
+                                    <form:input  type="text" require="true"  size="15" path ="fecha_inicio"  style="width:100px"/>
                                 </td>
                             </tr>
                             <tr>
@@ -324,6 +325,7 @@
 
                                     </select> 
                                     <a id="linkNuevoP" href="propAlProyecto.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}&idInstancia=${idDeInstancia}" class="fancy" >Agregar un proyecto</a>
+                                    
                                 </td>
                             </tr>
 

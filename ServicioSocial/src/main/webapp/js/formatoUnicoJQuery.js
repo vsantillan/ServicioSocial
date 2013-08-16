@@ -40,7 +40,7 @@ function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
             $('#nombre_responsable').val(proyecto.nombre_responsable[i]);
             $('#responsable_puesto').val(proyecto.nombre_responsable[i]);
             $('#telefono_responsable').val(proyecto.telefono_responsable[i]);
-            $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDP + "&idInstancia=" + idInstancia + "");
+            $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDatosPer + "&idInstancia=" + idInstancia + "");
         }
     }
 
