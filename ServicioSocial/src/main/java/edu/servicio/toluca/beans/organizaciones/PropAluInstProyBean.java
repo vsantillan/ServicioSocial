@@ -10,9 +10,7 @@ import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
 import java.math.BigInteger;
 import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
@@ -59,6 +57,7 @@ public class PropAluInstProyBean {
     private String modalidad;
     @Basic(optional = false)
     @NotNull
+    @Min(1)
     private BigInteger vacantes;
     private Colonia idColonia_proyecto;
     private TipoProyecto idTipoProyecto;

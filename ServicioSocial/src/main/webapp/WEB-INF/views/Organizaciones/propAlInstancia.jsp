@@ -73,7 +73,7 @@
                         <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                         <td>  
                             <form:input path="telefono_titular" id="telefono" size="20" maxlength="10"/><br/>
-                            <form:errors path="telefono_titular" cssClass="error"/>${telefono_titular}
+                            ${telefono}
                             <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
                         </td>  
                     </tr>
@@ -180,7 +180,7 @@
                         <td>  
                             <!--input type="text" name="puesto" id="puesto" size="20" require="true"/--> 
                             <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10"/><br/>
-                            <form:errors path="telefonoResponsable" cssClass="error"/>${telefono_responsable}
+                            ${telefono2}
                         </td>  
                     </tr>
                     <tr>

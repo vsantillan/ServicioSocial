@@ -50,6 +50,8 @@ import org.springframework.format.annotation.NumberFormat;
     @NamedQuery(name = "Instancia.findByPassword", query = "SELECT i FROM Instancia i WHERE i.password = :password"),
     @NamedQuery(name = "Instancia.findByCorreo", query = "SELECT i FROM Instancia i WHERE i.correo = :correo")})
 public class Instancia implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
+    private Collection<RetroalimentacionInstancia2> retroalimentacionInstancia2Collection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -109,7 +111,7 @@ public class Instancia implements Serializable {
     private Colonia idColonia;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<Proyectos> proyectosCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
+//@OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
 //    private Collection<RetroalimentacionInstancia> retroalimentacionInstanciaCollection;
 
     public Instancia() {
@@ -273,6 +275,15 @@ public class Instancia implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Instancia[ idInstancia=" + idInstancia + " ]";
+    }
+
+    @XmlTransient
+    public Collection<RetroalimentacionInstancia2> getRetroalimentacionInstancia2Collection() {
+        return retroalimentacionInstancia2Collection;
+    }
+
+    public void setRetroalimentacionInstancia2Collection(Collection<RetroalimentacionInstancia2> retroalimentacionInstancia2Collection) {
+        this.retroalimentacionInstancia2Collection = retroalimentacionInstancia2Collection;
     }
 
 }

@@ -93,7 +93,7 @@
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')">15.2 Acerca De</a></li>
             </ul>
         </li>
-        <li><a href="javascript:void(0)" onclick="redirecciona('index.do')">Cerrar Sesi&oacute;n</a></li>
+        <li><a href="javascript:void(0)" onclick="redirecciona('cerrarSesion.do')">Cerrar Sesi&oacute;n</a></li>
     </ul>
     <br style="clear: left" />
 </div>

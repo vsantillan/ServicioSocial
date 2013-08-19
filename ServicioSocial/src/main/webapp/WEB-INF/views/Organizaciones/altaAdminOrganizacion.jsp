@@ -71,7 +71,7 @@
                             <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                             <td>  
                                 <form:input path="telefono" id="telefono" size="20" maxlength="10"/><br/>
-                                <form:errors path="telefono" cssClass="error"/>
+                                ${telefono}
                                 <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
                             </td>  
                         </tr>

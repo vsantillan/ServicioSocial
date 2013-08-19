@@ -1013,6 +1013,7 @@ public class OrganizacionesController2 {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
             String idInstancia = session.getAttribute("NCONTROL").toString();
             Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            //Valida que no sea nula la collection
             ArrayList<Proyectos> listaProyectos = new ArrayList<Proyectos>(instancia.getProyectosCollection());
             ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
             //Muestra proyectos que esten activos, validados o no validados

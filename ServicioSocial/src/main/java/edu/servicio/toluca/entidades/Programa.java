@@ -7,16 +7,20 @@ package edu.servicio.toluca.entidades;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,6 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Programa.findByStatus", query = "SELECT p FROM Programa p WHERE p.status = :status"),
     @NamedQuery(name = "Programa.findBySiglas", query = "SELECT p FROM Programa p WHERE p.siglas = :siglas")})
 public class Programa implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPrograma")
+    private Collection<Proyectos> proyectosCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -120,6 +126,15 @@ public class Programa implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Programa[ idPrograma=" + idPrograma + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Proyectos> getProyectosCollection() {
+        return proyectosCollection;
+    }
+
+    public void setProyectosCollection(Collection<Proyectos> proyectosCollection) {
+        this.proyectosCollection = proyectosCollection;
     }
     
 }

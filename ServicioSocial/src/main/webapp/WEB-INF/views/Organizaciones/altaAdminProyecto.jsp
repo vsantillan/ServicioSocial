@@ -83,7 +83,7 @@
                                     <td>  
                                         <!--input type="text" name="puesto" id="puesto" size="20" require="true"/--> 
                                         <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10"/><br/>
-                                        <form:errors path="telefonoResponsable" cssClass="error"/>${telefono}
+                                        ${telefono}
                                     </td>  
                                 </tr>
                                 <tr>

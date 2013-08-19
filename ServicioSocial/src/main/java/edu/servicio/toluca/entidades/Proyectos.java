@@ -23,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -52,6 +53,8 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles"),
     @NamedQuery(name = "Proyectos.findByNombre", query = "SELECT p FROM Proyectos p WHERE p.nombre = :nombre")})
 public class Proyectos implements Serializable {
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
+    private Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -96,9 +99,11 @@ public class Proyectos implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "VACANTES")
+    @Min(1)
     private BigInteger vacantes;
     @Basic(optional = false)
     @Column(name = "VACANTES_DISPONIBLES")
+    @Min(1)
     private BigInteger vacantesDisponibles;
     @Basic(optional = false)
     @Size(min = 1,max = 60)
@@ -326,6 +331,15 @@ public class Proyectos implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Proyectos[ idProyecto=" + idProyecto + " ]";
+    }
+
+    @XmlTransient
+    public Collection<RetroalimentacionProyecto2> getRetroalimentacionProyecto2Collection() {
+        return retroalimentacionProyecto2Collection;
+    }
+
+    public void setRetroalimentacionProyecto2Collection(Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection) {
+        this.retroalimentacionProyecto2Collection = retroalimentacionProyecto2Collection;
     }
     
 }

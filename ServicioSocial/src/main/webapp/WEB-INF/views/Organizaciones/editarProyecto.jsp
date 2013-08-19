@@ -92,7 +92,7 @@
                             <td>  <label for="lugar">Tel&eacute;fono del Responsable:</label></td>
                             <td>
                                 <form:input path="telefonoResponsable" id="telefonoResponsable" size="20"/><br/>
-                                <form:errors path="telefonoResponsable" cssClass="error"/>${telefono}
+                                ${telefono}
                             </td>
                         </tr>
                         <tr>

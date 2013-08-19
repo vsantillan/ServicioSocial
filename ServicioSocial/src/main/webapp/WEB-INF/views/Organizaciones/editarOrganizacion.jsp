@@ -18,11 +18,7 @@
         <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
         <script src="js/cargaCodigosPostalesParaEditarOP.js"></script>
         <script src="js/jquery.manolo.js"></script>
-        <script>
-            $(document).ready(function() {
-                $(".MyForm").formly();
-            });
-        </script>
+        
         <script>
             function pass(elemento)
             {
@@ -89,7 +85,7 @@
                             <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                             <td>  
                                 <form:input path="telefono" id="telefono" size="10"/><br/>
-                                <form:errors path="telefono" cssClass="error"/>
+                                ${telefono}
                                 <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
                             </td>  
                         </tr>
