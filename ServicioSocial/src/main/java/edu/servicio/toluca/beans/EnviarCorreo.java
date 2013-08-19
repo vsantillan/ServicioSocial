@@ -52,7 +52,7 @@ public class EnviarCorreo
                 Message.RecipientType.TO,
                 new InternetAddress(destinatario));
             message.setSubject(asunto);
-            message.setText(mensaje);
+            message.setText(mensaje,"UTF-8","html");
 
             // Lo enviamos.
             Transport t = session.getTransport("smtp");

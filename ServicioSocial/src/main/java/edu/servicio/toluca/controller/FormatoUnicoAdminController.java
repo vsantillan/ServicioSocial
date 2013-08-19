@@ -396,23 +396,59 @@ public class FormatoUnicoAdminController {
     private void enviarCorreo(int tipo,String correoDestinatario)
     {
      
-        String mensaje="";
+        String mensaje=" ";
         switch(tipo)
         {
             case 1://Aceptados
-                mensaje="Aceptado";
+                mensaje="<h1>Notificación Servicio Social</h1>\n" +
+                "<h2>Estimado  <b>Nombre</b>:</h2> \n" +
+                "<p>\n" +
+                "Te informamos que  tu  Formato Único que has llenado, fue revisado por la Oficina de Servicio Social  y ha sido <b>Aceptado</b> Satisfactoriamente. \n" +
+                "</p>\n" +
+                "<p>Por lo que te recordamos, que a partir de este momento cada 2 meses tienes que subir tu   reporte bimestral, el cual será revisado de la misma manera  por la Oficina de Servicio Social. \n" +
+                "</p>\n" +
+                "<p>\n" +
+                "Oficina de Servicio Social<br> \n" +
+                "Instituto Tecnológico  de Toluca\n" +
+                "</p>";
                 break;
             case 2://Correccion
+                mensaje="<h1>Notificación Servicio Social</h1>\n" +
+                "<h2>Estimado  <b>Nombre</b>:</h2> \n" +
+                "<p>\n" +
+                "Te informamos que   tu  Formato Único que has llenado, ha sido revisado por la Oficina de Servicio Social  y este tiene errores.  Favor de corregirlos lo más pronto posible.\n" +
+                "</p>\n" +
+                "<ul>\n" +
+                "<li>a</li>\n" +
+                "</ul>\n" +
+                "<p>\n" +
+                "Oficina de Servicio Social <br>\n" +
+                "Instituto Tecnológico  de Toluca\n" +
+                "</p>";
                 break;
             case 3://No aceptados
+                mensaje="<h1>Notificación Servicio Social</h1>\n" +
+                "<h2>Estimado  <b>Nombre</b>:</h2> \n" +
+                "<p>\n" +
+                "Te informamos que   tu  Formato Único que has llenado, fue revisado por la Oficina de Servicio Social  y este ha sido <b>Rechazado</b>.\n" +
+                "</p>\n" +
+                "<p>\n" +
+                "Si esto ha sucedido, es porque has rebasado el número de intentos  para corregir tu Formato  Único.  Para mayor información  presentarse en la Oficina de Servicio Social o intentar de  nuevo para la siguiente convocatoria.  \n" +
+                "</p>\n" +
+                "<p>\n" +
+                "Oficina de Servicio Social <br>\n" +
+                "Instituto Tecnológico  de Toluca\n" +
+                "</p>";
                 break;
             default:
                 return;
         }
-        EnviarCorreo correo = new EnviarCorreo("Notificacion  Servicio Social ",
+        //Formato Correo
+        EnviarCorreo correo = new EnviarCorreo("Notificación  Servicio Social ",
                                                correoDestinatario,
                                                mensaje
                                                );
+        //Enviar Correo
         correo.enviaCorreo();
     }
 }
