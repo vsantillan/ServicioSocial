@@ -63,8 +63,17 @@ function cambiarEstadoFormatoAceptado(event)
     {
         $.post("modificarFormatoUnicoNR_Aceptado.do",{id:$(this).attr('idFU')},function(respuesta)
         {
-            window.location.reload();
-            console.log(respuesta);
+            
+            
+            if(respuesta==="OK")
+            {
+                window.location.reload();
+                console.log(respuesta);
+            }
+            else
+            {
+                alert("Imposible Realizar Acción");
+            }
         });
     }
     
@@ -124,7 +133,7 @@ function obtenerDatos()
                 window.location.reload();
             }else
             {
-                alert("Imposible Borrar Consulte a Team Developer");
+                alert("Imposible Realizar Acción");
             }
         }
         );

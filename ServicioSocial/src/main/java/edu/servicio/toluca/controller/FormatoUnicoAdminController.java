@@ -28,6 +28,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -152,8 +154,13 @@ public class FormatoUnicoAdminController {
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos2);
                 if(fechaSubida != null)
                 {
-                     formatoAceptados.setFechaSubida(fechaSubida);
-                     listadoFormatosAceptados.add(formatoAceptados);
+                    String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos2);
+                    formatoAceptados.setFechaSubida(fechaSubida);
+                    if(idDocumento!=null)
+                    {
+                        formatoAceptados.setIdDocumentoFormatoUnico(idDocumento);
+                        listadoFormatosAceptados.add(formatoAceptados);
+                    } 
                 }
             }
             //------------------Formatos Rechazados------------------------   
@@ -165,7 +172,8 @@ public class FormatoUnicoAdminController {
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());   
                 formatoRechazados.setPeriodo(formato.getPeriodoInicio());
-                List<Documentos> listaDocumentos2 = documentoFacade.findBySpecificField("datosPersonalesId",
+                formatoRechazados.setIdDatosPersonales(formato.getDatosPersonalesId().getId().toString());
+                List<Documentos> listaDocumentos3 = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
                 for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId", 
@@ -177,11 +185,16 @@ public class FormatoUnicoAdminController {
                      formatoRechazados.añadirObservacion(detalle);
                 }
 
-                String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos2);
+                String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos3);
                 if(fechaSubida != null)
                 {
+                     String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos3);
                      formatoRechazados.setFechaSubida(fechaSubida);
-                     listadoFormatosRechazados.add(formatoRechazados);
+                     if(idDocumento!=null)
+                     {
+                        formatoRechazados.setIdDocumentoFormatoUnico(idDocumento);
+                        listadoFormatosRechazados.add(formatoRechazados);
+                     }
                 }
             }
             //------------------//Formatos Correccion-----------------------   
@@ -193,7 +206,8 @@ public class FormatoUnicoAdminController {
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());   
                 formatoCorreccion.setPeriodo(formato.getPeriodoInicio());
-                List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
+                formatoCorreccion.setIdDatosPersonales(formato.getDatosPersonalesId().getId().toString());
+                List<Documentos> listaDocumentos4 = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
                
@@ -207,12 +221,18 @@ public class FormatoUnicoAdminController {
 
                      formatoCorreccion.añadirObservacion(detalle);
                 }
-                String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
+                String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos4);
  
                 if(fechaSubida != null)
                 {
+                     String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos4);
                      formatoCorreccion.setFechaSubida(fechaSubida);
-                     listadoFormatosCorreccion.add(formatoCorreccion);
+                     if(idDocumento!=null)
+                     {
+                         formatoCorreccion.setIdDocumentoFormatoUnico(idDocumento);
+                         listadoFormatosCorreccion.add(formatoCorreccion);
+                     }
+                     
                 }
             }
         }
@@ -248,7 +268,11 @@ public class FormatoUnicoAdminController {
             //Cambiar Estado de NO_ACEPTADO A ACEPTADO
             fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
             formatoUnicoFacade.edit(fA);
-            enviarCorreo(1,"rehoscript@gmail.com");
+            
+            String nombre=fA.getDatosPersonalesId().getNombre()+" "
+                          +fA.getDatosPersonalesId().getApellidoP()+" "
+                          +fA.getDatosPersonalesId().getApellidoM();
+            enviarCorreo(1,"rehoscript@gmail.com",nombre);
         }
         return "OK";
     }
@@ -273,7 +297,7 @@ public class FormatoUnicoAdminController {
                          String idFormatoUnico,
                          String tipo) {
         
-
+        String nombre=" ";
         switch(Integer.parseInt(tipo))
         {
             case 1://Correccion
@@ -282,6 +306,11 @@ public class FormatoUnicoAdminController {
                 //Cambiar Status
                 fu.setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
                 formatoUnicoFacade.edit(fu);
+                //Enviar Correo
+                nombre=fu.getDatosPersonalesId().getNombre()+" "
+                          +fu.getDatosPersonalesId().getApellidoP()+" "
+                          +fu.getDatosPersonalesId().getApellidoM();
+                enviarCorreo(2, "rehoscript@gmail.com",nombre);
                 break;
             case 2://Rechazo
                 //Buscar Formato Unico
@@ -289,6 +318,11 @@ public class FormatoUnicoAdminController {
                 //Cambiar Status
                 fuR.setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
                 formatoUnicoFacade.edit(fuR);
+                //Enviar Correo
+                nombre=fuR.getDatosPersonalesId().getNombre()+" "
+                          +fuR.getDatosPersonalesId().getApellidoP()+" "
+                          +fuR.getDatosPersonalesId().getApellidoM();
+                enviarCorreo(3, "rehoscript@gmail.com",nombre);
                 break;
         }
         
@@ -332,10 +366,18 @@ public class FormatoUnicoAdminController {
             httpServletResponse.getOutputStream().write(documentoBLOB);
 
         }
-        
+    }
+    @RequestMapping(value = "/mostarObservacion.do", method = RequestMethod.GET)
+    public String mostrarObservacion(String idDatosPersonales,Model modelo) 
+    {
+        modelo.addAttribute("listadoObservaciones", 
+        regisObservacionesFacade.findBySpecificField("datosPersonalesId", 
+                                                      datosPersonalesFacade.find(BigDecimal.valueOf(Long.parseLong(idDatosPersonales))),
+                                                            "equal", null, null));
+        return "/FormatoUnico/detalleObservacion";
+
         
     }
-    
      
     //Metodos 
      
@@ -396,7 +438,7 @@ public class FormatoUnicoAdminController {
     }
 
     
-    private void enviarCorreo(int tipo,String correoDestinatario)
+    private void enviarCorreo(int tipo,String correoDestinatario,String nombre)
     {
      
         String mensaje=" ";
@@ -404,7 +446,7 @@ public class FormatoUnicoAdminController {
         {
             case 1://Aceptados
                 mensaje="<h1>Notificación Servicio Social</h1>\n" +
-                "<h2>Estimado  <b>Nombre</b>:</h2> \n" +
+                "<h2>Estimado  <b>"+nombre+"</b>:</h2> \n" +
                 "<p>\n" +
                 "Te informamos que  tu  Formato Único que has llenado, fue revisado por la Oficina de Servicio Social  y ha sido <b>Aceptado</b> Satisfactoriamente. \n" +
                 "</p>\n" +
@@ -417,7 +459,7 @@ public class FormatoUnicoAdminController {
                 break;
             case 2://Correccion
                 mensaje="<h1>Notificación Servicio Social</h1>\n" +
-                "<h2>Estimado  <b>Nombre</b>:</h2> \n" +
+                "<h2>Estimado  <b>"+nombre+"</b>:</h2> \n" +
                 "<p>\n" +
                 "Te informamos que   tu  Formato Único que has llenado, ha sido revisado por la Oficina de Servicio Social  y este tiene errores.  Favor de corregirlos lo más pronto posible.\n" +
                 "</p>\n" +
@@ -431,7 +473,7 @@ public class FormatoUnicoAdminController {
                 break;
             case 3://No aceptados
                 mensaje="<h1>Notificación Servicio Social</h1>\n" +
-                "<h2>Estimado  <b>Nombre</b>:</h2> \n" +
+                "<h2>Estimado  <b>"+nombre+"</b>:</h2> \n" +
                 "<p>\n" +
                 "Te informamos que   tu  Formato Único que has llenado, fue revisado por la Oficina de Servicio Social  y este ha sido <b>Rechazado</b>.\n" +
                 "</p>\n" +
@@ -446,8 +488,12 @@ public class FormatoUnicoAdminController {
             default:
                 return;
         }
+        Date fechaActual=new Date();
+        System.out.println(fechaActual);
+        SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yyyy");
+        String str=fecha.format(fechaActual);
         //Formato Correo
-        EnviarCorreo correo = new EnviarCorreo("Notificación  Servicio Social ",
+        EnviarCorreo correo = new EnviarCorreo("Notificación  Servicio Social "+str+" "+nombre,
                                                correoDestinatario,
                                                mensaje
                                                );

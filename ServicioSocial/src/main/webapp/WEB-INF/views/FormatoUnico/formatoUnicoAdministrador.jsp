@@ -50,18 +50,25 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="noRevisadosDT" width='100%'>
                             <thead>
                                 <tr>
+                                    <th>Acci&oacute;nes</th>
                                     <td>Periodo</td>
-                                    <th>n. Control</th>
+                                    <th>N. Control</th>
                                     <th>Nombre</th>
                                     <th>Documento</th>
                                     <th>Fecha Subida</th>
-                                    <th>Acci&oacute;nes</th>
+                                    
                                 </tr>
                             </thead>
                             <tbody>
                                 
-                                <core:forEach items="${listadoFormatoUnicoNORevisados}" var="filaNR">
+                                <core:forEach items="${listadoFormatoUnicoNORevisados}" var="filaNR">                                   
                                     <tr class='gradeX'>
+                                    <td>
+                                        <a href="#"> <img class="aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/paloma.png" /></a>
+                                        <a href="#"> <img class="rechazar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/tache.png" /></a>
+                                        <a href="#"> <img class="correccion" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/corregir.jpg" /></a>
+                                    </td>
+     
                                     <td>${filaNR.periodo}</td>
                                     <td> <core:out value="${filaNR.noControl}"/>  </td>
                                     <td>
@@ -69,14 +76,7 @@
                                     </td>
                                     <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
                                     <td><core:out value="${filaNR.fechaSubida}"/></td>
-                                    
-                                    <td>
-                                        <a href="#"> <img src="imagenes/logo_tec_r.png" /></a>
-                                        <input type="button" value="Aceptar" class="aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}">
-                                        <input type="button" value="Rechazar" class="rechazar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" />
-                                        <input type="button" value="Corrección" class="correccion" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
-                                    </td>
-                                    
+
                                     </tr>
                                 </core:forEach>
                             </tbody>
@@ -87,8 +87,9 @@
                             <thead>
                                 <tr>
                                     <th>Periodo</th>
-                                    <td>n. Control</td>
+                                    <td>No. Control</td>
                                     <th>Nombre</th>
+                                    <th>Documento</th>
                                     <th>Fecha Subida</th>
                                     <th>Motivo</th>
                                 </tr>
@@ -98,14 +99,16 @@
                                     <tr class='gradeX'>
                                         <td>${filaRech.periodo}</td>
                                         <td> <core:out value="${filaRech.noControl}"/>  </td>
-                                        <td><core:out value="${filaRech.nombre}"/></td>                                        
+                                        <td><core:out value="${filaRech.nombre}"/></td>
+                                        <td><a href="mostarPDF.do?id=${filaRech.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
                                         <td><core:out value="${filaRech.fechaSubida}"/></td>
                                         <td>
-                                             <ul>
-                                            <core:forEach items="${filaRech.listaObservaciones}" var="observacion">
+                                            <%/*
+                                             * <core:forEach items="${filaRech.listaObservaciones}" var="observacion">
                                                 <li>${observacion}</li>
                                             </core:forEach>
-                                            </ul>
+                                            */%>
+                                            <a href="mostarObservacion.do?idDatosPersonales=${filaRech.idDatosPersonales}" class="fancy">Detalles</a>
                                         </td>
                                     </tr>
                                 </core:forEach>
@@ -117,8 +120,9 @@
                             <thead>
                                 <tr>
                                    <th>Periodo</th>
-                                    <td>n. Control</td>
+                                    <td>No. Control</td>
                                     <th>Nombre</th>
+                                    <th>Documento</th>
                                     <th>Fecha Subida</th>
                                     <th>Motivo</th>
                                 </tr>
@@ -128,14 +132,19 @@
                                     <tr class='gradeX'>
                                         <td>${filaCorrec.periodo}</td>
                                         <td> <core:out value="${filaCorrec.noControl}"/>  </td>
-                                        <td><core:out value="${filaCorrec.nombre}"/></td>                                        
+                                        <td><core:out value="${filaCorrec.nombre}"/></td>
+                                        <td><a href="mostarPDF.do?id=${filaCorrec.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
                                         <td><core:out value="${filaCorrec.fechaSubida}"/></td>
                                         <td>
-                                            <ul>
+                                            <%/*
+                                             * <ul>
                                             <core:forEach items="${filaCorrec.listaObservaciones}" var="observacion">
                                                 <li>${observacion}</li>
                                             </core:forEach>
                                             </ul>
+                                            */%>
+                                            
+                                            <a href="mostarObservacion.do?idDatosPersonales=${filaCorrec.idDatosPersonales}" class="fancy">Detalles</a>
                                         </td>
                                     </tr>
                                 </core:forEach>
@@ -147,8 +156,9 @@
                             <thead>
                                 <tr>
                                     <th>Periodo</th>
-                                    <th>n. Control</th>
+                                    <th>No. Control</th>
                                     <th>Nombre</th>
+                                    <th>Documento</th>
                                     <th>Fecha Subida</th>
                                 </tr>
                             </thead>
@@ -158,7 +168,9 @@
                                     <td>${filaA.periodo}</td>
                                     <td> <core:out value="${filaA.noControl}"/>  </td>
                                     <td><core:out value="${filaA.nombre}"/></td>
-                                    <td><core:out value="${filaA.fechaSubida}"/></td>                                    
+                                    <td><a href="mostarPDF.do?id=${filaA.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                    <td><core:out value="${filaA.fechaSubida}"/></td>
+                                   
                                     </tr>
                                 </core:forEach>
                             </tbody>
