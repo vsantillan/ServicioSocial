@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Reportes;
@@ -12,6 +13,7 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.ReportesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.text.ParseException;
 import java.util.List;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
@@ -40,7 +42,7 @@ public class ReporteBimestralController {
 //        return "/ReporteBimestral/reporteBimestralAdministrador";
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
-    public String reporteBimestralUsuario(Model modelo) {
+    public String reporteBimestralUsuario(Model modelo) throws ParseException {
         String alumno_id = "09280028";
         ///////////BUSCAR ALUMNO///////////
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
@@ -54,6 +56,8 @@ public class ReporteBimestralController {
             if (RB.isEmpty()) {
                 List<FormatoUnico> formatoUnico =formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
                 FormatoUnico fechaInicioFU=formatoUnico.get(0);
+                fechas fechaFin =new  fechas(fechaInicioFU.getFechaInicio());
+               System.out.println("Resultado del metodo"+fechaFin.dameFecha());
                 modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
             }else{
                 modelo.addAttribute("fechaInicio", "");

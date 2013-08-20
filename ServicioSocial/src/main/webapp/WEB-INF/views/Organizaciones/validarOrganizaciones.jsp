@@ -73,16 +73,15 @@
                             <core:choose>
                                 <core:when test="${current.estatus==1}">
                                     <tr class='gradeX'>
-                                        <th><a href="#" class="btn-validar-org"><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}" ><img  src="imagenes/tache.png" width="30"></a></th>
+                                        <th><a href="#" ><img class="editOrg" ide="${current.idInstancia}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}" ><img  src="imagenes/tache.png" width="30"></a></th>
                                         <th><a href="detalleOrganizacion.do?id=${current.idInstancia}" class="fancy" ><img src="imagenes/lupa.png" width="30"/></a></th>
                                         <th><core:out value="${current.nombre}" /></th>
                                         <th><core:out value="${current.titular}" /></th>
                                         <th><core:out value="${current.rfc}" /></th>
                                         <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
-                                <input type="hidden" value="${current.correo}" x="${current.idInstancia}"/>
-                                <input type="hidden" value="${current.nombre}" x="${current.idInstancia}"/>
-
-                                </tr>
+                                        <input type="hidden" value="${current.correo}" x="${current.idInstancia}"/>
+                                        <input type="hidden" value="${current.nombre}" x="${current.idInstancia}"/>
+                                    </tr>
                             </core:when>
                         </core:choose>
                     </core:forEach>
@@ -103,11 +102,11 @@
                     <tr>
 
                         <td>Nombre de la Organizaci&oacute;n:</td>
-                        <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" /> </td>
+                        <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" disabled="true" /> </td>
                     </tr>
                     <tr>
                         <td>E-Mail:</td>
-                        <td><form:input type ="text"  id="correo" path="correo" name="correo" /> </td>
+                        <td><form:input type ="text"  id="correo" path="correo" name="correo" disabled="true" /> </td>
                     </tr>
                     <tr>
                         <td>Descripci&oacute;n:</td>

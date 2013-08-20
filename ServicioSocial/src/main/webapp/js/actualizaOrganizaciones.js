@@ -8,12 +8,12 @@ $(document).ready(retroalimentacion);
 
 function editarStatusInstancia(e)
 {
-    if(confirm('¿Seguro que desea eliminar instancia?'))
+    if (confirm('¿Seguro que desea eliminar instancia?'))
     {
         var row = $(this).parents('tr')[0];
         var idUpdate = $(e.target).attr('ide');
         var tabla = $('#example').dataTable();
-        $.post("cambiaStatusInstancia.do", {id: idUpdate}, function(response) 
+        $.post("cambiaStatusInstancia.do", {id: idUpdate}, function(response)
         {
             tabla.fnDeleteRow(row);
         });
@@ -22,39 +22,51 @@ function editarStatusInstancia(e)
 
 function editarStatusProyecto(e)
 {
-    if(confirm('¿Seguro que desea eliminar proyecto?'))
+    if (confirm('¿Seguro que desea eliminar proyecto?'))
     {
         var row = $(this).parents('tr')[0];
         var idUpdate = $(e.target).attr('ide');
         var tabla = $('#example').dataTable();
-        $.post("cambiaStatusProyecto.do", {id: idUpdate}, function(response) 
+        $.post("cambiaStatusProyecto.do", {id: idUpdate}, function(response)
         {
             tabla.fnDeleteRow(row);
         });
     }
 }
 
-function updateProyecto(e) {
-    var row = $(this).parents('tr')[0];
-    var idUpdate = $(e.target).attr('ide');
-    var tabla = $('#example').dataTable();
-    tabla.fnDeleteRow(row);
-    alert("Este es el update" + idUpdate);
-    //ajax(idUpdate);
-    $.post("updateProyecto.do", {id: idUpdate}, function(response) {
-        //alert("Ya hizo el update");
-    });
+function updateProyecto(e)
+{
+    if (confirm('¿Seguro que desea aprobar el proyecto?'))
+    {
+        var row = $(this).parents('tr')[0];
+        var idUpdate = $(e.target).attr('ide');
+        var tabla = $('#example').dataTable();
+        $.post("updateProyecto.do", {id: idUpdate}, function(response) {
+            tabla.fnDeleteRow(row);
+            $("#div-validar-proyecto").show('slow');
+            setTimeout(function() {
+                $("#div-validar-proyecto").hide('slow')
+            }, 3000)
+        });
+    }
 }
 
 
-function updateOrganisation(e) {
-    var row = $(this).parents('tr')[0];
-    var idUpdate = $(e.target).attr('ide');
-    var tabla = $('#example').dataTable();
-    tabla.fnDeleteRow(row);
-    $.post("updateStatus.do", {id: idUpdate}, function(response) {
-  
-    });
+function updateOrganisation(e)
+{
+    if (confirm('¿Seguro que desea aprobar esta organizacion?'))
+    {
+        var row = $(this).parents('tr')[0];
+        var idUpdate = $(e.target).attr('ide');
+        var tabla = $('#example').dataTable();
+        $.post("updateStatus.do", {id: idUpdate}, function(response) {
+            tabla.fnDeleteRow(row);
+            $("#div-validar-organizacion").show('slow')
+            setTimeout(function() {
+                $("#div-validar-organizacion").hide('slow')
+            }, 3000)
+        });
+    }
 }
 
 function retroalimentacion() {
@@ -65,21 +77,3 @@ function retroalimentacion() {
         $("input#idI").attr("value", $(this).attr("idO"));
     });
 }
-
-function enviaDatos() {
-//    alert("work it");
-  //  var tabla = $('#example').dataTable();
- //   tabla.fnDeleteRow(row);
-//    var str = $("#MyForm").serialize();
-//    console.log(str);
-//    $.post("borrarOrganizacion.do", {id: "1", descripcion: "ola k ase", correo: "roy_006@hotmail.com"}, function(response) {
-//        alert("Ya mando Post: " + response);
-//    });
-
-
-}
-
-
-
-
-

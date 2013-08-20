@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <td><p>Domicilio de la Instancia:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.domicilio}"/></p></td>
+                    <td><p><core:out value="${proyectoDetalle.idInstancia.domicilio}"/></p></td>
                 </tr>
                 <tr>
                     <td><p>Actividades:</p></td>
