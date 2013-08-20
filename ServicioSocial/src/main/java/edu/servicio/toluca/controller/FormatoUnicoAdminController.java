@@ -172,8 +172,8 @@ public class FormatoUnicoAdminController {
                                                             formato.getDatosPersonalesId(),
                                                             "equal", null, null)) {
                      
-                     String detalle=observacionesCatalogoFacade.find(reg.getId()).getDetalle();
-                     System.out.println(detalle);
+                     
+                     String detalle=reg.getCatalogoObservacionId().getDetalle();
                      formatoRechazados.añadirObservacion(detalle);
                 }
 
@@ -196,12 +196,15 @@ public class FormatoUnicoAdminController {
                 List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
+               
                 for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId", 
                                                             formato.getDatosPersonalesId(),
                                                             "equal", null, null)) {
                      
-                     String detalle=observacionesCatalogoFacade.find(reg.getId()).getDetalle();
-                     System.out.println(detalle);
+                    
+//                   
+                     String detalle=reg.getCatalogoObservacionId().getDetalle();
+
                      formatoCorreccion.añadirObservacion(detalle);
                 }
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
@@ -296,7 +299,7 @@ public class FormatoUnicoAdminController {
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
             registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
             //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
-            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico))));
+            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
             //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
             //Creacion de Registro

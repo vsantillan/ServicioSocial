@@ -113,18 +113,27 @@ function obtenerDatos()
       }
   });
   
-  $.post("modificarFormatoUnicoNR.do",{idDatoPersonales:idDatosPersonales2,idFormatoUnico:idFormatoUnico2,tipo:tipo2,observaciones:array},function(respuesta)
-    {        
-        if(respuesta==="OK")
-        {
-            //$.fancybox.close();
-            window.location.reload();
-        }else
-        {
-            alert("Imposible Borrar Consulte a Team Developer");
+  
+  if(array.length > 0)
+  {
+      $.post("modificarFormatoUnicoNR.do",{idDatoPersonales:idDatosPersonales2,idFormatoUnico:idFormatoUnico2,tipo:tipo2,observaciones:array},function(respuesta)
+        {        
+            if(respuesta==="OK")
+            {
+                //$.fancybox.close();
+                window.location.reload();
+            }else
+            {
+                alert("Imposible Borrar Consulte a Team Developer");
+            }
         }
-    }
-    );
+        );
+  }
+  else
+  {
+        alert('No se ha seleccionado Observación');
+  }
+  
 }
 
 

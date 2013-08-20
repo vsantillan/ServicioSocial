@@ -71,7 +71,8 @@
                                     <td><core:out value="${filaNR.fechaSubida}"/></td>
                                     
                                     <td>
-                                        <input type="button" value="Aceptar" class="aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
+                                        <a href="#"> <img src="imagenes/logo_tec_r.png" /></a>
+                                        <input type="button" value="Aceptar" class="aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}">
                                         <input type="button" value="Rechazar" class="rechazar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" />
                                         <input type="button" value="Corrección" class="correccion" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"/>
                                     </td>
