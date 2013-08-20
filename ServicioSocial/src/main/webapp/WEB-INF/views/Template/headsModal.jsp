@@ -21,25 +21,35 @@
             }
         });
         //FACY EXTERNO
-    $(".fancy").fancybox({  
-        'autoScale'     : false,  
-        'transitionIn'      : 'none',  
-        'transitionOut'     : 'none',  
-        'width'         : 680,  
-        'height'        : 450,  
-        'type'          : 'iframe'  
-    });
-    
-    
-    $(".fancyFU").fancybox({  
-        'autoScale'     : false,  
-        'transitionIn'      : 'none',  
-        'transitionOut'     : 'none',  
-        'width'         : '90%',  
-        'height'        : '90%',  
-        'type'          : 'iframe'  
-    });
-    
-    
+        $(".fancy").fancybox({
+            'autoScale': false,
+            'transitionIn': 'none',
+            'transitionOut': 'none',
+            'width': 680,
+            'height': 450,
+            'type': 'iframe'
+        });
+
+
+        $(".fancyFU").fancybox({
+            'autoScale': false,
+            'transitionIn': 'none',
+            'transitionOut': 'none',
+            'width': '90%',
+            'height': '90%',
+            'type': 'iframe'
+        });
+        $(".fancyFUI").fancybox({
+            'autoScale': false,
+            'transitionIn': 'none',
+            'transitionOut': 'none',
+            'width': '90%',
+            'height': '90%',
+            'type': 'iframe',
+            'autoDimensions': false,
+            
+        });
+
+
     });
 </script>

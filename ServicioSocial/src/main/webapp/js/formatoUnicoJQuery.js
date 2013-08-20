@@ -141,7 +141,8 @@ function enviarDatosAlumno()
         }
         if (respJ.length > 0)
         {
-            alert('Tienes errores');
+            //alert('Tienes errores');
+            console.log('Tienes errores');
             $('.observacion').remove();
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');
@@ -172,7 +173,8 @@ function enviarDatosContactoAlumno()
         }
         if (respJ.length > 0)
         {
-            alert('Tienes errores');
+            //alert('Tienes errores');
+            console.log('Tienes errores');
             $('.observacion').remove();
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');
@@ -203,7 +205,8 @@ function enviarHorarios()
         }
         if (respJ.length > 0)
         {
-            alert('Tienes errores');
+            //alert('Tienes errores');
+            console.log('Tienes errores');
             $('.observacion').remove();
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');

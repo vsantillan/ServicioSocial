@@ -83,22 +83,23 @@
                 </ul>
                 <div id="datosPersonales">
                     <form:form id="frmDatosPersonales" modelAttribute="formatoUnicoDatosPersonales">
+                        Los datos marcados con * son Obligatorios
                         <table>
                             <tr>
                                 <form:input  type="hidden" path ="id" />
-                                <td>Nombre:</td>
+                                <td>*Nombre:</td>
                                 <td><form:input  path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
-                                <td>Apellido Paterno</td>
+                                <td>*Apellido Paterno</td>
                                 <td><form:input  path ="apellidoP" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
-                                <td>Apellido Materno:</td>
+                                <td>*Apellido Materno:</td>
                                 <td><form:input  path ="apellidoM" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
-                                <td>Sexo</td>
+                                <td>*Sexo</td>
                                 <td>
 
 
@@ -142,25 +143,26 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Ocupaci&oacute;n:</td>
+                                <td>*Ocupaci&oacute;n:</td>
                                 <td><form:input  path ="ocupacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
-                                <td>CURP:</td>
+                                <td>*CURP:</td>
                                 <td><form:input  path ="curp" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
-                                <td>Folio de Documento de Identificaci&oacute;n:</td>
+                                <td>*Folio de Documento de Identificaci&oacute;n:</td>
                                 <td><form:input  path ="folioDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
-                                <td>Clave de Documento de Identificaci&oacute;n:</td>
+                                <td>*Clave de Documento de Identificaci&oacute;n:</td>
                                 <td><form:input  path ="claveDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
-                                    <form:checkbox path="acuerdoC" />  He le&iacute;do y acepto el <a href="#">Acuerdo de Confidencialidad</a> </td>
+                                    <form:checkbox path="acuerdoC" />  *He le&iacute;do y acepto el <a href="showpdf.do" class="fancyFUI">Acuerdo de Confidencialidad</a> </td>
+                                    
                             </tr>
                             <tr>
                                 <td></td>
@@ -311,7 +313,7 @@
                                             <option value="${instancia.idInstancia}">${instancia.nombre}</option>
                                         </core:forEach> 
                                     </select> 
-                                    <a id="linkNuevoI" href="propalinstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancy" >Agregar una Instancia/Proyecto Nuevo</a>
+                                    <a id="linkNuevoI" href="propAlInstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancy" >Agregar una Instancia/Proyecto Nuevo</a>
                                 </td>
                                 <td style="padding-left: 50px; text-align:right">
                                     Fecha de Inicio 

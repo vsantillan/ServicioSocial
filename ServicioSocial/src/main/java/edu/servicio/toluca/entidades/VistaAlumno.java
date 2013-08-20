@@ -7,6 +7,7 @@ package edu.servicio.toluca.entidades;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -54,10 +57,13 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "VistaAlumno.findByPromedio", query = "SELECT v FROM VistaAlumno v WHERE v.promedio = :promedio")})
 public class VistaAlumno implements Serializable {
     @Column(name = "PROMEDIO")
-    private Double promedio;
+    private BigInteger promedio;
     @Lob
     @Column(name = "FOTO")
-    private byte[] foto;
+    private Serializable foto;
+    @Column(name = "FEC_NAC")
+    @Temporal(TemporalType.DATE)
+    private Date fecNac;
     
     @Column(name = "PLAN_ID")
     private BigInteger planId;
@@ -369,20 +375,28 @@ public class VistaAlumno implements Serializable {
         this.planId = planId;
     }
 
-    public Double getPromedio() {
+    public BigInteger getPromedio() {
         return promedio;
     }
 
-    public void setPromedio(Double promedio) {
+    public void setPromedio(BigInteger promedio) {
         this.promedio = promedio;
     }
 
-    public byte[] getFoto() {
+    public Serializable getFoto() {
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(Serializable foto) {
         this.foto = foto;
+    }
+
+    public Date getFecNac() {
+        return fecNac;
+    }
+
+    public void setFecNac(Date fecNac) {
+        this.fecNac = fecNac;
     }
     
 }

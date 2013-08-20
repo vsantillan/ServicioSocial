@@ -91,6 +91,11 @@ public class FormatoUnicoController {
     @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
     private FoliosPlaticaFacade foliosPlaticaFacade;
 
+    @RequestMapping(method = RequestMethod.GET, value = "/showpdf.do")
+    public String showpdf(Model modelo, String alumno_id) {
+        return "/FormatoUnico/showpdf";
+    }
+    
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo, String alumno_id) {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
@@ -306,6 +311,9 @@ public class FormatoUnicoController {
         FormatoUnicoProyectosJSON formatoUnicoProyectosJON = new FormatoUnicoProyectosJSON();
         formatoUnicoProyectosJON.setId(datosPersonales.getId());
         formatoUnicoProyectosJON.setIdProyecto(formatoUnico.getIdproyecto().getIdProyecto());
+        System.out.println("Id de fui"+ formatoUnico.getId());
+        System.out.println("id de datos perso del fui"+ formatoUnico.getDatosPersonalesId().getId());
+        System.out.println("El  proy asignado es "+  formatoUnico.getIdproyecto().getIdProyecto());
         formatoUnicoProyectosJON.setFecha_inicio(formatoUnico.getFechaInicio());
         modelo.addAttribute("formatoUnicoDatosOrganizaciones", formatoUnicoProyectosJON);
         //modelo.addAttribute("idDeInstancia", formatoUnico.getIdproyecto().getIdInstancia().getIdInstancia());
