@@ -176,15 +176,7 @@ public class FormatoUnicoAdminController {
                 List<Documentos> listaDocumentos3 = documentoFacade.findBySpecificField("datosPersonalesId",
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
-                for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId", 
-                                                            formato.getDatosPersonalesId(),
-                                                            "equal", null, null)) {
-                     
-                     
-                     String detalle=reg.getCatalogoObservacionId().getDetalle();
-                     formatoRechazados.añadirObservacion(detalle);
-                }
-
+                
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos3);
                 if(fechaSubida != null)
                 {
@@ -211,16 +203,7 @@ public class FormatoUnicoAdminController {
                                                                formato.getDatosPersonalesId(),
                                                                "equal", null, null);
                
-                for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId", 
-                                                            formato.getDatosPersonalesId(),
-                                                            "equal", null, null)) {
-                     
-                    
-//                   
-                     String detalle=reg.getCatalogoObservacionId().getDetalle();
-
-                     formatoCorreccion.añadirObservacion(detalle);
-                }
+               
                 String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos4);
  
                 if(fechaSubida != null)
