@@ -102,15 +102,15 @@
                         <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
                         <form:input hidden="hidden" id="control" path="control" value="1" />
                         <td>Nombre del Proyecto:</td>
-                        <td><form:input id="nombreProyecto" path="nombreProyecto"  /></td>
+                        <td><form:input id="nombreProyecto" path="nombreProyecto" disabled="true"  /></td>
                     </tr>
                     <tr>
                         <td>Nombre de la Organizaci&oacute;n:</td>
-                        <td><form:input id="nombre" path="nombreInstancia"  /></td>
+                        <td><form:input id="nombre" path="nombreInstancia" disabled="true"  /></td>
                     </tr>
                     <tr>
                         <td>E-Mail:</td>
-                        <td><form:input id="correo" path="email" disabled="disabled"  /></td>
+                        <td><form:input id="correo" path="email" disabled="true"  /></td>
                     </tr>
                     <tr>
                         <td>Descripci&oacute;n:</td>
