@@ -88,15 +88,15 @@
                             <tr>
                                 <form:input  type="hidden" path ="id" />
                                 <td>*Nombre:</td>
-                                <td><form:input  path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input   maxlength="60" path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>*Apellido Paterno</td>
-                                <td><form:input  path ="apellidoP" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="30" path ="apellidoP" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>*Apellido Materno:</td>
-                                <td><form:input  path ="apellidoM" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="30" path ="apellidoM" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>*Sexo</td>
@@ -128,7 +128,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Estado civil:</td>
+                                <td>*Estado civil:</td>
                                 <td>
                                     <select name="estado_civil">
                                         <option value="SOLTERO(A)">SOLTERO</option>
@@ -144,19 +144,23 @@
                             </tr>
                             <tr>
                                 <td>*Ocupaci&oacute;n:</td>
-                                <td><form:input  path ="ocupacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="30" path ="ocupacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>*CURP:</td>
-                                <td><form:input  path ="curp" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="18" path ="curp" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                            </tr>
+                            <tr>
+                                <td>*Lugar de Nacimiento:</td>
+                                <td><form:input maxlength="150" path ="lugar_nacimiento" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>*Folio de Documento de Identificaci&oacute;n:</td>
-                                <td><form:input  path ="folioDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="13" path ="folioDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>*Clave de Documento de Identificaci&oacute;n:</td>
-                                <td><form:input  path ="claveDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="30" path ="claveDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -173,30 +177,32 @@
                 </div>
                 <div id="datosContacto">
                     <form:form id="frmDatosContacto" commandName="formatoUnicoDatosContacto" >
+                        Los datos marcados con * son Obligatorios
                         <table>
+                            
                             <tr>
                                 <form:input  type="hidden" path ="id" />
-                                <td>Calle:</td>
-                                <td><form:input  path ="calle" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td>*Calle:</td>
+                                <td><form:input  path ="calle" maxlength="200" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>No. Int.</td>
-                                <td><form:input  path ="numeroI" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input  path ="numeroI" maxlength="5" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
-                                <td>No. Ext.</td>
-                                <td><form:input  path ="numeroE" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td>*No. Ext.</td>
+                                <td><form:input  path ="numeroE" maxlength="5" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
 
                             <tr>
                             <input type="hidden" id="preCP" value="${codigoPostal}" />
                             <input type="hidden" id="preColonia" value="${preColonia}" />
 
-                            <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
+                            <td>  <label for="codigo_postal">*C&oacute;digo Postal:</label></td>
                             <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${instanciaDireccion.idColonia.idCp.cp}"></td>  
                             </tr>
                             <tr>
-                                <td>  <label for="estado">Estado:</label></td>
+                                <td>  <label for="estado">*Estado:</label></td>
                                 <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> 
                                     <select name="estado" id="estado" disabled="true">                                   
                                         <core:forEach items="${estados}" var="estados">
@@ -206,13 +212,13 @@
                                 </td>  
                             </tr>                        
                             <tr>
-                                <td>  <label for="municipio">Municipio:</label></td>
+                                <td>  <label for="municipio">*Municipio:</label></td>
                                 <td>  <!--input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/--> 
                                     <select name="municipio" id="municipio" disabled="true"></select>
                                 </td>  
                             </tr>
                             <tr>
-                                <td>  <label for="ciudad">Ciudad</label></td>
+                                <td>  <label for="ciudad">*Ciudad</label></td>
                                 <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
                                     <select name="ciudad" id="ciudad" disabled="true"></select>
                                 </td>  
@@ -220,7 +226,7 @@
                             <tr>
                                 <td>
                                     <input id="nombre_colonia" path="nombre_colonia" value="${instanciaDireccion.idColonia.nombre}" hidden="hidden"/>
-                                    <label for="colonia">Colonia:</label></td>
+                                    <label for="colonia">*Colonia:</label></td>
                                 <td>  
                                     <div id="notice"></div>
                                     <!--select name="colonia" id="colonia" disabled="true"></select--> 
@@ -237,32 +243,32 @@
                             <tr>
 
 
-                                <td>Entre Calles:</td>
-                                <td><form:input  path ="entreCalles" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td>*Entre Calles:</td>
+                                <td><form:input maxlength="255" path ="entreCalles" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
-                                <td>Referencias:</td>
-                                <td><form:input  path ="referencias" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td>*Referencias:</td>
+                                <td><form:input maxlength="70" path ="referencias" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono casa:</td>
-                                <td><form:input  path ="telefono_casa" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="50"  path ="telefono_casa" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono cel:</td>
-                                <td><form:input  path ="telefono_cel" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="30" path ="telefono_cel" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Tel&eacute;fono oficina:</td>
-                                <td><form:input  path ="telefono_oficina" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="30" path ="telefono_oficina" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>Twitter:</td>
-                                <td><form:input  path ="twitter" /> </td>
+                                <td><form:input maxlength="25" path ="twitter" /> </td>
                             </tr>
                             <tr>
                                 <td>Facebook:</td>
-                                <td><form:input  path ="facebook" /> </td>
+                                <td><form:input maxlength="30" path ="facebook" /> </td>
                             </tr>
                             <tr>
                                 <td></td>
@@ -303,30 +309,31 @@
                 </div>
                 <div id="datosOrganizaciones">
                     <form:form id="frmDatosOrganizaciones" modelAttribute="formatoUnicoDatosOrganizaciones" >
+                        Los datos marcados con * son Obligatorios
                         <table>
                             <tr>
                                 <form:input class="idDatosPersonalesOrg" type="hidden" path ="id" />
-                                <td>Organizaci&oacute;n:</td>
+                                <td>*Organizaci&oacute;n:</td>
                                 <td>
                                     <select id="comboOrganizaciones" name="organizacion">
                                         <core:forEach items="${instancias}" var="instancia">
                                             <option value="${instancia.idInstancia}">${instancia.nombre}</option>
                                         </core:forEach> 
                                     </select> 
-                                    <a id="linkNuevoI" href="propAlInstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancy" >Agregar una Instancia/Proyecto Nuevo</a>
+                                    <a id="linkNuevoI" href="propAlInstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancyFU" >Agregar una Instancia/Proyecto Nuevo</a>
                                 </td>
                                 <td style="padding-left: 50px; text-align:right">
-                                    Fecha de Inicio 
+                                    *Fecha de Inicio 
                                     <form:input  type="text" require="true"  size="15" path ="fecha_inicio"  style="width:100px"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Proyecto:</td>
+                                <td>*Proyecto:</td>
                                 <td>
                                     <select id="proyectos" name="proyecto">
 
                                     </select> 
-                                    <a id="linkNuevoP" href="propAlProyecto.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}&idInstancia=${idDeInstancia}" class="fancy" >Agregar un proyecto</a>
+                                    <a id="linkNuevoP" href="propAlProyecto.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}&idInstancia=${idDeInstancia}" class="fancyFU" >Agregar un proyecto</a>
                                     
                                 </td>
                             </tr>
@@ -387,20 +394,20 @@
                             </tr>
                             <tr>
                                 <th>Horario Inicio:</th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[1]" path="luI" /></th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[3]" path="maI" /></th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[5]" path="miI" /></th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[7]" path="juI" /></th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[9]" path="viI" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[1]" path="luI" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[3]" path="maI" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[5]" path="miI" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[7]" path="juI" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[9]" path="viI" /></th>
 
                             </tr>
                             <tr>
                                 <th>Horario Final</th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[2]" path="luF" /></th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[4]" path="maF" /></th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[6]" path="miF" /></th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[8]" path="juF" /></th>
-                                <th><form:input type="text" style="width: 70px;" class="timepicker.[10]" path="viF" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[2]" path="luF" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[4]" path="maF" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[6]" path="miF" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[8]" path="juF" /></th>
+                                <th><form:input maxlength="5" type="text" style="width: 70px;" class="timepicker.[10]" path="viF" /></th>
 
                             </tr>
                             <tr>

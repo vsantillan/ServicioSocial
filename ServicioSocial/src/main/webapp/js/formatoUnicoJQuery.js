@@ -231,7 +231,7 @@ function enviarDatosOrganizaciones()
     console.log(alumno);
     $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta) {
         alert(respuesta);
-        console.log(respuesta);
+        //console.log(respuesta);
     });
 
 

@@ -26,6 +26,7 @@ public class FormatoUnicoDatosPersonalesBean {
     private String claveDocIdentificacion;
     private String folioDocIdentificacion;
     private boolean acuerdoC;
+    private String lugar_nacimiento;
     private ArrayList<String> listaErrores = new ArrayList<String>();
     MetodosValidacion mv = new MetodosValidacion();
     
@@ -45,6 +46,7 @@ public class FormatoUnicoDatosPersonalesBean {
         if(curp == null || curp.equals("")){listaErrores.add("El campo curp no puede estar vacío"); }
         if(claveDocIdentificacion.equals("")){listaErrores.add("El campo Clave del Documento de indentificación no puede estar vacío"); }
         if(folioDocIdentificacion == null || folioDocIdentificacion.equals("0")){listaErrores.add("El campo folio del Documento de indentificación no puede estar vacío"); }
+        if(lugar_nacimiento == null || lugar_nacimiento.equals("0")){listaErrores.add("El campo lugar de Nacimiento no puede estar vacío"); }
         //Validar tamaños de texto
         if(!mv.minimoString(nombre, 1) && !mv.maximoString(nombre, 60)){listaErrores.add("El campo nombre debe tener entre 1 y 60 letras");}
         if(!mv.minimoString(apellidoP, 1) && !mv.maximoString(apellidoP, 30)){listaErrores.add("El campo apellido paterno debe tener entre 1 y 30 letras");}
@@ -53,6 +55,7 @@ public class FormatoUnicoDatosPersonalesBean {
         if(!mv.minimoString(curp, 18) && !mv.maximoString(curp, 18)){listaErrores.add("El campo CURP debe contener 18 caracteres");}
         if(!mv.minimoString(claveDocIdentificacion, 1) && !mv.maximoString(claveDocIdentificacion, 30)){listaErrores.add("El campo Clave del Documento de identificacion debe tener entre 1 y 30 letras");}
         if(!mv.minimoString(folioDocIdentificacion, 1) && !mv.maximoString(folioDocIdentificacion, 6)){listaErrores.add("El campo Folio del Documento de identificacion debe tener entre 1 y 6 digitos");}
+        if(!mv.minimoString(lugar_nacimiento, 1) && !mv.maximoString(lugar_nacimiento, 150)){listaErrores.add("El campo Folio del Documento de identificacion debe tener entre 1 y 6 digitos");}
         
         
         return listaErrores;
@@ -70,6 +73,7 @@ public class FormatoUnicoDatosPersonalesBean {
         this.curp = mv.tuneaStringParaBD(curp);
         this.claveDocIdentificacion = mv.tuneaStringParaBD(claveDocIdentificacion);
         this.folioDocIdentificacion = mv.dejarSoloNumeros(folioDocIdentificacion);
+        this.lugar_nacimiento = mv.tuneaStringParaBD(lugar_nacimiento);
         setFolioDocIdentificacion(mv.dejarSoloNumeros(folioDocIdentificacion));
         
     }
@@ -225,6 +229,20 @@ public class FormatoUnicoDatosPersonalesBean {
      */
     public void setId(BigDecimal id) {
         this.id = id;
+    }
+
+    /**
+     * @return the lugar_nacimiento
+     */
+    public String getLugar_nacimiento() {
+        return lugar_nacimiento;
+    }
+
+    /**
+     * @param lugar_nacimiento the lugar_nacimiento to set
+     */
+    public void setLugar_nacimiento(String lugar_nacimiento) {
+        this.lugar_nacimiento = lugar_nacimiento;
     }
 
 }

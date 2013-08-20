@@ -95,9 +95,9 @@ public class FormatoUnicoController {
     public String showpdf(Model modelo, String alumno_id) {
         return "/FormatoUnico/showpdf";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
-    public String formatoUnico(Model modelo, String alumno_id) {
+    public String formatoUnico(Model modelo, String alumno_id) throws ParseException {
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
         FormatoUnicoDatosPersonalesBean formatoUnicoDatosPersonalesbean = new FormatoUnicoDatosPersonalesBean();
         FormatoUnicoDatosContactoBean formatoUnicoDatosContacoBean = new FormatoUnicoDatosContactoBean();
@@ -242,6 +242,7 @@ public class FormatoUnicoController {
         formatoUnicoDatosPersonalesbean.setOcupacion(datosPersonales.getOcupacion());
         formatoUnicoDatosPersonalesbean.setClaveDocIdentificacion(datosPersonales.getClaveDocIdentificacion());
         formatoUnicoDatosPersonalesbean.setFolioDocIdentificacion(datosPersonales.getFolioDocIdentificaciin().toString());
+        formatoUnicoDatosPersonalesbean.setLugar_nacimiento(datosPersonales.getLugarNacimiento());
         modelo.addAttribute("formatoUnicoDatosPersonales", formatoUnicoDatosPersonalesbean);
 
 
@@ -311,9 +312,12 @@ public class FormatoUnicoController {
         FormatoUnicoProyectosJSON formatoUnicoProyectosJON = new FormatoUnicoProyectosJSON();
         formatoUnicoProyectosJON.setId(datosPersonales.getId());
         formatoUnicoProyectosJON.setIdProyecto(formatoUnico.getIdproyecto().getIdProyecto());
-        System.out.println("Id de fui"+ formatoUnico.getId());
-        System.out.println("id de datos perso del fui"+ formatoUnico.getDatosPersonalesId().getId());
-        System.out.println("El  proy asignado es "+  formatoUnico.getIdproyecto().getIdProyecto());
+        System.out.println("Id de fui" + formatoUnico.getId());
+        System.out.println("id de datos perso del fui" + formatoUnico.getDatosPersonalesId().getId());
+        System.out.println("El  proy asignado es " + formatoUnico.getIdproyecto().getIdProyecto());
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf.format(formatoUnico.getFechaInicio());
+        Date f = new java.sql.Date(sdf.parse(fecha).getTime());
         formatoUnicoProyectosJON.setFecha_inicio(formatoUnico.getFechaInicio());
         modelo.addAttribute("formatoUnicoDatosOrganizaciones", formatoUnicoProyectosJON);
         //modelo.addAttribute("idDeInstancia", formatoUnico.getIdproyecto().getIdInstancia().getIdInstancia());
@@ -383,10 +387,11 @@ public class FormatoUnicoController {
             datosPersonales.setEstadoCivil(dt.getEstado_civil());
             datosPersonales.setOcupacion(dt.getOcupacion());
             datosPersonales.setCurp(dt.getCurp());
+            datosPersonales.setLugarNacimiento(dt.getLugar_nacimiento());
             datosPersonales.setFolioDocIdentificaciin(new BigInteger(dt.getFolioDocIdentificacion()));
             datosPersonales.setClaveDocIdentificacion(dt.getClaveDocIdentificacion());
             datosPersonalesFacade.edit(datosPersonales);
-            
+
         } else {
             int i = 1;
             for (String s : listaErrores) {
@@ -451,7 +456,7 @@ public class FormatoUnicoController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosOrganizaciones.do")
     public @ResponseBody
-    FormatoUnicoErrores modificarDatosOrganizaciones(FormatoUnicoDatosContactoBean dt, Date fecha_inicio, BigDecimal proyecto, BindingResult resultado) {
+    String modificarDatosOrganizaciones(FormatoUnicoDatosContactoBean dt, Date fecha_inicio, BigDecimal proyecto, BindingResult resultado) {
         System.out.println("recibí" + proyecto);
         DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
         System.out.println("Datos per" + datosPersonales.getNombre());
@@ -464,16 +469,26 @@ public class FormatoUnicoController {
         formatoUnico.setIdproyecto(proyectoG);
         formatoUnico.setFechaInicio(fecha_inicio);
         System.out.println("La fecha recibida es" + fecha_inicio);
+        List<FoliosPlatica> listaF = foliosPlaticaFacade.findBySpecificField("alumnoId", datosPersonales.getAlumnoId(), "equal", null, null);
+        FoliosPlatica fp = listaF.get(0);
+        Date fechaMax = new java.sql.Date(fp.getPlaticaId().getFechaMxFui().getTime());
+        if(fecha_inicio.after(fechaMax))
+            return "La fecha de inicio sobrepasa la fecha maxima permitida";
         // formatoUnico.setFechaInicio(fj.getFecha_inicio());
-        formatoUnicoFacade.edit(formatoUnico);
-
-
-        if (resultado.hasErrors()) {
-            for (ObjectError error : resultado.getAllErrors()) {
-                System.out.println(error.getDefaultMessage());
-            }
+        try
+        {
+            formatoUnicoFacade.edit(formatoUnico);
+            return "Informacion Almacenada correctamente";
         }
-        return new FormatoUnicoErrores();
+        catch(Exception e)
+        {
+            return "Hubo un Problema al Guardar tu informacion";
+        }
+        
+
+
+
+        //return new FormatoUnicoErrores();
 
     }
 

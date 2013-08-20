@@ -68,9 +68,11 @@ public class MetodosValidacion {
     public String quitaAcentos(String input) {
 
         // Cadena de caracteres original a sustituir.
-        String original = "ÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑÇ";
+        // ya no usadoString original = "ÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑÇ";
+        String original = "ÀÄÈËÌÏÒÖÙÜÇ";
         // Cadena de caracteres ASCII que reemplazarán los originales.
-        String ascii = "AAAEEEIIIOOOUUUNC";
+        //ya no usado String ascii = "AAAEEEIIIOOOUUUNC";
+        String ascii = "AAEEIIOOUUC";
         String output = input;
         for (int i = 0; i < original.length(); i++) {
             // Reemplazamos los caracteres especiales.
