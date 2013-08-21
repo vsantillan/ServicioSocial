@@ -91,9 +91,12 @@ public class OrganizacionesController {
     public String administradorProyectos(Model model, HttpSession session, HttpServletRequest request) {
         List<Proyectos> listaProyectos = proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
-        for (int i = 0; i < listaProyectos.size(); i++) {
-            if (listaProyectos.get(i).getValidacionAdmin() == BigInteger.ONE) {
+        for (int i = 0; i < listaProyectos.size(); i++) 
+        {
+            if ((listaProyectos.get(i).getValidacionAdmin() == BigInteger.ONE) && (listaProyectos.get(i).getIdInstancia().getEstatus() == BigInteger.ONE) && ((listaProyectos.get(i).getIdInstancia().getValidacionAdmin() == BigInteger.ONE) || (listaProyectos.get(i).getIdInstancia().getValidacionAdmin() == BigInteger.valueOf(2))))
+            {
                 filtroDeProyectos.add(listaProyectos.get(i));
+                
             }
         }
         model.addAttribute("proyectos", filtroDeProyectos);
@@ -246,7 +249,8 @@ public class OrganizacionesController {
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         for (int i = 0; i < listaInstancias.size(); i++) {
-            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+            if ((listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) || (listaInstancias.get(i).getValidacionAdmin() == BigInteger.valueOf(2)))
+            {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
@@ -307,7 +311,8 @@ public class OrganizacionesController {
             List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             for (int i = 0; i < listaInstancias.size(); i++) {
-                if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+                if ((listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) || (listaInstancias.get(i).getValidacionAdmin() == BigInteger.valueOf(2)))
+                {
                     filtroInstancias.add(listaInstancias.get(i));
                 }
             }
@@ -528,6 +533,13 @@ public class OrganizacionesController {
     String cambiaStatusInstancia(int id, Model model, HttpSession session, HttpServletRequest request) {
         Instancia instancia;
         instancia = instanciaFacade.find(BigDecimal.valueOf(id));
+        Iterator<Proyectos> proyectos=instancia.getProyectosCollection().iterator();
+        while(proyectos.hasNext())
+        {
+            Proyectos proyectoEdit=proyectos.next();
+            proyectoEdit.setEstatus(BigInteger.ZERO);
+            proyectosFacade.edit(proyectoEdit);
+        }
         instancia.setEstatus(BigInteger.ZERO);
         instanciaFacade.edit(instancia);
         System.out.println("Ya actualizo");
