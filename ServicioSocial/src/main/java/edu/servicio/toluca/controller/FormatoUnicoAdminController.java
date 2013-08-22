@@ -86,6 +86,10 @@ public class FormatoUnicoAdminController {
     
     final long DOC_CAT_FU=1;
     
+    //Bandera de prueba Desactivar para Funcionar Correctamente
+    final boolean banderaPrueba = true;
+    
+    
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
         
@@ -255,7 +259,7 @@ public class FormatoUnicoAdminController {
             String nombre=fA.getDatosPersonalesId().getNombre()+" "
                           +fA.getDatosPersonalesId().getApellidoP()+" "
                           +fA.getDatosPersonalesId().getApellidoM();
-            enviarCorreo(1,"rehoscript@gmail.com",nombre);
+            enviarCorreo(1,(banderaPrueba)? "rehoscript@gmail.com":fA.getDatosPersonalesId().getCorreoElectronico(),nombre,null);
         }
         return "OK";
     }
@@ -280,35 +284,6 @@ public class FormatoUnicoAdminController {
                          String idFormatoUnico,
                          String tipo) {
         
-        String nombre=" ";
-        switch(Integer.parseInt(tipo))
-        {
-            case 1://Correccion
-                //Buscar Formato Unico
-                FormatoUnico fu=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
-                //Cambiar Status
-                fu.setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
-                formatoUnicoFacade.edit(fu);
-                //Enviar Correo
-                nombre=fu.getDatosPersonalesId().getNombre()+" "
-                          +fu.getDatosPersonalesId().getApellidoP()+" "
-                          +fu.getDatosPersonalesId().getApellidoM();
-                enviarCorreo(2, "rehoscript@gmail.com",nombre);
-                break;
-            case 2://Rechazo
-                //Buscar Formato Unico
-                FormatoUnico fuR=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
-                //Cambiar Status
-                fuR.setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
-                formatoUnicoFacade.edit(fuR);
-                //Enviar Correo
-                nombre=fuR.getDatosPersonalesId().getNombre()+" "
-                          +fuR.getDatosPersonalesId().getApellidoP()+" "
-                          +fuR.getDatosPersonalesId().getApellidoM();
-                enviarCorreo(3, "rehoscript@gmail.com",nombre);
-                break;
-        }
-        
         for(String idObservacion:observaciones)
         {
             //Objeto a Registrar
@@ -322,6 +297,38 @@ public class FormatoUnicoAdminController {
             //Creacion de Registro
             regisObservacionesFacade.create(registro);
         }
+        
+        String nombre=" ";
+        switch(Integer.parseInt(tipo))
+        {
+            case 1://Correccion
+                //Buscar Formato Unico
+                FormatoUnico fu=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
+                //Cambiar Status 
+                fu.setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
+                formatoUnicoFacade.edit(fu);
+                //Enviar Correo
+                nombre=fu.getDatosPersonalesId().getNombre()+" "
+                          +fu.getDatosPersonalesId().getApellidoP()+" "
+                          +fu.getDatosPersonalesId().getApellidoM();
+                
+                enviarCorreo(2,(banderaPrueba)? "rehoscript@gmail.com":fu.getDatosPersonalesId().getCorreoElectronico(),nombre,fu.getDatosPersonalesId());
+                break;
+            case 2://Rechazo
+                //Buscar Formato Unico
+                FormatoUnico fuR=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
+                //Cambiar Status
+                fuR.setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
+                formatoUnicoFacade.edit(fuR);
+                //Enviar Correo
+                nombre=fuR.getDatosPersonalesId().getNombre()+" "
+                          +fuR.getDatosPersonalesId().getApellidoP()+" "
+                          +fuR.getDatosPersonalesId().getApellidoM();
+                enviarCorreo(3,(banderaPrueba)? "rehoscript@gmail.com":fuR.getDatosPersonalesId().getCorreoElectronico(),nombre,fuR.getDatosPersonalesId());
+                break;
+        }
+        
+        
         return "OK";
     }
     @RequestMapping(value = "/mostarPDF.do", method = RequestMethod.GET)
@@ -408,7 +415,6 @@ public class FormatoUnicoAdminController {
             @RequestParam("file") MultipartFile file,String id) throws IOException { 
 
         Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
-        System.out.println(doc);
         doc.setArchivo(file.getBytes());
         doc.setExtension("pdf");
         documentoFacade.edit(doc);
@@ -421,7 +427,7 @@ public class FormatoUnicoAdminController {
     }
 
     
-    private void enviarCorreo(int tipo,String correoDestinatario,String nombre)
+    private void enviarCorreo(int tipo,String correoDestinatario,String nombre,DatosPersonales dtp)
     {
      
         String mensaje=" ";
@@ -441,18 +447,31 @@ public class FormatoUnicoAdminController {
                 "</p>";
                 break;
             case 2://Correccion
-                mensaje="<h1>Notificación Servicio Social</h1>\n" +
+                System.out.println(dtp);
+                String mns1="<h1>Notificación Servicio Social</h1>\n" +
                 "<h2>Estimado  <b>"+nombre+"</b>:</h2> \n" +
                 "<p>\n" +
                 "Te informamos que   tu  Formato Único que has llenado, ha sido revisado por la Oficina de Servicio Social  y este tiene errores.  Favor de corregirlos lo más pronto posible.\n" +
                 "</p>\n" +
-                "<ul>\n" +
-                "<li>a</li>\n" +
+                "<ul>\n";
+                mensaje += mns1;
+                
+                for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId",
+                                                            dtp,
+                                                            "equal", null, null)) {
+                       
+                     String detalle=observacionesCatalogoFacade.find(reg.getId()).getDetalle();
+                     mensaje += "<li>"+detalle+"</li>\n";
+                }
+                
+                
+                String mns2 = 
                 "</ul>\n" +
                 "<p>\n" +
                 "Oficina de Servicio Social <br>\n" +
                 "Instituto Tecnológico  de Toluca\n" +
                 "</p>";
+                mensaje += mns2;
                 break;
             case 3://No aceptados
                 mensaje="<h1>Notificación Servicio Social</h1>\n" +
@@ -472,15 +491,50 @@ public class FormatoUnicoAdminController {
                 return;
         }
         Date fechaActual=new Date();
-        System.out.println(fechaActual);
+        
         SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yyyy");
         String str=fecha.format(fechaActual);
-        //Formato Correo
-        EnviarCorreo correo = new EnviarCorreo("Notificación  Servicio Social "+str+" "+nombre,
-                                               correoDestinatario,
-                                               mensaje
+        
+        Thread hiloHora=new Thread(new Hilo(str,nombre,correoDestinatario,mensaje));
+        
+        hiloHora.start();
+        
+    }
+    
+    
+    private class Hilo implements Runnable
+    {
+        private String fecha,
+                       nombre,
+                       correo,
+                       mensaje;
+        public Hilo(String fecha,String nombre,String correo,String mensaje) {
+            this.fecha=fecha;
+            this.nombre=nombre;
+            this.correo=correo;
+            this.mensaje=mensaje;
+        }
+        
+        
+        @Override
+        public void run() {
+            
+            try
+            {
+                EnviarCorreo correo2 = new EnviarCorreo("Notificación  Servicio Social "+this.fecha+" "+this.nombre,
+                                               this.correo,
+                                               this.mensaje
                                                );
-        //Enviar Correo
-        correo.enviaCorreo();
+                correo2.enviaCorreo();
+            }
+            catch(Exception e)
+            {
+                System.out.println("Error");
+            }
+            
+            
+            
+        }
+    
     }
 }
