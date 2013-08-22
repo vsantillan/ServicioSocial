@@ -83,11 +83,12 @@ public class FormatoUnicoAdminController {
     final int VALOR_CORRECCION = 3;
     
     //ID CatalogoDocumentos FormatoUnico
-    
     final long DOC_CAT_FU=1;
     
     //Bandera de prueba Desactivar para Funcionar Correctamente
     final boolean banderaPrueba = true;
+    
+    final String correoTest="rehoscript@gmail.com";
     
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
@@ -460,7 +461,7 @@ public class FormatoUnicoAdminController {
                                                             dtp,
                                                             "equal", null, null)) {
                        
-                     String detalle=observacionesCatalogoFacade.find(reg.getId()).getDetalle();
+                     String detalle=reg.getCatalogoObservacionId().getDetalle();
                      mensaje += "<li>"+detalle+"</li>\n";
                 }
                 
