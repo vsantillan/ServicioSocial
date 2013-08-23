@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
 import java.util.LinkedHashMap;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ public class PlaticaController1 {
     {
         LinkedHashMap ordenarDesc = new LinkedHashMap();
         ordenarDesc.put("lugar", "asc");
-
+        modelo.addAttribute("lugar", new LugaresPlatica());
         modelo.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
         return "/Platicas/lugaresPlatica";
     }

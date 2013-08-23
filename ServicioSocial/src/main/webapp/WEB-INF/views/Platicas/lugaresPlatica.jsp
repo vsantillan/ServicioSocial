@@ -60,7 +60,28 @@
                     </tr>
                 </table>
                 <div id="agregarLugar">
-                    <h1>Agregar un lugar para platicas</h1>
+                    <%-- Formulario Nueva lugar para platica de inducción --%>
+                    <form:form action="lugaresPlatica1.do" method="post" commandName="lugar" id="formLugar" name="altaLugar" > 
+                        <table style="width:500px">
+                            <tr>
+                                <td>
+                                    <form:input type="hidden" value="1" path="status"/>
+                                    <label for="Lugar"><fmt:message key="lugar" /></label> 
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td><form:textarea  path="lugar" rows="3" cols="60" /></td>    
+                            </tr>
+                            <tr>
+                                 <td><form:errors path="lugar" cssClass="error" /></td>   
+                            </tr>
+                            <tr> 
+                                <td> </td>
+                                <td> <input type ="submit" value = "Guardar " /> </td>
+                                <td><input type ="reset" value = "Limpiar" /></td>
+                        </table>
+                    </form:form>
                 </div>
                 <%-- fin del contenido --%>
             </div>
