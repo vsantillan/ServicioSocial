@@ -36,6 +36,9 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "FoliosPlatica.findByNumeroFolio", query = "SELECT f FROM FoliosPlatica f WHERE f.numeroFolio = :numeroFolio"),
     @NamedQuery(name = "FoliosPlatica.findByStatus", query = "SELECT f FROM FoliosPlatica f WHERE f.status = :status")})
 public class FoliosPlatica implements Serializable {
+    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
+    @ManyToOne
+    private VistaAlumno numeroControl;
     private static final long serialVersionUID = 1L;
     @GenericGenerator(name = "generator", strategy = "increment")
     @Id
@@ -144,6 +147,14 @@ public class FoliosPlatica implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.FoliosPlatica[ id=" + id + " ]";
+    }
+
+    public VistaAlumno getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(VistaAlumno numeroControl) {
+        this.numeroControl = numeroControl;
     }
     
 }

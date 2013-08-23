@@ -58,6 +58,9 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "DatosPersonales.findByTelefonoOficina", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoOficina = :telefonoOficina"),
     @NamedQuery(name = "DatosPersonales.findByEstadoCivil", query = "SELECT d FROM DatosPersonales d WHERE d.estadoCivil = :estadoCivil")})
 public class DatosPersonales implements Serializable {
+    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
+    @ManyToOne
+    private VistaAlumno numeroControl;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "dpGen" , strategy = "increment")
@@ -472,6 +475,14 @@ public class DatosPersonales implements Serializable {
 
     public void setAlumnoId(String string) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public VistaAlumno getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(VistaAlumno numeroControl) {
+        this.numeroControl = numeroControl;
     }
     
 }

@@ -61,6 +61,8 @@ public class VistaAlumno implements Serializable {
     @Lob
     @Column(name = "FOTO")
     private byte[] foto;
+    @OneToMany(mappedBy = "numeroControl")
+    private Collection<Becado> becadoCollection;
     @Column(name = "FEC_NAC")
     @Temporal(TemporalType.DATE)
     private Date fecNac;
@@ -375,6 +377,14 @@ public class VistaAlumno implements Serializable {
         this.planId = planId;
     }
 
+    public Date getFecNac() {
+        return fecNac;
+    }
+
+    public void setFecNac(Date fecNac) {
+        this.fecNac = fecNac;
+    }
+
     public double getPromedio() {
         return promedio;
     }
@@ -391,12 +401,13 @@ public class VistaAlumno implements Serializable {
         this.foto = foto;
     }
 
-    public Date getFecNac() {
-        return fecNac;
+    @XmlTransient
+    public Collection<Becado> getBecadoCollection() {
+        return becadoCollection;
     }
 
-    public void setFecNac(Date fecNac) {
-        this.fecNac = fecNac;
+    public void setBecadoCollection(Collection<Becado> becadoCollection) {
+        this.becadoCollection = becadoCollection;
     }
     
 }

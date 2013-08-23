@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Becado.findByNumeroDeRegistro", query = "SELECT b FROM Becado b WHERE b.numeroDeRegistro = :numeroDeRegistro"),
     @NamedQuery(name = "Becado.findByStatus", query = "SELECT b FROM Becado b WHERE b.status = :status")})
 public class Becado implements Serializable {
+    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
+    @ManyToOne
+    private VistaAlumno numeroControl;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -170,6 +173,14 @@ public class Becado implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Becado[ id=" + id + " ]";
+    }
+
+    public VistaAlumno getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(VistaAlumno numeroControl) {
+        this.numeroControl = numeroControl;
     }
     
 }
