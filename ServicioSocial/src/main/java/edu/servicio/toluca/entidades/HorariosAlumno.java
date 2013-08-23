@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,7 +18,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -37,9 +35,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class HorariosAlumno implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GenericGenerator(name = "horariosGenerator" , strategy = "increment")
     @Id
-    @GeneratedValue(generator = "horariosGenerator")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
@@ -47,10 +43,10 @@ public class HorariosAlumno implements Serializable {
     @Size(max = 30)
     @Column(name = "DIA")
     private String dia;
-    @Size(max = 10)
+    @Size(max = 5)
     @Column(name = "HORA_INICIO")
     private String horaInicio;
-    @Size(max = 10)
+    @Size(max = 5)
     @Column(name = "HORA_FIN")
     private String horaFin;
     @JoinColumn(name = "FORMATO_UNICO_ID", referencedColumnName = "ID")

@@ -10,7 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -23,7 +22,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -40,16 +38,14 @@ import org.hibernate.annotations.GenericGenerator;
 public class Documentos implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GenericGenerator(name = "DocumentosGenerator" , strategy = "increment")
     @Id
-    @GeneratedValue(generator = "DocumentosGenerator")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
     private BigDecimal id;
     @Lob
     @Column(name = "ARCHIVO")
-    private byte[] archivo;
+    private Serializable archivo;
     @Size(max = 10)
     @Column(name = "EXTENSION")
     private String extension;
@@ -78,11 +74,11 @@ public class Documentos implements Serializable {
         this.id = id;
     }
 
-    public byte[] getArchivo() {
+    public Serializable getArchivo() {
         return archivo;
     }
 
-    public void setArchivo(byte[] archivo) {
+    public void setArchivo(Serializable archivo) {
         this.archivo = archivo;
     }
 

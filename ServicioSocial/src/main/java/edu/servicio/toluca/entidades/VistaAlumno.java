@@ -11,8 +11,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -25,7 +23,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -54,33 +51,17 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "VistaAlumno.findByCreditos", query = "SELECT v FROM VistaAlumno v WHERE v.creditos = :creditos"),
     @NamedQuery(name = "VistaAlumno.findByCreditosAcumulados", query = "SELECT v FROM VistaAlumno v WHERE v.creditosAcumulados = :creditosAcumulados"),
     @NamedQuery(name = "VistaAlumno.findByPorcentaje", query = "SELECT v FROM VistaAlumno v WHERE v.porcentaje = :porcentaje"),
-    @NamedQuery(name = "VistaAlumno.findByPromedio", query = "SELECT v FROM VistaAlumno v WHERE v.promedio = :promedio")})
+    @NamedQuery(name = "VistaAlumno.findByPromedio", query = "SELECT v FROM VistaAlumno v WHERE v.promedio = :promedio"),
+    @NamedQuery(name = "VistaAlumno.findByPlanId", query = "SELECT v FROM VistaAlumno v WHERE v.planId = :planId"),
+    @NamedQuery(name = "VistaAlumno.findByFecNac", query = "SELECT v FROM VistaAlumno v WHERE v.fecNac = :fecNac")})
 public class VistaAlumno implements Serializable {
-    @Column(name = "PROMEDIO")
-    private double promedio;
-    @Lob
-    @Column(name = "FOTO")
-    private byte[] foto;
-    @OneToMany(mappedBy = "numeroControl")
-    private Collection<Becado> becadoCollection;
-    @Column(name = "FEC_NAC")
-    @Temporal(TemporalType.DATE)
-    private Date fecNac;
-    
-    @Column(name = "PLAN_ID")
-    private BigInteger planId;
-    
-    
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "vaGen" , strategy = "increment")
     @Id
-    @GeneratedValue(generator="vaGen")
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 10)
     @Column(name = "ID")
     private String id;
-    
     @Size(max = 18)
     @Column(name = "CURP")
     private String curp;
@@ -135,14 +116,32 @@ public class VistaAlumno implements Serializable {
     @Size(max = 7)
     @Column(name = "PORCENTAJE")
     private String porcentaje;
+    @Column(name = "PROMEDIO")
+    private BigInteger promedio;
+    @Lob
+    @Column(name = "FOTO")
+    private Serializable foto;
+    @Column(name = "PLAN_ID")
+    private BigInteger planId;
+    @Column(name = "FEC_NAC")
+    @Temporal(TemporalType.DATE)
+    private Date fecNac;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<Egresado> egresadoCollection;
+    @OneToMany(mappedBy = "numeroControl")
+    private Collection<Egresado> egresadoCollection1;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<DocumentosFinales> documentosFinalesCollection;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<DatosPersonales> datosPersonalesCollection;
+    @OneToMany(mappedBy = "numeroControl")
+    private Collection<DatosPersonales> datosPersonalesCollection1;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<FoliosPlatica> foliosPlaticaCollection;
+    @OneToMany(mappedBy = "numeroControl")
+    private Collection<FoliosPlatica> foliosPlaticaCollection1;
+    @OneToMany(mappedBy = "numeroControl")
+    private Collection<Becado> becadoCollection;
 
     public VistaAlumno() {
     }
@@ -302,6 +301,38 @@ public class VistaAlumno implements Serializable {
         this.porcentaje = porcentaje;
     }
 
+    public BigInteger getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(BigInteger promedio) {
+        this.promedio = promedio;
+    }
+
+    public Serializable getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Serializable foto) {
+        this.foto = foto;
+    }
+
+    public BigInteger getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(BigInteger planId) {
+        this.planId = planId;
+    }
+
+    public Date getFecNac() {
+        return fecNac;
+    }
+
+    public void setFecNac(Date fecNac) {
+        this.fecNac = fecNac;
+    }
+
     @XmlTransient
     public Collection<Egresado> getEgresadoCollection() {
         return egresadoCollection;
@@ -309,6 +340,15 @@ public class VistaAlumno implements Serializable {
 
     public void setEgresadoCollection(Collection<Egresado> egresadoCollection) {
         this.egresadoCollection = egresadoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Egresado> getEgresadoCollection1() {
+        return egresadoCollection1;
+    }
+
+    public void setEgresadoCollection1(Collection<Egresado> egresadoCollection1) {
+        this.egresadoCollection1 = egresadoCollection1;
     }
 
     @XmlTransient
@@ -330,12 +370,39 @@ public class VistaAlumno implements Serializable {
     }
 
     @XmlTransient
+    public Collection<DatosPersonales> getDatosPersonalesCollection1() {
+        return datosPersonalesCollection1;
+    }
+
+    public void setDatosPersonalesCollection1(Collection<DatosPersonales> datosPersonalesCollection1) {
+        this.datosPersonalesCollection1 = datosPersonalesCollection1;
+    }
+
+    @XmlTransient
     public Collection<FoliosPlatica> getFoliosPlaticaCollection() {
         return foliosPlaticaCollection;
     }
 
     public void setFoliosPlaticaCollection(Collection<FoliosPlatica> foliosPlaticaCollection) {
         this.foliosPlaticaCollection = foliosPlaticaCollection;
+    }
+
+    @XmlTransient
+    public Collection<FoliosPlatica> getFoliosPlaticaCollection1() {
+        return foliosPlaticaCollection1;
+    }
+
+    public void setFoliosPlaticaCollection1(Collection<FoliosPlatica> foliosPlaticaCollection1) {
+        this.foliosPlaticaCollection1 = foliosPlaticaCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Becado> getBecadoCollection() {
+        return becadoCollection;
+    }
+
+    public void setBecadoCollection(Collection<Becado> becadoCollection) {
+        this.becadoCollection = becadoCollection;
     }
 
     @Override
@@ -361,53 +428,6 @@ public class VistaAlumno implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.VistaAlumno[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the planId
-     */
-    public BigInteger getPlanId() {
-        return planId;
-    }
-
-    /**
-     * @param planId the planId to set
-     */
-    public void setPlanId(BigInteger planId) {
-        this.planId = planId;
-    }
-
-    public Date getFecNac() {
-        return fecNac;
-    }
-
-    public void setFecNac(Date fecNac) {
-        this.fecNac = fecNac;
-    }
-
-    public double getPromedio() {
-        return promedio;
-    }
-
-    public void setPromedio(double promedio) {
-        this.promedio = promedio;
-    }
-
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
-
-    @XmlTransient
-    public Collection<Becado> getBecadoCollection() {
-        return becadoCollection;
-    }
-
-    public void setBecadoCollection(Collection<Becado> becadoCollection) {
-        this.becadoCollection = becadoCollection;
     }
     
 }

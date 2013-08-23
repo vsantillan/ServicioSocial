@@ -4,7 +4,7 @@
  */
 package edu.servicio.toluca.sesion;
 
-import edu.servicio.toluca.entidades.MunicipiosSia;
+import edu.servicio.toluca.entidades.Va;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
  * @author SATELLITE
  */
 @Stateless
-public class MunicipiosSiaFacade extends AbstractFacade<MunicipiosSia> {
+public class VaFacade extends AbstractFacade<Va> {
     @PersistenceContext(unitName = "servicioPU")
     private EntityManager em;
 
@@ -23,8 +23,8 @@ public class MunicipiosSiaFacade extends AbstractFacade<MunicipiosSia> {
         return em;
     }
 
-    public MunicipiosSiaFacade() {
-        super(MunicipiosSia.class);
+    public VaFacade() {
+        super(Va.class);
     }
     
 }

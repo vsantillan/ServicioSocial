@@ -13,7 +13,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,13 +22,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -53,17 +49,15 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles"),
     @NamedQuery(name = "Proyectos.findByNombre", query = "SELECT p FROM Proyectos p WHERE p.nombre = :nombre")})
 public class Proyectos implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
-    private Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
-    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ID_PROYECTO")
     private BigDecimal idProyecto;
     @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "DOMICILIO")
     private String domicilio;
@@ -71,7 +65,6 @@ public class Proyectos implements Serializable {
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "NOMBRE_RESPONSABLE")
-    @NotBlank
     private String nombreResponsable;
     @Basic(optional = false)
     @NotNull
@@ -83,34 +76,38 @@ public class Proyectos implements Serializable {
     @Column(name = "TELEFONO_RESPONSABLE")
     private long telefonoResponsable;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "VALIDACION_ADMIN")
     private BigInteger validacionAdmin;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ESTATUS")
     private BigInteger estatus;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
     @Column(name = "MODALIDAD")
     private String modalidad;
     @Basic(optional = false)
-    //@NotNull
+    @NotNull
     @Column(name = "FECHA_ALTA")
     @Temporal(TemporalType.DATE)
     private Date fechaAlta;
     @Basic(optional = false)
     @NotNull
     @Column(name = "VACANTES")
-    @Min(1)
     private BigInteger vacantes;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "VACANTES_DISPONIBLES")
-    @Min(1)
     private BigInteger vacantesDisponibles;
     @Basic(optional = false)
-    @Size(min = 1,max = 60)
     @NotNull
-    @NotBlank
+    @Size(min = 1, max = 60)
     @Column(name = "NOMBRE")
     private String nombre;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
+    private Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<ProyectoPerfil> proyectoPerfilCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
@@ -129,9 +126,7 @@ public class Proyectos implements Serializable {
     private Colonia idColonia;
     @OneToMany(mappedBy = "idproyecto")
     private Collection<FormatoUnico> formatoUnicoCollection;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
-//    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;
-//    
+
     public Proyectos() {
     }
 
@@ -139,7 +134,7 @@ public class Proyectos implements Serializable {
         this.idProyecto = idProyecto;
     }
 
-    public Proyectos(BigDecimal idProyecto, String domicilio, String nombreResponsable, String responsablePuesto, long telefonoResponsable, BigInteger validacionAdmin, BigInteger estatus, String modalidad, Date fechaAlta, BigInteger vacantes, BigInteger vacantesDisponibles) {
+    public Proyectos(BigDecimal idProyecto, String domicilio, String nombreResponsable, String responsablePuesto, long telefonoResponsable, BigInteger validacionAdmin, BigInteger estatus, String modalidad, Date fechaAlta, BigInteger vacantes, BigInteger vacantesDisponibles, String nombre) {
         this.idProyecto = idProyecto;
         this.domicilio = domicilio;
         this.nombreResponsable = nombreResponsable;
@@ -151,6 +146,7 @@ public class Proyectos implements Serializable {
         this.fechaAlta = fechaAlta;
         this.vacantes = vacantes;
         this.vacantesDisponibles = vacantesDisponibles;
+        this.nombre = nombre;
     }
 
     public BigDecimal getIdProyecto() {
@@ -250,6 +246,15 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
+    public Collection<RetroalimentacionProyecto2> getRetroalimentacionProyecto2Collection() {
+        return retroalimentacionProyecto2Collection;
+    }
+
+    public void setRetroalimentacionProyecto2Collection(Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection) {
+        this.retroalimentacionProyecto2Collection = retroalimentacionProyecto2Collection;
+    }
+
+    @XmlTransient
     public Collection<ProyectoPerfil> getProyectoPerfilCollection() {
         return proyectoPerfilCollection;
     }
@@ -257,7 +262,7 @@ public class Proyectos implements Serializable {
     public void setProyectoPerfilCollection(Collection<ProyectoPerfil> proyectoPerfilCollection) {
         this.proyectoPerfilCollection = proyectoPerfilCollection;
     }
-    
+
     @XmlTransient
     public Collection<Actividades> getActividadesCollection() {
         return actividadesCollection;
@@ -331,15 +336,6 @@ public class Proyectos implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Proyectos[ idProyecto=" + idProyecto + " ]";
-    }
-
-    @XmlTransient
-    public Collection<RetroalimentacionProyecto2> getRetroalimentacionProyecto2Collection() {
-        return retroalimentacionProyecto2Collection;
-    }
-
-    public void setRetroalimentacionProyecto2Collection(Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection) {
-        this.retroalimentacionProyecto2Collection = retroalimentacionProyecto2Collection;
     }
     
 }

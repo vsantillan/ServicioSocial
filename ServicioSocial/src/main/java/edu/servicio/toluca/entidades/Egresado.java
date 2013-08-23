@@ -35,9 +35,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Egresado.findByTipoPrograma", query = "SELECT e FROM Egresado e WHERE e.tipoPrograma = :tipoPrograma"),
     @NamedQuery(name = "Egresado.findByFechaSubida", query = "SELECT e FROM Egresado e WHERE e.fechaSubida = :fechaSubida")})
 public class Egresado implements Serializable {
-    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
-    @ManyToOne
-    private VistaAlumno numeroControl;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -54,6 +51,9 @@ public class Egresado implements Serializable {
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
     @ManyToOne
     private VistaAlumno alumnoId;
+    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
+    @ManyToOne
+    private VistaAlumno numeroControl;
     @JoinColumn(name = "DATOS_PERSONALES_ID", referencedColumnName = "ID")
     @ManyToOne
     private DatosPersonales datosPersonalesId;
@@ -97,6 +97,14 @@ public class Egresado implements Serializable {
         this.alumnoId = alumnoId;
     }
 
+    public VistaAlumno getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(VistaAlumno numeroControl) {
+        this.numeroControl = numeroControl;
+    }
+
     public DatosPersonales getDatosPersonalesId() {
         return datosPersonalesId;
     }
@@ -128,14 +136,6 @@ public class Egresado implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Egresado[ id=" + id + " ]";
-    }
-
-    public VistaAlumno getNumeroControl() {
-        return numeroControl;
-    }
-
-    public void setNumeroControl(VistaAlumno numeroControl) {
-        this.numeroControl = numeroControl;
     }
     
 }

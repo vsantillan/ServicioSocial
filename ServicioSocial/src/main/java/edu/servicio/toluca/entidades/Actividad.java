@@ -37,8 +37,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Actividad.findByDescripcion", query = "SELECT a FROM Actividad a WHERE a.descripcion = :descripcion"),
     @NamedQuery(name = "Actividad.findByStatus", query = "SELECT a FROM Actividad a WHERE a.status = :status")})
 public class Actividad implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idActividad")
-    private Collection<BimestralesActividades> bimestralesActividadesCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -61,6 +59,8 @@ public class Actividad implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "STATUS")
     private String status;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idActividad")
+    private Collection<BimestralesActividades> bimestralesActividadesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "actividadId")
     private Collection<DetProgGralActiv> detProgGralActivCollection;
     @JoinColumn(name = "ENFOQUE_ID", referencedColumnName = "ID")
@@ -116,6 +116,15 @@ public class Actividad implements Serializable {
     }
 
     @XmlTransient
+    public Collection<BimestralesActividades> getBimestralesActividadesCollection() {
+        return bimestralesActividadesCollection;
+    }
+
+    public void setBimestralesActividadesCollection(Collection<BimestralesActividades> bimestralesActividadesCollection) {
+        this.bimestralesActividadesCollection = bimestralesActividadesCollection;
+    }
+
+    @XmlTransient
     public Collection<DetProgGralActiv> getDetProgGralActivCollection() {
         return detProgGralActivCollection;
     }
@@ -164,15 +173,6 @@ public class Actividad implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Actividad[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<BimestralesActividades> getBimestralesActividadesCollection() {
-        return bimestralesActividadesCollection;
-    }
-
-    public void setBimestralesActividadesCollection(Collection<BimestralesActividades> bimestralesActividadesCollection) {
-        this.bimestralesActividadesCollection = bimestralesActividadesCollection;
     }
     
 }

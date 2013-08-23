@@ -8,19 +8,15 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
@@ -36,30 +32,27 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "FoliosPlatica.findByNumeroFolio", query = "SELECT f FROM FoliosPlatica f WHERE f.numeroFolio = :numeroFolio"),
     @NamedQuery(name = "FoliosPlatica.findByStatus", query = "SELECT f FROM FoliosPlatica f WHERE f.status = :status")})
 public class FoliosPlatica implements Serializable {
-    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
-    @ManyToOne
-    private VistaAlumno numeroControl;
     private static final long serialVersionUID = 1L;
-    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
-    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ID")
     private Long id;
     @Column(name = "ASISTENCIA")
     private Short asistencia;
     @Basic(optional = false)
-    
     @NotNull
-    @NotBlank  (message="Ingrese numero de Folio")
+    @Size(min = 1, max = 20)
     @Column(name = "NUMERO_FOLIO")
     private String numeroFolio;
-    
     @Column(name = "STATUS")
     private Short status;
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
     @ManyToOne
     private VistaAlumno alumnoId;
+    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
+    @ManyToOne
+    private VistaAlumno numeroControl;
     @JoinColumn(name = "PLATICA_ID", referencedColumnName = "ID")
     @ManyToOne
     private Platica platicaId;
@@ -116,6 +109,14 @@ public class FoliosPlatica implements Serializable {
         this.alumnoId = alumnoId;
     }
 
+    public VistaAlumno getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(VistaAlumno numeroControl) {
+        this.numeroControl = numeroControl;
+    }
+
     public Platica getPlaticaId() {
         return platicaId;
     }
@@ -147,14 +148,6 @@ public class FoliosPlatica implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.FoliosPlatica[ id=" + id + " ]";
-    }
-
-    public VistaAlumno getNumeroControl() {
-        return numeroControl;
-    }
-
-    public void setNumeroControl(VistaAlumno numeroControl) {
-        this.numeroControl = numeroControl;
     }
     
 }

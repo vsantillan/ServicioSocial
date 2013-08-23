@@ -35,40 +35,27 @@ public abstract class AbstractFacade<T> {
 
     public void create(T entity) {
         getEntityManager().persist(entity);
-        getEntityManager().flush();
-        System.out.println("FLUSH");
     }
 
     public void edit(T entity) {
-        getEntityManager().merge(entity);        
-        getEntityManager().flush();
-        System.out.println("FLUSH");
+        getEntityManager().merge(entity);
     }
- 
 
     public void remove(T entity) {
         getEntityManager().remove(getEntityManager().merge(entity));
-        getEntityManager().flush();
-        System.out.println("FLUSH");
     }
 
     public T find(Object id) {
-        getEntityManager().flush();
-        System.out.println("FLUSH");
-        return getEntityManager().find(entityClass, id);        
+        return getEntityManager().find(entityClass, id);
     }
 
     public List<T> findAll() {
-        getEntityManager().flush();
-        System.out.println("FLUSH");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
     }
     
     public List<T> findAll(LinkedHashMap<String, String> ordering) {
-        getEntityManager().flush();
-        System.out.println("FLUSH");
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         Root<T> root = cq.from(entityClass);
         cq.select(root);
@@ -93,8 +80,6 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findRange(int[] range) {
-        getEntityManager().flush();
-        System.out.println("FLUSH");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
@@ -104,8 +89,6 @@ public abstract class AbstractFacade<T> {
     }
 
     public int count() {
-        getEntityManager().flush();
-        System.out.println("FLUSH");
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
@@ -114,8 +97,6 @@ public abstract class AbstractFacade<T> {
     }
     
     public List<T> findBySpecificField(String field, Object fieldContent, String predicates, LinkedHashMap<String, String> ordering, LinkedList<String> grouping) {
-        getEntityManager().flush();
-        System.out.println("FLUSH");
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
         Root<T> root = criteriaQuery.from(entityClass);

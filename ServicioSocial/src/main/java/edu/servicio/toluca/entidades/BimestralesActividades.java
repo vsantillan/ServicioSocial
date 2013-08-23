@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author SATELLITE
  */
 @Entity
-@Table(name = "BIMESTRALES_ACTIVIDADES")
+@Table(name = "BIMESTRALES_ACTIVIDADES", catalog = "", schema = "GES_VIN")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "BimestralesActividades.findAll", query = "SELECT b FROM BimestralesActividades b"),

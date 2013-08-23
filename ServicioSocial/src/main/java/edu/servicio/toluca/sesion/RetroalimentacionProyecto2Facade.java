@@ -4,20 +4,18 @@
  */
 package edu.servicio.toluca.sesion;
 
-import edu.servicio.toluca.entidades.Horario;
-import javax.ejb.Stateful;
+import edu.servicio.toluca.entidades.RetroalimentacionProyecto2;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 
 /**
  *
  * @author SATELLITE
  */
-@Stateful
-public class HorarioFacade extends AbstractFacade<Horario> {
-    @PersistenceContext(unitName = "servicioPU", type= PersistenceContextType.EXTENDED)
+@Stateless
+public class RetroalimentacionProyecto2Facade extends AbstractFacade<RetroalimentacionProyecto2> {
+    @PersistenceContext(unitName = "servicioPU")
     private EntityManager em;
 
     @Override
@@ -25,8 +23,8 @@ public class HorarioFacade extends AbstractFacade<Horario> {
         return em;
     }
 
-    public HorarioFacade() {
-        super(Horario.class);
+    public RetroalimentacionProyecto2Facade() {
+        super(RetroalimentacionProyecto2.class);
     }
     
 }

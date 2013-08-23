@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author bustedvillain
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "PROGRAMA", catalog = "", schema = "GES_VIN")
@@ -36,8 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Programa.findByStatus", query = "SELECT p FROM Programa p WHERE p.status = :status"),
     @NamedQuery(name = "Programa.findBySiglas", query = "SELECT p FROM Programa p WHERE p.siglas = :siglas")})
 public class Programa implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPrograma")
-    private Collection<Proyectos> proyectosCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -57,6 +55,8 @@ public class Programa implements Serializable {
     @Size(max = 4)
     @Column(name = "SIGLAS")
     private String siglas;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPrograma")
+    private Collection<Proyectos> proyectosCollection;
 
     public Programa() {
     }
@@ -103,6 +103,15 @@ public class Programa implements Serializable {
         this.siglas = siglas;
     }
 
+    @XmlTransient
+    public Collection<Proyectos> getProyectosCollection() {
+        return proyectosCollection;
+    }
+
+    public void setProyectosCollection(Collection<Proyectos> proyectosCollection) {
+        this.proyectosCollection = proyectosCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -126,15 +135,6 @@ public class Programa implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Programa[ idPrograma=" + idPrograma + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Proyectos> getProyectosCollection() {
-        return proyectosCollection;
-    }
-
-    public void setProyectosCollection(Collection<Proyectos> proyectosCollection) {
-        this.proyectosCollection = proyectosCollection;
     }
     
 }

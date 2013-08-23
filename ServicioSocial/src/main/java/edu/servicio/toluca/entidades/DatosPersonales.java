@@ -11,7 +11,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +22,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -58,14 +56,9 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "DatosPersonales.findByTelefonoOficina", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoOficina = :telefonoOficina"),
     @NamedQuery(name = "DatosPersonales.findByEstadoCivil", query = "SELECT d FROM DatosPersonales d WHERE d.estadoCivil = :estadoCivil")})
 public class DatosPersonales implements Serializable {
-    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
-    @ManyToOne
-    private VistaAlumno numeroControl;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @GenericGenerator(name = "dpGen" , strategy = "increment")
     @Id
-    @GeneratedValue(generator="dpGen")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
@@ -152,6 +145,9 @@ public class DatosPersonales implements Serializable {
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
     @ManyToOne
     private VistaAlumno alumnoId;
+    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
+    @ManyToOne
+    private VistaAlumno numeroControl;
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
@@ -422,6 +418,14 @@ public class DatosPersonales implements Serializable {
         this.alumnoId = alumnoId;
     }
 
+    public VistaAlumno getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(VistaAlumno numeroControl) {
+        this.numeroControl = numeroControl;
+    }
+
     public Colonia getIdColonia() {
         return idColonia;
     }
@@ -471,18 +475,6 @@ public class DatosPersonales implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.DatosPersonales[ id=" + id + " ]";
-    }
-
-    public void setAlumnoId(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public VistaAlumno getNumeroControl() {
-        return numeroControl;
-    }
-
-    public void setNumeroControl(VistaAlumno numeroControl) {
-        this.numeroControl = numeroControl;
     }
     
 }

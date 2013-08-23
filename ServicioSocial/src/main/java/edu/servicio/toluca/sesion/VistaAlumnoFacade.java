@@ -5,19 +5,17 @@
 package edu.servicio.toluca.sesion;
 
 import edu.servicio.toluca.entidades.VistaAlumno;
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 
-/**0
+/**
  *
  * @author SATELLITE
  */
-@Stateful
+@Stateless
 public class VistaAlumnoFacade extends AbstractFacade<VistaAlumno> {
-    @PersistenceContext(unitName = "servicioPU", type= PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "servicioPU")
     private EntityManager em;
 
     @Override

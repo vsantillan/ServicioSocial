@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author bustedvillain
+ * @author SATELLITE
  */
 @Entity
 @Table(name = "RETROALIMENTACION_INSTANCIA2", catalog = "", schema = "GES_VIN")
