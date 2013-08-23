@@ -5,17 +5,19 @@
 package edu.servicio.toluca.sesion;
 
 import edu.servicio.toluca.entidades.Municipios;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 
 /**
  *
  * @author SATELLITE
  */
-@Stateless
+@Stateful
 public class MunicipiosFacade extends AbstractFacade<Municipios> {
-    @PersistenceContext(unitName = "servicioPU")
+    @PersistenceContext(unitName = "servicioPU", type= PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override
