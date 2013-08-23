@@ -117,10 +117,10 @@ public class VistaAlumno implements Serializable {
     @Column(name = "PORCENTAJE")
     private String porcentaje;
     @Column(name = "PROMEDIO")
-    private BigInteger promedio;
+    private double promedio;
     @Lob
     @Column(name = "FOTO")
-    private Serializable foto;
+    private byte[] foto;
     @Column(name = "PLAN_ID")
     private BigInteger planId;
     @Column(name = "FEC_NAC")
@@ -301,19 +301,19 @@ public class VistaAlumno implements Serializable {
         this.porcentaje = porcentaje;
     }
 
-    public BigInteger getPromedio() {
+    public double getPromedio() {
         return promedio;
     }
 
-    public void setPromedio(BigInteger promedio) {
+    public void setPromedio(double promedio) {
         this.promedio = promedio;
     }
 
-    public Serializable getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 
-    public void setFoto(Serializable foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 

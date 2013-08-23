@@ -31,7 +31,7 @@ import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
-import edu.servicio.toluca.sesion.HorarioFacade;
+//import edu.servicio.toluca.sesion.HorarioFacade;
 import edu.servicio.toluca.sesion.HorariosAlumnoFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
