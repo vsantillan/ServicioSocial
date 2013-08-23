@@ -61,7 +61,7 @@
                 </table>
                 <div id="agregarLugar">
                     <%-- Formulario Nueva lugar para platica de inducción --%>
-                    <form:form action="lugaresPlatica1.do" method="post" commandName="lugar" id="formLugar" name="altaLugar" > 
+                    <form:form action="altaLugarBD.do" method="post" commandName="lugar" id="formLugar" name="altaLugares" > 
                         <table style="width:500px">
                             <tr>
                                 <td>
