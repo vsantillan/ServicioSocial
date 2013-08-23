@@ -189,9 +189,9 @@
         
         
         <div id="motivos" style="display: none; ">
+             <form id="observacionesCat" action="#"  onsubmit="return  false;">
+            <div style="height: 350px; overflow: scroll" >
                 <h1>Motivos de Rechazo</h1>
-                <div id="scroll" >
-                    <form id="observacionesCat" action="#" onsubmit="return  false;">
                     <table>
                         <core:forEach items="${listadoObservaciones}" var="observacion">
                         <tr>
@@ -201,9 +201,12 @@
                         </tr> 
                     </core:forEach>
                    </table>
-                    </form>
                 </div>
-                    <button id="guardarObservaciones">Guardar</button>
+                 <div>
+                      <button id="guardarObservaciones">Guardar</button>
+                 </div>
+                 </form>  
+                
             </div>
         
         <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
