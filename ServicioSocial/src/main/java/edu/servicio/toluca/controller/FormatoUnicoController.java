@@ -22,6 +22,7 @@ import edu.servicio.toluca.entidades.HorariosAlumno;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoPlanFacade;
@@ -35,6 +36,7 @@ import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.HorariosAlumnoFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
+import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -90,6 +92,8 @@ public class FormatoUnicoController {
     private CatalogoPlanFacade catalogoPlanFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
     private FoliosPlaticaFacade foliosPlaticaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/VaFacade")
+    private VaFacade vaFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/showpdf.do")
     public String showpdf(Model modelo, String alumno_id) {
@@ -118,6 +122,7 @@ public class FormatoUnicoController {
         // fin de creación de objetos
 
         //verificar si ya está en datos personales
+
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         BigDecimal idDatosPersonales;
 
