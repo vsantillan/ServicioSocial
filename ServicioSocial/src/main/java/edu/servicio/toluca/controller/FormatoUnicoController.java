@@ -472,19 +472,17 @@ public class FormatoUnicoController {
         List<FoliosPlatica> listaF = foliosPlaticaFacade.findBySpecificField("alumnoId", datosPersonales.getAlumnoId(), "equal", null, null);
         FoliosPlatica fp = listaF.get(0);
         Date fechaMax = new java.sql.Date(fp.getPlaticaId().getFechaMxFui().getTime());
-        if(fecha_inicio.after(fechaMax))
+        if (fecha_inicio.after(fechaMax)) {
             return "La fecha de inicio sobrepasa la fecha maxima permitida";
+        }
         // formatoUnico.setFechaInicio(fj.getFecha_inicio());
-        try
-        {
+        try {
             formatoUnicoFacade.edit(formatoUnico);
             return "Informacion Almacenada correctamente";
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             return "Hubo un Problema al Guardar tu informacion";
         }
-        
+
 
 
 
@@ -682,5 +680,12 @@ public class FormatoUnicoController {
 
 
         return "redirect:panelUsuario.do";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/bajaImagenes.do")
+    public @ResponseBody
+    String bajaImagenes(Model a, String id) throws ParseException {
+        
+        return "";
     }
 }
