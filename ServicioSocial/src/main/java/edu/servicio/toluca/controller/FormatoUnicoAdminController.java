@@ -5,30 +5,20 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.EnviarCorreo;
-import edu.servicio.toluca.beans.FormatoUnicoDatosPersoValidaciones;
-import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
-import edu.servicio.toluca.beans.FormatoUnicoErrores;
-import edu.servicio.toluca.beans.Observaciones;
-import org.hibernate.Hibernate;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoBean;
-
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.RegObservaciones;
-import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,15 +26,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.SerializationUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,11 +68,14 @@ public class FormatoUnicoAdminController {
     //ID CatalogoDocumentos FormatoUnico
     final long DOC_CAT_FU=1;
     
-    //Bandera de prueba Desactivar para Funcionar Correctamente
+    
+    
+    //Pruebas Developer
+    //**********************************************
+    //Desactivar para Produccion, Activar para Desarrollo
     final boolean banderaPrueba = true;
-    
     final String correoTest="rehoscript@gmail.com";
-    
+    //**********************************************
     
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model) {
@@ -260,7 +246,7 @@ public class FormatoUnicoAdminController {
             String nombre=fA.getDatosPersonalesId().getNombre()+" "
                           +fA.getDatosPersonalesId().getApellidoP()+" "
                           +fA.getDatosPersonalesId().getApellidoM();
-            enviarCorreo(1,(banderaPrueba)? "rehoscript@gmail.com":fA.getDatosPersonalesId().getCorreoElectronico(),nombre,null);
+            enviarCorreo(1,fA.getDatosPersonalesId().getCorreoElectronico(),nombre,null);
         }
         return "OK";
     }
@@ -313,7 +299,7 @@ public class FormatoUnicoAdminController {
                           +fu.getDatosPersonalesId().getApellidoP()+" "
                           +fu.getDatosPersonalesId().getApellidoM();
                 
-                enviarCorreo(2,(banderaPrueba)? "rehoscript@gmail.com":fu.getDatosPersonalesId().getCorreoElectronico(),nombre,fu.getDatosPersonalesId());
+                enviarCorreo(2,fu.getDatosPersonalesId().getCorreoElectronico(),nombre,fu.getDatosPersonalesId());
                 break;
             case 2://Rechazo
                 //Buscar Formato Unico
@@ -325,7 +311,7 @@ public class FormatoUnicoAdminController {
                 nombre=fuR.getDatosPersonalesId().getNombre()+" "
                           +fuR.getDatosPersonalesId().getApellidoP()+" "
                           +fuR.getDatosPersonalesId().getApellidoM();
-                enviarCorreo(3,(banderaPrueba)? "rehoscript@gmail.com":fuR.getDatosPersonalesId().getCorreoElectronico(),nombre,fuR.getDatosPersonalesId());
+                enviarCorreo(3,fuR.getDatosPersonalesId().getCorreoElectronico(),nombre,fuR.getDatosPersonalesId());
                 break;
         }
         
@@ -409,28 +395,25 @@ public class FormatoUnicoAdminController {
          }
          return null;
      }
-     
-     ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
-    @RequestMapping(value = "/guardarPDF2.do", method = RequestMethod.POST)
-    public String save(
-            @RequestParam("file") MultipartFile file,String id) throws IOException { 
 
-        Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
-        doc.setArchivo(file.getBytes());
-        doc.setExtension("pdf");
-        documentoFacade.edit(doc);
-        return "redirect:subirpdf2.do";
-    }
 
-    @RequestMapping(value = "/subirpdf2.do",method = RequestMethod.GET)
-    public String guardaFotoPrueba(Model modelo) {
-        return "/FormatoUnico/guardarFoto";
-    }
-
-    
+    /**
+     * 
+     * Metodo que se encarga de enviar notificacion al alumno en base a su correo
+     * @param tipo
+     * @param correoDestinatario
+     * @param nombre
+     * @param dtp 
+     */
     private void enviarCorreo(int tipo,String correoDestinatario,String nombre,DatosPersonales dtp)
     {
-     
+        //Romper metodo en caso de que correo no se encuentre
+        if(correoDestinatario==null)
+            return;
+        else if(banderaPrueba)    
+            correoDestinatario=correoTest;
+         //En caso de que BanderaPrueba este activa se envia Correo al correo de Test
+        
         String mensaje=" ";
         switch(tipo)
         {
@@ -448,7 +431,6 @@ public class FormatoUnicoAdminController {
                 "</p>";
                 break;
             case 2://Correccion
-                System.out.println(dtp);
                 String mns1="<h1>Notificación Servicio Social</h1>\n" +
                 "<h2>Estimado  <b>"+nombre+"</b>:</h2> \n" +
                 "<p>\n" +
@@ -491,14 +473,12 @@ public class FormatoUnicoAdminController {
             default:
                 return;
         }
-        Date fechaActual=new Date();
-        
+
         SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yyyy");
-        String str=fecha.format(fechaActual);
+        String str=fecha.format(new Date());
         
-        Thread hiloHora=new Thread(new Hilo(str,nombre,correoDestinatario,mensaje));
-        
-        hiloHora.start();
+        Thread hiloCorreo=new Thread(new Hilo(str,nombre,correoDestinatario,mensaje));
+        hiloCorreo.start();
         
     }
     
@@ -532,10 +512,28 @@ public class FormatoUnicoAdminController {
             {
                 System.out.println("Error");
             }
-            
-            
-            
         }
     
+    }
+    
+    
+    
+    //No-Visible 
+         
+     ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
+    @RequestMapping(value = "/guardarPDF2.do", method = RequestMethod.POST)
+    public String save(
+            @RequestParam("file") MultipartFile file,String id) throws IOException { 
+
+        Documentos doc=documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
+        doc.setArchivo(file.getBytes());
+        doc.setExtension("pdf");
+        documentoFacade.edit(doc);
+        return "redirect:subirpdf2.do";
+    }
+
+    @RequestMapping(value = "/subirpdf2.do",method = RequestMethod.GET)
+    public String guardaFotoPrueba(Model modelo) {
+        return "/FormatoUnico/guardarFoto";
     }
 }
