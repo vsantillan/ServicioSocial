@@ -3,8 +3,11 @@ $(document).ready(listo);
 
 function listo() {
     $(".actualizaObservacion").click(function() {
-        $("textarea#descripcionE").text( $(this).attr("detalle"));
+        alert($(this).attr("detalle"));
+        $(".error").hide('hide');
+        $("textarea#detalleE").text($(this).attr("detalle"));
         $("input#id").attr("value", $(this).attr("idO"));
+        $("input#algo").attr("value", $(this).attr("detalle"));
     });
 }
 
@@ -19,4 +22,12 @@ function borrarObservacion(e) {
    // $.post("deleteObservacion.do", {id: idDelete}, function(response) {
         //alert("Ya hizo el update");
    // });
+}
+function validarForm(formulario) {
+
+  if(formulario.detalleE.value.length===0) { //comprueba que no esté vacío   
+    $(".error").show('slow'); 
+    return false; //devolvemos el foco
+  }
+  return true;
 }
