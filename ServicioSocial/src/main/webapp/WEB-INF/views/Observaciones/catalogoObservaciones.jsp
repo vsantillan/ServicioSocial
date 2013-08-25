@@ -8,6 +8,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="../Template/taglibs.jsp" %>
 
 
@@ -16,17 +17,17 @@
     <head>
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
-        <!-- CSS  Shadowbox-->
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
 
         <!--Script para DataTables-->
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        
+                <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" />
+           <!--        Scripts para tablas-->
+        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>      
         <script type="text/javascript" language="javascript" src="js/observaciones.js"></script>
 
-        <!--Include para Ventanas Modales-->
-        <jsp:include page="../Template/headsModal.jsp" />
-         
         <script type="text/javascript" >
             $(document).ready(function() {
                 $('#example').dataTable({
@@ -51,8 +52,9 @@
                 <p>A continuaci&oacute;n se muestra el catalogo de observaciones.</p>
                 <div id="tabs">
                     <ul>
-                        <li><a href="#catalogoObservaciones">Cat&aacute;logo de Observaciones</a></li>
                         <li><a href="#nuevaObservacion">Nueva Observaci&oacute;n</a></li>
+                        <li><a href="#catalogoObservaciones">Cat&aacute;logo de Observaciones</a></li>
+
                     </ul>
                     <div id="catalogoObservaciones">
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
@@ -77,12 +79,17 @@
                     <div id="nuevaObservacion">
                         <h1>Nueva Observaci&oacute;n</h1>
                         <center>                            
-                            <form:form commandName="Observacion" id="nuevaDescrpcion" action="nuevaObservacion.do" method="POST">
+                            <form:form commandName="Observacion" id="nuevaDescrpcion" name="nuevaObservacion" action="nuevaObservacion.do" method="POST">
                                 <table>
+                                    <form:hidden path="id" id="id" />
                                     <tr>
-                                        <td> <p><label for="descripcion">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:textarea id="descripcion"  name="descripcion" path="descripcion" rows="8" cols="50"  /> </td>
+                                        <td> <p><label for="detalle">Descripci&oacute;n:</label> </p></td>
+                                        <td>  <form:textarea id="detalle"  name="detalle" path="detalle" rows="8" cols="50"  /> 
+                                        <td>${errorBlanco}</td>
+                                        </td>
+
                                     </tr>
+
                                     <tr> 
                                         <td> <input type ="submit" value = "Guardar " /> </td>
                                     </tr>
@@ -98,14 +105,19 @@
     </div>
     <div id="a" style="display: none; font-size: 15px">
         <center> 
-            <h1>Editar Observaci&oacute;n</h1>
-            <form:form  commandName="Observacion" action="actualizaObservacion.do" method="POST" >
+            <h1>Editar Observaci&oacute;n</h1><!--actualizaObservacion.do--->
+            <form:form commandName="Observacion" action="#" method="POST" onsubmit="return validarForm(this);" >
                 <table>
                     <form:input hidden="hidden" id="id" name="name" path="id" />
                     <tr>
-                        <td> <label for="descripcion">Descripci&oacute;n:</label> </td>
-                        <td></td>
-                        <td><form:textarea id="descripcionE" name="descripcionE" path="descripcion" rows="4" cols="50"  /></td>
+                        <td><input id="algo"></td>
+                        <td>Descripci&oacute;n:</td>
+                        <td><form:textarea id="detalleE" path="detalle" rows="10" cols="70" name="detalleE"  /></td>
+                    <tr>
+                        <td>
+                            <div class='error' style="display:none;">Error la descripcion esta vacia</div>
+                        </td>
+                    </tr>
                     </tr>
                     <tr> 
                         <td> <input type ="submit" value = "Guardar " /> </td>
@@ -114,7 +126,6 @@
             </form:form>
         </center> 
     </div>
-
     <jsp:include page="../Template/footer.jsp" />
 
 </body>
