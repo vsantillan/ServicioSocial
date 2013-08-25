@@ -71,9 +71,19 @@ function updateOrganisation(e)
 
 function retroalimentacion() {
     $(".mandaRetro").click(function() {
+        $(".error").hide('hide');
         $("input#nombre").attr("value", $(this).attr("nombre"));
         $("input#nombreProyecto").attr("value", $(this).attr("nombreProyecto"));
         $("input#correo").attr("value", $(this).attr("correo"));
         $("input#idI").attr("value", $(this).attr("idO"));
     });
+}
+
+function validarForm(formulario) {
+
+  if(formulario.descripcion.value.length===0) { //comprueba que no esté vacío   
+    $(".error").show('slow'); 
+    return false; //devolvemos el foco
+  }
+  return true;
 }
