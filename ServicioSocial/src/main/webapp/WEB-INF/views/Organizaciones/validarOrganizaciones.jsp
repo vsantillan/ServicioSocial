@@ -79,9 +79,9 @@
                                         <th><core:out value="${current.titular}" /></th>
                                         <th><core:out value="${current.rfc}" /></th>
                                         <th><core:out value="${current.tipoOrganizacion.detalle}" /></th>
-                                        <input type="hidden" value="${current.correo}" x="${current.idInstancia}"/>
-                                        <input type="hidden" value="${current.nombre}" x="${current.idInstancia}"/>
-                                    </tr>
+                                <input type="hidden" value="${current.correo}" x="${current.idInstancia}"/>
+                                <input type="hidden" value="${current.nombre}" x="${current.idInstancia}"/>
+                                </tr>
                             </core:when>
                         </core:choose>
                     </core:forEach>
@@ -93,7 +93,7 @@
             <%-- fin del contenido --%>
         </div>
         <div id="a" style="display: none; font-size: 15px">
-            <form:form commandName="retroalimentacionInstancia"  id="MyForm" method="POST"  action="borrarInstancia.do">
+            <form:form commandName="retroalimentacionInstancia"  id="MyForm" method="POST"  action="borrarInstancia.do" onsubmit="return validarForm(this);">
                 <h1>Envio de Retroalimentaci&oacute;n</h1>
                 <h2>Motivos de Rechazo</h2>
                 <table >
@@ -111,6 +111,11 @@
                     <tr>
                         <td>Descripci&oacute;n:</td>
                         <td><form:textarea  id="descripcion" path="descripcion" rows="10" cols="70" name="descripcion" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class='error' style="display:none;">Error la descripcion esta vacia</div>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>

@@ -94,7 +94,7 @@
             <%-- fin del contenido --%>
         </div>
         <div id="a" style="display: none; font-size: 15px">
-            <form:form commandName="borrarProyecto" id="MyForm" action="borrarProyecto.do" method="POST">
+            <form:form commandName="borrarProyecto" id="MyForm" action="borrarProyecto.do" method="POST" onsubmit="return validarForm(this);">
                 <h1>Envio de Retroalimentaci&oacute;n</h1>
                 <h2>Motivos de Rechazo</h2>
                 <table>
@@ -115,6 +115,11 @@
                     <tr>
                         <td>Descripci&oacute;n:</td>
                         <td><form:textarea rows="10" cols="70" id="descripcion" path="descripcion" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class='error' style="display:none;">Error la descripcion esta vacia</div>
+                        </td>
                     </tr>
                     <tr>
                         <td></td>
