@@ -5,6 +5,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.Fecha;
+import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.entidades.Platica;
 import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.PlaticaFacade;
@@ -27,12 +28,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import edu.servicio.toluca.beans.PlaticaJson;
+import edu.servicio.toluca.beans.ValidacionPlatica;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.math.BigInteger;
+import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,6 +68,7 @@ public class PlaticaController {
         modelo.addAttribute("anioFin", anio.anioFin());
         modelo.addAttribute("platica", new Platica());
         modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
+        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
         return "/Platicas/altaPlatica";
     }
 
@@ -113,23 +118,76 @@ public class PlaticaController {
     public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException {
 
         platica.setNumeroAsistentes(0);
-
+        Fecha anio = new Fecha();
+        System.out.println("intentando guardar");
         if (result.hasErrors()) {
-            Fecha anio = new Fecha();
+            System.out.println("intentando guardar errores");
             modelo.addAttribute("anioInicio", anio.anioActual());
             modelo.addAttribute("anioFin", anio.anioFin());
             modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
+            modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
             return "/Platicas/altaPlatica";
         } else {
-            platicaFacade.create(platica);
-            return "/Platicas/redirectAltaPlatica";
+            System.out.println("sin errores entidad");
+            System.out.println("fecha" + platica.getFechaMxFui().toString());
+            if (platica.getFechaMxFui().compareTo(platica.getFecha()) > 0) {
+                MetodosValidacion hora = new MetodosValidacion();
+                System.out.println("hora" + platica.getHora());
+                if (!hora.esHora(platica.getHora())) {
+                    System.out.println("no es hora");
+                    modelo.addAttribute("anioInicio", anio.anioActual());
+                    modelo.addAttribute("anioFin", anio.anioFin());
+                    modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
+                    modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                    modelo.addAttribute("errorHora", "<div class='error'>La hora no es valida</div>");
+                    return "/Platicas/altaPlatica";
+                } else {
+                    platica.setStatus((short) 1);
+                    List<Platica> listaPlaticas = platicaFacade.findAll();
+                        Boolean existe = false;
+                    for (int i = 0; i < listaPlaticas.size(); i++)
+                    {
+                         if (platica.equals(listaPlaticas.get(i))) {
+                            existe = true;
+                            break;
+                        }
+                    }
+                        if (existe) {
+                        modelo.addAttribute("anioInicio", anio.anioActual());
+                        modelo.addAttribute("anioFin", anio.anioFin());
+                        modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
+                        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                        modelo.addAttribute("exito", "<div style='background-color:#0B6121'> LA PLÁTICA YA EXISTE</div>");
+                        System.out.println("ya existia");
+                        return "/Platicas/altaPlatica";
+                    } else {
+
+                        platicaFacade.create(platica);
+                        modelo.addAttribute("anioInicio", anio.anioActual());
+                        modelo.addAttribute("anioFin", anio.anioFin());
+                        modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
+                        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                        modelo.addAttribute("exito", "<div style='background-color:#0B6121'> PLÁTICA GUARDADA</div>");
+                        System.out.println("creada");
+                        return "/Platicas/altaPlatica";
+                    }
+                }
+            } else {
+                modelo.addAttribute("anioInicio", anio.anioActual());
+                modelo.addAttribute("anioFin", anio.anioFin());
+                modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
+                modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                modelo.addAttribute("errorFm", "<div class='error'>La fecha de platica debe ser menor a la de Formato unico</div>");
+                return "/Platicas/altaPlatica";
+            }
+
         }
 
 
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/folioPlatica.do")
-    public String folioPlatica(Model a, String fecha,String numeroC) {
+    public String folioPlatica(Model a, String fecha, String numeroC) {
         FoliosPlatica foliosPlatica = new FoliosPlatica();
         Platica platica = new Platica();
         VistaAlumno alumno = new VistaAlumno();
@@ -152,7 +210,7 @@ public class PlaticaController {
         platica.setNumeroAsistentes(numero);
         platicaFacade.edit(platica);
 
-       //  return "/Platicas/reporte";
+        //  return "/Platicas/reporte";
         return "/Platicas/seleccionarPlatica";
     }
 /////////ASISTENCIA.DO////////////////////
@@ -170,7 +228,7 @@ public class PlaticaController {
 
             if (lista.size() > 0) {
                 VistaAlumno vistaAlumno1;
-               vistaAlumno1 = vistaAlumnoFacade.find(lista.get(0).getAlumnoId().getId()); 
+                vistaAlumno1 = vistaAlumnoFacade.find(lista.get(0).getAlumnoId().getId());
                 System.out.println(lista.get(0).getAlumnoId());
                 //vistaAlumno1 = vistaAlumnoFacade.find("09280531");
                 modelo.addAttribute("alumno", vistaAlumno1);
@@ -212,35 +270,56 @@ public class PlaticaController {
     public String ponerAsistenciaEspecial(String idPlatica, String no_control, Model modelo) {
 
         if (no_control.length() > 7 && no_control.length() < 9) {
-            FoliosPlatica foliosPlatica = new FoliosPlatica();
-            Platica platica = new Platica();
-            VistaAlumno alumno = new VistaAlumno();
-            alumno.setId(no_control);
-            System.out.println("platica id:" + idPlatica);
-            platica.setId(Long.parseLong(idPlatica));
-            foliosPlatica.setPlaticaId(platica);
-            foliosPlatica.setAlumnoId(alumno);
-            //folio: numero de control+idPlatica
-            foliosPlatica.setNumeroFolio(idPlatica + no_control);
-            System.out.println(idPlatica + no_control);
-            foliosPlatica.setStatus((short) 1);
-            foliosPlatica.setAsistencia((short) 1);
-        foliosPlaticaFacade.create(foliosPlatica);
-
-        //incrementar numero de asistentes +1
-       platica = platicaFacade.findBySpecificField("id",idPlatica, "equal", null, null).get(0);
-        int numero = platica.getNumeroAsistentes();
-        numero = numero + 1;
-        System.out.println("numero" + numero);
-        platica.setNumeroAsistentes(numero);
-        platicaFacade.edit(platica);
-          modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
-          return "/Platicas/asistenciaPosteriorEspecial";
+            List<VistaAlumno> listaAlumno = vistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
+            VistaAlumno promedio = listaAlumno.get(0);
+            if (Float.parseFloat(promedio.getPorcentaje()) < 70) {
+                modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+                modelo.addAttribute("error", "<div class='error'>El alumno no cuenta con los creditos suficientes</div>");
+                return "/Platicas/asistenciaPosteriorEspecial";
+            } else {
+                
+                List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", idPlatica +""+ no_control, "equal", null, null);
+                if (lista.isEmpty()) {
+                    
+                    FoliosPlatica foliosPlatica = new FoliosPlatica();
+                Platica platica = new Platica();
+                VistaAlumno alumno = new VistaAlumno();
+                alumno.setId(no_control);
+                System.out.println("platica id:" + idPlatica);
+                platica.setId(Long.parseLong(idPlatica));
+                foliosPlatica.setPlaticaId(platica);
+                foliosPlatica.setAlumnoId(alumno);
+                //folio: numero de control+idPlatica
+                foliosPlatica.setNumeroFolio(idPlatica + no_control);
+                System.out.println(idPlatica + no_control);
+                foliosPlatica.setStatus((short) 1);
+                foliosPlatica.setAsistencia((short) 1);
+                foliosPlaticaFacade.create(foliosPlatica);
+                    //incrementar numero de asistentes +1
+                    platica = platicaFacade.findBySpecificField("id", idPlatica, "equal", null, null).get(0);
+                    int numero = platica.getNumeroAsistentes();
+                    numero = numero + 1;
+                    System.out.println("numero" + numero);
+                    platica.setNumeroAsistentes(numero);
+                    platicaFacade.edit(platica);
+                    modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+                    return "/Platicas/asistenciaPosteriorEspecial";
+                    
+                } else {
+                    FoliosPlatica foliosPlatica = lista.get(0);
+                    System.out.println("si encontro numero folio");
+                    foliosPlatica.setAsistencia((short) 1);
+                    foliosPlaticaFacade.edit(foliosPlatica);
+                     modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+                    return "/Platicas/asistenciaPosteriorEspecial";
+                }
+            }
         } else {
             modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
             modelo.addAttribute("error", "<div class='error'>Numero de control incorrecto</div>");
+            return "/Platicas/asistenciaPosteriorEspecial";
         }
-        return "/Platicas/asistenciaPosteriorEspecial";
+
     }
 
     @RequestMapping(value = "/mostrarFoto.do", method = RequestMethod.GET)
@@ -264,7 +343,23 @@ public class PlaticaController {
 
     }
 
-   //metodo para cambiar informacion de platica dinamicamente en seleccionarPlatica
+    @RequestMapping(method = RequestMethod.POST, value = "/altaLugarBD.do")
+    public @ResponseBody
+    String altaLugaresBD(@Valid LugaresPlatica lugares, BindingResult result, Model modelo) {
+        System.out.println("hola");
+        if (result.hasErrors()) {
+            System.out.println("si hubo errores");
+            modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+            return "/Platicas/lugaresPlatica";
+        } else {
+            System.out.println("hola k ase");
+            System.out.println(lugares.getLugar());
+            lugaresPlaticaFacade.create(lugares);
+            modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+            return "/Platicas/lugaresPlatica";
+        }
+    }
+    //metodo para cambiar informacion de platica dinamicamente en seleccionarPlatica
 
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarDetalle.do")
     public @ResponseBody

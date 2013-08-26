@@ -47,10 +47,10 @@
                             </tr>
                             <tr>
                                 <td><label for="alumno">Número de control</label></td>
-                                <td> <input type="text" name="no_control" id="no_control" size="15" /> </td>
+                                <td> <input type="text" autofocus="true"name="no_control" id="no_control" size="15" /> </td>
                             </tr>
                             <tr>
-                                <td><button type="submit">Asistió</button></td>
+                                <td><button type="submit"> Asistió</button></td>
                                 <td><button type="reset">Limpiar</button></td>
                             </tr>
                         </table>

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : guardarFoto
-    Created on : 29/07/2013, 12:15:49 PM
-    Author     : mary
---%>
 
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : js
-    Created on : 4/06/2013, 10:06:43 AM
-    Author     : Jonny
---%>
-<%-- Alta palticas --%>
 <script>
 
     $(document).ready(function() {
