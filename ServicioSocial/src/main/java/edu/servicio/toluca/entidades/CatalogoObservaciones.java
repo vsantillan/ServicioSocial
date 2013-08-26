@@ -10,6 +10,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -34,12 +36,14 @@ import javax.xml.bind.annotation.XmlTransient;
 public class CatalogoObservaciones implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
+    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private BigDecimal id;
-    @Size(max = 300)
+    @NotNull
+    @Size(min=1,max = 300,message="El tamaño debe ser menor a 300 caracteres")
     @Column(name = "DETALLE")
     private String detalle;
     @OneToMany(mappedBy = "catalogoObservacionId")

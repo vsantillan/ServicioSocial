@@ -10,8 +10,10 @@ import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,23 +30,25 @@ public class ObservacionesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/catalogoObservaciones.do")
     public String catalogoObservaciones(Model modelo) {
-        modelo.addAttribute("Observacion", new NuevaObservacion());
+        modelo.addAttribute("Observacion",new CatalogoObservaciones());
         modelo.addAttribute("Observaciones", catalogoObservacionesFacade.findAll());
         return "/Observaciones/catalogoObservaciones";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/nuevaObservacion.do")
-    public @ResponseBody
-    String nuevaObservacion(Model modelo, NuevaObservacion observacion) {
-        CatalogoObservaciones catalogo = new CatalogoObservaciones();
-        catalogo.setDetalle(observacion.getDescripcion());
-        System.out.println("la observacion" + observacion.getDescripcion());
-        catalogoObservacionesFacade.create(catalogo);
-        System.out.println("Inserto Observacion");
-        return "<script>"
-                + "alert('¡Observacion Agregada Correctamente!');"
-                + "location.href='catalogoObservaciones.do';"
-                + "</script>";
+    public 
+    String nuevaObservacion(@Valid CatalogoObservaciones Observacion, BindingResult resultado,Model modelo) {
+        if (!resultado.hasErrors()) {
+            catalogoObservacionesFacade.create(Observacion);
+            modelo.addAttribute("Observaciones", catalogoObservacionesFacade.findAll());
+            modelo.addAttribute("Observacion", new CatalogoObservaciones());
+             return "/Observaciones/catalogoObservaciones";
+        }else{
+            modelo.addAttribute("Observaciones", catalogoObservacionesFacade.findAll());
+             modelo.addAttribute("Observacion",Observacion);
+             modelo.addAttribute("errorBlanco", "<div class='error'>Error la descripcion esta vacia</div>");
+           return "/Observaciones/catalogoObservaciones";
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/deleteObservacion.do")
@@ -62,15 +66,18 @@ public class ObservacionesController {
     @RequestMapping(method = RequestMethod.POST, value = "/actualizaObservacion.do")
     public @ResponseBody
     String actualizaObservacion(Model modelo, NuevaObservacion observacion) {
+
         CatalogoObservaciones catalogo;
-        catalogo= catalogoObservacionesFacade.find(BigDecimal.valueOf(observacion.getId()));
-        catalogo.setDetalle(observacion.getDescripcion());
-        System.out.println("la observacion" + observacion.getDescripcion());
+        catalogo = catalogoObservacionesFacade.find(BigDecimal.valueOf(observacion.getId()));
+        catalogo.setDetalle(observacion.getDetalle());
+        System.out.println("la observacion" + observacion.getDetalle());
         catalogoObservacionesFacade.edit(catalogo);
         System.out.println("Actualizo Observacion");
         return "<script>"
                 + "alert('¡Observacion Actualizada  Correctamente!');"
                 + "location.href='catalogoObservaciones.do';"
                 + "</script>";
+
+
     }
 }
