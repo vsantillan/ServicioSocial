@@ -47,7 +47,7 @@
                     <tbody>
                         <core:forEach items="${lugares}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="editarOrganizacion.do?id=${current.id}" ><img src="imagenes/editar.png" width="30" title="Editar Lugar"/></a>
+                                <th><a href="editarLugar.do?id=${current.id}" ><img src="imagenes/editar.png" width="30" title="Editar Lugar"/></a>
                                     <a href="#" class="btn-validar-org"><img class="cambiaStatusInstancia" ide="${current.id}" src="imagenes/trash.png" width="30" title="Borrar Lugar"></a></th>
                                 <th><core:out value="${current.lugar}" /></th>
                             </tr>
