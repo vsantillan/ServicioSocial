@@ -15,6 +15,7 @@
 
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
+        
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
 

@@ -3,11 +3,9 @@ $(document).ready(listo);
 
 function listo() {
     $(".actualizaObservacion").click(function() {
-        alert($(this).attr("detalle"));
         $(".error").hide('hide');
         $("textarea#detalleE").text($(this).attr("detalle"));
         $("input#id").attr("value", $(this).attr("idO"));
-        $("input#algo").attr("value", $(this).attr("detalle"));
     });
 }
 

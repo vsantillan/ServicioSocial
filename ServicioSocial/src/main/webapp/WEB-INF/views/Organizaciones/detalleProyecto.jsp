@@ -52,29 +52,19 @@
                 <tr>
                     <td><p>Actividades:</p></td>
                     <td><p>                        
-                           <core:choose>
+                            <core:choose>
                                 <core:when test="${empty proyectoDetalle.actividadesCollection}">
-                                    <p>No hay actividades</p>
-                                </core:when>
-                                <core:otherwise>
-                                    <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
+                                <p>No hay actividades</p>
+                            </core:when>
+                            <core:otherwise>
+                                <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
                                     <p>${actividades.detalle}</p>
-                                      </core:forEach>
-                                </core:otherwise>
-                           </core:choose>                                                          
+                                </core:forEach>
+                            </core:otherwise>
+                        </core:choose>                                                          
                         </p>
                     </td>
                 </tr>
-<!--                <tr>
-                    <td><p>Horario:</p></td>
-                    <td><p>
-                            <%-- <core:forEach items="${proyectoDetalle.horarioCollection}" var="horarios">
-                             <p>Dia: value="${horarios.dia}"/></p>
-                             <p>Hora: <core:out  value="${horarios.hora}"/></p>
-                         </core:forEach> --%>
-                        </p>
-                    </td>
-                </tr>-->
                 <tr>
                     <td><p>Responsable del Programa:</p></td>
                     <td><p><core:out value="${proyectoDetalle.nombreResponsable}"/></p></td>
@@ -102,12 +92,20 @@
                 <tr>
                     <td><p>Perfil buscado:</p></td>
                     <td><p>
-                            <core:forEach items="${proyectoDetalle.proyectoPerfilCollection}" var="perfiles">
-                            <ul>
-                                <li>  <p>Perfil: ${perfiles.idPerfil.nombre}</p></li>
-                            </ul>
-                        </core:forEach>
-                        </p></td>
+                            <core:choose>
+                                    <core:when test="${empty proyectoDetalle.proyectoPerfilCollection}">
+                                        <p>Ninguno</p>
+                                    </core:when>
+                                    <core:otherwise>
+                                        <core:forEach items="${proyectoDetalle.proyectoPerfilCollection}" var="perfiles">
+                                            <ul>
+                                                <li>  <p>Perfil: ${perfiles.idPerfil.nombre}</p></li>
+                                            </ul>
+                                        </core:forEach>
+                                    </core:otherwise>
+                        </core:choose>
+                        </p>
+                    </td>
                 </tr>
             </table>
         </div> 

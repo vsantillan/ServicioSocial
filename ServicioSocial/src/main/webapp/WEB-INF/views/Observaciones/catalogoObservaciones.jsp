@@ -21,10 +21,11 @@
         <!--Script para DataTables-->
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        
-                <!--Include para Ventanas Modales-->
+
+
+        <!--Include para Ventanas Modales-->
         <jsp:include page="../Template/headsModal.jsp" />
-           <!--        Scripts para tablas-->
+        <!--        Scripts para tablas-->
         <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>      
         <script type="text/javascript" language="javascript" src="js/observaciones.js"></script>
 
@@ -84,7 +85,7 @@
                                     <form:hidden path="id" id="id" />
                                     <tr>
                                         <td> <p><label for="detalle">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:textarea id="detalle"  name="detalle" path="detalle" rows="8" cols="50"  /> 
+                                        <td>  <form:textarea id="detalle"  name="detalle" path="detalle" rows="8" cols="50" maxlength="2" /> 
                                         <td>${errorBlanco}</td>
                                         </td>
 
@@ -102,29 +103,6 @@
                 <%-- fin del contenido --%>
             </div>
             <div style="clear: both;"/></div>
-    </div>
-    <div id="a" style="display: none; font-size: 15px">
-        <center> 
-            <h1>Editar Observaci&oacute;n</h1><!--actualizaObservacion.do--->
-            <form:form commandName="Observacion" action="#" method="POST" onsubmit="return validarForm(this);" >
-                <table>
-                    <form:input hidden="hidden" id="id" name="name" path="id" />
-                    <tr>
-                        <td><input id="algo"></td>
-                        <td>Descripci&oacute;n:</td>
-                        <td><form:textarea id="detalleE" path="detalle" rows="10" cols="70" name="detalleE"  /></td>
-                    <tr>
-                        <td>
-                            <div class='error' style="display:none;">Error la descripcion esta vacia</div>
-                        </td>
-                    </tr>
-                    </tr>
-                    <tr> 
-                        <td> <input type ="submit" value = "Guardar " /> </td>
-                    </tr>
-                </table>
-            </form:form>
-        </center> 
     </div>
     <jsp:include page="../Template/footer.jsp" />
 
