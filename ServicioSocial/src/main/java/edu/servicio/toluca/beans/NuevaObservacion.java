@@ -7,22 +7,9 @@ package edu.servicio.toluca.beans;
 
 public class NuevaObservacion {
     
-    private String descripcion;
+    private String detalle;
     private int id;
 
-    /**
-     * @return the descripcion
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    /**
-     * @param descripcion the descripcion to set
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
 
     /**
      * @return the id
@@ -36,6 +23,20 @@ public class NuevaObservacion {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @return the detalle
+     */
+    public String getDetalle() {
+        return detalle;
+    }
+
+    /**
+     * @param detalle the detalle to set
+     */
+    public void setDetalle(String detalle) {
+        this.detalle = detalle;
     }
     
     
