@@ -6,6 +6,7 @@ var tipo2="";
 $(document).ready(listo);
 function listo()
 {
+    
     inicializarDataTables();
     $(document).on("click","#guardarObservaciones",obtenerDatos);
     $(document).on("click",".aceptar",cambiarEstadoFormatoAceptado);
@@ -61,10 +62,10 @@ function cambiarEstadoFormatoAceptado(event)
     console.log($(this).attr('idFU'));
     if(confirmacionEvento())
     {
+        $('#guardarObservaciones').attr('disabled', true);
+        
         $.post("modificarFormatoUnicoNR_Aceptado.do",{id:$(this).attr('idFU')},function(respuesta)
         {
-            
-            
             if(respuesta==="OK")
             {
                 window.location.reload();
@@ -75,6 +76,7 @@ function cambiarEstadoFormatoAceptado(event)
                 alert("Imposible Realizar Acción");
             }
         });
+        $('#guardarObservaciones').attr('disabled', false);
     }
     
 }
@@ -125,6 +127,8 @@ function obtenerDatos()
   
   if(array.length > 0)
   {
+      
+      $('#guardarObservaciones').attr('disabled', true);
       $.post("modificarFormatoUnicoNR.do",{idDatoPersonales:idDatosPersonales2,idFormatoUnico:idFormatoUnico2,tipo:tipo2,observaciones:array},function(respuesta)
         {        
             if(respuesta==="OK")
@@ -135,6 +139,7 @@ function obtenerDatos()
             {
                 alert("Imposible Realizar Acción");
             }
+            $('#guardarObservaciones').attr('disabled', false);
         }
         );
   }
