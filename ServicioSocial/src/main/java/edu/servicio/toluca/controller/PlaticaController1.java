@@ -4,7 +4,6 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.NuevoLugar;
 import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
 import java.math.BigInteger;
