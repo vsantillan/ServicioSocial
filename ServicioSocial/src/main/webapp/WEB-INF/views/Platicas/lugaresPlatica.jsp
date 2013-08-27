@@ -12,8 +12,11 @@
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />       
         <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsModal.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        <jsp:include page="../Template/headsModal.jsp" />
+        
+        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>      
+        <script type="text/javascript" language="javascript" src="js/lugares.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" >
             $(document).ready(function() {
@@ -48,7 +51,7 @@
                         <core:forEach items="${lugares}" var="current">
                             <tr class='gradeX'>
                                 <th><a href="editarLugar.do?id=${current.id}" ><img src="imagenes/editar.png" width="30" title="Editar Lugar"/></a>
-                                    <a href="#" class="btn-validar-org"><img class="cambiaStatusInstancia" ide="${current.id}" src="imagenes/trash.png" width="30" title="Borrar Lugar"></a></th>
+                                    <a href="#" class="btn-validar-org"><img class="cambiaStatusLugar" ide="${current.id}" src="imagenes/trash.png" width="30" title="Borrar Lugar"></a></th>
                                 <th><core:out value="${current.lugar}" /></th>
                             </tr>
                         </core:forEach>
@@ -56,10 +59,10 @@
                 </table>
                 <table>
                     <tr>
-                        <td><a href="#preseleccionado" rel="shadowbox;height=300;width=500"><img src="imagenes/agregar.jpg" title="Agregar Lugar" width="30"/></a></td>
+                        <td><a href="#a" class="fancybox-effects-a"><img src="imagenes/agregar.jpg" title="Agregar Lugar" width="30"/></a></td>
                     </tr>
                 </table>
-                <div id="agregarLugar">
+                <div id="a" style="display:none">
                     <%-- Formulario Nueva lugar para platica de inducción --%>
                     <form:form commandName="lugar_i" id="nuevoLugar" action="nuevoLugar.do" method="POST">
                                 <table>

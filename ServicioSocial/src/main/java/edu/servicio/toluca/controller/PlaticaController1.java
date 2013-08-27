@@ -4,12 +4,16 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import org.springframework.ui.Model;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -49,9 +53,15 @@ public class PlaticaController1 {
         return "/Platicas/lugaresPlatica";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/editarLugar.do")
-    String editarLugar(Model modelo, LugaresPlatica lugar_i) {
+    @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusLugar.do")
+    public @ResponseBody
+    String actualizarStatusOrganizaciones(int id, Model model) {
+    
+        LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
+        System.out.println(lugar.getLugar());
+        lugar.setStatus(BigInteger.valueOf(0));
+        LugaresPlaticaFacade.edit(lugar);
         
-        return "/Platicas/lugaresPlatica";
+        return "ok";
     }
 }
