@@ -40,7 +40,14 @@
                                 <td>
                                     <select name="idPlatica" id="idPlatica">
                                         <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
-                                            <option value="${platicasPeriodo.id}"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option>                                    
+                                            <c:choose>
+                                                <c:when test="${idP}=${platicasPeriodo.id}">
+                                                    <option value="${platicasPeriodo.id}" selected="true"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
+                                                </c:when>
+                                                <c:otherwise>
+                                                     <option value="${platicasPeriodo.id}"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
+                                                </c:otherwise>
+                                            </c:choose>                                   
                                         </core:forEach>
                                     </select>
                                 </td>

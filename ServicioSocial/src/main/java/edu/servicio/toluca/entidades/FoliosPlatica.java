@@ -8,6 +8,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -36,9 +38,10 @@ public class FoliosPlatica implements Serializable {
     @Column(name = "NUMERO_CONTROL")
     private String numeroControl;
     private static final long serialVersionUID = 1L;
+    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
+    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private Long id;
     @Column(name = "ASISTENCIA")
