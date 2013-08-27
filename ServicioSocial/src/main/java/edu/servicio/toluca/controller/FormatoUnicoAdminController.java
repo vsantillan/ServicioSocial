@@ -96,7 +96,7 @@ public class FormatoUnicoAdminController {
                 //Asignando Datos A Formato Unico en estado NO_REVISADO
                 FormatoUnicoBean formatoNR=new FormatoUnicoBean();
                 formatoNR.setIdFormatoUnico(formato.getId().toString());
-                formatoNR.setNoControl( formato.getDatosPersonalesId().getNumeroControl().getId() );
+                formatoNR.setNoControl( formato.getDatosPersonalesId().getNumeroControl() );
                 formatoNR.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());
@@ -132,7 +132,7 @@ public class FormatoUnicoAdminController {
             {
                 FormatoUnicoBean formatoAceptados = new FormatoUnicoBean();
                 
-                formatoAceptados.setNoControl( formato.getDatosPersonalesId().getNumeroControl().getId() );
+                formatoAceptados.setNoControl( formato.getDatosPersonalesId().getNumeroControl() );
                 formatoAceptados.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());
@@ -157,7 +157,7 @@ public class FormatoUnicoAdminController {
             if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//
             {
                 FormatoUnicoBean formatoRechazados = new FormatoUnicoBean();
-                formatoRechazados.setNoControl( formato.getDatosPersonalesId().getNumeroControl().getId() );
+                formatoRechazados.setNoControl( formato.getDatosPersonalesId().getNumeroControl() );
                 formatoRechazados.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());   
@@ -183,7 +183,7 @@ public class FormatoUnicoAdminController {
             if(formato.getStatusFui()!=null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION)))
             {
                 FormatoUnicoBean formatoCorreccion = new FormatoUnicoBean();
-                formatoCorreccion.setNoControl( formato.getDatosPersonalesId().getNumeroControl().getId() );
+                formatoCorreccion.setNoControl( formato.getDatosPersonalesId().getNumeroControl() );
                 formatoCorreccion.setNombre(formato.getDatosPersonalesId().getNombre()
                                     +" "+formato.getDatosPersonalesId().getApellidoP()
                                     +" "+formato.getDatosPersonalesId().getApellidoM());   

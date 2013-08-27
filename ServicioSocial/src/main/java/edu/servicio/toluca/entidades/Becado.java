@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Becado.findByNumeroDeRegistro", query = "SELECT b FROM Becado b WHERE b.numeroDeRegistro = :numeroDeRegistro"),
     @NamedQuery(name = "Becado.findByStatus", query = "SELECT b FROM Becado b WHERE b.status = :status")})
 public class Becado implements Serializable {
+    @Size(max = 10)
+    @Column(name = "NUMERO_CONTROL")
+    private String numeroControl;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -57,9 +60,9 @@ public class Becado implements Serializable {
     private Collection<ReporteMensual> reporteMensualCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "becadoId")
     private Collection<Revision> revisionCollection;
-    @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
+    /*@JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
     @ManyToOne
-    private VistaAlumno numeroControl;
+    private VistaAlumno numeroControl;*/
     @JoinColumn(name = "PROGRAMA_GENERAL_ID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private ProgramaGeneral programaGeneralId;
@@ -134,13 +137,13 @@ public class Becado implements Serializable {
         this.revisionCollection = revisionCollection;
     }
 
-    public VistaAlumno getNumeroControl() {
+    /*public VistaAlumno getNumeroControl() {
         return numeroControl;
     }
 
     public void setNumeroControl(VistaAlumno numeroControl) {
         this.numeroControl = numeroControl;
-    }
+    }*/
 
     public ProgramaGeneral getProgramaGeneralId() {
         return programaGeneralId;
@@ -181,6 +184,14 @@ public class Becado implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Becado[ id=" + id + " ]";
+    }
+
+    public String getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(String numeroControl) {
+        this.numeroControl = numeroControl;
     }
     
 }

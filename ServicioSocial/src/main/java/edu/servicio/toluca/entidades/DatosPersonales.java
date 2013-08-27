@@ -58,6 +58,9 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "DatosPersonales.findByTelefonoOficina", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoOficina = :telefonoOficina"),
     @NamedQuery(name = "DatosPersonales.findByEstadoCivil", query = "SELECT d FROM DatosPersonales d WHERE d.estadoCivil = :estadoCivil")})
 public class DatosPersonales implements Serializable {
+    @Size(max = 10)
+    @Column(name = "NUMERO_CONTROL")
+    private String numeroControl;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "datosPersonalesG", strategy = "increment")
@@ -149,9 +152,10 @@ public class DatosPersonales implements Serializable {
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
     @ManyToOne
     private VistaAlumno alumnoId;
+    /*
     @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
     @ManyToOne
-    private VistaAlumno numeroControl;
+    private VistaAlumno numeroControl;*/
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
@@ -422,14 +426,14 @@ public class DatosPersonales implements Serializable {
         this.alumnoId = alumnoId;
     }
 
-    public VistaAlumno getNumeroControl() {
+   /* public VistaAlumno getNumeroControl() {
         return numeroControl;
     }
 
     public void setNumeroControl(VistaAlumno numeroControl) {
         this.numeroControl = numeroControl;
     }
-
+*/
     public Colonia getIdColonia() {
         return idColonia;
     }
@@ -479,6 +483,14 @@ public class DatosPersonales implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.DatosPersonales[ id=" + id + " ]";
+    }
+
+    public String getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(String numeroControl) {
+        this.numeroControl = numeroControl;
     }
     
 }

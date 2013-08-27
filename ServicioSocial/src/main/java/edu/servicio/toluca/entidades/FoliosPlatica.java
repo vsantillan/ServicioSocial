@@ -32,6 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "FoliosPlatica.findByNumeroFolio", query = "SELECT f FROM FoliosPlatica f WHERE f.numeroFolio = :numeroFolio"),
     @NamedQuery(name = "FoliosPlatica.findByStatus", query = "SELECT f FROM FoliosPlatica f WHERE f.status = :status")})
 public class FoliosPlatica implements Serializable {
+    @Size(max = 10)
+    @Column(name = "NUMERO_CONTROL")
+    private String numeroControl;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -50,9 +53,11 @@ public class FoliosPlatica implements Serializable {
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
     @ManyToOne
     private VistaAlumno alumnoId;
+    /*
     @JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
     @ManyToOne
     private VistaAlumno numeroControl;
+    * */
     @JoinColumn(name = "PLATICA_ID", referencedColumnName = "ID")
     @ManyToOne
     private Platica platicaId;
@@ -108,7 +113,7 @@ public class FoliosPlatica implements Serializable {
     public void setAlumnoId(VistaAlumno alumnoId) {
         this.alumnoId = alumnoId;
     }
-
+/*
     public VistaAlumno getNumeroControl() {
         return numeroControl;
     }
@@ -116,7 +121,7 @@ public class FoliosPlatica implements Serializable {
     public void setNumeroControl(VistaAlumno numeroControl) {
         this.numeroControl = numeroControl;
     }
-
+*/
     public Platica getPlaticaId() {
         return platicaId;
     }
@@ -148,6 +153,14 @@ public class FoliosPlatica implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.FoliosPlatica[ id=" + id + " ]";
+    }
+
+    public String getNumeroControl() {
+        return numeroControl;
+    }
+
+    public void setNumeroControl(String numeroControl) {
+        this.numeroControl = numeroControl;
     }
     
 }

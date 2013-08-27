@@ -108,15 +108,22 @@ public class FormatoUnicoController {
         //id de alumno provisional en lo que nos dan lo de sesión
         //String alumno_id = "09280531";
         //select * from ...where
-        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
+        //***List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
+        List<Va> listaAlumnos = vaFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //objeto que voy a insertar
-        VistaAlumno alumno = listaAlumnos.get(0);
+        //***VistaAlumno alumno = listaAlumnos.get(0);
+        Va alumno = listaAlumnos.get(0);
+        
+        
+        
+        
         if (Float.parseFloat(alumno.getPorcentaje()) < 70) {
             return "PanelUsuario/panelUsuario";
         }
         //Creación de los objetos necesarios para inserción y lectura
         DatosPersonales datosPersonales = new DatosPersonales();
-        datosPersonales.setAlumnoId(alumno);
+        //***datosPersonales.setAlumnoId(alumno);
+        datosPersonales.setNumeroControl(alumno.getId());
         FormatoUnico formatoUnico = new FormatoUnico();
         HorariosAlumno horariosAlumno = new HorariosAlumno();
         // fin de creación de objetos
