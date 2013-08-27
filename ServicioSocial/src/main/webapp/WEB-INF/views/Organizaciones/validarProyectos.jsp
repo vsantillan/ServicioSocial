@@ -114,7 +114,7 @@
                     </tr>
                     <tr>
                         <td>Descripci&oacute;n:</td>
-                        <td><form:textarea rows="10" cols="70" id="descripcion" path="descripcion" /></td>
+                        <td><form:textarea rows="10" cols="70" id="descripcion" path="descripcion" maxlength="200" /></td>
                     </tr>
                     <tr>
                         <td>

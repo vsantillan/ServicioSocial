@@ -65,14 +65,12 @@ public class ObservacionesController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/actualizaObservacion.do")
     public @ResponseBody
-    String actualizaObservacion(Model modelo, NuevaObservacion observacion) {
+    String actualizaObservacion(Model modelo, NuevaObservacion Observacion) {
 
         CatalogoObservaciones catalogo;
-        catalogo = catalogoObservacionesFacade.find(BigDecimal.valueOf(observacion.getId()));
-        catalogo.setDetalle(observacion.getDetalle());
-        System.out.println("la observacion" + observacion.getDetalle());
+        catalogo = catalogoObservacionesFacade.find(BigDecimal.valueOf(Observacion.getId()));
+        catalogo.setDetalle(Observacion.getDetalle());
         catalogoObservacionesFacade.edit(catalogo);
-        System.out.println("Actualizo Observacion");
         return "<script>"
                 + "alert('¡Observacion Actualizada  Correctamente!');"
                 + "location.href='catalogoObservaciones.do';"
