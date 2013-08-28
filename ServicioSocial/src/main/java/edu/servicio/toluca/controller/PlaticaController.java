@@ -148,13 +148,11 @@ public class PlaticaController {
                 } else {
                     platica.setStatus((short) 1);
                     List<Platica> listaPlaticas = platicaFacade.findAll();
-                        Platica auxiliar =new Platica ();
                         Boolean existe = false;
                     for (int i = 0; i < listaPlaticas.size(); i++)
                     {
                         System.out.println("recorriendo la lista");
-                        auxiliar=listaPlaticas.get(i);
-                         if (platica.equals(auxiliar)) {
+                         if (platica.equals(listaPlaticas.get(i))) {
                              System.out.println("si existe");
                             existe = true;
                             break;
@@ -165,7 +163,7 @@ public class PlaticaController {
                         modelo.addAttribute("anioFin", anio.anioFin());
                         modelo.addAttribute("lugares", lugaresPlaticaFacade.findAll());
                         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-                        modelo.addAttribute("exito", "<div style='background-color:#0B6121'> LA PLÁTICA YA EXISTE</div>");
+                        modelo.addAttribute("exito", "<div class='error'> LA PLÁTICA YA EXISTE</div>");
                         System.out.println("ya existia");
                         return "/Platicas/altaPlatica";
                     } else {
@@ -313,6 +311,7 @@ public class PlaticaController {
                     System.out.println("numero" + numero);
                     platica.setNumeroAsistentes(numero);
                     platicaFacade.edit(platica);
+                    modelo.addAttribute("folio",idPlatica + no_control);
                     modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
                     modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
                     return "/Platicas/asistenciaPosteriorEspecial";

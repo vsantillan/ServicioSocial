@@ -63,6 +63,7 @@
                         </table>
                         <fmt:message key="datosRequeridos" />
                     </form:form>
+                    <h3>Folio:${folio}</h3>
                 </center>
             </div>
             <div style="clear:both;"></div>
