@@ -321,6 +321,7 @@ public class PlaticaController {
                     System.out.println("si encontro numero folio");
                     foliosPlatica.setAsistencia((short) 1);
                     foliosPlaticaFacade.edit(foliosPlatica);
+                    modelo.addAttribute("folio",idPlatica + no_control);
                     modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
                      modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
                     return "/Platicas/asistenciaPosteriorEspecial";

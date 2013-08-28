@@ -125,11 +125,11 @@
                     </form:form>
                     <div id="resultado"></div>
                     <div id="myDivID" style="display:none">
-                        <form:form action="altaLugarBD.do" commandName="lugares" method="post"  id="MyForm" modelAttribute="lugaresPlatica" name="altaLugares">  
+                        <form:form action="nuevoLugar.do" commandName="lugar_i" method="post"  modelAttribute="lugaresPlatica" name="altaLugares">  
                             <table>
                                 <tr>
                                     <td><label for="Lugar"><fmt:message key="agregarLugar" /></label>  </td>
-                                    <td><form:input  path="lugar" size="50px" /></td>
+                                    <td><form:input   path="lugar" size="50px" /></td>
                                     <td><form:errors path="lugar" cssClass="error" /></td>
                                 </tr>
                                 <tr> 
