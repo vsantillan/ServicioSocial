@@ -55,7 +55,7 @@
 
             });
         </script> 
-
+        <script type="text/javascript" language="javascript" src="js/reporteBimestalActualiza.js"></script> 
 
 
         <title>Administrar Reportes Bimestrales</title>
@@ -65,19 +65,6 @@
         <div id ="contenido" align="left">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left; width: 80%;">
-                <%--<select>
-                    <core:forEach items="${reportes}" var="reporte">
-                        <core:forEach items="${datosPersonales}" var="datoPersonal">
-                            <core:choose>
-                                <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
-                                    <core:forEach items="${datoPersonal.formatoUnicoCollection}" var="fu">
-                                        <option value="${fu.periodoInicio}">${fu.periodoInicio}</option>
-                                    </core:forEach>
-                                </core:when>
-                            </core:choose>
-                        </core:forEach>
-                    </core:forEach>
-                </select>--%>
                 <div id="tabs">
                     <h1>Administraci&oacute;n de Reportes Bimestrales</h1>
                     <ul>
@@ -121,20 +108,31 @@
                         </table>
                     </div>
                     <div id="noRevisados">
+                    <div id="div-aceptar-reporte" style="display:none;">
+                        <center>
+                            <img src="imagenes/paloma.png" width="100"/>
+                            <h2>Reporte validado correctamente</h2>
+                        </center>
+                    </div>
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="NoRev" width='100%'>
                             <thead>
                                 <tr>
                                     <th>Acci&oacute;n</th>
+                                    <th>Ver detalle</th>
                                     <th>Nombre</th>
                                     <th>N. Control</th>
                                     <th>Periodo</th>
-                                    <th>Fecha Subida</th>
                                     <th>Archivo</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <core:forEach items="${reportes}" var="reporte">
                                     <tr class='gradeX'>
+                                        <th>
+                                            <a href="#"><img class="aceptarReporte" ide="${reporte.id}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
+                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${reporte.datosPersonalesId.nombre}" correo="${reporte.datosPersonalesId.correoElectronico}" status="${3}" idReporte="${reporte.id}"><img src="imagenes/editar.png" width="30"/></a>
+                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${reporte.datosPersonalesId.nombre}" correo="${reporte.datosPersonalesId.correoElectronico}" status="${2}" idReporte="${reporte.id}"><img src="imagenes/tache.png" width="30"></a>
+                                        </th>
                                         <th><a href="detalleReporteBimestral.do?id=${reporte.id}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
                                         <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                         <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
@@ -149,7 +147,6 @@
                                                 </core:choose>
                                             </core:forEach>
                                         </th>
-                                        <th><core:out value="${reporte.status}"/></th>
                                         <th><core:out value="${reporte.horas}"/></th>
                                     </tr>
                                 </core:forEach>
@@ -160,6 +157,7 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="Correccion" width='100%'>
                             <thead>
                                 <tr>
+                                    <th>Documento</th>
                                     <th>Nombre</th>
                                     <th>N. Control</th>
                                     <th>Periodo</th>
@@ -169,6 +167,7 @@
                             <tbody>
                                 <core:forEach items="${reportes}" var="reporte">
                                     <tr class='gradeX'>
+                                        <th><a href="mostarPDF.do?id=${1}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
                                         <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                         <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
                                         <th>
@@ -192,6 +191,7 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="Recha" width='100%'>
                             <thead>
                                 <tr>
+                                    <th>Documento</th>
                                     <th>Nombre</th>
                                     <th>N. Control</th>
                                     <th>Periodo</th>
@@ -201,6 +201,7 @@
                             <tbody>
                                 <core:forEach items="${reportes}" var="reporte">
                                     <tr class='gradeX'>
+                                        <th><a href="mostarPDF.do?id=${1}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
                                         <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                         <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
                                         <th>
@@ -226,8 +227,35 @@
 
             <%-- fin del contenido --%>
         </div>
+        <div id="a" style="display: none; font-size: 15px">
+            <form:form commandName="retroalimentacionReporte"  id="MyForm" method="POST"  action="actualizarStatusReporte.do">
+                <h1>Envio de Retroalimentaci&oacute;n</h1>
+                <h2>Motivos de Rechazo</h2>
+                <table >
+                    <tr>
+                        <td>Nombre de la Organizaci&oacute;n:
+                            <form:hidden id="status" nombre="status" path="status" size="20"/><br/>
+                            <form:hidden id="idReporte" path="idReporte" name="idReporte" size="20"/>
+                        </td>
+                        <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" disabled="true" /> </td>
+                    </tr>
+                    <tr>
+                        <td>E-Mail:</td>
+                        <td><form:input type ="text"  id="correo" path="correo" name="correo" disabled="true" /> </td>
+                    </tr>
+                    <tr>
+                        <td>Descripci&oacute;n:</td>
+                        <td><form:textarea  id="descripcion" path="descripcion" rows="10" cols="70" name="descripcion" /></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            
+                        </td>
+                        <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n"  > </td>
+                    </tr>
+                </table>
+            </form:form>
+        </div>
         <jsp:include page="../Template/footer.jsp" />
-
-
     </body>
 </html>
