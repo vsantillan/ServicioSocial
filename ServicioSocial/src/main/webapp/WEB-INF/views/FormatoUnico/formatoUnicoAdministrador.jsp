@@ -204,7 +204,7 @@
                 </div>
                  <div>
                       <button id="guardarObservaciones">Guardar</button>
-                      &nbsp;&nbsp;&nbsp;&nbsp;<a href="catalogoObservaciones.do" style="font-size: 20px"> Agregar Observación</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do')"   style="font-size: 20px"> Agregar Observación</a>
                  </div>
                  </form>  
                 
