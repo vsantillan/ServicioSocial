@@ -49,12 +49,6 @@
                 <li><a href="javascript:void(0)" onclick="redirecciona('catalogoSanciones.do')">6.2 Cat&aacute;logo de Sanciones</a></li>
             </ul>
         </li>
-        <li><a href="javascript:void(0)" onclick="redirecciona('#')">Observaciones</a>
-            <ul>
-                <li><a href="javascript:void(0)" onclick="redirecciona('#')"> Administrar Observaciones</a></li>
-                <li><a href="javascript:void(0)" onclick="redirecciona('#')">Cat&aacute;logo  Observaciones</a></li>
-            </ul>
-        </li>
         <li><a href="javascript:void(0)" onclick="redirecciona('#')">Bajas Temporales</a>
             <ul>
                 <li><a href="javascript:void(0)" onclick="redirecciona('administrarBajas.do')">7.1 Administrar</a></li>
