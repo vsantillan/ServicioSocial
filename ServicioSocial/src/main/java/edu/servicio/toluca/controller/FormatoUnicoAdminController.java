@@ -15,6 +15,7 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
+import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -56,7 +57,8 @@ public class FormatoUnicoAdminController {
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     private RegObservacionesFacade regisObservacionesFacade;
     
-    
+    @EJB(mappedName = "java:global/ServicioSocial/VaFacade")
+    private VaFacade vaFacade;
     
     //Status de FormatoUnico FUI en  base al documento status_DOC_1.doc
     final int VALOR_NO_REVISADOS = 4;
@@ -219,7 +221,7 @@ public class FormatoUnicoAdminController {
         //Formato Correccion
         model.addAttribute("listadoFormatoUnicoCorreccion",listadoFormatosCorreccion);
         //Catalogo Sanciones
-        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll());
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
         return "/FormatoUnico/formatoUnicoAdministrador";
     }
     
