@@ -126,7 +126,7 @@
                     <div id="resultado"></div>
                     <div id="myDivID" style="display:none">
                         <form:form action="altaLugarBD.do" commandName="lugares" method="post"  id="MyForm" modelAttribute="lugaresPlatica" name="altaLugares">  
-<!--                            <table>
+                            <table>
                                 <tr>
                                     <td><label for="Lugar"><fmt:message key="agregarLugar" /></label>  </td>
                                     <td><form:input  path="lugar" size="50px" /></td>
@@ -142,7 +142,7 @@
                                      <td> </td>
                                     <td><input type ="reset" value = "Limpiar" /></td>
                                 </tr>
-                            </table>-->
+                            </table>
                         </form:form>
                     </div>
 

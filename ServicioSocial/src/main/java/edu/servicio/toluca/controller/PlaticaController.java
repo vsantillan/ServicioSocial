@@ -62,6 +62,8 @@ public class PlaticaController {
     private FoliosPlaticaFacade foliosPlaticaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VaFacade")
     private VaFacade  vaFacade;
+     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+    private VistaAlumnoFacade VistaAlumnoFacade ;
 
     @RequestMapping(method = RequestMethod.GET, value = "/altaPlatica.do")
     public String altaPlatica(Model modelo) {
@@ -146,11 +148,13 @@ public class PlaticaController {
                 } else {
                     platica.setStatus((short) 1);
                     List<Platica> listaPlaticas = platicaFacade.findAll();
+                        Platica auxiliar =new Platica ();
                         Boolean existe = false;
                     for (int i = 0; i < listaPlaticas.size(); i++)
                     {
                         System.out.println("recorriendo la lista");
-                         if (platica.equals(listaPlaticas.get(i))) {
+                        auxiliar=listaPlaticas.get(i);
+                         if (platica.equals(auxiliar)) {
                              System.out.println("si existe");
                             existe = true;
                             break;
@@ -233,10 +237,10 @@ public class PlaticaController {
             List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
 
             if (lista.size() > 0) {
-                Va vistaAlumno1;
-                vistaAlumno1 = vaFacade.find(lista.get(0).getAlumnoId().getId());
+                VistaAlumno vistaAlumno1;
+                vistaAlumno1 = VistaAlumnoFacade.find(lista.get(0).getAlumnoId().getId());
                 System.out.println(lista.get(0).getAlumnoId());
-                //vistaAlumno1 = vaFacade.find("09280531");
+                //vistaAlumno1 = VistaAlumnoFacade.find("09280531");
                 modelo.addAttribute("alumno", vistaAlumno1);
                 modelo.addAttribute("espacio", " ");
                 return "/Platicas/capturarAsistencia2";
@@ -276,8 +280,9 @@ public class PlaticaController {
     public String ponerAsistenciaEspecial(String idPlatica, String no_control, Model modelo) {
 
         if (no_control.length() > 7 && no_control.length() < 9) {
-            List<Va> listaAlumno = vaFacade.findBySpecificField("id", no_control, "equal", null, null);
-            Va promedio = listaAlumno.get(0);
+           // List<Va> listaAlumno = vaFacade.findBySpecificField("id", no_control, "equal", null, null); 
+            List<VistaAlumno> listaAlumno = VistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
+            VistaAlumno promedio = listaAlumno.get(0);
             if (Float.parseFloat(promedio.getPorcentaje()) < 70) {
                 modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
                 modelo.addAttribute("error", "<div class='error'>El alumno no cuenta con los creditos suficientes</div>");
@@ -294,7 +299,7 @@ public class PlaticaController {
                 System.out.println("platica id:" + idPlatica);
                 platica.setId(Long.parseLong(idPlatica));
                 foliosPlatica.setPlaticaId(platica);
-                foliosPlatica.setNumeroControl(alumno);
+                foliosPlatica.setAlumnoId(alumno);
                 //folio: numero de control+idPlatica
                 foliosPlatica.setNumeroFolio(idPlatica + no_control);
                 System.out.println(idPlatica + no_control);
@@ -308,7 +313,7 @@ public class PlaticaController {
                     System.out.println("numero" + numero);
                     platica.setNumeroAsistentes(numero);
                     platicaFacade.edit(platica);
-                    modelo.addAttribute("idP", foliosPlatica.getPlaticaId());
+                    modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
                     modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
                     return "/Platicas/asistenciaPosteriorEspecial";
                     
@@ -317,7 +322,7 @@ public class PlaticaController {
                     System.out.println("si encontro numero folio");
                     foliosPlatica.setAsistencia((short) 1);
                     foliosPlaticaFacade.edit(foliosPlatica);
-                    modelo.addAttribute("idP", foliosPlatica.getPlaticaId());
+                    modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
                      modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
                     return "/Platicas/asistenciaPosteriorEspecial";
                 }
@@ -335,7 +340,7 @@ public class PlaticaController {
     public void saveAndShowPDF(String id, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException, Exception {
 
         httpServletResponse.setContentType("image/jpg");
-        httpServletResponse.getOutputStream().write(vaFacade.find(id).getFoto());
+        httpServletResponse.getOutputStream().write(VistaAlumnoFacade.find(id).getFoto());
         httpServletResponse.getOutputStream().close();
 
     }
@@ -386,10 +391,10 @@ public class PlaticaController {
     @RequestMapping(value = "/subirFoto.do", method = RequestMethod.POST)
     public String save(
             @RequestParam("file") MultipartFile file, String id) throws IOException {
-        Va vistaAlumno1;
-        vistaAlumno1 = vaFacade.find(id);
+        VistaAlumno vistaAlumno1;
+        vistaAlumno1 = VistaAlumnoFacade.find(id);
         vistaAlumno1.setFoto(file.getBytes());
-        vaFacade.edit(vistaAlumno1);
+        VistaAlumnoFacade.edit(vistaAlumno1);
         return "/Platicas/guardarFoto";
     }
 

@@ -36,13 +36,13 @@
                     <form:form name="casistenciaespecial" id="casistenciaespecial" action="ponerAsistenciaEspecial.do" method="Post">
                         <table>
                             <tr>
-                                <td><label>Seleciona la platica</label></td>
+                                <td><label><fmt:message key="select_platica"/></label></td>
                                 <td>
                                     <select name="idPlatica" id="idPlatica">
                                         <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
                                             <c:choose>
-                                                <c:when test="${idP}=${platicasPeriodo.id}">
-                                                    <option value="${platicasPeriodo.id}" selected="true"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
+                                                <c:when test="${idP==platicasPeriodo.id}">
+                                                    <option value="${platicasPeriodo.id}" selected="selected" ><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
                                                 </c:when>
                                                 <c:otherwise>
                                                      <option value="${platicasPeriodo.id}"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
@@ -53,7 +53,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><label for="alumno">Número de control</label></td>
+                                <td><label for="alumno"><fmt:message key="no_control"/></label></td>
                                 <td> <input type="text" autofocus="true"name="no_control" id="no_control" size="15" /> </td>
                             </tr>
                             <tr>
@@ -61,6 +61,7 @@
                                 <td><button type="reset">Limpiar</button></td>
                             </tr>
                         </table>
+                        <fmt:message key="datosRequeridos" />
                     </form:form>
                 </center>
             </div>
