@@ -64,6 +64,8 @@
                 </table>
                 <div id="a" style="display:none">
                     <%-- Formulario Nueva lugar para platica de inducción --%>
+                    <h1>Agregar un Lugar</h1>
+                    <p>Escriba la descripcion del lugar.</p>
                     <form:form commandName="lugar_i" id="nuevoLugar" action="nuevoLugar.do" method="POST">
                                 <table>
                                     <tr>
