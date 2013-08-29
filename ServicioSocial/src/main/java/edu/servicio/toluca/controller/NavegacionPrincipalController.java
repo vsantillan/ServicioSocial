@@ -18,7 +18,6 @@ import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -28,7 +27,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 public class NavegacionPrincipalController {
@@ -153,6 +151,7 @@ public class NavegacionPrincipalController {
         } catch (Exception e) {
             System.out.println(e.toString());
             System.out.println("Error al conectar!");
+            System.out.println("Verificando si es una organizacion");
             boolean inicioSesion = false;
             //Verificar si es una instancia  Login por usuario
             List<Instancia> instancia = instanciaFacade.findBySpecificField("usuario", usuario, "equal", null, null);
@@ -170,13 +169,23 @@ public class NavegacionPrincipalController {
                 }
             }
             if (inicioSesion) {
-                System.out.println("Iniciando sesion con organziacion "+instancia.get(0).getNombre());
-                session.setAttribute("ROL", "ORGANIZACION");
-                session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
-                session.setAttribute("NOMBRE", instancia.get(0).getNombre());
-                return "redirect:panelOrganizacion.do";
-            }
+                //Verificando si este usuario tiene permisos de entrar
+                if (instancia.get(0).getValidacionAdmin() != BigInteger.ZERO && instancia.get(0).getEstatus() == BigInteger.ONE) {
+                    System.out.println("Iniciando sesion con organziacion " + instancia.get(0).getNombre());
+                    session.setAttribute("ROL", "ORGANIZACION");
+                    session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
+                    session.setAttribute("NOMBRE", instancia.get(0).getNombre());
+                    if(instancia.get(0).getValidacionAdmin() == BigInteger.valueOf(2)){
+                        session.setAttribute("MENSAJE", "<div class='error'>Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
+                    }
+                    return "redirect:panelOrganizacion.do";
+                } else {   
+                    System.out.println("La organizacion no puede ingresar, estatus inactivo");
+                    model.addAttribute("error", "<div class='error'>Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
+                    return "/NavegacionPrincipal/loginPrincipal";
+                }
 
+            }
 
 
             model.addAttribute("error", "<div class='error'>Usuario o contraseña incorrecta</div>");

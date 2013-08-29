@@ -28,6 +28,7 @@
             <center>
                 <br/>
                 <h1>Bienvenido al Sitio para Organizaciones</h1>
+                <center>${mensaje1}</center>
                 <img src="imagenes/organizacion.jpg">
                 <h4>Perfil de la Organizaci&oacute;n</h4>
                 <form:form name="editarOrganizacion" commandName="instancia" class="MyForm" action="gdaEdicionOrganizacion.do"  method="POST" style="width:60%;" >

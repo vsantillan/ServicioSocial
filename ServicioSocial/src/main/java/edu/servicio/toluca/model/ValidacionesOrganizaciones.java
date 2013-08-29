@@ -18,7 +18,7 @@ import org.springframework.validation.ObjectError;
 public class ValidacionesOrganizaciones {
 
     //Valida ciertos campos en el alta de una instancia
-    public void valGdaAltaInst(Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String confirma_password) {
+    public void valGdaAltaInst(Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existeCP, String confirma_password) {
         //Valida contraseñas
         if (confirma_password.equals("")) {
             result.addError(new ObjectError("confirma_passowrd", "Confirmación de contraseña vacía."));
@@ -67,6 +67,15 @@ public class ValidacionesOrganizaciones {
         } catch (Exception e) {
             result.addError(new ObjectError("telefono", "Formato de teléfono inválido."));
             model.addAttribute("telefono", error("Formato inválido. Solo se aceptan de 7 a 13 números."));
+        }
+        //Valida codigo postal
+        if (existeCP.equals("true")) {
+            if (instancia.getIdColonia().getIdColonia().toString().equals("0")) {
+                if (otra_colonia.equals("")) {
+                    result.addError(new ObjectError("error_otra_colonia", "No ha ingresado el nombre de la colonia."));
+                    model.addAttribute("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
+                }
+            }
         }
 
     }
@@ -140,8 +149,7 @@ public class ValidacionesOrganizaciones {
             if (strTelefono.length() > 13 || strTelefono.length() < 7) {
                 result.addError(new ObjectError("telefono", "Formato de teléfono inválido."));
                 model.addAttribute("telefono", error("Formato inválido. Solo se aceptan de 7 a 13 números."));
-            }
-             else {
+            } else {
                 if (telefono < 0) {
                     result.addError(new ObjectError("telefono", "Formato de teléfono inválido."));
                     model.addAttribute("telefono", error("Formato inválido. No se aceptan números negativos."));
@@ -202,7 +210,7 @@ public class ValidacionesOrganizaciones {
                     model.addAttribute("telefono", error("Formato inválido. No se aceptan números negativos."));
                 }
             }
-            
+
         } catch (Exception e) {
             result.addError(new ObjectError("telefono", "Formato de teléfono inválido."));
             model.addAttribute("telefono", error("Formato inválido. Solo se aceptan de 7 a 13 números."));
@@ -289,8 +297,7 @@ public class ValidacionesOrganizaciones {
             if (strTelefono.length() > 13 || strTelefono.length() < 7) {
                 result.addError(new ObjectError("telefono", "Formato de teléfono inválido."));
                 model.addAttribute("telefono", error("Formato inválido. Solo se aceptan de 7 a 13 números."));
-            }
-             else {
+            } else {
                 if (telefono < 0) {
                     result.addError(new ObjectError("telefono", "Formato de teléfono inválido."));
                     model.addAttribute("telefono", error("Formato inválido. No se aceptan números negativos."));

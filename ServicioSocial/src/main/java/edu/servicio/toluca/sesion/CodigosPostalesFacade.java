@@ -4,11 +4,10 @@
  */
 package edu.servicio.toluca.sesion;
 
-import edu.servicio.toluca.beans.Fecha;
+import edu.servicio.toluca.beans.organizaciones.CiudadesJSON;
+import edu.servicio.toluca.beans.organizaciones.MunicipiosJSON;
 import edu.servicio.toluca.entidades.CodigosPostales;
-import edu.servicio.toluca.entidades.MunicipiosSia;
-import edu.servicio.toluca.entidades.Platica;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
@@ -34,37 +33,38 @@ public class CodigosPostalesFacade extends AbstractFacade<CodigosPostales> {
         super(CodigosPostales.class);
     }
     
-    public List<Platica> platicasPeriodo() {
-        Fecha fecha = new Fecha();
-        String periodo = fecha.CalculaPeriodoPrueba();
-        System.out.println("periodo platica actual_" + periodo);
-
-        String sql = "select * from platica where status=1 and periodo='" + periodo + "'" + "  and fecha >=(select sysdate -1 from dual) and tipo=1";
-        Query query = (Query) em.createNativeQuery(sql, Platica.class);
-        List<Platica> lista = query.getResultList();
-        List<Platica> listaPlatica = new ArrayList<Platica>();
-
-//    System.out.println("-------------------------"+lista.size()); 
-        for (int i = 0; i < lista.size(); i++) {
-            listaPlatica.add(lista.get(i));
-        }
-        return listaPlatica;
-
-    }
-    
-    public List<MunicipiosSia> municipiosEstado(String idEstado){
+    public MunicipiosJSON municipiosEstado(String idEstado){
         System.out.println("Query municipios de un estado");
         
-        String sql = "select distinct(cp.id_municipio), m.NOMBRE from GES_VIN.CODIGOS_POSTALES cp, GES_VIN.MUNICIPIOS_SIA m where id_estado='"+idEstado+"' and m.ID_MUNICIPIO= cp.ID_MUNICIPIO order by nombre";
-        Query query = (Query) em.createNamedQuery(sql, MunicipiosSia.class);
-        List<MunicipiosSia> municipios = new ArrayList<MunicipiosSia>();
-        List<MunicipiosSia> registros = query.getResultList();
+        String sql = "select distinct(cp.id_municipio), m.NOMBRE from GES_VIN.CODIGOS_POSTALES cp, GES_VIN.MUNICIPIOS_SIA m where id_estado='"+idEstado+"' and m.ID_MUNICIPIO= cp.ID_MUNICIPIO and m.STATUS=1 order by nombre";
+        System.out.println("SQL:"+ sql);
+        Query query = (Query) em.createNativeQuery(sql);
+        MunicipiosJSON municipios = new MunicipiosJSON();
+        List<Object[]> registros = query.getResultList();        
         
         for (int i = 0; i < registros.size(); i++) {
-            System.out.println(registros.get(i).getIdMunicipio());
-            
+            System.out.println(registros.get(i)[0] + " "+ registros.get(i)[1]);
+            municipios.agregarMunicipio(registros.get(i)[0].toString(), (String) registros.get(i)[1]);
         }
         return municipios;
     }
+    
+     public CiudadesJSON ciudadMunicipio(String idMunicipio){
+        System.out.println("Query municipios de un estado");
+        
+        String sql = "select distinct(cp.id_ciudad), c.nombre from GES_VIN.CODIGOS_POSTALES cp, GES_VIN.CIUDADES c where cp.ID_CIUDAD =c.ID_CIUDAD and id_municipio='"+idMunicipio+"' and c.status=1 order by nombre";
+        System.out.println("SQL:"+ sql);
+        Query query = (Query) em.createNativeQuery(sql);
+        CiudadesJSON ciudades = new CiudadesJSON();
+        List<Object[]> registros = query.getResultList();        
+        
+        for (int i = 0; i < registros.size(); i++) {
+            System.out.println(registros.get(i)[0] + " "+ registros.get(i)[1]);
+            ciudades.agregarCiudad(registros.get(i)[0].toString(), (String) registros.get(i)[1]);
+        }
+        return ciudades;
+    }
+    
+
     
 }

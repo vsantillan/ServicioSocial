@@ -2,19 +2,37 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.servicio.toluca.beans;
+package edu.servicio.toluca.beans.organizaciones;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
  * @author bustedvillain
  */
 public class MunicipiosJSON {
-    
+
     private ArrayList<String> municipios = new ArrayList<String>();
     private ArrayList<String> idMunicipios = new ArrayList<String>();
     private boolean statusJSON;
+
+    public void agregarMunicipio(String idMunicipio, String municipio) {
+        if(checarUnique(idMunicipio)){
+            municipios.add(municipio);
+            idMunicipios.add(idMunicipio);
+        }
+    }
+    
+
+    public boolean checarUnique(String idMunicipio) {
+        for (int i = 0; i < idMunicipios.size(); i++) {
+            if (idMunicipios.get(i).equals(idMunicipio)) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * @return the municipios
@@ -57,5 +75,4 @@ public class MunicipiosJSON {
     public void setStatusJSON(boolean statusJSON) {
         this.statusJSON = statusJSON;
     }
-    
 }

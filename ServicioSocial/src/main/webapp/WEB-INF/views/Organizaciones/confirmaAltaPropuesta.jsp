@@ -18,7 +18,7 @@
                 <h1>Propuesta registrada correctamente</h1>
                 <img src="imagenes/paloma.png"/>
                 <h3>Esta propuesta aún tiene que ser validada por el administrador.</h3>
-                <input type="button" value="Continuar con mi formato unico" onclick="parent.$.fn.fancybox.close();">
+                <input type="button" value="Continuar con mi formato unico" onclick="$.fancybox.close();">
                 <br/>
             </center>
         </div>

@@ -6,7 +6,7 @@ function remagia(cp)
 
 }
 $(document).ready(function() {
-    
+
     //usado por formato unico para la edición
     if ($('#preCP').length > 0 && document.getElementById("preCP").value !== "")
     {
@@ -15,7 +15,7 @@ $(document).ready(function() {
         document.getElementById("codigo_postal").value = cp;
         console.log('que trae' + document.getElementById("idColonia").value);
     }
-    
+
     if ($('#preCP2').length > 0 && document.getElementById("preCP2").value !== "")
     {
         var cp = document.getElementById("preCP2").value;
@@ -26,12 +26,14 @@ $(document).ready(function() {
     //fin usado por formato unico
 
     var existeCP = true;
-    
+    $("#existeCP").val(existeCP);
+
     var existeCP2 = true;
+    $("#existeCP").val(existeCP2);
 
 //Cargar colonias con JSON
     function cargarColonias(cp) {
-
+        console.log("cargarColonias:" + cp);
         var comboColonias = document.getElementById("idColonia");
         var comboCiudad = document.getElementById("ciudad");
         var comboEstado = document.getElementById("estado");
@@ -49,6 +51,7 @@ $(document).ready(function() {
 
             if (respuesta.statusJSON) {
                 existeCP = true;
+                $("#existeCP").val(existeCP);
 
                 //Actualizar combo de estados
                 ubicarEstado(respuesta.idEstado);
@@ -74,7 +77,7 @@ $(document).ready(function() {
                     option.value = respuesta.idColonia[i];
                     comboColonias.appendChild(option);
                     //usado por formato unico para la edición
-                    if ($('#preColonia').length > 0 && document.getElementById("preColonia").value !== "" && document.getElementById("preColonia").value === respuesta.idColonia[i] )
+                    if ($('#preColonia').length > 0 && document.getElementById("preColonia").value !== "" && document.getElementById("preColonia").value === respuesta.idColonia[i])
                     {
                         option.selected = "selected";
                     }
@@ -84,6 +87,12 @@ $(document).ready(function() {
                 option.text = "Otra (Especifique)";
                 option.value = 0;
                 comboColonias.appendChild(option);
+                if ($('#preColonia').val() === "0") {
+                    console.log("preColonia:0");
+                    //console.log("index:"+comboColonias.selectedIndex);
+                    comboColonias.selectedIndex = comboColonias.length - 1;
+                    $("#otra_colonia").show("slow");
+                }
 
                 if (comboColonias.options[comboColonias.selectedIndex].value === 0) {
                     $("#otra_colonia").show("slow");
@@ -94,11 +103,14 @@ $(document).ready(function() {
 
             } else {
                 existeCP = false;
-                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>";
+                $("#existeCP").val(existeCP);
+                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta...</h4>";
                 $("#otra_colonia").show("slow");
                 comboEstado.disabled = false;
                 comboMunicipio.disabled = false;
                 comboColonias.disabled = true;
+                comboMunicipio.disabled = false;
+                console.log("timeout");
                 cargarMunicipios();
 
 //                inputCiudad.value = "No disponible";
@@ -109,7 +121,7 @@ $(document).ready(function() {
         });
 
     }
-    
+
     function cargarColonias2(cp) {
 
         var comboColonias = document.getElementById("idColonia2");
@@ -129,6 +141,7 @@ $(document).ready(function() {
 
             if (respuesta.statusJSON) {
                 existeCP = true;
+                $("#existeCP").val(existeCP);
 
                 //Actualizar combo de estados
                 ubicarEstado2(respuesta.idEstado);
@@ -154,7 +167,7 @@ $(document).ready(function() {
                     option.value = respuesta.idColonia[i];
                     comboColonias.appendChild(option);
                     //usado por formato unico para la edición
-                    if ($('#preColonia').length > 0 && document.getElementById("preColonia").value !== "" && document.getElementById("preColonia").value === respuesta.idColonia[i] )
+                    if ($('#preColonia').length > 0 && document.getElementById("preColonia").value !== "" && document.getElementById("preColonia").value === respuesta.idColonia[i])
                     {
                         option.selected = "selected";
                     }
@@ -164,6 +177,9 @@ $(document).ready(function() {
                 option.text = "Otra (Especifique)";
                 option.value = 0;
                 comboColonias.appendChild(option);
+                if ($('#preColonia2').val() === "0") {
+                    comboColonias.selectedIndex = $("#preColonia").length - 1;
+                }
 
                 if (comboColonias.options[comboColonias.selectedIndex].value === 0) {
                     $("#otra_colonia").show("slow");
@@ -174,9 +190,11 @@ $(document).ready(function() {
 
             } else {
                 existeCP2 = false;
-                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>";
+                $("#existe_colonia").val(existeCP2);
+                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta.</h4>";
                 $("#otra_colonia2").show("slow");
                 comboEstado.disabled = false;
+                comboMunicipio.disabled = false;
                 comboMunicipio.disabled = false;
                 comboColonias.disabled = true;
                 cargarMunicipios();
@@ -192,10 +210,12 @@ $(document).ready(function() {
 
     $("#idColonia").change(function(event) {
         //Actualiza los demas campos de acuerdo a la colonia
-        var comboColonias = document.getElementById("idColonia");
-        //console.log("")
+        //var comboColonias = document.getElementById("idColonia");
+        console.log("Cambio idColonia");
+        console.log("comboColonias.value:" + $(this).val());
 
-        if (comboColonias.value === 0) {
+        if ($(this).val() === "0") {
+            //console.log("Poner campo para agregar colonia");
             $("#otra_colonia").show("slow");
             if (existeCP) {
                 document.getElementById("estado").disabled = true;
@@ -208,16 +228,14 @@ $(document).ready(function() {
             }
 
         } else {
+            //console.log("Oculta");
             $("#otra_colonia").hide("slow");
             document.getElementById("estado").disabled = true;
             document.getElementById("municipio").disabled = true;
             document.getElementById("ciudad").disabled = true;
         }
-
-
-
     });
-    
+
     $("#idColonia2").change(function(event) {
         //Actualiza los demas campos de acuerdo a la colonia
         var comboColonias = document.getElementById("idColonia2");
@@ -249,26 +267,54 @@ $(document).ready(function() {
             cargarMunicipios();
         }
     });
-    
-     $("#estado2").change(function(event) {
+
+    $("#estado2").change(function(event) {
         if (!existeCP) {
             cargarMunicipios();
         }
     });
 //Evento de teclado para codigos postales registroOrganizacion.do
-    $("#codigo_postal").keyup(function(event) {
+    function cambioInputCodigoPostal() {
         $("#otra_colonia").hide("slow");
         var cp = document.getElementById("codigo_postal").value;
         if (cp.length === 5)
             cargarColonias(cp);
-    });
-    
-    $("#codigo_postal2").keyup(function(event) {
-        $("#otra_colonia2").hide("slow");
+    }
+    function cambioInputCodigoPostal2() {
+        $("#otra_colonia").hide("slow");
         var cp = document.getElementById("codigo_postal2").value;
         if (cp.length === 5)
-            cargarColonias2(cp);
+            cargarColonias(cp);
+    }
+    $("#codigo_postal").keyup(function(event) {
+        cambioInputCodigoPostal();
     });
+
+//    $("#codigo_postal").change(function(event) {
+//        cambioInputCodigoPostal();
+//    });
+
+    $("#codigo_postal2").keyup(function(event) {
+        cambioInputCodigoPostal2();
+    });
+
+//    $("#codigo_postal2").change(function(event) {
+//        cambioInputCodigoPostal2();
+//    });
+
+    $("#municipio").change(function(event) {
+        if (!existeCP) {
+            cargarCiudad();
+        }
+    });
+
+    $("#municipio2").change(function(event) {
+        if (!existeCP) {
+            cargarCiudad2()();
+        }
+    });
+
+
 
     function ubicarEstado(value) {
         console.log("value:" + value);
@@ -289,7 +335,7 @@ $(document).ready(function() {
                 i++;
         }
     }
-    
+
     function ubicarEstado2(value) {
         console.log("value:" + value);
         //Ubicar el indice en el estado correspondiente
@@ -332,7 +378,33 @@ $(document).ready(function() {
     function cargarMunicipios() {
 
         if (!existeCP) {
+            var comboMunicipio = document.getElementById("municipio");
+            comboMunicipio.length = 0;
             var idEstado = document.getElementById("estado").value;
+            notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. </h4><img src='imagenes/loading.gif' width='30'><h4>Cargando municipios, espere un momento...<h4>";
+            $.get("cargarMunicipios.do?idEstado=" + idEstado, null, function(respuesta) {
+                console.log(respuesta);
+                if (respuesta.statusJSON) {
+                    for (i = 0; i < respuesta.municipios.length; i++) {
+                        var option = document.createElement("option");
+                        option.text = respuesta.municipios[i];
+                        option.value = respuesta.idMunicipios[i];
+                        comboMunicipio.appendChild(option);
+                    }
+                    cargarCiudad();
+                } else {
+                    alert("Error al cargar los municipios del estado");
+                }
+                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>";
+            });
+        }
+
+    }
+    function cargarMunicipios2() {
+
+        if (!existeCP2) {
+            var idEstado = document.getElementById("estado2").value;
+            notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. </h4><img src='imagenes/loading.gif' width='30'><h4>Cargando municipios, espere un momento...<h4>";
             $.get("cargarMunicipios.do?idEstado=" + idEstado, null, function(respuesta) {
                 console.log(respuesta);
                 var comboMunicipio = document.getElementById("municipio");
@@ -347,33 +419,70 @@ $(document).ready(function() {
                 } else {
                     alert("Error al cargar los municipios del estado");
                 }
-
             });
+            notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>";
         }
 
     }
-    function cargarMunicipios2() {
 
-        if (!existeCP2) {
-            var idEstado = document.getElementById("estado2").value;
-            $.get("cargarMunicipios.do?idEstado=" + idEstado, null, function(respuesta) {
+    function cargarCiudad() {
+        console.log("Cargar ciudad");
+        var notice = document.getElementById("notice");
+        if (!existeCP) {
+            var idMunicipio = document.getElementById("municipio").value;
+            notice.inneHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. </h4><img src='imagenes/loading.gif' width='30'><h4>Cargando ciudades, espere un momento...<h4>";
+            var comboCiudad = document.getElementById("ciudad");
+            comboCiudad.length = 0;
+            $.get("cargarCiudades.do?idMunicipio=" + idMunicipio, null, function(respuesta) {
                 console.log(respuesta);
-                var comboMunicipio = document.getElementById("municipio2");
                 if (respuesta.statusJSON) {
-                    comboMunicipio.length = 0;
-                    for (i = 0; i < respuesta.municipios.length; i++) {
+                    if (respuesta.ciudades.length === 0) {
                         var option = document.createElement("option");
-                        option.text = respuesta.municipios[i];
-                        option.value = respuesta.idMunicipios[i];
-                        comboMunicipio.appendChild(option);
+                        option.text = "No hay ciudades";
+                        comboCiudad.appendChild(option);
+                    }
+                    for (i = 0; i < respuesta.ciudades.length; i++) {
+                        var option = document.createElement("option");
+                        option.text = respuesta.ciudades[i];
+                        option.value = respuesta.idCiudades[i];
+                        comboCiudad.appendChild(option);
                     }
                 } else {
-                    alert("Error al cargar los municipios del estado");
+                    alert("Error al cargar ciudades del municipio");
                 }
-
+                notice.inneHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. ";
             });
         }
+    }
 
+    function cargarCiudad2() {
+        console.log("Cargar ciudad");
+        var notice = document.getElementById("notice2");
+        if (!existeCP) {
+            var idMunicipio = document.getElementById("municipio2").value;
+            notice.inneHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. </h4><img src='imagenes/loading.gif' width='30'><h4>Cargando ciudades, espere un momento...<h4>";
+            var comboCiudad = document.getElementById("ciudad2");
+            comboCiudad.length = 0;
+            $.get("cargarCiudades.do?idMunicipio=" + idMunicipio, null, function(respuesta) {
+                console.log(respuesta);
+                if (respuesta.statusJSON) {
+                    if (respuesta.ciudades.length === 0) {
+                        var option = document.createElement("option");
+                        option.text = "No hay ciudades";
+                        comboCiudad.appendChild(option);
+                    }
+                    for (i = 0; i < respuesta.ciudades.length; i++) {
+                        var option = document.createElement("option");
+                        option.text = respuesta.ciudades[i];
+                        option.value = respuesta.idCiudades[i];
+                        comboCiudad.appendChild(option);
+                    }
+                } else {
+                    alert("Error al cargar ciudades del municipio");
+                }
+                notice.inneHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. ";
+            });
+        }
     }
 
 });

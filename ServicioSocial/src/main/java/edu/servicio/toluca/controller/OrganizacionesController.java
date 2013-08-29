@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
@@ -12,6 +13,8 @@ import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Perfil;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.entidades.RetroalimentacionInstancia2;
+import edu.servicio.toluca.entidades.RetroalimentacionProyecto2;
 import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.model.ValidaSesion;
 import edu.servicio.toluca.model.ValidarProyectos;
@@ -22,6 +25,8 @@ import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
 import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
+import edu.servicio.toluca.sesion.RetroalimentacionInstancia2Facade;
+import edu.servicio.toluca.sesion.RetroalimentacionProyecto2Facade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigDecimal;
@@ -72,6 +77,10 @@ public class OrganizacionesController {
     private ProgramaFacade programaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
     private ActividadesFacade actividadesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/RetroalimentacionInstancia2Facade")
+    private RetroalimentacionInstancia2Facade retroalimentacionInstanciaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/RetroalimentacionProyecto2Facade")
+    private RetroalimentacionProyecto2Facade retroalimentacionProyectoFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request) {
@@ -463,16 +472,16 @@ public class OrganizacionesController {
             } else {
                 instancia.setValidacionAdmin(BigInteger.valueOf(2));
                 //Prepara retroalimentacion
-//                EnviarCorreo correo = new EnviarCorreo("Retroalimentacion de Instancia Rechazada", retroalimentacionInstancia.getDescripcion(), instancia.getCorreo());
-//                RetroalimentacionInstancia retro = new RetroalimentacionInstancia();
-//                retro.setEstatus(BigInteger.ONE);
-//                retro.setFecha(new Date());
-//                retro.setDetalle(retroalimentacionInstancia.getDescripcion());
-//                retro.setIdInstancia(instancia);
-//                retroalimentacionInstanciaFacade.create(retro);
+                EnviarCorreo correo = new EnviarCorreo("Retroalimentacion de Instancia Rechazada", retroalimentacionInstancia.getDescripcion(), instancia.getCorreo());
+                RetroalimentacionInstancia2 retro = new RetroalimentacionInstancia2();
+                retro.setEstatus(BigInteger.ONE);
+                retro.setFecha(new Date());
+                retro.setDetalle(retroalimentacionInstancia.getDescripcion());
+                retro.setIdInstancia(instancia);
+                retroalimentacionInstanciaFacade.create(retro);
                 
                 instanciaFacade.edit(instancia);
-//                correo.enviaCorreo();
+                correo.enviaCorreo();
                 return "<script>"
                         + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
                         + "location.href='validarOrganizaciones.do';"
@@ -508,16 +517,16 @@ public class OrganizacionesController {
                 proyecto.setValidacionAdmin(BigInteger.valueOf(2));
                 
                 //Prepara retroalimentacion
-//                EnviarCorreo correo = new EnviarCorreo("Retroalimentacion de Proyecto Rechazado", proyecto.getIdInstancia().getCorreo(), retroalimentacionProyecto.getDescripcion());
-//                RetroalimentacionProyecto retro = new RetroalimentacionProyecto();
-//                retro.setDetalle(retroalimentacionProyecto.getDescripcion());
-//                retro.setEstatus(BigInteger.ONE);
-//                retro.setFecha(new Date());
-//                retro.setIdProyecto(proyecto);
-//                retroalimentacionProyectoFacade.create(retro);                
+                EnviarCorreo correo = new EnviarCorreo("Retroalimentacion de Proyecto Rechazado", proyecto.getIdInstancia().getCorreo(), retroalimentacionProyecto.getDescripcion());
+                RetroalimentacionProyecto2 retro = new RetroalimentacionProyecto2();
+                retro.setDetalle(retroalimentacionProyecto.getDescripcion());
+                retro.setEstatus(BigInteger.ONE);
+                retro.setFecha(new Date());
+                retro.setIdProyecto(proyecto);
+                retroalimentacionProyectoFacade.create(retro);                
                 
                 proyectosFacade.edit(proyecto);
-//                correo.enviaCorreo();
+                correo.enviaCorreo();
                  
                 return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
                         + "location.href='validarProyectos.do';"

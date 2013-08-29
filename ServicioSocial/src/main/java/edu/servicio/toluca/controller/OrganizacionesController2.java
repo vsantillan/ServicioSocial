@@ -7,39 +7,46 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.PerfilJSON;
 import edu.servicio.toluca.beans.StringMD;
-import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
 import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.PropAluInstProyBean;
 import edu.servicio.toluca.entidades.Actividades;
+import edu.servicio.toluca.entidades.Ciudades;
+import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.EstadosSia;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.MunicipiosSia;
 import edu.servicio.toluca.entidades.Perfil;
 import edu.servicio.toluca.entidades.Programa;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.model.ValidaSesion;
 import edu.servicio.toluca.model.ValidacionesOrganizaciones;
 import edu.servicio.toluca.sesion.ActividadesFacade;
+import edu.servicio.toluca.sesion.CiudadesFacade;
+import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
+import edu.servicio.toluca.sesion.MunicipiosSiaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
 import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
+import edu.servicio.toluca.sesion.TipoLocalidadFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -87,6 +94,14 @@ public class OrganizacionesController2 {
     private FormatoUnicoFacade formatoUnicoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
+    private CodigosPostalesFacade codigosPostalesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
+    private MunicipiosSiaFacade municipiosFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
+    private CiudadesFacade ciudadesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
+    private TipoLocalidadFacade tipoLocalidadFacade;
     MetodosValidacion limpiar = new MetodosValidacion();
     //Alta de Organizacion
 
@@ -171,16 +186,21 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaOrganizacion.do")
-    public String gdaAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia, HttpSession session, HttpServletRequest request) {
+    public String gdaAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad, HttpSession session, HttpServletRequest request) {
 
         //Validacion
-        new ValidacionesOrganizaciones().valGdaAltaInst(instancia, result, model, codigo_postal, otra_colonia, existe_colonia, confirma_password);
-
+        new ValidacionesOrganizaciones().valGdaAltaInst(instancia, result, model, codigo_postal, otra_colonia, existeCP, confirma_password);
+        System.out.println("Codigo Postal" + codigo_postal);
+        System.out.println("Otra Colonia:" + otra_colonia);
+        System.out.println("Existe Colonia:" + existeCP);
+//        System.out.println("idColonia:" + instancia.getIdColonia().getIdColonia());
         if (result.hasErrors()) {
             System.out.print("hubo errores");
             System.out.println(instancia.toString());
             System.out.println(result.toString());
 
+            //Inyectamos lo que traia en la colonia
+            model.addAttribute("otra_colonia", otra_colonia);
             //Agregamos atributos al formulario
             model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
 //            model.addAttribute("instancia", new Instancia());
@@ -188,10 +208,82 @@ public class OrganizacionesController2 {
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
             model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-
+            //Regresar codigo postal
+            model.addAttribute("cp", codigo_postal);
+            try {
+                model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+            } catch (Exception e) {
+            }
             return "/Organizaciones/registroOrganizaciones";
 
         } else {
+            //Checa codigo postal
+            if (existeCP.equals("true")) {
+                if (instancia.getIdColonia().getIdColonia().toString().equals("0")) {
+                    //Agregar colonia                   
+//                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
+                    System.out.println("AgregarColonia");
+                    System.out.println("codigo postal:" + codigo_postal.toString());
+                    List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
+                    CodigosPostales codigoPostal = codigosPostales.get(0);
+                    Colonia nvaColonia = new Colonia();
+                    otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
+                    nvaColonia.setNombre(otra_colonia);
+                    nvaColonia.setIdCp(codigoPostal);
+                    nvaColonia.setStatus(BigInteger.ONE);
+                    coloniaFacade.create(nvaColonia);
+
+                    //Obtenemos la ultima colonia
+                    LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                    ordenamiento.put("idColonia", "desc");
+                    Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
+                    instancia.setIdColonia(colonia);
+                    System.out.println("Nueva colonia agregada!");
+                }
+            } else {
+                //Agregar codigo postal + colonia
+//                instancia.setIdColonia(new CodigosPostalesController().agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
+                EstadosSia estadoP = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(estado)));
+                MunicipiosSia municipioP = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
+                TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
+                Ciudades ciudadP = null;
+                try {
+                    ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
+                } catch (Exception e) {
+                    System.out.println("No tiene ciudad");
+                }
+
+                CodigosPostales codigoPostal = new CodigosPostales();
+                codigoPostal.setCp(Integer.parseInt(codigo_postal));
+                codigoPostal.setIdMunicipio(municipioP);
+                codigoPostal.setIdEstado(estadoP);
+                codigoPostal.setIdTipoLocalidad(localidad);
+                if (ciudad != null) {
+                    codigoPostal.setIdCiudad(ciudadP);
+                }
+                codigosPostalesFacade.create(codigoPostal);
+
+                //Obtenemos el Ultimo codigo postal
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("idCp", "desc");
+                CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
+
+                Colonia colonia = new Colonia();
+                colonia.setIdCp(codigoPostal);
+                otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
+                colonia.setNombre(otra_colonia);
+                colonia.setStatus(BigInteger.ONE);
+
+                coloniaFacade.create(colonia);
+
+                //Obtenemos la ultima colonia
+                ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("idColonia", "desc");
+                Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
+                instancia.setIdColonia(coloniaNew);
+                System.out.println("Nuevo codigo postal + colonia agregado!");
+            }
+
             System.out.print("no hubo errores");
             instancia.setValidacionAdmin(BigInteger.ZERO);
             instancia.setEstatus(BigInteger.ONE);
@@ -207,6 +299,7 @@ public class OrganizacionesController2 {
 
             try {
                 instanciaFacade.create(instancia);
+                System.out.println("Instancia Creada");
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
                 model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
@@ -234,9 +327,14 @@ public class OrganizacionesController2 {
             model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
             model.addAttribute("idInstancia", idInstancia);
-            model.addAttribute("cp", codigo_postal);
             model.addAttribute("instancia", instancia);
-
+            //Regresar codigo postal
+            model.addAttribute("cp", codigo_postal);
+            model.addAttribute("otra_colonia", otra_colonia);
+            try {
+                model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+            } catch (Exception e) {
+            }
             return "/Organizaciones/confirmaOrganizacionVisitante";
 
         } else {
@@ -283,7 +381,13 @@ public class OrganizacionesController2 {
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
             model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-
+            //Regresar codigo postal
+            model.addAttribute("cp", codigo_postal);
+            model.addAttribute("otra_colonia", otra_colonia);
+            try {
+                model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+            } catch (Exception e) {
+            }
             return "/Organizaciones/altaAdminOrganizacion";
         } else {
             System.out.print("no hubo errores");
@@ -305,7 +409,7 @@ public class OrganizacionesController2 {
     //Una organizacion da de alta un proyecto
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaProyecto.do")
-    public String gdaAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, HttpSession session, HttpServletRequest request) {
+    public String gdaAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, String existeCP, String otra_colonia, HttpSession session, HttpServletRequest request) {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
             System.out.println("hola gda alta organizacion");
 
@@ -343,6 +447,10 @@ public class OrganizacionesController2 {
                     model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
                 } catch (Exception e) {
                 }
+                //Regresar codigo postal
+                model.addAttribute("otra_colonia", otra_colonia);
+
+
 
                 //Regresar actividades
                 model.addAttribute("nActividades", nActividades.substring(0, 1));
@@ -424,7 +532,7 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaAdminProyecto.do")
-    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, HttpSession session, HttpServletRequest request) {
+    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, String existeCP, String otra_colonia, HttpSession session, HttpServletRequest request) {
         System.out.println("hola admin gda alta organizacion");
 
         //Validaciones
@@ -468,6 +576,7 @@ public class OrganizacionesController2 {
             model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
+            model.addAttribute("otra_colonia", otra_colonia);
             try {
                 model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
             } catch (Exception e) {
@@ -602,7 +711,7 @@ public class OrganizacionesController2 {
 
     //Panel de organizaciones (usuarios)
     @RequestMapping(method = RequestMethod.GET, value = "/panelOrganizacion.do")
-    public String panelOrganizacion(Model model, HttpSession session, HttpServletRequest request) {
+    public String panelOrganizacion(Model model, HttpSession session, HttpServletRequest request, String mensaje) {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
             String idInstancia = session.getAttribute("NCONTROL").toString();
             //idInstancia=idInstancia.trim();
@@ -616,6 +725,10 @@ public class OrganizacionesController2 {
             Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
             model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
             model.addAttribute("instancia", instancia);
+
+            if (session.getAttribute("MENSAJE") != null) {
+                model.addAttribute("mensaje1", session.getAttribute("MENSAJE").toString());
+            }
             return "/PanelOrganizacion/panelOrganizacion";
         } else {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
@@ -1015,10 +1128,11 @@ public class OrganizacionesController2 {
             Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
             //Valida que no sea nula la collection
             ArrayList<Proyectos> listaProyectos = new ArrayList<Proyectos>(instancia.getProyectosCollection());
+            System.out.println("proyectos:" + listaProyectos);
             ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
             //Muestra proyectos que esten activos, validados o no validados
             for (int i = 0; i < listaProyectos.size(); i++) {
-                if (listaProyectos.get(i).getEstatus()== BigInteger.ONE) {
+                if (listaProyectos.get(i).getEstatus() == BigInteger.ONE) {
                     filtroDeProyectos.add(listaProyectos.get(i));
                 }
             }
@@ -1029,5 +1143,4 @@ public class OrganizacionesController2 {
             return "redirect:login.do";
         }
     }
-
 }
