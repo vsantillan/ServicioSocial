@@ -18,7 +18,7 @@
         <!-- CSS -->
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
         
-        <jsp:include page="../Template/headsModal.jsp" />
+        
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
           <!--Include para Ventanas Modales-->

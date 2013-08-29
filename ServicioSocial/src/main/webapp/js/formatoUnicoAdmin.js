@@ -1,4 +1,3 @@
-var arrayAcptadosFilaTemp = new Array();
 var idDatosPersonales2 = "";
 var idFormatoUnico2 = "";
 var tipo2="";
@@ -18,7 +17,6 @@ function inicializarDataTables()
 {
     $('#noRevisadosDT').dataTable({
                     "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
                     "sScrollX": "100%",
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
@@ -26,23 +24,17 @@ function inicializarDataTables()
                 });
     $('#noAceptadosDT').dataTable({
                     "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
 
                 });
     $('#enCorreccionDT').dataTable({
                     "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
-
                 });
      $('#aceptadosDT').dataTable({
                     "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
                 });
