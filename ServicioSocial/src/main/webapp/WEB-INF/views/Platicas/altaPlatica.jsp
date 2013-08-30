@@ -5,6 +5,7 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ include file="../Template/taglibs.jsp" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -54,7 +55,7 @@
                                 <td>  
                                     <form:select path="idLugar.id">
                                         <core:forEach items="${lugares}" var="lugares" >
-                                            <form:option value="${lugares.id}">${lugares.lugar}</form:option>
+                                            <form:option value="${lugares.id}">${fn:escapeXml(lugares.lugar)}</form:option>
                                         </core:forEach>
                                     </form:select>
                                 </td>  
