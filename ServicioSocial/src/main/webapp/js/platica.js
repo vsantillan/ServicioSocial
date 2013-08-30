@@ -31,15 +31,14 @@ $(document).ready(function() {
 
             });
     $('#hora').timepicker();
+    
     $('#agregaLugar').click(function() {
         $.fancybox({
-            content: $("#myDivID").html(),
+            'content': $("#myDivID").html(),
             onComplete: function() {
-                $('#MyForm').submit(function() {
-                    console.log ("llego");
-                    return false;
-                });
+               console.log("enviado dsde fancy"); 
             }
         });
     });
+    
 });

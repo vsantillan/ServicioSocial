@@ -31,39 +31,46 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
-                <center><h2>Capturar Asistencia Especial Posterior</h2></center>  
-                <center> ${error}
-                    <form:form name="casistenciaespecial" id="casistenciaespecial" action="ponerAsistenciaEspecial.do" method="Post">
-                        <table>
-                            <tr>
-                                <td><label><fmt:message key="select_platica"/></label></td>
-                                <td>
-                                    <select name="idPlatica" id="idPlatica">
-                                        <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
-                                            <c:choose>
-                                                <c:when test="${idP==platicasPeriodo.id}">
-                                                    <option value="${platicasPeriodo.id}" selected="selected" ><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
-                                                </c:when>
-                                                <c:otherwise>
-                                                     <option value="${platicasPeriodo.id}"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
-                                                </c:otherwise>
-                                            </c:choose>                                   
-                                        </core:forEach>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label for="alumno"><fmt:message key="no_control"/></label></td>
-                                <td> <input type="text" autofocus="true"name="no_control" id="no_control" size="15" /> </td>
-                            </tr>
-                            <tr>
-                                <td><button type="submit"> Asistió</button></td>
-                                <td><button type="reset">Limpiar</button></td>
-                            </tr>
-                        </table>
-                        <fmt:message key="datosRequeridos" />
-                    </form:form>
-                    <h3>Folio:${folio}</h3>
+                <center><h2>Capturar Asistencia Especial Posterior</h2></center> 
+                    <c:choose>
+                     <c:when test="${empty platicasPeriodo}">
+                        <div class='error'>No hay platicas activas</div>
+                    </c:when>
+                    <c:otherwise>                         
+                        <center> ${error}
+                            <form:form name="casistenciaespecial" id="casistenciaespecial" action="capturarAsistenciaPosteriorEspecial.do" method="Post">
+                                <table>
+                                    <tr>
+                                        <td><label><fmt:message key="select_platica"/></label></td>
+                                        <td>
+                                            <select name="idPlatica" id="idPlatica">
+                                                <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
+                                                    <c:choose>
+                                                        <c:when test="${idP==platicasPeriodo.id}">
+                                                            <option value="${platicasPeriodo.id}" selected="selected" ><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <option value="${platicasPeriodo.id}"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
+                                                        </c:otherwise>
+                                                    </c:choose>                                   
+                                                </core:forEach>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label for="alumno"><fmt:message key="no_control"/></label></td>
+                                        <td> <input type="text" autofocus="true"name="no_control" id="no_control" size="15" /> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><button type="submit"> Asistió</button></td>
+                                        <td><button type="reset">Limpiar</button></td>
+                                    </tr>
+                                </table>
+                                <fmt:message key="datosRequeridos" />
+                            </form:form>
+                            <h3>Folio:${folio}</h3>
+                        </c:otherwise>
+                    </c:choose> 
                 </center>
             </div>
             <div style="clear:both;"></div>
