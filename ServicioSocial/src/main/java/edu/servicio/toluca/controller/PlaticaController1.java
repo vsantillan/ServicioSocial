@@ -30,7 +30,7 @@ public class PlaticaController1 {
     @EJB(mappedName = "java:global/ServicioSocial/LugaresPlaticaFacade")
     private LugaresPlaticaFacade LugaresPlaticaFacade;
     
-    @RequestMapping(method = RequestMethod.GET, value = "/altaLugares1.do")
+    @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
     public String obtieneLugares(Model modelo)
     { 
         LinkedHashMap ordenarDesc = new LinkedHashMap();
