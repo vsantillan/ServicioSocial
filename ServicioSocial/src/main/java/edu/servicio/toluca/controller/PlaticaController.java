@@ -104,11 +104,11 @@ public class PlaticaController {
         return "/Platicas/seleccionarPlatica";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
-    public String altaLugares(Model modelo) {
-        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-        return "/Platicas/lugaresPlatica";
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
+//    public String altaLugares(Model modelo) {
+//        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+//        return "/Platicas/lugaresPlatica";
+//    }
 
     // metodo para validar fecha, va colocado antes del metodo que invoca a @valid
     @InitBinder
