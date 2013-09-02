@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.NuevaObservacion;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
@@ -39,6 +40,8 @@ public class ObservacionesController {
     public 
     String nuevaObservacion(@Valid CatalogoObservaciones Observacion, BindingResult resultado,Model modelo) {
         if (!resultado.hasErrors()) {
+            MetodosValidacion cleaner = new MetodosValidacion();
+            Observacion.setDetalle(cleaner.tuneaStringParaBD(Observacion.getDetalle()));
             catalogoObservacionesFacade.create(Observacion);
             modelo.addAttribute("Observaciones", catalogoObservacionesFacade.findAll());
             modelo.addAttribute("Observacion", new CatalogoObservaciones());

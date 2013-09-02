@@ -33,10 +33,9 @@
             $(document).ready(function() {
                 $('#example').dataTable({
                     "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
+                    "sPaginationType": "two_button",
                     "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
+                    "sScrollXInner": "100%"
 
                 });
             });
