@@ -126,7 +126,7 @@ public class Va implements Serializable {
     @Column(name = "PORCENTAJE")
     private String porcentaje;
     @Column(name = "PROMEDIO")
-    private BigInteger promedio;
+    private double promedio;
     @Lob
     @Column(name = "FOTO")
     private byte[] foto;
@@ -302,11 +302,11 @@ public class Va implements Serializable {
         this.porcentaje = porcentaje;
     }
 
-    public BigInteger getPromedio() {
+    public double getPromedio() {
         return promedio;
     }
 
-    public void setPromedio(BigInteger promedio) {
+    public void setPromedio(double promedio) {
         this.promedio = promedio;
     }
 
