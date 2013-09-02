@@ -114,20 +114,25 @@ public class FormatoUnicoController {
         
         //objeto que voy a insertar
         if(listaAlumnos.isEmpty())
+        {
+            System.out.println("La lista de alumnos está vacía");
             return "PanelUsuario/panelUsuario";
+        }
         VistaAlumno alumno = listaAlumnos.get(0);
+        System.out.println("Que traigo? Nombre:"+alumno.getNombre()+" id:"+alumno.getId());
         //---Va alumno = listaAlumnos.get(0);
         
         
         
         
         if (Float.parseFloat(alumno.getPorcentaje()) < 70) {
+            System.out.println("El alumno no tiene los créditos necesarios");
             return "PanelUsuario/panelUsuario";
         }
         //Creación de los objetos necesarios para inserción y lectura
         DatosPersonales datosPersonales = new DatosPersonales();
-        //***datosPersonales.setAlumnoId(alumno);
-        datosPersonales.setNumeroControl(alumno.getId());
+        datosPersonales.setAlumnoId(alumno);
+        //---datosPersonales.setNumeroControl(alumno.getId());
         FormatoUnico formatoUnico = new FormatoUnico();
         HorariosAlumno horariosAlumno = new HorariosAlumno();
         // fin de creación de objetos
@@ -200,7 +205,10 @@ public class FormatoUnicoController {
             //**Proyectos proyecto = new Proyectos();
             List<Proyectos> listaProyectos = proyectoFacade.findAll();
             if(listaProyectos.isEmpty())
+            {
+                System.out.println("La lista de proyectos está vacía");
                 return "PanelUsuario/panelUsuario";
+            }
             Proyectos proyecto = listaProyectos.get(0);
             //**proyecto.setIdProyecto(BigDecimal.ONE);
             formatoUnico.setIdproyecto(proyecto);
@@ -215,8 +223,10 @@ public class FormatoUnicoController {
             //Setear en vacío los horarios alumno 
             //Recuperar el objeto FormatoUnico que se acaba de insertar para insertarlo en los horarios_alumno
             List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
-            if(listaFormatoUnico.isEmpty())
+            if(listaFormatoUnico.isEmpty()){
+                System.out.println("La lista de formatoUnico está vacía");
                 return "PanelUsuario/panelUsuario";
+            }
             FormatoUnico fuiAux = listaFormatoUnico.get(0);
             //fin recuperación
             //Día{1 = Lunes, 2= Martes, 3= Miercoles .......... }
@@ -261,6 +271,8 @@ public class FormatoUnicoController {
             modelo.addAttribute("idUsuario", alumno.getId());
             return "/FormatoUnico/subirFoto";
         }
+        else
+            System.out.println("La foto no estaba nula");
         
 //////////////////////////////////////////////////////////////////////////
 ////////Preparar información de datos personales y enviar/////////////////
@@ -717,8 +729,9 @@ public class FormatoUnicoController {
     
     @RequestMapping(value = "/guardarImagenFui.do", method = RequestMethod.POST)
     public String guardarImagenFui(
-            @RequestParam("file") MultipartFile file, BigDecimal id) throws IOException {
-        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", id, "like", null, null);
+            @RequestParam("file") MultipartFile file, String id) throws IOException {
+        System.out.println("Buscare pa subir foto el id"+id);
+        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", id, "equal", null, null);
         if(listaAlumnos.isEmpty())
             return "redirect:panelUsuario.do";
         VistaAlumno alumno = listaAlumnos.get(0);
