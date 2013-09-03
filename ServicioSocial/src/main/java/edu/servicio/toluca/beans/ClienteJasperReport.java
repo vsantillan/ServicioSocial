@@ -34,7 +34,7 @@ public class ClienteJasperReport {
      public ClienteJasperReport()
      {
          server = new JServer();
-         server.setUrl("http://192.168.57.202:8080/jasperserver/services/repository");
+         server.setUrl("http://hermes.ittoluca.edu.mx:8083/jasperserver/services/repository");
          server.setUsername("jasperadmin");
          server.setPassword("jasperadmin");         
      }

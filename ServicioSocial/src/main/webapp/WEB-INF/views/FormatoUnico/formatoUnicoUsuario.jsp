@@ -419,7 +419,7 @@
                 </div>
                 <div id="imprimirFui">
                     <h1>Presiona el bot&oacute;n para descargar</h1>
-                    <a href=""><img src="imagenes/descargar.png" /></a>
+                    <a href="muestraReporteFUI.do"><img src="imagenes/descargar.png" /></a>
                 </div>
                 <div id="subirFui">
                     <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>

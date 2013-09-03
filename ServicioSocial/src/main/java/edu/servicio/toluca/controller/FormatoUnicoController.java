@@ -24,6 +24,7 @@ import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.model.ValidaSesion;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoPlanFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
@@ -47,6 +48,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -101,7 +104,15 @@ public class FormatoUnicoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
-    public String formatoUnico(Model modelo, String alumno_id) throws ParseException {
+    public String formatoUnico(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
+        if(new ValidaSesion().validaAlumno(session, request)){
+            //return "/PanelUsuario/panelUsuario";
+        }else{
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+        System.out.println("***Eyy N control ="+session.getAttribute("NCONTROL").toString());
+        alumno_id = session.getAttribute("NCONTROL").toString();
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
         FormatoUnicoDatosPersonalesBean formatoUnicoDatosPersonalesbean = new FormatoUnicoDatosPersonalesBean();
         FormatoUnicoDatosContactoBean formatoUnicoDatosContacoBean = new FormatoUnicoDatosContactoBean();
@@ -681,7 +692,10 @@ public class FormatoUnicoController {
             doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
             doc.setArchivo(file.getBytes());
             doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
-            doc.setExtension("pdf");
+            String extension = file.getOriginalFilename();
+            extension = extension.substring(extension.length()-3, extension.length());
+            //**doc.setExtension("pdf");
+            doc.setExtension(extension);
             doc.setFechaSubida(new java.util.Date());
             DatosPersonales dp = datosPersonalesFacade.find(id);
             List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
@@ -695,7 +709,10 @@ public class FormatoUnicoController {
             doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
             doc.setArchivo(file.getBytes());
             doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
-            doc.setExtension("pdf");
+            String extension = file.getOriginalFilename();
+            extension = extension.substring(extension.length()-3, extension.length());
+            //**doc.setExtension("pdf");
+            doc.setExtension(extension);
             doc.setFechaSubida(new java.util.Date());
             DatosPersonales dp = datosPersonalesFacade.find(id);
             List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
@@ -726,7 +743,8 @@ public class FormatoUnicoController {
 
         return "redirect:panelUsuario.do";
     }
-    
+
+
     @RequestMapping(value = "/guardarImagenFui.do", method = RequestMethod.POST)
     public String guardarImagenFui(
             @RequestParam("file") MultipartFile file, String id) throws IOException {
@@ -762,4 +780,26 @@ public class FormatoUnicoController {
         
         return "";
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteFUI.do")
+    String muestraReporteFUI(Model a, String nControl, String idProyecto, HttpSession session, HttpServletRequest request) throws ParseException {
+        String noControl = session.getAttribute("NCONTROL").toString();
+        a.addAttribute("noControl", noControl);
+        System.out.println("En el muestra :D" + noControl);
+        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
+        VistaAlumno alumno = listaAlumnos.get(0);
+        
+        List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        DatosPersonales dp = listaDatosPersonales.get(0);
+        List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
+        if(listaFormatoUnico.isEmpty()){
+            System.out.println("La lista de formatoUnico está vacía");
+            return "PanelUsuario/panelUsuario";
+        }
+        System.out.println("Ahh y su fui es"+listaFormatoUnico.get(0).getId());
+        a.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+        session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+        return "/FormatoUnico/reporteFUI";
+    }
+    
+
 }
