@@ -92,8 +92,8 @@
                     <tr>
                         <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
                         <td> 
-                            <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5">
-                            <input type="hidden" id="preCP" value="${cp}"/><br>${error_codigo_postal}
+                            <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off">
+                            <input type="hidden" id="preCP" value="${cp}"/><br>${codigo_postal}
                         </td>  
                     </tr>
                     <tr>
@@ -125,13 +125,14 @@
                             <!--select name="colonia" id="colonia" disabled="true"></select--> 
                             <form:select id="idColonia" path="idColonia.idColonia" name="idColonia"></form:select> 
                                 <div id="otra_colonia" style="display:none;">
-                                    <input type="text" name="otra_colonia" id="otra_colonia" />
-                                    <!--form:input path="usuario" id="usuario" size="20"/-->
-                                </div>
+                                    <input type="text" name="otra_colonia" value="${otra_colonia}"/>
+                                <input type="hidden" id="existeCP" name="existeCP" value="true">
                                 <input type="hidden" id="preColonia" value="${idColonia}"/>
-                            <form:errors path="idColonia" cssClass="error"/>
+                                ${error_otra_colonia}
+                            </div>
+                            <br/>
                         </td>  
-                    </tr>
+                    </tr>  
                     <tr>
                         <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                         <td>
@@ -204,7 +205,7 @@
                     </tr>                               
                     <input type="hidden" name="nActividades" value="0">
                     <input type="hidden" name="nPerfiles" value="0">
-                                                   
+
                     <tr> 
                         <td> <input type ="button" value = "Guardar " id="btnGdaPropProyecto"/> </td>
                         <td> <input type ="reset" value = "Limpiar" /></td>

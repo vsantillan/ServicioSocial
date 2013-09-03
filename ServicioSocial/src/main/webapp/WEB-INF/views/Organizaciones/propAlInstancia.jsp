@@ -88,8 +88,8 @@
                     <tr>
                         <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
                         <td> 
-                            <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5">
-                            <br/>${error_codigo_postal1}
+                            <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off">
+                            <input type="hidden" id="preCP" value="${cp}"/><br>${codigo_postal}
                         </td>  
                     </tr>
                     <tr>
@@ -121,12 +121,14 @@
                             <!--select name="colonia" id="colonia" disabled="true"></select--> 
                             <form:select id="idColonia" path="idColonia_instancia.idColonia" name="idColonia"></form:select> 
                                 <div id="otra_colonia" style="display:none;">
-                                    <input type="text" name="otra_colonia" id="otra_colonia" />
-                                    <!--form:input path="usuario" id="usuario" size="20"/-->
-                                </div>
-                            <form:errors path="idColonia_instancia" cssClass="error"/>
+                                    <input type="text" name="otra_colonia" value="${otra_colonia}"/>
+                                <input type="hidden" id="existeCP" name="existeCP" value="true">
+                                <input type="hidden" id="preColonia" value="${idColonia}"/>
+                                ${error_otra_colonia}
+                            </div>
+                            <br/>
                         </td>  
-                    </tr>                     
+                    </tr>                      
                     <tr>
                         <td> <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> </td>
                         <td>
@@ -194,14 +196,14 @@
                     <tr>
                         <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
                         <td> 
-                            <input type="text" name="codigo_postal2" id="codigo_postal2" size="20" maxlength="5">
-                            <input type="hidden" id="preCP2" value="${cp}"/><br>${error_codigo_postal2}
+                            <input type="text" name="codigo_postal2" id="codigo_postal2" size="20" maxlength="5" autocomplete="off">
+                            <input type="hidden" id="preCP2" value="${cp2}"/><br>${codigo_postal2}
                         </td>  
                     </tr>
                     <tr>
                         <td>  <label for="estado">Estado:</label></td>
                         <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> 
-                            <select name="estado" id="estado2" disabled="true">                                   
+                            <select name="estado2" id="estado2" disabled="true">                                   
                                 <core:forEach items="${estados}" var="estados">
                                     <option value="${estados.idEstado}">${estados.nombre}</option>
                                 </core:forEach> 
@@ -211,29 +213,30 @@
                     <tr>
                         <td>  <label for="municipio">Municipio:</label></td>
                         <td>  <!--input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/--> 
-                            <select name="municipio" id="municipio2" disabled="true"></select>
+                            <select name="municipio2" id="municipio2" disabled="true"></select>
                         </td>  
                     </tr>
                     <tr>
                         <td>  <label for="ciudad">Ciudad</label></td>
                         <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
-                            <select name="ciudad" id="ciudad2" disabled="true"></select>
+                            <select name="ciudad2" id="ciudad2" disabled="true"></select>
                         </td>  
                     </tr>
                     <tr>
                         <td>  <label for="colonia">Colonia:</label></td>
                         <td>  
-                            <div id="notice2"></div>
+                            <div id="notice"></div>
                             <!--select name="colonia" id="colonia" disabled="true"></select--> 
                             <form:select id="idColonia2" path="idColonia_proyecto.idColonia" name="idColonia"></form:select> 
                                 <div id="otra_colonia2" style="display:none;">
-                                    <input type="text" name="otra_colonia"  />
-                                    <!--form:input path="usuario" id="usuario" size="20"/-->
-                                </div>
-                                <input type="hidden" id="preColonia2" value="${idColonia}"/>
-                            <form:errors path="idColonia_proyecto" cssClass="error"/>
+                                    <input type="text" name="otra_colonia2" value="${otra_colonia2}"/>
+                                <input type="hidden" id="existeCP2" name="existeCP" value="true">
+                                <input type="hidden" id="preColonia2" value="${idColonia2}"/>
+                                ${error_otra_colonia2}
+                            </div>
+                            <br/>
                         </td>  
-                    </tr>
+                    </tr>  
                     <tr>
                         <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                         <td>

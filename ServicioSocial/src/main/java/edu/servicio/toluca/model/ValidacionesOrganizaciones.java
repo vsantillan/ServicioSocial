@@ -161,11 +161,20 @@ public class ValidacionesOrganizaciones {
         }
     }
 
-    public void valAltaAdminProy(Proyectos proyecto, BindingResult result, Model model, String codigo_postal) {
+    public void valAltaAdminProy(Proyectos proyecto, BindingResult result, Model model, String codigo_postal, String existeCP, String otra_colonia) {
         //Agregando errores
         if (codigo_postal.equals("") || codigo_postal.length() != 5) {
             result.addError(new ObjectError("error_codigo_postal", "Ingrese un código postal válido."));
             model.addAttribute("error_codigo_postal", error("Ingrese un código postal válido."));
+        }
+        //Valida codigo postal
+        if (existeCP.equals("true")) {
+            if (proyecto.getIdColonia().getIdColonia().toString().equals("0")) {
+                if (otra_colonia.equals("")) {
+                    result.addError(new ObjectError("error_otra_colonia", "No ha ingresado el nombre de la colonia."));
+                    model.addAttribute("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
+                }
+            }
         }
         try {
             model.addAttribute("nombre", error(result.getFieldError("nombre").getDefaultMessage()));
@@ -218,15 +227,34 @@ public class ValidacionesOrganizaciones {
 
     }
 
-    public void valPropAlInstancia(PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, String selectfrom, String cadenaActividades, String codigo_postal2) {
+    public void valPropAlInstancia(PropAluInstProyBean propuesta, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existeCP, String selectfrom, String cadenaActividades, String codigo_postal2, String existeCP2, String otra_colonia2) {
         //Agregando errores
         if (codigo_postal.equals("") || codigo_postal.length() != 5) {
             result.addError(new ObjectError("error_codigo_postal", "Ingrese un código postal válido."));
             model.addAttribute("error_codigo_postal1", error("Ingrese un código postal válido."));
         }
+        //Valida codigo postal
+        if (existeCP.equals("true")) {
+            if (propuesta.getIdColonia_instancia().getIdColonia().toString().equals("0")) {
+                if (otra_colonia.equals("")) {
+                    result.addError(new ObjectError("error_otra_colonia", "No ha ingresado el nombre de la colonia."));
+                    model.addAttribute("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
+                }
+            }
+        }
+        
         if (codigo_postal2.equals("") || codigo_postal2.length() != 5) {
             result.addError(new ObjectError("error_codigo_postal2", "Ingrese un código postal válido."));
             model.addAttribute("error_codigo_postal2", error("Ingrese un código postal válido."));
+        }
+        //Valida codigo postal
+        if (existeCP2.equals("true")) {
+            if (propuesta.getIdColonia_proyecto().getIdColonia().toString().equals("0")) {
+                if (otra_colonia2.equals("")) {
+                    result.addError(new ObjectError("error_otra_colonia2", "No ha ingresado el nombre de la colonia."));
+                    model.addAttribute("error_otra_colonia2", error("No ha ingresado el nombre de la colonia."));
+                }
+            }
         }
         //Validacion instancia
         try {
