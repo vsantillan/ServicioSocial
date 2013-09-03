@@ -50,7 +50,7 @@
                     <tbody>
                         <core:forEach items="${lugares}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="editarLugar.do?id=${current.id}" ><img src="imagenes/editar.png" width="30" title="Editar Lugar"/></a>
+                                <th><a href="#editarL" ><img src="imagenes/editar.png" width="30" title="Editar Lugar"/></a>
                                     <a href="#" class="btn-validar-org"><img class="cambiaStatusLugar" ide="${current.id}" src="imagenes/trash.png" width="30" title="Borrar Lugar"></a></th>
                                 <th><core:out value="${current.lugar}" /></th>
                             </tr>
@@ -59,10 +59,10 @@
                 </table>
                 <table>
                     <tr>
-                        <td><a href="#a" class="fancybox-effects-a"><img src="imagenes/agregar.jpg" title="Agregar Lugar" width="30"/></a></td>
+                        <td><a href="#nuevoL" class="fancybox-effects-a"><img src="imagenes/agregar.jpg" title="Agregar Lugar" width="30"/></a></td>
                     </tr>
                 </table>
-                <div id="a" style="display:none">
+                <div id="nuevoL" style="display:none">
                     <%-- Formulario Nueva lugar para platica de inducción --%>
                     <h1>Agregar un Lugar</h1>
                     <p>Escriba la descripcion del lugar.</p>
@@ -78,6 +78,23 @@
                                 </table>
                     </form:form>
                 </div>
+                <div id="editarL" style="display:none">
+                    <%-- Formulario editar lugar para platica de inducción --%>
+                    <h1>Editar un Lugar</h1>
+                    <p>Escriba la descripcion del lugar.</p>
+                    <form:form commandName="lugar_i" id="editarLugar" action="editarLugar.do" method="POST">
+                                <table>
+                                    <tr>
+                                        <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
+                                        <td>  <form:textarea id="lugar"  name="lugar" path="lugar" rows="8" cols="50"  /> </td>
+                                    </tr>
+                                    <tr> 
+                                        <td> <input type ="submit" value = "Guardar " /> </td>
+                                    </tr>
+                                </table>
+                    </form:form>
+                </div>
+
                 <%-- fin del contenido --%>
             </div>
             <div style="clear:both;"></div> 

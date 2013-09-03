@@ -45,12 +45,12 @@ public class PlaticaController1 {
         lugar_i.setStatus(BigInteger.valueOf(1));
         //lugar.setLugar(lugar);
         LugaresPlaticaFacade.create(lugar_i);
-        System.out.println("Inserto Lugar");
+        //System.out.println("Inserto Lugar");
         LinkedHashMap ordenarDesc = new LinkedHashMap();
         ordenarDesc.put("lugar","desc");        
         modelo.addAttribute("lugar_i", new LugaresPlatica());
         modelo.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
-        return "/Platicas/lugaresPlatica";
+        return "redirect:altaLugares.do";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusLugar.do")
@@ -58,10 +58,21 @@ public class PlaticaController1 {
     String actualizarStatusOrganizaciones(int id, Model model) {
     
         LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
-        System.out.println(lugar.getLugar());
         lugar.setStatus(BigInteger.valueOf(0));
         LugaresPlaticaFacade.edit(lugar);
         
         return "ok";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/editarLugar.do")
+    public @ResponseBody
+    String editarLugar(int id,String lugar_i, Model model) {
+    
+        LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
+        System.out.println(lugar_i);
+        lugar.setLugar(lugar_i);
+        LugaresPlaticaFacade.edit(lugar);
+        
+        return "redirect:altaLugares.do";
     }
 }
