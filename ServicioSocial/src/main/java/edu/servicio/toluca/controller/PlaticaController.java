@@ -143,17 +143,17 @@ public class PlaticaController {
                     Boolean existe = false;
                     MetodosValidacion limpiar1 = new MetodosValidacion();
                     for (int i = 0; i < listaPlaticas.size(); i++) {
-                        if ((platica.getAnio().toString().compareTo(listaPlaticas.get(i).getAnio().toString())==0)&&(platica.getFecha().compareTo(listaPlaticas.get(i).getFecha())==0)
-                                &&(platica.getHora().toString().compareTo(listaPlaticas.get(i).getHora().toString())==0)&&(platica.getPeriodo().toString().compareTo(listaPlaticas.get(i).getPeriodo().toString())==0)
-                                &&(platica.getTipo().compareTo(listaPlaticas.get(i).getTipo())==0)&&(platica.getStatus().compareTo(listaPlaticas.get(i).getTipo())==0)
-                                &&(platica.getStatus().compareTo(listaPlaticas.get(i).getStatus())==0)&&(platica.getFechaMxFui().compareTo(listaPlaticas.get(i).getFechaMxFui())==0)
-                                &&(platica.getDescripcion().toString().compareTo(limpiar1.quitaCaracteresEspeciales(platica.getDescripcion()))==0)
-                                &&(platica.getIdLugar().equals(listaPlaticas.get(i).getIdLugar()))) {
+                        if ((platica.getAnio().toString().compareTo(listaPlaticas.get(i).getAnio().toString()) == 0) && (platica.getFecha().compareTo(listaPlaticas.get(i).getFecha()) == 0)
+                                && (platica.getHora().toString().compareTo(listaPlaticas.get(i).getHora().toString()) == 0) && (platica.getPeriodo().toString().compareTo(listaPlaticas.get(i).getPeriodo().toString()) == 0)
+                                && (platica.getTipo().compareTo(listaPlaticas.get(i).getTipo()) == 0) && (platica.getStatus().compareTo(listaPlaticas.get(i).getTipo()) == 0)
+                                && (platica.getStatus().compareTo(listaPlaticas.get(i).getStatus()) == 0) && (platica.getFechaMxFui().compareTo(listaPlaticas.get(i).getFechaMxFui()) == 0)
+                                && (platica.getDescripcion().toString().compareTo(limpiar1.quitaCaracteresEspeciales(platica.getDescripcion())) == 0)
+                                && (platica.getIdLugar().equals(listaPlaticas.get(i).getIdLugar()))) {
                             System.out.println("si existe");
                             existe = true;
                             break;
                         }
-                        
+
                     }
                     if (existe) {
                         modelo.addAttribute("anioInicio", anio.anioActual());
@@ -192,31 +192,42 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/folioPlatica.do")
-    public String folioPlatica(Model a, String fecha, String numeroC) {
-        FoliosPlatica foliosPlatica = new FoliosPlatica();
-        Platica platica = new Platica();
-        VistaAlumno alumno = new VistaAlumno();
-        alumno.setId(numeroC);
-        System.out.println("platica id:" + fecha);
-        platica.setId(Long.parseLong(fecha));
-        foliosPlatica.setPlaticaId(platica);
-        foliosPlatica.setAlumnoId(alumno);
-        //folio: numero de control+idPlatica
-        foliosPlatica.setNumeroFolio(fecha + numeroC);
-        System.out.println(fecha + numeroC);
-        foliosPlatica.setStatus((short) 1);
-        foliosPlaticaFacade.create(foliosPlatica);
+    public String folioPlatica(Model modelo, String fecha, String numeroC) {
 
-        //incrementar numero de asistentes +1
-        platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
-        int numero = platica.getNumeroAsistentes();
-        numero = numero + 1;
-        System.out.println("numero" + numero);
-        platica.setNumeroAsistentes(numero);
-        platicaFacade.edit(platica);
+        List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + numeroC, "equal", null, null);
+        if (lista.isEmpty()) {
+            FoliosPlatica foliosPlatica = new FoliosPlatica();
+            Platica platica = new Platica();
+            VistaAlumno alumno = new VistaAlumno();
+            alumno.setId(numeroC);
+            System.out.println("platica id:" + fecha);
+            platica.setId(Long.parseLong(fecha));
+            foliosPlatica.setPlaticaId(platica);
+            foliosPlatica.setAlumnoId(alumno);
+            //folio: numero de control+idPlatica
+            foliosPlatica.setNumeroFolio(fecha + numeroC);
+            System.out.println(fecha + numeroC);
+            foliosPlatica.setStatus((short) 1);
+            foliosPlaticaFacade.create(foliosPlatica);
 
-        //  return "/Platicas/reporte";
-        return "/Platicas/seleccionarPlatica";
+            //incrementar numero de asistentes +1
+            platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
+            int numero = platica.getNumeroAsistentes().intValue();
+            numero = numero + 1;
+            System.out.println("numero" + numero);
+            platica.setNumeroAsistentes(numero);
+            platicaFacade.edit(platica);
+            return "/Platicas/seleccionarPlatica";
+            //  return "/Platicas/reporte";
+        } else {
+            modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+            modelo.addAttribute("platica", new Platica());
+            modelo.addAttribute("existe", "<div class='error'>Ya te has registrado a esta platica anteriormente</div>");
+            return "/Platicas/seleccionarPlatica";
+        }
+
+
+
     }
 /////////ASISTENCIA.DO////////////////////
 
@@ -353,7 +364,7 @@ public class PlaticaController {
         //System.out.print("eliminar platica.do");
         Platica platica = new Platica();
         platica = platicaFacade.find(id_platica);
-        platica.setStatus((short)0);
+        platica.setStatus((short) 0);
         platicaFacade.edit(platica);
 
 
@@ -367,8 +378,8 @@ public class PlaticaController {
             MetodosValidacion limpiar = new MetodosValidacion();
             for (int i = 0; i < listaLugares.size(); i++) {
                 System.out.println(listaLugares.get(i).getLugar().toString());
-                if (listaLugares.get(i).getLugar().toString().compareTo(limpiar.quitaCaracteresEspeciales(lugares.getLugar().toUpperCase().toString()))==0) {
-                    existe=true;
+                if (listaLugares.get(i).getLugar().toString().compareTo(limpiar.quitaCaracteresEspeciales(lugares.getLugar().toUpperCase().toString())) == 0) {
+                    existe = true;
                     break;
                 }
             }

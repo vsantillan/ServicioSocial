@@ -42,21 +42,21 @@ $(document).ready(function() {
             }
         });
     });
-    //baja platica
-  fn_dar_eliminar();
+   
 });
-              function fn_dar_eliminar(){
-                $("a.elimina").click(function(){
-                    id = $(this).parents("tr").find("td").eq(10).html();
-                    fecha = $(this).parents("tr").find("td").find("div").eq(0).html();
-                    respuesta = confirm("Está seguro que desea eliminar la platica con fecha: " + fecha);
-                    if (respuesta){
-                        $(this).parents("tr").fadeOut("normal", function(){
-                            $(this).remove();
-                            var id_platica=id;
-                                $.post("eliminarPlatica.do", {id_platica: id_platica});
-                            
-                        });
-                    }
-                });
-    };
+             
+             
+ function marcado() {
+                var opcion = document.getElementById("aceptacionleer"); //acceso al botón
+
+                //var platica=document.getElementById("fecha").html;
+                var platica = $("#fecha option:selected").html();
+                if (opcion.checked == true) { //botón seleccionado
+                    //alert("Esta seguro de registrarse a la plática de inducción:\nFecha \t "+platica)
+                }
+                else {  //botón no seleccionado
+                    alert("El formulario no ha podido enviarse. \n Debe aceptar haber leido el manual para poder enviar el formulario");
+                    return false; //el formulario no se envia
+                }
+}
+     
