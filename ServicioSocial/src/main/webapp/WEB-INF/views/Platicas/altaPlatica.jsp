@@ -28,6 +28,7 @@
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left; width: 80%">
                 <center> 
+                    ${alert}
                     <h1>Nueva Plática</h1>
                     <%-- Formulario Nueva Plática --%>
                     <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica" name="altaPlatica" > 
@@ -114,8 +115,7 @@
                                 <td></td>
                             </tr>
                             <tr> 
-                                <th>${exito}</th>
-                            </tr>
+
 
                             <tr> 
                                 <td> <input type ="submit" value = "Guardar " /> </td>
