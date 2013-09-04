@@ -1,5 +1,7 @@
 $(document).ready(function() {
     $('#formPlatica').formly();
+    
+    
     $('#datepicker').datepicker(
             {
                 closeText: 'Cerrar',
@@ -36,9 +38,25 @@ $(document).ready(function() {
         $.fancybox({
             'content': $("#myDivID").html(),
             onComplete: function() {
-               console.log("enviado dsde fancy"); 
+              
             }
         });
     });
-    
+    //baja platica
+  fn_dar_eliminar();
 });
+              function fn_dar_eliminar(){
+                $("a.elimina").click(function(){
+                    id = $(this).parents("tr").find("td").eq(10).html();
+                    fecha = $(this).parents("tr").find("td").find("div").eq(0).html();
+                    respuesta = confirm("Está seguro que desea eliminar la platica con fecha: " + fecha);
+                    if (respuesta){
+                        $(this).parents("tr").fadeOut("normal", function(){
+                            $(this).remove();
+                            var id_platica=id;
+                                $.post("eliminarPlatica.do", {id_platica: id_platica});
+                            
+                        });
+                    }
+                });
+    };

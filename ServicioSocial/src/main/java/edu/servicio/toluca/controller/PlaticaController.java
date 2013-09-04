@@ -352,8 +352,9 @@ public class PlaticaController {
     public void eliminarPlatica(long id_platica) throws ParseException {
         //System.out.print("eliminar platica.do");
         Platica platica = new Platica();
-        platica.setId(id_platica);
-        platicaFacade.remove(platica);
+        platica = platicaFacade.find(id_platica);
+        platica.setStatus((short)0);
+        platicaFacade.edit(platica);
 
 
     }

@@ -4,6 +4,7 @@
     Author     : mary
 --%>
 
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@ include file="../Template/taglibs.jsp" %>
@@ -90,7 +91,7 @@
              
                                 <c:forEach items="${platica}" var="platica">
                                     <tr>
-                                        <td><a class="elimina"><img src="imagenes/trash.png" height="40" width="45" /></a></td>
+                                        <td><a class="elimina" href="#"><img src="imagenes/trash.png" height="40" width="45" /></a></td>
 
                                         <td style="width: 100px"><div  contenteditable >${platica.fecha}</div></td>
                                         <td><div  contenteditable >${platica.hora}</div></td>

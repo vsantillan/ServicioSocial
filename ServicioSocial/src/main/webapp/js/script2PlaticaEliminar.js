@@ -1,6 +1,4 @@
-// JavaScript Document
-
-            $(document).ready(function(){
+           $(document).ready(function(){
                fn_dar_eliminar();
              fn_editar2();
 				//fn_cantidad();
@@ -18,8 +16,6 @@
                     if (respuesta){
                         $(this).parents("tr").fadeOut("normal", function(){
                             $(this).remove();
-                            alert("plática" + id+ " eliminada")
-                            
                             var id_platica=id
                            
                                 
@@ -70,4 +66,4 @@
                     
                 });
             };
-                
+                 
