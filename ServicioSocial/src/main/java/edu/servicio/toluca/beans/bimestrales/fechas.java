@@ -24,17 +24,15 @@ public class fechas {
 
     }
 
-    public Date dameFecha() throws ParseException {
+    public String dameFecha() throws ParseException {
         SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
         //fechaFin = textFormat.parse(fechaInicio);
         System.out.println("La fecha de Inicio es: "+fechaInicio);
         Calendar fecha = Calendar.getInstance();
         fecha.setTime(fechaInicio);
         fecha.add(Calendar.MONTH,2);
- 
-        System.out.println("La fecha fin es :"+textFormat.format(fecha.getTime()));
 
-        return null;
+        return textFormat.format(fecha.getTime());
 
     }
 }

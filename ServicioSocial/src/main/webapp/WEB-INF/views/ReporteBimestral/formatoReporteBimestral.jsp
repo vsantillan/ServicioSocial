@@ -87,9 +87,16 @@
                         <table>
                             <tr>
                                 <td> <label for="fecha">Fecha de Inicio del Reporte:</label> </td>
-                                <td><input type="text"  name="fechaInicio"id="datepicker" value="${fechaInicio}" onchange="actualizaFecha(this)" /></td>  
+                                <core:choose>
+                                    <core:when test="${empty fechaInicio}">
+                                        <td><input type="text"  name="fechaInicio"id="datepicker" value="" onchange="actualizaFecha(this)" /></td>  
+                                    </core:when>
+                                    <core:otherwise>
+                                             <td><input type="text"  name="fechaInicio"id="datepicker" disabled="disabled" value="${fechaInicio}" onchange="actualizaFecha(this)" /></td>  
+                                    </core:otherwise>
+                                </core:choose>                                   
                                 <td> <label for="fecha">Fecha Limite del  Reporte:</label> </td>
-                                <td><input type="text" name="fechaFin" id="fechaFin" disabled="disabled" value=""  /></td> 
+                                <td><input type="text" name="fechaFin" id="fechaFin" disabled="disabled" value="${fechaFin}"  /></td> 
                             </tr>
                             <tr>
                                 <td><label for="horasA">Horas del Reporte:</label></td>

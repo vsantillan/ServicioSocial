@@ -7,19 +7,27 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
+import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.ReportesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -43,7 +51,7 @@ public class ReporteBimestralController {
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model modelo) throws ParseException {
-        String alumno_id = "09280028";
+        String alumno_id = "09280437";
         ///////////BUSCAR ALUMNO///////////
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
@@ -59,8 +67,10 @@ public class ReporteBimestralController {
                 fechas fechaFin =new  fechas(fechaInicioFU.getFechaInicio());
                System.out.println("Resultado del metodo"+fechaFin.dameFecha());
                 modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
+                modelo.addAttribute("fechaFin",fechaFin.dameFecha());
             }else{
                 modelo.addAttribute("fechaInicio", "");
+                modelo.addAttribute("fechaFin","");
             }       
         //////////////////////////////////////////////////////////////
 
@@ -71,5 +81,12 @@ public class ReporteBimestralController {
     public String retroalimentacionBimestralUsuario(Model a) {
 
         return "/ReporteBimestral/retroalimentacionReportesBimestrales";
+    }
+    
+        @RequestMapping(method = RequestMethod.POST, value = "/insertaReporte.do")
+    public @ResponseBody
+    String insertaBimestral(@Valid Reportes reporte, BindingResult resultado, Model modelo) {
+
+        return "ok";
     }
 }
