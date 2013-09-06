@@ -108,7 +108,7 @@ public class MetodosValidacion {
 //            return false;
 //        }
         boolean r = true;
-        DateFormat formato = new SimpleDateFormat("hh:mm");
+        DateFormat formato = new SimpleDateFormat("HH:mm");
         try {
             Date h1 = (Date)formato.parse(s);
             System.out.println("Sin problema al parsear queda"+h1);

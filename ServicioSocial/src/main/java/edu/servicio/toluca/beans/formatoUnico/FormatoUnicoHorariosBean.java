@@ -59,7 +59,7 @@ public class FormatoUnicoHorariosBean {
         if(!juF.equals("") && !juF.equals(" ") && !mv.esHora(juF)){listaErrores.add("La hora de fin del Jueves, no es una hora correcta, debe estar en el formato HH:MM"); jufh = false;}
         if(!viF.equals("") && !viF.equals(" ") && !mv.esHora(viF)){listaErrores.add("La hora de fin del Viernes, no es una hora correcta, debe estar en el formato HH:MM"); vifh = false;}
         
-        DateFormat formato = new SimpleDateFormat("hh:mm");
+        DateFormat formato = new SimpleDateFormat("HH:mm");
         if(!luI.equals(" ") && !luF.equals(" ") && !luI.equals("") && !luF.equals(""))
         {
             Date h1 = (Date)formato.parse(luI);
