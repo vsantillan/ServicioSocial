@@ -1,37 +1,18 @@
 $(document).on('click', ".aceptarReporte", aceptarReporteA);
-$(document).on('click', ".rechazaReporte", rechazaReporte);
-$(document).on('click', ".editarReporte", editarReporte);
+$(document).on('click', ".enviarRetroalimentacion", enviaRetroalimentacion);
 
 $(document).ready(retroalimentacion);
 
-function rechazaReporte(e)
+function enviaRetroalimentacion(e)
 {
-    if (confirm('¿Seguro que desea aprobar el proyecto?'))
+    if($(".d").val()==='')
     {
-        var row = $(this).parents('tr')[0];
-        var idUpdate = $(e.target).attr('ide');
-        var idStatus = $(e.target).attr('status');
-        var tabla = $('#NoRev').dataTable();
-        $.post("actualizarStatusReporte.do", {id: idUpdate,status:idStatus}, function(response) 
-        {
-            tabla.fnDeleteRow(row);
-        });
-    }
-}
-
-function editarReporte(e)
-{
-    if (confirm('¿Seguro que desea aprobar el proyecto?'))
-    {
-        var row = $(this).parents('tr')[0];
-        var idUpdate = $(e.target).attr('ide');
-        var idStatus = $(e.target).attr('status');
-        var tabla = $('#NoRev').dataTable();
-        $.post("actualizarStatusReporte.do", {id: idUpdate,status:idStatus}, function(response) 
-        {
-            tabla.fnDeleteRow(row);
-        });
-    }
+        $(".d").attr("style","border: 2px solid #990000;");
+        $("#errorDescripcion").attr("style","display; block");
+        return false;
+        $(".d").attr("style","border: 1px solid");
+        $("#errorDescripcion").attr("style","display; none");
+    }   
 }
 
 function aceptarReporteA(e)

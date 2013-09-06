@@ -245,13 +245,15 @@
                     </tr>
                     <tr>
                         <td>Descripci&oacute;n:</td>
-                        <td><form:textarea  id="descripcion" path="descripcion" rows="10" cols="70" name="descripcion" /></td>
+                        <td><form:textarea  id="descripcion" path="descripcion" rows="10" cols="70" name="descripcion" cssClass="d"/><br/>
+                            <label id="errorDescripcion" style="display: none" class="error">La descripción no debe ser vacía</label>
+                        </td>
                     </tr>
                     <tr>
                         <td>
                             
                         </td>
-                        <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n"  > </td>
+                        <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n" class="enviarRetroalimentacion"> </td>
                     </tr>
                 </table>
             </form:form>
