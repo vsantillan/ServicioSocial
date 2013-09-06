@@ -28,6 +28,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -35,6 +37,7 @@ import org.hibernate.validator.constraints.NotBlank;
  *
  * @author SATELLITE
  */
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
 @Table(name = "PROYECTOS", catalog = "", schema = "GES_VIN")
 @XmlRootElement

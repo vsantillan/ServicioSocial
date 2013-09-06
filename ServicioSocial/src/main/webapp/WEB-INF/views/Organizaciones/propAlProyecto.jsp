@@ -136,7 +136,7 @@
                     <tr>
                         <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                         <td>
-                            <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto">
+                            <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto" disabled="true">
                                 <core:forEach items="${tipoProyecto}" var="tipoProyecto">
                                     <form:option  value="${tipoProyecto.idTipoProyecto}">${tipoProyecto.descripcion}</form:option>
                                 </core:forEach> 

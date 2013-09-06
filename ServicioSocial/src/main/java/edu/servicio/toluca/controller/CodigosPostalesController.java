@@ -56,7 +56,7 @@ public class CodigosPostalesController {
     @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
     private TipoLocalidadFacade tipoLocalidadFacade;
     MetodosValidacion limpiar = new MetodosValidacion();
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/cargarColonias.do")
     public @ResponseBody
     LocalidadJSON cargarColonias(Model model, String cp) {
@@ -66,7 +66,7 @@ public class CodigosPostalesController {
         System.out.println("Comenzare el query buscando el codigo postal:" + cp);
         //Consulta codigo postal
         //model.addAttribute("codigoPostal", );
-        
+
 
         //Fabricacion de objeto
         LocalidadJSON localidadJSON = new LocalidadJSON();
@@ -81,10 +81,13 @@ public class CodigosPostalesController {
                 localidadJSON.getNombreColonia().add(colonias.get(i).getNombre());
             }
             //localidadJSON.setColonias(coloniasTmp);
-            localidadJSON.setCiudad(codigosPostales.get(0).getIdCiudad().getNombre());
+            try {
+                localidadJSON.setCiudad(codigosPostales.get(0).getIdCiudad().getNombre());
+            } catch (Exception e) {
+                localidadJSON.setCiudad("No hay ciudades");
+            }
             localidadJSON.setIdEstado(codigosPostales.get(0).getIdEstado().getIdEstado() + "");
             localidadJSON.setMunicipio(codigosPostales.get(0).getIdMunicipio().getNombre());
-            localidadJSON.setCiudad(codigosPostales.get(0).getIdCiudad().getNombre() + "");
             localidadJSON.setIdMunicipio(codigosPostales.get(0).getIdMunicipio().getIdMunicipio() + "");
             //Operacion realizada con exito
             localidadJSON.setStatusJSON(true);
@@ -92,8 +95,7 @@ public class CodigosPostalesController {
             return localidadJSON;
         } catch (Exception e) {
             //Error en consulta
-            System.out.println(e);
-            System.out.println("----------------------------------------------------");
+            System.out.println("No existe este codigo postal");
             localidadJSON.setStatusJSON(false);
             return localidadJSON;
         }
@@ -107,7 +109,7 @@ public class CodigosPostalesController {
         EstadosJSON estadosJSON = new EstadosJSON();
         try {
             LinkedHashMap<String, String> ordering = new LinkedHashMap<String, String>();
-            ordering.put("asc", "nombre");            
+            ordering.put("asc", "nombre");
             //List<EstadosSia> estados = estadosFacade.findBySpecificField(null, null, null, null, null);
             List<EstadosSia> estados = estadosFacade.findAll();
             for (int i = 0; i < estados.size(); i++) {
@@ -165,10 +167,10 @@ public class CodigosPostalesController {
             //Track tiempo
             Calendar ahora1 = Calendar.getInstance();
             long tiempo1 = ahora1.getTimeInMillis();
-            
+
             //COnsulta
-            ciudadesJSON=codigosPostalesFacade.ciudadMunicipio(idMunicipio);
-            
+            ciudadesJSON = codigosPostalesFacade.ciudadMunicipio(idMunicipio);
+
             //Operacion realizada con exito
             ciudadesJSON.setStatusJSON(true);
             Calendar ahora2 = Calendar.getInstance();
@@ -196,19 +198,19 @@ public class CodigosPostalesController {
             Calendar ahora1 = Calendar.getInstance();
             long tiempo1 = ahora1.getTimeInMillis();
             municipiosJSON = codigosPostalesFacade.municipiosEstado("15");
-           
+
             //Operacion realizada con exito
             municipiosJSON.setStatusJSON(true);
             Calendar ahora2 = Calendar.getInstance();
             long tiempo2 = ahora2.getTimeInMillis();
             long total = tiempo2 - tiempo1;
             System.out.println("Operacion con exito en " + total + "ms");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             //Error en consulta
             municipiosJSON.setStatusJSON(false);
-            
+
         }
 
     }
@@ -216,14 +218,14 @@ public class CodigosPostalesController {
     //ESTOS METODOS DEBERIA ESTAR EN EL MODELO, DADAS LAS CIRCUNSTANCIAS ESTARA AQUI TEMPORALMENTE
     //Agrega una colonia a un codigo postal
     @RequestMapping(method = RequestMethod.GET, value = "/agregaColonia.do")
-    public Colonia agregaColonia(Model model,  String codigo_postal, String otra_colonia) {
+    public Colonia agregaColonia(Model model, String codigo_postal, String otra_colonia) {
         try {
             System.out.println("AgregarColonia");
-            System.out.println("codigo postal:"+codigo_postal.toString());
+            System.out.println("codigo postal:" + codigo_postal.toString());
             List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
             CodigosPostales codigoPostal = codigosPostales.get(0);
             Colonia nvaColonia = new Colonia();
-            otra_colonia=limpiar.tuneaStringParaBD(otra_colonia);
+            otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
             nvaColonia.setNombre(otra_colonia);
             nvaColonia.setIdCp(codigoPostal);
             nvaColonia.setStatus(BigInteger.ONE);
@@ -264,26 +266,26 @@ public class CodigosPostalesController {
                 codigoPostal.setIdCiudad(ciudad);
             }
             codigosPostalesFacade.create(codigoPostal);
-            
+
             //Obtenemos el Ultimo codigo postal
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idCp", "desc");
             CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
-            
+
             Colonia colonia = new Colonia();
             colonia.setIdCp(codigoPostal);
-            otra_colonia=limpiar.tuneaStringParaBD(otra_colonia);
+            otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
             colonia.setNombre(otra_colonia);
             colonia.setStatus(BigInteger.ONE);
-            
+
             coloniaFacade.create(colonia);
-            
+
             //Obtenemos la ultima colonia
             ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idColonia", "desc");
             Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
-            return coloniaNew;            
-            
+            return coloniaNew;
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println(e);

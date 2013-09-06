@@ -16,7 +16,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
-
+         <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" />
         <script src="js/jquery.codigos.postales.js"></script>       
         <script src="js/jquery.manolo.js"></script>
         <script>
@@ -27,7 +28,8 @@
     <body class="background">
     <center>
         <h1>Propuesta de Alumno</h1>        
-
+        <!--<a onclick="$.fancybox.close();">Redireccion</a>-->
+        <a href="formatoUnicoUsuario.do" target="_parent">Redireccion</a>
         <form:form name="altaPropInstancia" commandName="propuesta" class="MyForm" action="gdaPropAlInstancia.do"  method="POST" style="width:80%;" id="contenido">
             <center>
                 <input type="hidden" name="datos_personales" value="${datos_personales}">
@@ -225,12 +227,12 @@
                     <tr>
                         <td>  <label for="colonia">Colonia:</label></td>
                         <td>  
-                            <div id="notice"></div>
+                            <div id="notice2"></div>
                             <!--select name="colonia" id="colonia" disabled="true"></select--> 
                             <form:select id="idColonia2" path="idColonia_proyecto.idColonia" name="idColonia"></form:select> 
                                 <div id="otra_colonia2" style="display:none;">
                                     <input type="text" name="otra_colonia2" value="${otra_colonia2}"/>
-                                <input type="hidden" id="existeCP2" name="existeCP" value="true">
+                                <input type="hidden" id="existeCP2" name="existeCP2" value="true">
                                 <input type="hidden" id="preColonia2" value="${idColonia2}"/>
                                 ${error_otra_colonia2}
                             </div>
@@ -240,7 +242,7 @@
                     <tr>
                         <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                         <td>
-                            <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto">
+                            <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto" style="display:none;">
                                 <core:forEach items="${tipoProyecto}" var="tipoProyecto">
                                     <form:option  value="${tipoProyecto.idTipoProyecto}">${tipoProyecto.descripcion}</form:option>
                                 </core:forEach> 

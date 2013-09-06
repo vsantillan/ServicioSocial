@@ -32,18 +32,18 @@
             <center>
                 <br/>
                 <h1>Login</h1>
-                <form:form name="formLogin" class="MyForm" action="validaLogin.do" method="POST" style="width:400px; height:230px">
+                <form:form name="formLogin" class="MyForm" action="validaLogin.do" method="POST" style="width:400px; height:230px" id="formLogin">
                     <table>
                         <tr>
                             <td> <label for="usuario">Usuario (alu_00289999):</label> </td>
                             <td> 
-                                <input type="text" name="usuario" id="usuario" size="20" require="true" />
+                                <input type="text" name="usuario" id="usuario" size="20" require="true" autocomplete="off" autofocus="on"/>
                             </td>  
                         </tr>
                         <tr>
                             <td><label for="password">Contrase&ntilde;a:</label></td>
                             <td> 
-                                <input type="password" name="pass" id="pass" size="20" require="true" />
+                                <input type="password" name="pass" id="pass" size="20" require="true" autocomplete="off"/>
                             </td> 
                         </tr>
                         <tr> 

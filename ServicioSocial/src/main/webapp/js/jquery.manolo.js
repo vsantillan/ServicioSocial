@@ -5,46 +5,46 @@
 $(document).ready(function() {
 
     $(".btn-validar-org").click(function(event) {
-        $("#div-validar-organizacion").show('slow')
+        $("#div-validar-organizacion").show('slow');
 
         setTimeout(function() {
-            $("#div-validar-organizacion").hide('slow')
-        }, 3000)
-    })
+            $("#div-validar-organizacion").hide('slow');
+        }, 3000);
+    });
 
     $(".btn-validar-proyecto").click(function(event) {
         $("#div-validar-proyecto").show('slow');
 
         setTimeout(function() {
-            $("#div-validar-proyecto").hide('slow')
-        }, 3000)
-    })
+            $("#div-validar-proyecto").hide('slow');
+        }, 3000);
+    });
 
     $("#btnLoginOrg").click(function(event) {
 
-        var correo = document.getElementById("correo")
-        var pass = document.getElementById("pass")
-        var ok = true
+        var correo = document.getElementById("correo");
+        var pass = document.getElementById("pass");
+        var ok = true;
 
-        $("#respLoginOrg").html("")
-        $("#div_correo_organizacion").hide("slow")
-        $("#div_pass_organizacion").hide("slow")
+        $("#respLoginOrg").html("");
+        $("#div_correo_organizacion").hide("slow");
+        $("#div_pass_organizacion").hide("slow");
 
-        if (correo.value == "") {
-            ok = false
-            $("#div_correo_organizacion").show("slow")
-        }
-        if (pass.value == "") {
+        if (correo.value === "") {
             ok = false;
-            $("#div_pass_organizacion").show("slow")
+            $("#div_correo_organizacion").show("slow");
+        }
+        if (pass.value === "") {
+            ok = false;
+            $("#div_pass_organizacion").show("slow");
         }
         if (ok) {
             $("#respLoginOrg").html("<center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center>");
             setTimeout(function() {
                 window.location.href = "panelOrganizacion.do";
-            }, 3000)
+            }, 3000);
         }
-    })
+    });
 
     function objetoAjax() {
         var xmlhttp = false;
@@ -66,7 +66,7 @@ $(document).ready(function() {
         return xmlhttp;
 
     }
-    
+
     //Formulario alta admin proyectos
     if (typeof(iniciarAltaAdminProyecto) !== 'undefined' || typeof(iniciarAltaPropuestaInstancia) !== 'undefined' || typeof (iniciarAltaProyecto) !== 'undefined') {
         console.log("Iniciando alta admin proyecto");
@@ -74,7 +74,7 @@ $(document).ready(function() {
         var nActHidden = document.getElementById("PrenActividades");
         nActHidden.value = Number(nActHidden.value);
         nActividades = 0;
-        
+
         for (var i = 0; i < 5; i++) {
             var actHidden = document.getElementById("actividad" + i);
             if (i < 2) {
@@ -92,7 +92,7 @@ $(document).ready(function() {
             }
         }
     }
-    
+
     var nActividades;
     $("#agregarActividad").click(function(event) {
         agregarActividad();
@@ -135,7 +135,7 @@ $(document).ready(function() {
             $(this).closest('li').remove();
             menosActividad();
         }
-    })
+    });
 
     //Arreglo de perfiles
     var perfiles = new Array();
@@ -173,7 +173,7 @@ $(document).ready(function() {
                 select.appendChild(option);
                 //$("#perfiles").append("<option value='" + perfiles[i].id + "'>" + perfiles[i].nombre + "</option>");
             }
-            $(select).attr("name", "perfiles[" + nPerfiles + "]")
+            $(select).attr("name", "perfiles[" + nPerfiles + "]");
             $(select).attr("class", "perfil");
             //$("#perfiles").append("</select><input type ='button' class='borrarPerfil' value = 'Quitar'/></li>");
             li.appendChild(select);
@@ -207,7 +207,7 @@ $(document).ready(function() {
 
     $("#agregaPerfil").click(function(event) {
         agregaComboPerfil();
-    })
+    });
 
     $("body").on("click", ".borrarPerfil", function(event) {
         $(this).closest('li').remove();
@@ -243,8 +243,8 @@ $(document).ready(function() {
             console.log("Deshabilitado");
         }
     }
-    
-    function preparaActividadesPerfiles(){
+
+    function preparaActividadesPerfiles() {
         console.log("Guardar");
         //var cadenaPerfiles = "";
         var cadenaActividades = "";
@@ -268,13 +268,13 @@ $(document).ready(function() {
         preparaActividadesPerfiles();
         document.forms["altaOrganizacion"].submit();
     });
-    
+
     $("#btnGdaPropProyecto").click(function(event) {
         preparaActividadesPerfiles();
         document.forms["altaPropProyecto"].submit();
     });
-    
-    $("#btnGdaPropAlInst").click(function(event){
+
+    $("#btnGdaPropAlInst").click(function(event) {
         preparaActividadesPerfiles();
         document.forms["altaPropInstancia"].submit();
     });
@@ -287,10 +287,17 @@ $(document).ready(function() {
             document.forms["altaOrganizacion"].submit();
         }
     });
-    
-    $("#btnLogin").click(function(event){
+
+    $("#btnLogin").click(function(event) {
         $("#respLoginOrg").html("<center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center>");
         document.forms["formLogin"].submit();
+    });
+
+    $("#formLogin").keyup(function(event) {
+        if (event.keyCode === 13) {
+            $("#respLoginOrg").html("<center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center>");
+            document.forms["formLogin"].submit();
+        }
     });
 
 });

@@ -365,11 +365,11 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAdminAltaOrganizacion.do")
-    public String gdaAdminAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existe_colonia, HttpSession session, HttpServletRequest request) {
+    public String gdaAdminAltaOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad, HttpSession session, HttpServletRequest request) {
         System.out.println("hola admin gda alta organizacion");
 
         //Validacion
-        new ValidacionesOrganizaciones().valAltaAdminInst(instancia, result, model, codigo_postal);
+        new ValidacionesOrganizaciones().valAltaAdminInst(instancia, result, model, codigo_postal, existeCP, otra_colonia);
 
         if (result.hasErrors()) {
             System.out.print("hubo errores");
@@ -790,7 +790,7 @@ public class OrganizacionesController2 {
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
             model.addAttribute("idInstancia", idInstancia);
             Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
-            model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
+//            model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
             model.addAttribute("instancia", instancia);
 
             if (session.getAttribute("MENSAJE") != null) {
@@ -805,10 +805,10 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaEdicionOrganizacion.do")
-    public String gdaEdicionOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia, String idInstancia, String antiguoPass, HttpSession session, HttpServletRequest request) {
+    public String gdaEdicionOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad, String idInstancia, String antiguoPass, HttpSession session, HttpServletRequest request) {
         System.out.println("idInstancia:" + idInstancia);
         //Validacion
-        new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existe_colonia, confirma_password);
+        new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existeCP, confirma_password);
 
         //Agregamos atributos al formulario
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
@@ -917,7 +917,7 @@ public class OrganizacionesController2 {
         System.out.println("Guardando propuesta de alumno de instancia");
         System.out.println("idDatos_personales:" + datos_personales);
         //Validacion
-        new ValidacionesOrganizaciones().valPropAlInstancia(propuesta, result, model, codigo_postal, otra_colonia, existeCP, selectfrom, cadenaActividades, codigo_postal2, existeCP, otra_colonia2);
+        new ValidacionesOrganizaciones().valPropAlInstancia(propuesta, result, model, codigo_postal, otra_colonia, existeCP, selectfrom, cadenaActividades, codigo_postal2, existeCP2, otra_colonia2);
 
         //Desglose de Actividades
         ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);

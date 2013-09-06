@@ -24,14 +24,16 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
-import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
  * @author bustedvillain
  */
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
 @Table(name = "INSTANCIA", catalog = "", schema = "GES_VIN")
 @XmlRootElement
@@ -50,6 +52,7 @@ import org.springframework.format.annotation.NumberFormat;
     @NamedQuery(name = "Instancia.findByPassword", query = "SELECT i FROM Instancia i WHERE i.password = :password"),
     @NamedQuery(name = "Instancia.findByCorreo", query = "SELECT i FROM Instancia i WHERE i.correo = :correo")})
 public class Instancia implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<RetroalimentacionInstancia2> retroalimentacionInstancia2Collection;
     private static final long serialVersionUID = 1L;
@@ -62,26 +65,26 @@ public class Instancia implements Serializable {
     private BigDecimal idInstancia;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45, message="Nombre de la Organización vacía")
+    @Size(min = 1, max = 45, message = "Nombre de la Organización vacía")
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 12, max = 12, message="El RFC debe tener una longitud de 12 caracteres")
+    @Size(min = 12, max = 12, message = "El RFC debe tener una longitud de 12 caracteres")
     @Column(name = "RFC")
     private String rfc;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45, message="Nombre del Titular vacío")
+    @Size(min = 1, max = 45, message = "Nombre del Titular vacío")
     @Column(name = "TITULAR")
     private String titular;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45, message="Puesto vacío")
+    @Size(min = 1, max = 45, message = "Puesto vacío")
     @Column(name = "PUESTO")
     private String puesto;
     @Basic(optional = false)
-    @NotNull    
+    @NotNull
     @Column(name = "TELEFONO")
     private long telefono;
     @Basic(optional = false)
@@ -109,6 +112,7 @@ public class Instancia implements Serializable {
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<Proyectos> proyectosCollection;
 //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
@@ -285,5 +289,4 @@ public class Instancia implements Serializable {
     public void setRetroalimentacionInstancia2Collection(Collection<RetroalimentacionInstancia2> retroalimentacionInstancia2Collection) {
         this.retroalimentacionInstancia2Collection = retroalimentacionInstancia2Collection;
     }
-
 }

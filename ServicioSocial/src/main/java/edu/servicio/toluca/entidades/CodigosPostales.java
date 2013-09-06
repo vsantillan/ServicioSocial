@@ -9,6 +9,7 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -33,7 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "CodigosPostales.findByCp", query = "SELECT c FROM CodigosPostales c WHERE c.cp = :cp")})
 public class CodigosPostales implements Serializable {
     private static final long serialVersionUID = 1L;
+    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
+    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CP")
