@@ -194,4 +194,9 @@ public class NavegacionPrincipalController {
         }
 
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/contacto.do")
+    public String contacto(Model a) {
+        return "/NavegacionPrincipal/contacto";
+    }
+    
 }
