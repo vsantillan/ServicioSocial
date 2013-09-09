@@ -199,7 +199,7 @@ public class Proyectos implements Serializable {
     public BigInteger getValidacionAdmin() {
         return validacionAdmin;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public void setValidacionAdmin(BigInteger validacionAdmin) {
         this.validacionAdmin = validacionAdmin;
     }
@@ -207,7 +207,7 @@ public class Proyectos implements Serializable {
     public BigInteger getEstatus() {
         return estatus;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public void setEstatus(BigInteger estatus) {
         this.estatus = estatus;
     }
@@ -253,6 +253,7 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<ProyectoPerfil> getProyectoPerfilCollection() {
         return proyectoPerfilCollection;
     }
@@ -262,6 +263,7 @@ public class Proyectos implements Serializable {
     }
     
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<Actividades> getActividadesCollection() {
         return actividadesCollection;
     }
@@ -303,6 +305,7 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<FormatoUnico> getFormatoUnicoCollection() {
         return formatoUnicoCollection;
     }
@@ -337,6 +340,7 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<RetroalimentacionProyecto2> getRetroalimentacionProyecto2Collection() {
         return retroalimentacionProyecto2Collection;
     }

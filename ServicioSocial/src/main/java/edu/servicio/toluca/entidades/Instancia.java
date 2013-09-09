@@ -52,7 +52,6 @@ import org.hibernate.validator.constraints.Email;
     @NamedQuery(name = "Instancia.findByPassword", query = "SELECT i FROM Instancia i WHERE i.password = :password"),
     @NamedQuery(name = "Instancia.findByCorreo", query = "SELECT i FROM Instancia i WHERE i.correo = :correo")})
 public class Instancia implements Serializable {
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<RetroalimentacionInstancia2> retroalimentacionInstancia2Collection;
     private static final long serialVersionUID = 1L;
@@ -61,7 +60,7 @@ public class Instancia implements Serializable {
     @Id
     @GeneratedValue(generator = "generator")
     @Basic(optional = false)
-    @Column(name = "ID_INSTANCIA")
+    @Column(name = "ID_INSTANCIA")    
     private BigDecimal idInstancia;
     @Basic(optional = false)
     @NotNull
@@ -112,7 +111,6 @@ public class Instancia implements Serializable {
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
-    @Cache(usage = CacheConcurrencyStrategy.NONE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<Proyectos> proyectosCollection;
 //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
@@ -190,15 +188,15 @@ public class Instancia implements Serializable {
     public void setDomicilio(String domicilio) {
         this.domicilio = domicilio;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public BigInteger getValidacionAdmin() {
         return validacionAdmin;
     }
-
+    
     public void setValidacionAdmin(BigInteger validacionAdmin) {
         this.validacionAdmin = validacionAdmin;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public BigInteger getEstatus() {
         return estatus;
     }
@@ -248,6 +246,7 @@ public class Instancia implements Serializable {
     }
 
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<Proyectos> getProyectosCollection() {
         return proyectosCollection;
     }
@@ -282,6 +281,7 @@ public class Instancia implements Serializable {
     }
 
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<RetroalimentacionInstancia2> getRetroalimentacionInstancia2Collection() {
         return retroalimentacionInstancia2Collection;
     }

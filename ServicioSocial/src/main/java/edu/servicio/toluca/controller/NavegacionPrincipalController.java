@@ -156,15 +156,24 @@ public class NavegacionPrincipalController {
             //Verificar si es una instancia  Login por usuario
             List<Instancia> instancia = instanciaFacade.findBySpecificField("usuario", usuario, "equal", null, null);
             if (instancia.size() > 0) {
-                if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1))) {
-                    inicioSesion = true;
+                System.out.println("pass:"+StringMD.getStringMessageDigest(pass, StringMD.SHA1));
+                try {
+                    if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1))) {
+                        inicioSesion = true;
+                    }
+                } catch (Exception ex) {
+                    System.out.println("Password vacio");
                 }
             } else {
                 //No encntro instancia por usuario, busqueda por correo
                 instancia = instanciaFacade.findBySpecificField("correo", usuario, "equal", null, null);
                 if (instancia.size() > 0) {
-                    if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1))) {
-                        inicioSesion = true;
+                    try {
+                        if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1))) {
+                            inicioSesion = true;
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("No hay password");
                     }
                 }
             }
@@ -175,11 +184,11 @@ public class NavegacionPrincipalController {
                     session.setAttribute("ROL", "ORGANIZACION");
                     session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
                     session.setAttribute("NOMBRE", instancia.get(0).getNombre());
-                    if(instancia.get(0).getValidacionAdmin() == BigInteger.valueOf(2)){
+                    if (instancia.get(0).getValidacionAdmin() == BigInteger.valueOf(2)) {
                         session.setAttribute("MENSAJE", "<div class='error'>Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
                     }
                     return "redirect:panelOrganizacion.do";
-                } else {   
+                } else {
                     System.out.println("La organizacion no puede ingresar, estatus inactivo");
                     model.addAttribute("error", "<div class='error'>Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
                     return "/NavegacionPrincipal/loginPrincipal";
@@ -187,8 +196,9 @@ public class NavegacionPrincipalController {
 
             }
 
+            model.addAttribute(
+                    "error", "<div class='error'>Usuario o contraseña incorrecta</div>");
 
-            model.addAttribute("error", "<div class='error'>Usuario o contraseña incorrecta</div>");
 
             return "/NavegacionPrincipal/loginPrincipal";
         }
