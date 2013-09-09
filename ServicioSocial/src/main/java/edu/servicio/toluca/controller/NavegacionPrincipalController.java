@@ -8,6 +8,7 @@ package edu.servicio.toluca.controller;
  *
  * @author bustedvillain
  */
+import edu.servicio.toluca.beans.Contacto;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.VistaAlumno;
@@ -203,5 +204,15 @@ public class NavegacionPrincipalController {
             return "/NavegacionPrincipal/loginPrincipal";
         }
 
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/contacto.do")
+    public String contacto(Model modelo) {
+        modelo.addAttribute("Contacto",new Contacto());
+        return "/NavegacionPrincipal/contacto";
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/enviarMensajeContacto.do")
+    public String nuevoMensaje(Contacto contacto,Model modelo) {
+        System.out.println(contacto.getCorreo());
+        return "redirect:contacto.do";
     }
 }

@@ -13,7 +13,7 @@
         <jsp:include page="../Template/headsJQueryUI.jsp" /><!--Hay conflicto de datatables con estilo forms--->
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
 
-        
+
         <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
         <!--css de tabs-->
         <link rel="stylesheet" type="text/css" href="css/jqueryUI/jquery.ui.all.css"/>
@@ -50,22 +50,22 @@
             });
         </script>
         <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
-        
+
         <script type="text/javascript" src="js/jqueryUI/i18n/jquery.ui.datepicker-es.js"></script>
         <script src="js/jquery.codigos.postales.js"></script>   
-         <!--Include para Ventanas Modales-->
+        <!--Include para Ventanas Modales-->
         <jsp:include page="../Template/headsModal.jsp" />
         <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
 
         <title>Formato &Uacute;nico - Usuario</title>
-        
+
     </head>
     <body class ="background" onload=" //recargaProyectos(2);
                 recargaCombosOrgs(${formatoUnicoDatosOrganizaciones.idProyecto});">
 
-        
+
         <%@ include file="../Template/banner.jsp" %>
-        
+
 
         <%-- inicio del contenido --%>
         <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />
@@ -166,7 +166,7 @@
                                 <td></td>
                                 <td>
                                     <form:checkbox path="acuerdoC" />  *He le&iacute;do y acepto el <a href="showpdf.do" class="fancyFUI">Acuerdo de Confidencialidad</a> </td>
-                                    
+
                             </tr>
                             <tr>
                                 <td></td>
@@ -179,7 +179,7 @@
                     <form:form id="frmDatosContacto" commandName="formatoUnicoDatosContacto" >
                         Los datos marcados con * son Obligatorios
                         <table>
-                            
+
                             <tr>
                                 <form:input  type="hidden" path ="id" />
                                 <td>*Calle:</td>
@@ -198,11 +198,15 @@
                             <input type="hidden" id="preCP" value="${codigoPostal}" />
                             <input type="hidden" id="preColonia" value="${preColonia}" />
 
-                            <td>  <label for="codigo_postal">*C&oacute;digo Postal:</label></td>
-                            <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${instanciaDireccion.idColonia.idCp.cp}"></td>  
+                            <tr>
+                                <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
+                                <td> 
+                                    <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off">
+                                    <input type="hidden" id="preCP" value="${cp}"/><br>${codigo_postal}
+                                </td>  
                             </tr>
                             <tr>
-                                <td>  <label for="estado">*Estado:</label></td>
+                                <td>  <label for="estado">Estado:</label></td>
                                 <td>  <!--input type="text" name="estado" id="estado" size="20" require="true" disabled="true"/--> 
                                     <select name="estado" id="estado" disabled="true">                                   
                                         <core:forEach items="${estados}" var="estados">
@@ -212,32 +216,32 @@
                                 </td>  
                             </tr>                        
                             <tr>
-                                <td>  <label for="municipio">*Municipio:</label></td>
+                                <td>  <label for="municipio">Municipio:</label></td>
                                 <td>  <!--input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/--> 
                                     <select name="municipio" id="municipio" disabled="true"></select>
                                 </td>  
                             </tr>
                             <tr>
-                                <td>  <label for="ciudad">*Ciudad</label></td>
+                                <td>  <label for="ciudad">Ciudad</label></td>
                                 <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
                                     <select name="ciudad" id="ciudad" disabled="true"></select>
                                 </td>  
                             </tr>
                             <tr>
-                                <td>
-                                    <input id="nombre_colonia" path="nombre_colonia" value="${instanciaDireccion.idColonia.nombre}" hidden="hidden"/>
-                                    <label for="colonia">*Colonia:</label></td>
+                                <td>  <label for="colonia">Colonia:</label></td>
                                 <td>  
                                     <div id="notice"></div>
                                     <!--select name="colonia" id="colonia" disabled="true"></select--> 
                                     <form:select id="idColonia" path="idColonia.idColonia" name="idColonia"></form:select> 
                                         <div id="otra_colonia" style="display:none;">
-                                            <input type="text" name="otra_colonia" id="otra_colonia"/>
-                                            <!--form:input path="usuario" id="usuario" size="20"/-->
-                                        </div>
-                                    <form:errors path="idColonia.idColonia" cssClass="error"/>
+                                            <input type="text" name="otra_colonia" value="${otra_colonia}"/>
+                                        <input type="hidden" id="existeCP" name="existeCP" value="true">
+                                        <input type="hidden" id="preColonia" value="${idColonia}"/>
+                                        ${error_otra_colonia}
+                                    </div>
+                                    <br/>
                                 </td>  
-                            </tr>        
+                            </tr>       
 
 
                             <tr>
@@ -334,7 +338,7 @@
 
                                     </select> 
                                     <a id="linkNuevoP" href="propAlProyecto.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}&idInstancia=${idDeInstancia}" class="fancyFU" >Agregar un proyecto</a>
-                                    
+
                                 </td>
                             </tr>
 
@@ -419,7 +423,7 @@
                 </div>
                 <div id="imprimirFui">
                     <h1>Presiona el bot&oacute;n para descargar</h1>
-                    <a href="muestraReporteFUI.do"><img src="imagenes/descargar.png" /></a>
+                    <a href="muestraReporteFUI.do" target="_blank"><img src="imagenes/descargar.png" /></a>
                 </div>
                 <div id="subirFui">
                     <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>

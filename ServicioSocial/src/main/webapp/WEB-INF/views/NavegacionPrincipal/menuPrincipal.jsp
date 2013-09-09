@@ -23,6 +23,7 @@
                         <li><a href="preguntasFrecuentes.do">Preguntas Frecuentes</a></li>
                    </ul>
                 </li>
+                <li><a href="contacto.do">Contacto</a></li>
                 <li><a href="login.do">Login</a></li>
                 
             </ul>

@@ -50,31 +50,36 @@ public class ReporteBimestralController {
 //        return "/ReporteBimestral/reporteBimestralAdministrador";
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
-    public String reporteBimestralUsuario(Model modelo) throws ParseException {
-        String alumno_id = "09280437";
+    public String reporteBimestralUsuario(Model modelo,String alumno_id ) throws ParseException {
+       modelo.addAttribute("Reportes",new Reportes());
         ///////////BUSCAR ALUMNO///////////
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
-        DatosPersonales DP = datosPersonales.get(0);
-        modelo.addAttribute("datosPersonales", datosPersonales);
-       
-        /////////////Validamos si es su primer reporte//////////////
-            List<Reportes> RB = reportesFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
-            if (RB.isEmpty()) {
-                List<FormatoUnico> formatoUnico =formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
-                FormatoUnico fechaInicioFU=formatoUnico.get(0);
-                fechas fechaFin =new  fechas(fechaInicioFU.getFechaInicio());
-               System.out.println("Resultado del metodo"+fechaFin.dameFecha());
-                modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
-                modelo.addAttribute("fechaFin",fechaFin.dameFecha());
-            }else{
-                modelo.addAttribute("fechaInicio", "");
-                modelo.addAttribute("fechaFin","");
-            }       
-        //////////////////////////////////////////////////////////////
+        if(!datosPersonales.isEmpty()){
+                DatosPersonales DP = datosPersonales.get(0);
+                modelo.addAttribute("datosPersonales", datosPersonales);
 
-        return "/ReporteBimestral/formatoReporteBimestral";
+                /////////////Validamos si es su primer reporte//////////////
+                    List<Reportes> RB = reportesFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
+                    if (RB.isEmpty()) {
+                        List<FormatoUnico> formatoUnico =formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
+                        FormatoUnico fechaInicioFU=formatoUnico.get(0);
+                        fechas fechaFin =new  fechas(fechaInicioFU.getFechaInicio());
+                       System.out.println("Resultado del metodo"+fechaFin.dameFecha());
+                        modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
+                        modelo.addAttribute("fechaFin",fechaFin.dameFecha());
+                    }else{
+                        modelo.addAttribute("fechaInicio", "");
+                        modelo.addAttribute("fechaFin","");
+                    }       
+                //////////////////////////////////////////////////////////////
+
+                return "/ReporteBimestral/formatoReporteBimestral";
+        }else{
+            return "/PanelUsuario/panelUsuario";
+        }
+                
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/retroalimentacionReportesBimestrales.do")
@@ -84,9 +89,17 @@ public class ReporteBimestralController {
     }
     
         @RequestMapping(method = RequestMethod.POST, value = "/insertaReporte.do")
-    public @ResponseBody
-    String insertaBimestral(@Valid Reportes reporte, BindingResult resultado, Model modelo) {
+    public String insertaBimestral(@Valid Reportes reporte, BindingResult resultado, Model modelo) {
+            
+            if(resultado.hasErrors()){
+                modelo.addAttribute("Reportes",reporte);
+                System.out.println("Hubo errores"+resultado.toString());
+                return "redirect:formatoReporteBimestral.do?alumno_id=09280441";
+            }else{
+                modelo.addAttribute("Reportes",reporte);
+                System.out.println("Paso bien");
+                return "redirect:formatoReporteBimestral.do?alumno_id=09280441";
+            }
 
-        return "ok";
     }
 }

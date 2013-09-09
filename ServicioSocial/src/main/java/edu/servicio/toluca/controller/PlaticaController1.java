@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
@@ -42,14 +43,12 @@ public class PlaticaController1 {
     
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugar.do")
     String nuevoLugar(Model modelo, LugaresPlatica lugar_i) {
+        MetodosValidacion metodo = new MetodosValidacion();
         lugar_i.setStatus(BigInteger.valueOf(1));
         //lugar.setLugar(lugar);
+        lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
         LugaresPlaticaFacade.create(lugar_i);
         //System.out.println("Inserto Lugar");
-        LinkedHashMap ordenarDesc = new LinkedHashMap();
-        ordenarDesc.put("lugar","desc");        
-        modelo.addAttribute("lugar_i", new LugaresPlatica());
-        modelo.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
         return "redirect:altaLugares.do";
     }
 
@@ -66,13 +65,17 @@ public class PlaticaController1 {
     
     @RequestMapping(method = RequestMethod.POST, value = "/editarLugar.do")
     public @ResponseBody
-    String editarLugar(int id,String lugar_i, Model model) {
-    
-        LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
-        System.out.println(lugar_i);
-        lugar.setLugar(lugar_i);
-        LugaresPlaticaFacade.edit(lugar);
-        
+    String editarLugar_r(LugaresPlatica lugar_i,String lugar_s, Model model) {
         return "redirect:altaLugares.do";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/editarLugar1.do")
+    public @ResponseBody
+    String editarLugar(String lugar_s, int id, Model model) {
+        MetodosValidacion metodo = new MetodosValidacion();
+        LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
+        lugar.setLugar(metodo.tuneaStringParaBD(lugar_s));
+        LugaresPlaticaFacade.edit(lugar);
+        return "ok";
     }
 }
