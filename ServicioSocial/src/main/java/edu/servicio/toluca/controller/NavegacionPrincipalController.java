@@ -29,6 +29,8 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -219,7 +221,9 @@ public class NavegacionPrincipalController {
     @RequestMapping(method = RequestMethod.POST, value = "/enviarMensajeContacto.do")
     public String nuevoMensaje(@Valid Contacto contacto, BindingResult result,Model modelo) {
         if(result.hasErrors()) {
-            modelo.addAttribute("Contacto",new Contacto());
+            System.err.println("Error");
+            System.out.println("Error2");
+            modelo.addAttribute("Contacto",contacto);
             return "/NavegacionPrincipal/contacto";
         }
         
@@ -233,7 +237,7 @@ public class NavegacionPrincipalController {
         modelo.addAttribute("Contacto",new Contacto());
         return "/NavegacionPrincipal/contacto";
     }
-    
+   
     private class HiloCorreo implements Runnable
     {
         private String mensaje;

@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.beans;
 
+import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -12,13 +13,20 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author Héctor
  */
 public class Contacto {
+    @NotNull(message = "Escribe un Correo") 
     @NotEmpty(message = "Escribe tu comentario") 
     private String detalle;
+    
+    @NotNull(message = "Escribe un Correo") 
     @NotEmpty(message = "Escribe un Asunto") 
     private String asunto;
+    
+    @NotNull(message = "Escribe un Correo") 
     @NotEmpty(message = "Escribe un Correo") 
     @Email(message = "No es correo valido")
     private String correo;
+    
+    @NotNull(message = "Escribe un Correo") 
     @NotEmpty(message = "Escribe tu Nombre") 
     private String nombre;
 
