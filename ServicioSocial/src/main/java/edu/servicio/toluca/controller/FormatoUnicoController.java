@@ -158,6 +158,8 @@ public class FormatoUnicoController {
             System.out.println("El alumno no tiene los créditos necesarios");
             return "PanelUsuario/panelUsuario";
         }
+        
+        
         //Creación de los objetos necesarios para inserción y lectura
         DatosPersonales datosPersonales = new DatosPersonales();
         datosPersonales.setAlumnoId(alumno);
@@ -289,6 +291,21 @@ public class FormatoUnicoController {
             //Asignación a objetos para posteriormente preparar
             datosPersonales = listaDatosPersonales.get(0);
             formatoUnico = listaFormatoUnico.get(0);
+            
+            //Validar que el alumno esté rechazado o en correción
+            if(formatoUnico.getStatusFui() != null)
+            {
+                System.out.println("El status del fui es" + formatoUnico.getStatusFui().toString());
+                if(formatoUnico.getStatusFui().toString().equals("2") && formatoUnico.getStatusFui().toString().equals("3"))
+                {
+                    System.out.println("Su formato único está en correción o fue rechazado, puede entrar");
+                }
+                else
+                {
+                    System.out.println("El formato único no puede entrar, anda en validaciones o ya fue aceptado");
+                    return "PanelUsuario/panelUsuario";
+                }
+            }
             //horariosAlumno = listaHorariosAlumno.get(0);
 
         }
