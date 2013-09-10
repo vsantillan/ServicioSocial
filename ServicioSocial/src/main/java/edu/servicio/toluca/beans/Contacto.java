@@ -4,15 +4,23 @@
  */
 package edu.servicio.toluca.beans;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 /**
  *
  * @author Héctor
  */
 public class Contacto {
-    private String detalle,
-                   asunto,
-                   correo,
-                   nombre;
+    @NotEmpty(message = "Escribe tu comentario") 
+    private String detalle;
+    @NotEmpty(message = "Escribe un Asunto") 
+    private String asunto;
+    @NotEmpty(message = "Escribe un Correo") 
+    @Email(message = "No es correo valido")
+    private String correo;
+    @NotEmpty(message = "Escribe tu Nombre") 
+    private String nombre;
 
     public Contacto() 
     {

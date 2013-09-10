@@ -24,23 +24,34 @@
             <center>
                 <br/>
                 <h1>Contacto</h1>
+                ${pageContext.request.requestURL}
+                <div>${message}</div>
                 <form:form commandName="Contacto"  action="enviarMensajeContacto.do" method="POST">
                                 <table>
                                     <tr>
                                         <td>Nombre:</td>
-                                        <td><form:input path="nombre"/></td>
+                                        <td><form:input path="nombre"/>
+                                            <form:errors path="nombre"/>    
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Asunto:</td>
-                                        <td><form:input path="asunto"/></td>
+                                        <td><form:input path="asunto"/>
+                                            <form:errors path="asunto"/> 
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>Correo Electr&oacute;nico:</td>
-                                        <td><form:input path="correo"/></td>
+                                        <td><form:input path="correo"/>
+                                            <form:errors path="correo"/> 
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td> <p><label for="detalle">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:textarea  path="detalle" rows="8" cols="50" maxlength="300" />  
+                                        <td>  <form:textarea  path="detalle" rows="8" cols="50" maxlength="300" />
+                                              <form:errors path="detalle"/> 
+                                        </td>
+                                            
                                     </tr>
                                     <tr> 
                                         <td> <input type ="submit" value = "Guardar " /> </td>

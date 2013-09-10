@@ -9,6 +9,7 @@ package edu.servicio.toluca.controller;
  * @author bustedvillain
  */
 import edu.servicio.toluca.beans.Contacto;
+import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.VistaAlumno;
@@ -24,8 +25,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,7 +45,10 @@ public class NavegacionPrincipalController {
     public EstadosSiaFacade estadosFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     public VistaAlumnoFacade vistaAlumnoFacade;
-
+    
+    
+    final private String correosDevelopers[]={"rehoscript@gmail.com"};
+    
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model a) {
         return "/NavegacionPrincipal/index";
@@ -211,8 +217,52 @@ public class NavegacionPrincipalController {
         return "/NavegacionPrincipal/contacto";
     }
     @RequestMapping(method = RequestMethod.POST, value = "/enviarMensajeContacto.do")
-    public String nuevoMensaje(Contacto contacto,Model modelo) {
-        System.out.println(contacto.getCorreo());
-        return "redirect:contacto.do";
+    public String nuevoMensaje(@Valid Contacto contacto, BindingResult result,Model modelo) {
+        if(result.hasErrors()) {
+            modelo.addAttribute("Contacto",new Contacto());
+            return "/NavegacionPrincipal/contacto";
+        }
+        
+        String mensajeContacto="<h1>"+contacto.getNombre()+"</h1>" +
+                                "<h1>"+contacto.getAsunto()+"</h1>" +
+                                "<h1>"+contacto.getCorreo()+"</h1>" +
+                                "<p>"+contacto.getDetalle()+"</p>";
+        Thread hiloCorreo=new Thread(new HiloCorreo(mensajeContacto));
+        hiloCorreo.start();
+        modelo.addAttribute("message","Gracias por tu comentario, lo tomaremos en cuenta. ");
+        modelo.addAttribute("Contacto",new Contacto());
+        return "/NavegacionPrincipal/contacto";
+    }
+    
+    private class HiloCorreo implements Runnable
+    {
+        private String mensaje;
+        public HiloCorreo(String mensaje) {
+            this.mensaje=mensaje;
+        }
+        
+        
+        @Override
+        public void run() {
+            
+            try
+            {
+                
+                for(String correoDev: correosDevelopers)
+                {
+                    EnviarCorreo correoContacto = new EnviarCorreo("Contacto Servicio Social",
+                                               correoDev,
+                                               this.mensaje
+                                               );
+                    correoContacto.enviaCorreo();
+                }
+                
+            }
+            catch(Exception e)
+            {
+                System.out.println(e);
+            }
+        }
+    
     }
 }
