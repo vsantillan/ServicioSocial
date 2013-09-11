@@ -18,10 +18,11 @@
                 <h1>Propuesta registrada correctamente</h1>
                 <img src="imagenes/paloma.png"/>
                 <h3>Esta propuesta aún tiene que ser validada por el administrador.</h3>
-                <input type="button" value="Continuar con mi formato unico" onclick="$.fancybox.close();">
+                <button onclick="self.parent.location='formatoUnicoUsuario.do';">Continuar con mi formato &uacute;nico</button>
                 <br/>
             </center>
         </div>
-
+        
     </body>
+    
 </html>

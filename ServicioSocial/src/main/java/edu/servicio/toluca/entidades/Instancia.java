@@ -53,6 +53,7 @@ import org.hibernate.validator.constraints.Email;
     @NamedQuery(name = "Instancia.findByCorreo", query = "SELECT i FROM Instancia i WHERE i.correo = :correo")})
 public class Instancia implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     private Collection<RetroalimentacionInstancia2> retroalimentacionInstancia2Collection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -111,6 +112,7 @@ public class Instancia implements Serializable {
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     private Collection<Proyectos> proyectosCollection;
 //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")

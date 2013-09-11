@@ -1161,7 +1161,7 @@ public class OrganizacionesController2 {
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(propuesta.getResponsablePuesto()));
             proyecto.setTelefonoResponsable(propuesta.getTelefonoResponsable());
             proyecto.setValidacionAdmin(BigInteger.ZERO); //NO validado
-            proyecto.setEstatus(BigInteger.valueOf(2));
+            proyecto.setEstatus(BigInteger.valueOf(2)); //Propuesto por el alumno
             proyecto.setModalidad(limpiar.tuneaStringParaBD(propuesta.getModalidad()));
             proyecto.setFechaAlta(new Date());
             proyecto.setVacantes(propuesta.getVacantes());
@@ -1357,8 +1357,8 @@ public class OrganizacionesController2 {
                 proyecto.setIdColonia(coloniaNew);
                 System.out.println("Nuevo codigo postal + colonia agregado!");
             }
-            proyecto.setValidacionAdmin(BigInteger.valueOf(2)); //Proyecto propuesto por alumno
-            proyecto.setEstatus(BigInteger.ZERO); //No validado
+            proyecto.setValidacionAdmin(BigInteger.ZERO); //No validado
+            proyecto.setEstatus(BigInteger.valueOf(2)); //Proyecto propuesto por alumno
             proyecto.setFechaAlta(new Date());
             proyecto.setVacantesDisponibles(proyecto.getVacantes());
 
@@ -1367,7 +1367,9 @@ public class OrganizacionesController2 {
             proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
             proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
-
+            System.out.println("###################");
+            proyecto.getInfToBd();
+            System.out.println("###################");
             proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
 

@@ -29,7 +29,6 @@
     <center>
         <h1>Propuesta de Alumno</h1>        
         <!--<a onclick="$.fancybox.close();">Redireccion</a>-->
-        <a href="formatoUnicoUsuario.do" target="_parent">Redireccion</a>
         <form:form name="altaPropInstancia" commandName="propuesta" class="MyForm" action="gdaPropAlInstancia.do"  method="POST" style="width:80%;" id="contenido">
             <center>
                 <input type="hidden" name="datos_personales" value="${datos_personales}">
