@@ -26,12 +26,13 @@
                 <h1>Contacto</h1>
                
                 <div>${message}</div>
-                <form:form commandName="Contacto"  action="enviarMensajeContacto.do" method="POST">
+                <form:form commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do" method="POST">
                                 <table>
                                     <tr>
                                         <td>Nombre:</td>
                                         <td><form:input path="nombre"/><br/>
-                                            <form:errors path="nombre" cssClass="error"/>    
+                                            <form:errors path="nombre" cssClass="error"/>  
+                                            
                                         </td>
                                     </tr>
                                     <tr>

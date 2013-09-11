@@ -22,6 +22,7 @@ import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,7 +50,9 @@ public class NavegacionPrincipalController {
     public VistaAlumnoFacade vistaAlumnoFacade;
     
     
-    final private String correosDevelopers[]={"rehoscript@gmail.com"};
+    final private String correosDevelopers[]={"rehoscript@gmail.com",
+                                              "wind.saber@hotmail.com",
+                                              "roy006@hotmail.com"};
     
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model a) {
@@ -218,12 +221,13 @@ public class NavegacionPrincipalController {
         modelo.addAttribute("Contacto",new Contacto());
         return "/NavegacionPrincipal/contacto";
     }
-    @RequestMapping(method = RequestMethod.POST, value = "/enviarMensajeContacto.do")
-    public String nuevoMensaje(@Valid Contacto contacto, BindingResult result,Model modelo) {
+    @RequestMapping(method = RequestMethod.POST, value = "/contacto.do")
+    public String nuevoMensaje(@Valid Contacto contacto, BindingResult result,Map modelo) {
         if(result.hasErrors()) {
             System.err.println("Error");
             System.out.println("Error2");
-            modelo.addAttribute("Contacto",contacto);
+            
+            modelo.put("Contacto",contacto);
             return "/NavegacionPrincipal/contacto";
         }
         
@@ -233,8 +237,8 @@ public class NavegacionPrincipalController {
                                 "<p>"+contacto.getDetalle()+"</p>";
         Thread hiloCorreo=new Thread(new HiloCorreo(mensajeContacto));
         hiloCorreo.start();
-        modelo.addAttribute("message","Gracias por tu comentario, lo tomaremos en cuenta. ");
-        modelo.addAttribute("Contacto",new Contacto());
+        modelo.put("message","Gracias por tu comentario, lo tomaremos en cuenta. ");
+        modelo.put("Contacto",new Contacto());
         return "/NavegacionPrincipal/contacto";
     }
    
