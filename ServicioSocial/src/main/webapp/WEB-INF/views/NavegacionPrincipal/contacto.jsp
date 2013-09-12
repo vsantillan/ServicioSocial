@@ -27,6 +27,8 @@
                
                 <div>${message}</div>
                 <form:form commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do" method="POST">
+                    
+                    
                                 <table>
                                     <tr>
                                         <td>Nombre:</td>
