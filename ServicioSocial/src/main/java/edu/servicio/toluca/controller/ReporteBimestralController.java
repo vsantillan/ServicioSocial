@@ -5,6 +5,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.bimestrales.fechas;
+import edu.servicio.toluca.beans.bimestrales.reporteBimestral;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Proyectos;
@@ -51,7 +52,7 @@ public class ReporteBimestralController {
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model modelo,String alumno_id ) throws ParseException {
-       modelo.addAttribute("Reportes",new Reportes());
+       modelo.addAttribute("Reportes",new reporteBimestral());
         ///////////BUSCAR ALUMNO///////////
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
@@ -66,6 +67,7 @@ public class ReporteBimestralController {
                         List<FormatoUnico> formatoUnico =formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
                         FormatoUnico fechaInicioFU=formatoUnico.get(0);
                         fechas fechaFin =new  fechas(fechaInicioFU.getFechaInicio());
+                        modelo.addAttribute("horasAcumuladas",fechaInicioFU.getHorasAcumuladas());
                        System.out.println("Resultado del metodo"+fechaFin.dameFecha());
                         modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
                         modelo.addAttribute("fechaFin",fechaFin.dameFecha());
@@ -89,7 +91,7 @@ public class ReporteBimestralController {
     }
     
         @RequestMapping(method = RequestMethod.POST, value = "/insertaReporte.do")
-    public String insertaBimestral(@Valid Reportes reporte, BindingResult resultado, Model modelo) {
+    public String insertaBimestral(@Valid reporteBimestral reporte, BindingResult resultado, Model modelo) {
             
             if(resultado.hasErrors()){
                 modelo.addAttribute("Reportes",reporte);
