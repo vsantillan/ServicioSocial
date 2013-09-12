@@ -30,6 +30,8 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,7 +54,10 @@ public class NavegacionPrincipalController {
     
     final private String correosDevelopers[]={"rehoscript@gmail.com",
                                               "wind.saber@hotmail.com",
-                                              "roy006@hotmail.com"};
+                                              "roy_006@hotmail.com",
+                                              "manolo7221@gmail.com",
+                                              "m.jonatan.diaz@gmail.com",
+                                              "regulesteban@gmail.com"};
     
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model a) {
@@ -224,9 +229,7 @@ public class NavegacionPrincipalController {
     @RequestMapping(method = RequestMethod.POST, value = "/contacto.do")
     public String nuevoMensaje(@Valid Contacto contacto, BindingResult result,Map modelo) {
         if(result.hasErrors()) {
-            System.err.println("Error");
-            System.out.println("Error2");
-            
+            modelo.put("message",parseoErroresHTML(result.getFieldErrors()));
             modelo.put("Contacto",contacto);
             return "/NavegacionPrincipal/contacto";
         }
@@ -237,11 +240,26 @@ public class NavegacionPrincipalController {
                                 "<p>"+contacto.getDetalle()+"</p>";
         Thread hiloCorreo=new Thread(new HiloCorreo(mensajeContacto));
         hiloCorreo.start();
-        modelo.put("message","Gracias por tu comentario, lo tomaremos en cuenta. ");
+        modelo.put("message","<div class='error'>Gracias por tu comentario, lo tomaremos en cuenta. </div>");
         modelo.put("Contacto",new Contacto());
         return "/NavegacionPrincipal/contacto";
     }
+    
+    
+    ///----------------------------------------------------------------------------
    
+    
+    private String parseoErroresHTML(List<FieldError> errores)
+    {
+        String html="<div class='error'>";
+        for(FieldError error:errores)
+        {
+            html += error.getDefaultMessage()+"<br/>";
+        }
+        html +="</div>";
+        return html;
+    }
+    
     private class HiloCorreo implements Runnable
     {
         private String mensaje;
