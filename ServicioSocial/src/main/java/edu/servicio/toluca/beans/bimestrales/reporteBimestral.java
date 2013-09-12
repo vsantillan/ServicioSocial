@@ -29,6 +29,7 @@ public class reporteBimestral {
     @NotEmpty (message = "El campo no puede ser vacio")
     @Range(min = 0,max = 100, message = "La calificacion debe de estar entre 0-100")
     private BigInteger calificacion;
+    private String actividades;
 
     /**
      * @return the fechaInicio
@@ -98,6 +99,20 @@ public class reporteBimestral {
      */
     public void setCalificacion(BigInteger calificacion) {
         this.calificacion = calificacion;
+    }
+
+    /**
+     * @return the actividades
+     */
+    public String getActividades() {
+        return actividades;
+    }
+
+    /**
+     * @param actividades the actividades to set
+     */
+    public void setActividades(String actividades) {
+        this.actividades = actividades;
     }
     
 }
