@@ -6,13 +6,11 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.Contacto;
 import edu.servicio.toluca.beans.EnviarCorreo;
-import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,8 +37,7 @@ public class ContactoController {
     }
     @RequestMapping(method = RequestMethod.POST)
     public String nuevoMensaje( @ModelAttribute("Contacto") @Valid Contacto contacto, BindingResult result,Map modelo) {
-        if(result.hasErrors()) {
-            modelo.put("message",parseoErroresHTML(result.getFieldErrors()));
+        if(result.hasErrors()) {            
             modelo.put("Contacto",contacto);
             return "/NavegacionPrincipal/contacto";
         }
@@ -60,16 +57,7 @@ public class ContactoController {
     ///----------------------------------------------------------------------------
    
     
-    private String parseoErroresHTML(List<FieldError> errores)
-    {
-        String html="<div class='error'>";
-        for(FieldError error:errores)
-        {
-            html += error.getDefaultMessage()+"<br/>";
-        }
-        html +="</div>";
-        return html;
-    }
+   
     
     private class HiloCorreo implements Runnable
     {

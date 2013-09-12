@@ -57,7 +57,7 @@
                                             
                                     </tr>
                                     <tr> 
-                                        <td> <input type ="submit" value = "Guardar " /> </td>
+                                        <td> <input type ="submit" value = "Enviar" /> </td>
                                     </tr>
                                 </table>
                             </form:form>

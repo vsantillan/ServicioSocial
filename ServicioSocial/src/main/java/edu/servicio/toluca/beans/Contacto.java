@@ -18,20 +18,20 @@ public class Contacto implements Serializable{
     private static final long serialVersionUID = 1L;
     
     
-    @NotEmpty(message = "{Escribe tu comentario}") 
+    @NotEmpty(message = "Escribe tu comentario") 
     private String detalle;
     
    
-    @NotEmpty(message = "{Escribe un Asunto}") 
+    @NotEmpty(message = "Escribe un Asunto") 
     private String asunto;
     
     
-    @NotEmpty(message = "{Escribe un Correo}") 
-    @Email(message = "{No es correo valido}")
+    @NotEmpty(message = "Escribe un Correo") 
+    @Email(message = "No es correo valido")
     private String correo;
     
     
-    @NotEmpty(message = "{Escribe tu Nombre}") 
+    @NotEmpty(message = "Escribe tu Nombre") 
     private String nombre;
 
     public Contacto() 
