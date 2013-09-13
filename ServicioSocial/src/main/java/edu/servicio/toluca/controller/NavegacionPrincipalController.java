@@ -8,8 +8,6 @@ package edu.servicio.toluca.controller;
  *
  * @author bustedvillain
  */
-import edu.servicio.toluca.beans.Contacto;
-import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.VistaAlumno;
@@ -22,18 +20,11 @@ import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
