@@ -76,6 +76,15 @@ public class PlaticaController {
         return "/Platicas/altaPlatica";
     }
 
+        @RequestMapping(method = RequestMethod.GET, value = "/pruebarep.do")
+    public String reporte(Model model) {
+        return "/Platicas/pruebarep";
+    }
+          @RequestMapping(method = RequestMethod.GET, value = "/rep.do")
+    public String reporte2(Model model) {
+        return "/Platicas/rep";
+    }    
+        
     @RequestMapping(method = RequestMethod.GET, value = "/consultasBajas.do")
     public String consultasBajas(Model model) {
         LinkedHashMap ordenarDesc = new LinkedHashMap();

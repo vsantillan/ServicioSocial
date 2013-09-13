@@ -56,6 +56,7 @@
                             </tr>
                         </core:forEach>
                     </tbody>
+                    ${errorBlanco}
                 </table>
                 <table>
                     <tr>
@@ -70,7 +71,7 @@
                                 <table>
                                     <tr>
                                         <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:input id="lugar" class="lugares" name="lugar" path="lugar" rows="8" cols="50"  /> </td>
+                                        <td>  <form:input id="lugar" class="lugares" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                                     </tr>
                                     <tr> 
                                         <td> <input type ="submit" value = "Guardar " /> </td>
@@ -84,9 +85,10 @@
                     <p>Escriba la descripcion del lugar.</p>
                     <form:form commandName="lugar_i" id="editarLugar" action="editarLugar.do" method="POST">
                                 <table>
+                                     <form:input hidden="hidden" id="id" name="name" path="id" />
                                     <tr>
                                         <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:input id="lugar_s" class="lugares"  name="lugar" path="lugar" rows="8" cols="50"  /> </td>
+                                        <td>  <form:input id="lugar_s" class="lugares"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                                     </tr>
                                     <tr> 
                                         <td> <input id="envioB" type ="submit" value = "Guardar " /> </td>

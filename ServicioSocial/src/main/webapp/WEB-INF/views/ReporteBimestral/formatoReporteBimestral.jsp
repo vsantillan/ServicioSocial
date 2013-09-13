@@ -86,6 +86,10 @@
 
                         <table>
                             <tr>
+                                <td><label for="noReporte">No de Reporte:</label></td>
+                                <td><form:input path="numeroReporte" type="text" name=" numeroReporte" id=" numeroReporte" disabled="true" value="${numeroReporte}"  /></td>
+                            </tr>
+                            <tr>
                                 <td> <label for="fecha">Fecha de Inicio del Reporte:</label> </td>
                                 <core:choose>
                                     <core:when test="${empty fechaInicio}">
@@ -160,10 +164,6 @@
                     </form:form>
                 </div>
             </div>
-
-
-
-
             <div style="clear:both;"></div>
         </div>
         <%-- fin del contenido --%>
