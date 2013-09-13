@@ -29,7 +29,6 @@
     <center>
         <h1>Propuesta de Alumno</h1>        
         <!--<a onclick="$.fancybox.close();">Redireccion</a>-->
-        <a href="formatoUnicoUsuario.do" target="_parent">Redireccion</a>
         <form:form name="altaPropInstancia" commandName="propuesta" class="MyForm" action="gdaPropAlInstancia.do"  method="POST" style="width:80%;" id="contenido">
             <center>
                 <input type="hidden" name="datos_personales" value="${datos_personales}">
@@ -239,10 +238,10 @@
                             <br/>
                         </td>  
                     </tr>  
-                    <tr>
+                    <tr style="display:none;">
                         <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                         <td>
-                            <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto" style="display:none;">
+                            <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto">
                                 <core:forEach items="${tipoProyecto}" var="tipoProyecto">
                                     <form:option  value="${tipoProyecto.idTipoProyecto}">${tipoProyecto.descripcion}</form:option>
                                 </core:forEach> 

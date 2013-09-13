@@ -8,7 +8,6 @@ import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.NuevaObservacion;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
-import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
 import java.math.BigDecimal;
 import javax.ejb.EJB;
 import javax.validation.Valid;

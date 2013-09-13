@@ -50,7 +50,7 @@
                     <tbody>
                         <core:forEach items="${lugares}" var="current">
                             <tr class='gradeX'>
-                                <th><a href="#editarL" ><img src="imagenes/editar.png" width="30" title="Editar Lugar"/></a>
+                                <th><a href="#editarL" class="fancybox-effects-a"><img class="editLugar" ide="${current.id}" id="${current.lugar}" src="imagenes/editar.png" width="30" title="Editar Lugar"/></a>
                                     <a href="#" class="btn-validar-org"><img class="cambiaStatusLugar" ide="${current.id}" src="imagenes/trash.png" width="30" title="Borrar Lugar"></a></th>
                                 <th><core:out value="${current.lugar}" /></th>
                             </tr>
@@ -59,7 +59,7 @@
                 </table>
                 <table>
                     <tr>
-                        <td><a href="#nuevoL" class="fancybox-effects-a"><img src="imagenes/agregar.jpg" title="Agregar Lugar" width="30"/></a></td>
+                        <td><a href="#nuevoL" class="fancybox-effects-a" id="nuevoLB"><img id="nuevoLB" src="imagenes/agregar.jpg" title="Agregar Lugar" width="30"/></a></td>
                     </tr>
                 </table>
                 <div id="nuevoL" style="display:none">
@@ -70,7 +70,7 @@
                                 <table>
                                     <tr>
                                         <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:textarea id="lugar"  name="lugar" path="lugar" rows="8" cols="50"  /> </td>
+                                        <td>  <form:input id="lugar" class="lugares" name="lugar" path="lugar" rows="8" cols="50"  /> </td>
                                     </tr>
                                     <tr> 
                                         <td> <input type ="submit" value = "Guardar " /> </td>
@@ -86,10 +86,10 @@
                                 <table>
                                     <tr>
                                         <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:textarea id="lugar"  name="lugar" path="lugar" rows="8" cols="50"  /> </td>
+                                        <td>  <form:input id="lugar_s" class="lugares"  name="lugar" path="lugar" rows="8" cols="50"  /> </td>
                                     </tr>
                                     <tr> 
-                                        <td> <input type ="submit" value = "Guardar " /> </td>
+                                        <td> <input id="envioB" type ="submit" value = "Guardar " /> </td>
                                     </tr>
                                 </table>
                     </form:form>

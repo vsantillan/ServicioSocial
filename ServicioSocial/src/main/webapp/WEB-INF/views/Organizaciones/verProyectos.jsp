@@ -24,7 +24,7 @@
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
                     "sScrollX": "100%",
-                    "sScrollXInner": "100%",
+                    "sScrollXInner": "200%",
                     "bScrollCollapse": true
 
                 });
@@ -50,10 +50,10 @@
                         <tr>
                             <th>Acci&oacute;n</th>
                             <th>Ver proyecto</th>
-                            <th>Organizaci&oacute;n</th>
                             <th>Nombre del proyecto</th>
-                            <th>Titular</th>
-                            <th>Numero de vacantes</th>     
+                            <th>Numero de vacantes</th> 
+                            <th>Responsable del Programa</th> 
+                            <th>Puesto del Responsable</th>  
                             <th>Estatus</th>
                         </tr>
                     </thead>
@@ -62,10 +62,10 @@
                             <tr class='gradeX' id="${current.idProyecto}">
                                 <th><a href="editarProyecto.do?id=${current.idProyecto}" ><img src="imagenes/editar.png" width="30" title="Editar Proyecto"/></a><a href="#" ><img  ide="${current.idProyecto}" src="imagenes/trash.png" width="30" title="Borrar Proyecto"></a></th>
                                 <th><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
-                                <th><core:out value="${current.idInstancia.nombre}" /></th>
                                 <th><core:out value="${current.nombre}" /></th>
-                                <th><core:out value="${current.idInstancia.titular}" /></th>
                                 <th><core:out value="${current.vacantes}" /></th>
+                                <th><core:out value="${current.nombreResponsable}" /></th>
+                                <th><core:out value="${current.responsablePuesto}" /></th>                                
                                 <th>
                                     <core:choose>
                                         <core:when test="${current.validacionAdmin == 0}">

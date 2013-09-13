@@ -84,12 +84,14 @@ public class OrganizacionesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request) {
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
+        System.out.println("Instancias");
         for (int i = 0; i < listaInstancias.size(); i++) {
-            if ((listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) || (listaInstancias.get(i).getValidacionAdmin() == BigInteger.valueOf(2))) {
+            String estatus=listaInstancias.get(i).getEstatus().toString();
+            if ((estatus.equals("1")) || (estatus.equals("2"))) {
                 filtroInstancias.add(listaInstancias.get(i));
-            }
+            }                
         }
         model.addAttribute("organizaciones", filtroInstancias);
         model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());

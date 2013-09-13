@@ -5,8 +5,6 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-
 <%@ include file="../Template/taglibs.jsp" %>
 <!DOCTYPE html>
 <html>

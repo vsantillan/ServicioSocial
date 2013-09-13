@@ -28,6 +28,10 @@ function listo()
 
     })
 
+    function prueba() {
+        alert("funciona!");
+    }
+
 }
 function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
 {
@@ -118,7 +122,7 @@ function recargaCombosOrgs(idProyecto)
                 $("#comboOrganizaciones").val(idInstancia);
             }
         });
-        
+
 
     });
 
@@ -269,4 +273,6 @@ function timePicker()
         $(idCadena).timepicker(parametros);
     }
 }
+
+
 

@@ -25,6 +25,7 @@ import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
+import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.model.ValidaSesion;
 import edu.servicio.toluca.model.ValidacionesOrganizaciones;
@@ -44,6 +45,7 @@ import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoLocalidadFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
+import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -102,6 +104,8 @@ public class OrganizacionesController2 {
     private CiudadesFacade ciudadesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
     private TipoLocalidadFacade tipoLocalidadFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+    private VistaAlumnoFacade vistaAlumnoFacade;
     MetodosValidacion limpiar = new MetodosValidacion();
     //Alta de Organizacion
 
@@ -543,7 +547,21 @@ public class OrganizacionesController2 {
                 proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
                 proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
                 proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
-
+                //Imprimir todo
+                System.out.println("Datos del alumno");
+                System.out.println("Nombre:"+proyecto.getNombre()+ " len:"+proyecto.getNombre().length());
+                System.out.println("Vacantes:"+proyecto.getVacantes()+ " len:"+proyecto.getVacantes().toString().length());
+                System.out.println("Vacantes disponibles:"+proyecto.getVacantesDisponibles()+ " len:"+proyecto.getVacantesDisponibles().toString().length());
+                System.out.println("Responsable puesto:"+proyecto.getResponsablePuesto()+ " len:"+proyecto.getResponsablePuesto().length());
+                System.out.println("Nombre Responsable:"+proyecto.getNombreResponsable()+ " len:"+proyecto.getNombreResponsable().length());
+                System.out.println("Telefono responsable:"+proyecto.getTelefonoResponsable()+ " len:"+(proyecto.getTelefonoResponsable()+"").length());
+                System.out.println("Domicilio:"+proyecto.getDomicilio()+ " len:"+proyecto.getDomicilio().length());
+                System.out.println("Id colonia:"+proyecto.getIdColonia().getIdColonia()+ " len:"+proyecto.getIdColonia().getIdColonia().toString().length());
+                System.out.println("Id tipo proyecto:"+proyecto.getIdTipoProyecto().getIdTipoProyecto()+ " len:"+proyecto.getIdTipoProyecto().getIdTipoProyecto().toString().length());
+                System.out.println("Id programa:"+proyecto.getIdPrograma().getIdPrograma()+ " len:"+proyecto.getIdPrograma().getIdPrograma().toString().length());
+                System.out.println("Modalidad:"+proyecto.getModalidad()+ " len:"+proyecto.getModalidad().length());
+                System.out.println("fin");
+                //
                 proyectosFacade.create(proyecto);
                 System.out.println("Insercion correcta!");
 
@@ -1143,7 +1161,7 @@ public class OrganizacionesController2 {
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(propuesta.getResponsablePuesto()));
             proyecto.setTelefonoResponsable(propuesta.getTelefonoResponsable());
             proyecto.setValidacionAdmin(BigInteger.ZERO); //NO validado
-            proyecto.setEstatus(BigInteger.valueOf(2));
+            proyecto.setEstatus(BigInteger.valueOf(2)); //Propuesto por el alumno
             proyecto.setModalidad(limpiar.tuneaStringParaBD(propuesta.getModalidad()));
             proyecto.setFechaAlta(new Date());
             proyecto.setVacantes(propuesta.getVacantes());
@@ -1339,8 +1357,8 @@ public class OrganizacionesController2 {
                 proyecto.setIdColonia(coloniaNew);
                 System.out.println("Nuevo codigo postal + colonia agregado!");
             }
-            proyecto.setValidacionAdmin(BigInteger.valueOf(2)); //Proyecto propuesto por alumno
-            proyecto.setEstatus(BigInteger.ZERO); //No validado
+            proyecto.setValidacionAdmin(BigInteger.ZERO); //No validado
+            proyecto.setEstatus(BigInteger.valueOf(2)); //Proyecto propuesto por alumno
             proyecto.setFechaAlta(new Date());
             proyecto.setVacantesDisponibles(proyecto.getVacantes());
 
@@ -1349,7 +1367,9 @@ public class OrganizacionesController2 {
             proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
             proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
-
+            System.out.println("###################");
+            proyecto.getInfToBd();
+            System.out.println("###################");
             proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
 
@@ -1414,8 +1434,14 @@ public class OrganizacionesController2 {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
             String idInstancia = session.getAttribute("NCONTROL").toString();
             Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            System.out.println("idInstancia:"+idInstancia);
             //Valida que no sea nula la collection
-            ArrayList<Proyectos> listaProyectos = new ArrayList<Proyectos>(instancia.getProyectosCollection());
+            ArrayList<Proyectos> listaProyectos= new ArrayList<Proyectos>();
+            try{
+                listaProyectos= new ArrayList<Proyectos>(instancia.getProyectosCollection());
+            }catch(Exception e){
+                System.out.println("Lista de proyectos vacia");
+            }
             System.out.println("proyectos:" + listaProyectos);
             ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
             //Muestra proyectos que esten activos, validados o no validados
@@ -1424,7 +1450,29 @@ public class OrganizacionesController2 {
                     filtroDeProyectos.add(listaProyectos.get(i));
                 }
             }
+            
+            //List<Proyectos> proyectos = proyectosFacade.findBySpecificField("idInstancia", idInstancia, "equal", null, null);
+//            System.out.println("proyectos:"+proyectos);
             model.addAttribute("proyectos", filtroDeProyectos);
+            return "/Organizaciones/verProyectos";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/verAlumnosProyecto.do")
+    public String verAlumnosProyecto(Model model, HttpSession session, HttpServletRequest request, String idProyecto) {
+        if (new ValidaSesion().validaOrganizacion(session, request)) {
+            System.out.println("idProyecto"+idProyecto);
+            List<FormatoUnico> alumnos = new ArrayList<FormatoUnico>();
+            try{
+                alumnos = new ArrayList<FormatoUnico>(proyectosFacade.find(BigDecimal.valueOf(Double.parseDouble(idProyecto))).getFormatoUnicoCollection());                
+            }catch(Exception e){
+                System.out.println("Error cargando la lista");
+            }
+            model.addAttribute("alumnos", alumnos);
+            
             return "/Organizaciones/verProyectos";
         } else {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");

@@ -27,7 +27,9 @@
     <body class="background">
     <center>
         <h1>Propuesta de Alumno</h1>        
-
+        <script>
+            prueba();
+        </script>
         <form:form name="altaPropProyecto" commandName="proyecto" class="MyForm" action="gdaPropAlProyecto.do"  method="POST" style="width:80%;" id="contenido">
             <center>
                 <input type="hidden" name="datos_personales" value="${datos_personales}">
@@ -133,10 +135,10 @@
                             <br/>
                         </td>  
                     </tr>  
-                    <tr>
+                    <tr style="display:none;">
                         <td>  <label for="lugar">Tipo de Proyecto:</label></td>
                         <td>
-                            <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto" disabled="true">
+                            <form:select id="tipoProyecto" path="idTipoProyecto.idTipoProyecto" name="tipoProyecto">
                                 <core:forEach items="${tipoProyecto}" var="tipoProyecto">
                                     <form:option  value="${tipoProyecto.idTipoProyecto}">${tipoProyecto.descripcion}</form:option>
                                 </core:forEach> 

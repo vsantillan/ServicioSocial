@@ -56,6 +56,7 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles"),
     @NamedQuery(name = "Proyectos.findByNombre", query = "SELECT p FROM Proyectos p WHERE p.nombre = :nombre")})
 public class Proyectos implements Serializable {
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection;
     private static final long serialVersionUID = 1L;
@@ -114,9 +115,11 @@ public class Proyectos implements Serializable {
     @NotBlank
     @Column(name = "NOMBRE")
     private String nombre;
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<ProyectoPerfil> proyectoPerfilCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     private Collection<Actividades> actividadesCollection;
     @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
     @ManyToOne(optional = false)
@@ -126,11 +129,13 @@ public class Proyectos implements Serializable {
     private Programa idPrograma;
     @JoinColumn(name = "ID_INSTANCIA", referencedColumnName = "ID_INSTANCIA")
     @ManyToOne(optional = false)
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     private Instancia idInstancia;
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
     @OneToMany(mappedBy = "idproyecto")
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     private Collection<FormatoUnico> formatoUnicoCollection;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
 //    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;
@@ -199,15 +204,15 @@ public class Proyectos implements Serializable {
     public BigInteger getValidacionAdmin() {
         return validacionAdmin;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public void setValidacionAdmin(BigInteger validacionAdmin) {
         this.validacionAdmin = validacionAdmin;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public BigInteger getEstatus() {
         return estatus;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public void setEstatus(BigInteger estatus) {
         this.estatus = estatus;
     }
@@ -253,6 +258,7 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<ProyectoPerfil> getProyectoPerfilCollection() {
         return proyectoPerfilCollection;
     }
@@ -262,6 +268,7 @@ public class Proyectos implements Serializable {
     }
     
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<Actividades> getActividadesCollection() {
         return actividadesCollection;
     }
@@ -285,7 +292,7 @@ public class Proyectos implements Serializable {
     public void setIdPrograma(Programa idPrograma) {
         this.idPrograma = idPrograma;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Instancia getIdInstancia() {
         return idInstancia;
     }
@@ -303,6 +310,7 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<FormatoUnico> getFormatoUnicoCollection() {
         return formatoUnicoCollection;
     }
@@ -337,12 +345,42 @@ public class Proyectos implements Serializable {
     }
 
     @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Collection<RetroalimentacionProyecto2> getRetroalimentacionProyecto2Collection() {
         return retroalimentacionProyecto2Collection;
     }
 
     public void setRetroalimentacionProyecto2Collection(Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection) {
         this.retroalimentacionProyecto2Collection = retroalimentacionProyecto2Collection;
+    }
+    
+    public void getInfToBd(){
+        System.out.println("Proyecto");
+        try{
+            System.out.println("idProyecto:"+getIdProyecto());
+        }catch(Exception e){
+            System.out.println("Aun no tiene idProyecto");
+        }        
+        System.out.println("idInstancia:"+getIdInstancia().getIdInstancia());
+        System.out.println("Nombre proyecto:"+getNombre());
+        System.out.println("Vacantes:"+getVacantes());
+        System.out.println("Vacantes disponibles:"+getVacantesDisponibles());
+        System.out.println("Responsable:"+getNombreResponsable());
+        System.out.println("Puesto responsable:"+getResponsablePuesto());
+        System.out.println("Telefono:"+getTelefonoResponsable());
+        System.out.println("Domicilio:"+getDomicilio());
+        System.out.println("idColonia:"+getIdColonia().getIdColonia());
+        System.out.println("ValidacionAdmin:"+getValidacionAdmin());
+        System.out.println("Estatus:"+getEstatus());
+        System.out.println("idPrograma:"+getIdPrograma().getIdPrograma());
+        System.out.println("Modalidad:"+getModalidad());
+        System.out.println("Fecha alta:"+getFechaAlta());
+        System.out.println("Tipo Poryecto:"+getIdTipoProyecto().getIdTipoProyecto());
+        
+    }
+    
+    public void getEverythingDebugged(){
+        
     }
     
 }

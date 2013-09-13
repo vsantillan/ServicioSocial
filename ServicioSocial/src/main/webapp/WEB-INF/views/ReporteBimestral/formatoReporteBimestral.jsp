@@ -82,25 +82,30 @@
                 <div id="Generar">
                     <h1>Generar Reporte</h1>
                     <p>Introduzca los datos requeridos para llenar su formulario</p>
-                    <form:form name="reportesBimestrales" id="reportesBimestrales"  action="#" method="POST">
+                    <form:form commandName="Reportes" name="reportesBimestrales" id="reportesBimestrales"  action="insertaReporte.do" method="POST">
 
                         <table>
                             <tr>
                                 <td> <label for="fecha">Fecha de Inicio del Reporte:</label> </td>
                                 <core:choose>
                                     <core:when test="${empty fechaInicio}">
-                                        <td><input type="text"  name="fechaInicio"id="datepicker" value="" onchange="actualizaFecha(this)" /></td>  
+                                        <td><form:input path="fechaInicio" type="text"  name="fechaInicio"id="datepicker" value="" onchange="actualizaFecha(this)" /></td>  
                                     </core:when>
                                     <core:otherwise>
-                                             <td><input type="text"  name="fechaInicio"id="datepicker" disabled="disabled" value="${fechaInicio}" onchange="actualizaFecha(this)" /></td>  
+                                             <td><form:input path="fechaInicio" type="text"  name="fechaInicio"id="datepicker" disabled="true" value="${fechaInicio}" onchange="actualizaFecha(this)" /></td>  
                                     </core:otherwise>
                                 </core:choose>                                   
                                 <td> <label for="fecha">Fecha Limite del  Reporte:</label> </td>
-                                <td><input type="text" name="fechaFin" id="fechaFin" disabled="disabled" value="${fechaFin}"  /></td> 
+                                <td><form:input path="fechaFin" type="text" name="fechaFin" id="fechaFin" disabled="true" value="${fechaFin}"  /></td> 
                             </tr>
                             <tr>
                                 <td><label for="horasA">Horas del Reporte:</label></td>
-                                <td><input type="text" name="horasReporte" /></td>
+                                <td>
+                                    <form:input path="horas" type="text" name="horasReporte" value="0" />
+                                    <form:errors path="horas" cssClass="error"/>
+                                </td>
+                                <td><label for="horasAcumuluadas">Horas Acumuladas:</label></td>
+                                <td><form:input path="horasAcumuladas" type="text" name="horasAcumuladas" id="horasAcumuladas" disabled="true" value="${horasAcumuladas}"  /></td>
                             </tr>
                             <tr>
                                 <td><label for="actividad">Actividades:</label></td>
@@ -122,8 +127,6 @@
                                         <select name="selectto" id="select-to" multiple size="5">
                                         </select>
                                     </fieldset>
-
-
                                 </td>
                             </tr>
                             <core:forEach items="${datosPersonales}" var="current">
@@ -132,7 +135,10 @@
                                         <core:when test="${formato.catalogoPlanId.detalle=='S'}" >
                                             <tr>
                                                 <td><label for="calificacion">Calificaci&oacute;n</label></td>
-                                                <td><input type="text" name="actividad" /></td>                                            
+                                                <td>
+                                                    <form:input path="calificacion" type="text" name="actividad" />
+                                                    <form:errors path="calificacion" cssClass="error"/>
+                                                </td>                                            
                                             </tr>
                                         </core:when> 
                                     </core:choose>
@@ -141,7 +147,6 @@
                             </core:forEach>  
                             <tr> 
                                 <td> <input type ="submit" value = "Generar Reporte" /> </td>
-                                <td> <input type ="reset" value = "Limpiar" /></td>
                             </tr>
                         </table>
                     </form:form>
