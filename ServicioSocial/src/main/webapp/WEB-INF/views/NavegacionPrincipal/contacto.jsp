@@ -26,7 +26,9 @@
                 <h1>Contacto</h1>
                
                 <div>${message}</div>
-                <form:form commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do" method="POST">
+                <form:form commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do" class="MyForm" method="POST">
+                    
+                    
                                 <table>
                                     <tr>
                                         <td>Nombre:</td>
@@ -55,7 +57,7 @@
                                             
                                     </tr>
                                     <tr> 
-                                        <td> <input type ="submit" value = "Guardar " /> </td>
+                                        <td> <input type ="submit" value = "Enviar" /> </td>
                                     </tr>
                                 </table>
                             </form:form>

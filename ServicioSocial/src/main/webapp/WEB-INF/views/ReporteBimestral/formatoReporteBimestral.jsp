@@ -101,9 +101,11 @@
                             <tr>
                                 <td><label for="horasA">Horas del Reporte:</label></td>
                                 <td>
-                                    <form:input path="horas" type="text" name="horasReporte" />
+                                    <form:input path="horas" type="text" name="horasReporte" value="0" />
                                     <form:errors path="horas" cssClass="error"/>
                                 </td>
+                                <td><label for="horasAcumuluadas">Horas Acumuladas:</label></td>
+                                <td><form:input path="horasAcumuladas" type="text" name="horasAcumuladas" id="horasAcumuladas" disabled="true" value="${horasAcumuladas}"  /></td>
                             </tr>
                             <tr>
                                 <td><label for="actividad">Actividades:</label></td>
@@ -125,8 +127,6 @@
                                         <select name="selectto" id="select-to" multiple size="5">
                                         </select>
                                     </fieldset>
-
-
                                 </td>
                             </tr>
                             <core:forEach items="${datosPersonales}" var="current">
