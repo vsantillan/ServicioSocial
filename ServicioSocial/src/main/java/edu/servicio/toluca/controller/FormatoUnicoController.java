@@ -123,6 +123,8 @@ public class FormatoUnicoController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
+        if(foliosPlaticaFacade.count() == 0)
+            return "PanelUsuario/panelUsuario";
         if(new ValidaSesion().validaAlumno(session, request)){
             //return "/PanelUsuario/panelUsuario";
         }else{
