@@ -66,12 +66,22 @@ public class ReporteBimestralController {
                     if (RB.isEmpty()) {
                         List<FormatoUnico> formatoUnico =formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
                         FormatoUnico fechaInicioFU=formatoUnico.get(0);
+                        modelo.addAttribute("numeroReporte", 1);
                         fechas fechaFin =new  fechas(fechaInicioFU.getFechaInicio());
                         modelo.addAttribute("horasAcumuladas",fechaInicioFU.getHorasAcumuladas());
                        System.out.println("Resultado del metodo"+fechaFin.dameFecha());
                         modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
                         modelo.addAttribute("fechaFin",fechaFin.dameFecha());
                     }else{
+                        int noReportes=0;
+                        for(int i=0; i<RB.size(); i++){
+                            Reportes reporteBimestral = RB.get(i);
+                            if(reporteBimestral.getStatus()==BigInteger.valueOf(1)){//Checar cual el es el status de formato aprobado
+                                noReportes++;
+                               }
+                        
+                        }
+                        modelo.addAttribute("numeroReporte", noReportes);
                         modelo.addAttribute("fechaInicio", "");
                         modelo.addAttribute("fechaFin","");
                     }       
