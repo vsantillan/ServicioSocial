@@ -22,15 +22,15 @@ public class reporteBimestral {
     private String fechaInicio;
     @NotEmpty (message = "El campo no puede ser vacio")
     private String fechaFin;
-    @NotEmpty (message = "El campo no puede ser vacio")
+    @NotNull (message ="Debe introducir un numero de horas por Reporte" )
     @Range(min = 0,max = 160,message = "El rango de las horas debe ser entre 0-160")
-    private int horas;
-    private int horasAcumuladas;
-    @NotEmpty (message = "El campo no puede ser vacio")
+    private Integer horas;
+    private Integer horasAcumuladas;
+    @NotNull (message = "Introduzca una calificacion para el reporte")
     @Range(min = 0,max = 100, message = "La calificacion debe de estar entre 0-100")
-    private int calificacion;
+    private Integer calificacion;
     private String actividades;
-    private int numeroReporte;
+    private Integer numeroReporte;
 
     /**
      * @return the fechaInicio
@@ -63,42 +63,42 @@ public class reporteBimestral {
     /**
      * @return the horas
      */
-    public int getHoras() {
+    public Integer getHoras() {
         return horas;
     }
 
     /**
      * @param horas the horas to set
      */
-    public void setHoras(int horas) {
+    public void setHoras(Integer horas) {
         this.horas = horas;
     }
 
     /**
      * @return the horasAcumuladas
      */
-    public int getHorasAcumuladas() {
+    public Integer getHorasAcumuladas() {
         return horasAcumuladas;
     }
 
     /**
      * @param horasAcumuladas the horasAcumuladas to set
      */
-    public void setHorasAcumuladas(int horasAcumuladas) {
+    public void setHorasAcumuladas(Integer horasAcumuladas) {
         this.horasAcumuladas = horasAcumuladas;
     }
 
     /**
      * @return the calificacion
      */
-    public int getCalificacion() {
+    public Integer getCalificacion() {
         return calificacion;
     }
 
     /**
      * @param calificacion the calificacion to set
      */
-    public void setCalificacion(int calificacion) {
+    public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
     }
 
@@ -119,14 +119,14 @@ public class reporteBimestral {
     /**
      * @return the numeroReporte
      */
-    public int getNumeroReporte() {
+    public Integer getNumeroReporte() {
         return numeroReporte;
     }
 
     /**
      * @param numeroReporte the numeroReporte to set
      */
-    public void setNumeroReporte(int numeroReporte) {
+    public void setNumeroReporte(Integer numeroReporte) {
         this.numeroReporte = numeroReporte;
     }
 

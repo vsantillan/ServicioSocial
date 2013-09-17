@@ -93,14 +93,20 @@
                                 <td> <label for="fecha">Fecha de Inicio del Reporte:</label> </td>
                                 <core:choose>
                                     <core:when test="${empty fechaInicio}">
-                                        <td><form:input path="fechaInicio" type="text"  name="fechaInicio"id="datepicker" value="" onchange="actualizaFecha(this)" /></td>  
+                                        <td><form:input path="fechaInicio" type="text"  name="fechaInicio"id="datepicker" value="" onchange="actualizaFecha(this)" />
+                                            <form:errors path="fechaInicio" cssClass="error"/>  
+                                        </td>  
                                     </core:when>
                                     <core:otherwise>
-                                             <td><form:input path="fechaInicio" type="text"  name="fechaInicio"id="datepicker" disabled="true" value="${fechaInicio}" onchange="actualizaFecha(this)" /></td>  
+                                        <td><form:input path="fechaInicio" type="text"  name="fechaInicio"id="datepicker" disabled="true" value="${fechaInicio}" onchange="actualizaFecha(this)" />
+                                            <form:errors path="fechaInicio" cssClass="error"/> 
+                                        </td>  
                                     </core:otherwise>
                                 </core:choose>                                   
                                 <td> <label for="fecha">Fecha Limite del  Reporte:</label> </td>
-                                <td><form:input path="fechaFin" type="text" name="fechaFin" id="fechaFin" disabled="true" value="${fechaFin}"  /></td> 
+                                <td><form:input path="fechaFin" type="text" name="fechaFin" id="fechaFin" disabled="true" value="${fechaFin}"  />
+                                    <form:errors path="fechaFin" cssClass="error"/> 
+                                </td> 
                             </tr>
                             <tr>
                                 <td><label for="horasA">Horas del Reporte:</label></td>
@@ -109,13 +115,15 @@
                                     <form:errors path="horas" cssClass="error"/>
                                 </td>
                                 <td><label for="horasAcumuluadas">Horas Acumuladas:</label></td>
-                                <td><form:input path="horasAcumuladas" type="text" name="horasAcumuladas" id="horasAcumuladas" disabled="true" value="${horasAcumuladas}"  /></td>
+                                <td><form:input path="horasAcumuladas" type="text" name="horasAcumuladas" id="horasAcumuladas" disabled="true" value="${horasAcumuladas}"  />
+                                    <form:errors path="horasAcumuladas" cssClass="error"/>
+                                </td>
                             </tr>
                             <tr>
                                 <td><label for="actividad">Actividades:</label></td>
                                 <td>
                                     <fieldset>
-                                        <select name="selectfrom" id="select-from" multiple size="5">
+                                        <select name="selectfrom" id="select-from" multiple size="5" >
                                             <core:forEach items="${datosPersonales}" var="current">
                                                 <core:forEach items="${current.formatoUnicoCollection}" var="formato">
                                                     <core:forEach items="${formato.idproyecto.actividadesCollection}" var="actividades" >
@@ -124,14 +132,17 @@
                                                 </core:forEach>
                                             </core:forEach>
                                         </select>
-
-                                        <a href="JavaScript:void(0);" id="btn-add">Agregar &raquo;</a>
+                                        
                                         <a href="JavaScript:void(0);" id="btn-remove">&laquo; Quitar</a>
+                                        <a href="JavaScript:void(0);" id="btn-add">Agregar &raquo;</a>
+                                        
+                                        
 
                                         <select name="selectto" id="select-to" multiple size="5">
                                         </select>
                                     </fieldset>
                                 </td>
+                                <td>${errorActividades}</td>
                             </tr>
                             <core:forEach items="${datosPersonales}" var="current">
                                 <core:forEach items="${current.formatoUnicoCollection}" var="formato">
@@ -149,8 +160,9 @@
 
                                 </core:forEach>
                             </core:forEach>  
+                            <form:input path="actividades" hidden="hidden" name="nActividades" id="nActividades" value="0" />
                             <tr> 
-                                <td> <input type ="submit" value = "Generar Reporte" /> </td>
+                                <td> <input type ="submit" value = "Generar Reporte" id="envia"  /> </td>
                             </tr>
                         </table>
                     </form:form>
@@ -181,6 +193,16 @@
                     $(this).remove();
                 });
             });
+            
+                    $('input#envia').click(function() {
+            $('#select-from option').each(function()
+            {
+                $(this).attr("selected", "selected");
+            });
+        });
+  
+
+
         </script>
     </body>
 </html>
