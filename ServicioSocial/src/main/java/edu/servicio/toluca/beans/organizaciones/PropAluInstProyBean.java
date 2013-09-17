@@ -10,6 +10,7 @@ import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
 import java.math.BigInteger;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,6 +32,8 @@ public class PropAluInstProyBean {
     private String puesto_titular;
     @NotNull    
     private long telefono_titular;
+    @Size(max = 7)
+    private String ext;
     @NotNull
     @Size(min = 1, max = 100)
     private String domicilio_instancia;
@@ -54,6 +57,8 @@ public class PropAluInstProyBean {
     @Basic(optional = false)
     @NotNull
     private long telefonoResponsable;
+    @Size(max = 7)
+    private String ext2;
     private String modalidad;
     @Basic(optional = false)
     @NotNull
@@ -313,5 +318,19 @@ public class PropAluInstProyBean {
      */
     public void setIdPrograma(Programa idPrograma) {
         this.idPrograma = idPrograma;
+    }
+
+    /**
+     * @return the ext
+     */
+    public String getExt() {
+        return ext;
+    }
+
+    /**
+     * @param ext the ext to set
+     */
+    public void setExt(String ext) {
+        this.ext = ext;
     }
 }

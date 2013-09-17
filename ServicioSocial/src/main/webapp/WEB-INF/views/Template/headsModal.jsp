@@ -29,6 +29,16 @@
             'height': 450,
             'type': 'iframe'
         });
+        
+        //FACY Alumnos Proyecto
+        $(".fancyProy").fancybox({
+            'autoScale': true,
+            'transitionIn': 'none',
+            'transitionOut': 'none',
+            'width': 800,
+            'height': 700,            
+            'type': 'iframe'
+        });
 
 
         $(".fancyFU").fancybox({

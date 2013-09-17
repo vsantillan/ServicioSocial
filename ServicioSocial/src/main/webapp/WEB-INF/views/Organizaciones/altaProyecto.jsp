@@ -68,7 +68,8 @@
                             <td>  <label for="lugar">Tel&eacute;fono del Responsable:</label></td>
                             <td>  
                                 <!--input type="text" name="puesto" id="puesto" size="20" require="true"/--> 
-                                <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10"/><br/>
+                                <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10"/>
+                                Ext:<form:input path="ext" id="ext" size="7" maxlength="7"/><br/>
                                 ${telefono}
                             </td>  
                         </tr>

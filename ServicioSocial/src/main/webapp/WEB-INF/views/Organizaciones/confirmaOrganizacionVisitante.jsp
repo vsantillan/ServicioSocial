@@ -16,7 +16,7 @@
     <head>
         <link rel="stylesheet" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
         <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
-           
+
         <%@ include file="../Template/headsMenuUsuario.jsp" %>
         <%@ include file="../Template/metas.jsp" %>   
         <script src="js/jquery.codigos.postales.js"></script>
@@ -69,11 +69,12 @@
                             </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="telefono">Tel&eacute;fono:</label></td>
+                            <td>  <label for="lugar">Tel&eacute;fono del Responsable:</label></td>
                             <td>  
-                                <form:input path="telefono" id="telefono" size="20" maxlength="10"/><br/>
-                                <form:errors path="telefono" cssClass="error"/>
-                                <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
+                                <!--input type="text" name="puesto" id="puesto" size="20" require="true"/--> 
+                                <form:input path="telefono" id="rfc" size="20" maxlength="10"/>
+                                <form:input path="ext" id="ext" size="20" maxlength="7"/><br/>
+                                ${telefono}
                             </td>  
                         </tr>
                         <tr>
@@ -87,9 +88,8 @@
                         <tr>
                             <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
                             <td> 
-                                <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" value="${instancia.idColonia.idCp.cp}">
-                                <br/>${error_codigo_postal}
-                                <input type="hidden" id="preCP" value="${cp}"/>
+                                <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off">
+                                <input type="hidden" id="preCP" value="${cp}"/><br>${codigo_postal}
                             </td>  
                         </tr>
                         <tr>
@@ -121,13 +121,14 @@
                                 <!--select name="colonia" id="colonia" disabled="true"></select--> 
                                 <form:select id="idColonia" path="idColonia.idColonia" name="idColonia"></form:select> 
                                     <div id="otra_colonia" style="display:none;">
-                                        <input type="text" name="otra_colonia" id="otra_colonia" />
-                                        <!--form:input path="usuario" id="usuario" size="20"/-->
-                                    </div>
-                                <form:errors path="idColonia" cssClass="error"/>
-                                <input type="hidden" id="preColonia" value="${instancia.idColonia.idColonia}"/>
+                                        <input type="text" name="otra_colonia" value="${otra_colonia}"/>
+                                    <input type="hidden" id="existeCP" name="existeCP" value="true">
+                                    <input type="hidden" id="preColonia" value="${idColonia}"/>
+                                    ${error_otra_colonia}
+                                </div>
+                                <br/>
                             </td>  
-                        </tr>                     
+                        </tr>                  
                         <tr>
                             <td> <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> </td>
                             <td>

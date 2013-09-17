@@ -45,6 +45,10 @@
                         <td><p><core:out value="${instancia.telefono}" /></p></td>
                     </tr>
                     <tr>
+                        <td><p>Ext:</p></td>
+                        <td><p><core:out value="${instancia.ext}" /></p></td>
+                    </tr>
+                    <tr>
                         <td><p>Domicilio:</p></td>
                         <td><p><core:out value="${instancia.domicilio}" /></p></td>
                     </tr>

@@ -25,8 +25,6 @@
                 $('#example').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "200%",
                     "bScrollCollapse": true
 
                 });
@@ -37,13 +35,13 @@
         <script src="js/jquery.codigos.postales.js"></script>       
         <script src="js/jquery.manolo.js"></script>
 
-        <title>Propuesta de Alumno Instancia/Proyecto</title>
+        <title>Alumnos en Proyecto</title>
     </head>
     <body class="background">
     <center>
         <h1>Alumnos en el proyecto ${proyecto}</h1>        
         <!--<a onclick="$.fancybox.close();">Redireccion</a>-->
-        <div style="width:80%;">
+        <div style="width:95%;">
             <p>A continuaci&oacute;n se muestran los alumnos que se encuentran en el proyecto.</p>
             <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                 <thead>

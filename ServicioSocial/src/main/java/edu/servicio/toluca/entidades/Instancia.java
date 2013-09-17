@@ -52,6 +52,9 @@ import org.hibernate.validator.constraints.Email;
     @NamedQuery(name = "Instancia.findByPassword", query = "SELECT i FROM Instancia i WHERE i.password = :password"),
     @NamedQuery(name = "Instancia.findByCorreo", query = "SELECT i FROM Instancia i WHERE i.correo = :correo")})
 public class Instancia implements Serializable {
+    @Size(max = 7)
+    @Column(name = "EXT")
+    private String ext;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
     @Cache(usage = CacheConcurrencyStrategy.NONE)
     private Collection<RetroalimentacionInstancia2> retroalimentacionInstancia2Collection;
@@ -290,5 +293,13 @@ public class Instancia implements Serializable {
 
     public void setRetroalimentacionInstancia2Collection(Collection<RetroalimentacionInstancia2> retroalimentacionInstancia2Collection) {
         this.retroalimentacionInstancia2Collection = retroalimentacionInstancia2Collection;
+    }
+
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
     }
 }

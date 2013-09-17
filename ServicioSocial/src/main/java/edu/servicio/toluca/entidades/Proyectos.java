@@ -56,6 +56,9 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles"),
     @NamedQuery(name = "Proyectos.findByNombre", query = "SELECT p FROM Proyectos p WHERE p.nombre = :nombre")})
 public class Proyectos implements Serializable {
+    @Size(max = 7)
+    @Column(name = "EXT")
+    private String ext;
     @Cache(usage = CacheConcurrencyStrategy.NONE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection;
@@ -381,6 +384,14 @@ public class Proyectos implements Serializable {
     
     public void getEverythingDebugged(){
         
+    }
+
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
     }
     
 }

@@ -49,6 +49,7 @@
                         <tr>
                             <th>Acci&oacute;n</th>
                             <th>Ver proyecto</th>
+                            <th>Ver Alumnos en Proyecto</th>
                             <th>Organizaci&oacute;n</th>
                             <th>Nombre del proyecto</th>
                             <th>Titular</th>
@@ -60,6 +61,7 @@
                             <tr class='gradeX' id="${current.idProyecto}">
                                 <th><a href="editarProyecto.do?id=${current.idProyecto}" ><img src="imagenes/editar.png" width="30" title="Editar Proyecto"/></a><a href="#" class="btn-validar-proyecto"><img class="cambiaStatusProyecto" ide="${current.idProyecto}" src="imagenes/trash.png" width="30" title="Borrar Proyecto"></a></th>
                                 <th><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                <th><a href="verAlumnosProyecto.do?id=${current.idProyecto}" class="fancyFU"><img src="imagenes/lupa.png" width="30"/></a></th>
                                 <th><core:out value="${current.idInstancia.nombre}" /></th>
                                 <th><core:out value="${current.nombre}" /></th>
                                 <th><core:out value="${current.idInstancia.titular}" /></th>

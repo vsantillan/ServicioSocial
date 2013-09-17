@@ -31,7 +31,7 @@
                 <center>${mensaje1}</center>
                 <img src="imagenes/organizacion.jpg">
                 <h4>Perfil de la Organizaci&oacute;n</h4>
-                <form:form name="editarOrganizacion" commandName="instancia" class="MyForm" action="gdaEdicionOrganizacion.do"  method="POST" style="width:60%;" >
+                <form:form name="editarOrganizacion" commandName="instancia" class="MyForm" action="gdaEdicionOrganizacion.do"  method="POST" style="width:70%;" >
                     <p>${error_sql}</p>
                     <center><p>${mensaje}</p></center>
                     <input type="hidden" name="idInstancia" value="${instancia.idInstancia}">
@@ -71,8 +71,9 @@
                         <tr>
                             <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                             <td>  
-                                <form:input path="telefono" id="telefono" size="20"maxlength="10"/><br/>
-                                <form:errors path="telefono" cssClass="error"/>
+                                <form:input path="telefono" id="telefono" size="20"maxlength="10"/>
+                                Ext:<form:input path="ext" id="ext" size="7"maxlength="7"/><br/>
+                                ${telefono}
                                 <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
                             </td>  
                         </tr>

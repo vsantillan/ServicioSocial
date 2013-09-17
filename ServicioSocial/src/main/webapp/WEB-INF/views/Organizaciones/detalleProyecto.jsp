@@ -42,6 +42,10 @@
                     <td><p><core:out value="${proyectoDetalle.idInstancia.telefono}"/></p></td>
                 </tr>
                 <tr>
+                        <td><p>Ext:</p></td>
+                        <td><p><core:out value="${instancia.ext}" /></p></td>
+                    </tr>
+                <tr>
                     <td><p>Instancia:</p></td>
                     <td><p><core:out value="${proyectoDetalle.idInstancia.nombre}"/></p></td>
                 </tr>

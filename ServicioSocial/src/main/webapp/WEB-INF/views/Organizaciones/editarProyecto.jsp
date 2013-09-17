@@ -91,7 +91,8 @@
                         <tr>
                             <td>  <label for="lugar">Tel&eacute;fono del Responsable:</label></td>
                             <td>
-                                <form:input path="telefonoResponsable" id="telefonoResponsable" size="20"/><br/>
+                                <form:input path="telefonoResponsable" id="telefonoResponsable" size="20"/>
+                                <form:input path="ext" id="ext" size="20" maxlength="7"/><br/>
                                 ${telefono}
                             </td>
                         </tr>

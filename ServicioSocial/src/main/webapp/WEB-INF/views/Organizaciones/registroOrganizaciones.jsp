@@ -60,7 +60,7 @@
 
                 <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h4></p>
                 <%-- Formulario Nueva Organizacion --%>
-                <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAltaOrganizacion.do"  method="POST" style="width:60%;" >
+                <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAltaOrganizacion.do"  method="POST" style="width:70%;" >
                     <p>${error_sql}</p>
                     <table>
                         <tr>
@@ -98,7 +98,8 @@
                         <tr>
                             <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                             <td>  
-                                <form:input path="telefono" id="telefono" size="20"maxlength="10"/><br/>
+                                <form:input path="telefono" id="telefono" size="20"maxlength="10"/>
+                                Ext:<form:input path="ext" id="ext" size="7" maxlength="7"/><br/>
                                 ${telefono}
                                 <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
                             </td>  

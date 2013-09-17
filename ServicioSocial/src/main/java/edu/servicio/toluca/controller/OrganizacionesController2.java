@@ -1144,6 +1144,7 @@ public class OrganizacionesController2 {
             instancia.getTipoOrganizacion().setIdTipoOrganizacion(propuesta.getTipoOrganizacion().getIdTipoOrganizacion());
             instancia.setIdColonia(new Colonia());
             instancia.getIdColonia().setIdColonia(propuesta.getIdColonia_instancia().getIdColonia());
+            instancia.setExt(propuesta.getExt());
 
             instanciaFacade.create(instancia);
             System.out.println("Insercion  de intancia correcta!");
@@ -1473,7 +1474,7 @@ public class OrganizacionesController2 {
             }
             model.addAttribute("alumnos", alumnos);
             
-            return "/Organizaciones/verProyectos";
+            return "/Organizaciones/verAlumnosProyecto";
         } else {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";

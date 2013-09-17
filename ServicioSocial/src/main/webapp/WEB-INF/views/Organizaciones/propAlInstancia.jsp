@@ -73,7 +73,8 @@
                     <tr>
                         <td>  <label for="telefono">Tel&eacute;fono:</label></td>
                         <td>  
-                            <form:input path="telefono_titular" id="telefono" size="20" maxlength="10"/><br/>
+                            <form:input path="telefono_titular" id="telefono" size="20" maxlength="10"/>
+                            <form:input path="ext" id="ext" size="20" maxlength="7"/><br/>
                             ${telefono}
                             <!--input type="text" name="lugar" id="telefono" size="20" require="true"/--> 
                         </td>  
@@ -182,7 +183,8 @@
                         <td>  <label for="lugar">Tel&eacute;fono del Responsable:</label></td>
                         <td>  
                             <!--input type="text" name="puesto" id="puesto" size="20" require="true"/--> 
-                            <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10"/><br/>
+                            <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10"/>
+                            <form:input path="ext2" id="ext2" size="20" maxlength="7"/><br/>
                             ${telefono2}
                         </td>  
                     </tr>
