@@ -14,6 +14,7 @@ import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoHorariosBean;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoProyectosJSON;
 import edu.servicio.toluca.entidades.CatalogoDocumento;
 import edu.servicio.toluca.entidades.CatalogoPlan;
+import edu.servicio.toluca.entidades.CatalogoSanciones;
 import edu.servicio.toluca.entidades.Ciudades;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
@@ -25,14 +26,17 @@ import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.HorariosAlumno;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.MunicipiosSia;
+import edu.servicio.toluca.entidades.Platica;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.ValidaSesion;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoPlanFacade;
+import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
@@ -46,6 +50,7 @@ import edu.servicio.toluca.sesion.HorariosAlumnoFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.MunicipiosSiaFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
+import edu.servicio.toluca.sesion.SancionesFacade;
 import edu.servicio.toluca.sesion.TipoLocalidadFacade;
 import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
@@ -55,6 +60,7 @@ import java.math.BigInteger;
 import java.sql.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -115,6 +121,10 @@ public class FormatoUnicoController {
     private MunicipiosSiaFacade municipiosFacade;
     @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
     private TipoLocalidadFacade tipoLocalidadFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoSancionesFacade")
+    private CatalogoSancionesFacade catalogoSancionesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
+    private SancionesFacade sancionesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/showpdf.do")
     public String showpdf(Model modelo, String alumno_id) {
@@ -297,7 +307,7 @@ public class FormatoUnicoController {
             //Validar que el alumno esté rechazado o en correción
             if (formatoUnico.getStatusFui() != null) {
                 System.out.println("El status del fui es" + formatoUnico.getStatusFui().toString());
-                if (formatoUnico.getStatusFui().toString().equals("2") || formatoUnico.getStatusFui().toString().equals("3") || formatoUnico.getStatusFui().equals(null)) {
+                if (formatoUnico.getStatusFui().toString().equals("5") || formatoUnico.getStatusFui().toString().equals("2") || formatoUnico.getStatusFui().toString().equals("3") ||  formatoUnico.getStatusFui() == null) {
                     System.out.println("Su formato único está en correción o fue rechazado, puede entrar");
                 } else {
                     System.out.println("El formato único no puede entrar, anda en validaciones o ya fue aceptado");
@@ -445,15 +455,12 @@ public class FormatoUnicoController {
 ////////Para la subida de archivos/////////////////////
 //////////////////////////////////////////////////////////////////////////
         modelo.addAttribute("idDatSubida", datosPersonales.getId());
-        if(formatoUnico.getStatusFui().toString().equals("5"))
-        {
-            modelo.addAttribute("infoDescarga","<input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>\n" +
-"                        <input type='submit' value='Subir' />");
-        }
-        else
-        {
-             modelo.addAttribute("infoDescarga","<h1 style='color: #990000'>Se ha detectado que aun no descargas tu formato &uacute;nico, dicha tarea la puedes hacer en la secci&oacute; anterior. Gracias</h1>");
-            
+        if (formatoUnico.getStatusFui() != null && formatoUnico.getStatusFui().toString().equals("5")) {
+            modelo.addAttribute("infoDescarga", "<input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>\n"
+                    + "                        <input type='submit' value='Subir' />");
+        } else {
+            modelo.addAttribute("infoDescarga", "<h1 style='color: #990000'>Se ha detectado que aun no descargas tu formato &uacute;nico, dicha tarea la puedes hacer en la secci&oacute; anterior. Gracias</h1>");
+
         }
 
 
@@ -539,7 +546,7 @@ public class FormatoUnicoController {
 //                if (dt.getIdColonia().getIdColonia().toString().equals("0")) {
 //                    if (otra_colonia.equals("")) {
 //                        resultado.addError(new ObjectError("error_otra_colonia", "No ha ingresado el nombre de la colonia."));
-//                        //modelo.addAttribute("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
+//                        //modelo.addAttribute ("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
 //                    }
 //                }
 //            } catch (Exception e) {
@@ -821,42 +828,95 @@ public class FormatoUnicoController {
         System.out.println("File:" + file.getName());
         System.out.println("Size:" + file.getSize());
         System.out.println("ContentType:" + file.getContentType());
+        Documentos doc = new Documentos();
+        doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
+        doc.setArchivo(file.getBytes());
+        doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
+        String extension = file.getOriginalFilename();
+        extension = extension.substring(extension.length() - 3, extension.length());
+        //**doc.setExtension("pdf");
+        doc.setExtension(extension);
+        doc.setFechaSubida(new java.util.Date());
+        DatosPersonales dp = datosPersonalesFacade.find(id);
+        List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
+        FormatoUnico fui = listaFui.get(0);
+        fui.setStatusFui(new BigInteger("4"));
+        formatoUnicoFacade.edit(fui);
         if (listaDocumento.isEmpty()) {
             System.out.println("Subida nueva");
-            Documentos doc = new Documentos();
-            doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
-            doc.setArchivo(file.getBytes());
-            doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
-            String extension = file.getOriginalFilename();
-            extension = extension.substring(extension.length() - 3, extension.length());
-            //**doc.setExtension("pdf");
-            doc.setExtension(extension);
-            doc.setFechaSubida(new java.util.Date());
-            DatosPersonales dp = datosPersonalesFacade.find(id);
-            List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
-            FormatoUnico fui = listaFui.get(0);
-            fui.setStatusFui(new BigInteger("4"));
-            formatoUnicoFacade.edit(fui);
             documentoFacade.create(doc);
         } else {
             System.out.println("Ya estaba");
-            Documentos doc = listaDocumento.get(0);
-            doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
-            doc.setArchivo(file.getBytes());
-            doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
-            String extension = file.getOriginalFilename();
-            extension = extension.substring(extension.length() - 3, extension.length());
-            //**doc.setExtension("pdf");
-            doc.setExtension(extension);
-            doc.setFechaSubida(new java.util.Date());
-            DatosPersonales dp = datosPersonalesFacade.find(id);
-            List<FormatoUnico> listaFui = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
-            FormatoUnico fui = listaFui.get(0);
-            fui.setStatusFui(new BigInteger("4"));
-            formatoUnicoFacade.edit(fui);
             documentoFacade.edit(doc);
 
         }
+
+//        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", id.toString(), "equal", null, null);
+//        VistaAlumno alumno = listaAlumnos.get(0);
+        List<FoliosPlatica> listaFolios = foliosPlaticaFacade.findBySpecificField("alumnoId", dp.getAlumnoId(), "equal", null, null);
+        if(listaFolios.isEmpty())
+        {
+            System.out.println("No aexiste alumno en platica");
+        }
+        FoliosPlatica folioPlatica = listaFolios.get(0);
+        Platica platica = folioPlatica.getPlaticaId();
+        java.util.Date fecha_max = platica.getFechaMxFui();
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        //----Asignar la sanción---
+        //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        java.util.Date fecha_actual = new java.util.Date();
+        System.out.println("La fecha actual es: " + fecha_actual);
+        System.out.println("La fecha máxima es:" + fecha_max);
+        if(fecha_actual.after(fecha_max))//fecha_max el la fecha máxima que tengas definida
+        {
+            System.out.println("La fecha actual sobrepasa la fecha máxima, procedo a revisar tolerancia");
+            if(catalogoSancionesFacade.count()<1)
+            {
+                System.out.println("La tabla de sanciones está vacía");
+                return "redirect:panelUsuario.do";
+            }
+            List<CatalogoSanciones> listaCatalogoSanciones = catalogoSancionesFacade.findBySpecificField("detalle", "S001", "like", null, null);
+            if(listaCatalogoSanciones.isEmpty())
+            {
+                System.out.println("La sanción no pudo ser encontrada");
+                return "redirect:panelUsuario.do";
+            }
+            CatalogoSanciones catalogoSancion = listaCatalogoSanciones.get(0);//Se obtiene el registro de la sanción para tratar sus datos
+            Calendar fecha_max_x = Calendar.getInstance();  
+            fecha_max_x.setTime(fecha_max);  
+            fecha_max_x.add(Calendar.DATE, 5);  
+            fecha_max = fecha_max_x.getTime();
+            System.out.println("La fecha con la tolerancia es" + fecha_max);
+            if(fecha_actual.after(fecha_max))
+            {
+                System.out.println("La fecha actual sobrepasa la de con tolerancia");
+                Sanciones sancion = new Sanciones();
+                sancion.setCatalogoSancionesId(catalogoSancion);
+                sancion.setDatosPersonalesId(dp);//Id corresponde al objeto datos personales de mi alumno a sancionar
+                sancion.setFecha(fecha_actual);
+                sancion.setHorasSancion(catalogoSancion.getHorasSancion());
+                try
+                {
+                    sancionesFacade.create(sancion);
+                    System.out.println("Sancion: "+ catalogoSancion.getDetalle() + "\nAplicada a: "+ dp.getNumeroControl()+"-"+dp.getNombre() + "\nHoras:" + catalogoSancion.getHorasSancion());
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Problema al crear" + e.getMessage());
+                } 
+            }
+            else
+            {
+                System.out.println("La fecha actual no sobrepasa la de con tolerancia, no hay sancion");
+            }
+        }
+        else
+        {
+            System.out.println("La fecha actual está dentro de la fecha máxima. No hay sanción");
+        }
+
+        //
+
 //        System.out.println("id:" + vistaAlumno.getId());
 //        String id=vistaAlumno.getId();
 //        
@@ -937,7 +997,7 @@ public class FormatoUnicoController {
     @RequestMapping(value = "/cambiaStatusSubidaFui.do", method = RequestMethod.GET)
     public @ResponseBody
     String cambiaStatusSubidaFui(Model a, BigDecimal id_datos_personales) throws ParseException {
-        System.out.println("En el cambia status subida fui se buscara "+ id_datos_personales);
+        System.out.println("En el cambia status subida fui se buscara " + id_datos_personales);
         DatosPersonales datosPersonales = datosPersonalesFacade.find(id_datos_personales);
         System.out.println("En el cambia status subida fui se halló id" + datosPersonales.getId().toString());
         List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
@@ -947,7 +1007,7 @@ public class FormatoUnicoController {
         }
         FormatoUnico formatoUnico = listaFormatoUnico.get(0);
         //Cambiando el status a descargado.
-        formatoUnico.setStatusFui(new BigInteger("55"));
+        formatoUnico.setStatusFui(new BigInteger("5"));
         formatoUnicoFacade.edit(formatoUnico);
         return "";
     }
