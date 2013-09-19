@@ -18,12 +18,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author SATELLITE
  */
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
 @Table(name = "FOLIOS_PLATICA", catalog = "", schema = "GES_VIN")
 @XmlRootElement
@@ -45,6 +48,7 @@ public class FoliosPlatica implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Column(name = "ASISTENCIA")
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     private Short asistencia;
     @Basic(optional = false)
     @NotNull
@@ -52,6 +56,7 @@ public class FoliosPlatica implements Serializable {
     @Column(name = "NUMERO_FOLIO")
     private String numeroFolio;
     @Column(name = "STATUS")
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     private Short status;
     @JoinColumn(name = "ALUMNO_ID", referencedColumnName = "ID")
     @ManyToOne
@@ -84,7 +89,7 @@ public class FoliosPlatica implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Short getAsistencia() {
         return asistencia;
     }
@@ -104,7 +109,7 @@ public class FoliosPlatica implements Serializable {
     public Short getStatus() {
         return status;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public void setStatus(Short status) {
         this.status = status;
     }

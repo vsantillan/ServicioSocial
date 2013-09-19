@@ -42,9 +42,6 @@ public class NavegacionPrincipalController {
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     public VistaAlumnoFacade vistaAlumnoFacade;
     
-    
-
-    
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model a) {
         return "/NavegacionPrincipal/index";
@@ -120,7 +117,7 @@ public class NavegacionPrincipalController {
                     //Sesion
                     session.setAttribute("ROL", "ALUMNO");
                     session.setAttribute(("NCONTROL"), usuario.substring(4));
-                    session.setAttribute("NOMBRE", alumno.get(0).getNombre());
+                    session.setAttribute("NOMBRE", alumno.get(0).getNombre()+" "+alumno.get(0).getApellidoPat()+" "+alumno.get(0).getApellidoMat());
                     return "redirect:panelUsuario.do";
                 } else {
                     model.addAttribute("error", "<div class='error'>Lo sentimos no cumples con el minimo de 70% de créditos para tramitar tu servicio social</div>");
@@ -135,14 +132,17 @@ public class NavegacionPrincipalController {
             //DIRECTIVOS
             if (rol.equals("ROLE_GESVIN_CONSULTAS")) {
                 session.setAttribute("ROL", "CONSULTAS");
+                return "redirect:panelAdministrador.do";
             }
             //BACKDOOR
             if (rol.equals("ROLE_GESVIN_ADMIN")) {
                 session.setAttribute("ROL", "ADMIN");
+                return "redirect:panelAdministrador.do";
             }
             //ASISTENTE
             if (rol.equals("ROLE_GESVIN_REGISTRO")) {
                 session.setAttribute("ROL", "REGISTRO");
+                return "redirect:panelAdministrador.do";
             }
             //OTRO
             if (rol.equals("OTRO")) {
