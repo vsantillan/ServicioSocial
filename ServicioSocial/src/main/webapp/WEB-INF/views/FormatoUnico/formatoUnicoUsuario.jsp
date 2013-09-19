@@ -73,13 +73,13 @@
             <div id="tabs">
                 <h1>P&aacute;gina del Formato Unico</h1>
                 <ul>
-                    <li><a href="#datosPersonales">Datos Personales</a></li>
-                    <li><a href="#datosContacto">Datos de Contacto</a></li>
-                    <li><a href="#datosAcademicos">Datos Acad&eacute;micos</a></li>
-                    <li><a href="#datosOrganizaciones">Datos de Organizaciones</a></li>
-                    <li><a href="#horarios">Horario</a></li>
-                    <li><a href="#imprimirFui">Imprimir Formato &Uacute;nico</a></li>
-                    <li><a href="#subirFui">Subir Formato &Uacute;nico</a></li>
+                    <li><a href="#datosPersonales">1.Datos Personales</a></li>
+                    <li><a href="#datosContacto">2.Datos Contacto</a></li>
+                    <li><a href="#datosAcademicos">3.Datos Acad&eacute;micos</a></li>
+                    <li><a href="#datosOrganizaciones">4.Datos Organizaciones</a></li>
+                    <li><a href="#horarios">5.Horario</a></li>
+                    <li><a href="#imprimirFui">6.Imprimir Formato &Uacute;nico</a></li>
+                    <li><a href="#subirFui">7.Subir Formato &Uacute;nico</a></li>
                 </ul>
                 <div id="datosPersonales">
                     <form:form id="frmDatosPersonales" modelAttribute="formatoUnicoDatosPersonales">
@@ -422,15 +422,20 @@
                     </form:form>
                 </div>
                 <div id="imprimirFui">
-                    <h1>Presiona el bot&oacute;n para descargar</h1>
-                    <a href="muestraReporteFUI.do" target="_blank"><img src="imagenes/descargar.png" /></a>
+                    <h1>A continuaci&oacute; descargar&aacute;s tu formato &uacute;nico, para posteriormente imprimirlo y acudir a la instancia donde realizarás tu servicio social para que te sellen tu documento como se muestra a continuación:</h1>
+                    <img src="imagenes/fui.png" style="width:300; height:500px" alt="Formato Unico inicial"/>
+                    <h1>Ahora pulsa en el botón de descargar.</h1>
+                    <h2>Cuando tu formato tenga el sello corespondiente s&uacute;belo en la siguiente secci&oacute;n</h2>
+                    <a href="muestraReporteFUI.do" id="cmdDescargaFui" target="_blank"><img src="imagenes/descargar.png" /></a>
                 </div>
                 <div id="subirFui">
-                    <h1>Da clic en el bot&oacute;n y selecciona tu formato &Uacute;nico</h1>
-                    <form method="post" action="subirFui.do"  enctype="multipart/form-data">
-                        <input type="hidden" name ="id" value="${idDatSubida}"/>
-                        <input type="file"  name ="file"/> <br/>
-                        <input type="submit" value="Subir" />
+                    <h1>Sube aqu&iacute; tu formato &uacute;nico dellado como el que está a continuaci&oacute;n</h1>
+                    <img src="imagenes/fui.png" style="width:300; height:500px" alt="Formato Unico inicial"/>
+                    <form method="post" id="frmSubirFui" action="subirFui.do"  enctype="multipart/form-data">
+                        <input type="hidden" name ="id" id="idSubirFui" value="${idDatSubida}"/>
+<!--                        <input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>
+                        <input type='submit' value='Subir' />-->
+                        ${infoDescarga}
                     </form>
                 </div>
             </div>

@@ -9,6 +9,9 @@ function listo()
     $('#frmDatosContacto').submit(enviarDatosContactoAlumno);
     $('#frmDatosOrganizaciones').submit(enviarDatosOrganizaciones);
     $('#frmHorarios').submit(enviarHorarios);
+    
+    $('#cmdDescargaFui').click(cambiaStatusSubidaFui);
+    
 
     $('.otraorg').click(function(event) {
         alert('ola ke ase');
@@ -49,6 +52,14 @@ function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
     }
 
 
+}
+function cambiaStatusSubidaFui()
+{
+    var idDP = $('#idSubirFui');
+    console.log('Se cambiará el estatus por descargado al id de datos personales '+idDP);
+    $.get("cambiaStatusSubidaFui.do?&id_datos_personales=" + idDP, null, function(respuesta) {
+        console.log('Subida con respuesta = ' + respuesta);
+    });
 }
 function abreFancy()
 {

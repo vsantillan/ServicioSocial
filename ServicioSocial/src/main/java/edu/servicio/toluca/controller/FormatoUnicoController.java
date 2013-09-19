@@ -123,15 +123,16 @@ public class FormatoUnicoController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
-        if(foliosPlaticaFacade.count() == 0)
+        if (foliosPlaticaFacade.count() == 0) {
             return "PanelUsuario/panelUsuario";
-        if(new ValidaSesion().validaAlumno(session, request)){
+        }
+        if (new ValidaSesion().validaAlumno(session, request)) {
             //return "/PanelUsuario/panelUsuario";
-        }else{
+        } else {
             modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
-        System.out.println("***Eyy N control ="+session.getAttribute("NCONTROL").toString());
+        System.out.println("***Eyy N control =" + session.getAttribute("NCONTROL").toString());
         alumno_id = session.getAttribute("NCONTROL").toString();
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
         FormatoUnicoDatosPersonalesBean formatoUnicoDatosPersonalesbean = new FormatoUnicoDatosPersonalesBean();
@@ -142,26 +143,25 @@ public class FormatoUnicoController {
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //***List<Va> listaAlumnos = vaFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         //---List<Va> listaAlumnos = vaFacade.findAll();
-        
+
         //objeto que voy a insertar
-        if(listaAlumnos.isEmpty())
-        {
+        if (listaAlumnos.isEmpty()) {
             System.out.println("La lista de alumnos está vacía");
             return "PanelUsuario/panelUsuario";
         }
         VistaAlumno alumno = listaAlumnos.get(0);
-        System.out.println("Que traigo? Nombre:"+alumno.getNombre()+" id:"+alumno.getId());
+        System.out.println("Que traigo? Nombre:" + alumno.getNombre() + " id:" + alumno.getId());
         //---Va alumno = listaAlumnos.get(0);
-        
-        
-        
-        
+
+
+
+
         if (Float.parseFloat(alumno.getPorcentaje()) < 70) {
             System.out.println("El alumno no tiene los créditos necesarios");
             return "PanelUsuario/panelUsuario";
         }
-        
-        
+
+
         //Creación de los objetos necesarios para inserción y lectura
         DatosPersonales datosPersonales = new DatosPersonales();
         datosPersonales.setAlumnoId(alumno);
@@ -224,8 +224,9 @@ public class FormatoUnicoController {
             CatalogoPlan plan = catalogoPlanFacade.find(new BigDecimal(alumno.getPlanId()));
             formatoUnico.setCatalogoPlanId(plan);
             List<FoliosPlatica> listaFolios = foliosPlaticaFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
-            if(listaFolios.isEmpty())
+            if (listaFolios.isEmpty()) {
                 return "PanelUsuario/panelUsuario";
+            }
             FoliosPlatica platica = listaFolios.get(0);
             formatoUnico.setPeriodoInicio(platica.getPlaticaId().getPeriodo());
             formatoUnico.setTipoServicio(BigInteger.ONE);
@@ -237,8 +238,7 @@ public class FormatoUnicoController {
             //seteo del proyecto al alumno a través del banco
             //**Proyectos proyecto = new Proyectos();
             List<Proyectos> listaProyectos = proyectoFacade.findAll();
-            if(listaProyectos.isEmpty())
-            {
+            if (listaProyectos.isEmpty()) {
                 System.out.println("La lista de proyectos está vacía");
                 return "PanelUsuario/panelUsuario";
             }
@@ -256,7 +256,7 @@ public class FormatoUnicoController {
             //Setear en vacío los horarios alumno 
             //Recuperar el objeto FormatoUnico que se acaba de insertar para insertarlo en los horarios_alumno
             List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
-            if(listaFormatoUnico.isEmpty()){
+            if (listaFormatoUnico.isEmpty()) {
                 System.out.println("La lista de formatoUnico está vacía");
                 return "PanelUsuario/panelUsuario";
             }
@@ -293,17 +293,13 @@ public class FormatoUnicoController {
             //Asignación a objetos para posteriormente preparar
             datosPersonales = listaDatosPersonales.get(0);
             formatoUnico = listaFormatoUnico.get(0);
-            
+
             //Validar que el alumno esté rechazado o en correción
-            if(formatoUnico.getStatusFui() != null)
-            {
+            if (formatoUnico.getStatusFui() != null) {
                 System.out.println("El status del fui es" + formatoUnico.getStatusFui().toString());
-                if(formatoUnico.getStatusFui().toString().equals("2") && formatoUnico.getStatusFui().toString().equals("3"))
-                {
+                if (formatoUnico.getStatusFui().toString().equals("2") || formatoUnico.getStatusFui().toString().equals("3") || formatoUnico.getStatusFui().equals(null)) {
                     System.out.println("Su formato único está en correción o fue rechazado, puede entrar");
-                }
-                else
-                {
+                } else {
                     System.out.println("El formato único no puede entrar, anda en validaciones o ya fue aceptado");
                     return "PanelUsuario/panelUsuario";
                 }
@@ -314,14 +310,13 @@ public class FormatoUnicoController {
 //////////////////////////////////////////////////////////////////////////
 ////////Asunto de la foto provisional/////////////////
 //////////////////////////////////////////////////////////////////////////
-        if(alumno.getFoto() == null)
-        {
+        if (alumno.getFoto() == null) {
             modelo.addAttribute("idUsuario", alumno.getId());
             return "/FormatoUnico/subirFoto";
-        }
-        else
+        } else {
             System.out.println("La foto no estaba nula");
-        
+        }
+
 //////////////////////////////////////////////////////////////////////////
 ////////Preparar información de datos personales y enviar/////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -449,6 +444,16 @@ public class FormatoUnicoController {
 ////////Para la subida de archivos/////////////////////
 //////////////////////////////////////////////////////////////////////////
         modelo.addAttribute("idDatSubida", datosPersonales.getId());
+        if(formatoUnico.getStatusFui().toString().equals("5"))
+        {
+            modelo.addAttribute("infoDescarga","<input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>\n" +
+"                        <input type='submit' value='Subir' />");
+        }
+        else
+        {
+             modelo.addAttribute("infoDescarga","<h1 style='color: #990000'>Se ha detectado que aun no descargas tu formato &uacute;nico, dicha tarea la puedes hacer en la secci&oacute; anterior. Gracias</h1>");
+            
+        }
 
 
         return "/FormatoUnico/formatoUnicoUsuario";
@@ -524,7 +529,7 @@ public class FormatoUnicoController {
             datosPersonales.setTelefonoOficina(dt.getTelefono_oficina());
             datosPersonales.setFacebook(dt.getFacebook());
             datosPersonales.setTwitter(dt.getTwitter());
-            
+
 ///////////Nueva manera de códigos postales
             //Valida codigo postal
 //        if (existeCP.equals("true")) {
@@ -543,7 +548,7 @@ public class FormatoUnicoController {
 //                //modelo.addAttribute("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
 //            }
 //        }
-        //Checa codigo postal
+            //Checa codigo postal
             if (existeCP.equals("true")) {
                 if (dt.getIdColonia().getIdColonia().toString().equals("0")) {
                     //Agregar colonia                   
@@ -609,11 +614,11 @@ public class FormatoUnicoController {
                 dt.setIdColonia(coloniaNew);
                 System.out.println("Nuevo codigo postal + colonia agregado!");
             }
-        
+
 ///////////Termina códigos postales        
-            
-            
-            
+
+
+
             System.out.println("coloonia" + dt.getIdColonia() + "  " + dt.getIdColonia().getNombre());
             datosPersonales.setIdColonia(dt.getIdColonia());
             datosPersonalesFacade.edit(datosPersonales);
@@ -821,7 +826,7 @@ public class FormatoUnicoController {
             doc.setArchivo(file.getBytes());
             doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
             String extension = file.getOriginalFilename();
-            extension = extension.substring(extension.length()-3, extension.length());
+            extension = extension.substring(extension.length() - 3, extension.length());
             //**doc.setExtension("pdf");
             doc.setExtension(extension);
             doc.setFechaSubida(new java.util.Date());
@@ -838,7 +843,7 @@ public class FormatoUnicoController {
             doc.setArchivo(file.getBytes());
             doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
             String extension = file.getOriginalFilename();
-            extension = extension.substring(extension.length()-3, extension.length());
+            extension = extension.substring(extension.length() - 3, extension.length());
             //**doc.setExtension("pdf");
             doc.setExtension(extension);
             doc.setFechaSubida(new java.util.Date());
@@ -872,42 +877,40 @@ public class FormatoUnicoController {
         return "redirect:panelUsuario.do";
     }
 
-
     @RequestMapping(value = "/guardarImagenFui.do", method = RequestMethod.POST)
     public String guardarImagenFui(
             @RequestParam("file") MultipartFile file, String id) throws IOException {
-        System.out.println("Buscare pa subir foto el id"+id);
+        System.out.println("Buscare pa subir foto el id" + id);
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", id, "equal", null, null);
-        if(listaAlumnos.isEmpty())
+        if (listaAlumnos.isEmpty()) {
             return "redirect:panelUsuario.do";
+        }
         VistaAlumno alumno = listaAlumnos.get(0);
         System.out.println("Inicia subida de info");
         System.out.println("Original filename: " + file.getOriginalFilename());
         System.out.println("File:" + file.getName());
         System.out.println("Size:" + file.getSize());
         System.out.println("ContentType:" + file.getContentType());
-        if(alumno.getFoto() == null)
-        {
+        if (alumno.getFoto() == null) {
             System.out.println("ya tenía foto");
             alumno.setFoto(file.getBytes());
             vistaAlumnoFacade.edit(alumno);
-        }
-        else
-        {
+        } else {
             System.out.println("No tenía foto");
             alumno.setFoto(file.getBytes());
             vistaAlumnoFacade.create(alumno);
         }
-       
+
         return "redirect:formatoUnicoUsuario.do";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/bajaImagenes.do")
     public @ResponseBody
     String bajaImagenes(Model a, String id) throws ParseException {
-        
+
         return "";
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteFUI.do")
     String muestraReporteFUI(Model a, String nControl, String idProyecto, HttpSession session, HttpServletRequest request) throws ParseException {
         String noControl = session.getAttribute("NCONTROL").toString();
@@ -915,19 +918,35 @@ public class FormatoUnicoController {
         System.out.println("En el muestra :D" + noControl);
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
-        
+
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         DatosPersonales dp = listaDatosPersonales.get(0);
         List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
-        if(listaFormatoUnico.isEmpty()){
+        if (listaFormatoUnico.isEmpty()) {
             System.out.println("La lista de formatoUnico está vacía");
             return "PanelUsuario/panelUsuario";
         }
-        System.out.println("Ahh y su fui es"+listaFormatoUnico.get(0).getId());
+        System.out.println("Ahh y su fui es" + listaFormatoUnico.get(0).getId());
         a.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
         session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
         return "/FormatoUnico/reporteFUI";
     }
-    
 
+    @RequestMapping(value = "/cambiaStatusSubidaFui.do", method = RequestMethod.GET)
+    public @ResponseBody
+    String cambiaStatusSubidaFui(Model a, BigDecimal id_datos_personales) throws ParseException {
+        System.out.println("En el cambia status subida fui se buscara "+ id_datos_personales);
+        DatosPersonales datosPersonales = datosPersonalesFacade.find(id_datos_personales);
+        System.out.println("En el cambia status subida fui se halló id" + datosPersonales.getId().toString());
+        List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+        if (listaFormatoUnico.isEmpty()) {
+            System.out.println("La lista de formatoUnico está vacía");
+            return "PanelUsuario/panelUsuario";
+        }
+        FormatoUnico formatoUnico = listaFormatoUnico.get(0);
+        //Cambiando el status a descargado.
+        formatoUnico.setStatusFui(new BigInteger("55"));
+        formatoUnicoFacade.edit(formatoUnico);
+        return "";
+    }
 }
