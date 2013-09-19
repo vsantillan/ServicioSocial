@@ -33,6 +33,7 @@ import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.model.SancionesModelo;
 import edu.servicio.toluca.model.ValidaSesion;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoPlanFacade;
@@ -864,56 +865,63 @@ public class FormatoUnicoController {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         //----Asignar la sanción---
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        java.util.Date fecha_actual = new java.util.Date();
-        System.out.println("La fecha actual es: " + fecha_actual);
-        System.out.println("La fecha máxima es:" + fecha_max);
-        if(fecha_actual.after(fecha_max))//fecha_max el la fecha máxima que tengas definida
-        {
-            System.out.println("La fecha actual sobrepasa la fecha máxima, procedo a revisar tolerancia");
-            if(catalogoSancionesFacade.count()<1)
-            {
-                System.out.println("La tabla de sanciones está vacía");
-                return "redirect:panelUsuario.do";
-            }
-            List<CatalogoSanciones> listaCatalogoSanciones = catalogoSancionesFacade.findBySpecificField("detalle", "S001", "like", null, null);
-            if(listaCatalogoSanciones.isEmpty())
-            {
-                System.out.println("La sanción no pudo ser encontrada");
-                return "redirect:panelUsuario.do";
-            }
-            CatalogoSanciones catalogoSancion = listaCatalogoSanciones.get(0);//Se obtiene el registro de la sanción para tratar sus datos
-            Calendar fecha_max_x = Calendar.getInstance();  
-            fecha_max_x.setTime(fecha_max);  
-            fecha_max_x.add(Calendar.DATE, 5);  
-            fecha_max = fecha_max_x.getTime();
-            System.out.println("La fecha con la tolerancia es" + fecha_max);
-            if(fecha_actual.after(fecha_max))
-            {
-                System.out.println("La fecha actual sobrepasa la de con tolerancia");
-                Sanciones sancion = new Sanciones();
-                sancion.setCatalogoSancionesId(catalogoSancion);
-                sancion.setDatosPersonalesId(dp);//Id corresponde al objeto datos personales de mi alumno a sancionar
-                sancion.setFecha(fecha_actual);
-                sancion.setHorasSancion(catalogoSancion.getHorasSancion());
-                try
-                {
-                    sancionesFacade.create(sancion);
-                    System.out.println("Sancion: "+ catalogoSancion.getDetalle() + "\nAplicada a: "+ dp.getNumeroControl()+"-"+dp.getNombre() + "\nHoras:" + catalogoSancion.getHorasSancion());
-                }
-                catch(Exception e)
-                {
-                    System.out.println("Problema al crear" + e.getMessage());
-                } 
-            }
-            else
-            {
-                System.out.println("La fecha actual no sobrepasa la de con tolerancia, no hay sancion");
-            }
-        }
-        else
-        {
-            System.out.println("La fecha actual está dentro de la fecha máxima. No hay sanción");
-        }
+        SancionesModelo sm = new SancionesModelo(catalogoSancionesFacade, sancionesFacade, fecha_max, dp, "S01");
+        sm.asignaSancion();
+        
+        
+        
+        
+        
+//        java.util.Date fecha_actual = new java.util.Date();
+//        System.out.println("La fecha actual es: " + fecha_actual);
+//        System.out.println("La fecha máxima es:" + fecha_max);
+//        if(fecha_actual.after(fecha_max))//fecha_max el la fecha máxima que tengas definida
+//        {
+//            System.out.println("La fecha actual sobrepasa la fecha máxima, procedo a revisar tolerancia");
+//            if(catalogoSancionesFacade.count()<1)
+//            {
+//                System.out.println("La tabla de sanciones está vacía");
+//                return "redirect:panelUsuario.do";
+//            }
+//            List<CatalogoSanciones> listaCatalogoSanciones = catalogoSancionesFacade.findBySpecificField("detalle", "S001", "like", null, null);
+//            if(listaCatalogoSanciones.isEmpty())
+//            {
+//                System.out.println("La sanción no pudo ser encontrada");
+//                return "redirect:panelUsuario.do";
+//            }
+//            CatalogoSanciones catalogoSancion = listaCatalogoSanciones.get(0);//Se obtiene el registro de la sanción para tratar sus datos
+//            Calendar fecha_max_x = Calendar.getInstance();  
+//            fecha_max_x.setTime(fecha_max);  
+//            fecha_max_x.add(Calendar.DATE, 5);  
+//            fecha_max = fecha_max_x.getTime();
+//            System.out.println("La fecha con la tolerancia es" + fecha_max);
+//            if(fecha_actual.after(fecha_max))
+//            {
+//                System.out.println("La fecha actual sobrepasa la de con tolerancia");
+//                Sanciones sancion = new Sanciones();
+//                sancion.setCatalogoSancionesId(catalogoSancion);
+//                sancion.setDatosPersonalesId(dp);//Id corresponde al objeto datos personales de mi alumno a sancionar
+//                sancion.setFecha(fecha_actual);
+//                sancion.setHorasSancion(catalogoSancion.getHorasSancion());
+//                try
+//                {
+//                    sancionesFacade.create(sancion);
+//                    System.out.println("Sancion: "+ catalogoSancion.getDetalle() + "\nAplicada a: "+ dp.getNumeroControl()+"-"+dp.getNombre() + "\nHoras:" + catalogoSancion.getHorasSancion());
+//                }
+//                catch(Exception e)
+//                {
+//                    System.out.println("Problema al crear" + e.getMessage());
+//                } 
+//            }
+//            else
+//            {
+//                System.out.println("La fecha actual no sobrepasa la de con tolerancia, no hay sancion");
+//            }
+//        }
+//        else
+//        {
+//            System.out.println("La fecha actual está dentro de la fecha máxima. No hay sanción");
+//        }
 
         //
 
