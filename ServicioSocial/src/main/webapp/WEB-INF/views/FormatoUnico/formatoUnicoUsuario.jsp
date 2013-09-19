@@ -267,6 +267,10 @@
                                 <td><form:input maxlength="30" path ="telefono_oficina" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
+                                <td>*Correo electr&oacute;nico:</td>
+                                <td><form:input maxlength="30" path ="correo_electronico"/> </td>
+                            </tr>
+                            <tr>
                                 <td>Twitter:</td>
                                 <td><form:input maxlength="25" path ="twitter" /> </td>
                             </tr>

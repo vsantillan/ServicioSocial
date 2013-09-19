@@ -349,6 +349,7 @@ public class FormatoUnicoController {
         formatoUnicoDatosContacoBean.setTelefono_casa(datosPersonales.getTelefonoCasa());
         formatoUnicoDatosContacoBean.setTelefono_cel(datosPersonales.getTelefonoCel());
         formatoUnicoDatosContacoBean.setTelefono_oficina(datosPersonales.getTelefonoOficina());
+        formatoUnicoDatosContacoBean.setCorreo_electronico(datosPersonales.getCorreoElectronico());
         formatoUnicoDatosContacoBean.setTwitter(datosPersonales.getTwitter());
         formatoUnicoDatosContacoBean.setFacebook(datosPersonales.getFacebook());
         modelo.addAttribute("formatoUnicoDatosContacto", formatoUnicoDatosContacoBean);
@@ -527,6 +528,7 @@ public class FormatoUnicoController {
             datosPersonales.setTelefonoCasa(dt.getTelefono_casa());
             datosPersonales.setTelefonoCel(dt.getTelefono_cel());
             datosPersonales.setTelefonoOficina(dt.getTelefono_oficina());
+            datosPersonales.setCorreoElectronico(dt.getCorreo_electronico());
             datosPersonales.setFacebook(dt.getFacebook());
             datosPersonales.setTwitter(dt.getTwitter());
 

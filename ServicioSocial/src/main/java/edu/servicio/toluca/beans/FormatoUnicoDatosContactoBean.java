@@ -24,6 +24,8 @@ public class FormatoUnicoDatosContactoBean {
     private String telefono_casa;
     private String telefono_cel;
     private String telefono_oficina;
+    private String correo_electronico;
+    
     private String twitter;
     private String facebook;
     private Colonia idColonia;
@@ -48,6 +50,7 @@ public class FormatoUnicoDatosContactoBean {
         if(!mv.maximoString(telefono_casa, 50)){listaErrores.add("El campo Telefono de casa no puede ser mayor a 50 digitos");} 
         if(!mv.maximoString(telefono_cel, 30)){listaErrores.add("El campo Telefono celular no puede ser mayor a 30 digitos");} 
         if(!mv.maximoString(telefono_oficina, 30)){listaErrores.add("El campo Telefono oficina no puede ser mayor a 30 digitos");} 
+        if(!mv.maximoString(correo_electronico, 30)){listaErrores.add("El campo Correo electronico no puede ser mayor a 30 digitos");} 
         if(!mv.maximoString(twitter, 25)){listaErrores.add("El campo Twitter no puede ser mayor a 25 letras");} 
         if(!mv.maximoString(facebook, 30)){listaErrores.add("El campo Facebook no puede ser mayor a 30 letras");} 
         
@@ -236,6 +239,20 @@ public class FormatoUnicoDatosContactoBean {
      */
     public void setIdColonia(Colonia idColonia) {
         this.idColonia = idColonia;
+    }
+
+    /**
+     * @return the correo_electronico
+     */
+    public String getCorreo_electronico() {
+        return correo_electronico;
+    }
+
+    /**
+     * @param correo_electronico the correo_electronico to set
+     */
+    public void setCorreo_electronico(String correo_electronico) {
+        this.correo_electronico = correo_electronico;
     }
     
     
