@@ -33,12 +33,8 @@ import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
-<<<<<<< HEAD
 import edu.servicio.toluca.beans.organizaciones.ValidaSesion;
-=======
 import edu.servicio.toluca.model.SancionesModelo;
-import edu.servicio.toluca.model.ValidaSesion;
->>>>>>> 06918e74afed4041d12d7b2b4374f173af42d18a
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoPlanFacade;
 import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
