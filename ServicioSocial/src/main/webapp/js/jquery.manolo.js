@@ -311,6 +311,17 @@ $(document).ready(function() {
             return false;
         }
     });
+    
+    //Panel de usuario
+    $("#filaPlatica").mouseover(function(event){
+       console.log("mouseover");
+        $("#platica").show("slow"); 
+    });
+    
+    $("#filaPlatica").mouseleave(function(event){
+       console.log("mouseleave");
+        $("#platica").hide("slow"); 
+    });
 
 });
 

@@ -24,6 +24,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.GenericGenerators;
 
@@ -31,6 +33,7 @@ import org.hibernate.annotations.GenericGenerators;
  *
  * @author SATELLITE
  */
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
 @Table(name = "VISTA_ALUMNO", catalog = "", schema = "GES_VIN")
 @XmlRootElement
@@ -133,18 +136,13 @@ public class VistaAlumno implements Serializable {
     private Date fecNac;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<Egresado> egresadoCollection;
-    @OneToMany(mappedBy = "numeroControl")
-    private Collection<Egresado> egresadoCollection1;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<DocumentosFinales> documentosFinalesCollection;
     @OneToMany(mappedBy = "alumnoId")
     private Collection<DatosPersonales> datosPersonalesCollection;
-    @OneToMany(mappedBy = "numeroControl")
-    private Collection<DatosPersonales> datosPersonalesCollection1;
     @OneToMany(mappedBy = "alumnoId")
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     private Collection<FoliosPlatica> foliosPlaticaCollection;
-    @OneToMany(mappedBy = "numeroControl")
-    private Collection<FoliosPlatica> foliosPlaticaCollection1;
     @OneToMany(mappedBy = "numeroControl")
     private Collection<Becado> becadoCollection;
 
@@ -346,16 +344,7 @@ public class VistaAlumno implements Serializable {
     public void setEgresadoCollection(Collection<Egresado> egresadoCollection) {
         this.egresadoCollection = egresadoCollection;
     }
-
-    @XmlTransient
-    public Collection<Egresado> getEgresadoCollection1() {
-        return egresadoCollection1;
-    }
-
-    public void setEgresadoCollection1(Collection<Egresado> egresadoCollection1) {
-        this.egresadoCollection1 = egresadoCollection1;
-    }
-
+    
     @XmlTransient
     public Collection<DocumentosFinales> getDocumentosFinalesCollection() {
         return documentosFinalesCollection;
@@ -372,34 +361,17 @@ public class VistaAlumno implements Serializable {
 
     public void setDatosPersonalesCollection(Collection<DatosPersonales> datosPersonalesCollection) {
         this.datosPersonalesCollection = datosPersonalesCollection;
-    }
+    }    
 
     @XmlTransient
-    public Collection<DatosPersonales> getDatosPersonalesCollection1() {
-        return datosPersonalesCollection1;
-    }
-
-    public void setDatosPersonalesCollection1(Collection<DatosPersonales> datosPersonalesCollection1) {
-        this.datosPersonalesCollection1 = datosPersonalesCollection1;
-    }
-
-    @XmlTransient
+    @Cache(usage = CacheConcurrencyStrategy.NONE)   
     public Collection<FoliosPlatica> getFoliosPlaticaCollection() {
         return foliosPlaticaCollection;
     }
 
     public void setFoliosPlaticaCollection(Collection<FoliosPlatica> foliosPlaticaCollection) {
         this.foliosPlaticaCollection = foliosPlaticaCollection;
-    }
-
-    @XmlTransient
-    public Collection<FoliosPlatica> getFoliosPlaticaCollection1() {
-        return foliosPlaticaCollection1;
-    }
-
-    public void setFoliosPlaticaCollection1(Collection<FoliosPlatica> foliosPlaticaCollection1) {
-        this.foliosPlaticaCollection1 = foliosPlaticaCollection1;
-    }
+    }  
 
     @XmlTransient
     public Collection<Becado> getBecadoCollection() {
