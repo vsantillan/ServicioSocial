@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.model;
 
+import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.entidades.CatalogoSanciones;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.sesion.SancionesFacade;
@@ -76,6 +77,8 @@ public void asignaSancion()
                 {
                     sancionesFacade.create(sancion);
                     System.out.println("Sancion: "+ catalogoSancion.getDetalle() + "\nAplicada a: "+ dp.getNumeroControl()+"-"+dp.getNombre() + "\nHoras:" + catalogoSancion.getHorasSancion());
+                    EnviarCorreo correo = new EnviarCorreo("Se te ha asignado una sanción", dp.getCorreoElectronico(),"Tienes una sanción de "+sancion.getHorasSancion() + "horas. La sanción es: "+ catalogoSancion.getDetalle());
+                    correo.enviaCorreo();
                 }
                 catch(Exception e)
                 {

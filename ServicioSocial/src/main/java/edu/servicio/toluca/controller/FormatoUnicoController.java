@@ -865,8 +865,10 @@ public class FormatoUnicoController {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         //----Asignar la sanción---
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        SancionesModelo sm = new SancionesModelo(catalogoSancionesFacade, sancionesFacade, fecha_max, dp, "S01");
+        SancionesModelo sm = new SancionesModelo(catalogoSancionesFacade, sancionesFacade, fecha_max, dp, "S001");
         sm.asignaSancion();
+        
+        
         
         
         
