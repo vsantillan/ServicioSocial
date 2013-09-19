@@ -107,6 +107,8 @@ public abstract class AbstractFacade<T> {
             predicate = criteriaBuilder.equal(root.get(field), fieldContent);
         } else if (predicates.equals("likelower")) {
             predicate = criteriaBuilder.like(criteriaBuilder.lower(root.<String>get(field)), fieldContent.toString());
+        } else if (predicates.equals("like")) {
+            predicate = criteriaBuilder.like(root.<String>get(field), "%" + fieldContent.toString() + "%");
         }
 
         criteriaQuery.select(root);

@@ -55,7 +55,7 @@ function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
 }
 function cambiaStatusSubidaFui()
 {
-    var idDP = $('#idSubirFui');
+    var idDP = $('#idSubirFui').val();
     console.log('Se cambiará el estatus por descargado al id de datos personales '+idDP);
     $.get("cambiaStatusSubidaFui.do?&id_datos_personales=" + idDP, null, function(respuesta) {
         console.log('Subida con respuesta = ' + respuesta);
