@@ -30,7 +30,7 @@ import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
-import edu.servicio.toluca.model.ValidaSesion;
+import edu.servicio.toluca.beans.organizaciones.ValidaSesion;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoPlanFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;

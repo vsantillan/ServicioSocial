@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.servicio.toluca.model;
+package edu.servicio.toluca.beans.organizaciones;
 
 /**
  *
  * @author bustedvillain
  */
-public class RespuestaInsertActividades {
+public class RespuestaInsertProyectoPerfil {
     private boolean success;
     private String mensaje;
 

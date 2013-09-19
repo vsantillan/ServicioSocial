@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.model;
 
+import edu.servicio.toluca.beans.organizaciones.RespuestaInsertActividades;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Perfil;
 import edu.servicio.toluca.entidades.Proyectos;

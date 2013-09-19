@@ -7,8 +7,8 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.PerfilJSON;
 import edu.servicio.toluca.beans.StringMD;
-import edu.servicio.toluca.beans.organizaciones.ConsultasOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.PropAluInstProyBean;
+import edu.servicio.toluca.model.organizaciones.prueba;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Ciudades;
 import edu.servicio.toluca.entidades.CodigosPostales;
@@ -25,10 +25,9 @@ import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
-import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.ActividadesModel;
-import edu.servicio.toluca.model.ValidaSesion;
-import edu.servicio.toluca.model.ValidacionesOrganizaciones;
+import edu.servicio.toluca.beans.organizaciones.ValidaSesion;
+import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
@@ -789,7 +788,8 @@ public class OrganizacionesController2 {
     //Alta de organizacion por pre-registro
     @RequestMapping(method = RequestMethod.GET, value = "/pruebaFacade.do")
     public String pruebaFacade(Model model) {
-        ConsultasOrganizaciones consulta = new ConsultasOrganizaciones();
+        prueba pruebaa = new prueba();
+        pruebaa.prueba(instanciaFacade);
         //model.addAttribute("organizaciones", consulta.getOrganizacionesPreRegistradas());
         return "/paginaPrueba";
     }

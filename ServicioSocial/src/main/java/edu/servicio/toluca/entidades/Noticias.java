@@ -48,6 +48,7 @@ public class Noticias implements Serializable {
     @Size(max = 300)
     @Column(name = "DETALLE")
     private String detalle;
+    //1. Noticas para pagina principal, 2. Noticias para alumnos, 3. Noticias para organizaciones
     @Column(name = "TIPO_SERVICIO")
     private BigInteger tipoServicio;
 
@@ -81,7 +82,11 @@ public class Noticias implements Serializable {
     public void setDetalle(String detalle) {
         this.detalle = detalle;
     }
-
+    
+    /**
+     * 1. Noticas para pagina principal, 2. Noticias para alumnos, 3. Noticias para organizaciones
+     * @return 
+     */
     public BigInteger getTipoServicio() {
         return tipoServicio;
     }
