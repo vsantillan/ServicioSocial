@@ -76,13 +76,9 @@ public class PlaticaController {
         return "/Platicas/altaPlatica";
     }
 
-        @RequestMapping(method = RequestMethod.GET, value = "/pruebarep.do")
-    public String reporte(Model model) {
-        return "/Platicas/pruebarep";
-    }
-          @RequestMapping(method = RequestMethod.GET, value = "/rep.do")
+          @RequestMapping(method = RequestMethod.GET, value = "/folio.do")
     public String reporte2(Model model) {
-        return "/Platicas/rep";
+        return "/Platicas/folio";
     }    
         
     @RequestMapping(method = RequestMethod.GET, value = "/consultasBajas.do")
