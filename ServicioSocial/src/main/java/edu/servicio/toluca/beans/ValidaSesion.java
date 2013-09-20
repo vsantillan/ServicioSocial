@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.servicio.toluca.beans.organizaciones;
+package edu.servicio.toluca.beans;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,7 +24,61 @@ public class ValidaSesion {
 
     public ValidaSesion() {
     }
+    
+    /**
+     * Retorna true si hay una sesion iniciada. No recibe parametros, estos debieron haber sido enviados en el constructor de la clase
+     * @return 
+     */
+    public boolean haySesion(){
+        if(validaAdmin() || validaAlumno() || validaConsultas() || validaOperador() || validaOrganizacion() || validaRegistro()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    /**
+     * Retorna ture si hay una sesion iniciada. No recibe parametros.
+     * @param session
+     * @param request
+     * @return 
+     */
+    public boolean haySesion(HttpSession session, HttpServletRequest request){
+        if(validaAdmin(session, request) || validaAlumno(session, request) || validaConsultas(session, request) || validaOperador(session, request) || validaOrganizacion(session, request) || validaRegistro(session, request)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
+    /**
+     * Valida si el usuario puede entrar al panel del administrador. Sin recibir parametros, que debieron haber sido enviados en el constructor de la clase.
+     * @return 
+     */
+    public boolean accesaPanelAdministrador(){
+        if(validaAdmin() || validaConsultas() || validaRegistro() || validaOperador()){
+           return true; 
+        }else{
+            return false;
+        }
+        
+    }
+    
+    /**
+     * Valida si el usuario puede entrar al panel del administrador. Recibe las variables de sesion.
+     * @param session
+     * @param request
+     * @return 
+     */
+    public boolean accesaPanelAdministraodr(HttpSession session, HttpServletRequest request){
+        if(validaAdmin(session, request) || validaConsultas(session, request) || validaRegistro(session, request) || validaOperador(session, request)){
+           return true; 
+        }else{
+            return false;
+        }
+    }
     /**
      * Este metodo valida que la sesion sea de un alumno recibiendo las
      * variables de la sesion

@@ -6,7 +6,7 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.entidades.FoliosPlatica;
 import edu.servicio.toluca.entidades.VistaAlumno;
-import edu.servicio.toluca.beans.organizaciones.ValidaSesion;
+import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.util.ArrayList;

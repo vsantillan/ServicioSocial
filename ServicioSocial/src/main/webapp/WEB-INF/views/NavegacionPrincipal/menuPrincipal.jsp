@@ -3,6 +3,17 @@
     Created on : 5/06/2013, 10:50:33 AM
     Author     : roy
 --%>
+<%@page import="edu.servicio.toluca.beans.ValidaSesion"%>
+<%
+    HttpSession sesionOk=request.getSession();
+    ValidaSesion sesion = new ValidaSesion(sesionOk, request);
+    String nombre="";
+    String rol="";
+    if(sesion.haySesion()){
+        nombre=sesionOk.getAttribute("NOMBRE").toString();
+        rol=sesionOk.getAttribute("ROL").toString();
+    }
+%>
 
 <div id="menu">
     <div class="jquerycssmenu">
@@ -24,7 +35,32 @@
                    </ul>
                 </li>
                 <li><a href="contacto.do">Contacto</a></li>
-                <li><a href="login.do">Login</a></li>
+                <% if(sesion.haySesion()){
+                        if(sesion.validaAlumno()){
+                %>
+                            <li><a href="panelUsuario.do">Mi Perfil</a></li>
+                        <%}%>
+                        <% if(sesion.validaOrganizacion()){ %>
+                            <li><a href="panelOrganizacion.do">Organizacion <%=nombre%></a>
+                                <ul>
+                                    <li><a href="panelOrganizacion.do">Ver Perfil</a></li>
+                                    <li><a href="mensajeOrganizacion.do">Mensajes</a></li>
+                                    <li><a href="javascript:void(0);">Proyectos</a>
+                                        <ul>
+                                            <li><a href="altaProyecto.do">Alta Proyecto</a></li>
+                                            <li><a href="verProyectos.do">Ver Proyectos</a></li>
+                                        </ul>
+                                    </li>                        
+                                </ul>
+                            </li>
+                        <%}%>
+                        <% if(sesion.accesaPanelAdministrador()){ %>
+                            <li><a href="panelAdministrador.do">Panel Administrador</a></li>
+                        <%}%>
+                        <li><a href="cerrarSesion.do">Cerrar Sesi&oacute;n</a></li>
+                <%}else{%>
+                    <li><a href="login.do">Login</a></li>
+                <%}%>                
                 
             </ul>
         </div>  

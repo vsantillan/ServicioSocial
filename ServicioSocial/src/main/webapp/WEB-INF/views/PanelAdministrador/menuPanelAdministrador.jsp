@@ -21,7 +21,8 @@
 <!--<div id="smoothmenu1" class="ddsmoothmenu"></div>-->
 <div id="smoothmenu2" class="ddsmoothmenu-v">
     <ul>
-        <li><a href="javascript:void(0)" onclick="redirecciona('#')">Pláticas</a>
+        <li><a href="index.do">Regresar al Sitio</a></li>
+        <li><a href="javascript:void(0)">Pláticas</a>
             <ul>
                 <li><a href="altaPlatica.do" onclick="redirecciona('altaPlatica.do')">1.1 Altas</a></li>
                 <li><a href="consultasBajas.do" onclick="redirecciona('consultasBajas.do')">1.2 Bajas | Consultas</a></li>

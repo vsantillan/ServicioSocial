@@ -127,21 +127,25 @@ public class NavegacionPrincipalController {
             //JOELITO
             if (rol.equals("ROLE_GESVIN_OPERACION")) {
                 session.setAttribute("ROL", "OPERACION");
+                session.setAttribute("NOMBRE", "OPERADOR");
                 return "redirect:panelAdministrador.do";
             }
             //DIRECTIVOS
             if (rol.equals("ROLE_GESVIN_CONSULTAS")) {
                 session.setAttribute("ROL", "CONSULTAS");
+                session.setAttribute("NOMBRE", "ADMINISTRATIVO");
                 return "redirect:panelAdministrador.do";
             }
             //BACKDOOR
             if (rol.equals("ROLE_GESVIN_ADMIN")) {
                 session.setAttribute("ROL", "ADMIN");
+                session.setAttribute("NOMBRE", "SUPER ADMIN");
                 return "redirect:panelAdministrador.do";
             }
             //ASISTENTE
             if (rol.equals("ROLE_GESVIN_REGISTRO")) {
                 session.setAttribute("ROL", "REGISTRO");
+                session.setAttribute("NOMBRE", "ASISTENTE");
                 return "redirect:panelAdministrador.do";
             }
             //OTRO

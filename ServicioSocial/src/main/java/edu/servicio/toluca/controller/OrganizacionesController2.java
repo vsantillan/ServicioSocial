@@ -26,7 +26,7 @@ import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.model.ActividadesModel;
-import edu.servicio.toluca.beans.organizaciones.ValidaSesion;
+import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;
@@ -1464,7 +1464,8 @@ public class OrganizacionesController2 {
     
     @RequestMapping(method = RequestMethod.GET, value = "/verAlumnosProyecto.do")
     public String verAlumnosProyecto(Model model, HttpSession session, HttpServletRequest request, String idProyecto) {
-        if (new ValidaSesion().validaOrganizacion(session, request)) {
+        ValidaSesion valSession = new ValidaSesion(session, request);
+        if (valSession.validaOrganizacion() || valSession.validaAdmin() || valSession.validaConsultas() || valSession.validaOperador() || valSession.validaRegistro()) {
             System.out.println("idProyecto"+idProyecto);
             List<FormatoUnico> alumnos = new ArrayList<FormatoUnico>();
             try{

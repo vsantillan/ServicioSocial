@@ -4,7 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.organizaciones.ValidaSesion;
+import edu.servicio.toluca.beans.ValidaSesion;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class PanelAdministradorController
     {
         //Valida sesion
         ValidaSesion valSession = new ValidaSesion(session, request);
-        if (valSession.validaAdmin() || valSession.validaConsultas() || valSession.validaRegistro() || valSession.validaOperador()) {
+        if (valSession.accesaPanelAdministrador()) {
             return "/PanelAdministrador/panelAdministrador";
         }else{
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");

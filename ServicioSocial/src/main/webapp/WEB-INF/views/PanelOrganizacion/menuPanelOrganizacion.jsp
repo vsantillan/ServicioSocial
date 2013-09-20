@@ -3,11 +3,8 @@
     Created on : 06-jun-2013, 10:26:34
     Author     : bustedvillain
 --%>
-<%
-    HttpSession sesionOk = request.getSession();
-    String nombre=sesionOk.getAttribute("NOMBRE")+"";
-%>
-
+<%@ include file="../NavegacionPrincipal/menuPrincipal.jsp" %>
+<%--
 <div id="menu">
     <div class="jquerycssmenu">
         <div id="smoothmenu1" class="ddsmoothmenu" >
@@ -36,3 +33,4 @@
         <br style="clear: left" />
     </div>
 </div>
+--%>

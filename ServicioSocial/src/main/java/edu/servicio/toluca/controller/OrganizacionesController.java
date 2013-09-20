@@ -16,7 +16,7 @@ import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.RetroalimentacionInstancia2;
 import edu.servicio.toluca.entidades.RetroalimentacionProyecto2;
 import edu.servicio.toluca.model.ActividadesModel;
-import edu.servicio.toluca.beans.organizaciones.ValidaSesion;
+import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.ValidarProyectos;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
