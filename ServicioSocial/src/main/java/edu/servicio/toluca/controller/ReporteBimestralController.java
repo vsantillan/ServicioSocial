@@ -55,7 +55,8 @@ public class ReporteBimestralController {
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model modelo, String alumno_id) throws ParseException {
-        modelo.addAttribute("Reportes", new reporteBimestral());
+        reporteBimestral RBObjeto = new reporteBimestral();
+        alumno_id = "09280531";
         ///////////BUSCAR ALUMNO///////////
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
@@ -70,10 +71,16 @@ public class ReporteBimestralController {
                 List<FormatoUnico> formatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
                 FormatoUnico fechaInicioFU = formatoUnico.get(0);
                 modelo.addAttribute("numeroReporte", 1);
-                fechas fechaFin = new fechas(fechaInicioFU.getFechaInicio());
-                modelo.addAttribute("horasAcumuladas", fechaInicioFU.getHorasAcumuladas());
-                modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
-                modelo.addAttribute("fechaFin", fechaFin.dameFecha());
+                fechas fechas = new fechas();
+                //modelo.addAttribute("horasAcumuladas", fechaInicioFU.getHorasAcumuladas());
+                //modelo.addAttribute("fechaInicio", fechaInicioFU.getFechaInicio());
+                //modelo.addAttribute("fechaFin", fechas.dameFecha(fechaInicioFU.getFechaInicio()));
+                RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
+                RBObjeto.setFechaFin(fechas.dameFecha(fechaInicioFU.getFechaInicio()));
+                RBObjeto.setHorasAcumuladas(fechaInicioFU.getHorasAcumuladas());
+                RBObjeto.setHoras(10);
+
+                modelo.addAttribute("Reportes", RBObjeto);
             } else {
                 int noReportes = 0;
                 for (int i = 0; i < RB.size(); i++) {
@@ -104,6 +111,7 @@ public class ReporteBimestralController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/insertaReporte.do")
     public String insertaBimestral(@ModelAttribute("Reportes") @Valid reporteBimestral reporte, BindingResult resultado, Model modelo, String selectfrom) {
+        String alumno_id = "09280531";
         if (selectfrom != null) {
             List<String> listaIds = new ArrayList<String>();
             StringTokenizer palabra = new StringTokenizer(selectfrom, ",");
@@ -111,22 +119,31 @@ public class ReporteBimestralController {
                 listaIds.add(palabra.nextToken());
                 //System.out.println("Actividad"+palabra.nextToken());
             }
-            System.out.println("tamaño de la lista:"+listaIds.size());
-            if(listaIds.size()<=1){
-                System.out.println("Entro");
+            System.out.println("tamaño de la lista:" + listaIds.size());
+            if (listaIds.size() <= 1) {
                 modelo.addAttribute("errorActividades", "<div class='error'>Seleccione como minimo 2 Actividades</div>");
+                modelo.addAttribute("Reportes", reporte);
+                List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
+                VistaAlumno alumno = listaAlumnos.get(0);
+                List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+                if (!datosPersonales.isEmpty()) {
+                    DatosPersonales DP = datosPersonales.get(0);
+                    modelo.addAttribute("datosPersonales", datosPersonales);
+                }
+                    System.out.println("Fecha Inicio:" + reporte.getFechaInicio());
+                    System.out.println("Fecha Fin: " + reporte.getFechaFin());
+                    System.out.println("Horas del Reporte:" + reporte.getHoras());
+                    return "/ReporteBimestral/formatoReporteBimestral";
+                }
+            }
+            if (resultado.hasErrors()) {
+                modelo.addAttribute("Reportes", reporte);
+                System.out.println("Hubo errores" + resultado.toString());
+                return "redirect:formatoReporteBimestral.do?alumno_id=09280531";
+            } else {
+                modelo.addAttribute("Reportes", reporte);
                 return "redirect:formatoReporteBimestral.do?alumno_id=09280531";
             }
-        }
-        if (resultado.hasErrors()) {
-            modelo.addAttribute("Reportes", reporte);
-            System.out.println("Hubo errores" + resultado.toString());
-            return "redirect:formatoReporteBimestral.do?alumno_id=09280531";
-        } else {
-            modelo.addAttribute("Reportes", reporte);
-            System.out.println("Paso bien");
-            return "redirect:formatoReporteBimestral.do?alumno_id=09280531";
-        }
 
+        }
     }
-}

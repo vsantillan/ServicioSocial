@@ -18,14 +18,12 @@ import org.hibernate.validator.constraints.Range;
 
 public class reporteBimestral {
     
-    @NotEmpty (message = "El campo no puede ser vacio")
-    private String fechaInicio;
-    @NotEmpty (message = "El campo no puede ser vacio")
+    private String  fechaInicio;
     private String fechaFin;
     @NotNull (message ="Debe introducir un numero de horas por Reporte" )
     @Range(min = 0,max = 160,message = "El rango de las horas debe ser entre 0-160")
     private Integer horas;
-    private Integer horasAcumuladas;
+    private BigInteger horasAcumuladas;
     @NotNull (message = "Introduzca una calificacion para el reporte")
     @Range(min = 0,max = 100, message = "La calificacion debe de estar entre 0-100")
     private Integer calificacion;
@@ -77,14 +75,14 @@ public class reporteBimestral {
     /**
      * @return the horasAcumuladas
      */
-    public Integer getHorasAcumuladas() {
+    public BigInteger getHorasAcumuladas() {
         return horasAcumuladas;
     }
 
     /**
      * @param horasAcumuladas the horasAcumuladas to set
      */
-    public void setHorasAcumuladas(Integer horasAcumuladas) {
+    public void setHorasAcumuladas(BigInteger horasAcumuladas) {
         this.horasAcumuladas = horasAcumuladas;
     }
 
@@ -129,6 +127,10 @@ public class reporteBimestral {
     public void setNumeroReporte(Integer numeroReporte) {
         this.numeroReporte = numeroReporte;
     }
+
+
+ 
+
 
 
     

@@ -87,31 +87,31 @@
                         <table>
                             <tr>
                                 <td><label for="noReporte">No de Reporte:</label></td>
-                                <td><form:input path="numeroReporte" type="text" name=" numeroReporte" id=" numeroReporte" disabled="true" value="${numeroReporte}"  /></td>
+                                <td><form:input path="numeroReporte" type="text" name=" numeroReporte" id=" numeroReporte"  value="${numeroReporte}" readonly="true" /></td>
                             </tr>
                             <tr>
                                 <td> <label for="fecha">Fecha de Inicio del Reporte:</label> </td>
                                 <core:choose>
                                     <core:when test="${empty fechaInicio}">
-                                        <td><form:input path="fechaInicio" type="text"  name="fechaInicio"id="datepicker" value="" onchange="actualizaFecha(this)" />
+                                        <td><form:input path="fechaInicio" type="text"  name="fechaInicio" readonly="true"  onchange="actualizaFecha(this)" />
                                             <form:errors path="fechaInicio" cssClass="error"/>  
                                         </td>  
                                     </core:when>
                                     <core:otherwise>
-                                        <td><form:input path="fechaInicio" type="text"  name="fechaInicio"id="datepicker" disabled="true" value="${fechaInicio}" onchange="actualizaFecha(this)" />
+                                        <td><form:input path="fechaInicio" type="text"  name="fechaInicio" readonly="true"  onchange="actualizaFecha(this)" />
                                             <form:errors path="fechaInicio" cssClass="error"/> 
                                         </td>  
                                     </core:otherwise>
                                 </core:choose>                                   
                                 <td> <label for="fecha">Fecha Limite del  Reporte:</label> </td>
-                                <td><form:input path="fechaFin" type="text" name="fechaFin" id="fechaFin" disabled="true" value="${fechaFin}"  />
+                                <td><form:input path="fechaFin" type="text" name="fechaFin" id="fechaFin" readonly="true"   />
                                     <form:errors path="fechaFin" cssClass="error"/> 
                                 </td> 
                             </tr>
                             <tr>
                                 <td><label for="horasA">Horas del Reporte:</label></td>
                                 <td>
-                                    <form:input path="horas" type="text" name="horasReporte" value="0" />
+                                    <form:input path="horas" type="text" name="horasReporte" />
                                     <form:errors path="horas" cssClass="error"/>
                                 </td>
                                 <td><label for="horasAcumuluadas">Horas Acumuladas:</label></td>
@@ -133,8 +133,8 @@
                                             </core:forEach>
                                         </select>
                                         
-                                        <a href="JavaScript:void(0);" id="btn-remove">&laquo; Quitar</a>
-                                        <a href="JavaScript:void(0);" id="btn-add">Agregar &raquo;</a>
+                                        <a href="JavaScript:void(0);" id="btn-add">&laquo; Quitar</a>
+                                        <a href="JavaScript:void(0);" id="btn-remove">Agregar &raquo;</a>
                                         
                                         
 

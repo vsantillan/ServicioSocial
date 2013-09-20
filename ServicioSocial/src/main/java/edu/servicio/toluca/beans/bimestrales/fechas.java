@@ -16,23 +16,31 @@ import java.util.GregorianCalendar;
  */
 public class fechas {
 
-    private Date fechaInicio;
-    private Date fechaFin;
-
-    public fechas(Date fecha) {
-        this.fechaInicio = fecha;
-
-    }
-
-    public String dameFecha() throws ParseException {
+    public String dameFecha(Date fechaInicio) throws ParseException {
         SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
-        //fechaFin = textFormat.parse(fechaInicio);
-        System.out.println("La fecha de Inicio es: "+fechaInicio);
         Calendar fecha = Calendar.getInstance();
         fecha.setTime(fechaInicio);
-        fecha.add(Calendar.MONTH,2);
+        fecha.add(Calendar.MONTH, 2);
 
         return textFormat.format(fecha.getTime());
 
+    }
+
+    public String convierteDate(Date fecha) {
+        SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        return textFormat.format(fecha);
+    }
+
+    public Date covierteString(String fecha) {
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+        Date fechaDate = null;
+        try {
+            fechaDate = formatoFecha.parse(fecha);
+        } catch (Exception ex) {
+            System.out.println("Ocurrio un error");
+
+        }
+        return fechaDate;
     }
 }
