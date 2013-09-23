@@ -437,7 +437,7 @@
                     <img src="imagenes/fui.png" style="width:300; height:500px" alt="Formato Unico inicial"/>
                     <h1>Ahora pulsa en el botón de descargar.</h1>
                     <h2>Cuando tu formato tenga el sello corespondiente s&uacute;belo en la siguiente secci&oacute;n</h2>
-                    <a href="muestraReporteFUI.do" id="cmdDescargaFui" target="_blank"><img src="imagenes/descargar.png" /></a>
+                    <a href="muestraReporteFUI.do" id="cmdDescargaFui" target="_blank" onclick="window.location.reload();"><img src="imagenes/descargar.png" /></a>
                 </div>
                 <div id="subirFui">
                     <h1>Sube aqu&iacute; tu formato &uacute;nico dellado como el que está a continuaci&oacute;n</h1>
