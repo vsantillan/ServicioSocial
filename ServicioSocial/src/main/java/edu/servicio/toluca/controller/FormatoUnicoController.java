@@ -242,6 +242,7 @@ public class FormatoUnicoController {
             formatoUnico.setPeriodoInicio(platica.getPlaticaId().getPeriodo());
             formatoUnico.setTipoServicio(BigInteger.ONE);
             formatoUnico.setStatusServicio(BigInteger.ONE);
+            formatoUnico.setHorasAcumuladas(BigInteger.ZERO);
 
 
 
