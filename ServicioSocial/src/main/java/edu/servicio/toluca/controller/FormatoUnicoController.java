@@ -456,6 +456,7 @@ public class FormatoUnicoController {
 ////////Para la subida de archivos/////////////////////
 //////////////////////////////////////////////////////////////////////////
         modelo.addAttribute("idDatSubida", datosPersonales.getId());
+        System.out.println("Antes de mostrar el status fui es:"+ formatoUnico.getStatusFui());
         if (formatoUnico.getStatusFui() != null && formatoUnico.getStatusFui().toString().equals("5")) {
             modelo.addAttribute("infoDescarga", "<input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>\n"
                     + "                        <input type='submit' value='Subir' />");

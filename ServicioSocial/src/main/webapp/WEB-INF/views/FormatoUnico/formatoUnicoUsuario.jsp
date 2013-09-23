@@ -382,6 +382,13 @@
 
                             </tr>
                             <tr>
+                                
+                                <td>Para ver más informaci&oacute;n del proyecto, da clic en la lupa
+                                    <!--<input type="text" id="idProyecto" />-->
+                                </td>
+                                <td style="text-align: left;"><a id="linkMasInfoProyecto"  class="fancyFU"><img src="imagenes/lupa.png" width="30"/></a></td>
+                            </tr>
+                            <tr>
                                 <td></td>
                                 <td><input type ="submit" value="Guardar Datos de Organizaci&oacute;n" > </td>
                             </tr>

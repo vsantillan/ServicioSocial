@@ -43,6 +43,8 @@ function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
         if (idProyActual == proyecto.id_proyecto[i])
         {
             console.log('--soniguales');
+            //$('#idProyecto').val(proyecto.id_proyecto[i]);
+            $('#linkMasInfoProyecto').attr("href", "verAlumnosProyecto.do?id=" + proyecto.id_proyecto[i]);
             $('#domicilioOrg').val(proyecto.domicilio[i]);
             $('#nombre_responsable').val(proyecto.nombre_responsable[i]);
             $('#responsable_puesto').val(proyecto.nombre_responsable[i]);
@@ -83,6 +85,8 @@ function recargaProyectos(idInstancia, idProyecto)
             //$("#proyectos").append('<option value=' + respuesta.id_proyecto + '>' + respuesta.nombre + '</option>');
             console.log('Respuesda.id_proyecto es:' + respuesta.id_proyecto[i]);
             console.log('Respuesda.nombre es:' + respuesta.nombre[i]);
+            //$('#idProyecto').val(proyecto.id_proyecto[i]);
+            $('#linkMasInfoProyecto').attr("href", "verAlumnosProyecto.do?id=" + proyecto.id_proyecto[i]);
             $('<option value=' + respuesta.id_proyecto[i] + '>' + respuesta.nombre[i] + '</option>').appendTo("#proyectos");
             $('#domicilioOrg').val('');
             $('#nombre_responsable').val('');
