@@ -289,13 +289,15 @@ $(document).ready(function() {
     });
 
     $("#btnLogin").click(function(event) {
-        $("#respLoginOrg").html("<center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center>");
+        $("#respLoginOrg").show("fast");
+        $("#formLogin").animate({width:400, height:300}, "slow");
         document.forms["formLogin"].submit();
     });
 
     $("#formLogin").keyup(function(event) {
         if (event.keyCode === 13) {
-            $("#respLoginOrg").html("<center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center>");
+            $("#respLoginOrg").show("fast");
+            $("#formLogin").animate({width:400, height:300}, "slow");
             document.forms["formLogin"].submit();
         }
     });
@@ -313,14 +315,68 @@ $(document).ready(function() {
     });
     
     //Panel de usuario
-    $("#filaPlatica").mouseover(function(event){
-       console.log("mouseover");
-        $("#platica").show("slow"); 
+    $(".filas").mouseover(function(event){
+        $("#mensajesProceso").show("fast");
     });
     
-    $("#filaPlatica").mouseleave(function(event){
-       console.log("mouseleave");
-        $("#platica").hide("slow"); 
+    $("td").mouseleave(function(event){
+        $("#mensajesProceso").hide("fast");
+    });
+    //Platica
+    $("#filaPlatica").mouseover(function(event){       
+       $("#platica").show("fast");  
+    });
+    
+    $("#filaPlatica").mouseleave(function(event){       
+       $("#platica").hide("fast"); 
+    });
+    //Formato Unico
+    $("#filaFormatoUnico").mouseover(function(event){       
+       $("#formatoUnico").show("fast");  
+    });
+    
+    $("#filaFormatoUnico").mouseleave(function(event){       
+       $("#formatoUnico").hide("fast"); 
+    });
+    //Reportes Bimestrales
+    $("#filaReportesBimestrales").mouseover(function(event){       
+       $("#reportesBimestrales").show("fast");  
+    });
+    
+    $("#filaReportesBimestrales").mouseleave(function(event){       
+       $("#reportesBimestrales").hide("fast"); 
+    });
+    //Reportes Mensuales
+    $("#filaReportesMensuales").mouseover(function(event){       
+       $("#reportesMensuales").show("fast");  
+    });
+    
+    $("#filaReportesMensuales").mouseleave(function(event){       
+       $("#reportesMensuales").hide("fast"); 
+    });
+    //Platica Becados
+    $("#filaPlaticaBecados").mouseover(function(event){       
+       $("#platicaBecados").show("fast");  
+    });
+    
+    $("#filaPlaticaBecados").mouseleave(function(event){       
+       $("#platicaBecados").hide("fast"); 
+    });
+    //Documentos Finales
+    $("#filaDocumentosFinales").mouseover(function(event){       
+       $("#documentosFinales").show("fast");  
+    });
+    
+    $("#filaDocumentosFinales").mouseleave(function(event){       
+       $("#documentosFinales").hide("fast"); 
+    });
+    //Sanciones
+    $("#filaSanciones").mouseover(function(event){       
+       $("#sanciones").show("fast");  
+    });
+    
+    $("#filaSanciones").mouseleave(function(event){       
+       $("#sanciones").hide("fast"); 
     });
 
 });

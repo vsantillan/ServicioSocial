@@ -61,6 +61,11 @@ public class NavegacionPrincipalController {
     public String organizaciones(Model a) {
         return "/NavegacionPrincipal/organizaciones";
     }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/acercaDe.do")
+    public String acercaDe(Model a) {
+        return "/NavegacionPrincipal/acercaDe";
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/loginOrganizaciones.do")
     public String loginOrganizaciones(Model a) {

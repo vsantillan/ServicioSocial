@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.FechaAPalabras;
 import edu.servicio.toluca.entidades.FoliosPlatica;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
@@ -47,6 +48,7 @@ public class PanelUsuarioController {
             System.out.println("Bienvenido al panel de usuario " + alumno.getNombre());
 
             //Checa platica
+            FechaAPalabras fecha = new FechaAPalabras();
             System.out.println("Checa platica");
             List<FoliosPlatica> platica = foliosPlaticaFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
             List<FoliosPlatica> filtroPlatica= new ArrayList();
@@ -64,7 +66,7 @@ public class PanelUsuarioController {
                 //Checa si asistio a la platica en la cual se registro
                 if(platica.get(0).getAsistencia()==uno){
                     model.addAttribute("platica", true);
-                    model.addAttribute("mensajePlatica", "Asististe a la platica del "+platica.get(0).getPlaticaId().getFecha()+", la fecha máxima para que subas tu formato único es hasta el "+platica.get(0).getPlaticaId().getFechaMxFui()+", de lo contrario serás acreedor a una sanción.");
+                    model.addAttribute("mensajePlatica", "Asististe a la platica del "+ fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFecha())+", la fecha máxima para que subas tu formato único es hasta el "+fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFechaMxFui())+", de lo contrario serás acreedor a una sanción.");
                     System.out.println("Asistio a la platica");
                 }else{
                     model.addAttribute("platica", false);

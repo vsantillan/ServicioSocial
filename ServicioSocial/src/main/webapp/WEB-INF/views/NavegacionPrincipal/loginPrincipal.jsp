@@ -4,9 +4,9 @@
     Author     : bustedvillain
 --%>
 <%
-    String error="";
-    if(request.getParameter("error")!=null){
-        error=request.getParameter("error");
+    String error = "";
+    if (request.getParameter("error") != null) {
+        error = request.getParameter("error");
     }
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -51,7 +51,9 @@
                         </tr>
                         <tr>
                             <td colspan="2">
-                                <div id="respLoginOrg"></div>
+                                <div id="respLoginOrg" style="display:none;">
+                                    <center><img src='imagenes/loading.gif' width='40'/><br/>Cargando...</center> 
+                                </div>
                             </td>
                         </tr>
                         ${error}
@@ -59,9 +61,9 @@
                     </table>
                     <h3>Recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</h3>
                 </form:form> 
-                
+
                 <br/><br/><br/><br/><br/><br/><br/>
-                
+
             </center>
             <div style="clear:both;"></div>
         </div>

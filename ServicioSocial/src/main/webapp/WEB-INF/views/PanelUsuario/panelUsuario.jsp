@@ -21,6 +21,24 @@
         <%@ include file="../Template/metas.jsp" %>
         <script src="js/jquery.manolo.js"></script>
         <title>Home Usuario</title>
+        <style>
+            .mensajesProceso{
+                position:fixed;
+                width:80%;
+                height:100px;
+                bottom: 20px;
+                left: 10%; 
+                background-color: white;
+                z-index:100;
+                -webkit-border-radius: 6px;
+		-moz-border-radius: 6px;
+		border-radius: 6px;
+		border:#01406a solid 1px;
+            }
+            .oculto{
+                display:none;
+            }
+        </style>
     </head>
     <body class="background" >
         <jsp:include page="../Template/banner.jsp" />
@@ -41,9 +59,39 @@
                 </ul>
             </div>
             <br/>
+            <div id="mensajesProceso" class="mensajesProceso oculto">
+                <div id="platica"  class="oculto">            
+                    <h1>Pl&aacute;tica</h1>
+                    <p>${mensajePlatica}</p>                   
+                </div>
+                <div id="formatoUnico"  class="oculto">            
+                    <h1>Formato &Uacute;nico</h1>
+                    <p>${mensajeFormatoUnico}</p>                   
+                </div>
+                <div id="reportesBimestrales"  class="oculto">            
+                    <h1>Reportes Bimestrales</h1>
+                    <p>${mensajeReportesBimestrales}</p>                   
+                </div>
+                <div id="reportesMensuales"  class="oculto">            
+                    <h1>Reportes Mensuales</h1>
+                    <p>${mensajeReportesMensuales}</p>                   
+                </div>
+                <div id="platicaBecados"  class="oculto">            
+                    <h1>Pl&aacute;tica Becados</h1>
+                    <p>${mensajePlaticaBecados}</p>                   
+                </div>
+                <div id="documentosFinales"  class="oculto">            
+                    <h1>Documentos Finales</h1>
+                    <p>${mensajeDocumentosFinales}</p>                   
+                </div>
+                <div id="sanciones"  class="oculto">            
+                    <h1>Sanciones</h1>
+                    <p>${mensajeSanciones}</p>                   
+                </div>
+            </div>
             <table class="general">
                 <tr>
-                    <td class="filas" id="filaPlatica"><a id="b" href="seleccionarPlatica.do">PLATICA</a></td>
+                    <td class="filas" id="filaPlatica"><a id="b" href="seleccionarPlatica.do">PL&Aacute;TICA</a></td>
                     <td>
                         <core:choose>
                             <core:when  test="${platica}">
@@ -55,80 +103,30 @@
                         </core:choose>
                     </td>
                 </tr>
-                <tr style="display:none;" id="platica">
-                    <td>
-                        <div class="MyForm">
-                            <p>${mensajePlatica}</p>
-                        </div>
-                    </td>
-                    <td></td>
-                </tr>
                 <tr>
-                    <td class="filas"><a id="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a></td>
+                    <td class="filas" id="filaFormatoUnico"><a id="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                <tr style="display:none;" id="">
-                    <td colspan="2">
-                        <div class="MyForm">
-
-                        </div>
-                    </td>
-                </tr>
                 <tr>
-                    <td class="filas"><a id="b" href="formatoReporteBimestral.do">FORMATOS BIMESTRALES</a></td>
+                    <td class="filas" id="filaReportesBimestrales"><a id="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                <tr style="display:none;" id="">
-                    <td colspan="2">
-                        <div class="MyForm">
-
-                        </div>
-                    </td>
-                </tr>
                 <tr>
-                    <td class="filas"><a id="b" href="#">FORMATOS MENSUALES</a></td>
+                    <td class="filas" id="filaReportesMensuales"><a id="b" href="#">REPORTES MENSUALES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                <tr style="display:none;" id="">
-                    <td colspan="2">
-                        <div class="MyForm">
-
-                        </div>
-                    </td>
-                </tr>
                 <tr>
-                    <td class="filas"><a id="b" href="#">PLATICA DE BECADOS</a></td>
+                    <td class="filas" id="filaPlaticaBecados"><a id="b" href="#">PLATICA DE BECADOS</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                <tr style="display:none;" id="">
-                    <td colspan="2">
-                        <div class="MyForm">
-
-                        </div>
-                    </td>
-                </tr>
                 <tr>
-                    <td class="filas"><a id="b" href="#">DOCUMENTOS FINALES</a></td>
+                    <td class="filas" id="filaDocumentosFinales"><a id="b" href="#">DOCUMENTOS FINALES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr>
-                <tr style="display:none;" id="">
-                    <td colspan="2">
-                        <div class="MyForm">
-
-                        </div>
-                    </td>
-                </tr>
                 <tr>
-                    <td class="filas"><a id="b" href="#">SANCIONES</a></td>
+                    <td class="filas" id="filaSanciones"><a id="b" href="#">SANCIONES</a></td>
                     <td><img class="imagenes" src="imagenes/tache.png"/></td>
                 </tr> 
-                <tr style="display:none;" id="">
-                    <td colspan="2">
-                        <div class="MyForm">
-
-                        </div>
-                    </td>
-                </tr>
             </table>
             <br/><br/><br/>
         </div>
