@@ -59,7 +59,7 @@
                         <tr>
                             <td>Carta de motivos</td>
                             <td><input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>
-                                <input type='submit' value='Subir' />
+                                
                             </td>
                         </tr>
                         <tr>
@@ -70,6 +70,10 @@
                         <tr>
                             <td>Correo electr&oacute;nico</td>
                             <td><input type="text" name="email" value="${email}"/></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type='submit' value='Subir' /></td>
                         </tr>
                     </table>
                 </form>

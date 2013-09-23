@@ -141,8 +141,6 @@ public class EgresadoController {
         System.out.println("***Eyy N control =" + session.getAttribute("NCONTROL").toString());
         alumno_id = session.getAttribute("NCONTROL").toString();
         modelo.addAttribute("formatoUnicoDatosPersonales", new FormatoUnicoDatosPersonalesBean());
-        FormatoUnicoDatosPersonalesBean formatoUnicoDatosPersonalesbean = new FormatoUnicoDatosPersonalesBean();
-        FormatoUnicoDatosContactoBean formatoUnicoDatosContacoBean = new FormatoUnicoDatosContactoBean();
 
         //select * from ...where
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
