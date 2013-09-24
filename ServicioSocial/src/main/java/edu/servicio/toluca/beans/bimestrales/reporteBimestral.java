@@ -20,7 +20,7 @@ public class reporteBimestral {
     
     private String  fechaInicio;
     private String fechaFin;
-    @NotNull (message ="Debe introducir un numero de horas por Reporte" )
+    @NotNull (message ="Introduzca el numero de horas del Reporte" )
     @Range(min = 0,max = 160,message = "El rango de las horas debe ser entre 0-160")
     private Integer horas;
     private BigInteger horasAcumuladas;

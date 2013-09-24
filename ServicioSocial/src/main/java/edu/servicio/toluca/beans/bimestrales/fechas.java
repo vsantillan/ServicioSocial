@@ -16,7 +16,7 @@ import java.util.GregorianCalendar;
  */
 public class fechas {
 
-    public String dameFecha(Date fechaInicio) throws ParseException {
+    public String dameFechaFin(Date fechaInicio) throws ParseException {
         SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
         Calendar fecha = Calendar.getInstance();
         fecha.setTime(fechaInicio);
@@ -42,5 +42,11 @@ public class fechas {
 
         }
         return fechaDate;
+    }
+
+    public Date fechaEntrgaMax() {
+        Date fechaEntregaMax = null;
+        return fechaEntregaMax;
+
     }
 }
