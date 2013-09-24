@@ -47,7 +47,7 @@
                     <li>Motivos por los cuales no realiz&oacute; su servicio social a tiempo.</li>
                 </ul>
 
-                <form method="post" id="frmSubirFui" action="subirFui.do"  enctype="multipart/form-data">
+                <form method="post" id="frmSubirCartaMotivos" action="subirCartaMotivos.do"  enctype="multipart/form-data">
                     <table>
                         <tr>
                             <td colspan="2">

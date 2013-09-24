@@ -34,6 +34,7 @@ import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.entidades.Egresado;
 import edu.servicio.toluca.model.SancionesModelo;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoPlanFacade;
@@ -43,6 +44,7 @@ import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
+import edu.servicio.toluca.sesion.EgresadoFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
@@ -126,12 +128,12 @@ public class EgresadoController {
     private CatalogoSancionesFacade catalogoSancionesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
     private SancionesFacade sancionesFacade;
-
-
+    @EJB(mappedName = "java:global/ServicioSocial/EgresadoFacade")
+    private EgresadoFacade egresadoFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/cartaMotivos.do")
     public String formatoUnico(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
-       
+
 //        if (new ValidaSesion().validaAlumno(session, request)) {
 //            //return "/PanelUsuario/panelUsuario";
 //        } else {
@@ -163,8 +165,7 @@ public class EgresadoController {
             System.out.println("El alumno no tiene los créditos necesarios");
             return "PanelUsuario/panelUsuario";
         }
-        if(!alumno.getStaActual().equals("EG"))
-        {
+        if (!alumno.getStaActual().equals("EG")) {
             System.out.println("El Alumno no es algún egresado");
             return "redirect:login.do";
         }
@@ -305,7 +306,7 @@ public class EgresadoController {
             //Validar que el alumno esté rechazado o en correción
             if (formatoUnico.getStatusFui() != null) {
                 System.out.println("El status del fui es" + formatoUnico.getStatusFui().toString());
-                if (formatoUnico.getStatusFui().toString().equals("5") || formatoUnico.getStatusFui().toString().equals("2") || formatoUnico.getStatusFui().toString().equals("3") ||  formatoUnico.getStatusFui() == null) {
+                if (formatoUnico.getStatusFui().toString().equals("5") || formatoUnico.getStatusFui().toString().equals("2") || formatoUnico.getStatusFui().toString().equals("3") || formatoUnico.getStatusFui() == null) {
                     System.out.println("Su formato único está en correción o fue rechazado, puede entrar");
                 } else {
                     System.out.println("El formato único no puede entrar, anda en validaciones o ya fue aceptado");
@@ -332,10 +333,94 @@ public class EgresadoController {
         modelo.addAttribute("email", datosPersonales.getCorreoElectronico());
         modelo.addAttribute("idAlumno", datosPersonales.getAlumnoId().getId());
         modelo.addAttribute("idDatosPersonales", datosPersonales.getId());
-        
-        
+
+
         return "/Egresados/cartaMotivos";
     }
 
+    @RequestMapping(value = "/subirCartaMotivos.do", method = RequestMethod.POST)
+    public String subirCartaMotivos(
+            @RequestParam("file") MultipartFile file, String idAlumno, String idDatosPersonales) throws IOException {
+        System.out.println("Inicia Subir carta motivos");
+        System.out.println("El id del alumno es->" + idAlumno + " EL id de datos personales es->" + idDatosPersonales);
+        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", idAlumno, "equal", null, null);
+        if (vistaAlumnoFacade.count() < 1 || listaAlumnos.isEmpty()) {
+            System.out.println("O no hay registros en la tabla o no existe tal alumno en la base de datos de Vista LAumno");
+            return "redirect:panelUsuario.do";
+        }
+        VistaAlumno alumno = listaAlumnos.get(0);
+        List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        DatosPersonales datosPersonales = listaDatosPersonales.get(0);
 
+        System.out.println("Inicia subida de info la tabla de Egresado");
+        System.out.println("Original filename: " + file.getOriginalFilename());
+        System.out.println("File:" + file.getName());
+        System.out.println("Size:" + file.getSize());
+        System.out.println("ContentType:" + file.getContentType());
+        System.out.println("COmprobando que no exista antes una carta de motivos en la tabla");
+        List<Egresado> listaEgresado = egresadoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+        Egresado egresado = new Egresado();
+        if (egresadoFacade.count() < 1) {
+            System.out.println("La tabla está vacía");
+        }
+        egresado.setTipoPrograma("4");
+        egresado.setFechaSubida(new java.util.Date());
+        if (listaEgresado.isEmpty()) {
+            System.out.println("No existía el egresado en la tabla egresado, se va a agregar uno nuevo");
+            egresado.setAlumnoId(alumno);
+            egresado.setDatosPersonalesId(datosPersonales);
+            
+            egresadoFacade.create(egresado);
+            System.out.println("Creación de registro en egresado completa");
+        } else {
+            System.out.println("Ya había un registro, procedemos a editar");
+            egresado = listaEgresado.get(0);
+    
+            egresadoFacade.edit(egresado);
+            System.out.println("Edicion de egresado completa");
+        }
+        System.out.println("Iniciando proceso de subida de documento");
+        List<CatalogoDocumento> listaCatalogoDocumento = catalogoDocumentoFacade.findBySpecificField("tipo", "Carta_Motivos", "equal", null, null);
+        CatalogoDocumento catalogoDocumento = listaCatalogoDocumento.get(0);
+        List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+        Documentos documento = new Documentos();
+        boolean enDocumentos = false;
+        if (documentoFacade.count() < 1 || listaDocumentos.isEmpty()) {
+            System.out.println("Todo indica que dicho registro en Documentos no existia se va a hacer uno nuevo");
+            enDocumentos = false;
+        } else {
+            if(listaDocumentos.get(0).getCatalogoDocumentosId() == catalogoDocumento)
+            {
+                System.out.println("Todo indica que ya estaba el registro en Documentos, se va a editar");
+                enDocumentos = true;
+               
+                documento = listaDocumentos.get(0);
+            }
+            else
+            {
+                System.out.println("Todo indica que dicho registro en Documentos no existia se va a hacer uno nuevo");
+                enDocumentos = false;
+            }
+            
+        }
+        documento.setArchivo(file.getBytes());
+        documento.setDatosPersonalesId(datosPersonales);
+        String extension = file.getOriginalFilename();
+        extension = extension.substring(extension.length() - 3, extension.length());
+        //**doc.setExtension("pdf");
+        documento.setExtension(extension);
+        documento.setFechaSubida(new java.util.Date());
+        documento.setCatalogoDocumentosId(catalogoDocumento);
+        if(enDocumentos)
+        {
+            documentoFacade.edit(documento);
+            System.out.println("Fin de creación en Documento");
+        }
+        else
+        {
+            documentoFacade.create(documento);
+            System.out.println("Fin de edición en Docuemnto");
+        }
+        return "redirect:formatoUnicoUsuario.do";
+    }
 }
