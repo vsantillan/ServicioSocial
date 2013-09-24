@@ -368,7 +368,7 @@ public class VistaAlumno implements Serializable {
     public Collection<FoliosPlatica> getFoliosPlaticaCollection() {
         return foliosPlaticaCollection;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE) 
     public void setFoliosPlaticaCollection(Collection<FoliosPlatica> foliosPlaticaCollection) {
         this.foliosPlaticaCollection = foliosPlaticaCollection;
     }  

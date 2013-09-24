@@ -93,7 +93,7 @@ public class FoliosPlatica implements Serializable {
     public Short getAsistencia() {
         return asistencia;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public void setAsistencia(Short asistencia) {
         this.asistencia = asistencia;
     }
@@ -105,7 +105,7 @@ public class FoliosPlatica implements Serializable {
     public void setNumeroFolio(String numeroFolio) {
         this.numeroFolio = numeroFolio;
     }
-
+    @Cache(usage = CacheConcurrencyStrategy.NONE)
     public Short getStatus() {
         return status;
     }

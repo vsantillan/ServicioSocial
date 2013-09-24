@@ -38,6 +38,9 @@
             .oculto{
                 display:none;
             }
+            .text{
+                color:white;
+            }
         </style>
     </head>
     <body class="background" >
@@ -91,7 +94,16 @@
             </div>
             <table class="general">
                 <tr>
-                    <td class="filas" id="filaPlatica"><a id="b" href="seleccionarPlatica.do">PL&Aacute;TICA</a></td>
+                    <td class="filas" id="filaPlatica">
+                        <core:choose>
+                            <core:when test="${accesoPlatica}">
+                                <a id="b" href="seleccionarPlatica.do">PL&Aacute;TICA</a>
+                            </core:when>
+                            <core:otherwise>
+                                <p class="text">PL&Aacute;TICA</p>
+                            </core:otherwise>
+                        </core:choose>                        
+                    </td>
                     <td>
                         <core:choose>
                             <core:when  test="${platica}">

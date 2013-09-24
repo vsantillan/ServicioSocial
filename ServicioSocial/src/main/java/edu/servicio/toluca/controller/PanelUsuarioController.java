@@ -5,13 +5,15 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.FechaAPalabras;
-import edu.servicio.toluca.entidades.FoliosPlatica;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
+import edu.servicio.toluca.model.VistaAlumno.ConsultasVistaAlumno;
+import edu.servicio.toluca.model.noticias.ConsultasNoticias;
+import edu.servicio.toluca.model.platica.ConsultasPlatica;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
+import edu.servicio.toluca.sesion.NoticiasFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,10 +32,12 @@ public class PanelUsuarioController {
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     public VistaAlumnoFacade vistaAlumnoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
-    public FoliosPlaticaFacade foliosPlaticaFacade;    
+    public FoliosPlaticaFacade foliosPlaticaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/NoticiasFacade")
+    public NoticiasFacade noticiasFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelUsuario.do")
-    public String formatoUnico(Model model, HttpSession session, HttpServletRequest request) {
+    public String panelUsuario(Model model, HttpSession session, HttpServletRequest request) {
         //Valida sesion
         if (!new ValidaSesion().validaAlumno(session, request)) {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
@@ -41,49 +45,27 @@ public class PanelUsuarioController {
         }
         System.out.println("NCONTROL:" + session.getAttribute("NCONTROL").toString());
 
-        List<VistaAlumno> alumnos = vistaAlumnoFacade.findBySpecificField("id", session.getAttribute("NCONTROL").toString(), "equal", null, null);
-        VistaAlumno alumno = null;
-        if (!alumnos.isEmpty()) {
-            alumno = alumnos.get(0);
-            System.out.println("Bienvenido al panel de usuario " + alumno.getNombre());
+        //Obtenemos al alumno
+        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+        VistaAlumno alumno = consultaVistaAlumno.getAlumnoSesion(session);
+        
+        System.out.println("Bienvenido al panel de usuario " + alumno.getNombre());
 
-            //Checa platica
-            FechaAPalabras fecha = new FechaAPalabras();
-            System.out.println("Checa platica");
-            List<FoliosPlatica> platica = foliosPlaticaFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
-            List<FoliosPlatica> filtroPlatica= new ArrayList();
-            System.out.println("No. de registros en platica:"+platica.size());
-            short uno =1;
-                
-            for (int i = 0; i < platica.size(); i++) {
-                System.out.println(platica.get(i).toString());
-                if(platica.get(i).getStatus() == uno){
-                    filtroPlatica.add(platica.get(i));
-                }
-            }
-            //Checa si se registro a alguna platica
-            if(!filtroPlatica.isEmpty()){
-                //Checa si asistio a la platica en la cual se registro
-                if(platica.get(0).getAsistencia()==uno){
-                    model.addAttribute("platica", true);
-                    model.addAttribute("mensajePlatica", "Asististe a la platica del "+ fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFecha())+", la fecha máxima para que subas tu formato único es hasta el "+fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFechaMxFui())+", de lo contrario serás acreedor a una sanción.");
-                    System.out.println("Asistio a la platica");
-                }else{
-                    model.addAttribute("platica", false);
-                    model.addAttribute("mensajePlatica", "Te registraste a la platica, pero no asististe a ella. Favor de pasar a la oficina de servicio social para solicitar un alta posterior.");
-                    System.out.println("No asistio a la platica");
-                }
-            }else{
-                model.addAttribute("platica", false);
-                model.addAttribute("mensajePlatica", "No te has registrado a ninguna plática");
-                System.out.println("No se registro a ninguna platica");
-            }
+        //Cargar noticias noticias
+        ConsultasNoticias noticias = new ConsultasNoticias(noticiasFacade);
+        model.addAttribute("noticiasAlumnos", noticias.consultaNoticiasGenerales("desc"));
 
-            return "/PanelUsuario/panelUsuario";
-        } else {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
-            return "redirect:login.do";
-        }
+        //Checa platica
+        ConsultasPlatica platica = new ConsultasPlatica(foliosPlaticaFacade);
+        FoliosPlaticaBean beanPlatica = platica.checaAlumnoPlatica(alumno);
+
+        model.addAttribute("platica", beanPlatica.isTienePlatica());
+        model.addAttribute("accesoPlatica", beanPlatica.isAccesoPanelPlatica());
+        model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
+
+
+        return "/PanelUsuario/panelUsuario";
+
 
     }
 }
