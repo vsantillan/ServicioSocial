@@ -5,6 +5,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.EnviarCorreo;
+import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
@@ -17,16 +18,28 @@ import edu.servicio.toluca.entidades.RetroalimentacionInstancia2;
 import edu.servicio.toluca.entidades.RetroalimentacionProyecto2;
 import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.ValidarProyectos;
+import edu.servicio.toluca.entidades.Ciudades;
+import edu.servicio.toluca.entidades.CodigosPostales;
+import edu.servicio.toluca.entidades.Colonia;
+import edu.servicio.toluca.entidades.EstadosSia;
+import edu.servicio.toluca.entidades.MunicipiosSia;
+import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.sesion.ActividadesFacade;
+import edu.servicio.toluca.sesion.CiudadesFacade;
+import edu.servicio.toluca.sesion.CodigosPostalesFacade;
+import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
+import edu.servicio.toluca.sesion.MunicipiosSiaFacade;
 import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
 import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.RetroalimentacionInstancia2Facade;
 import edu.servicio.toluca.sesion.RetroalimentacionProyecto2Facade;
+import edu.servicio.toluca.sesion.TipoLocalidadFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigDecimal;
@@ -34,6 +47,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.validation.Valid;
@@ -81,6 +95,17 @@ public class OrganizacionesController {
     private RetroalimentacionInstancia2Facade retroalimentacionInstanciaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/RetroalimentacionProyecto2Facade")
     private RetroalimentacionProyecto2Facade retroalimentacionProyectoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
+    private CodigosPostalesFacade codigosPostalesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
+    private MunicipiosSiaFacade municipiosFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
+    private CiudadesFacade ciudadesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
+    private TipoLocalidadFacade tipoLocalidadFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
+    private ColoniaFacade coloniaFacade;
+    MetodosValidacion limpiar = new MetodosValidacion();
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request) {
@@ -199,10 +224,12 @@ public class OrganizacionesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarOrganizacion.do")
-    public String modificarOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, int valid_pass, HttpSession session, HttpServletRequest request) {
+    public String modificarOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, int valid_pass, HttpSession session, HttpServletRequest request,String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad) {
         System.out.println("contraseña:" + instancia.getPassword());
         System.out.println("confirma_contraseña:" + confirma_password);
 
+        new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existeCP, confirma_password);
+        
         if (valid_pass == 1) {
             if (!confirma_password.equals(instancia.getPassword())) {
                 result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
@@ -210,15 +237,92 @@ public class OrganizacionesController {
             }
         }
 
-        if (result.hasErrors()) {
+        if (result.hasErrors()) 
+        {
             System.out.println("Con errores");
             System.out.println("Los errores son: " + result.toString());
             model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
-            model.addAttribute("estados", estadosFacade.findAll());
+            model.addAttribute("otra_colonia", otra_colonia);            
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("nombre", "asc");
+            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            //Regresar codigo postal
+            model.addAttribute("cp", codigo_postal);
+            try {
+                model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+            } catch (Exception e) {
+            }
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
             return "/Organizaciones/editarOrganizacion";
-
         } else {
+            //---------------------------A continuación código para agregar nueva colonia****************************************
+             if (existeCP.equals("true")) {
+                if (instancia.getIdColonia().getIdColonia().toString().equals("0")) {
+                    //Agregar colonia                   
+//                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
+                    System.out.println("AgregarColonia");
+                    System.out.println("codigo postal:" + codigo_postal.toString());
+                    List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
+                    CodigosPostales codigoPostal = codigosPostales.get(0);
+                    Colonia nvaColonia = new Colonia();
+                    otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
+                    nvaColonia.setNombre(otra_colonia);
+                    nvaColonia.setIdCp(codigoPostal);
+                    nvaColonia.setStatus(BigInteger.ONE);
+                    coloniaFacade.create(nvaColonia);
+
+                    //Obtenemos la ultima colonia
+                    LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                    ordenamiento.put("idColonia", "desc");
+                    Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
+                    instancia.setIdColonia(colonia);
+                    System.out.println("Nueva colonia agregada!");
+                }
+            } else {
+                //Agregar codigo postal + colonia
+//                instancia.setIdColonia(new CodigosPostalesController().agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
+                EstadosSia estadoP = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(estado)));
+                MunicipiosSia municipioP = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
+                TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
+                Ciudades ciudadP = null;
+                try {
+                    ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
+                } catch (Exception e) {
+                    System.out.println("No tiene ciudad");
+                }
+
+                CodigosPostales codigoPostal = new CodigosPostales();
+                codigoPostal.setCp(Integer.parseInt(codigo_postal));
+                codigoPostal.setIdMunicipio(municipioP);
+                codigoPostal.setIdEstado(estadoP);
+                codigoPostal.setIdTipoLocalidad(localidad);
+                if (ciudad != null) {
+                    codigoPostal.setIdCiudad(ciudadP);
+                }
+                codigosPostalesFacade.create(codigoPostal);
+
+                //Obtenemos el Ultimo codigo postal
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("idCp", "desc");
+                CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
+
+                Colonia colonia = new Colonia();
+                colonia.setIdCp(codigoPostal);
+                otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
+                colonia.setNombre(otra_colonia);
+                colonia.setStatus(BigInteger.ONE);
+
+                coloniaFacade.create(colonia);
+
+                //Obtenemos la ultima colonia
+                ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("idColonia", "desc");
+                Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
+                instancia.setIdColonia(coloniaNew);
+                System.out.println("Nuevo codigo postal + colonia agregado!");
+            }
+            //---------------------------Fin código para agregar nueva colonia****************************************
+            
             //Encriptar contraseña de la instancia
             instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
             //Convirtiendo a mayusculas
@@ -239,10 +343,11 @@ public class OrganizacionesController {
             System.out.println("Sin errores");
 
             //Consulta para la administracion de organizaciones
-            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             for (int i = 0; i < listaInstancias.size(); i++) {
-                if ((listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) || (listaInstancias.get(i).getValidacionAdmin() == BigInteger.valueOf(2))) {
+                if ((listaInstancias.get(i).getEstatus() == BigInteger.ONE) || (listaInstancias.get(i).getEstatus() == BigInteger.valueOf(2)))
+                {
                     filtroInstancias.add(listaInstancias.get(i));
                 }
             }

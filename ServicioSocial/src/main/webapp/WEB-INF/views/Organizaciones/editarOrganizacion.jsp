@@ -99,7 +99,10 @@
                         </tr>
                         <tr>
                             <td>  <label for="codigo_postal">C&oacute;digo Postal:</label></td>
-                            <td> <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" require="true" value="${instanciaDireccion.idColonia.idCp.cp}"></td>  
+                            <td> 
+                                <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" value="${instanciaDireccion.idColonia.idCp.cp}">
+                                <input type="hidden" id="preCP" value="${cp}"/><br>${codigo_postal}
+                            </td>  
                         </tr>
                         <tr>
                             <td>  <label for="estado">Estado:</label></td>
@@ -132,10 +135,12 @@
                                 <!--select name="colonia" id="colonia" disabled="true"></select--> 
                                 <form:select id="idColonia" path="idColonia.idColonia" name="idColonia"></form:select> 
                                     <div id="otra_colonia" style="display:none;">
-                                        <input type="text" name="otra_colonia" id="otra_colonia"/>
-                                        <!--form:input path="usuario" id="usuario" size="20"/-->
-                                    </div>
-                                <form:errors path="idColonia.idColonia" cssClass="error"/>
+                                        <input type="text" name="otra_colonia" value="${otra_colonia}"/>
+                                        <input type="hidden" id="existeCP" name="existeCP" value="true">
+                                        <input type="hidden" id="preColonia" value="${idColonia}"/>
+                                    ${error_otra_colonia}
+                                </div>
+                                <br/>
                             </td>  
                         </tr>                     
                         <tr>

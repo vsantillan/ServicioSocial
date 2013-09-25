@@ -91,17 +91,17 @@ public class ValidacionesOrganizaciones {
 
     public void valGdaEditaInst(Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existeCP, String confirma_password) {
         //Valida contraseñas
-        if (!instancia.getPassword().equals("")) {
-            if (confirma_password.equals("")) {
-                result.addError(new ObjectError("confirma_passowrd", "Confirmación de contraseña vacía."));
-                model.addAttribute("confirma_password", error("Confirmación de contraseña vacía"));
-            } else {
-                if (!confirma_password.equals(instancia.getPassword())) {
-                    result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
-                    model.addAttribute("confirma_password", error("Las contraseñas no coinciden"));
-                }
-            }
-        }
+//        if (!instancia.getPassword().equals("")) {
+//            if (confirma_password.equals("")) {
+//                result.addError(new ObjectError("confirma_passowrd", "Confirmación de contraseña vacía."));
+//                model.addAttribute("confirma_password", error("Confirmación de contraseña vacía"));
+//            } else {
+//                if (!confirma_password.equals(instancia.getPassword())) {
+//                    result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
+//                    model.addAttribute("confirma_password", error("Las contraseñas no coinciden"));
+//                }
+//            }
+//        }
         //Valida codigo postal
         if (codigo_postal.equals("")) {
             result.addError(new ObjectError("codigo_postal", "Código postal vacío."));
@@ -128,14 +128,14 @@ public class ValidacionesOrganizaciones {
                 model.addAttribute("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
             }
         }
-        if (instancia.getUsuario().equals("")) {
-            result.addError(new ObjectError("usuario", "Campo de usuario vacío."));
-            model.addAttribute("usuario", error("Campo de usuario vacío."));
-        }
-        if (instancia.getCorreo().equals("")) {
-            result.addError(new ObjectError("correo", "Campo de correo vacío."));
-            model.addAttribute("correo", error("Campo de correo vacío."));
-        }
+//        if (instancia.getUsuario().equals("")) {
+//            result.addError(new ObjectError("usuario", "Campo de usuario vacío."));
+//            model.addAttribute("usuario", error("Campo de usuario vacío."));
+//        }
+//        if (instancia.getCorreo().equals("")) {
+//            result.addError(new ObjectError("correo", "Campo de correo vacío."));
+//            model.addAttribute("correo", error("Campo de correo vacío."));
+//        }
         try {
             String strTelefono = instancia.getTelefono() + "";
             Double telefono = Double.parseDouble(strTelefono);
