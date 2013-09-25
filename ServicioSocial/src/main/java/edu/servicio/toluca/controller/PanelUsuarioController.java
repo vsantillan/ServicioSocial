@@ -62,7 +62,9 @@ public class PanelUsuarioController {
         model.addAttribute("platica", beanPlatica.isTienePlatica());
         model.addAttribute("accesoPlatica", beanPlatica.isAccesoPanelPlatica());
         model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
-
+        
+        //Prueba mensaje personal
+        //model.addAttribute("mensajePersonal", "<div class='error'>No puedes acceder a esta seccion</div>");
 
         return "/PanelUsuario/panelUsuario";
 

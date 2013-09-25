@@ -22,25 +22,7 @@
         <script src="js/jquery.manolo.js"></script>
         <title>Home Usuario</title>
         <style>
-            .mensajesProceso{
-                position:fixed;
-                width:80%;
-                height:100px;
-                bottom: 20px;
-                left: 10%; 
-                background-color: white;
-                z-index:100;
-                -webkit-border-radius: 6px;
-		-moz-border-radius: 6px;
-		border-radius: 6px;
-		border:#01406a solid 1px;
-            }
-            .oculto{
-                display:none;
-            }
-            .text{
-                color:white;
-            }
+
         </style>
     </head>
     <body class="background" >
@@ -51,8 +33,8 @@
         <div id="contenido">
 
             <h1>Panel de Usuario</h1>
-
-            <div class="MyForm" style="width: 70%; margin-left: auto; margin-right: auto;">
+            <!--Cuadro de bienvenida-->
+            <div class="MyForm mensajeBienvenida">
                 <h1>Bienvenido <%=nombre%></h1>
                 <p>A continuaci&oacute;n se presenta un men&uacute; con el proceso de tu servicio social, te mostraremos que significan los &iacute;conos:.</p>
                 <ul>
@@ -62,6 +44,8 @@
                 </ul>
             </div>
             <br/>
+            <!--/Cuadro de bienvenida-->
+            <!--Mensajes emergentes en la parte inferior-->
             <div id="mensajesProceso" class="mensajesProceso oculto">
                 <div id="platica"  class="oculto">            
                     <h1>Pl&aacute;tica</h1>
@@ -92,55 +76,85 @@
                     <p>${mensajeSanciones}</p>                   
                 </div>
             </div>
-            <table class="general">
-                <tr>
-                    <td class="filas" id="filaPlatica">
-                        <core:choose>
-                            <core:when test="${accesoPlatica}">
-                                <a id="b" href="seleccionarPlatica.do">PL&Aacute;TICA</a>
-                            </core:when>
-                            <core:otherwise>
-                                <p class="text">PL&Aacute;TICA</p>
-                            </core:otherwise>
-                        </core:choose>                        
-                    </td>
-                    <td>
-                        <core:choose>
-                            <core:when  test="${platica}">
-                                <img class="imagenes" src="imagenes/paloma.png"/>
-                            </core:when>                            
-                            <core:otherwise>
-                                <img class="imagenes" src="imagenes/tache.png"/>
-                            </core:otherwise>
-                        </core:choose>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="filas" id="filaFormatoUnico"><a id="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a></td>
-                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                </tr>
-                <tr>
-                    <td class="filas" id="filaReportesBimestrales"><a id="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a></td>
-                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                </tr>
-                <tr>
-                    <td class="filas" id="filaReportesMensuales"><a id="b" href="#">REPORTES MENSUALES</a></td>
-                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                </tr>
-                <tr>
-                    <td class="filas" id="filaPlaticaBecados"><a id="b" href="#">PLATICA DE BECADOS</a></td>
-                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                </tr>
-                <tr>
-                    <td class="filas" id="filaDocumentosFinales"><a id="b" href="#">DOCUMENTOS FINALES</a></td>
-                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                </tr>
-                <tr>
-                    <td class="filas" id="filaSanciones"><a id="b" href="#">SANCIONES</a></td>
-                    <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                </tr> 
-            </table>
-            <br/><br/><br/>
+            <!--/Mensajes emergentes en la parte inferior-->
+
+            <!--Seccion de noticias generales-->
+            <div class="seccionLateral MyForm ">
+                <h1>Noticias Generales</h1>
+                <ul class="scroll listaNoticias">
+                    <core:forEach items="${noticiasAlumnos}" var="noticia">
+                        <li class="error"><b>${noticia.fecha}</b>: ${noticia.detalle}</li>
+                    </core:forEach>
+                </ul>
+
+            </div>
+            <!--/Seccion de noticias generales-->
+
+            <!--Menu proceso de servicio social-->
+            <div class="seccionCentral MyForm">
+                <h1>Proceso del Servicio Social</h1>
+                <table class="general">
+                    <tr>
+                        <td class="filas" id="filaPlatica">
+                            <core:choose>
+                                <core:when test="${accesoPlatica}">
+                                    <a id="b" href="seleccionarPlatica.do">PL&Aacute;TICA</a>
+                                </core:when>
+                                <core:otherwise>
+                                    <p class="text">PL&Aacute;TICA</p>
+                                </core:otherwise>
+                            </core:choose>                        
+                        </td>
+                        <td>
+                            <core:choose>
+                                <core:when  test="${platica}">
+                                    <img class="imagenes" src="imagenes/paloma.png"/>
+                                </core:when>                            
+                                <core:otherwise>
+                                    <img class="imagenes" src="imagenes/tache.png"/>
+                                </core:otherwise>
+                            </core:choose>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="filas" id="filaFormatoUnico"><a id="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a></td>
+                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                    </tr>
+                    <tr>
+                        <td class="filas" id="filaReportesBimestrales"><a id="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a></td>
+                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                    </tr>
+                    <tr>
+                        <td class="filas" id="filaReportesMensuales"><a id="b" href="#">REPORTES MENSUALES</a></td>
+                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                    </tr>
+                    <tr>
+                        <td class="filas" id="filaPlaticaBecados"><a id="b" href="#">PLATICA DE BECADOS</a></td>
+                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                    </tr>
+                    <tr>
+                        <td class="filas" id="filaDocumentosFinales"><a id="b" href="#">DOCUMENTOS FINALES</a></td>
+                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                    </tr>
+                    <tr>
+                        <td class="filas" id="filaSanciones"><a id="b" href="#">SANCIONES</a></td>
+                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                    </tr> 
+                </table>
+            </div>
+
+            <!--Menu proceso de servicio social-->
+
+            <!--Mensajes personales-->
+            <div class="seccionLateral MyForm">
+                <h1>Mensajes Personales</h1>
+                ${mensajePersonal}
+            </div>
+            <!--/Mensajes personales-->
+
+
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
         </div>
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>
