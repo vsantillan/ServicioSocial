@@ -4,12 +4,14 @@
  */
 package edu.servicio.toluca.model.formatoUnico;
 
+import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 /**
  *
@@ -61,9 +63,32 @@ public class FormatoUnicoAdminModel {
     {
         
     }
-    public void aceptar()
+    
+    /**
+     * 
+     * @param id
+     * @return Cambia el estado de un FormatoUnico de estado NO_REVISADO 
+     * a estado ACEPTADO
+     */
+    public boolean  aceptar(String id)
     {
-        
+        //Obtener FormatoUnico en especifico 
+        FormatoUnico fA=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
+        if(fA!=null)
+        {
+            //Cambiar Estado de NO_ACEPTADO A ACEPTADO
+            fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
+            formatoUnicoFacade.edit(fA);
+            
+            String nombre=fA.getDatosPersonalesId().getNombre()+" "
+                          +fA.getDatosPersonalesId().getApellidoP()+" "
+                          +fA.getDatosPersonalesId().getApellidoM();
+            
+            return true;
+            //enviarCorreo(1,fA.getDatosPersonalesId().getCorreoElectronico(),nombre,null);
+        }
+        else
+            return false;
     }
     
     /**

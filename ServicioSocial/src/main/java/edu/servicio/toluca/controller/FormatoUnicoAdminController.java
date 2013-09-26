@@ -242,12 +242,7 @@ public class FormatoUnicoAdminController {
     }
     
     
-    /**
-     * 
-     * @param id
-     * @return Cambia el estado de un FormatoUnico de estado NO_REVISADO 
-     * a estado ACEPTADO
-     */
+    
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR_Aceptado.do")
     public @ResponseBody String modificarFU_NR_Aceptados(String id) {
         //Obtener FormatoUnico en especifico 
