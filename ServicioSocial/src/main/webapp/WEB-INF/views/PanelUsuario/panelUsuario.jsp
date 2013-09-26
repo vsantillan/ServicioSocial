@@ -84,7 +84,7 @@
                 <ul class="scroll listaNoticias">
                     <core:forEach items="${noticiasAlumnos}" var="noticia">
                         <li class="error"><b>${noticia.fecha}</b>: ${noticia.detalle}</li>
-                    </core:forEach>
+                            </core:forEach>
                 </ul>
 
             </div>
@@ -117,8 +117,30 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaFormatoUnico"><a id="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a></td>
-                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                        <td class="filas" id="filaFormatoUnico">
+                            <core:choose>
+                                <core:when test="${accesoFormatoUnico}">
+                                    <a id="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a>
+                                </core:when>
+                                <core:otherwise>
+                                    <p class="text">FORMATO UNICO</p>
+                                </core:otherwise>
+                            </core:choose>                            
+                        </td>
+                        <td>
+                            <core:choose>
+                                <core:when  test="${statusFui==1}">
+                                    <img class="imagenes" src="imagenes/paloma.png"/>
+                                </core:when>    
+                                <core:when  test="${statusFui==2}">
+                                    <img class="imagenes" src="imagenes/tache.png"/>
+                                </core:when> 
+                                <core:when  test="${statusFui==3}">
+                                    <img class="imagenes" src="imagenes/reloj.png"/>
+                                </core:when> 
+
+                            </core:choose>                            
+                        </td>
                     </tr>
                     <tr>
                         <td class="filas" id="filaReportesBimestrales"><a id="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a></td>

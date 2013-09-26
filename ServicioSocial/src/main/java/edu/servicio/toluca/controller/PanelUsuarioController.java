@@ -4,16 +4,21 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.FechaAPalabras;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
+import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.model.VistaAlumno.ConsultasVistaAlumno;
+import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
 import edu.servicio.toluca.model.platica.ConsultasPlatica;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.NoticiasFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -37,7 +42,7 @@ public class PanelUsuarioController {
     public NoticiasFacade noticiasFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelUsuario.do")
-    public String panelUsuario(Model model, HttpSession session, HttpServletRequest request) {
+    public String panelUsuario(Model model, HttpSession session, HttpServletRequest request, String mensaje) {
         //Valida sesion
         if (!new ValidaSesion().validaAlumno(session, request)) {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
@@ -48,7 +53,7 @@ public class PanelUsuarioController {
         //Obtenemos al alumno
         ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
         VistaAlumno alumno = consultaVistaAlumno.getAlumnoSesion(session);
-        
+
         System.out.println("Bienvenido al panel de usuario " + alumno.getNombre());
 
         //Cargar noticias noticias
@@ -62,9 +67,31 @@ public class PanelUsuarioController {
         model.addAttribute("platica", beanPlatica.isTienePlatica());
         model.addAttribute("accesoPlatica", beanPlatica.isAccesoPanelPlatica());
         model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
-        
+
+        //Valida Formato Unico
+        try {
+            ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
+            List<DatosPersonales> datosPersonales = new ArrayList<DatosPersonales>(alumno.getDatosPersonalesCollection());
+            //Validar cuando sea nulo!
+            List<FormatoUnico> formatoUnico = new ArrayList<FormatoUnico>(datosPersonales.get(0).getFormatoUnicoCollection());
+            FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(beanPlatica, formatoUnico.get(0));
+            
+            model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
+            System.out.println("accesoFormatoUnico:"+beanFU.isAccesoFormatoUnico());
+            model.addAttribute("statusFui", beanFU.getStatusFui());
+            System.out.println("statusFui:"+beanFU.getStatusFui());
+            model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
+            System.out.println("Formato Unico:"+beanFU.getMensaje());
+
+        } catch (Exception e) {
+            System.out.println("Error al validar formato unico");
+            e.printStackTrace();
+        }
+
         //Prueba mensaje personal
-        //model.addAttribute("mensajePersonal", "<div class='error'>No puedes acceder a esta seccion</div>");
+        if (mensaje != null) {
+            model.addAttribute("mensajePersonal", "<div class='error'>" + mensaje + "</div>");
+        }
 
         return "/PanelUsuario/panelUsuario";
 

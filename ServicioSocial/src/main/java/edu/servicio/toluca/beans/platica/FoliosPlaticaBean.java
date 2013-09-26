@@ -5,7 +5,7 @@
 package edu.servicio.toluca.beans.platica;
 
 /**
- *
+ *  Bean para validar acceso en el panel de usuario
  * @author bustedvillain
  */
 public class FoliosPlaticaBean {
