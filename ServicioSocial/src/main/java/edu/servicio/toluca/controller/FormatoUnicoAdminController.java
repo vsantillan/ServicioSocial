@@ -260,6 +260,7 @@ public class FormatoUnicoAdminController {
                           +fA.getDatosPersonalesId().getApellidoM();
             enviarCorreo(1,fA.getDatosPersonalesId().getCorreoElectronico(),nombre,null);
         }
+        
         return "OK";
     }
     
