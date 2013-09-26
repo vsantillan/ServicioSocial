@@ -34,6 +34,7 @@ import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.model.SancionesModelo;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoPlanFacade;
@@ -55,19 +56,27 @@ import edu.servicio.toluca.sesion.SancionesFacade;
 import edu.servicio.toluca.sesion.TipoLocalidadFacade;
 import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
+import org.openide.util.Exceptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -985,25 +994,53 @@ public class FormatoUnicoController {
         return "";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteFUI.do")
-    String muestraReporteFUI(Model a, String nControl, String idProyecto, HttpSession session, HttpServletRequest request) throws ParseException {
-        String noControl = session.getAttribute("NCONTROL").toString();
-        a.addAttribute("noControl", noControl);
-        System.out.println("En el muestra :D" + noControl);
-        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
-        VistaAlumno alumno = listaAlumnos.get(0);
+    @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteFUI.pdf")
+    public String muestraReporteFUI(Model a, String nControl, String idProyecto, HttpSession session, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException {
+        try {
+            String noControl = session.getAttribute("NCONTROL").toString();
+            a.addAttribute("noControl", noControl);
+            System.out.println("En el muestra :D" + noControl);
+            List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
+            VistaAlumno alumno = listaAlumnos.get(0);
 
-        List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
-        DatosPersonales dp = listaDatosPersonales.get(0);
-        List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
-        if (listaFormatoUnico.isEmpty()) {
-            System.out.println("La lista de formatoUnico está vacía");
-            return "PanelUsuario/panelUsuario";
-        }
-        System.out.println("Ahh y su fui es" + listaFormatoUnico.get(0).getId());
-        a.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
-        session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
-        return "/FormatoUnico/reporteFUI";
+            List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+            DatosPersonales dp = listaDatosPersonales.get(0);
+            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
+            if (listaFormatoUnico.isEmpty()) {
+                System.out.println("La lista de formatoUnico está vacía");
+                return "PanelUsuario/panelUsuario";
+            }
+            
+            
+            System.out.println("Ahh y su fui es" + listaFormatoUnico.get(0).getId());
+            a.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+            session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+            
+            Conexion conn =new Conexion ();
+            /*Establecemos la ruta del reporte*/ 
+            File reportFile = new File(request.getRealPath("reportes//FormatoUnico.jasper")); 
+             /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
+            Map parameters = new HashMap();
+            parameters.put("noControl",session.getAttribute("NCONTROL").toString());
+            parameters.put("idProyecto", session.getAttribute("idProyecto").toString());
+            //parameters.put("Nombre_parametro", "Valor_Parametro"); 
+            /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
+            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
+            /*Indicamos que la respuesta va a ser en formato PDF*/ 
+            httpServletResponse.setContentType("application/pdf"); 
+            httpServletResponse.setContentLength(bytes.length);
+            httpServletResponse.getOutputStream().write(bytes);
+            
+            
+            
+            
+                return "";
+            //return "/FormatoUnico/reporteFUI";
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+        } 
+        
+        return null;
     }
 
     @RequestMapping(value = "/cambiaStatusSubidaFui.do", method = RequestMethod.GET)
