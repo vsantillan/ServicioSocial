@@ -386,7 +386,7 @@
                                 <td>Para ver más informaci&oacute;n del proyecto, da clic en la lupa
                                     <!--<input type="text" id="idProyecto" />-->
                                 </td>
-                                <td style="text-align: left;"><a id="linkMasInfoProyecto"  class="fancyFU"><img src="imagenes/lupa.png" width="30"/></a></td>
+                                <td style="text-align: left;"><a id="linkMasInfoProyecto"  class="fancy"><img src="imagenes/lupa.png" width="30"/></a></td>
                             </tr>
                             <tr>
                                 <td></td>
