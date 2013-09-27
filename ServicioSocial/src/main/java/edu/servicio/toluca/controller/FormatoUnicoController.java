@@ -995,52 +995,49 @@ public class FormatoUnicoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteFUI.pdf")
-    public String muestraReporteFUI(Model a, String nControl, String idProyecto, HttpSession session, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException {
-        try {
-            String noControl = session.getAttribute("NCONTROL").toString();
-            a.addAttribute("noControl", noControl);
-            System.out.println("En el muestra :D" + noControl);
-            List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
-            VistaAlumno alumno = listaAlumnos.get(0);
+    public String muestraReporteFUI(Model modelo, String nControl, String idProyecto, HttpSession session, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException {
 
-            List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
-            DatosPersonales dp = listaDatosPersonales.get(0);
-            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
-            if (listaFormatoUnico.isEmpty()) {
-                System.out.println("La lista de formatoUnico está vacía");
-                return "PanelUsuario/panelUsuario";
-            }
-            
-            
-            System.out.println("Ahh y su fui es" + listaFormatoUnico.get(0).getId());
-            a.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
-            session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
-            
-            Conexion conn =new Conexion ();
-            /*Establecemos la ruta del reporte*/ 
-            File reportFile = new File(request.getRealPath("reportes//FormatoUnico.jasper")); 
-             /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
-            Map parameters = new HashMap();
-            parameters.put("noControl",session.getAttribute("NCONTROL").toString());
-            parameters.put("idProyecto", session.getAttribute("idProyecto").toString());
-            //parameters.put("Nombre_parametro", "Valor_Parametro"); 
-            /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
-            /*Indicamos que la respuesta va a ser en formato PDF*/ 
-            httpServletResponse.setContentType("application/pdf"); 
-            httpServletResponse.setContentLength(bytes.length);
-            httpServletResponse.getOutputStream().write(bytes);
-            
-            
-            
-            
-                return "";
-            //return "/FormatoUnico/reporteFUI";
-        } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
-        } 
-        
-        return null;
+                try {
+                String noControl = session.getAttribute("NCONTROL").toString();
+                modelo.addAttribute("noControl", noControl);
+                System.out.println("En el muestra :D" + noControl);
+                List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
+                VistaAlumno alumno = listaAlumnos.get(0);
+
+                List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+                DatosPersonales dp = listaDatosPersonales.get(0);
+                List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
+                if (listaFormatoUnico.isEmpty()) {
+                    System.out.println("La lista de formatoUnico está vacía");
+                    return "PanelUsuario/panelUsuario";
+                }
+
+
+                System.out.println("Ahh y su fui es" + listaFormatoUnico.get(0).getId());
+                modelo.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+                session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+
+                Conexion conn =new Conexion ();
+                /*Establecemos la ruta del reporte*/ 
+                File reportFile = new File(request.getRealPath("reportes//FormatoUnico.jasper")); 
+                 /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
+                Map parameters = new HashMap();
+                parameters.put("noControl",session.getAttribute("NCONTROL").toString());
+                parameters.put("idProyecto", session.getAttribute("idProyecto").toString());
+                //parameters.put("Nombre_parametro", "Valor_Parametro"); 
+                /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
+                byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
+                /*Indicamos que la respuesta va a ser en formato PDF*/ 
+                httpServletResponse.setContentType("application/pdf"); 
+                httpServletResponse.setContentLength(bytes.length);
+                httpServletResponse.getOutputStream().write(bytes);
+   
+            } catch (Exception ex) {
+                Exceptions.printStackTrace(ex);
+            } 
+
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";        
     }
 
     @RequestMapping(value = "/cambiaStatusSubidaFui.do", method = RequestMethod.GET)
