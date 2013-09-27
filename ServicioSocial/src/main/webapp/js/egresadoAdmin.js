@@ -1,5 +1,5 @@
 var idDatosPersonales2 = "";
-var idFormatoUnico2 = "";
+var idEgresado2 = "";
 var tipo2="";
 
 $(document).ready(listo);
@@ -77,8 +77,9 @@ function cambiarEstadoFormatoCorreccion(event)
 {
     if(confirmacionEvento())
     {
+        console.log('En e campo de idCa tengo' + $(this).attr('idCa'));
        idDatosPersonales2 =$(this).attr('idDP');
-       idFormatoUnico2=$(this).attr('idCa');
+       idEgresado2=$(this).attr('idCa');
        tipo2="1";
        mostrarDIVMotivos();
     }
@@ -89,7 +90,7 @@ function cambiarEstadoFormatoRechazado()
     if(confirmacionEvento())
     {
        idDatosPersonales2 =$(this).attr('idDP');
-       idFormatoUnico2=$(this).attr('idCa');
+       idEgresado2=$(this).attr('idCa');
        tipo2="2";
        mostrarDIVMotivos();
     }
@@ -121,7 +122,7 @@ function obtenerDatos()
   {
       
       $('#guardarObservaciones').attr('disabled', true);
-      $.post("modificarFormatoUnicoNR.do",{idDatoPersonales:idDatosPersonales2,idFormatoUnico:idFormatoUnico2,tipo:tipo2,observaciones:array},function(respuesta)
+      $.post("modificarEgresadoNR.do",{idDatoPersonales:idDatosPersonales2,idEgresado:idEgresado2,tipo:tipo2,observaciones:array},function(respuesta)
         {        
             if(respuesta==="OK")
             {

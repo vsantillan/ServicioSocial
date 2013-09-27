@@ -170,7 +170,7 @@ public class EgresadoAdminController {
                     }
                 }
                 //------------------Formatos Aceptados------------------------    
-                if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_ACEPTADOS)))//
+                if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_ACEPTADOS).toString()))//
                 {
                     EgresadoBean cartaAceptada = new EgresadoBean();
                     cartaAceptada.setIdEgresado(egresado.getId().toString());
@@ -195,7 +195,7 @@ public class EgresadoAdminController {
                     }
                 }
                 //------------------Formatos Rechazados------------------------   
-                if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//
+                if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_RECHAZADOS).toString()))//
                 {
                     EgresadoBean cartasRechazadas = new EgresadoBean();
                     cartasRechazadas.setIdEgresado(egresado.getId().toString());
@@ -220,7 +220,7 @@ public class EgresadoAdminController {
                     }
                 }
                 //------------------//Formatos Correccion-----------------------   
-                if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_CORRECCION))) {
+                if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_CORRECCION).toString())) {
                     EgresadoBean cartaCorreccion = new EgresadoBean();
                     cartaCorreccion.setIdEgresado(egresado.getId().toString());
                     cartaCorreccion.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
@@ -270,18 +270,96 @@ public class EgresadoAdminController {
     String modificarEgresadoNR_Aceptado(String id) {
         //Obtener FormatoUnico en especifico 
         System.out.println(id);
-        FormatoUnico fA = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
+
+        Egresado egresado = egresadoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
+//        FormatoUnico fA = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
+        FormatoUnico fA = formatoUnicoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0);
         //Se encontro el Objeto
-        if (fA != null) {
+        if (egresado != null) {
             //Cambiar Estado de NO_ACEPTADO A ACEPTADO
-            fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
-            formatoUnicoFacade.edit(fA);
+            egresado.setTipoPrograma(BigInteger.valueOf(VALOR_ACEPTADOS).toString());
+            egresadoFacade.edit(egresado);
 
             String nombre = fA.getDatosPersonalesId().getNombre() + " "
                     + fA.getDatosPersonalesId().getApellidoP() + " "
                     + fA.getDatosPersonalesId().getApellidoM();
             enviarCorreo(1, fA.getDatosPersonalesId().getCorreoElectronico(), nombre, null);
         }
+
+        return "OK";
+    }
+
+    /**
+     * @see variable tipo indica que tipo de cambio de status realizara si es 1
+     * cambiara de NO_REVISADO a CORRECCION si es 2 cambiara de NO_REVISADO a
+     * RECHAZO variable observaciones es un array de id's de Observaciones en
+     * Base al Catalogo Observaciones
+     *
+     * @param observaciones
+     * @param idDatoPersonales
+     * @param idFormatoUnico
+     * @param tipo
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarEgresadoNR.do")
+    public @ResponseBody
+    String modificarFormatoUnico(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
+            String idDatoPersonales,
+            String idEgresado,
+            String tipo) {
+
+        for (String idObservacion : observaciones) {
+            //Objeto a Registrar
+            RegObservaciones registro = new RegObservaciones();
+            //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
+            registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
+            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            //Asignar Fecha Actual al momento para registro 
+            registro.setFecha(new Date());
+            //Creacion de Registro
+            regisObservacionesFacade.create(registro);
+        }
+        System.out.println("Recibí como dato de IdEgresado" + idEgresado);
+        String nombre = " ";
+        Egresado egresado = egresadoFacade.find(BigDecimal.valueOf(Long.valueOf(idEgresado)));
+        System.out.println("Datos encontrados de egresado");
+        System.out.println("alumnoid" + egresado.getAlumnoId());
+        System.out.println("nombre" + egresado.getDatosPersonalesId().getNombre());
+        System.out.println("tipo pro" + egresado.getTipoPrograma());
+        System.out.println("fecha subida" + egresado.getFechaSubida());
+        System.out.println("idEgres" + egresado.getId());
+
+        switch (Integer.parseInt(tipo)) {
+            case 1://Correccion
+                //Buscar Formato Unico
+                //Egresado egresado = egresadoFacade.find(BigDecimal.valueOf(Long.valueOf(idEgresado)));
+                FormatoUnico fu = formatoUnicoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0);
+
+                //Cambiar Status 
+                egresado.setTipoPrograma(BigInteger.valueOf(VALOR_CORRECCION).toString());
+                egresadoFacade.edit(egresado);
+                //Enviar Correo
+                nombre = egresado.getDatosPersonalesId().getNombre() + " "
+                        + egresado.getDatosPersonalesId().getApellidoP() + " "
+                        + egresado.getDatosPersonalesId().getApellidoM();
+
+                enviarCorreo(2, egresado.getDatosPersonalesId().getCorreoElectronico(), nombre, egresado.getDatosPersonalesId());
+                break;
+            case 2://Rechazo
+                //Buscar Formato Unico
+                FormatoUnico fuR = formatoUnicoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0);
+                //Cambiar Status
+                egresado.setTipoPrograma(BigInteger.valueOf(VALOR_RECHAZADOS).toString());
+                egresadoFacade.edit(egresado);
+                //Enviar Correo
+                nombre = fuR.getDatosPersonalesId().getNombre() + " "
+                        + fuR.getDatosPersonalesId().getApellidoP() + " "
+                        + fuR.getDatosPersonalesId().getApellidoM();
+                enviarCorreo(3, fuR.getDatosPersonalesId().getCorreoElectronico(), nombre, fuR.getDatosPersonalesId());
+                break;
+        }
+
 
         return "OK";
     }
