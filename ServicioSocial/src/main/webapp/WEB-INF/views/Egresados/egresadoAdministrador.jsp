@@ -47,7 +47,7 @@
                             <thead>
                                 <tr>
                                     <th>Acci&oacute;nes</th>
-                                    <td>Periodo</td>
+<!--                                    <td>Periodo</td>-->
                                     <th>N. Control</th>
                                     <th>Nombre</th>
                                     <th>Documento</th>
@@ -65,7 +65,7 @@
                                             <a href="#"> <img class="correccion" idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
                                         </td>
 
-                                        <td>${filaNR.periodo}</td>
+<!--                                        <td>${filaNR.periodo}</td>-->
                                         <td> <core:out value="${filaNR.noControl}"/>  </td>
                                         <td>
                                             <core:out value="${filaNR.nombre}"/>
@@ -82,7 +82,7 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="noAceptadosDT" width='100%'>
                             <thead>
                                 <tr>
-                                    <th>Periodo</th>
+<!--                                    <th>Periodo</th>-->
                                     <td>No. Control</td>
                                     <th>Nombre</th>
                                     <th>Documento</th>
@@ -93,7 +93,7 @@
                             <tbody>
                                 <core:forEach items="${listadoCartasRechazadas}" var="filaRech">
                                     <tr class='gradeX'>
-                                        <td>${filaRech.periodo}</td>
+                                        <!--<td>${filaRech.periodo}</td>-->
                                         <td> <core:out value="${filaRech.noControl}"/>  </td>
                                         <td><core:out value="${filaRech.nombre}"/></td>
                                         <td><a href="mostarPDF.do?id=${filaRech.idDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
@@ -115,7 +115,7 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="enCorreccionDT" width='100%'>
                             <thead>
                                 <tr>
-                                    <th>Periodo</th>
+                                    <!--<th>Periodo</th>-->
                                     <td>No. Control</td>
                                     <th>Nombre</th>
                                     <th>Documento</th>
@@ -126,7 +126,7 @@
                             <tbody>
                                 <core:forEach items="${listadoCartasCorreccion}" var="filaCorrec">
                                     <tr class='gradeX'>
-                                        <td>${filaCorrec.periodo}</td>
+                                        <!--<td>${filaCorrec.periodo}</td>-->
                                         <td> <core:out value="${filaCorrec.noControl}"/>  </td>
                                         <td><core:out value="${filaCorrec.nombre}"/></td>
                                         <td><a href="mostarPDF.do?id=${filaCorrec.idDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
@@ -151,7 +151,7 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="aceptadosDT" width='100%'>
                             <thead>
                                 <tr>
-                                    <th>Periodo</th>
+                                    <!--<th>Periodo</th>-->
                                     <th>No. Control</th>
                                     <th>Nombre</th>
                                     <th>Documento</th>
@@ -161,7 +161,7 @@
                             <tbody>
                                 <core:forEach items="${listadoCartasAceptadas}" var="filaA">
                                     <tr class='gradeX'>
-                                        <td>${filaA.periodo}</td>
+                                        <!--<td>${filaA.periodo}</td>-->
                                         <td> <core:out value="${filaA.noControl}"/>  </td>
                                         <td><core:out value="${filaA.nombre}"/></td>
                                         <td><a href="mostarPDF.do?id=${filaA.idDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>

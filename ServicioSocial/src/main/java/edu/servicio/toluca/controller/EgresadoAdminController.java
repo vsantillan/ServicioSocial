@@ -138,8 +138,9 @@ public class EgresadoAdminController {
                     //Asignando Datos A Formato Unico en estado NO_REVISADO
                     EgresadoBean cartaNR = new EgresadoBean();
                     cartaNR.setIdEgresado(egresado.getId().toString());
+                    cartaNR.setNoControl(egresado.getDatosPersonalesId().getAlumnoId().getId());
                     cartaNR.setIdDocumentoCartaMotivos(documentoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0).getId().toString());
-                    cartaNR.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
+                    //cartaNR.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
                     cartaNR.setNombre(egresado.getDatosPersonalesId().getNombre()
                             + " " + egresado.getDatosPersonalesId().getApellidoP()
                             + " " + egresado.getDatosPersonalesId().getApellidoM());
@@ -175,7 +176,7 @@ public class EgresadoAdminController {
                     EgresadoBean cartaAceptada = new EgresadoBean();
                     cartaAceptada.setIdEgresado(egresado.getId().toString());
                     cartaAceptada.setIdDocumentoCartaMotivos(documentoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0).getId().toString());
-                    cartaAceptada.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
+                    cartaAceptada.setNoControl(egresado.getDatosPersonalesId().getAlumnoId().getId());
                     cartaAceptada.setNombre(egresado.getDatosPersonalesId().getNombre()
                             + " " + egresado.getDatosPersonalesId().getApellidoP()
                             + " " + egresado.getDatosPersonalesId().getApellidoM());
@@ -199,7 +200,7 @@ public class EgresadoAdminController {
                 {
                     EgresadoBean cartasRechazadas = new EgresadoBean();
                     cartasRechazadas.setIdEgresado(egresado.getId().toString());
-                    cartasRechazadas.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
+                    cartasRechazadas.setNoControl(egresado.getDatosPersonalesId().getAlumnoId().getId());
                     cartasRechazadas.setNombre(egresado.getDatosPersonalesId().getNombre()
                             + " " + egresado.getDatosPersonalesId().getApellidoP()
                             + " " + egresado.getDatosPersonalesId().getApellidoM());
@@ -223,7 +224,7 @@ public class EgresadoAdminController {
                 if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_CORRECCION).toString())) {
                     EgresadoBean cartaCorreccion = new EgresadoBean();
                     cartaCorreccion.setIdEgresado(egresado.getId().toString());
-                    cartaCorreccion.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
+                    cartaCorreccion.setNoControl(egresado.getDatosPersonalesId().getAlumnoId().getId());
                     cartaCorreccion.setNombre(egresado.getDatosPersonalesId().getNombre()
                             + " " + egresado.getDatosPersonalesId().getApellidoP()
                             + " " + egresado.getDatosPersonalesId().getApellidoM());
