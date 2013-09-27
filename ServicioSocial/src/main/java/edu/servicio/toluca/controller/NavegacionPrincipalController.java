@@ -8,16 +8,21 @@ package edu.servicio.toluca.controller;
  *
  * @author bustedvillain
  */
+import edu.servicio.toluca.beans.SesionBean;
 import edu.servicio.toluca.beans.StringMD;
+import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Login;
+import edu.servicio.toluca.login.ValidaLogin;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -41,7 +46,7 @@ public class NavegacionPrincipalController {
     public EstadosSiaFacade estadosFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     public VistaAlumnoFacade vistaAlumnoFacade;
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model a) {
         return "/NavegacionPrincipal/index";
@@ -61,7 +66,7 @@ public class NavegacionPrincipalController {
     public String organizaciones(Model a) {
         return "/NavegacionPrincipal/organizaciones";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/acercaDe.do")
     public String acercaDe(Model a) {
         return "/NavegacionPrincipal/acercaDe";
@@ -99,123 +104,15 @@ public class NavegacionPrincipalController {
     @RequestMapping(method = RequestMethod.POST, value = "/validaLogin.do")
     public String validaLogin(Model model, String usuario, String pass, HttpSession session, HttpServletRequest request) {
         session = request.getSession();
-
-        System.out.println("Usuario:" + usuario);
-        System.out.println("Pass:" + pass);
-
-        if (usuario.equals("") || pass.equals("")) {
-            model.addAttribute("error", "<div class='error'>Datos de acceso inválidos</div>");
-            return "/NavegacionPrincipal/loginPrincipal";
+        
+        ValidaLogin login = new ValidaLogin();        
+        SesionBean sesionBean = login.validaLogin(usuario, pass, vistaAlumnoFacade, instanciaFacade, session);
+        
+        if(sesionBean.getMensaje() != null){
+            model.addAttribute("error", sesionBean.getMensaje());
         }
-        try {
-            String rol = new Login().ValidarUsuario(usuario, pass);
-            System.out.println("rol:" + rol);
-
-            //ALUMNOS
-            if (rol.equals("ROLE_ALUMNOS")) {
-                System.out.println("buscar:" + usuario.substring(4));
-                List<VistaAlumno> alumno = vistaAlumnoFacade.findBySpecificField("id", usuario.substring(4), "equal", null, null);
-                System.out.println("tamaño lista:" + alumno.size());
-                Double porcentaje = Double.parseDouble(alumno.get(0).getPorcentaje());
-                System.out.println("Porcentaje del alumno:" + porcentaje);
-                if (porcentaje >= 70) {
-                    //Sesion
-                    session.setAttribute("ROL", "ALUMNO");
-                    session.setAttribute(("NCONTROL"), usuario.substring(4));
-                    session.setAttribute("NOMBRE", alumno.get(0).getNombre()+" "+alumno.get(0).getApellidoPat()+" "+alumno.get(0).getApellidoMat());
-                    return "redirect:panelUsuario.do";
-                } else {
-                    model.addAttribute("error", "<div class='error'>Lo sentimos no cumples con el minimo de 70% de créditos para tramitar tu servicio social</div>");
-                    return "/NavegacionPrincipal/loginPrincipal";
-                }
-            }
-            //JOELITO
-            if (rol.equals("ROLE_GESVIN_OPERACION")) {
-                session.setAttribute("ROL", "OPERACION");
-                session.setAttribute("NOMBRE", "OPERADOR");
-                return "redirect:panelAdministrador.do";
-            }
-            //DIRECTIVOS
-            if (rol.equals("ROLE_GESVIN_CONSULTAS")) {
-                session.setAttribute("ROL", "CONSULTAS");
-                session.setAttribute("NOMBRE", "ADMINISTRATIVO");
-                return "redirect:panelAdministrador.do";
-            }
-            //BACKDOOR
-            if (rol.equals("ROLE_GESVIN_ADMIN")) {
-                session.setAttribute("ROL", "ADMIN");
-                session.setAttribute("NOMBRE", "SUPER ADMIN");
-                return "redirect:panelAdministrador.do";
-            }
-            //ASISTENTE
-            if (rol.equals("ROLE_GESVIN_REGISTRO")) {
-                session.setAttribute("ROL", "REGISTRO");
-                session.setAttribute("NOMBRE", "ASISTENTE");
-                return "redirect:panelAdministrador.do";
-            }
-            //OTRO
-            if (rol.equals("OTRO")) {
-                model.addAttribute("error", "<div class='error'>Lo sentimos no tiene los permisos necesarios para accesar al sistema.</div>");
-            }
-
-            return "/NavegacionPrincipal/loginPrincipal";
-
-        } catch (Exception e) {
-            System.out.println(e.toString());
-            System.out.println("Error al conectar!");
-            System.out.println("Verificando si es una organizacion");
-            boolean inicioSesion = false;
-            //Verificar si es una instancia  Login por usuario
-            List<Instancia> instancia = instanciaFacade.findBySpecificField("usuario", usuario, "equal", null, null);
-            if (instancia.size() > 0) {
-                System.out.println("pass:"+StringMD.getStringMessageDigest(pass, StringMD.SHA1));
-                try {
-                    if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1))) {
-                        inicioSesion = true;
-                    }
-                } catch (Exception ex) {
-                    System.out.println("Password vacio");
-                }
-            } else {
-                //No encntro instancia por usuario, busqueda por correo
-                instancia = instanciaFacade.findBySpecificField("correo", usuario, "equal", null, null);
-                if (instancia.size() > 0) {
-                    try {
-                        if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1))) {
-                            inicioSesion = true;
-                        }
-                    } catch (Exception ex) {
-                        System.out.println("No hay password");
-                    }
-                }
-            }
-            if (inicioSesion) {
-                //Verificando si este usuario tiene permisos de entrar
-                if (instancia.get(0).getValidacionAdmin() != BigInteger.ZERO && instancia.get(0).getEstatus() == BigInteger.ONE) {
-                    System.out.println("Iniciando sesion con organziacion " + instancia.get(0).getNombre());
-                    session.setAttribute("ROL", "ORGANIZACION");
-                    session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
-                    session.setAttribute("NOMBRE", instancia.get(0).getNombre());
-                    if (instancia.get(0).getValidacionAdmin() == BigInteger.valueOf(2)) {
-                        session.setAttribute("MENSAJE", "<div class='error'>Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
-                    }
-                    return "redirect:panelOrganizacion.do";
-                } else {
-                    System.out.println("La organizacion no puede ingresar, estatus inactivo");
-                    model.addAttribute("error", "<div class='error'>Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
-                    return "/NavegacionPrincipal/loginPrincipal";
-                }
-
-            }
-
-            model.addAttribute(
-                    "error", "<div class='error'>Usuario o contraseña incorrecta</div>");
-
-
-            return "/NavegacionPrincipal/loginPrincipal";
-        }
+        
+        return sesionBean.getPagReturn();          
 
     }
-    
-    
 }

@@ -72,7 +72,6 @@ public class PanelUsuarioController {
         try {
             ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
             List<DatosPersonales> datosPersonales = new ArrayList<DatosPersonales>(alumno.getDatosPersonalesCollection());
-            //Validar cuando sea nulo!
             List<FormatoUnico> formatoUnico = new ArrayList<FormatoUnico>(datosPersonales.get(0).getFormatoUnicoCollection());
             FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(beanPlatica, formatoUnico.get(0));
             
@@ -84,8 +83,11 @@ public class PanelUsuarioController {
             System.out.println("Formato Unico:"+beanFU.getMensaje());
 
         } catch (Exception e) {
-            System.out.println("Error al validar formato unico");
-            e.printStackTrace();
+            System.out.println("Error al validar formato unico, Datos personales o formato unico nulo");
+            model.addAttribute("accesoFormatoUnico", true);
+            model.addAttribute("statusFui", 2);
+            model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
+            //e.printStackTrace();
         }
 
         //Prueba mensaje personal
