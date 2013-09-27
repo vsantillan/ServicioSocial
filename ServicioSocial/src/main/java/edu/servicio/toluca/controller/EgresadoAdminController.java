@@ -107,12 +107,12 @@ public class EgresadoAdminController {
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
     
     //Status de FormatoUnico FUI en  base al documento status_DOC_1.doc
-    final int VALOR_NO_REVISADOS = 4;
+    final String VALOR_NO_REVISADOS = "4";
     final int VALOR_ACEPTADOS = 1;
     final int VALOR_RECHAZADOS = 2;
     final int VALOR_CORRECCION = 3;
-    //ID CatalogoDocumentos FormatoUnico
-    final long DOC_CAT_FU = 1;
+    //ID CatalogoDocumentos CartaDeMotivos
+    final long DOC_CAT_FU = 3;
     
     //Pruebas Developer
     //**********************************************
@@ -133,10 +133,10 @@ public class EgresadoAdminController {
             List<EgresadoBean> listadoCartasCorreccion = new ArrayList<EgresadoBean>();
 
             for (Egresado egresado : egresadoFacade.findAll()) {
-
+                System.out.println("Dentro del foreach de egresado");
                 //------------------Formatos No Revisados------------------------
                 if (egresado.getTipoPrograma() != null
-                        && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_NO_REVISADOS))) {
+                        && egresado.getTipoPrograma().equals(VALOR_NO_REVISADOS)) {
                     //Asignando Datos A Formato Unico en estado NO_REVISADO
                     EgresadoBean cartaNR = new EgresadoBean();
                     cartaNR.setIdDocumentoCartaMotivos(documentoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0).getId().toString());
@@ -145,6 +145,7 @@ public class EgresadoAdminController {
                             + " " + egresado.getDatosPersonalesId().getApellidoP()
                             + " " + egresado.getDatosPersonalesId().getApellidoM());
                     cartaNR.setIdDatosPersonales(egresado.getDatosPersonalesId().getId().toString());
+                    System.out.println("Lo que setie en la cartaNR es idDOcCartamotivos=" + cartaNR.getIdDocumentoCartaMotivos() + "No control" + cartaNR.getNoControl());
 //                    cartaNR.setPeriodo(egresado.getPeriodoInicio());
                     //Buscar FormatoUnico en Tabla Documentos Regresa todos los .pdf .jpg .png
                     //En caso de que HIBERNATE se generen consultas con AND, se tiene que modificar este query 
@@ -159,7 +160,7 @@ public class EgresadoAdminController {
                          Si es diferente de null, el documento de FormatoUnico se encuentra en la tabla de Documentos
                          */
                         cartaNR.setFechaSubida(fechaSubida);
-                        String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos);
+                        String idDocumento = obtenerIDDocumentoCarta(listaDocumentos);
 
                         if (idDocumento != null) {
                             cartaNR.setIdDocumentoCartaMotivos(idDocumento);
@@ -185,7 +186,7 @@ public class EgresadoAdminController {
 
                     String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos2);
                     if (fechaSubida != null) {
-                        String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos2);
+                        String idDocumento = obtenerIDDocumentoCarta(listaDocumentos2);
                         cartaAceptada.setFechaSubida(fechaSubida);
                         if (idDocumento != null) {
                             cartaAceptada.setIdDocumentoCartaMotivos(idDocumento);
@@ -209,7 +210,7 @@ public class EgresadoAdminController {
 
                     String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos3);
                     if (fechaSubida != null) {
-                        String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos3);
+                        String idDocumento = obtenerIDDocumentoCarta(listaDocumentos3);
                         cartasRechazadas.setFechaSubida(fechaSubida);
                         if (idDocumento != null) {
                             cartasRechazadas.setIdDocumentoCartaMotivos(idDocumento);
@@ -234,7 +235,7 @@ public class EgresadoAdminController {
                     String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos4);
 
                     if (fechaSubida != null) {
-                        String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos4);
+                        String idDocumento = obtenerIDDocumentoCarta(listaDocumentos4);
                         cartaCorreccion.setFechaSubida(fechaSubida);
                         if (idDocumento != null) {
                             cartaCorreccion.setIdDocumentoCartaMotivos(idDocumento);
@@ -245,7 +246,7 @@ public class EgresadoAdminController {
                 }
             }
             //Formatos Unicos No Revisados 
-            model.addAttribute("listadoCartasNORevisadas",listadoCartasNoRevisadas);
+            model.addAttribute("listadoCartasNoRevisadas",listadoCartasNoRevisadas);
             //Formato Unico Aceptados
             model.addAttribute("listadoCartasAceptadas",listadoCartasAceptadas);
             //Formato Rechazados
@@ -289,7 +290,7 @@ public class EgresadoAdminController {
       * @return ID_DOCUMENTO del FormatoUnico, en caso de no encontrarse retorna null
       */
      
-     private String  obtenerIDDocumentoFormatoU(List<Documentos> listaDocumentos)
+     private String  obtenerIDDocumentoCarta(List<Documentos> listaDocumentos)
      {
          for (Documentos docu : listaDocumentos) 
          {

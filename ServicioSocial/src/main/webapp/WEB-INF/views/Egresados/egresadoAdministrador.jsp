@@ -60,9 +60,9 @@
                                 <core:forEach items="${listadoCartasNoRevisadas}" var="filaNR">                                   
                                     <tr class='gradeX'>
                                         <td>
-                                            <a href="#"> <img class="aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/paloma.png" /></a>
-                                            <a href="#"> <img class="rechazar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/tache.png" /></a>
-                                            <a href="#"> <img class="correccion" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
+                                            <a href="#"> <img class="aceptar" idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/paloma.png" /></a>
+                                            <a href="#"> <img class="rechazar" idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/tache.png" /></a>
+                                            <a href="#"> <img class="correccion" idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
                                         </td>
 
                                         <td>${filaNR.periodo}</td>
@@ -70,7 +70,7 @@
                                         <td>
                                             <core:out value="${filaNR.nombre}"/>
                                         </td>
-                                        <td><a href="mostarPDF.do?id=${filaNR.setIdDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                        <td><a href="mostarPDF.do?id=${filaNR.idDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
                                         <td><core:out value="${filaNR.fechaSubida}"/></td>
 
                                     </tr>
@@ -96,7 +96,7 @@
                                         <td>${filaRech.periodo}</td>
                                         <td> <core:out value="${filaRech.noControl}"/>  </td>
                                         <td><core:out value="${filaRech.nombre}"/></td>
-                                        <td><a href="mostarPDF.do?id=${filaRech.setIdDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                        <td><a href="mostarPDF.do?id=${filaRech.idDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
                                         <td><core:out value="${filaRech.fechaSubida}"/></td>
                                         <td>
                                             <%/*
@@ -129,7 +129,7 @@
                                         <td>${filaCorrec.periodo}</td>
                                         <td> <core:out value="${filaCorrec.noControl}"/>  </td>
                                         <td><core:out value="${filaCorrec.nombre}"/></td>
-                                        <td><a href="mostarPDF.do?id=${filaCorrec.setIdDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                        <td><a href="mostarPDF.do?id=${filaCorrec.idDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
                                         <td><core:out value="${filaCorrec.fechaSubida}"/></td>
                                         <td>
                                             <%/*
@@ -164,7 +164,7 @@
                                         <td>${filaA.periodo}</td>
                                         <td> <core:out value="${filaA.noControl}"/>  </td>
                                         <td><core:out value="${filaA.nombre}"/></td>
-                                        <td><a href="mostarPDF.do?id=${filaA.setIdDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                        <td><a href="mostarPDF.do?id=${filaA.idDocumentoCartaMotivos}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
                                         <td><core:out value="${filaA.fechaSubida}"/></td>
 
                                     </tr>
