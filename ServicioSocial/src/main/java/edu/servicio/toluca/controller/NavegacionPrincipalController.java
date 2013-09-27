@@ -111,7 +111,7 @@ public class NavegacionPrincipalController {
         if(sesionBean.getMensaje() != null){
             model.addAttribute("error", sesionBean.getMensaje());
         }
-        
+        System.out.println("retorna:"+sesionBean.getPagReturn());
         return sesionBean.getPagReturn();          
 
     }

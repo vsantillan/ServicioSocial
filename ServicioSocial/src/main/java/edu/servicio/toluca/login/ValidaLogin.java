@@ -60,13 +60,13 @@ public class ValidaLogin {
                                 sesionBean.setMensaje("<div class='error'>Lo sentimos tu servicio social ha sido dado de baja temporalmente. Contacta al Jefe del Departamento de Servicio Social para solucionar esta situacion.</div>");
                                 sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                             } else {
+                                System.out.println("Inicia sesion en proceso...");
                                 //Sesion
                                 session.setAttribute("ROL", "ALUMNO");
                                 session.setAttribute(("NCONTROL"), usuario.substring(4));
                                 session.setAttribute("NOMBRE", alumno.get(0).getNombre() + " " + alumno.get(0).getApellidoPat() + " " + alumno.get(0).getApellidoMat());
                                 sesionBean.setPagReturn("redirect:panelUsuario.do");
                             }
-
                         }
                     } catch (Exception e) {
                         //Sesion
@@ -109,9 +109,8 @@ public class ValidaLogin {
             //OTRO
             if (rol.equals("OTRO")) {
                 sesionBean.setMensaje("<div class='error'>Lo sentimos no tiene los permisos necesarios para accesar al sistema.</div>");
-            }
-
-            sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
+                sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
+            }           
 
         } catch (Exception e) {
             System.out.println(e.toString());
