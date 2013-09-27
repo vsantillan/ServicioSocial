@@ -60,9 +60,9 @@
                                 <core:forEach items="${listadoCartasNoRevisadas}" var="filaNR">                                   
                                     <tr class='gradeX'>
                                         <td>
-                                            <a href="#"> <img class="aceptar" idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/paloma.png" /></a>
-                                            <a href="#"> <img class="rechazar" idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/tache.png" /></a>
-                                            <a href="#"> <img class="correccion" idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idFU="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
+                                            <a href="#"> <img class="aceptar" idCa="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idCa="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/paloma.png" /></a>
+                                            <a href="#"> <img class="rechazar" idCa="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idCa="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/tache.png" /></a>
+                                            <a href="#"> <img class="correccion" idCa="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idCa="${filaNR.idDocumentoCartaMotivos}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
                                         </td>
 
                                         <td>${filaNR.periodo}</td>
@@ -206,7 +206,7 @@
 
         </div>
 
-        <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
+        <script type="text/javascript" src="js/egresadoAdmin.js"></script>
     </body>
 </html>
 

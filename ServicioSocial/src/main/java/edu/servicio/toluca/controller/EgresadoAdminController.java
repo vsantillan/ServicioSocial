@@ -105,7 +105,6 @@ public class EgresadoAdminController {
     private RegObservacionesFacade regisObservacionesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
-    
     //Status de FormatoUnico FUI en  base al documento status_DOC_1.doc
     final String VALOR_NO_REVISADOS = "4";
     final int VALOR_ACEPTADOS = 1;
@@ -113,12 +112,11 @@ public class EgresadoAdminController {
     final int VALOR_CORRECCION = 3;
     //ID CatalogoDocumentos CartaDeMotivos
     final long DOC_CAT_FU = 3;
-    
     //Pruebas Developer
     //**********************************************
     //Desactivar para Produccion, Activar para Desarrollo
     final boolean banderaPrueba = true;
-    final String correoTest="rehoscript@gmail.com";
+    final String correoTest = "rehoscript@gmail.com";
     //**********************************************
 
     @RequestMapping(method = RequestMethod.GET, value = "/egresadoAdministrador.do")
@@ -139,6 +137,7 @@ public class EgresadoAdminController {
                         && egresado.getTipoPrograma().equals(VALOR_NO_REVISADOS)) {
                     //Asignando Datos A Formato Unico en estado NO_REVISADO
                     EgresadoBean cartaNR = new EgresadoBean();
+                    cartaNR.setIdEgresado(egresado.getId().toString());
                     cartaNR.setIdDocumentoCartaMotivos(documentoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0).getId().toString());
                     cartaNR.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
                     cartaNR.setNombre(egresado.getDatosPersonalesId().getNombre()
@@ -174,6 +173,7 @@ public class EgresadoAdminController {
                 if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_ACEPTADOS)))//
                 {
                     EgresadoBean cartaAceptada = new EgresadoBean();
+                    cartaAceptada.setIdEgresado(egresado.getId().toString());
                     cartaAceptada.setIdDocumentoCartaMotivos(documentoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0).getId().toString());
                     cartaAceptada.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
                     cartaAceptada.setNombre(egresado.getDatosPersonalesId().getNombre()
@@ -198,6 +198,7 @@ public class EgresadoAdminController {
                 if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//
                 {
                     EgresadoBean cartasRechazadas = new EgresadoBean();
+                    cartasRechazadas.setIdEgresado(egresado.getId().toString());
                     cartasRechazadas.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
                     cartasRechazadas.setNombre(egresado.getDatosPersonalesId().getNombre()
                             + " " + egresado.getDatosPersonalesId().getApellidoP()
@@ -221,6 +222,7 @@ public class EgresadoAdminController {
                 //------------------//Formatos Correccion-----------------------   
                 if (egresado.getTipoPrograma() != null && egresado.getTipoPrograma().equals(BigInteger.valueOf(VALOR_CORRECCION))) {
                     EgresadoBean cartaCorreccion = new EgresadoBean();
+                    cartaCorreccion.setIdEgresado(egresado.getId().toString());
                     cartaCorreccion.setNoControl(egresado.getDatosPersonalesId().getNumeroControl());
                     cartaCorreccion.setNombre(egresado.getDatosPersonalesId().getNombre()
                             + " " + egresado.getDatosPersonalesId().getApellidoP()
@@ -246,183 +248,189 @@ public class EgresadoAdminController {
                 }
             }
             //Formatos Unicos No Revisados 
-            model.addAttribute("listadoCartasNoRevisadas",listadoCartasNoRevisadas);
+            model.addAttribute("listadoCartasNoRevisadas", listadoCartasNoRevisadas);
             //Formato Unico Aceptados
-            model.addAttribute("listadoCartasAceptadas",listadoCartasAceptadas);
+            model.addAttribute("listadoCartasAceptadas", listadoCartasAceptadas);
             //Formato Rechazados
-            model.addAttribute("listadoCartasRechazadas",listadoCartasRechazadas);
+            model.addAttribute("listadoCartasRechazadas", listadoCartasRechazadas);
             //Formato Correccion
-            model.addAttribute("listadoCartasCorreccion",listadoCartasCorreccion);
+            model.addAttribute("listadoCartasCorreccion", listadoCartasCorreccion);
             //Catalogo Sanciones
-            model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
+            model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll());
 
             return "/Egresados/egresadoAdministrador";
         } else {
             return "redirect:index.do";
         }
-        
-    }
-    
-    
-    
-     /**
-      * 
-      * @param listaDocumentos
-      * @return Fecha de Subida de Formato Unico
-      * De todos los documentos, se obtiene solo los documentos con CATALOGO_ID= 1
-      * En caso de no encontrar nada devuelve null, en caso contrario la Fecha de Subida
-      */
-     
-     private  String  obtenerFechaSubidaFormatoU(List<Documentos> listaDocumentos)
-     {
-         for (Documentos docu : listaDocumentos) 
-         {
-                    if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(DOC_CAT_FU)) )//Es igual a formato Unico
-                    {
-                        return docu.getFechaSubida().toString();
-                    }
-         }
-         return null;
-     }
-     /**
-      * 
-      * @param listaDocumentos
-      * @return ID_DOCUMENTO del FormatoUnico, en caso de no encontrarse retorna null
-      */
-     
-     private String  obtenerIDDocumentoCarta(List<Documentos> listaDocumentos)
-     {
-         for (Documentos docu : listaDocumentos) 
-         {
-                    if(docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(DOC_CAT_FU)) )//Es igual a formato Unico
-                    {
-                        return docu.getId().toString();
-                    }
-         }
-         return null;
-     }
 
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/modificarEgresadoNR_Aceptado.do")
+    public @ResponseBody
+    String modificarEgresadoNR_Aceptado(String id) {
+        //Obtener FormatoUnico en especifico 
+        System.out.println(id);
+        FormatoUnico fA = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
+        //Se encontro el Objeto
+        if (fA != null) {
+            //Cambiar Estado de NO_ACEPTADO A ACEPTADO
+            fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
+            formatoUnicoFacade.edit(fA);
+
+            String nombre = fA.getDatosPersonalesId().getNombre() + " "
+                    + fA.getDatosPersonalesId().getApellidoP() + " "
+                    + fA.getDatosPersonalesId().getApellidoM();
+            enviarCorreo(1, fA.getDatosPersonalesId().getCorreoElectronico(), nombre, null);
+        }
+
+        return "OK";
+    }
 
     /**
-     * 
-     * Metodo que se encarga de enviar notificacion al alumno en base a su correo
+     *
+     * @param listaDocumentos
+     * @return Fecha de Subida de Formato Unico De todos los documentos, se
+     * obtiene solo los documentos con CATALOGO_ID= 1 En caso de no encontrar
+     * nada devuelve null, en caso contrario la Fecha de Subida
+     */
+    private String obtenerFechaSubidaFormatoU(List<Documentos> listaDocumentos) {
+        for (Documentos docu : listaDocumentos) {
+            if (docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(DOC_CAT_FU)))//Es igual a formato Unico
+            {
+                return docu.getFechaSubida().toString();
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param listaDocumentos
+     * @return ID_DOCUMENTO del FormatoUnico, en caso de no encontrarse retorna
+     * null
+     */
+    private String obtenerIDDocumentoCarta(List<Documentos> listaDocumentos) {
+        for (Documentos docu : listaDocumentos) {
+            if (docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(DOC_CAT_FU)))//Es igual a formato Unico
+            {
+                return docu.getId().toString();
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * Metodo que se encarga de enviar notificacion al alumno en base a su
+     * correo
+     *
      * @param tipo
      * @param correoDestinatario
      * @param nombre
-     * @param dtp 
+     * @param dtp
      */
-    private void enviarCorreo(int tipo,String correoDestinatario,String nombre,DatosPersonales dtp)
-    {
+    private void enviarCorreo(int tipo, String correoDestinatario, String nombre, DatosPersonales dtp) {
         //Romper metodo en caso de que correo no se encuentre
-        if(correoDestinatario==null)
+        if (correoDestinatario == null) {
             return;
-        else if(banderaPrueba)    
-            correoDestinatario=correoTest;
-         //En caso de que BanderaPrueba este activa se envia Correo al correo de Test
-        
-        String mensaje=" ";
-        switch(tipo)
-        {
+        } else if (banderaPrueba) {
+            correoDestinatario = correoTest;
+        }
+        //En caso de que BanderaPrueba este activa se envia Correo al correo de Test
+
+        String mensaje = " ";
+        switch (tipo) {
             case 1://Aceptados
-                mensaje="<h1>Notificación Servicio Social</h1>\n" +
-                "<h2>Estimado  <b>"+nombre+"</b>:</h2> \n" +
-                "<p>\n" +
-                "Te informamos que  tu  Formato Único que has llenado, fue revisado por la Oficina de Servicio Social  y ha sido <b>Aceptado</b> Satisfactoriamente. \n" +
-                "</p>\n" +
-                "<p>Por lo que te recordamos, que a partir de este momento cada 2 meses tienes que subir tu   reporte bimestral, el cual será revisado de la misma manera  por la Oficina de Servicio Social. \n" +
-                "</p>\n" +
-                "<p>\n" +
-                "Oficina de Servicio Social<br> \n" +
-                "Instituto Tecnológico  de Toluca\n" +
-                "</p>";
+                mensaje = "<h1>Notificación Servicio Social</h1>\n"
+                        + "<h2>Estimado  <b>" + nombre + "</b>:</h2> \n"
+                        + "<p>\n"
+                        + "Te informamos que  tu  Formato Único que has llenado, fue revisado por la Oficina de Servicio Social  y ha sido <b>Aceptado</b> Satisfactoriamente. \n"
+                        + "</p>\n"
+                        + "<p>Por lo que te recordamos, que a partir de este momento cada 2 meses tienes que subir tu   reporte bimestral, el cual será revisado de la misma manera  por la Oficina de Servicio Social. \n"
+                        + "</p>\n"
+                        + "<p>\n"
+                        + "Oficina de Servicio Social<br> \n"
+                        + "Instituto Tecnológico  de Toluca\n"
+                        + "</p>";
                 break;
             case 2://Correccion
-                String mns1="<h1>Notificación Servicio Social</h1>\n" +
-                "<h2>Estimado  <b>"+nombre+"</b>:</h2> \n" +
-                "<p>\n" +
-                "Te informamos que   tu  Formato Único que has llenado, ha sido revisado por la Oficina de Servicio Social  y este tiene errores.  Favor de corregirlos lo más pronto posible.\n" +
-                "</p>\n" +
-                "<ul>\n";
+                String mns1 = "<h1>Notificación Servicio Social</h1>\n"
+                        + "<h2>Estimado  <b>" + nombre + "</b>:</h2> \n"
+                        + "<p>\n"
+                        + "Te informamos que   tu  Formato Único que has llenado, ha sido revisado por la Oficina de Servicio Social  y este tiene errores.  Favor de corregirlos lo más pronto posible.\n"
+                        + "</p>\n"
+                        + "<ul>\n";
                 mensaje += mns1;
-                
+
                 for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId",
-                                                            dtp,
-                                                            "equal", null, null)) {
-                       
-                     String detalle=reg.getCatalogoObservacionId().getDetalle();
-                     mensaje += "<li>"+detalle+"</li>\n";
+                        dtp,
+                        "equal", null, null)) {
+
+                    String detalle = reg.getCatalogoObservacionId().getDetalle();
+                    mensaje += "<li>" + detalle + "</li>\n";
                 }
-                
-                
-                String mns2 = 
-                "</ul>\n" +
-                "<p>\n" +
-                "Oficina de Servicio Social <br>\n" +
-                "Instituto Tecnológico  de Toluca\n" +
-                "</p>";
+
+
+                String mns2 =
+                        "</ul>\n"
+                        + "<p>\n"
+                        + "Oficina de Servicio Social <br>\n"
+                        + "Instituto Tecnológico  de Toluca\n"
+                        + "</p>";
                 mensaje += mns2;
                 break;
             case 3://No aceptados
-                mensaje="<h1>Notificación Servicio Social</h1>\n" +
-                "<h2>Estimado  <b>"+nombre+"</b>:</h2> \n" +
-                "<p>\n" +
-                "Te informamos que   tu  Formato Único que has llenado, fue revisado por la Oficina de Servicio Social  y este ha sido <b>Rechazado</b>.\n" +
-                "</p>\n" +
-                "<p>\n" +
-                "Si esto ha sucedido, es porque has rebasado el número de intentos  para corregir tu Formato  Único.  Para mayor información  presentarse en la Oficina de Servicio Social o intentar de  nuevo para la siguiente convocatoria.  \n" +
-                "</p>\n" +
-                "<p>\n" +
-                "Oficina de Servicio Social <br>\n" +
-                "Instituto Tecnológico  de Toluca\n" +
-                "</p>";
+                mensaje = "<h1>Notificación Servicio Social</h1>\n"
+                        + "<h2>Estimado  <b>" + nombre + "</b>:</h2> \n"
+                        + "<p>\n"
+                        + "Te informamos que   tu  Formato Único que has llenado, fue revisado por la Oficina de Servicio Social  y este ha sido <b>Rechazado</b>.\n"
+                        + "</p>\n"
+                        + "<p>\n"
+                        + "Si esto ha sucedido, es porque has rebasado el número de intentos  para corregir tu Formato  Único.  Para mayor información  presentarse en la Oficina de Servicio Social o intentar de  nuevo para la siguiente convocatoria.  \n"
+                        + "</p>\n"
+                        + "<p>\n"
+                        + "Oficina de Servicio Social <br>\n"
+                        + "Instituto Tecnológico  de Toluca\n"
+                        + "</p>";
                 break;
             default:
                 return;
         }
 
-        SimpleDateFormat fecha=new SimpleDateFormat("dd/MM/yyyy");
-        String str=fecha.format(new Date());
-        
-        Thread hiloCorreo=new Thread(new EgresadoAdminController.HiloE(str,nombre,correoDestinatario,mensaje));
+        SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        String str = fecha.format(new Date());
+
+        Thread hiloCorreo = new Thread(new EgresadoAdminController.HiloE(str, nombre, correoDestinatario, mensaje));
         hiloCorreo.start();
-        
+
     }
-    
-    
-    public class HiloE implements Runnable
-    {
+
+    public class HiloE implements Runnable {
+
         private String fecha,
-                       nombre,
-                       correo,
-                       mensaje;
-        public HiloE(String fecha,String nombre,String correo,String mensaje) {
-            this.fecha=fecha;
-            this.nombre=nombre;
-            this.correo=correo;
-            this.mensaje=mensaje;
+                nombre,
+                correo,
+                mensaje;
+
+        public HiloE(String fecha, String nombre, String correo, String mensaje) {
+            this.fecha = fecha;
+            this.nombre = nombre;
+            this.correo = correo;
+            this.mensaje = mensaje;
         }
-        
-        
+
         @Override
         public void run() {
-            
-            try
-            {
-                EnviarCorreo correo2 = new EnviarCorreo("Notificación  Servicio Social "+this.fecha+" "+this.nombre,
-                                               this.correo,
-                                               this.mensaje
-                                               );
+
+            try {
+                EnviarCorreo correo2 = new EnviarCorreo("Notificación  Servicio Social " + this.fecha + " " + this.nombre,
+                        this.correo,
+                        this.mensaje);
                 correo2.enviaCorreo();
-            }
-            catch(Exception e)
-            {
+            } catch (Exception e) {
                 System.out.println("Error");
             }
         }
-    
     }
-    
-    
-    
     //No-Visible 
 }
