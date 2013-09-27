@@ -333,4 +333,18 @@ public class PropAluInstProyBean {
     public void setExt(String ext) {
         this.ext = ext;
     }
+
+    /**
+     * @return the ext2
+     */
+    public String getExt2() {
+        return ext2;
+    }
+
+    /**
+     * @param ext2 the ext2 to set
+     */
+    public void setExt2(String ext2) {
+        this.ext2 = ext2;
+    }
 }

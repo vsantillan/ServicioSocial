@@ -1192,6 +1192,13 @@ public class OrganizacionesController2 {
                 actividadesFacade.create(actividad);
                 System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
             }
+            //Preparacion de usuario
+            DatosPersonales datosPersonales = datosPersonalesFacade.find(BigDecimal.valueOf(Double.parseDouble(datos_personales)));
+            System.out.println("Datos per" + datosPersonales.getNombre());
+            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+            FormatoUnico formatoUnico = listaFormatoUnico.get(0);
+            int idPerfilAlumno = datosPersonales.getAlumnoId().getCarreraId();
+            boolean agregoSuPerfil =false;
             //Insercion de Perfiles
             //ProyectoPerfilModel proyectoPerfilModel;
             if (selectto != null) {
@@ -1200,6 +1207,7 @@ public class OrganizacionesController2 {
                 StringTokenizer token = new StringTokenizer(selectto, ",");
                 ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
 
+                //El perfil del alumno
                 System.out.println("Analizar cadena:" + selectto);
                 System.out.println("No de tokens:" + token.countTokens());
                 while (token.hasMoreTokens()) {
@@ -1207,6 +1215,9 @@ public class OrganizacionesController2 {
                     System.out.println("Token:" + perfil);
                     if (perfil != null && !perfil.equals("")) {
                         perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
+                        if(idPerfilAlumno == Integer.parseInt(perfil)){
+                            agregoSuPerfil=true;
+                        }
                     }
                 }
                 for (int i = 0; i < perfiles.size(); i++) {
@@ -1216,16 +1227,22 @@ public class OrganizacionesController2 {
                     proyectoPerfilFacade.create(proyectoPerfil);
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
+                //Agregamos su perfil si no lo agrego
+                if(!agregoSuPerfil){
+                    Perfil suPerfil = perfilFacade.find(BigDecimal.valueOf(idPerfilAlumno));
+                    ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
+                    proyectoPerfil.setIdPerfil(suPerfil);
+                    proyectoPerfil.setIdProyecto(newProyecto);
+                    proyectoPerfilFacade.create(proyectoPerfil);
+                    
+                    System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
+                }
             } else {
                 System.out.println("No se agregaran perfiles");
             }
 
             //Relacionar proyecto con formato unico
-            DatosPersonales datosPersonales = datosPersonalesFacade.find(BigDecimal.valueOf(Double.parseDouble(datos_personales)));
-            System.out.println("Datos per" + datosPersonales.getNombre());
-            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
-            FormatoUnico formatoUnico = listaFormatoUnico.get(0);
-
+            
             formatoUnico.setIdproyecto(newProyecto);
             formatoUnicoFacade.edit(formatoUnico);
             System.out.println("Relacion a formato unico correcta");
