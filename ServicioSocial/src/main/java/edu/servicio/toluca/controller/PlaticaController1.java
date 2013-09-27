@@ -5,6 +5,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.MetodosValidacion;
+import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
@@ -32,8 +33,12 @@ public class PlaticaController1 {
     private LugaresPlaticaFacade LugaresPlaticaFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
-    public String obtieneLugares(Model modelo)
+    public String obtieneLugares(Model modelo , HttpSession session, HttpServletRequest request)
     { 
+        /*if (! new ValidaSesion().validaOperador(session, request)) {
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }*/
         LinkedHashMap ordenarDesc = new LinkedHashMap();
         ordenarDesc.put("lugar","desc");        
         modelo.addAttribute("lugar_i", new LugaresPlatica());
@@ -71,12 +76,33 @@ public class PlaticaController1 {
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/editarLugar.do")
-    String editarLugar_r(LugaresPlatica lugar_i,String lugar,int id, Model model) {
-        MetodosValidacion metodo = new MetodosValidacion();
-        LugaresPlatica lugar_r = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
-        lugar_r.setLugar(metodo.tuneaStringParaBD(lugar));
-        LugaresPlaticaFacade.edit(lugar_r);
-        return "redirect:altaLugares.do";
+    String editarLugar_r(Model model, @Valid LugaresPlatica lugar_i,BindingResult resultado, HttpSession session, HttpServletRequest request) {
+        if (!resultado.hasErrors()) {
+            MetodosValidacion metodo = new MetodosValidacion();
+            LugaresPlatica lugar_r = LugaresPlaticaFacade.find(lugar_i.getId());
+            
+            lugar_r.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
+            if(lugar_r.getLugar().length()>0){
+                LugaresPlaticaFacade.edit(lugar_r);
+                return "redirect:altaLugares.do";
+            } else{
+                System.out.println("Result has error");
+                model.addAttribute("errorBlanco", "<div class='error'>Error la descripción esta vacia</div>");
+                LinkedHashMap ordenarDesc = new LinkedHashMap();
+                ordenarDesc.put("lugar","desc");        
+                model.addAttribute("lugar_i", new LugaresPlatica());
+                model.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
+                return "/Platicas/lugaresPlatica";
+            }
+        } else{
+            System.out.println("Result has error");
+            model.addAttribute("errorBlanco", "<div class='error'>Error la descripción esta vacia</div>");
+            LinkedHashMap ordenarDesc = new LinkedHashMap();
+            ordenarDesc.put("lugar","desc");        
+            model.addAttribute("lugar_i", new LugaresPlatica());
+            model.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
+            return "/Platicas/lugaresPlatica";
+        }
     }
 
 }
