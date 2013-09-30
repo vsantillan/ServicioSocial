@@ -30,6 +30,10 @@
                     <td><p><core:out value="${proyectoDetalle.vacantesDisponibles}"/></p></td>
                 </tr>
                 <tr>
+                    <td><p>Instancia:</p></td>
+                    <td><p><core:out value="${proyectoDetalle.idInstancia.nombre}"/></p></td>
+                </tr>                
+                <tr>
                     <td><p>Titular:</p></td>
                     <td><p><core:out value="${proyectoDetalle.idInstancia.titular}"/></p></td>
                 </tr>
@@ -39,19 +43,19 @@
                 </tr>
                 <tr>
                     <td><p>Tel&eacute;fono:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.telefono}"/></p></td>
-                </tr>
-                <tr>
-                        <td><p>Ext:</p></td>
-                        <td><p><core:out value="${instancia.ext}" /></p></td>
-                    </tr>
-                <tr>
-                    <td><p>Instancia:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.nombre}"/></p></td>
+                    <td><p><core:out value="${proyectoDetalle.idInstancia.telefono}"/> EXT:<core:out value="${proyectoDetalle.idInstancia.ext}"/> </p></td>
                 </tr>
                 <tr>
                     <td><p>Domicilio de la Instancia:</p></td>
                     <td><p><core:out value="${proyectoDetalle.idInstancia.domicilio}"/></p></td>
+                </tr>
+                <tr>
+                    <td><p>C&oacute;digo Postal de la Instancia:</p></td>
+                    <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.idCp.cp}"/></p></td>
+                </tr>
+                <tr>
+                    <td><p>Colonia de la Instancia:</p></td>
+                    <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.nombre}"/></p></td>
                 </tr>
                 <tr>
                     <td><p>Actividades:</p></td>
@@ -79,16 +83,20 @@
                 </tr>
                 <tr>
                     <td><p>Tel&eacute;fono del Responsable:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.telefonoResponsable}"/></p></td>
+                    <td><p><core:out value="${proyectoDetalle.telefonoResponsable}"/> EXT:<core:out value="${proyectoDetalle.ext}"/></p></td>
                 </tr>
                 <tr>
                     <td><p>Domicilio del programa:</p></td>
                     <td><p><core:out value="${proyectoDetalle.domicilio}"/></p></td>
                 </tr>
                 <tr>
-                    <td><p>C&oacute;digo Postal:</p></td>
+                    <td><p>C&oacute;digo Postal del programa:</p></td>
                     <td><p><core:out value="${proyectoDetalle.idColonia.idCp.cp}"/></p></td>
                 </tr>
+                <tr>
+                    <td><p>Colonia del programa:</p></td>
+                    <td><p><core:out value="${proyectoDetalle.idColonia.nombre}"/></p></td>
+                </tr>                
                 <tr>
                     <td><p>Tipo de Proyecto</p></td>
                     <td><p><core:out value="${proyectoDetalle.idTipoProyecto.descripcion}" /></p></td>

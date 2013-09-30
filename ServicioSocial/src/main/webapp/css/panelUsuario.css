@@ -88,3 +88,12 @@
     height: 330px;
 }
 
+.observaciones{
+    width: 90%;
+    margin-top: 10px;
+    margin-left: auto; 
+    margin-right: auto;
+    position: relative;
+    height:200px;    
+}
+
