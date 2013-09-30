@@ -5,6 +5,7 @@
 package edu.servicio.toluca.model.platica;
 
 import edu.servicio.toluca.beans.FechaAPalabras;
+import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
 import edu.servicio.toluca.entidades.FoliosPlatica;
 import edu.servicio.toluca.entidades.VistaAlumno;
@@ -46,10 +47,10 @@ public class ConsultasPlatica {
         this.foliosPlaticaFacade = foliosPlaticaFacade;
     }
 
-    public FoliosPlaticaBean checaAlumnoPlatica(VistaAlumno alumno) {        
+    public FoliosPlaticaBean checaAlumnoPlatica(StatusServicioBean servicioBean) {        
         
         System.out.println("Checa platica");
-        List<FoliosPlatica> platica = foliosPlaticaFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        List<FoliosPlatica> platica = foliosPlaticaFacade.findBySpecificField("alumnoId", servicioBean.getVistaAlumno(), "equal", null, null);
         List<FoliosPlatica> filtroPlatica = new ArrayList();
         System.out.println("No. de registros en platica:" + platica.size());
         short uno = 1;
@@ -85,7 +86,8 @@ public class ConsultasPlatica {
             beanPlatica.setMensajeUsuario("No te has registrado a ninguna plática");            
             System.out.println("No se registro a ninguna platica");
         }
-
+        
+        servicioBean.setPlaticaBean(beanPlatica);
         return beanPlatica;
     }
 }

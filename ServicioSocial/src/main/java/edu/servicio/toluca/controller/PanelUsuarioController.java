@@ -4,6 +4,8 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.SesionBean;
+import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
@@ -14,6 +16,7 @@ import edu.servicio.toluca.model.VistaAlumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
 import edu.servicio.toluca.model.observaciones.ObservacionesModel;
+import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
 import edu.servicio.toluca.model.platica.ConsultasPlatica;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.NoticiasFacade;
@@ -64,50 +67,74 @@ public class PanelUsuarioController {
         ConsultasNoticias noticias = new ConsultasNoticias(noticiasFacade);
         model.addAttribute("noticiasAlumnos", noticias.consultaNoticiasGenerales("desc"));
 
-        //Checa platica
-        ConsultasPlatica platica = new ConsultasPlatica(foliosPlaticaFacade);
-        FoliosPlaticaBean beanPlatica = platica.checaAlumnoPlatica(alumno);
+        //Valida estatus del servicio social
+        ValidacionStatusServicio validacionServicio = new ValidacionStatusServicio();
+        /**
+         * servicioBean validara el status del servicio social, y traera en sus
+         * atributos: DatosPersonales FormatoUnico ...
+         */
+        StatusServicioBean servicioBean = validacionServicio.validaServicio(alumno);
 
-        model.addAttribute("platica", beanPlatica.isTienePlatica());
-        model.addAttribute("accesoPlatica", beanPlatica.isAccesoPanelPlatica());
-        model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
+        //Hara las validaciones pertinentes si el estatus del servicio esta activo
+        if (servicioBean.getStatusServicio() == 1) {
+            //Checa platica
+            ConsultasPlatica platica = new ConsultasPlatica(foliosPlaticaFacade);
+            FoliosPlaticaBean beanPlatica = platica.checaAlumnoPlatica(servicioBean);
 
-        //Valida Formato Unico
-        DatosPersonales datosPersonales = null;
-        try {
-            ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
-            List<DatosPersonales> datosPersonalesC = new ArrayList<DatosPersonales>(alumno.getDatosPersonalesCollection());
-            datosPersonales = datosPersonalesC.get(0);
-            List<FormatoUnico> formatoUnico = new ArrayList<FormatoUnico>(datosPersonales.getFormatoUnicoCollection());
-            FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(beanPlatica, formatoUnico.get(0));
+            model.addAttribute("platica", beanPlatica.isTienePlatica());
+            model.addAttribute("accesoPlatica", beanPlatica.isAccesoPanelPlatica());
+            model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
 
-            model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
-            model.addAttribute("statusFui", beanFU.getStatusFui());
-            model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
+            //Valida Formato Unico
+            if (servicioBean.getDatosPersonales() != null) {
+                ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
+                FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(servicioBean);
 
-        } catch (Exception e) {
-            System.out.println("Error al validar formato unico, Datos personales o formato unico nulo");
-            model.addAttribute("accesoFormatoUnico", true);
-            model.addAttribute("statusFui", 2);
-            model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
-            //e.printStackTrace();
-        }
+                model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
+                model.addAttribute("statusFui", beanFU.getStatusFui());
+                model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
+            } else {
+                model.addAttribute("accesoFormatoUnico", true);
+                model.addAttribute("statusFui", 2);
+                model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
+            }            
 
-        //Mensaje personal
-        if (mensaje != null) {
-            model.addAttribute("mensajePersonal", "<div class='error'>" + mensaje + "</div>");
-        }
-
-        //Observaciones
-        try {
-            if (datosPersonales != null) {
-                ObservacionesModel observaciones = new ObservacionesModel();
-                model.addAttribute("observaciones", observaciones.consultaObservaciones(datosPersonales, regObservacionesFacade, "desc"));
+            //Mensaje personal
+            if (mensaje != null) {
+                model.addAttribute("mensajePersonal", "<div class='error'>" + mensaje + "</div>");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
+            //Observaciones
+            try {
+                if (servicioBean.getDatosPersonales() != null) {
+                    ObservacionesModel observaciones = new ObservacionesModel();
+                    model.addAttribute("observaciones", observaciones.consultaObservaciones(servicioBean.getDatosPersonales(), regObservacionesFacade, "desc"));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {            
+            
+            model.addAttribute("accesoPlatica", false);          
+            model.addAttribute("accesoFormatoUnico", false);
+            
+            //If servicio social terminado
+            if(servicioBean.getStatusServicio() == 4){
+                model.addAttribute("platica", true);
+                model.addAttribute("statusFui", 1);
+            }else{
+                model.addAttribute("platica", false);
+                model.addAttribute("statusFui", 2);
+            }            
+               
+            model.addAttribute("mensajeFormatoUnico", servicioBean.getMensaje());
+            model.addAttribute("mensajePlatica", servicioBean.getMensaje());
+            model.addAttribute("mensajeReportesBimestrales", servicioBean.getMensaje());
+            model.addAttribute("mensajeReportesMensuales", servicioBean.getMensaje());
+            model.addAttribute("mensajePlaticaBecados", servicioBean.getMensaje());
+            model.addAttribute("mensajeDocumentosFinales", servicioBean.getMensaje());
+            model.addAttribute("mensajeSanciones", servicioBean.getMensaje());
+        }
 
 
         return "/PanelUsuario/panelUsuario";
