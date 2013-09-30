@@ -410,6 +410,24 @@ public class FormatoUnicoController {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
+        listaInstancias = instanciaFacade.findBySpecificField("estatus", "3", "equal", null, null);
+        for(Instancia ins : listaInstancias)
+        {
+            System.out.println("Revisando si la instancia es propuesta");
+            System.out.println("La que se tiene en el fui es " + formatoUnico.getIdproyecto().getIdInstancia().getNombre());
+            System.out.println("La que está en el foreach es "+ ins.getNombre());
+            String idLeido = formatoUnico.getIdproyecto().getIdInstancia().getIdInstancia().toString();
+            String idInstFU = ins.getIdInstancia().toString();
+            if(idLeido.equals(idInstFU))
+            {
+                System.out.println("Se agregará a la lista una instancia del alumno");
+                filtroInstancias.add(ins);
+            }
+            else
+            {
+                
+            }
+        }
         modelo.addAttribute("instancias", filtroInstancias);
         System.out.println("lo que mando al facade es: " + datosPersonales.getIdColonia().getIdColonia());
         // modelo.addAttribute("instanciaDireccion", instanciaFacade.findBySpecificField("idColonia", datosPersonales.getIdColonia(), "equal" , null, null));
