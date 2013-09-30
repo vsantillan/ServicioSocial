@@ -21,9 +21,6 @@
         <%@ include file="../Template/metas.jsp" %>
         <script src="js/jquery.manolo.js"></script>
         <title>Home Usuario</title>
-        <style>
-
-        </style>
     </head>
     <body class="background" >
         <jsp:include page="../Template/banner.jsp" />
@@ -84,7 +81,7 @@
                 <ul class="scroll listaNoticias">
                     <core:forEach items="${noticiasAlumnos}" var="noticia">
                         <li class="error"><b>${noticia.fecha}</b>: ${noticia.detalle}</li>
-                            </core:forEach>
+                    </core:forEach>
                 </ul>
 
             </div>
@@ -174,9 +171,19 @@
             </div>
             <!--/Mensajes personales-->
 
+            <div style="clear: both"></div>
 
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <!--Observaciones-->
+            <div class="observaciones MyForm">
+                <h1>Observaciones</h1>
+                <ul class="scroll">
+                    <core:forEach items="${observaciones}" var="observacion">
+                        <li class="error"><b>${observacion.fecha}</b>: ${observacion.catalogoObservacionId.detalle}</li>
+                    </core:forEach>
+                </ul>
+            </div>
+            <!--/Observaciones-->
+            <br/>
         </div>
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>

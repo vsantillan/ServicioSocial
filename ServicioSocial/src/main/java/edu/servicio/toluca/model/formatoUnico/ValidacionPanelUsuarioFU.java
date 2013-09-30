@@ -62,7 +62,7 @@ public class ValidacionPanelUsuarioFU {
                                 if (revisionesFui <= 5) {
                                     beanFU.setAccesoFormatoUnico(true);
                                     beanFU.setStatusFui(3);
-                                    beanFU.setMensaje("Tu Formato Unico se encuentra en correccion. Por favor accede a la seccion de observaciones para saber que es lo que tienes que corregir en tu Formato Unico.");
+                                    beanFU.setMensaje("Tu Formato Unico se encuentra en correccion. Por favor revisa a la seccion de observaciones para saber que es lo que tienes que corregir en tu Formato Unico.");
                                 } else {
                                     beanFU.setAccesoFormatoUnico(false);
                                     beanFU.setStatusFui(3);
@@ -105,7 +105,7 @@ public class ValidacionPanelUsuarioFU {
             case 4:
                 beanFU.setAccesoFormatoUnico(false);
                 beanFU.setMensaje("Tu proceso de servicio social ya ha concluido.");
-                beanFU.setStatusFui(2);
+                beanFU.setStatusFui(1);
                 break;
         }
 

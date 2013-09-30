@@ -13,9 +13,11 @@ import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.model.VistaAlumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
+import edu.servicio.toluca.model.observaciones.ObservacionesModel;
 import edu.servicio.toluca.model.platica.ConsultasPlatica;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.NoticiasFacade;
+import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,8 @@ public class PanelUsuarioController {
     public FoliosPlaticaFacade foliosPlaticaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/NoticiasFacade")
     public NoticiasFacade noticiasFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
+    public RegObservacionesFacade regObservacionesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelUsuario.do")
     public String panelUsuario(Model model, HttpSession session, HttpServletRequest request, String mensaje) {
@@ -69,18 +73,17 @@ public class PanelUsuarioController {
         model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
 
         //Valida Formato Unico
+        DatosPersonales datosPersonales = null;
         try {
             ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
-            List<DatosPersonales> datosPersonales = new ArrayList<DatosPersonales>(alumno.getDatosPersonalesCollection());
-            List<FormatoUnico> formatoUnico = new ArrayList<FormatoUnico>(datosPersonales.get(0).getFormatoUnicoCollection());
+            List<DatosPersonales> datosPersonalesC = new ArrayList<DatosPersonales>(alumno.getDatosPersonalesCollection());
+            datosPersonales = datosPersonalesC.get(0);
+            List<FormatoUnico> formatoUnico = new ArrayList<FormatoUnico>(datosPersonales.getFormatoUnicoCollection());
             FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(beanPlatica, formatoUnico.get(0));
-            
+
             model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
-            System.out.println("accesoFormatoUnico:"+beanFU.isAccesoFormatoUnico());
             model.addAttribute("statusFui", beanFU.getStatusFui());
-            System.out.println("statusFui:"+beanFU.getStatusFui());
             model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
-            System.out.println("Formato Unico:"+beanFU.getMensaje());
 
         } catch (Exception e) {
             System.out.println("Error al validar formato unico, Datos personales o formato unico nulo");
@@ -90,10 +93,22 @@ public class PanelUsuarioController {
             //e.printStackTrace();
         }
 
-        //Prueba mensaje personal
+        //Mensaje personal
         if (mensaje != null) {
             model.addAttribute("mensajePersonal", "<div class='error'>" + mensaje + "</div>");
         }
+
+        //Observaciones
+        try {
+            if (datosPersonales != null) {
+                ObservacionesModel observaciones = new ObservacionesModel();
+                model.addAttribute("observaciones", observaciones.consultaObservaciones(datosPersonales, regObservacionesFacade, "desc"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
         return "/PanelUsuario/panelUsuario";
 
