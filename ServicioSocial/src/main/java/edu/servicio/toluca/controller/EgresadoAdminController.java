@@ -118,6 +118,11 @@ public class EgresadoAdminController {
     final boolean banderaPrueba = true;
     final String correoTest = "rehoscript@gmail.com";
     //**********************************************
+    
+//    ValidaSesion valSession = new ValidaSesion(session, request);
+//        if (!valSession.validaAlumno()) {
+//            return "redirect:login.do"; 
+//        } 
 
     @RequestMapping(method = RequestMethod.GET, value = "/egresadoAdministrador.do")
     public String egresadoAdministrador(Model model, HttpSession session, HttpServletRequest request) {
@@ -268,12 +273,13 @@ public class EgresadoAdminController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarEgresadoNR_Aceptado.do")
     public @ResponseBody
-    String modificarEgresadoNR_Aceptado(String id) {
+    String modificarEgresadoNR_Aceptado(String id) throws IOException {
+        if(id.length() < 1)
+            return "/Egresados/egresadoAdministrador";
         //Obtener FormatoUnico en especifico 
         System.out.println(id);
 
         Egresado egresado = egresadoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
-//        FormatoUnico fA = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
         FormatoUnico fA = formatoUnicoFacade.findBySpecificField("datosPersonalesId", egresado.getDatosPersonalesId(), "equal", null, null).get(0);
         //Se encontro el Objeto
         if (egresado != null) {
@@ -308,6 +314,8 @@ public class EgresadoAdminController {
             String idDatoPersonales,
             String idEgresado,
             String tipo) {
+        if(idEgresado.length() < 1)
+            return "/Egresados/egresadoAdministrador";
 
         for (String idObservacion : observaciones) {
             //Objeto a Registrar
