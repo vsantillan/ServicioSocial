@@ -134,8 +134,7 @@
                                 </core:when> 
                                 <core:when  test="${statusFui==3}">
                                     <img class="imagenes" src="imagenes/reloj.png"/>
-                                </core:when> 
-
+                                </core:when>
                             </core:choose>                            
                         </td>
                     </tr>
@@ -156,8 +155,27 @@
                         <td><img class="imagenes" src="imagenes/tache.png"/></td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaSanciones"><a id="b" href="#">SANCIONES</a></td>
-                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                        <td class="filas" id="filaSanciones">
+                            <core:choose>
+                                <core:when test="${accesoSanciones}">
+                                    <a id="b" href="#">SANCIONES</a>
+                                </core:when>
+                                <core:otherwise>
+                                    <p class="text">SANCIONES</p>
+                                </core:otherwise>
+                            </core:choose> 
+                        </td>
+                        <td>
+                            <core:choose>
+                                <core:when test="${tieneSancion}">
+                                    <img class="imagenes" src="imagenes/tache.png"/>
+                                </core:when>
+                                <core:otherwise>
+                                    <img class="imagenes" src="imagenes/paloma.png"/>
+                                </core:otherwise>
+                            </core:choose> 
+                            
+                        </td>
                     </tr> 
                 </table>
             </div>

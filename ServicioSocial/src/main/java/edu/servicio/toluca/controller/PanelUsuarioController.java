@@ -4,26 +4,23 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.SesionBean;
+import edu.servicio.toluca.beans.SancionesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
-import edu.servicio.toluca.entidades.DatosPersonales;
-import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.model.VistaAlumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
 import edu.servicio.toluca.model.observaciones.ObservacionesModel;
 import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
 import edu.servicio.toluca.model.platica.ConsultasPlatica;
+import edu.servicio.toluca.model.sanciones.ConsultasPanelUsuarioSanciones;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.NoticiasFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -113,10 +110,22 @@ public class PanelUsuarioController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            
+            //Reportes Bimestrales
+            
+            //Sanciones
+            ConsultasPanelUsuarioSanciones consultaSanciones = new ConsultasPanelUsuarioSanciones();
+            SancionesBean sancionesBean = consultaSanciones.consultaHorasSancion(servicioBean);
+            
+            model.addAttribute("mensajeSanciones", sancionesBean.getMensaje());
+            model.addAttribute("accesoSanciones", true);
+            model.addAttribute("tieneSancion", sancionesBean.isTieneSancion());
         } else {            
             
+            //Accesos
             model.addAttribute("accesoPlatica", false);          
             model.addAttribute("accesoFormatoUnico", false);
+            model.addAttribute("accesoSanciones", false);
             
             //If servicio social terminado
             if(servicioBean.getStatusServicio() == 4){
@@ -127,6 +136,7 @@ public class PanelUsuarioController {
                 model.addAttribute("statusFui", 2);
             }            
                
+            //Mensajes
             model.addAttribute("mensajeFormatoUnico", servicioBean.getMensaje());
             model.addAttribute("mensajePlatica", servicioBean.getMensaje());
             model.addAttribute("mensajeReportesBimestrales", servicioBean.getMensaje());
