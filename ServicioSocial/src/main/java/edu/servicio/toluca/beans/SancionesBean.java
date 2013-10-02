@@ -5,7 +5,7 @@
 package edu.servicio.toluca.beans;
 
 /**
- *
+ * Bean para el comportamiento de SANCIONES en el menu del proceso de servicio social PANEL DE USUARIO
  * @author bustedvillain
  */
 public class SancionesBean {

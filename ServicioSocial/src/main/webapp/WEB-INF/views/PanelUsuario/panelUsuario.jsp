@@ -192,15 +192,33 @@
             <div style="clear: both"></div>
 
             <!--Observaciones-->
-            <div class="observaciones MyForm">
+            <div class="divInferior MyForm">
                 <h1>Observaciones</h1>
-                <ul class="scroll">
+                <ul class="scrollDivInferior">
                     <core:forEach items="${observaciones}" var="observacion">
                         <li class="error"><b>${observacion.fecha}</b>: ${observacion.catalogoObservacionId.detalle}</li>
                     </core:forEach>
                 </ul>
             </div>
             <!--/Observaciones-->
+            
+            <!--Sanciones-->
+            <div class="divInferior MyForm">
+                <h1>Sanciones</h1>
+                <ul class="scrollDivInferior">
+                    <core:forEach items="${sanciones}" var="sancion">
+                        <core:choose>
+                            <core:when  test="${sancion.concepto==0}">
+                                <li class="error"><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
+                            </core:when>    
+                            <core:when  test="${sancion.concepto==1}">
+                                <li class="success"><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
+                            </core:when> 
+                         </core:choose> 
+                    </core:forEach>
+                </ul>
+            </div>
+            <!--/Sanciones-->
             <br/>
         </div>
         <%-- fin del contenido --%>

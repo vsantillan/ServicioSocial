@@ -20,6 +20,7 @@ import edu.servicio.toluca.model.sanciones.ConsultasPanelUsuarioSanciones;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.NoticiasFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
+import edu.servicio.toluca.sesion.SancionesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,8 @@ public class PanelUsuarioController {
     public NoticiasFacade noticiasFacade;
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     public RegObservacionesFacade regObservacionesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
+    public SancionesFacade sancionesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelUsuario.do")
     public String panelUsuario(Model model, HttpSession session, HttpServletRequest request, String mensaje) {
@@ -83,18 +86,23 @@ public class PanelUsuarioController {
             model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
 
             //Valida Formato Unico
-            if (servicioBean.getDatosPersonales() != null) {
-                ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
-                FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(servicioBean);
+            try {
+                if (servicioBean.getDatosPersonales() != null) {
+                    ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
+                    FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(servicioBean);
 
-                model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
-                model.addAttribute("statusFui", beanFU.getStatusFui());
-                model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
-            } else {
-                model.addAttribute("accesoFormatoUnico", true);
-                model.addAttribute("statusFui", 2);
-                model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
-            }            
+                    model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
+                    model.addAttribute("statusFui", beanFU.getStatusFui());
+                    model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
+                } else {
+                    model.addAttribute("accesoFormatoUnico", true);
+                    model.addAttribute("statusFui", 2);
+                    model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
+                }
+            } catch (Exception e) {
+                System.out.println("Error en la validacion del formato unico");
+                e.printStackTrace();
+            }
 
             //Mensaje personal
             if (mensaje != null) {
@@ -108,34 +116,44 @@ public class PanelUsuarioController {
                     model.addAttribute("observaciones", observaciones.consultaObservaciones(servicioBean.getDatosPersonales(), regObservacionesFacade, "desc"));
                 }
             } catch (Exception e) {
+                System.out.println("Eror en observaciones");
                 e.printStackTrace();
             }
-            
+
             //Reportes Bimestrales
-            
+
             //Sanciones
-            ConsultasPanelUsuarioSanciones consultaSanciones = new ConsultasPanelUsuarioSanciones();
-            SancionesBean sancionesBean = consultaSanciones.consultaHorasSancion(servicioBean);
-            
-            model.addAttribute("mensajeSanciones", sancionesBean.getMensaje());
-            model.addAttribute("accesoSanciones", true);
-            model.addAttribute("tieneSancion", sancionesBean.isTieneSancion());
-        } else {            
-            
+            try {
+                if (servicioBean.getDatosPersonales() != null) {
+                    ConsultasPanelUsuarioSanciones consultaSanciones = new ConsultasPanelUsuarioSanciones();
+                    SancionesBean sancionesBean = consultaSanciones.consultaHorasSancion(servicioBean);
+
+                    model.addAttribute("mensajeSanciones", sancionesBean.getMensaje());
+                    model.addAttribute("accesoSanciones", true);
+                    model.addAttribute("tieneSancion", sancionesBean.isTieneSancion());
+                    model.addAttribute("sanciones", consultaSanciones.listaSanciones(servicioBean.getDatosPersonales(), sancionesFacade, "desc"));
+                }
+            } catch (Exception e) {
+                System.out.println("Eror en observaciones");
+                e.printStackTrace();
+            }
+
+        } else {
+
             //Accesos
-            model.addAttribute("accesoPlatica", false);          
+            model.addAttribute("accesoPlatica", false);
             model.addAttribute("accesoFormatoUnico", false);
             model.addAttribute("accesoSanciones", false);
-            
+
             //If servicio social terminado
-            if(servicioBean.getStatusServicio() == 4){
+            if (servicioBean.getStatusServicio() == 4) {
                 model.addAttribute("platica", true);
                 model.addAttribute("statusFui", 1);
-            }else{
+            } else {
                 model.addAttribute("platica", false);
                 model.addAttribute("statusFui", 2);
-            }            
-               
+            }
+
             //Mensajes
             model.addAttribute("mensajeFormatoUnico", servicioBean.getMensaje());
             model.addAttribute("mensajePlatica", servicioBean.getMensaje());
