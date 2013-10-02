@@ -30,7 +30,7 @@
                     <table border="0">
                         <tr>
                             <td align="center">
-                                <form:form action="folioPlatica.pdf" method="get"  id="formSelecciona" commandName="platica" onsubmit="return marcado();" name="seleccionaPlatica">
+                                <form:form action="folioPlatica.pdf" method="post"  id="formSelecciona" commandName="platica" onsubmit="return marcado();" name="seleccionaPlatica">
                                     <h1>Fechas Disponibles</h1>
                                     <form:select path="fecha" >
                                         <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >

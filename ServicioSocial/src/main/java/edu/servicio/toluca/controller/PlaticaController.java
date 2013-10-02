@@ -159,10 +159,10 @@ public class PlaticaController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
     public String seleccionarPlatica(Model modelo, HttpSession session, HttpServletRequest request) {
-        if (!(new ValidaSesion().validaAlumno(session, request))) {
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
-            return "redirect:login.do";
-        }
+//        if (!(new ValidaSesion().validaAlumno(session, request))) {
+//            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+//            return "redirect:login.do";
+//        }
         modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
         modelo.addAttribute("platica", new Platica());
         return "/Platicas/seleccionarPlatica";
@@ -259,7 +259,7 @@ public class PlaticaController {
 
     }
 
- @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.do")
+ @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.pdf")
     public String folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request)  {
 
             List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
@@ -285,6 +285,8 @@ public class PlaticaController {
                 System.out.println("numero" + numero);
                 platica.setNumeroAsistentes(numero);
                 platicaFacade.edit(platica);
+                System.out.println("antes del folio");
+                 session.setAttribute("folio", fecha);
                 return "/Platicas/folio";
                 
             } else {
