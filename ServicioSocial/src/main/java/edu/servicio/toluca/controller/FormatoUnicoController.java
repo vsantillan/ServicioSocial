@@ -859,6 +859,10 @@ public class FormatoUnicoController {
         System.out.println("Size:" + file.getSize());
         System.out.println("ContentType:" + file.getContentType());
         Documentos doc = new Documentos();
+        if(!listaDocumento.isEmpty())
+        {
+            doc = documentoFacade.find(listaDocumento.get(0).getId());
+        }
         doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
         doc.setArchivo(file.getBytes());
         doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
