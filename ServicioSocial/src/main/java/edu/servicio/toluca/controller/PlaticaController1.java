@@ -6,7 +6,6 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.ValidaSesion;
-import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
 import java.math.BigDecimal;

@@ -69,7 +69,8 @@
         <li><a href="javascript:void(0)" onclick="redirecciona('#')">Administraci&oacute;n</a>
             <ul>
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')">9.1 Administrar Observaciones</a></li>
-                <li><a href="javascript:void(0)" onclick="redirecciona('#')">9.2 Noticias | Convocatorias</a></li>
+                <li><a href="catalogoNoticias.do" onclick="redirecciona('#')">9.2 Noticias</a></li>
+                <li><a href="catalogoConvocatorias.do" onclick="redirecciona('#')">9.3 Convocatorias</a></li>
             </ul>
         </li>
         <li><a href="historialServicio.do" onclick="redirecciona('#')">Historial Servicio Social</a></li>
