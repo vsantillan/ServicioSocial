@@ -35,10 +35,10 @@ public class PlaticaController1 {
     @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
     public String obtieneLugares(Model modelo , HttpSession session, HttpServletRequest request)
     { 
-        /*if (! new ValidaSesion().validaOperador(session, request)) {
+        if (! new ValidaSesion().validaOperador(session, request)) {
             modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
-        }*/
+        }
         LinkedHashMap ordenarDesc = new LinkedHashMap();
         ordenarDesc.put("lugar","desc");        
         modelo.addAttribute("lugar_i", new LugaresPlatica());
