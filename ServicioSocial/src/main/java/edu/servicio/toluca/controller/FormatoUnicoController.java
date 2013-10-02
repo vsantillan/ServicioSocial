@@ -1035,17 +1035,18 @@ public class FormatoUnicoController {
                 }
 
 
-                System.out.println("Ahh y su fui es" + listaFormatoUnico.get(0).getId());
-                modelo.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
-                session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+//                System.out.println("Ahh y su fui es" + listaFormatoUnico.get(0).getId());
+//                modelo.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+//                session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
+                
 
                 Conexion conn =new Conexion ();
                 /*Establecemos la ruta del reporte*/ 
                 File reportFile = new File(request.getRealPath("reportes//FormatoUnico.jasper")); 
                  /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
                 Map parameters = new HashMap();
-                parameters.put("noControl",session.getAttribute("NCONTROL").toString());
-                parameters.put("idProyecto", session.getAttribute("idProyecto").toString());
+                parameters.put("noControl",noControl);
+                parameters.put("idProyecto", listaFormatoUnico.get(0).getId());//idProyecto
                 //parameters.put("Nombre_parametro", "Valor_Parametro"); 
                 /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
                 byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
@@ -1058,7 +1059,7 @@ public class FormatoUnicoController {
                 Exceptions.printStackTrace(ex);
             } 
 
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            //modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";        
     }
 
