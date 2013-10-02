@@ -91,16 +91,17 @@ public class PlaticaController {
         return "/Platicas/altaPlatica";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/folio.pdf")
-    public String reporte2(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
+ @RequestMapping(method = RequestMethod.GET, value = "/folio.pdf")
+    @ResponseBody
+    public void reporte2(Model modelo, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
          try {/*Parametros para realizar la conexión*/
                 Conexion conn = new Conexion();
                 /*Establecemos la ruta del reporte*/
                 File reportFile = new File(request.getRealPath("reportes//folioPlatica.jasper"));
                 /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
                 Map parameters = new HashMap();
-                System.out.println("foli generado"+1 + session.getAttribute("NCONTROL").toString());
-                parameters.put("folio", 1 + session.getAttribute("NCONTROL").toString());
+                System.out.println("foli generado"+"809280531");
+                parameters.put("folio","809280531");
                 /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
                 byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectar("ges_vin", "gst05a"));
                 System.out.println("numero control");
@@ -108,15 +109,18 @@ public class PlaticaController {
                 httpServletResponse.setContentType("application/pdf");
                 httpServletResponse.setContentLength(bytes.length);
                 httpServletResponse.getOutputStream().write(bytes);
-                return "";
+                
     }
          catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
-         return "";
-     
+       //  modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+                 
+
+     // return "/Platicas/folio";
         
     }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/consultasBajas.do")
     public String consultasBajas(Model modelo, HttpSession session, HttpServletRequest request) {
@@ -255,10 +259,9 @@ public class PlaticaController {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.do")
-    public String folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
+ @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.do")
+    public String folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request)  {
 
-        try {
             List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
             if (lista.isEmpty()) {
                 FoliosPlatica foliosPlatica = new FoliosPlatica();
@@ -282,41 +285,17 @@ public class PlaticaController {
                 System.out.println("numero" + numero);
                 platica.setNumeroAsistentes(numero);
                 platicaFacade.edit(platica);
-
-                /*Parametros para realizar la conexión*/
-                Conexion conn = new Conexion();
-                /*Establecemos la ruta del reporte*/
-                File reportFile = new File(request.getRealPath("reportes//folioPlatica.jasper"));
-                /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
-                Map parameters = new HashMap();
-                System.out.println("foli generado"+fecha + session.getAttribute("NCONTROL").toString());
-                parameters.put("folio", fecha + session.getAttribute("NCONTROL").toString());
-                /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-                byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectar("ges_vin", "gst05a"));
-                System.out.println("numero control");
-                /*Indicamos que la respuesta va a ser en formato PDF*/
-                httpServletResponse.setContentType("application/pdf");
-                httpServletResponse.setContentLength(bytes.length);
-                httpServletResponse.getOutputStream().write(bytes);
-                httpServletResponse.getOutputStream().write(bytes, 0, bytes.length);
-                return "";
-                //return "/Platicas/seleccionarPlatica";
-                //  return "/Platicas/reporte";
+                return "/Platicas/folio";
+                
             } else {
                 modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
                 modelo.addAttribute("platica", new Platica());
                 modelo.addAttribute("existe", "<div class='error'>Ya te has registrado a esta platica anteriormente</div>");
                 return "/Platicas/seleccionarPlatica";
             }
-        } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
-        }
-
-        modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
-        return "redirect:login.do";
+        } 
 
 
-    }
 /////////ASISTENCIA.DO////////////////////
 
     @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
