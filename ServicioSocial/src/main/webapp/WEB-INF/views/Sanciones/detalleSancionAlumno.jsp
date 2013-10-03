@@ -45,6 +45,7 @@
                         <th>No. Reporte</th>
                         <th>Fecha</th>
                         <th>Horas</th>
+                        <th>D&iacute;as de tolerancia.</th>
                         <th>Descripci&oacute;n</th>
                     </tr>
                 </thead>
@@ -54,6 +55,7 @@
                             <th><core:out value="${current.noReporte}" /></th>
                             <th><core:out value="${current.fecha}" /></th>
                             <th><core:out value="${current.horas}" /></th>
+                            <th><core:out value="${current.tolerancia}" /></th>
                             <th><core:out value="${current.descripcion}" /></th>
                         </tr>
                     </core:forEach>
