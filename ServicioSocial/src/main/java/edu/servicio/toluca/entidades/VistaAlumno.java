@@ -62,10 +62,10 @@ import org.hibernate.annotations.GenericGenerators;
     @NamedQuery(name = "VistaAlumno.findByFecNac", query = "SELECT v FROM VistaAlumno v WHERE v.fecNac = :fecNac")})
 public class VistaAlumno implements Serializable {
     @Column(name = "PROMEDIO")
-    private BigInteger promedio;
+    private double promedio;
     @Lob
     @Column(name = "FOTO")
-    private Serializable foto;
+    private byte[] foto;
     private static final long serialVersionUID = 1L;
     @GenericGenerator(name = "vitaAlumnoG", strategy = "increment")
     @Id
@@ -391,19 +391,19 @@ public class VistaAlumno implements Serializable {
         return "edu.servicio.toluca.entidades.VistaAlumno[ id=" + id + " ]";
     }
 
-    public BigInteger getPromedio() {
+    public double getPromedio() {
         return promedio;
     }
 
-    public void setPromedio(BigInteger promedio) {
+    public void setPromedio(double promedio) {
         this.promedio = promedio;
     }
 
-    public Serializable getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 
-    public void setFoto(Serializable foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
     
