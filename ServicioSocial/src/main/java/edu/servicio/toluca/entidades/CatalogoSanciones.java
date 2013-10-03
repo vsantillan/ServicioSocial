@@ -46,7 +46,7 @@ public class CatalogoSanciones implements Serializable {
     @NotNull
     @Column(name = "ID")
     private BigDecimal id;
-    @Size(max = 300)
+    @Size(max = 300, message = "La cantidad de caracteres no puede exceder los 300")
     @Column(name = "DETALLE")
     private String detalle;
     @Column(name = "HORAS_SANCION")

@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Noticias.findByDetalle", query = "SELECT n FROM Noticias n WHERE n.detalle = :detalle"),
     @NamedQuery(name = "Noticias.findByTipoServicio", query = "SELECT n FROM Noticias n WHERE n.tipoServicio = :tipoServicio")})
 public class Noticias implements Serializable {
+    @Size(max = 255)
+    @Column(name = "TITULO")
+    private String titulo;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -118,6 +121,14 @@ public class Noticias implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Noticias[ id=" + id + " ]";
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
     
 }

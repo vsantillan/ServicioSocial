@@ -12,8 +12,10 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -88,8 +90,13 @@ public class SancionesController
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/nuevaSancion.do")
-    public String nuevaSancion(String descripcion,String horas,Model modelo)
+    public String nuevaSancion(@Valid CatalogoSanciones catalogoSanciones, BindingResult result, Model model, String descripcion,String horas,Model modelo)
     {
+        
+        if(result.hasErrors())
+        {
+            System.out.println("Bindiing" + result.toString());
+        }
         modelo.addAttribute("descripcion", descripcion);
         modelo.addAttribute("horas", horas);
         System.out.println("desc: "+descripcion+"\n horas: "+horas);

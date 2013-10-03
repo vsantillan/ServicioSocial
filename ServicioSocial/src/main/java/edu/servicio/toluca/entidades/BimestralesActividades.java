@@ -6,6 +6,7 @@ package edu.servicio.toluca.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +30,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BimestralesActividades.findAll", query = "SELECT b FROM BimestralesActividades b"),
     @NamedQuery(name = "BimestralesActividades.findById", query = "SELECT b FROM BimestralesActividades b WHERE b.id = :id")})
 public class BimestralesActividades implements Serializable {
+//    @Basic(optional = false)
+//    @NotNull
+//    @Column(name = "ID_ACTIVIDAD")
+//    private BigInteger idActividad;
+    @JoinColumn(name = "ID_ACTIVIDADES", referencedColumnName = "ID_ACTIVIDAD")
+    @ManyToOne
+    private Actividades idActividades;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -97,6 +105,22 @@ public class BimestralesActividades implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.BimestralesActividades[ id=" + id + " ]";
+    }
+
+//    public BigInteger getIdActividad() {
+//        return idActividad;
+//    }
+//
+//    public void setIdActividad(BigInteger idActividad) {
+//        this.idActividad = idActividad;
+//    }
+
+    public Actividades getIdActividades() {
+        return idActividades;
+    }
+
+    public void setIdActividades(Actividades idActividades) {
+        this.idActividades = idActividades;
     }
     
 }

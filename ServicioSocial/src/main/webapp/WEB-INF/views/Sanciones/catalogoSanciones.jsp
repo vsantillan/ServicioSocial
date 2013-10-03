@@ -31,8 +31,13 @@
             $(document).ready(function() {
                 $('#example').dataTable({
                     "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
                     "sScrollX": "100%",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+                $('#example2').dataTable({
+                    "bJQueryUI": true,
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
 
@@ -83,7 +88,7 @@
                     <div id="nuevaSancion">
                         <center> 
                             <p>Nueva Sanci&oacute;n</p>
-                            <form:form name="nuevaSancion.do" id="MyForm" action="#" method="POST">
+                            <form:form  id="MyForm" action="nuevaSancion.do" method="POST">
                                 <table>
                                     <tr>
                                         <td> <p><label for="descripcion">Descripci&oacute;n:</label> </p></td>
@@ -106,7 +111,7 @@
                         </center>
                     </div>
                     <div id="catalogoPagoSanciones">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="example2" width='100%'>
                             <thead>
                                 <tr>
                                     <th>No. Sanci&oacute;n</th>
@@ -149,27 +154,27 @@
             <div style="clear: both;"/>
         </div>
     </div>
-    <div id="a" style="display: none; font-size: 15px">
+<!--    <div id="a" style="display: none; font-size: 15px">
                     <center> 
                 <h1>Editar Sanci&oacute;n</h1>
-                <form:form  commandName="editaSancion" name="nuevaSancion" id="MyForm" action="editaSancion.do" method="POST" onsubmit="window.parent.Shadowbox.close();">
+                <form  commandName="editaSancion" name="nuevaSancion" id="MyForm" action="editaSancion.do" method="POST" onsubmit="window.parent.Shadowbox.close();">
                     <table>
                         <tr>
                             <td> <label for="descripcion">Descripci&oacute;n:</label> </td>
-                            <td> <form:textarea id="descripcion" name="descripcion" path="descripcion" rows="4" cols="50"  /> </td>
+                            <td> <textarea id="descripcion" name="descripcion" path="descripcion" rows="4" cols="50"  /> </td>
                         </tr>
                         <tr>
                             <td>  <label for="hora">Horas:</label> </td>
-                            <td>  <form:input id="horas" path="horas" name="horas" type="text" size="15" /></td>  
+                            <td>  <input id="horas" path="horas" name="horas" type="text" size="15" /></td>  
                         </tr>
                         <tr> 
                             <td> <input type ="submit" value = "Guardar " /> </td>
                             <td> <input type ="reset" value = "Limpiar" /></td>
                         </tr>
                     </table>
-                </form:form>
+                </form>
             </center> 
-    </div>
+    </div>-->
 
     <jsp:include page="../Template/footer.jsp" />
 
