@@ -31,8 +31,13 @@
             $(document).ready(function() {
                 $('#example').dataTable({
                     "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
                     "sScrollX": "100%",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true
+
+                });
+                $('#example2').dataTable({
+                    "bJQueryUI": true,
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true
 
@@ -53,6 +58,8 @@
                     <ul>
                         <li><a href="#catalogoSanciones">Cat&aacute;logo de Sanciones</a></li>
                         <li><a href="#nuevaSancion">Nueva Sanci&oacute;n</a></li>
+                        <li><a href="#catalogoPagoSanciones">Cat&aacute;logo de pago de Sanciones</a></li>
+                        <li><a href="#nuevoPagoSancion">Nuevo pago de Sanci&oacute;n</a></li>
                     </ul>
                     <div id="catalogoSanciones">
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
@@ -61,6 +68,7 @@
                                     <th>No. Sanci&oacute;n</th>
                                     <th>Descripci&oacute;n</th>
                                     <th>Horas</th>
+                                    <th>D&iacute;as de tolerancia</th>
                                     <th>Editar</th>
                                 </tr>
                             </thead>
@@ -70,6 +78,7 @@
                                         <th><core:out value="${current.id}" /></th>
                                         <th><core:out value="${current.detalle}" /></th>
                                         <th><core:out value="${current.horasSancion}" /></th>
+                                        <th><core:out value="${current.tolerancia}" /></th>
                                         <th><a href="#a" rel="shadowbox; width=1000px; height=400px"><img src="imagenes/editar.png" width="30" /></a></th>
                                     </tr>
                                 </core:forEach>
@@ -79,15 +88,56 @@
                     <div id="nuevaSancion">
                         <center> 
                             <p>Nueva Sanci&oacute;n</p>
+                            <form:form  id="MyForm" action="nuevaSancion.do" method="POST">
+                                <table>
+                                    <tr>
+                                        <td> <p><label for="descripcion">Descripci&oacute;n:</label> </p></td>
+                                        <td>  <textarea  name="descripcion" rows="4" cols="50" id="descripcion" pagoSanciones></textarea> </td>
+                                    </tr>
+                                    <tr>
+                                        <td> <p><label for="hora">Horas:</label></p> </td>
+                                        <td>  <input type="number" name="horas" size="2" value="0" required="required"/></td>  
+                                    </tr>
+                                    <tr>
+                                        <td> <p><label for="tolerancia">D&iacute;as de tolerancia</label></p> </td>
+                                        <td>  <input type="number" name="tolerancia" size="2" pagoSanciones/></td>  
+                                    </tr>
+                                    <tr> 
+                                        <td> <input type ="submit" value = "Guardar " /> </td>
+                                        <td> <input type ="reset" value = "Limpiar" /></td>
+                                    </tr>
+                                </table>
+                            </form:form>
+                        </center>
+                    </div>
+                    <div id="catalogoPagoSanciones">
+                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="example2" width='100%'>
+                            <thead>
+                                <tr>
+                                    <th>No. Sanci&oacute;n</th>
+                                    <th>Descripci&oacute;n</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <core:forEach items="${pagoSanciones}" var="current">
+                                    <tr class='gradeX'>
+                                        <th><core:out value="${current.id}" /></th>
+                                        <th><core:out value="${current.detalle}" /></th>
+                                        <th><a href="#a" rel="shadowbox; width=1000px; height=400px"><img src="imagenes/editar.png" width="30" /></a></th>
+                                    </tr>
+                                </core:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="nuevoPagoSancion">
+                        <center> 
+                            <p>Nueva Sanci&oacute;n</p>
                             <form:form name="nuevaSancion.do" id="MyForm" action="#" method="POST">
                                 <table>
                                     <tr>
                                         <td> <p><label for="descripcion">Descripci&oacute;n:</label> </p></td>
                                         <td>  <textarea  name="descripcion" rows="4" cols="50" id="descripcion"></textarea> </td>
-                                    </tr>
-                                    <tr>
-                                        <td> <p><label for="hora">Horas:</label></p> </td>
-                                        <td>  <input type="text" name="horas" size="15" /></td>  
                                     </tr>
                                     <tr> 
                                         <td> <input type ="submit" value = "Guardar " /> </td>
@@ -104,27 +154,27 @@
             <div style="clear: both;"/>
         </div>
     </div>
-    <div id="a" style="display: none; font-size: 15px">
+<!--    <div id="a" style="display: none; font-size: 15px">
                     <center> 
                 <h1>Editar Sanci&oacute;n</h1>
-                <form:form  commandName="editaSancion" name="nuevaSancion" id="MyForm" action="editaSancion.do" method="POST" onsubmit="window.parent.Shadowbox.close();">
+                <form  commandName="editaSancion" name="nuevaSancion" id="MyForm" action="editaSancion.do" method="POST" onsubmit="window.parent.Shadowbox.close();">
                     <table>
                         <tr>
                             <td> <label for="descripcion">Descripci&oacute;n:</label> </td>
-                            <td> <form:textarea id="descripcion" name="descripcion" path="descripcion" rows="4" cols="50"  /> </td>
+                            <td> <textarea id="descripcion" name="descripcion" path="descripcion" rows="4" cols="50"  /> </td>
                         </tr>
                         <tr>
                             <td>  <label for="hora">Horas:</label> </td>
-                            <td>  <form:input id="horas" path="horas" name="horas" type="text" size="15" /></td>  
+                            <td>  <input id="horas" path="horas" name="horas" type="text" size="15" /></td>  
                         </tr>
                         <tr> 
                             <td> <input type ="submit" value = "Guardar " /> </td>
                             <td> <input type ="reset" value = "Limpiar" /></td>
                         </tr>
                     </table>
-                </form:form>
+                </form>
             </center> 
-    </div>
+    </div>-->
 
     <jsp:include page="../Template/footer.jsp" />
 
