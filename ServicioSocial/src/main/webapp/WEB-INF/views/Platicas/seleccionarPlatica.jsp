@@ -30,7 +30,7 @@
                     <table border="0">
                         <tr>
                             <td align="center">
-                                <form:form action="folioPlatica.do" method="get"  id="formSelecciona" commandName="platica" onsubmit="return marcado();" name="seleccionaPlatica">
+                                <form:form action="folioPlatica.pdf" method="post"  id="formSelecciona" commandName="platica" onsubmit="return marcado();" name="seleccionaPlatica">
                                     <h1>Fechas Disponibles</h1>
                                     <form:select path="fecha" >
                                         <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
@@ -42,7 +42,6 @@
                                     <textarea  id="descripcion" rows="4" cols="50" disabled="true" style="background-color:#FFEBCD;border: 2px solid #CB8B07">Descripción:${platicasPeriodo.get(0).descripcion}</textarea><br>
                                     <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"> Acépto haber leído el manual donde se describe el uso del<br>
                                     sistema via web sobre como dar de alta mi servicio social<p></p>
-                                    <input type="text" name="numeroC" id="numeroC"/><br>
                                     <input type="submit" value="Generar Folio" /> <br>
                                 </form:form>
                             </td>

@@ -133,7 +133,10 @@ public class EgresadoController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/cartaMotivos.do")
     public String formatoUnico(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
-
+        ValidaSesion valSession = new ValidaSesion(session, request);
+        if (!valSession.validaAlumno()) {
+            return "redirect:login.do"; 
+        } 
 //        if (new ValidaSesion().validaAlumno(session, request)) {
 //            //return "/PanelUsuario/panelUsuario";
 //        } else {
@@ -341,6 +344,10 @@ public class EgresadoController {
     @RequestMapping(value = "/subirCartaMotivos.do", method = RequestMethod.POST)
     public String subirCartaMotivos(
             @RequestParam("file") MultipartFile file, String idAlumno, String idDatosPersonales) throws IOException {
+        //ValidaSesion valSession = new ValidaSesion(session, request);
+        if (idAlumno.length()<1) {
+            return "redirect:login.do"; 
+        } 
         System.out.println("Inicia Subir carta motivos");
         System.out.println("El id del alumno es->" + idAlumno + " EL id de datos personales es->" + idDatosPersonales);
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", idAlumno, "equal", null, null);

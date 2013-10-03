@@ -26,7 +26,7 @@
                 <h1>Contacto</h1>
                
                 <div>${message}</div>
-                <form:form commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do" class="MyForm" method="POST">
+                <form:form commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do" class="MyForm" method="POST" acceptCharset="UTF-8">
                     
                     
                                 <table>

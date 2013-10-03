@@ -11,8 +11,9 @@
 /*Establecemos la ruta del reporte*/ 
  File reportFile = new File(application.getRealPath("reportes//folioPlatica.jasper")); 
  /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
-Map parameters = new HashMap();
-parameters.put("folio", "809280531"); 
+ String folio = session.getAttribute("platica").toString()+session.getAttribute("NCONTROL").toString();
+ Map parameters = new HashMap();
+parameters.put("folio", folio); 
 /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
 byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
 /*Indicamos que la respuesta va a ser en formato PDF*/ 

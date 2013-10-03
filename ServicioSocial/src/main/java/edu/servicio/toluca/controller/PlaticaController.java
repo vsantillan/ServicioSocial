@@ -28,21 +28,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import edu.servicio.toluca.beans.PlaticaJson;
+import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.ValidacionPlatica;
 import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.apache.commons.codec.binary.Base64;
+import org.openide.util.Exceptions;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,7 +76,12 @@ public class PlaticaController {
     private VistaAlumnoFacade VistaAlumnoFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/altaPlatica.do")
-    public String altaPlatica(Model modelo) {
+    public String altaPlatica(Model modelo, HttpSession session, HttpServletRequest request) {
+        if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaRegistro(session, request))
+                || (new ValidaSesion().validaAdmin(session, request)))) {
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
         Fecha anio = new Fecha();
         modelo.addAttribute("anioInicio", anio.anioActual());
         modelo.addAttribute("anioFin", anio.anioFin());
@@ -76,34 +91,78 @@ public class PlaticaController {
         return "/Platicas/altaPlatica";
     }
 
-          @RequestMapping(method = RequestMethod.GET, value = "/folio.do")
-    public String reporte2(Model model) {
-        return "/Platicas/folio";
-    }    
+ @RequestMapping(method = RequestMethod.GET, value = "/folio.pdf")
+    @ResponseBody
+    public void reporte2(Model modelo, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
+         try {/*Parametros para realizar la conexión*/
+                Conexion conn = new Conexion();
+                /*Establecemos la ruta del reporte*/
+                File reportFile = new File(request.getRealPath("reportes//folioPlatica.jasper"));
+                /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
+                Map parameters = new HashMap();
+                System.out.println("foli generado"+"809280531");
+                parameters.put("folio","809280531");
+                /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
+                byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectar("ges_vin", "gst05a"));
+                System.out.println("numero control");
+                /*Indicamos que la respuesta va a ser en formato PDF*/
+                httpServletResponse.setContentType("application/pdf");
+                httpServletResponse.setContentLength(bytes.length);
+                httpServletResponse.getOutputStream().write(bytes);
+                
+    }
+         catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+        }
+       //  modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+                 
+
+     // return "/Platicas/folio";
         
+    }
+
+
     @RequestMapping(method = RequestMethod.GET, value = "/consultasBajas.do")
-    public String consultasBajas(Model model) {
+    public String consultasBajas(Model modelo, HttpSession session, HttpServletRequest request) {
+        if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaRegistro(session, request))
+                || (new ValidaSesion().validaAdmin(session, request)))) {
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
         LinkedHashMap ordenarDesc = new LinkedHashMap();
         ordenarDesc.put("fecha", "desc");
 
-        model.addAttribute("platica", platicaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
+        modelo.addAttribute("platica", platicaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
         return "/Platicas/consultasBajas";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/capturarAsistencia.do")
-    public String capturarAsistencia(Model modelo) {
+    public String capturarAsistencia(Model modelo, HttpSession session, HttpServletRequest request) {
+        if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaRegistro(session, request))
+                || (new ValidaSesion().validaAdmin(session, request)))) {
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
         return "/Platicas/capturarAsistencia";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/asistenciaPosteriorEspecial.do")
-    public String AsistenciaPosteriorEspecial(Model modelo) {
+    public String AsistenciaPosteriorEspecial(Model modelo, HttpSession session, HttpServletRequest request) {
+        if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaAdmin(session, request)))) {
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
         modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
         return "/Platicas/asistenciaPosteriorEspecial";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
-    public String seleccionarPlatica(Model modelo) {
+    public String seleccionarPlatica(Model modelo, HttpSession session, HttpServletRequest request) {
+//        if (!(new ValidaSesion().validaAlumno(session, request))) {
+//            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+//            return "redirect:login.do";
+//        }
         modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
         modelo.addAttribute("platica", new Platica());
         return "/Platicas/seleccionarPlatica";
@@ -116,124 +175,129 @@ public class PlaticaController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
-    public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException {
-
-        platica.setNumeroAsistentes(0);
-        Fecha anio = new Fecha();
-        System.out.println("intentando guardar");
-        if (result.hasErrors()) {
-            System.out.println("intentando guardar errores");
-            modelo.addAttribute("anioInicio", anio.anioActual());
-            modelo.addAttribute("anioFin", anio.anioFin());
-            modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
-            modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-            return "/Platicas/altaPlatica";
-        } else {
-            System.out.println("sin errores entidad");
-            System.out.println("fecha" + platica.getFechaMxFui().toString());
-            if (platica.getFechaMxFui().compareTo(platica.getFecha()) > 0) {
-                MetodosValidacion hora = new MetodosValidacion();
-                System.out.println("hora" + platica.getHora());
-                if (!hora.esHora(platica.getHora())) {
-                    System.out.println("no es hora");
-                    modelo.addAttribute("anioInicio", anio.anioActual());
-                    modelo.addAttribute("anioFin", anio.anioFin());
-                    modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
-                    modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-                    modelo.addAttribute("errorHora", "<div class='error'>La hora no es valida</div>");
-                    return "/Platicas/altaPlatica";
-                } else {
-                    platica.setStatus((short) 1);
-                    List<Platica> listaPlaticas = platicaFacade.findAll();
-                    Boolean existe = false;
-                    MetodosValidacion limpiar1 = new MetodosValidacion();
-                    for (int i = 0; i < listaPlaticas.size(); i++) {
-                        if ((platica.getAnio().toString().compareTo(listaPlaticas.get(i).getAnio().toString()) == 0) && (platica.getFecha().compareTo(listaPlaticas.get(i).getFecha()) == 0)
-                                && (platica.getHora().toString().compareTo(listaPlaticas.get(i).getHora().toString()) == 0) && (platica.getPeriodo().toString().compareTo(listaPlaticas.get(i).getPeriodo().toString()) == 0)
-                                && (platica.getTipo().compareTo(listaPlaticas.get(i).getTipo()) == 0) && (platica.getStatus().compareTo(listaPlaticas.get(i).getTipo()) == 0)
-                                && (platica.getStatus().compareTo(listaPlaticas.get(i).getStatus()) == 0) && (platica.getFechaMxFui().compareTo(listaPlaticas.get(i).getFechaMxFui()) == 0)
-                                && (platica.getDescripcion().toString().compareTo(limpiar1.quitaCaracteresEspeciales(platica.getDescripcion())) == 0)
-                                && (platica.getIdLugar().equals(listaPlaticas.get(i).getIdLugar()))) {
-                            System.out.println("si existe");
-                            existe = true;
-                            break;
-                        }
-
-                    }
-                    if (existe) {
-                        modelo.addAttribute("anioInicio", anio.anioActual());
-                        modelo.addAttribute("anioFin", anio.anioFin());
-                        modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
-                        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-                        modelo.addAttribute("exito", "<div class='error'> LA PLÁTICA YA EXISTE</div>");
-                        System.out.println("ya existia");
-                        return "/Platicas/altaPlatica";
-                    } else {
-                        MetodosValidacion limpiar = new MetodosValidacion();
-                        platica.setDescripcion(limpiar.pasaMayusculas(limpiar.quitaCaracteresEspeciales(platica.getDescripcion())));
-                        platicaFacade.create(platica);
-                        modelo.addAttribute("anioInicio", anio.anioActual());
-                        modelo.addAttribute("anioFin", anio.anioFin());
-                        modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
-                        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-
-                        modelo.addAttribute("alert", "<script>alert('Platica Guardada');</script>");
-                        System.out.println("creada");
-                        return "/Platicas/altaPlatica";
-                    }
-                }
-            } else {
+    public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException, JRException {
+        try {
+            platica.setNumeroAsistentes(0);
+            Fecha anio = new Fecha();
+            System.out.println("intentando guardar");
+            if (result.hasErrors()) {
+                System.out.println("intentando guardar errores");
                 modelo.addAttribute("anioInicio", anio.anioActual());
                 modelo.addAttribute("anioFin", anio.anioFin());
                 modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-                modelo.addAttribute("errorFm", "<div class='error'>La fecha de platica debe ser menor a la de Formato unico</div>");
                 return "/Platicas/altaPlatica";
+            } else {
+                System.out.println("sin errores entidad");
+                System.out.println("fecha" + platica.getFechaMxFui().toString());
+                if (platica.getFechaMxFui().compareTo(platica.getFecha()) > 0) {
+                    MetodosValidacion hora = new MetodosValidacion();
+                    System.out.println("hora" + platica.getHora());
+                    if (!hora.esHora(platica.getHora())) {
+                        System.out.println("no es hora");
+                        modelo.addAttribute("anioInicio", anio.anioActual());
+                        modelo.addAttribute("anioFin", anio.anioFin());
+                        modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                        modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                        modelo.addAttribute("errorHora", "<div class='error'>La hora no es valida</div>");
+                        return "/Platicas/altaPlatica";
+                    } else {
+                        platica.setStatus((short) 1);
+                        List<Platica> listaPlaticas = platicaFacade.findAll();
+                        Boolean existe = false;
+                        MetodosValidacion limpiar1 = new MetodosValidacion();
+                        for (int i = 0; i < listaPlaticas.size(); i++) {
+                            if ((platica.getAnio().toString().compareTo(listaPlaticas.get(i).getAnio().toString()) == 0) && (platica.getFecha().compareTo(listaPlaticas.get(i).getFecha()) == 0)
+                                    && (platica.getHora().toString().compareTo(listaPlaticas.get(i).getHora().toString()) == 0) && (platica.getPeriodo().toString().compareTo(listaPlaticas.get(i).getPeriodo().toString()) == 0)
+                                    && (platica.getTipo().compareTo(listaPlaticas.get(i).getTipo()) == 0) && (platica.getStatus().compareTo(listaPlaticas.get(i).getTipo()) == 0)
+                                    && (platica.getStatus().compareTo(listaPlaticas.get(i).getStatus()) == 0) && (platica.getFechaMxFui().compareTo(listaPlaticas.get(i).getFechaMxFui()) == 0)
+                                    && (platica.getDescripcion().toString().compareTo(limpiar1.quitaCaracteresEspeciales(platica.getDescripcion())) == 0)
+                                    && (platica.getIdLugar().equals(listaPlaticas.get(i).getIdLugar()))) {
+                                System.out.println("si existe");
+                                existe = true;
+                                break;
+                            }
+
+                        }
+                        if (existe) {
+                            modelo.addAttribute("anioInicio", anio.anioActual());
+                            modelo.addAttribute("anioFin", anio.anioFin());
+                            modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                            modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                            modelo.addAttribute("exito", "<div class='error'> LA PLÁTICA YA EXISTE</div>");
+                            System.out.println("ya existia");
+                            return "/Platicas/altaPlatica";
+                        } else {
+                            MetodosValidacion limpiar = new MetodosValidacion();
+                            platica.setDescripcion(limpiar.pasaMayusculas(limpiar.quitaCaracteresEspeciales(platica.getDescripcion())));
+                            platicaFacade.create(platica);
+                            modelo.addAttribute("anioInicio", anio.anioActual());
+                            modelo.addAttribute("anioFin", anio.anioFin());
+                            modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                            modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+
+                            modelo.addAttribute("alert", "<script>alert('Platica Guardada');</script>");
+                            System.out.println("creada");
+                            return "/Platicas/altaPlatica";
+                        }
+                    }
+                } else {
+                    modelo.addAttribute("anioInicio", anio.anioActual());
+                    modelo.addAttribute("anioFin", anio.anioFin());
+                    modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                    modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                    modelo.addAttribute("errorFm", "<div class='error'>La fecha de platica debe ser menor a la de Formato unico</div>");
+                    return "/Platicas/altaPlatica";
+                }
             }
-
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+            System.out.println(ex);
+            return null;
         }
 
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/folioPlatica.do")
-    public String folioPlatica(Model modelo, String fecha, String numeroC) {
+ @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.pdf")
+    public String folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request)  {
 
-        List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + numeroC, "equal", null, null);
-        if (lista.isEmpty()) {
-            FoliosPlatica foliosPlatica = new FoliosPlatica();
-            Platica platica = new Platica();
-            VistaAlumno alumno = new VistaAlumno();
-            alumno.setId(numeroC);
-            System.out.println("platica id:" + fecha);
-            platica.setId(Long.parseLong(fecha));
-            foliosPlatica.setPlaticaId(platica);
-            foliosPlatica.setAlumnoId(alumno);
-            //folio: numero de control+idPlatica
-            foliosPlatica.setNumeroFolio(fecha + numeroC);
-            System.out.println(fecha + numeroC);
-            foliosPlatica.setStatus((short) 1);
-            foliosPlaticaFacade.create(foliosPlatica);
+            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
+            if (lista.isEmpty()) {
+                FoliosPlatica foliosPlatica = new FoliosPlatica();
+                Platica platica = new Platica();
+                VistaAlumno alumno = new VistaAlumno();
+                alumno.setId(session.getAttribute("NCONTROL").toString());
+                System.out.println("platica id:" + fecha);
+                platica.setId(Long.parseLong(fecha));
+                foliosPlatica.setPlaticaId(platica);
+                foliosPlatica.setAlumnoId(alumno);
+                //folio: numero de control+idPlatica
+                foliosPlatica.setNumeroFolio(fecha + session.getAttribute("NCONTROL").toString());
+                System.out.println(fecha + session.getAttribute("NCONTROL").toString());
+                foliosPlatica.setStatus((short) 1);
+                foliosPlaticaFacade.create(foliosPlatica);
 
-            //incrementar numero de asistentes +1
-            platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
-            int numero = platica.getNumeroAsistentes().intValue();
-            numero = numero + 1;
-            System.out.println("numero" + numero);
-            platica.setNumeroAsistentes(numero);
-            platicaFacade.edit(platica);
-            return "/Platicas/seleccionarPlatica";
-            //  return "/Platicas/reporte";
-        } else {
-            modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
-            modelo.addAttribute("platica", new Platica());
-            modelo.addAttribute("existe", "<div class='error'>Ya te has registrado a esta platica anteriormente</div>");
-            return "/Platicas/seleccionarPlatica";
-        }
+                //incrementar numero de asistentes +1
+                platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
+                int numero = platica.getNumeroAsistentes().intValue();
+                numero = numero + 1;
+                System.out.println("numero" + numero);
+                platica.setNumeroAsistentes(numero);
+                platicaFacade.edit(platica);
+                System.out.println("antes del folio");
+                 session.setAttribute("folio", fecha);
+                return "/Platicas/folio";
+                
+            } else {
+                modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+                modelo.addAttribute("platica", new Platica());
+                modelo.addAttribute("existe", "<div class='error'>Ya te has registrado a esta platica anteriormente</div>");
+                return "/Platicas/seleccionarPlatica";
+            }
+        } 
 
 
-
-    }
 /////////ASISTENCIA.DO////////////////////
 
     @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
@@ -353,17 +417,16 @@ public class PlaticaController {
 
     }
 
-    @RequestMapping(value = "/mostrarFoto.do", method = RequestMethod.GET)
-    @ResponseBody
-    public void saveAndShowPDF(String id, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException, Exception {
-
-        httpServletResponse.setContentType("image/jpg");
-        httpServletResponse.getOutputStream().write(VistaAlumnoFacade.find(id).getFoto());
-        httpServletResponse.getOutputStream().close();
-
-    }
+//    @RequestMapping(value = "/mostrarFoto.do", method = RequestMethod.GET)
+//    @ResponseBody
+//    public void saveAndShowPDF(String id, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException, Exception {
+//
+//        httpServletResponse.setContentType("image/jpg");
+//        httpServletResponse.getOutputStream().write(VistaAlumnoFacade.find(id).getFoto());
+//        httpServletResponse.getOutputStream().close();
+//
+//    }
     /////////ASISTENCIA.DO  finnnnnnnnnnnnnnnnnnnnnnnn////////////////////
-
     @RequestMapping(method = RequestMethod.POST, value = "/eliminarPlatica.do")
     public void eliminarPlatica(long id_platica) throws ParseException {
         //System.out.print("eliminar platica.do");
@@ -446,21 +509,20 @@ public class PlaticaController {
         return platicaJson;
     }
 ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
-
-    @RequestMapping(value = "/subirFoto.do", method = RequestMethod.POST)
-    public String save(
-            @RequestParam("file") MultipartFile file, String id) throws IOException {
-        VistaAlumno vistaAlumno1;
-        vistaAlumno1 = VistaAlumnoFacade.find(id);
-        vistaAlumno1.setFoto(file.getBytes());
-        VistaAlumnoFacade.edit(vistaAlumno1);
-        return "/Platicas/guardarFoto";
-    }
-
-    @RequestMapping(value = "/guardaFoto.do")
-    public String guardaFotoPrueba(Model modelo) {
-        modelo.addAttribute("vistaAlumno", new VistaAlumno());
-        return "/Platicas/guardarFoto";
-    }
+//    @RequestMapping(value = "/subirFoto.do", method = RequestMethod.POST)
+//    public String save(
+//            @RequestParam("file") MultipartFile file, String id) throws IOException {
+//        VistaAlumno vistaAlumno1;
+//        vistaAlumno1 = VistaAlumnoFacade.find(id);
+//        vistaAlumno1.setFoto(file.getBytes());
+//        VistaAlumnoFacade.edit(vistaAlumno1);
+//        return "/Platicas/guardarFoto";
+//    }
+//
+//    @RequestMapping(value = "/guardaFoto.do")
+//    public String guardaFotoPrueba(Model modelo) {
+//        modelo.addAttribute("vistaAlumno", new VistaAlumno());
+//        return "/Platicas/guardarFoto";
+//    }
     //// fin          PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
 }

@@ -61,6 +61,11 @@ import org.hibernate.annotations.GenericGenerators;
     @NamedQuery(name = "VistaAlumno.findByPlanId", query = "SELECT v FROM VistaAlumno v WHERE v.planId = :planId"),
     @NamedQuery(name = "VistaAlumno.findByFecNac", query = "SELECT v FROM VistaAlumno v WHERE v.fecNac = :fecNac")})
 public class VistaAlumno implements Serializable {
+    @Column(name = "PROMEDIO")
+    private BigInteger promedio;
+    @Lob
+    @Column(name = "FOTO")
+    private Serializable foto;
     private static final long serialVersionUID = 1L;
     @GenericGenerator(name = "vitaAlumnoG", strategy = "increment")
     @Id
@@ -124,11 +129,6 @@ public class VistaAlumno implements Serializable {
     @Size(max = 7)
     @Column(name = "PORCENTAJE")
     private String porcentaje;
-    @Column(name = "PROMEDIO")
-    private double promedio;
-    @Lob
-    @Column(name = "FOTO")
-    private byte[] foto;
     @Column(name = "PLAN_ID")
     private BigInteger planId;
     @Column(name = "FEC_NAC")
@@ -304,22 +304,6 @@ public class VistaAlumno implements Serializable {
         this.porcentaje = porcentaje;
     }
 
-    public double getPromedio() {
-        return promedio;
-    }
-
-    public void setPromedio(double promedio) {
-        this.promedio = promedio;
-    }
-
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
-
     public BigInteger getPlanId() {
         return planId;
     }
@@ -405,6 +389,22 @@ public class VistaAlumno implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.VistaAlumno[ id=" + id + " ]";
+    }
+
+    public BigInteger getPromedio() {
+        return promedio;
+    }
+
+    public void setPromedio(BigInteger promedio) {
+        this.promedio = promedio;
+    }
+
+    public Serializable getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Serializable foto) {
+        this.foto = foto;
     }
     
 }

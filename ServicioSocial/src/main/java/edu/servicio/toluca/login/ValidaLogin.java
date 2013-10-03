@@ -75,8 +75,6 @@ public class ValidaLogin {
                         session.setAttribute("NOMBRE", alumno.get(0).getNombre() + " " + alumno.get(0).getApellidoPat() + " " + alumno.get(0).getApellidoMat());
                         sesionBean.setPagReturn("redirect:panelUsuario.do");
                     }
-
-
                 } else {
                     sesionBean.setMensaje("<div class='error'>Lo sentimos no cumples con el minimo de 70% de créditos para tramitar tu servicio social</div>");
                     sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");

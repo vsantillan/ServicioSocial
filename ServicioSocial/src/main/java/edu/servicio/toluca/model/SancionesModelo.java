@@ -47,7 +47,7 @@ public class SancionesModelo {
         this.clave_sancion = clave_sancion;
     }
 
-    public void asignaSancion() {
+    public String asignaSancion() {
         java.util.Date fecha_actual = new java.util.Date();
         System.out.println("La fecha actual es: " + fecha_actual);
         System.out.println("La fecha máxima es:" + fecha_max);
@@ -56,12 +56,12 @@ public class SancionesModelo {
             System.out.println("La fecha actual sobrepasa la fecha máxima, procedo a revisar tolerancia");
             if (catalogoSancionesFacade.count() < 1) {
                 System.out.println("La tabla de sanciones está vacía");
-                //return "redirect:panelUsuario.do";
+                return "redirect:panelUsuario.do";
             }
             List<CatalogoSanciones> listaCatalogoSanciones = catalogoSancionesFacade.findBySpecificField("detalle", clave_sancion, "like", null, null);
             if (listaCatalogoSanciones.isEmpty()) {
                 System.out.println("La sanción no pudo ser encontrada");
-                //return "redirect:panelUsuario.do";
+                return "redirect:panelUsuario.do";
             }
             CatalogoSanciones catalogoSancion = listaCatalogoSanciones.get(0);//Se obtiene el registro de la sanción para tratar sus datos
             Calendar fecha_max_x = Calendar.getInstance();
@@ -92,5 +92,6 @@ public class SancionesModelo {
         } else {
             System.out.println("La fecha actual está dentro de la fecha máxima. No hay sanción");
         }
+        return null;
     }
 }

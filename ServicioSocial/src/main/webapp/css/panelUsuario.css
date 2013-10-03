@@ -84,7 +84,22 @@
     overflow: auto;
 }
 
+.scrollDivInferior{
+    overflow: auto;
+    height: 170px;
+}
+
 .listaNoticias{
     height: 330px;
 }
+
+.divInferior{
+    width: 90%;
+    margin-top: 10px;
+    margin-left: auto; 
+    margin-right: auto;
+    position: relative;
+    height:200px;    
+}
+
 

@@ -4,10 +4,13 @@
  */
 package edu.servicio.toluca.controller;
 
+
 import edu.servicio.toluca.beans.Contacto;
 import edu.servicio.toluca.beans.EnviarCorreo;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import javax.validation.Valid;
+import org.openide.util.Exceptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,6 +49,9 @@ public class ContactoController {
                                 "<h1>"+contacto.getAsunto()+"</h1>" +
                                 "<h1>"+contacto.getCorreo()+"</h1>" +
                                 "<p>"+contacto.getDetalle()+"</p>";
+        System.out.println("á");
+        System.out.println(mensajeContacto);
+         
         Thread hiloCorreo=new Thread(new HiloCorreo(mensajeContacto));
         hiloCorreo.start();
         modelo.put("message","<div class='error'>Gracias por tu comentario, lo tomaremos en cuenta. </div>");

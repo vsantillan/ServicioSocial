@@ -21,9 +21,6 @@
         <%@ include file="../Template/metas.jsp" %>
         <script src="js/jquery.manolo.js"></script>
         <title>Home Usuario</title>
-        <style>
-
-        </style>
     </head>
     <body class="background" >
         <jsp:include page="../Template/banner.jsp" />
@@ -84,7 +81,7 @@
                 <ul class="scroll listaNoticias">
                     <core:forEach items="${noticiasAlumnos}" var="noticia">
                         <li class="error"><b>${noticia.fecha}</b>: ${noticia.detalle}</li>
-                            </core:forEach>
+                    </core:forEach>
                 </ul>
 
             </div>
@@ -137,8 +134,7 @@
                                 </core:when> 
                                 <core:when  test="${statusFui==3}">
                                     <img class="imagenes" src="imagenes/reloj.png"/>
-                                </core:when> 
-
+                                </core:when>
                             </core:choose>                            
                         </td>
                     </tr>
@@ -159,8 +155,27 @@
                         <td><img class="imagenes" src="imagenes/tache.png"/></td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaSanciones"><a id="b" href="#">SANCIONES</a></td>
-                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                        <td class="filas" id="filaSanciones">
+                            <core:choose>
+                                <core:when test="${accesoSanciones}">
+                                    <a id="b" href="#">SANCIONES</a>
+                                </core:when>
+                                <core:otherwise>
+                                    <p class="text">SANCIONES</p>
+                                </core:otherwise>
+                            </core:choose> 
+                        </td>
+                        <td>
+                            <core:choose>
+                                <core:when test="${tieneSancion}">
+                                    <img class="imagenes" src="imagenes/tache.png"/>
+                                </core:when>
+                                <core:otherwise>
+                                    <img class="imagenes" src="imagenes/paloma.png"/>
+                                </core:otherwise>
+                            </core:choose> 
+                            
+                        </td>
                     </tr> 
                 </table>
             </div>
@@ -174,9 +189,37 @@
             </div>
             <!--/Mensajes personales-->
 
+            <div style="clear: both"></div>
 
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <!--Observaciones-->
+            <div class="divInferior MyForm">
+                <h1>Observaciones</h1>
+                <ul class="scrollDivInferior">
+                    <core:forEach items="${observaciones}" var="observacion">
+                        <li class="error"><b>${observacion.fecha}</b>: ${observacion.catalogoObservacionId.detalle}</li>
+                    </core:forEach>
+                </ul>
+            </div>
+            <!--/Observaciones-->
+            
+            <!--Sanciones-->
+            <div class="divInferior MyForm">
+                <h1>Sanciones</h1>
+                <ul class="scrollDivInferior">
+                    <core:forEach items="${sanciones}" var="sancion">
+                        <core:choose>
+                            <core:when  test="${sancion.concepto==0}">
+                                <li class="error"><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
+                            </core:when>    
+                            <core:when  test="${sancion.concepto==1}">
+                                <li class="success"><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
+                            </core:when> 
+                         </core:choose> 
+                    </core:forEach>
+                </ul>
+            </div>
+            <!--/Sanciones-->
+            <br/>
         </div>
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>
