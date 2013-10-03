@@ -139,8 +139,30 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaReportesBimestrales"><a id="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a></td>
-                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                        <td class="filas" id="filaReportesBimestrales">
+                            
+                            <core:choose>
+                                <core:when test="${accesoFormatoUnico}">
+                                    <a id="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a>
+                                </core:when>
+                                <core:otherwise>
+                                    <p class="text">REPORTES BIMESTRALES</p>
+                                </core:otherwise>
+                            </core:choose>    
+                        </td>
+                        <td>
+                            <core:choose>
+                                <core:when  test="${statusReporteBimestrales==1}">
+                                    <img class="imagenes" src="imagenes/paloma.png"/>
+                                </core:when>    
+                                <core:when  test="${statusReporteBimestrales==2}">
+                                    <img class="imagenes" src="imagenes/tache.png"/>
+                                </core:when> 
+                                <core:when  test="${statusReporteBimestrales==3}">
+                                    <img class="imagenes" src="imagenes/reloj.png"/>
+                                </core:when>
+                            </core:choose> 
+                        </td>
                     </tr>
                     <tr>
                         <td class="filas" id="filaReportesMensuales"><a id="b" href="#">REPORTES MENSUALES</a></td>

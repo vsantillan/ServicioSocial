@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.servicio.toluca.model.VistaAlumno;
+package edu.servicio.toluca.model.vistaalumno;
 
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.entidades.VistaAlumno;

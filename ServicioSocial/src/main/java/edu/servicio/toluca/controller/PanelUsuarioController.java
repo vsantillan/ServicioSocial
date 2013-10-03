@@ -4,18 +4,20 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.ReportesBean;
 import edu.servicio.toluca.beans.SancionesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
-import edu.servicio.toluca.model.VistaAlumno.ConsultasVistaAlumno;
+import edu.servicio.toluca.model.vistaalumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
 import edu.servicio.toluca.model.observaciones.ObservacionesModel;
 import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
 import edu.servicio.toluca.model.platica.ConsultasPlatica;
+import edu.servicio.toluca.model.reportesBimestrales.ValidaReportesBimestralesModel;
 import edu.servicio.toluca.model.sanciones.ConsultasPanelUsuarioSanciones;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.NoticiasFacade;
@@ -121,6 +123,19 @@ public class PanelUsuarioController {
             }
 
             //Reportes Bimestrales
+            try{
+                if (servicioBean.getDatosPersonales() != null) {
+                    ValidaReportesBimestralesModel bimestralesModel = new ValidaReportesBimestralesModel();
+                    ReportesBean reporteBimestral =  bimestralesModel.validaReportesBimestrales(servicioBean);
+                    
+                    model.addAttribute("accesoReportesBimestrales", reporteBimestral.isAccesoFormato());
+                    model.addAttribute("mensajeReportesBimestrales", reporteBimestral.getMensaje());
+                    model.addAttribute("statusReporteBimestrales", reporteBimestral.getStatus());
+                }
+            }catch(Exception e){
+                System.out.println("Error en validacion de reportes bimestrales");
+                e.printStackTrace();                
+            }
 
             //Sanciones
             try {

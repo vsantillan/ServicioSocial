@@ -32,7 +32,7 @@ public class ValidacionPanelUsuarioFU {
         if (servicioBean.getPlaticaBean().isTienePlatica()) {
             if (servicioBean.getFormatoUnico().getStatusFui() == null) {
                 beanFU.setAccesoFormatoUnico(true);
-                beanFU.setMensaje("No has dado de alta tu Formato Unico");
+                beanFU.setMensaje("No has dado de alta tu Formato Único");
                 beanFU.setStatusFui(2);
             } else {
                 int statusFui = Integer.parseInt(servicioBean.getFormatoUnico().getStatusFui().toString());
@@ -41,13 +41,13 @@ public class ValidacionPanelUsuarioFU {
                     case 1:
                         beanFU.setAccesoFormatoUnico(false);
                         beanFU.setStatusFui(1);
-                        beanFU.setMensaje("Tu Formato Unico ha sido aceptado");
+                        beanFU.setMensaje("Tu Formato Único ha sido aceptado");
                         break;
                     //Rechazado
                     case 2:
                         beanFU.setAccesoFormatoUnico(false);
                         beanFU.setStatusFui(2);
-                        beanFU.setMensaje("Tu Formato Unico fue rechazado.");
+                        beanFU.setMensaje("Tu Formato Único fue rechazado.");
                         break;
                     //Correccion
                     case 3:
@@ -60,30 +60,30 @@ public class ValidacionPanelUsuarioFU {
                         if (revisionesFui <= 5) {
                             beanFU.setAccesoFormatoUnico(true);
                             beanFU.setStatusFui(3);
-                            beanFU.setMensaje("Tu Formato Unico se encuentra en correccion. Por favor revisa a la seccion de observaciones para saber que es lo que tienes que corregir en tu Formato Unico.");
+                            beanFU.setMensaje("Tu Formato Único se encuentra en corrección. Por favor revisa a la sección de observaciones para saber que es lo que tienes que corregir en tu Formato Unico.");
                         } else {
                             beanFU.setAccesoFormatoUnico(false);
-                            beanFU.setStatusFui(3);
-                            beanFU.setMensaje("Lo sentimos, has sobrepasado el numero maximo de correcciones en tu Formato Unico.");
+                            beanFU.setStatusFui(2);
+                            beanFU.setMensaje("Lo sentimos, has sobrepasado el número máximo de correcciones en tu Formato Único.");
                         }
                         break;
                     //No revisado
                     case 4:
                         beanFU.setAccesoFormatoUnico(false);
                         beanFU.setStatusFui(3);
-                        beanFU.setMensaje("Tu Formato Unico se encuentra en revision.");
+                        beanFU.setMensaje("Tu Formato Único se encuentra en revisión.");
                         break;
                     //Descargado
                     case 5:
                         beanFU.setAccesoFormatoUnico(true);
                         beanFU.setStatusFui(3);
-                        beanFU.setMensaje("Ya has generado y descargado tu Formato Unico. Solo falta que subas tu Formato Unico escaneado y sellado.");
+                        beanFU.setMensaje("Ya has generado y descargado tu Formato Único. Sólo falta que subas tu Formato Único escaneado y sellado.");
                         break;
                 }
             }
         } else {
             beanFU.setAccesoFormatoUnico(false);
-            beanFU.setMensaje("No puedes proceder a dar de alta tu Formato Unico, dado que no asististe a la platica de induccion, favor comunicarse con el Jefe de la Oficina del Servicio Social.");
+            beanFU.setMensaje("No puedes proceder a dar de alta tu Formato Único, dado que no asististe a la plática de inducción, favor comunicarse con el Jefe de la Oficina del Servicio Social.");
             beanFU.setStatusFui(2);
         }
 

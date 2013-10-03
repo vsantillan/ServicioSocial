@@ -47,8 +47,8 @@ public class ConsultasPlatica {
         this.foliosPlaticaFacade = foliosPlaticaFacade;
     }
 
-    public FoliosPlaticaBean checaAlumnoPlatica(StatusServicioBean servicioBean) {        
-        
+    public FoliosPlaticaBean checaAlumnoPlatica(StatusServicioBean servicioBean) {
+
         System.out.println("Checa platica");
         List<FoliosPlatica> platica = foliosPlaticaFacade.findBySpecificField("alumnoId", servicioBean.getVistaAlumno(), "equal", null, null);
         List<FoliosPlatica> filtroPlatica = new ArrayList();
@@ -62,31 +62,39 @@ public class ConsultasPlatica {
                 filtroPlatica.add(platica.get(i));
             }
         }
-        
+
         FoliosPlaticaBean beanPlatica = new FoliosPlaticaBean();
 
         //Checa si se registro a alguna platica
         if (!filtroPlatica.isEmpty()) {
             //Checa si asistio a la platica en la cual se registro
-            if (platica.get(0).getAsistencia() == uno) {
-                beanPlatica.setTienePlatica(true);
-                beanPlatica.setAccesoPanelPlatica(false);
-                beanPlatica.setMensajeUsuario("Asististe a la platica del " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFecha()) + ", la fecha máxima para que subas tu formato único es hasta el " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFechaMxFui()) + ", de lo contrario serás acreedor a una sanción.");
-                
-                System.out.println("Asistio a la platica");
+            if (filtroPlatica.get(0).getAsistencia() != null) {
+                if (filtroPlatica.get(0).getAsistencia().toString().equals("1")) {
+                    beanPlatica.setTienePlatica(true);
+                    beanPlatica.setAccesoPanelPlatica(false);
+                    beanPlatica.setMensajeUsuario("Asististe a la platica del " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFecha()) + ", la fecha máxima para que subas tu formato único es hasta el " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFechaMxFui()) + ", de lo contrario serás acreedor a una sanción.");
+
+                    System.out.println("Asistio a la platica");
+                } else {
+                    beanPlatica.setTienePlatica(false);
+                    beanPlatica.setAccesoPanelPlatica(false);
+                    beanPlatica.setMensajeUsuario("Te registraste a la platica, pero no asististe a ella. Favor de pasar a la oficina de servicio social para solicitar un alta posterior.");
+                    System.out.println("No asistio a la platica");
+                }
             } else {
                 beanPlatica.setTienePlatica(false);
                 beanPlatica.setAccesoPanelPlatica(false);
-                beanPlatica.setMensajeUsuario("Te registraste a la platica, pero no asististe a ella. Favor de pasar a la oficina de servicio social para solicitar un alta posterior.");                
+                beanPlatica.setMensajeUsuario("Te registraste a la platica, pero no asististe a ella. Favor de pasar a la oficina de servicio social para solicitar un alta posterior.");
                 System.out.println("No asistio a la platica");
             }
+
         } else {
             beanPlatica.setTienePlatica(false);
             beanPlatica.setAccesoPanelPlatica(true);
-            beanPlatica.setMensajeUsuario("No te has registrado a ninguna plática");            
+            beanPlatica.setMensajeUsuario("No te has registrado a ninguna plática");
             System.out.println("No se registro a ninguna platica");
         }
-        
+
         servicioBean.setPlaticaBean(beanPlatica);
         return beanPlatica;
     }
