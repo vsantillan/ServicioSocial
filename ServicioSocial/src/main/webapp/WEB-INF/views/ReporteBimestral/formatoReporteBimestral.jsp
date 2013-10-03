@@ -85,6 +85,7 @@
                     <form:form commandName="Reportes" name="reportesBimestrales" id="reportesBimestrales"  action="insertaReporte.do" method="POST">
 
                         <table>
+                            <h4>N&uacute;mero de Reviciones del Reporte: ${noReviciones}</h4>
                             <tr>
                                 <td><label for="noReporte">No de Reporte:</label></td>
                                 <td><form:input path="numeroReporte" type="text" name=" numeroReporte" id=" numeroReporte"  value="${numeroReporte}" readonly="true" /></td>
@@ -156,6 +157,15 @@
                                                 </td>                                            
                                             </tr>
                                         </core:when> 
+                                        <core:otherwise>
+                                            <tr>
+                                                <td><label for="calificacion">Calificaci&oacute;n</label></td>
+                                                <td>
+                                                    <form:input path="calificacion" type="text" name="actividad" readonly="true"  />
+                                                    <form:errors path="calificacion" cssClass="error"/>
+                                                </td>                                            
+                                            </tr>
+                                        </core:otherwise>
                                     </core:choose>
 
                                 </core:forEach>

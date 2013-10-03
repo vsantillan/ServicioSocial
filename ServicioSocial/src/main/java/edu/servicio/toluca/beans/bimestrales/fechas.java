@@ -32,21 +32,28 @@ public class fechas {
         return textFormat.format(fecha);
     }
 
-    public Date covierteString(String fecha) {
+    public java.sql.Date covierteString(String fecha) {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaDate = null;
+        java.sql.Date sqlDate=null;
         try {
             fechaDate = formatoFecha.parse(fecha);
+           sqlDate = new java.sql.Date(fechaDate.getTime());
+
+            System.out.println("sqlDate:" + sqlDate);
         } catch (Exception ex) {
             System.out.println("Ocurrio un error");
 
         }
-        return fechaDate;
+        return sqlDate;
     }
 
-    public Date fechaEntrgaMax() {
-        Date fechaEntregaMax = null;
-        return fechaEntregaMax;
+    public String fechaEntrgaMax(Date fechaFin) {
+        SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar fecha = Calendar.getInstance();
+        fecha.setTime(fechaFin);
+        fecha.add(Calendar.DATE, 5);
+        return textFormat.format(fecha.getTime());
 
     }
 }

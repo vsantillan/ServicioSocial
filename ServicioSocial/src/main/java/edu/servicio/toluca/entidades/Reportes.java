@@ -61,8 +61,6 @@ public class Reportes implements Serializable {
     private BigDecimal id;
     @Column(name = "NUMERO_REPORTE")
     private BigInteger numeroReporte;
-    @NotNull
-    @Min(1)
     @Column(name = "HORAS")
     private BigInteger horas;
     @Column(name = "CALIFICACION")

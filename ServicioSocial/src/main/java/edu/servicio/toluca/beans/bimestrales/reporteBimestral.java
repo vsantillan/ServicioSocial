@@ -29,6 +29,7 @@ public class reporteBimestral {
     private Integer calificacion;
     private String actividades;
     private Integer numeroReporte;
+    private Integer noReviciones;
 
     /**
      * @return the fechaInicio
@@ -126,6 +127,20 @@ public class reporteBimestral {
      */
     public void setNumeroReporte(Integer numeroReporte) {
         this.numeroReporte = numeroReporte;
+    }
+
+    /**
+     * @return the noReviciones
+     */
+    public Integer getNoReviciones() {
+        return noReviciones;
+    }
+
+    /**
+     * @param noReviciones the noReviciones to set
+     */
+    public void setNoReviciones(Integer noReviciones) {
+        this.noReviciones = noReviciones;
     }
 
 

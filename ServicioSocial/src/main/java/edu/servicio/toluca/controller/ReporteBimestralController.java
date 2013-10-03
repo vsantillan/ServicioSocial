@@ -7,11 +7,16 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.beans.bimestrales.reporteBimestral;
+import edu.servicio.toluca.entidades.Actividad;
+import edu.servicio.toluca.entidades.Actividades;
+import edu.servicio.toluca.entidades.BimestralesActividades;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.sesion.ActividadesFacade;
+import edu.servicio.toluca.sesion.BimestralesActividadesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.ReportesFacade;
@@ -20,6 +25,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.ejb.EJB;
@@ -50,6 +57,10 @@ public class ReporteBimestralController {
     private FormatoUnicoFacade formatoUnicoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/ReportesFacade")
     private ReportesFacade reportesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/BimestralesActividadesFacade")
+    private BimestralesActividadesFacade actividadesBimestralesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
+    private ActividadesFacade actividadesFacade;
 
 //    @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
 //    public String reporteBimestralAdministrador(Model modelo) {
@@ -57,14 +68,14 @@ public class ReporteBimestralController {
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
-
+        FormatoUnico fechaInicioFU=null;
+        
         if (!new ValidaSesion().validaAlumno(session, request)) {
             modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         alumno_id = session.getAttribute("NCONTROL").toString();
         reporteBimestral RBObjeto = new reporteBimestral();
-        //alumno_id = "09280531";
         ///////////BUSCAR ALUMNO///////////
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
@@ -77,9 +88,11 @@ public class ReporteBimestralController {
             List<Reportes> RB = reportesFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
             if (RB.isEmpty()) {
                 List<FormatoUnico> formatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
-                FormatoUnico fechaInicioFU = formatoUnico.get(0);
+                fechaInicioFU = formatoUnico.get(0);
                 modelo.addAttribute("numeroReporte", 1);
+                modelo.addAttribute("noReviciones",0);
                 fechas fechas = new fechas();
+                RBObjeto.setCalificacion(0);
                 RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
                 RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
                 RBObjeto.setHorasAcumuladas(fechaInicioFU.getHorasAcumuladas());
@@ -87,7 +100,7 @@ public class ReporteBimestralController {
 
                 modelo.addAttribute("Reportes", RBObjeto);
             } else {
-                int noReportes = 0;
+                int noReportes = 1;
                 for (int i = 0; i < RB.size(); i++) {
                     Reportes reporteBimestral = RB.get(i);
                     if (reporteBimestral.getStatus() == BigInteger.valueOf(1)) {//Checar cual el es el status de formato aprobado
@@ -96,8 +109,13 @@ public class ReporteBimestralController {
 
                 }
                 RBObjeto.setNumeroReporte(noReportes);
+                RBObjeto.setCalificacion(0);
+                //Buscar el ultimo reporte Bimestral con status aprobado
+                //Y sacar esa fecha fin
                 RBObjeto.setFechaInicio("");
+                //Sumar los dos meses a fecha FIn
                 RBObjeto.setFechaFin("");
+                RBObjeto.setHorasAcumuladas(fechaInicioFU.getHorasAcumuladas());
             }
             //////////////////////////////////////////////////////////////
 
@@ -116,8 +134,9 @@ public class ReporteBimestralController {
     @RequestMapping(method = RequestMethod.POST, value = "/insertaReporte.do")
     public String insertaBimestral(@ModelAttribute("Reportes") @Valid reporteBimestral reporte, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request) {
         String alumno_id = session.getAttribute("NCONTROL").toString();
+        List<String> listaIds=null;
         if (selectfrom != null) {
-            List<String> listaIds = new ArrayList<String>();
+           listaIds = new ArrayList<String>();
             StringTokenizer palabra = new StringTokenizer(selectfrom, ",");
             while (palabra.hasMoreTokens()) {
                 listaIds.add(palabra.nextToken());
@@ -137,23 +156,54 @@ public class ReporteBimestralController {
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         if (resultado.hasErrors()) {
+            System.out.println("Hubo errores:"+resultado.toString());
             if (!datosPersonales.isEmpty()) {       
                 modelo.addAttribute("datosPersonales", datosPersonales);
             }
             modelo.addAttribute("Reportes", reporte);
             return "/ReporteBimestral/formatoReporteBimestral";
         } else {
+             //---------------------------------------------------------//
+             //Insertamos el Reporte Bimestral                          //
+             //---------------------------------------------------------//
+           //Verificar si el status del utimo reporte es rechazado
+           //Se borran las Actividades que hay con este
+            
             fechas fecha = new fechas();
             Reportes reporteBimestral = new Reportes();
             reporteBimestral.setDatosPersonalesId(datosPersonales.get(0));
-            reporteBimestral.setNumeroReporte(BigInteger.valueOf(reporte.getHoras()));
+            reporteBimestral.setNumeroReporte(BigInteger.valueOf(reporte.getNumeroReporte()));
             reporteBimestral.setHoras(BigInteger.valueOf(reporte.getHoras()));
             reporteBimestral.setCalificacion(BigInteger.ZERO);
             reporteBimestral.setFechaInicio(fecha.covierteString(reporte.getFechaInicio()));
-            reporteBimestral.setFechaFin(fecha.covierteString(reporte.getFechaFin()));
+            Date fechaFin=fecha.covierteString(reporte.getFechaFin());
+            reporteBimestral.setFechaFin(fechaFin);
             reporteBimestral.setStatus(BigInteger.ZERO);
-            reporteBimestral.setFechaEntregaMax(null);
+            
+            reporteBimestral.setFechaEntregaMax(fecha.covierteString(fecha.fechaEntrgaMax(fechaFin)));
+            
             reporteBimestral.setNumeroRevisiones(BigInteger.ZERO);
+            reportesFacade.create(reporteBimestral);
+              //---------------------------------------------------------//
+             //Insertamos las actividades del reporte                   //
+             //---------------------------------------------------------//
+            
+            //Buscamos el reporte recien insertado
+            DatosPersonales dp=datosPersonales.get(0);
+            List<Reportes> bimestrales=reportesFacade.findBySpecificField("id",dp.getId(), "equal", null, null);
+            Reportes bimestralInsertado=bimestrales.get(0);
+            
+             Iterator inserta = listaIds.iterator();
+                //while que inserta la lista de los perfiles para el proyecto
+                while (inserta.hasNext()) {
+                    Actividad a;
+                   BimestralesActividades actividadesB = new BimestralesActividades();
+                   actividadesB.setIdReporte(bimestralInsertado);
+                   List<Actividades>  actividades=actividadesFacade.findBySpecificField("id", inserta.next(),"equal", null, null);
+                   //actividadesB.setIdActividad(actividades.get(0));
+                   actividadesBimestralesFacade.create(actividadesB);
+                }
+               System.out.println("Inserto las Actividaes");
             
             return "/ReporteBimestral/formatoReporteBimestral";
         }

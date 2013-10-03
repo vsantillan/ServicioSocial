@@ -179,11 +179,6 @@
             <version>1.4</version>
             <!--scope>compile</scope-->
         </dependency>
-        <dependency>
-            <groupId>net.sf.barcode4j</groupId>
-            <artifactId>barcode4j</artifactId>
-            <version>2.0</version>
-        </dependency>
        
         <dependency>
             <groupId>batik</groupId>
@@ -193,6 +188,30 @@
                 <exclusion>
                     <artifactId>fop</artifactId>
                     <groupId>fop</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>batik-awt-util</artifactId>
+                    <groupId>batik</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>batik-css</artifactId>
+                    <groupId>batik</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>batik-dom</artifactId>
+                    <groupId>batik</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>batik-parser</artifactId>
+                    <groupId>batik</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>batik-script</artifactId>
+                    <groupId>batik</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>batik-svg-dom</artifactId>
+                    <groupId>batik</groupId>
                 </exclusion>
             </exclusions>
         </dependency>         
@@ -222,6 +241,7 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+         
          
 
     
