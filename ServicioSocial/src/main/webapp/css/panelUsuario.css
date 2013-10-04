@@ -26,8 +26,8 @@
     text-align: center; 
     border: none;
 }
-#b{color: white;text-decoration: none;}
-#b:hover{font-size: 120%;}
+.b{color: white;text-decoration: none;}
+.b:hover{font-size: 120%;}
 
 /*
     From now on..

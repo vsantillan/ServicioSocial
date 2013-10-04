@@ -16,10 +16,17 @@
 <%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-    <head>
+    <head>        
+        <script src="js/jquery-boot.js"></script>
         <%@ include file="../Template/headsMenuUsuario.jsp" %>
         <%@ include file="../Template/metas.jsp" %>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/bootstrap-popover.js"></script>
         <script src="js/jquery.manolo.js"></script>
+        
+        <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+        
+                
         <title>Home Usuario</title>
     </head>
     <body class="background" >
@@ -30,10 +37,11 @@
         <div id="contenido">
 
             <h1>Panel de Usuario</h1>
+           
             <!--Cuadro de bienvenida-->
             <div class="MyForm mensajeBienvenida">
                 <h1>Bienvenido <%=nombre%></h1>
-                <p>A continuaci&oacute;n se presenta un men&uacute; con el proceso de tu servicio social, te mostraremos que significan los &iacute;conos:.</p>
+                <p>A continuaci&oacute;n se presenta un men&uacute; con el proceso de tu servicio social, te mostraremos que significan los &iacute;conos: </p>
                 <ul>
                     <li><img src="imagenes/paloma.png" height="30"/>: Proceso Completado</li>
                     <li><img src="imagenes/reloj.png" height="30"/>: Proceso en Revisi&oacute;n</li>
@@ -41,39 +49,7 @@
                 </ul>
             </div>
             <br/>
-            <!--/Cuadro de bienvenida-->
-            <!--Mensajes emergentes en la parte inferior-->
-            <div id="mensajesProceso" class="mensajesProceso oculto">
-                <div id="platica"  class="oculto">            
-                    <h1>Pl&aacute;tica</h1>
-                    <p>${mensajePlatica}</p>                   
-                </div>
-                <div id="formatoUnico"  class="oculto">            
-                    <h1>Formato &Uacute;nico</h1>
-                    <p>${mensajeFormatoUnico}</p>                   
-                </div>
-                <div id="reportesBimestrales"  class="oculto">            
-                    <h1>Reportes Bimestrales</h1>
-                    <p>${mensajeReportesBimestrales}</p>                   
-                </div>
-                <div id="reportesMensuales"  class="oculto">            
-                    <h1>Reportes Mensuales</h1>
-                    <p>${mensajeReportesMensuales}</p>                   
-                </div>
-                <div id="platicaBecados"  class="oculto">            
-                    <h1>Pl&aacute;tica Becados</h1>
-                    <p>${mensajePlaticaBecados}</p>                   
-                </div>
-                <div id="documentosFinales"  class="oculto">            
-                    <h1>Documentos Finales</h1>
-                    <p>${mensajeDocumentosFinales}</p>                   
-                </div>
-                <div id="sanciones"  class="oculto">            
-                    <h1>Sanciones</h1>
-                    <p>${mensajeSanciones}</p>                   
-                </div>
-            </div>
-            <!--/Mensajes emergentes en la parte inferior-->
+            <!--/Cuadro de bienvenida-->            
 
             <!--Seccion de noticias generales-->
             <div class="seccionLateral MyForm ">
@@ -81,7 +57,7 @@
                 <ul class="scroll listaNoticias">
                     <core:forEach items="${noticiasAlumnos}" var="noticia">
                         <li class="error"><b>${noticia.fecha}</b>: ${noticia.detalle}</li>
-                    </core:forEach>
+                            </core:forEach>
                 </ul>
 
             </div>
@@ -92,10 +68,10 @@
                 <h1>Proceso del Servicio Social</h1>
                 <table class="general">
                     <tr>
-                        <td class="filas" id="filaPlatica">
+                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajePlatica}" title="PLÁTICA">
                             <core:choose>
                                 <core:when test="${accesoPlatica}">
-                                    <a id="b" href="seleccionarPlatica.do">PL&Aacute;TICA</a>
+                                    <a class="b" href="seleccionarPlatica.do">PL&Aacute;TICA</a>
                                 </core:when>
                                 <core:otherwise>
                                     <p class="text">PL&Aacute;TICA</p>
@@ -114,10 +90,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaFormatoUnico">
+                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeFormatoUnico}" title="FORMATO ÚNICO">
                             <core:choose>
                                 <core:when test="${accesoFormatoUnico}">
-                                    <a id="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a>
+                                    <a class="b" href="formatoUnicoUsuario.do">FORMATO UNICO</a>
                                 </core:when>
                                 <core:otherwise>
                                     <p class="text">FORMATO UNICO</p>
@@ -139,11 +115,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaReportesBimestrales">
-                            
+                        <td class="filas"  data-toggle="popover" data-placement="right" data-content="${mensajeReportesBimestrales}" title="REPORTES BIMESTRALES">
                             <core:choose>
-                                <core:when test="${accesoFormatoUnico}">
-                                    <a id="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a>
+                                <core:when test="${accesoReportesBimestrales}">
+                                    <a class="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a>
                                 </core:when>
                                 <core:otherwise>
                                     <p class="text">REPORTES BIMESTRALES</p>
@@ -165,22 +140,22 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaReportesMensuales"><a id="b" href="#">REPORTES MENSUALES</a></td>
+                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeReportesMensuales}" title="REPORTES MENSUALES"><a class="b" href="#">REPORTES MENSUALES</a></td>
                         <td><img class="imagenes" src="imagenes/tache.png"/></td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaPlaticaBecados"><a id="b" href="#">PLATICA DE BECADOS</a></td>
+                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajePlaticaBecados}" title="PLATICA BECADOS"><a class="b" href="#">PLATICA DE BECADOS</a></td>
                         <td><img class="imagenes" src="imagenes/tache.png"/></td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaDocumentosFinales"><a id="b" href="#">DOCUMENTOS FINALES</a></td>
+                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="DOCUMENTOS FINALES"><a class="b" href="#">DOCUMENTOS FINALES</a></td>
                         <td><img class="imagenes" src="imagenes/tache.png"/></td>
                     </tr>
                     <tr>
-                        <td class="filas" id="filaSanciones">
+                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeSanciones}" title="SANCIONES">
                             <core:choose>
                                 <core:when test="${accesoSanciones}">
-                                    <a id="b" href="#">SANCIONES</a>
+                                    <a id="class" href="#">SANCIONES</a>
                                 </core:when>
                                 <core:otherwise>
                                     <p class="text">SANCIONES</p>
@@ -196,7 +171,7 @@
                                     <img class="imagenes" src="imagenes/paloma.png"/>
                                 </core:otherwise>
                             </core:choose> 
-                            
+
                         </td>
                     </tr> 
                 </table>
@@ -219,11 +194,11 @@
                 <ul class="scrollDivInferior">
                     <core:forEach items="${observaciones}" var="observacion">
                         <li class="error"><b>${observacion.fecha}</b>: ${observacion.catalogoObservacionId.detalle}</li>
-                    </core:forEach>
+                            </core:forEach>
                 </ul>
             </div>
             <!--/Observaciones-->
-            
+
             <!--Sanciones-->
             <div class="divInferior MyForm">
                 <h1>Sanciones</h1>
@@ -232,12 +207,12 @@
                         <core:choose>
                             <core:when  test="${sancion.concepto==0}">
                                 <li class="error"><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
-                            </core:when>    
-                            <core:when  test="${sancion.concepto==1}">
+                                    </core:when>    
+                                    <core:when  test="${sancion.concepto==1}">
                                 <li class="success"><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
-                            </core:when> 
-                         </core:choose> 
-                    </core:forEach>
+                                    </core:when> 
+                                </core:choose> 
+                            </core:forEach>
                 </ul>
             </div>
             <!--/Sanciones-->
@@ -245,7 +220,7 @@
         </div>
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>
-
+        
     </body>
 
 
