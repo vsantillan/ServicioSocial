@@ -128,6 +128,7 @@ public class PanelUsuarioController {
                     ValidaReportesBimestralesModel bimestralesModel = new ValidaReportesBimestralesModel();
                     ReportesBean reporteBimestral =  bimestralesModel.validaReportesBimestrales(servicioBean);
                     
+                    System.out.println("reporteBimestral:"+reporteBimestral.getMensaje());
                     model.addAttribute("accesoReportesBimestrales", reporteBimestral.isAccesoFormato());
                     model.addAttribute("mensajeReportesBimestrales", reporteBimestral.getMensaje());
                     model.addAttribute("statusReporteBimestrales", reporteBimestral.getStatus());

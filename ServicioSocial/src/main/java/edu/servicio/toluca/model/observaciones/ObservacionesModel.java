@@ -35,9 +35,9 @@ public class ObservacionesModel {
         System.out.println("Observaciones");
         if (!observaciones.isEmpty()) {
             for (int i = 0; i < observaciones.size(); i++) {
-                System.out.println("--------------------------------");
-                System.out.println("Fecha:"+fecha.fechaAPalabras(observaciones.get(i).getFecha()));
-                System.out.println("Detalle:"+observaciones.get(i).getCatalogoObservacionId().getDetalle());                
+//                System.out.println("--------------------------------");
+//                System.out.println("Fecha:"+fecha.fechaAPalabras(observaciones.get(i).getFecha()));
+//                System.out.println("Detalle:"+observaciones.get(i).getCatalogoObservacionId().getDetalle());                
             }
         }
         return observaciones;

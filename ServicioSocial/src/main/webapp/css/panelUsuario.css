@@ -25,8 +25,13 @@
     width: 90%;
     text-align: center; 
     border: none;
+    color:white;    
 }
-.b{color: white;text-decoration: none;}
+.filas a{
+    color:white;
+}
+.b{color: white;
+   text-decoration: none;}
 .b:hover{font-size: 120%;}
 
 /*

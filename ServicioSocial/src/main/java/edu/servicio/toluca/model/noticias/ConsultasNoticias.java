@@ -43,7 +43,7 @@ public class ConsultasNoticias {
         noticias = noticiasFacade.findBySpecificField("tipoServicio", 2, "equal", ordenamiento, null);
 
         //Imprime noticias en consola
-        System.out.println("Noticias");
+//        System.out.println("Noticias");
         if (!noticias.isEmpty()) {
             for (int i = 0; i < noticias.size(); i++) {
                 System.out.println("--------------------------------");
