@@ -117,14 +117,16 @@
                     <tr>
                         <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeReportesBimestrales}" title="REPORTES BIMESTRALES">
                             <a class="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a>
-                            <!--core:choose>
+                            <!--
+                            <core:choose>
                                 <core:when test="${accesoReportesBimestrales}">
                                     <a class="b" href="formatoReporteBimestral.do">REPORTES BIMESTRALES</a>
                                 </core:when>
                                 <core:otherwise>
                                     <p class="text">REPORTES BIMESTRALES</p>
                                 </core:otherwise>
-                            </core:choose--!>    
+                            </core:choose>    
+                            -->
                         </td>
                         <td>
                             <core:choose>
