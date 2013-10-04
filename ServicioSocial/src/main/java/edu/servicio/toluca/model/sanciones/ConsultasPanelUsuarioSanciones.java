@@ -58,12 +58,12 @@ public class ConsultasPanelUsuarioSanciones {
         sanciones = sancionesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenamiento, null);
 
         //Imprime noticias en consola
-        System.out.println("Observaciones");
+//        System.out.println("Observaciones");
         if (!sanciones.isEmpty()) {
             for (int i = 0; i < sanciones.size(); i++) {
-                System.out.println("--------------------------------");
-                System.out.println("Fecha:" + fecha.fechaAPalabras(sanciones.get(i).getFecha()));
-                System.out.println("Detalle:" + sanciones.get(i).getCatalogoSancionesId().getDetalle());
+//                System.out.println("--------------------------------");
+//                System.out.println("Fecha:" + fecha.fechaAPalabras(sanciones.get(i).getFecha()));
+//                System.out.println("Detalle:" + sanciones.get(i).getCatalogoSancionesId().getDetalle());
 
                 SancionBean sancion = new SancionBean();
                 sancion.setFecha(fecha.fechaAPalabras(sanciones.get(i).getFecha()));
