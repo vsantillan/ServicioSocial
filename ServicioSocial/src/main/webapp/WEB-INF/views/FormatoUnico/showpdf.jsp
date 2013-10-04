@@ -11,6 +11,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <embed src="pdfs/avisodeconfidencialidad.pdf" style="width:100%; height:2000px">
+        <embed src="pdfs/avisodeconfidencialidad.pdfd" style="width:100%; height:2000px">
     </body>
 </html>
