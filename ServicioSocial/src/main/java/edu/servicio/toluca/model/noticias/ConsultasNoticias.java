@@ -46,9 +46,9 @@ public class ConsultasNoticias {
 //        System.out.println("Noticias");
         if (!noticias.isEmpty()) {
             for (int i = 0; i < noticias.size(); i++) {
-                System.out.println("--------------------------------");
-                System.out.println("Fecha:"+fecha.fechaAPalabras(noticias.get(i).getFecha()));
-                System.out.println("Detalle:"+noticias.get(i).getDetalle());                
+//                System.out.println("--------------------------------");
+//                System.out.println("Fecha:"+fecha.fechaAPalabras(noticias.get(i).getFecha()));
+//                System.out.println("Detalle:"+noticias.get(i).getDetalle());                
             }
         }
         return noticias;

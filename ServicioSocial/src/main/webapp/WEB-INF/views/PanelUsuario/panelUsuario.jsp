@@ -142,14 +142,14 @@
                             </core:choose> 
                         </td>
                     </tr>
-                    <tr>
+<!--                    <tr>
                         <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeReportesMensuales}" title="REPORTES MENSUALES"><a class="b" href="#">REPORTES MENSUALES</a></td>
                         <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                    </tr>
-                    <tr>
+                    </tr>-->
+<!--                    <tr>
                         <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajePlaticaBecados}" title="PLATICA BECADOS"><a class="b" href="#">PLATICA DE BECADOS</a></td>
                         <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="DOCUMENTOS FINALES"><a class="b" href="#">DOCUMENTOS FINALES</a></td>
                         <td><img class="imagenes" src="imagenes/tache.png"/></td>

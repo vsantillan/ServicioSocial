@@ -30,6 +30,15 @@
 .filas a{
     color:white;
 }
+
+.filas a:link, 
+.filas a:visited { 
+    color: white;
+   text-decoration: none;
+}
+.filas a:hover { 
+    font-size: 120%;
+}
 .b{color: white;
    text-decoration: none;}
 .b:hover{font-size: 120%;}
@@ -61,7 +70,7 @@
 .seccionCentral{
     float:left;
     width:40%;
-    height:350px;
+    height:270px;
     margin-left: 4px;
     margin-right: 4px;
 }
@@ -69,7 +78,7 @@
 .seccionLateral{
     float:left;
     width:25%;
-    height:350px;
+    height:270px;
     margin-left: 4px;
     margin-right: 4px;
 }
@@ -95,7 +104,7 @@
 }
 
 .listaNoticias{
-    height: 330px;
+    height: 250px;
 }
 
 .divInferior{

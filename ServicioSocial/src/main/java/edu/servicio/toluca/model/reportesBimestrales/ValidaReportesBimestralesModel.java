@@ -17,15 +17,18 @@ import java.util.List;
 public class ValidaReportesBimestralesModel {
 
     public ReportesBean validaReportesBimestrales(StatusServicioBean servicioBean) {
+        System.out.println("Valida reportes bimestrales");
         ReportesBean reportesBean = new ReportesBean();
 
         if (servicioBean.getPlaticaBean().isTienePlatica()) {
             List<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
-
             int horasServicio = 0;
             int nReportes = 0;
-            if (!reportes.isEmpty()) {
-                nReportes = reportes.size();
+            nReportes = reportes.size();
+            System.out.println("Size reportes:" + nReportes);
+
+            if (!reportes.isEmpty() && reportes != null && nReportes > 0) {
+                System.out.println("Entro a validar bien los reportes bimestrales");
                 for (int i = 0; i < reportes.size(); i++) {
                     int horas = Integer.parseInt(reportes.get(i).getHoras().toString());
                     horasServicio += horas;
@@ -41,13 +44,13 @@ public class ValidaReportesBimestralesModel {
                         //Aceptado
                         case 1:
                             reportesBean.setAccesoFormato(true);
-                            reportesBean.setMensaje("Tu Reporte Bimestral número " + nReporte + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.");
+                            reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.");
                             reportesBean.setStatus(3);
                             break;
                         //Rechazado:
                         case 2:
                             reportesBean.setAccesoFormato(false);
-                            reportesBean.setMensaje("Tu Reporte Bimestral número " + nReporte + " fue rechazado. Favor de acudir a la oficina de servicio social, dado que no puedes continuar con tu proceso hasta que soluciones esta situación.");
+                            reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue rechazado. Favor de acudir a la oficina de servicio social, dado que no puedes continuar con tu proceso hasta que soluciones esta situación.");
                             reportesBean.setStatus(2);
                             break;
                         //Correccion
@@ -60,11 +63,11 @@ public class ValidaReportesBimestralesModel {
 
                             if (nRevisiones <= 5) {
                                 reportesBean.setAccesoFormato(true);
-                                reportesBean.setMensaje("Tu Reporte Bimestral número " + nReporte + " se encuentra en corrección. Por favor revisa la sección de observaciones para saber que es lo que tienes que corregir en tu Reporte Bimestral "+nReporte+".");
+                                reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " se encuentra en corrección. Por favor revisa la sección de observaciones para saber que es lo que tienes que corregir en tu Reporte Bimestral " + nReporte + ".");
                                 reportesBean.setStatus(3);
-                            }else{
+                            } else {
                                 reportesBean.setAccesoFormato(false);
-                                reportesBean.setMensaje("Lo sentimos, has sobrepasado el número máximo de correcciones en tu Reporte Bimestral "+nReporte);
+                                reportesBean.setMensaje("Lo sentimos, has sobrepasado el número máximo de correcciones en tu Reporte Bimestral " + ultimoBimestral.getNumeroReporte());
                                 reportesBean.setStatus(2);
                             }
                             break;
