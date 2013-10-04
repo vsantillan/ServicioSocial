@@ -13,6 +13,23 @@
         <%@ include file="../Template/metas.jsp" %>
         <script type="text/javascript" src="js/platica.js"></script>
         <script src="js/actualizaPlatica.js"></script>
+         <%@ include file="../Template/sinJavascript.jsp" %>
+        <jsp:include page="../Template/headsJQueryUI.jsp" /><!--Hay conflicto de datatables con estilo forms--->
+
+        <!-- Javascripts -->
+        <script src="js/jqueryUI/jquery-1.9.1.js"></script>
+
+        <script src="js/jqueryUI/jquery.ui.core.js"></script>
+        <script src="js/jqueryUI/jquery.ui.widget.js"></script>
+        <script src="js/jqueryUI/jquery.ui.datepicker.js"></script>
+        <script src="js/jqueryUI/jquery.ui.tabs.js"></script>
+        <script src="js/jqueryUI/jquery.ui.timepicker.js"></script>
+
+        <script type="text/javascript" src="js/jqueryUI/i18n/jquery.ui.datepicker-es.js"></script>
+        <script src="js/jquery.codigos.postales.js"></script>   
+        <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" />
+        <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
         <title>Selecciona Plática</title>
     </head>
     <body class="background">
@@ -40,7 +57,8 @@
                                     <p></p>               
                                     <textarea id="hora" rows="4" cols="50" disabled="true" style="background-color:#FFEBCD;border: 2px solid #CB8B07">Hora: ${platicasPeriodo.get(0).hora} Lugar: ${platicasPeriodo.get(0).idLugar.lugar}</textarea><br>
                                     <textarea  id="descripcion" rows="4" cols="50" disabled="true" style="background-color:#FFEBCD;border: 2px solid #CB8B07">Descripción:${platicasPeriodo.get(0).descripcion}</textarea><br>
-                                    <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"> Acépto haber leído el manual donde se describe el uso del<br>
+                                    <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"><a href="muestraPdf.do" class="fancyFUI">  Acepto haber leído el manual</a>
+                                    donde se describe el uso del<br>
                                     sistema via web sobre como dar de alta mi servicio social<p></p>
                                     <input type="submit" value="Generar Folio" /> <br>
                                 </form:form>
