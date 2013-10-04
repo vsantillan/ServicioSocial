@@ -184,4 +184,10 @@ public class PanelUsuarioController {
 
 
     }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/pruebaPopover.do")
+    public String pruebaPopover(Model model, HttpSession session, HttpServletRequest request, String mensaje) {
+        return "/PanelUsuario/pruebaPopover";
+    }
+        
 }

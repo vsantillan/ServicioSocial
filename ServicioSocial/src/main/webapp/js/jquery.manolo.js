@@ -290,14 +290,14 @@ $(document).ready(function() {
 
     $("#btnLogin").click(function(event) {
         $("#respLoginOrg").show("fast");
-        $("#formLogin").animate({width:400, height:300}, "slow");
+        $("#formLogin").animate({width: 400, height: 300}, "slow");
         document.forms["formLogin"].submit();
     });
 
     $("#formLogin").keyup(function(event) {
         if (event.keyCode === 13) {
             $("#respLoginOrg").show("fast");
-            $("#formLogin").animate({width:400, height:300}, "slow");
+            $("#formLogin").animate({width: 400, height: 300}, "slow");
             document.forms["formLogin"].submit();
         }
     });
@@ -313,71 +313,77 @@ $(document).ready(function() {
             return false;
         }
     });
-    
+
     //Panel de usuario
-    $(".filas").mouseover(function(event){
-        $("#mensajesProceso").show("fast");
+    $(".filas").mouseover(function(event) {
+        $(this).popover("show");
+        
     });
     
-    $("td").mouseleave(function(event){
-        $("#mensajesProceso").hide("fast");
+    $(".filas").mouseleave(function(event){
+        $(this).popover("hide");
     });
-    //Platica
-    $("#filaPlatica").mouseover(function(event){       
-       $("#platica").show("fast");  
-    });
+//
+//    $("td").mouseleave(function(event) {
+//        $("#mensajesProceso").hide("fast");
+//    });
+//    //Platica
+//    $("#filaPlatica").mouseover(function(event) {        
+//        $(this).popover("show");
+//    });
+//
+//    $("#filaPlatica").mouseleave(function(event) {
+//        $(this).popover("hide");
+//    });
+//    //Formato Unico
+//    $("#filaFormatoUnico").mouseover(function(event) {
+//        $(this).popover("show");
+//    });
+//
+//    $("#filaFormatoUnico").mouseleave(function(event) {
+//        $("#formatoUnico").hide("fast");
+//    });
+//    //Reportes Bimestrales
+//    $("#filaReportesBimestrales").mouseover(function(event) {
+//        $(this).popover("show");
+//    });
+//
+//    $("#filaReportesBimestrales").mouseleave(function(event) {
+//        $("#reportesBimestrales").hide("fast");
+//    });
+//    //Reportes Mensuales
+//    $("#filaReportesMensuales").mouseover(function(event) {
+//        $(this).popover("show");
+//    });
+//
+//    $("#filaReportesMensuales").mouseleave(function(event) {
+//        $("#reportesMensuales").hide("fast");
+//    });
+//    //Platica Becados
+//    $("#filaPlaticaBecados").mouseover(function(event) {
+//        $(this).popover("show");
+//    });
+//
+//    $("#filaPlaticaBecados").mouseleave(function(event) {
+//        $("#platicaBecados").hide("fast");
+//    });
+//    //Documentos Finales
+//    $("#filaDocumentosFinales").mouseover(function(event) {
+//        $(this).popover("show");
+//    });
+//
+//    $("#filaDocumentosFinales").mouseleave(function(event) {
+//        $("#documentosFinales").hide("fast");
+//    });
+//    //Sanciones
+//    $("#filaSanciones").mouseover(function(event) {
+//        $(this).popover("show");
+//    });
+//
+//    $("#filaSanciones").mouseleave(function(event) {
+//        $("#sanciones").hide("fast");
+//    });
     
-    $("#filaPlatica").mouseleave(function(event){       
-       $("#platica").hide("fast"); 
-    });
-    //Formato Unico
-    $("#filaFormatoUnico").mouseover(function(event){       
-       $("#formatoUnico").show("fast");  
-    });
-    
-    $("#filaFormatoUnico").mouseleave(function(event){       
-       $("#formatoUnico").hide("fast"); 
-    });
-    //Reportes Bimestrales
-    $("#filaReportesBimestrales").mouseover(function(event){       
-       $("#reportesBimestrales").show("fast");  
-    });
-    
-    $("#filaReportesBimestrales").mouseleave(function(event){       
-       $("#reportesBimestrales").hide("fast"); 
-    });
-    //Reportes Mensuales
-    $("#filaReportesMensuales").mouseover(function(event){       
-       $("#reportesMensuales").show("fast");  
-    });
-    
-    $("#filaReportesMensuales").mouseleave(function(event){       
-       $("#reportesMensuales").hide("fast"); 
-    });
-    //Platica Becados
-    $("#filaPlaticaBecados").mouseover(function(event){       
-       $("#platicaBecados").show("fast");  
-    });
-    
-    $("#filaPlaticaBecados").mouseleave(function(event){       
-       $("#platicaBecados").hide("fast"); 
-    });
-    //Documentos Finales
-    $("#filaDocumentosFinales").mouseover(function(event){       
-       $("#documentosFinales").show("fast");  
-    });
-    
-    $("#filaDocumentosFinales").mouseleave(function(event){       
-       $("#documentosFinales").hide("fast"); 
-    });
-    //Sanciones
-    $("#filaSanciones").mouseover(function(event){       
-       $("#sanciones").show("fast");  
-    });
-    
-    $("#filaSanciones").mouseleave(function(event){       
-       $("#sanciones").hide("fast"); 
-    });
 
 });
 
