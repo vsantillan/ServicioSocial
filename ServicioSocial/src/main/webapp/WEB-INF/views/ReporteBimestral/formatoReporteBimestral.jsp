@@ -116,7 +116,7 @@
                                     <form:errors path="horas" cssClass="error"/>
                                 </td>
                                 <td><label for="horasAcumuluadas">Horas Acumuladas:</label></td>
-                                <td><form:input path="horasAcumuladas" type="text" name="horasAcumuladas" id="horasAcumuladas" disabled="true" value="${horasAcumuladas}"  />
+                                <td><form:input path="horasAcumuladas" type="text" name="horasAcumuladas" id="horasAcumuladas" readonly="true" value="${horasAcumuladas}"  />
                                     <form:errors path="horasAcumuladas" cssClass="error"/>
                                 </td>
                             </tr>

@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.beans.bimestrales.reporteBimestral;
@@ -15,6 +16,8 @@ import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
+import edu.servicio.toluca.model.vistaalumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.BimestralesActividadesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
@@ -68,8 +71,10 @@ public class ReporteBimestralController {
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
-        FormatoUnico fechaInicioFU=null;
-        
+        FormatoUnico fechaInicioFU = null;
+
+
+
         if (!new ValidaSesion().validaAlumno(session, request)) {
             modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
@@ -83,14 +88,15 @@ public class ReporteBimestralController {
         if (!datosPersonales.isEmpty()) {
             DatosPersonales DP = datosPersonales.get(0);
             modelo.addAttribute("datosPersonales", datosPersonales);
+            List<FormatoUnico> formatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
+            fechaInicioFU = formatoUnico.get(0);
 
             /////////////Validamos si es su primer reporte//////////////
             List<Reportes> RB = reportesFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
             if (RB.isEmpty()) {
-                List<FormatoUnico> formatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
-                fechaInicioFU = formatoUnico.get(0);
+
                 modelo.addAttribute("numeroReporte", 1);
-                modelo.addAttribute("noReviciones",0);
+                modelo.addAttribute("noReviciones", 0);
                 fechas fechas = new fechas();
                 RBObjeto.setCalificacion(0);
                 RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
@@ -100,6 +106,7 @@ public class ReporteBimestralController {
 
                 modelo.addAttribute("Reportes", RBObjeto);
             } else {
+                fechas fechas = new fechas();
                 int noReportes = 1;
                 for (int i = 0; i < RB.size(); i++) {
                     Reportes reporteBimestral = RB.get(i);
@@ -108,14 +115,16 @@ public class ReporteBimestralController {
                     }
 
                 }
+                Reportes ultimoReporte = RB.get(RB.size() - 1);
                 RBObjeto.setNumeroReporte(noReportes);
                 RBObjeto.setCalificacion(0);
                 //Buscar el ultimo reporte Bimestral con status aprobado
                 //Y sacar esa fecha fin
-                RBObjeto.setFechaInicio("");
+                RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
                 //Sumar los dos meses a fecha FIn
-                RBObjeto.setFechaFin("");
+                RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
                 RBObjeto.setHorasAcumuladas(fechaInicioFU.getHorasAcumuladas());
+                modelo.addAttribute("Reportes", RBObjeto);
             }
             //////////////////////////////////////////////////////////////
 
@@ -133,10 +142,17 @@ public class ReporteBimestralController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/insertaReporte.do")
     public String insertaBimestral(@ModelAttribute("Reportes") @Valid reporteBimestral reporte, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request) {
+
+        //Obtenemos Objetos del Alumno
+        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+        VistaAlumno alumnoB = consultaVistaAlumno.getAlumnoSesion(session);
+        ValidacionStatusServicio validaServicio = new ValidacionStatusServicio();
+        StatusServicioBean servicioBean = validaServicio.validaServicio(alumnoB);
+
         String alumno_id = session.getAttribute("NCONTROL").toString();
-        List<String> listaIds=null;
+        List<String> listaIds = null;
         if (selectfrom != null) {
-           listaIds = new ArrayList<String>();
+            listaIds = new ArrayList<String>();
             StringTokenizer palabra = new StringTokenizer(selectfrom, ",");
             while (palabra.hasMoreTokens()) {
                 listaIds.add(palabra.nextToken());
@@ -156,18 +172,25 @@ public class ReporteBimestralController {
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         if (resultado.hasErrors()) {
-            System.out.println("Hubo errores:"+resultado.toString());
-            if (!datosPersonales.isEmpty()) {       
+            System.out.println("Hubo errores:" + resultado.toString());
+            if (!datosPersonales.isEmpty()) {
                 modelo.addAttribute("datosPersonales", datosPersonales);
             }
             modelo.addAttribute("Reportes", reporte);
             return "/ReporteBimestral/formatoReporteBimestral";
         } else {
-             //---------------------------------------------------------//
-             //Insertamos el Reporte Bimestral                          //
-             //---------------------------------------------------------//
-           //Verificar si el status del utimo reporte es rechazado
-           //Se borran las Actividades que hay con este
+            //---------------------------------------------------------//
+            //Insertamos el Reporte Bimestral                          //
+            //---------------------------------------------------------//
+
+            //Verificar si el status del utimo reporte es rechazado
+            //Se borran las Actividades que hay con este
+
+            List<Reportes> bimestralesUltimos = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+            Reportes bimestralU = bimestralesUltimos.get(bimestralesUltimos.size() - 1);
+            
+           // if(bimestralU.getStatus()== BigInteger.valueOf(0) )
+            //Hacer la validacion para hacer update o insert
             
             fechas fecha = new fechas();
             Reportes reporteBimestral = new Reportes();
@@ -176,35 +199,39 @@ public class ReporteBimestralController {
             reporteBimestral.setHoras(BigInteger.valueOf(reporte.getHoras()));
             reporteBimestral.setCalificacion(BigInteger.ZERO);
             reporteBimestral.setFechaInicio(fecha.covierteString(reporte.getFechaInicio()));
-            Date fechaFin=fecha.covierteString(reporte.getFechaFin());
+            Date fechaFin = fecha.covierteString(reporte.getFechaFin());
             reporteBimestral.setFechaFin(fechaFin);
             reporteBimestral.setStatus(BigInteger.ZERO);
-            
             reporteBimestral.setFechaEntregaMax(fecha.covierteString(fecha.fechaEntrgaMax(fechaFin)));
-            
             reporteBimestral.setNumeroRevisiones(BigInteger.ZERO);
+            //Creamos el nuevo Reporte Bimestral
             reportesFacade.create(reporteBimestral);
-              //---------------------------------------------------------//
-             //Insertamos las actividades del reporte                   //
-             //---------------------------------------------------------//
-            
+
+            //Actualizamos las horas acumuladas en el formato Unico
+            FormatoUnico actualizaHoras = servicioBean.getFormatoUnico();
+            actualizaHoras.setHorasAcumuladas(BigInteger.valueOf(reporte.getHoras()).add(actualizaHoras.getHorasAcumuladas()));
+            formatoUnicoFacade.edit(actualizaHoras);
+            //---------------------------------------------------------//
+            //Insertamos las actividades del reporte                   //
+            //---------------------------------------------------------//
+
+
             //Buscamos el reporte recien insertado
-            DatosPersonales dp=datosPersonales.get(0);
-            List<Reportes> bimestrales=reportesFacade.findBySpecificField("id",dp.getId(), "equal", null, null);
-            Reportes bimestralInsertado=bimestrales.get(0);
-            
-             Iterator inserta = listaIds.iterator();
-                //while que inserta la lista de los perfiles para el proyecto
-                while (inserta.hasNext()) {
-                    Actividad a;
-                   BimestralesActividades actividadesB = new BimestralesActividades();
-                   actividadesB.setIdReporte(bimestralInsertado);
-                   List<Actividades>  actividades=actividadesFacade.findBySpecificField("id", inserta.next(),"equal", null, null);
-                   //actividadesB.setIdActividad(actividades.get(0));
-                   actividadesBimestralesFacade.create(actividadesB);
-                }
-               System.out.println("Inserto las Actividaes");
-            
+            //DatosPersonales dp = datosPersonales.get(0);
+            List<Reportes> bimestrales = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+            Reportes bimestralInsertado = bimestrales.get(bimestrales.size() - 1);
+
+            Iterator inserta = listaIds.iterator();
+            //while que inserta la lista de los perfiles para el proyecto
+            while (inserta.hasNext()) {
+                BimestralesActividades actividadesB = new BimestralesActividades();
+                actividadesB.setIdReporte(bimestralInsertado);
+                List<Actividades> actividades = actividadesFacade.findBySpecificField("idActividad", inserta.next(), "equal", null, null);
+                actividadesB.setIdActividades(actividades.get(0));
+                actividadesBimestralesFacade.create(actividadesB);
+            }
+            System.out.println("Inserto las Actividaes");
+
             return "/ReporteBimestral/formatoReporteBimestral";
         }
 
