@@ -18,6 +18,7 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.ReportesFacade;
+import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -43,6 +44,8 @@ public class ReporteBimestralController2
 {
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+    private VistaAlumnoFacade vistaAlumnoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/ReportesFacade")
     private ReportesFacade reportesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
@@ -76,6 +79,7 @@ public class ReporteBimestralController2
         reporte=reportesFacade.find(BigDecimal.valueOf(id));
         //Checar el estatus del reporte
         reporte.setStatus(BigInteger.ONE);
+        reporte.setNumeroRevisiones(BigInteger.valueOf(reporte.getNumeroRevisiones().intValue()+1));
         reportesFacade.edit(reporte);
         System.out.println("Reporte Alterado con Status a: "+retroalimentacionReporte.getStatus());
         return "ok";
@@ -88,6 +92,7 @@ public class ReporteBimestralController2
         reporte=reportesFacade.find(BigDecimal.valueOf(id));
         //Checar el estatus del reporte
         reporte.setStatus(BigInteger.ZERO);
+        reporte.setNumeroRevisiones(BigInteger.valueOf(reporte.getNumeroRevisiones().intValue()+1));
         reportesFacade.edit(reporte);
         System.out.println("Reporte Alterado con Status a: "+status);
         return "ok";
@@ -102,24 +107,75 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(value = "/guardarReporteBimestral.do", method = RequestMethod.POST)
-    public String save(@RequestParam("file") MultipartFile file,int id) throws IOException 
-    { 
-        System.out.println("Aqui es donde lo debe guardar. Con id: "+id+" y docuemento: "+file.getOriginalFilename());
-        Documentos doc=new Documentos();
-        CatalogoDocumento catalogoDoc=catalogoDocumentoFacade.find(BigDecimal.valueOf(2));
-        DatosPersonales dp=datosPersonalesFacade.find(BigDecimal.valueOf(id));
-        doc.setDatosPersonalesId(dp);
-        doc.setCatalogoDocumentosId(catalogoDoc);
-        doc.setArchivo(file.getBytes());
-        doc.setExtension("pdf");
-        documentosFacade.create(doc);
-        return "/ReporteBimestral/subirAlumnoReporteBimestral";
+    public String subirReporteBi(@RequestParam("file") MultipartFile file, String no_control) throws IOException 
+    {
+        System.out.println("Inicia Subir carta motivos");
+        System.out.println("El no control del alumno es->" + no_control);
+        
+        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
+        if (vistaAlumnoFacade.count() < 1 || listaAlumnos.isEmpty()) {
+            System.out.println("O no hay registros en la tabla o no existe tal alumno en la base de datos de Vista LAumno");
+            return "redirect:panelUsuario.do";
+        }
+        
+        VistaAlumno alumno = listaAlumnos.get(0);
+        List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        DatosPersonales datosPersonales = listaDatosPersonales.get(0);
+
+        System.out.println("Inicia subida de info la tabla de Egresado");
+        System.out.println("Original filename: " + file.getOriginalFilename());
+        System.out.println("File:" + file.getName());
+        System.out.println("Size:" + file.getSize());
+        System.out.println("ContentType:" + file.getContentType());
+        System.out.println("COmprobando que no exista antes una carta de motivos en la tabla");
+        
+        System.out.println("Iniciando proceso de subida de documento");
+        //List<CatalogoDocumento> listaCatalogoDocumento = catalogoDocumentoFacade.findBySpecificField("tipo", "Formato_Bimestral", "equal", null, null); 
+        CatalogoDocumento catalogoDocumento = catalogoDocumentoFacade.find(BigDecimal.valueOf(2));
+        List<Documentos> listaDocumentos = documentosFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+        Documentos documento = new Documentos();
+        boolean enDocumentos = false;
+        if (documentosFacade.count() < 1 || listaDocumentos.isEmpty()) {
+            System.out.println("Todo indica que dicho registro en Documentos no existia se va a hacer uno nuevo");
+            enDocumentos = false;
+        } else {
+            if(listaDocumentos.get(0).getCatalogoDocumentosId() == catalogoDocumento)
+            {
+                System.out.println("Todo indica que ya estaba el registro en Documentos, se va a editar");
+                enDocumentos = true;
+                documento = listaDocumentos.get(0);
+            }
+            else
+            {
+                System.out.println("Todo indica que dicho registro en Documentos no existia se va a hacer uno nuevo");
+                enDocumentos = false;
+            }
+            
+        }
+        documento.setArchivo(file.getBytes());
+        documento.setDatosPersonalesId(datosPersonales);
+        String extension = file.getOriginalFilename();
+        extension = extension.substring(extension.length() - 3, extension.length());
+        documento.setExtension(extension);
+        documento.setFechaSubida(new java.util.Date());
+        documento.setCatalogoDocumentosId(catalogoDocumento);
+//        if(enDocumentos)
+//        {
+//            documentosFacade.edit(documento);
+//            System.out.println("Fin de creación en Documento");
+//        }
+//        else
+//        {
+            documentosFacade.create(documento);
+            System.out.println("Fin de edición en Docuemnto");
+//        }
+        return "redirect:subirAlumnoReporteBimestral.do";
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/subirAlumnoReporteBimestral.do")
-    String subirAlumnoReporteBimestral()
+    String subirAlumnoReporteBimestral(@RequestParam String no_control,Model modelo)
     {
-        System.out.println("Entro aquí");
+        modelo.addAttribute("no_control", no_control);
         return "/ReporteBimestral/subirAlumnoReporteBimestral";
     }
 }
