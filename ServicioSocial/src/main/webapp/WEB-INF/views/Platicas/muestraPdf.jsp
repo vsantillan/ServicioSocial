@@ -1,7 +1,7 @@
 <%-- 
-    Document   : showpdf
-    Created on : 19/08/2013, 12:06:42 PM
-    Author     : SATELLITE
+    Document   : muestraPdf
+    Created on : 4/10/2013, 01:21:01 PM
+    Author     : Jonny
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

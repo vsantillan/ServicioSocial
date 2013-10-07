@@ -146,7 +146,11 @@ public class PlaticaController {
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
         return "/Platicas/capturarAsistencia";
     }
-
+ @RequestMapping(method = RequestMethod.GET, value = "/muestraPdf.do")
+    public String pdfProcedimiento(Model modelo, HttpSession session, HttpServletRequest request) {
+        return "/Platicas/muestraPdf";
+    }
+    
     @RequestMapping(method = RequestMethod.GET, value = "/asistenciaPosteriorEspecial.do")
     public String AsistenciaPosteriorEspecial(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaAdmin(session, request)))) {
@@ -264,6 +268,14 @@ public class PlaticaController {
 
             List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
             if (lista.isEmpty()) {
+                 VistaAlumno alumnoRegistrado = new VistaAlumno();
+                 alumnoRegistrado.setId(session.getAttribute("NCONTROL").toString());
+                List<FoliosPlatica> tieneRegistros = foliosPlaticaFacade.findBySpecificField("alumnoId",alumnoRegistrado, "equal", null, null);
+              if(!tieneRegistros.isEmpty()) 
+              {    
+                  System.out.println("entro");
+                  for (int i = 0; i < tieneRegistros.size(); i++) {
+                   foliosPlaticaFacade.remove(tieneRegistros.get(i));}}
                 FoliosPlatica foliosPlatica = new FoliosPlatica();
                 Platica platica = new Platica();
                 VistaAlumno alumno = new VistaAlumno();
@@ -285,8 +297,7 @@ public class PlaticaController {
                 System.out.println("numero" + numero);
                 platica.setNumeroAsistentes(numero);
                 platicaFacade.edit(platica);
-                System.out.println("antes del folio");
-                 session.setAttribute("folio", fecha);
+                session.setAttribute("platica", fecha+"");
                 return "/Platicas/folio";
                 
             } else {

@@ -92,7 +92,8 @@ public class PanelUsuarioController {
                 if (servicioBean.getDatosPersonales() != null) {
                     ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
                     FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(servicioBean);
-
+                    
+                    System.out.println("Val FUI:"+beanFU.getMensaje());
                     model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
                     model.addAttribute("statusFui", beanFU.getStatusFui());
                     model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());

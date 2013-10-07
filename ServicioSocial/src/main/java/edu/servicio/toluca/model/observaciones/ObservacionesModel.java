@@ -32,7 +32,7 @@ public class ObservacionesModel {
         observaciones = regObservacionesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenamiento, null);
 
         //Imprime noticias en consola
-        System.out.println("Observaciones");
+//        System.out.println("Observaciones");
         if (!observaciones.isEmpty()) {
             for (int i = 0; i < observaciones.size(); i++) {
 //                System.out.println("--------------------------------");
