@@ -98,7 +98,7 @@ public class PanelUsuarioController {
                     model.addAttribute("statusFui", beanFU.getStatusFui());
                     model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
                 } else {
-                    model.addAttribute("accesoFormatoUnico", true);
+                    model.addAttribute("accesoFormatoUnico", false);
                     model.addAttribute("statusFui", 2);
                     model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
                 }
@@ -133,7 +133,11 @@ public class PanelUsuarioController {
                     model.addAttribute("accesoReportesBimestrales", reporteBimestral.isAccesoFormato());
                     model.addAttribute("mensajeReportesBimestrales", reporteBimestral.getMensaje());
                     model.addAttribute("statusReporteBimestrales", reporteBimestral.getStatus());
-                }
+                }else{
+                    model.addAttribute("accesoReportesBimestrales", false);
+                    model.addAttribute("mensajeReportesBimestrales", "No has comenzado tu proceso de servicio social");
+                    model.addAttribute("statusReporteBimestrales", 2);
+                }                   
             }catch(Exception e){
                 System.out.println("Error en validacion de reportes bimestrales");
                 e.printStackTrace();                
@@ -149,6 +153,24 @@ public class PanelUsuarioController {
                     model.addAttribute("accesoSanciones", true);
                     model.addAttribute("tieneSancion", sancionesBean.isTieneSancion());
                     model.addAttribute("sanciones", consultaSanciones.listaSanciones(servicioBean.getDatosPersonales(), sancionesFacade, "desc"));
+                }else{
+                    model.addAttribute("mensajeSanciones", "No has comenzado tu proceso de servicio social");
+                    model.addAttribute("accesoSanciones", false);
+                    model.addAttribute("tieneSancion", false);                    
+                }
+            } catch (Exception e) {
+                System.out.println("Eror en observaciones");
+                e.printStackTrace();
+            }
+            
+            //Documentos Finales
+            try {
+                if (servicioBean.getDatosPersonales() != null) {
+                
+                }else{
+                    model.addAttribute("accesoDocumentosFinales", false);
+                    model.addAttribute("mensajeDocumentosFinales", "No has comenzado tu proceso de servicio social");
+                    model.addAttribute("statusDocumentosFinales", 2);
                 }
             } catch (Exception e) {
                 System.out.println("Eror en observaciones");
@@ -161,6 +183,7 @@ public class PanelUsuarioController {
             model.addAttribute("accesoPlatica", false);
             model.addAttribute("accesoFormatoUnico", false);
             model.addAttribute("accesoSanciones", false);
+            model.addAttribute("accesoReportesBimestrales", false);
 
             //If servicio social terminado
             if (servicioBean.getStatusServicio() == 4) {

@@ -23,10 +23,10 @@
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/bootstrap-popover.js"></script>
         <script src="js/jquery.manolo.js"></script>
-        
+
         <link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
-        
-                
+
+
         <title>Home Usuario</title>
     </head>
     <body class="background" >
@@ -37,7 +37,7 @@
         <div id="contenido">
 
             <h1>Panel de Usuario</h1>
-           
+
             <!--Cuadro de bienvenida-->
             <div class="MyForm mensajeBienvenida">
                 <h1>Bienvenido <%=nombre%></h1>
@@ -142,17 +142,31 @@
                             </core:choose> 
                         </td>
                     </tr>
-<!--                    <tr>
-                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeReportesMensuales}" title="REPORTES MENSUALES"><a class="b" href="#">REPORTES MENSUALES</a></td>
-                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                    </tr>-->
-<!--                    <tr>
-                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajePlaticaBecados}" title="PLATICA BECADOS"><a class="b" href="#">PLATICA DE BECADOS</a></td>
-                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
-                    </tr>-->
+                    <!--                    <tr>
+                                            <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeReportesMensuales}" title="REPORTES MENSUALES"><a class="b" href="#">REPORTES MENSUALES</a></td>
+                                            <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                                        </tr>-->
+                    <!--                    <tr>
+                                            <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajePlaticaBecados}" title="PLATICA BECADOS"><a class="b" href="#">PLATICA DE BECADOS</a></td>
+                                            <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                                        </tr>-->
                     <tr>
-                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="DOCUMENTOS FINALES"><a class="b" href="#">DOCUMENTOS FINALES</a></td>
-                        <td><img class="imagenes" src="imagenes/tache.png"/></td>
+                        <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="DOCUMENTOS FINALES">
+                            <a class="b" href="#">DOCUMENTOS FINALES</a>
+                        </td>
+                        <td>
+                            <core:choose>
+                                <core:when  test="${statusDocumentosFinales==1}">
+                                    <img class="imagenes" src="imagenes/paloma.png"/>
+                                </core:when>    
+                                <core:when  test="${statusDocumentosFinales==2}">
+                                    <img class="imagenes" src="imagenes/tache.png"/>
+                                </core:when> 
+                                <core:when  test="${statusDocumentosFinales==3}">
+                                    <img class="imagenes" src="imagenes/reloj.png"/>
+                                </core:when>
+                            </core:choose> 
+                        </td>
                     </tr>
                     <tr>
                         <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeSanciones}" title="SANCIONES">
@@ -215,7 +229,7 @@
         </div>
         <%-- fin del contenido --%>
         <%@ include file="../Template/footer.jsp" %>
-        
+
     </body>
 
 
