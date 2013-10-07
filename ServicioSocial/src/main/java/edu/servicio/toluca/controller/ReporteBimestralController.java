@@ -13,6 +13,7 @@ import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.BimestralesActividades;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
+import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
@@ -187,17 +188,45 @@ public class ReporteBimestralController {
             //Se borran las Actividades que hay con este
 
             List<Reportes> bimestralesUltimos = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
-            Reportes bimestralU = bimestralesUltimos.get(bimestralesUltimos.size() - 1);
-            
-           // if(bimestralU.getStatus()== BigInteger.valueOf(0) )
-            //Hacer la validacion para hacer update o insert
-            
+
+            if (!bimestralesUltimos.isEmpty()) {
+                Reportes bimestralU = bimestralesUltimos.get(bimestralesUltimos.size() - 1);
+                if (bimestralU.getStatus() == BigInteger.valueOf(0) || bimestralU.getStatus() == BigInteger.valueOf(3)) {
+                    bimestralU.setHoras(BigInteger.valueOf(reporte.getHoras()));
+                    bimestralU.setCalificacion(BigInteger.valueOf(reporte.getCalificacion()));
+                    reportesFacade.edit(bimestralU);
+                    System.out.println("Edito El Reporte");
+                   
+                    //while para eliminar actividades antiguass
+                    List<BimestralesActividades> actividadesEliminar = actividadesBimestralesFacade.findBySpecificField("idReporte", bimestralU.getId(), "equal", null, null);
+                    Iterator<BimestralesActividades> recorreActividades = actividadesEliminar.iterator();
+                    while (recorreActividades.hasNext()) {
+                        BimestralesActividades borraActividades;
+                        borraActividades = recorreActividades.next();
+                        actividadesBimestralesFacade.remove(borraActividades);
+                    }
+                    System.out.println("Elimino Actividades Actuales");
+                    Iterator inserta = listaIds.iterator();
+                    //while que inserta la lista de los perfiles para el proyecto
+                    while (inserta.hasNext()) {
+                        BimestralesActividades actividadesB = new BimestralesActividades();
+                        actividadesB.setIdReporte(bimestralU);
+                        List<Actividades> actividades = actividadesFacade.findBySpecificField("idActividad", inserta.next(), "equal", null, null);
+                        actividadesB.setIdActividades(actividades.get(0));
+                        actividadesBimestralesFacade.create(actividadesB);
+                    }
+                    System.out.println("Inserto Nuevas Actividades");
+                }
+                System.out.println("Todo Salio bien");
+                return "/ReporteBimestral/formatoReporteBimestral";
+            }
+
             fechas fecha = new fechas();
             Reportes reporteBimestral = new Reportes();
             reporteBimestral.setDatosPersonalesId(datosPersonales.get(0));
             reporteBimestral.setNumeroReporte(BigInteger.valueOf(reporte.getNumeroReporte()));
             reporteBimestral.setHoras(BigInteger.valueOf(reporte.getHoras()));
-            reporteBimestral.setCalificacion(BigInteger.ZERO);
+            reporteBimestral.setCalificacion(BigInteger.valueOf(reporte.getCalificacion()));
             reporteBimestral.setFechaInicio(fecha.covierteString(reporte.getFechaInicio()));
             Date fechaFin = fecha.covierteString(reporte.getFechaFin());
             reporteBimestral.setFechaFin(fechaFin);
