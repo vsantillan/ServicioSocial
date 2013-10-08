@@ -5,12 +5,14 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.ReportesBean;
+import edu.servicio.toluca.beans.ReportesFinalesBean;
 import edu.servicio.toluca.beans.SancionesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
+import edu.servicio.toluca.model.documentosFinales.ValidaDocumentosFinalesModel;
 import edu.servicio.toluca.model.vistaalumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
@@ -92,8 +94,8 @@ public class PanelUsuarioController {
                 if (servicioBean.getDatosPersonales() != null) {
                     ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
                     FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(servicioBean);
-                    
-                    System.out.println("Val FUI:"+beanFU.getMensaje());
+
+                    System.out.println("Val FUI:" + beanFU.getMensaje());
                     model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
                     model.addAttribute("statusFui", beanFU.getStatusFui());
                     model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
@@ -124,23 +126,23 @@ public class PanelUsuarioController {
             }
 
             //Reportes Bimestrales
-            try{
+            try {
                 if (servicioBean.getDatosPersonales() != null) {
                     ValidaReportesBimestralesModel bimestralesModel = new ValidaReportesBimestralesModel();
-                    ReportesBean reporteBimestral =  bimestralesModel.validaReportesBimestrales(servicioBean);
-                    
-                    System.out.println("reporteBimestral:"+reporteBimestral.getMensaje());
+                    ReportesBean reporteBimestral = bimestralesModel.validaReportesBimestrales(servicioBean);
+
+                    System.out.println("reporteBimestral:" + reporteBimestral.getMensaje());
                     model.addAttribute("accesoReportesBimestrales", reporteBimestral.isAccesoFormato());
                     model.addAttribute("mensajeReportesBimestrales", reporteBimestral.getMensaje());
                     model.addAttribute("statusReporteBimestrales", reporteBimestral.getStatus());
-                }else{
+                } else {
                     model.addAttribute("accesoReportesBimestrales", false);
                     model.addAttribute("mensajeReportesBimestrales", "No has comenzado tu proceso de servicio social");
                     model.addAttribute("statusReporteBimestrales", 2);
-                }                   
-            }catch(Exception e){
+                }
+            } catch (Exception e) {
                 System.out.println("Error en validacion de reportes bimestrales");
-                e.printStackTrace();                
+                e.printStackTrace();
             }
 
             //Sanciones
@@ -153,21 +155,27 @@ public class PanelUsuarioController {
                     model.addAttribute("accesoSanciones", true);
                     model.addAttribute("tieneSancion", sancionesBean.isTieneSancion());
                     model.addAttribute("sanciones", consultaSanciones.listaSanciones(servicioBean.getDatosPersonales(), sancionesFacade, "desc"));
-                }else{
+                } else {
                     model.addAttribute("mensajeSanciones", "No has comenzado tu proceso de servicio social");
                     model.addAttribute("accesoSanciones", false);
-                    model.addAttribute("tieneSancion", false);                    
+                    model.addAttribute("tieneSancion", false);
                 }
             } catch (Exception e) {
                 System.out.println("Eror en observaciones");
                 e.printStackTrace();
             }
-            
+
             //Documentos Finales
             try {
                 if (servicioBean.getDatosPersonales() != null) {
-                
-                }else{
+                    ValidaDocumentosFinalesModel validaDocFinales = new ValidaDocumentosFinalesModel();
+                    ReportesFinalesBean reportesFinales = validaDocFinales.validaDocumentosFinales(servicioBean);
+                    
+                    model.addAttribute("accesoDocumentosFinales", reportesFinales.isPuedeAccesar());
+                    model.addAttribute("mensajeDocumentosFinales", reportesFinales.getMensaje());
+                    model.addAttribute("statusDocumentosFinales", reportesFinales.getStatus());
+
+                } else {
                     model.addAttribute("accesoDocumentosFinales", false);
                     model.addAttribute("mensajeDocumentosFinales", "No has comenzado tu proceso de servicio social");
                     model.addAttribute("statusDocumentosFinales", 2);
@@ -185,13 +193,17 @@ public class PanelUsuarioController {
             model.addAttribute("accesoSanciones", false);
             model.addAttribute("accesoReportesBimestrales", false);
 
-            //If servicio social terminado
+            //If servicio social terminado            
             if (servicioBean.getStatusServicio() == 4) {
+                //Para poner palomas a todos los procesos del servicio
                 model.addAttribute("platica", true);
                 model.addAttribute("statusFui", 1);
+                model.addAttribute("statusReporteBimestrales", 1);
             } else {
+                //Para poner taches a todos los procesos del servicio
                 model.addAttribute("platica", false);
                 model.addAttribute("statusFui", 2);
+                model.addAttribute("statusReporteBimestrales", 2);
             }
 
             //Mensajes
@@ -209,10 +221,9 @@ public class PanelUsuarioController {
 
 
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/pruebaPopover.do")
     public String pruebaPopover(Model model, HttpSession session, HttpServletRequest request, String mensaje) {
         return "/PanelUsuario/pruebaPopover";
     }
-        
 }

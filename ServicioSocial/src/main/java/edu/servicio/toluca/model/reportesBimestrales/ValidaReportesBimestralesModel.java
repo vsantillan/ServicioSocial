@@ -21,10 +21,11 @@ public class ValidaReportesBimestralesModel {
         ReportesBean reportesBean = new ReportesBean();
 
         if (servicioBean.getPlaticaBean().isTienePlatica()) {
-            List<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
+            ArrayList<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
             int horasServicio = 0;
             int nReportes = 0;
             nReportes = reportes.size();
+            servicioBean.setReportesBimestrales(reportes);
             System.out.println("Size reportes:" + nReportes);
 
             if (!reportes.isEmpty() && reportes != null && nReportes > 0) {
@@ -33,6 +34,7 @@ public class ValidaReportesBimestralesModel {
                     int horas = Integer.parseInt(reportes.get(i).getHoras().toString());
                     horasServicio += horas;
                 }
+                servicioBean.setHorasServicio(horasServicio);
 
                 if (horasServicio < 480) {
                     //Validar el ultimo reporte bimestral

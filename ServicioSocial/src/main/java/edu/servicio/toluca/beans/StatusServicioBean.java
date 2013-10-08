@@ -7,7 +7,9 @@ package edu.servicio.toluca.beans;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
+import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,6 +23,9 @@ public class StatusServicioBean {
     private FormatoUnico formatoUnico;
     private VistaAlumno vistaAlumno;
     private FoliosPlaticaBean platicaBean;
+    private int horasServicio=0;
+    private ArrayList<Reportes> reportesBimestrales;
+    
 
     /**
      * Mensaje sobre el estatus del servicio social
@@ -116,5 +121,33 @@ public class StatusServicioBean {
      */
     public void setPlaticaBean(FoliosPlaticaBean platicaBean) {
         this.platicaBean = platicaBean;
+    }
+
+    /**
+     * @return the horasServicio
+     */
+    public int getHorasServicio() {
+        return horasServicio;
+    }
+
+    /**
+     * @param horasServicio the horasServicio to set
+     */
+    public void setHorasServicio(int horasServicio) {
+        this.horasServicio = horasServicio;
+    }
+
+    /**
+     * @return the reportesBimestrales
+     */
+    public ArrayList<Reportes> getReportesBimestrales() {
+        return reportesBimestrales;
+    }
+
+    /**
+     * @param reportesBimestrales the reportesBimestrales to set
+     */
+    public void setReportesBimestrales(ArrayList<Reportes> reportesBimestrales) {
+        this.reportesBimestrales = reportesBimestrales;
     }
 }

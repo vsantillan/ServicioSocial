@@ -47,6 +47,7 @@
                     <li><img src="imagenes/reloj.png" height="30"/>: Proceso en Revisi&oacute;n</li>
                     <li><img src="imagenes/tache.png" height="30"/>: Proceso No realizado</li>
                 </ul>
+                <p>Es importante que recuerdes que a pesar de que el proceso es digital, debes conservar todos tus documentos y formatos originales, ya que deben ser entregados f&iacute;sicamente al final de tu proceso de servicio social.</p>
             </div>
             <br/>
             <!--/Cuadro de bienvenida-->            
@@ -153,6 +154,16 @@
                     <tr>
                         <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="DOCUMENTOS FINALES">
                             <a class="b" href="#">DOCUMENTOS FINALES</a>
+                            <!--
+                            <core:choose>
+                                <core:when test="${accesoReportesBimestrales}">
+                                    <a class="b" href="#">DOCUMENTOS FINALES</a>
+                                </core:when>
+                                <core:otherwise>
+                                    <p class="text">DOCUMENTOS FINALES</p>
+                                </core:otherwise>
+                            </core:choose>    
+                            -->
                         </td>
                         <td>
                             <core:choose>
@@ -163,6 +174,10 @@
                                     <img class="imagenes" src="imagenes/tache.png"/>
                                 </core:when> 
                                 <core:when  test="${statusDocumentosFinales==3}">
+                                    <img class="imagenes" src="imagenes/reloj.png"/>
+                                </core:when>
+                                <core:when  test="${statusDocumentosFinales==4}">
+                                    <img class="imagenes" src="imagenes/paloma.png"/>
                                     <img class="imagenes" src="imagenes/reloj.png"/>
                                 </core:when>
                             </core:choose> 

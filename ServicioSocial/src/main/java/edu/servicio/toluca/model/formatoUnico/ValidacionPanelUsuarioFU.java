@@ -60,7 +60,7 @@ public class ValidacionPanelUsuarioFU {
                         if (revisionesFui <= 5) {
                             beanFU.setAccesoFormatoUnico(true);
                             beanFU.setStatusFui(3);
-                            beanFU.setMensaje("Tu Formato Único se encuentra en corrección. Por favor revisa a la sección de observaciones para saber que es lo que tienes que corregir en tu Formato Unico.");
+                            beanFU.setMensaje("Tu Formato Único se encuentra en corrección. Por favor revisa la sección de observaciones para saber que es lo que tienes que corregir en tu Formato Unico.");
                         } else {
                             beanFU.setAccesoFormatoUnico(false);
                             beanFU.setStatusFui(2);
