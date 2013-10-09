@@ -116,8 +116,9 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(value = "/guardarReporteBimestral.do", method = RequestMethod.POST)
-    public String subirReporteBi(@RequestParam("file") MultipartFile file, String no_control,HttpSession session, HttpServletRequest request) throws IOException 
+    public String subirReporteBi(@RequestParam("file") MultipartFile file,HttpSession session, HttpServletRequest request) throws IOException 
     {
+        String no_control = session.getAttribute("NCONTROL").toString();
         System.out.println("Inicia Subir carta motivos");
         System.out.println("El no control del alumno es->" + no_control);
         
