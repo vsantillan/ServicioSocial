@@ -24,13 +24,13 @@ public class ValidacionStatusServicio {
             List<DatosPersonales> datosPersonales = new ArrayList<DatosPersonales>(vistaAlumno.getDatosPersonalesCollection());
             List<FormatoUnico> formatoUnicoColl = new ArrayList<FormatoUnico>(datosPersonales.get(0).getFormatoUnicoCollection());
             FormatoUnico formatoUnico = formatoUnicoColl.get(0);
-            
+
             int statusServicio = Integer.parseInt(formatoUnico.getStatusServicio().toString());
             servicioBean.setStatusServicio(statusServicio);
             servicioBean.setDatosPersonales(datosPersonales.get(0));
             servicioBean.setFormatoUnico(formatoUnico);
             servicioBean.setVistaAlumno(vistaAlumno);
-            
+
             switch (statusServicio) {
                 //Activo
                 case 1:
@@ -47,6 +47,9 @@ public class ValidacionStatusServicio {
                 //Terminado
                 case 4:
                     servicioBean.setMensaje("Tu servicio social ya ha concluido");
+                    break;
+                default:
+                    servicioBean.setMensaje("Invalid status");
                     break;
             }
 

@@ -31,18 +31,27 @@ public class ValidaReportesBimestralesModel {
             if (!reportes.isEmpty() && reportes != null && nReportes > 0) {
                 System.out.println("Entro a validar bien los reportes bimestrales");
                 for (int i = 0; i < reportes.size(); i++) {
+                    System.out.println("calculando horas...");
                     int horas = Integer.parseInt(reportes.get(i).getHoras().toString());
                     horasServicio += horas;
                 }
+                System.out.println("tiene "+ horasServicio+ " horas...");
                 servicioBean.setHorasServicio(horasServicio);
 
                 if (horasServicio < 480) {
+                    System.out.println("Menos 480 horas");
                     //Validar el ultimo reporte bimestral
                     int nReporte = reportes.size() - 1;
                     Reportes ultimoBimestral = reportes.get(nReporte);
                     int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
-
+                    System.out.println("Checando status del ultimo reporte:"+status);
                     switch (status) {
+                        //NO hay status 0
+                        case 0:
+                            reportesBean.setAccesoFormato(true);
+                            reportesBean.setMensaje("No hay status 0 en los reportes bimestrales amigo roy, por favor chequele bien, los estatus son del 1 al 4 XD");
+                            reportesBean.setStatus(3);
+                            break;
                         //Aceptado
                         case 1:
                             reportesBean.setAccesoFormato(true);
@@ -78,6 +87,11 @@ public class ValidaReportesBimestralesModel {
                             reportesBean.setAccesoFormato(false);
                             reportesBean.setMensaje("Tu Reporte Bimestral se encuentra en revisión.");
                             reportesBean.setStatus(3);
+                            break;
+                        default:
+                            reportesBean.setAccesoFormato(false);
+                            reportesBean.setMensaje("Invalid status");
+                            reportesBean.setStatus(2);
                             break;
                     }
                 } else {

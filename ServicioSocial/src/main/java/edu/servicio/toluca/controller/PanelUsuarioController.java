@@ -75,7 +75,11 @@ public class PanelUsuarioController {
         ValidacionStatusServicio validacionServicio = new ValidacionStatusServicio();
         /**
          * servicioBean validara el status del servicio social, y traera en sus
-         * atributos: DatosPersonales FormatoUnico ...
+         * atributos: private String mensaje; private int statusServicio;
+         * private DatosPersonales datosPersonales; private FormatoUnico
+         * formatoUnico; private VistaAlumno vistaAlumno; private
+         * FoliosPlaticaBean platicaBean; private int horasServicio=0; private
+         * ArrayList<Reportes> reportesBimestrales;
          */
         StatusServicioBean servicioBean = validacionServicio.validaServicio(alumno);
 
@@ -170,7 +174,7 @@ public class PanelUsuarioController {
                 if (servicioBean.getDatosPersonales() != null) {
                     ValidaDocumentosFinalesModel validaDocFinales = new ValidaDocumentosFinalesModel();
                     ReportesFinalesBean reportesFinales = validaDocFinales.validaDocumentosFinales(servicioBean);
-                    
+
                     model.addAttribute("accesoDocumentosFinales", reportesFinales.isPuedeAccesar());
                     model.addAttribute("mensajeDocumentosFinales", reportesFinales.getMensaje());
                     model.addAttribute("statusDocumentosFinales", reportesFinales.getStatus());

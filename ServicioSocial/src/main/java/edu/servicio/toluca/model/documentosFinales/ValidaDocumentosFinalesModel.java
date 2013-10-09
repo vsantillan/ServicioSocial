@@ -78,6 +78,12 @@ public class ValidaDocumentosFinalesModel {
                         reportesFinales.setPuedeAccesar(false);
                         reportesFinales.setStatus(3);
                         break;
+                    default:
+                        reportesFinales.setMensaje("Invalid Status");
+                        reportesFinales.setPuedeAccesar(false);
+                        reportesFinales.setStatus(2);
+                        break;
+                        
                 }
 
             } else {

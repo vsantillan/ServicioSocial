@@ -40,7 +40,7 @@
                             Instancia:
                         </td>
                         <td>
-                            <input type="text" disabled="true" value="${nombreInstancia}">
+                            <input type="text" disabled="true" value="${proyecto.idInstancia.nombre}">
                         </td>
                     </tr>
                     <tr>

@@ -50,7 +50,8 @@ public class ConsultasPlatica {
     public FoliosPlaticaBean checaAlumnoPlatica(StatusServicioBean servicioBean) {
 
         System.out.println("Checa platica");
-        List<FoliosPlatica> platica = foliosPlaticaFacade.findBySpecificField("alumnoId", servicioBean.getVistaAlumno(), "equal", null, null);
+//        List<FoliosPlatica> platica = foliosPlaticaFacade.findBySpecificField("alumnoId", servicioBean.getVistaAlumno(), "equal", null, null);
+        List<FoliosPlatica> platica = new ArrayList<FoliosPlatica>(servicioBean.getVistaAlumno().getFoliosPlaticaCollection());
         List<FoliosPlatica> filtroPlatica = new ArrayList();
         System.out.println("No. de registros en platica:" + platica.size());
         short uno = 1;
