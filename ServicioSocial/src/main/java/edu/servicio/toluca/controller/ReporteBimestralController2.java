@@ -13,20 +13,28 @@ import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.ReportesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
+import org.openide.util.Exceptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +64,7 @@ public class ReporteBimestralController2
     private CatalogoDocumentoFacade catalogoDocumentoFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
-    public String reporteBimestralAdministrador(Model modelo) 
+    public String reporteBimestralAdministrador(Model modelo,HttpSession session, HttpServletRequest request) 
     {
         modelo.addAttribute("datosPersonales", datosPersonalesFacade.findAll());
         modelo.addAttribute("reportes", reportesFacade.findAll());
@@ -65,7 +73,7 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/detalleReporteBimestral.do")
-    public String detalleReporteBimestral(int id,Model modelo) 
+    public String detalleReporteBimestral(int id,Model modelo,HttpSession session, HttpServletRequest request) 
     {
         Reportes reporte=reportesFacade.find(BigDecimal.valueOf(id));
         modelo.addAttribute("reportes", reporte);
@@ -87,7 +95,8 @@ public class ReporteBimestralController2
     
     @RequestMapping(method = RequestMethod.POST, value = "/aceptarReporte.do")
     public @ResponseBody
-    String aceptarReporte(int id,int status,Model model, HttpSession session, HttpServletRequest request) {
+    String aceptarReporte(int id,int status,Model model, HttpSession session, HttpServletRequest request) 
+    {
         Reportes reporte;
         reporte=reportesFacade.find(BigDecimal.valueOf(id));
         //Checar el estatus del reporte
@@ -99,7 +108,7 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestral.do")
-    String muestraReporte(String no_control,Model modelo)
+    String muestraReporte(String no_control,Model modelo,HttpSession session, HttpServletRequest request)
     {
         modelo.addAttribute("no_control", no_control);
         System.out.println("Agui genera el reporte");
@@ -107,7 +116,7 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(value = "/guardarReporteBimestral.do", method = RequestMethod.POST)
-    public String subirReporteBi(@RequestParam("file") MultipartFile file, String no_control) throws IOException 
+    public String subirReporteBi(@RequestParam("file") MultipartFile file, String no_control,HttpSession session, HttpServletRequest request) throws IOException 
     {
         System.out.println("Inicia Subir carta motivos");
         System.out.println("El no control del alumno es->" + no_control);
@@ -178,4 +187,43 @@ public class ReporteBimestralController2
         modelo.addAttribute("no_control", no_control);
         return "/ReporteBimestral/subirAlumnoReporteBimestral";
     }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestral.pdf")
+    public String muestraReporteBimestral(Model modelo, String nControl, String no_reporte, HttpSession session, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException 
+    {
+        try {
+        String noControl = session.getAttribute("NCONTROL").toString();
+        modelo.addAttribute("noControl", noControl);
+        System.out.println("En el muestra :D" + noControl);
+        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
+        VistaAlumno alumno = listaAlumnos.get(0);
+
+        if (listaAlumnos.isEmpty()) 
+        {
+            System.out.println("La lista de formatoUnico está vacía");
+            return "PanelUsuario/panelUsuario";
+        }
+
+        Conexion conn =new Conexion ();
+        /*Establecemos la ruta del reporte*/ 
+        File reportFile = new File(request.getRealPath("reportes//plantilaReporteBimestral.jasper")); 
+         /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
+        Map parameters = new HashMap();
+        parameters.put("noControl",alumno.getId());
+        parameters.put("no_reporte", Integer.parseInt(no_reporte));
+        //parameters.put("Nombre_parametro", "Valor_Parametro"); 
+        /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
+        byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
+        /*Indicamos que la respuesta va a ser en formato PDF*/ 
+        httpServletResponse.setContentType("application/pdf"); 
+        httpServletResponse.setContentLength(bytes.length);
+        httpServletResponse.getOutputStream().write(bytes);
+
+    } catch (Exception ex) {
+        Exceptions.printStackTrace(ex);
+    } 
+
+    //modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+    return "redirect:login.do";        
+}
 }
