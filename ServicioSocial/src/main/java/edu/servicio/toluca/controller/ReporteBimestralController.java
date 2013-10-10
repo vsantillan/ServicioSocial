@@ -273,10 +273,10 @@ public class ReporteBimestralController {
                     }
                     System.out.println("Inserto Segundo Reporte Correctamente");
 
-                    return "/ReporteBimestral/formatoReporteBimestral";
+                    return "/ReporteBimestral/generaReporteBimestral";
 
                 }
-                return "/ReporteBimestral/formatoReporteBimestral";
+                return "/ReporteBimestral/generaReporteBimestral";
             }
 
             fechas fecha = new fechas();
@@ -319,7 +319,7 @@ public class ReporteBimestralController {
             }
             System.out.println("Inserto Por Primera Vez");
 
-            return "/ReporteBimestral/formatoReporteBimestral";
+            return "/ReporteBimestral/generaReporteBimestral";
         }
 
     }

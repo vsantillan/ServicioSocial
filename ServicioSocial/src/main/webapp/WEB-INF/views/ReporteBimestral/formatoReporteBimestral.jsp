@@ -82,7 +82,7 @@
                 <div id="Generar">
                     <h1>Generar Reporte</h1>
                     <p>Introduzca los datos requeridos para llenar su formulario</p>
-                    <form:form commandName="Reportes" name="reportesBimestrales" id="reportesBimestrales"  action="insertaReporte.do" method="POST">
+                    <form:form commandName="Reportes" name="reportesBimestrales" id="reportesBimestrales"  action="insertaReporte.do" method="POST" target="_blank">
 
                         <table>
                             <h4>N&uacute;mero de Reviciones del Reporte: ${noReviciones}</h4>
@@ -172,7 +172,7 @@
                             </core:forEach>  
                             <form:input path="actividades" hidden="hidden" name="nActividades" id="nActividades" value="0" />
                             <tr> 
-                                <td> <input type ="submit" value = "Generar Reporte" id="envia"  /> </td>
+                                <td> <input type ="submit" value = "Generar Reporte" id="envia"  /></td>
                             </tr>
                         </table>
                     </form:form>
