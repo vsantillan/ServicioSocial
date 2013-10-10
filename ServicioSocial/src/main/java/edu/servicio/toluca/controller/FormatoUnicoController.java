@@ -1049,7 +1049,7 @@ public class FormatoUnicoController {
             } 
 
             //modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
-            return "redirect:login.do";        
+            return "";        
     }
 
     @RequestMapping(value = "/cambiaStatusSubidaFui.do", method = RequestMethod.GET)
