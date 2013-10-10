@@ -116,7 +116,7 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(value = "/guardarReporteBimestral.do", method = RequestMethod.POST)
-    public String subirReporteBi(@RequestParam("file") MultipartFile file,HttpSession session, HttpServletRequest request) throws IOException 
+    public String subirReporteBi(@RequestParam("file") MultipartFile file,Model modelo,HttpSession session, HttpServletRequest request) throws IOException 
     {
         String no_control = session.getAttribute("NCONTROL").toString();
         System.out.println("Inicia Subir carta motivos");
@@ -125,7 +125,7 @@ public class ReporteBimestralController2
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
         if (vistaAlumnoFacade.count() < 1 || listaAlumnos.isEmpty()) {
             System.out.println("O no hay registros en la tabla o no existe tal alumno en la base de datos de Vista LAumno");
-            return "redirect:panelUsuario.do";
+            modelo.addAttribute("error", "Error al subir el Reporte Bimestral");
         }
         
         VistaAlumno alumno = listaAlumnos.get(0);
@@ -142,26 +142,8 @@ public class ReporteBimestralController2
         System.out.println("Iniciando proceso de subida de documento");
         //List<CatalogoDocumento> listaCatalogoDocumento = catalogoDocumentoFacade.findBySpecificField("tipo", "Formato_Bimestral", "equal", null, null); 
         CatalogoDocumento catalogoDocumento = catalogoDocumentoFacade.find(BigDecimal.valueOf(2));
-        List<Documentos> listaDocumentos = documentosFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+        
         Documentos documento = new Documentos();
-        boolean enDocumentos = false;
-        if (documentosFacade.count() < 1 || listaDocumentos.isEmpty()) {
-            System.out.println("Todo indica que dicho registro en Documentos no existia se va a hacer uno nuevo");
-            enDocumentos = false;
-        } else {
-            if(listaDocumentos.get(0).getCatalogoDocumentosId() == catalogoDocumento)
-            {
-                System.out.println("Todo indica que ya estaba el registro en Documentos, se va a editar");
-                enDocumentos = true;
-                documento = listaDocumentos.get(0);
-            }
-            else
-            {
-                System.out.println("Todo indica que dicho registro en Documentos no existia se va a hacer uno nuevo");
-                enDocumentos = false;
-            }
-            
-        }
         documento.setArchivo(file.getBytes());
         documento.setDatosPersonalesId(datosPersonales);
         String extension = file.getOriginalFilename();
@@ -169,17 +151,29 @@ public class ReporteBimestralController2
         documento.setExtension(extension);
         documento.setFechaSubida(new java.util.Date());
         documento.setCatalogoDocumentosId(catalogoDocumento);
-//        if(enDocumentos)
-//        {
-//            documentosFacade.edit(documento);
-//            System.out.println("Fin de creación en Documento");
-//        }
-//        else
-//        {
-            documentosFacade.create(documento);
-            System.out.println("Fin de edición en Docuemnto");
-//        }
-        return "redirect:subirAlumnoReporteBimestral.do";
+  
+        try{
+            //documentosFacade.create(documento);
+            System.out.println("Se subio el Docuemnto con éxito!");
+        }catch(Exception ex){
+            modelo.addAttribute("error", "Error al subir el Reporte Bimestral");
+            return "redirect:formatoReporteBimestral.do";
+        }
+        
+        List<Reportes> listReporte=reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+        Reportes reporte=listReporte.get(0);
+        reporte.setStatus(BigInteger.valueOf(4));
+        reportesFacade.edit(reporte);
+        
+        //reporte.setDatosPersonalesId(datosPersonales);
+        
+        
+        
+        //##############   CAMBIA REPORTE A ESTATUS 4 
+        //##############   REEDIRECCIONA  A PANEL USUARIO
+        //##############   MANDAR MENSAJE DE ERROR
+            
+        return "redirect:panelUsuario.do";
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/subirAlumnoReporteBimestral.do")
@@ -190,7 +184,7 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestral.pdf")
-    public String muestraReporteBimestral(Model modelo, String nControl, String no_reporte, HttpSession session, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException 
+    public String muestraReporteBimestral(Model modelo, String no_reporte, HttpSession session, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException 
     {
         try {
         String noControl = session.getAttribute("NCONTROL").toString();
@@ -204,14 +198,15 @@ public class ReporteBimestralController2
             System.out.println("La lista de formatoUnico está vacía");
             return "PanelUsuario/panelUsuario";
         }
-
+        System.out.println("Realiza el reporte");
         Conexion conn =new Conexion ();
         /*Establecemos la ruta del reporte*/ 
         File reportFile = new File(request.getRealPath("reportes//plantilaReporteBimestral.jasper")); 
          /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
         Map parameters = new HashMap();
         parameters.put("noControl",alumno.getId());
-        parameters.put("no_reporte", Integer.parseInt(no_reporte));
+        parameters.put("no_reporte", no_reporte);
+            System.out.println("Paso los siguientes parametros: "+parameters.toString());
         //parameters.put("Nombre_parametro", "Valor_Parametro"); 
         /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
         byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
