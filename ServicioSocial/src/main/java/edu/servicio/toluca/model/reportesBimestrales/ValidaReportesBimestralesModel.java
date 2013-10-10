@@ -46,10 +46,10 @@ public class ValidaReportesBimestralesModel {
                     int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
                     System.out.println("Checando status del ultimo reporte:"+status);
                     switch (status) {
-                        //NO hay status 0
+                        //Descargado
                         case 0:
                             reportesBean.setAccesoFormato(true);
-                            reportesBean.setMensaje("No hay status 0 en los reportes bimestrales amigo roy, por favor chequele bien, los estatus son del 1 al 4 XD");
+                            reportesBean.setMensaje("Ya has generado y descargado tu último Reporte Bimestral. Sólo falta que subas tu Reporte escaneado y sellado.");
                             reportesBean.setStatus(3);
                             break;
                         //Aceptado
