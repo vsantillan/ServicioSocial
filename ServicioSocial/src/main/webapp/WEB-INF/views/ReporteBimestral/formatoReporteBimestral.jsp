@@ -180,8 +180,8 @@
                 <div id="Subir">
                     <h1>Subir Reporte</h1>
                     <p>Seleccione su Reporte Bimestral</p>
-                    <form:form name="subirReporte" id="MyForm" action="#" method="POST">
-                        <input type="file" id="archivo"/>
+                    <form:form name="subirReporte" id="MyForm" action="guardarReporteBimestral.do" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="file" value="Buscar Reporte" />
                         <input type="submit" value="Enviar"/>
                     </form:form>
                 </div>

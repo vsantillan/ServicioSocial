@@ -121,6 +121,7 @@ public class ReporteBimestralController {
                 RBObjeto.setCalificacion(0);
                 //Buscar el ultimo reporte Bimestral con status aprobado
                 //Y sacar esa fecha fin
+                //Verificar el status para en correccion  o para aceptado
                 RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
                 //Sumar los dos meses a fecha FIn
                 RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
@@ -266,3 +267,5 @@ public class ReporteBimestralController {
 
     }
 }
+//caundo sean 480 horas sumar 15 dias de la fecha final del ultimo reporte y se asigna en fecha_entrega_fuf de formato unico
+//Checar los de las horas acumuladas
