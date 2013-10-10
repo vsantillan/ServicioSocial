@@ -82,15 +82,15 @@ public class ReporteBimestralController2
     
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarStatusReporte.do")
     public @ResponseBody
-    String aceptarRactualizarStatusReporteporte(int id,RetroalimentacionReporte retroalimentacionReporte,Model model, HttpSession session, HttpServletRequest request) {
+    String aceptarRactualizarStatusReporteporte(RetroalimentacionReporte retroalimentacionReporte,Model model, HttpSession session, HttpServletRequest request) {
         Reportes reporte;
-        reporte=reportesFacade.find(BigDecimal.valueOf(id));
+        reporte=reportesFacade.find(BigDecimal.valueOf(retroalimentacionReporte.getIdReporte()));
         //Checar el estatus del reporte
-        reporte.setStatus(BigInteger.ONE);
+        reporte.setStatus(BigInteger.valueOf(retroalimentacionReporte.getStatus()));
         reporte.setNumeroRevisiones(BigInteger.valueOf(reporte.getNumeroRevisiones().intValue()+1));
         reportesFacade.edit(reporte);
         System.out.println("Reporte Alterado con Status a: "+retroalimentacionReporte.getStatus());
-        return "ok";
+        return "redirect:reporteBimestralAdministrador.do";
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/aceptarReporte.do")
@@ -100,7 +100,7 @@ public class ReporteBimestralController2
         Reportes reporte;
         reporte=reportesFacade.find(BigDecimal.valueOf(id));
         //Checar el estatus del reporte
-        reporte.setStatus(BigInteger.ZERO);
+        reporte.setStatus(BigInteger.ONE);
         reporte.setNumeroRevisiones(BigInteger.valueOf(reporte.getNumeroRevisiones().intValue()+1));
         reportesFacade.edit(reporte);
         System.out.println("Reporte Alterado con Status a: "+status);
@@ -206,20 +206,21 @@ public class ReporteBimestralController2
         Map parameters = new HashMap();
         parameters.put("noControl",alumno.getId());
         parameters.put("no_reporte", no_reporte);
-            System.out.println("Paso los siguientes parametros: "+parameters.toString());
+        System.out.println("Paso los siguientes parametros: "+parameters.toString());
         //parameters.put("Nombre_parametro", "Valor_Parametro"); 
         /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
         byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
+        System.out.println("aqui si entro");
         /*Indicamos que la respuesta va a ser en formato PDF*/ 
         httpServletResponse.setContentType("application/pdf"); 
         httpServletResponse.setContentLength(bytes.length);
         httpServletResponse.getOutputStream().write(bytes);
+        
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+        } 
 
-    } catch (Exception ex) {
-        Exceptions.printStackTrace(ex);
-    } 
-
-    //modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
-    return "redirect:login.do";        
-}
+        //modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+        return "";        
+    }
 }
