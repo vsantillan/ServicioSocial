@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.beans;
 
+import edu.servicio.toluca.beans.egresado.EgresadoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
@@ -25,6 +26,8 @@ public class StatusServicioBean {
     private FoliosPlaticaBean platicaBean;
     private int horasServicio=0;
     private ArrayList<Reportes> reportesBimestrales;
+    private int tipoPanel=0;
+    private EgresadoPanelUsuarioBean egresado;
     
 
     /**
@@ -149,5 +152,43 @@ public class StatusServicioBean {
      */
     public void setReportesBimestrales(ArrayList<Reportes> reportesBimestrales) {
         this.reportesBimestrales = reportesBimestrales;
+    }
+
+    /**
+     * El tipo de panel que se le va a mostrar al alumno
+     * 0:Interno
+     * 1:Egresado
+     * 2:Egresado haciendo servicio normal
+     * @return the tipoPanel
+     */
+    public int getTipoPanel() {
+        return tipoPanel;
+    }
+
+    /**
+     * El tipo de panel que se le va a mostrar al alumno
+     * 0:Interno
+     * 1:Egresado
+     * 2:Egresado haciendo servicio normal
+     * @param tipoPanel the tipoPanel to set
+     */
+    public void setTipoPanel(int tipoPanel) {
+        this.tipoPanel = tipoPanel;
+    }
+
+    /**
+     * Bean para los egresados
+     * @return the egresado
+     */
+    public EgresadoPanelUsuarioBean getEgresado() {
+        return egresado;
+    }
+
+    /**
+     * Bean para los egresados
+     * @param egresado the egresado to set
+     */
+    public void setEgresado(EgresadoPanelUsuarioBean egresado) {
+        this.egresado = egresado;
     }
 }
