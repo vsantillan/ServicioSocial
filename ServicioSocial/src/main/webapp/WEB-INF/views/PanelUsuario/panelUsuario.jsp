@@ -68,8 +68,8 @@
             <div class="seccionCentral MyForm">
                 <h1>Proceso del Servicio Social</h1>
                 <table class="general">
+                    <!--Carta de motivos-->
                     <core:choose>
-                        <!--Carta de motivos-->
                         <core:when  test="${tipoPanel==1 || tipoPanel == 2}">
                             <tr>
                                 <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeCartaMotivos}" title="CARTA DE MOTIVOS">
@@ -97,7 +97,7 @@
                                 </td>
                             </tr>
                         </core:when>    
-                        <!--Proceso normal del servicio social-->
+                        
                         <core:when  test="${tipoPanel ==0 || tipoPanel == 2}">
                             <tr>
                                 <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajePlatica}" title="PLÁTICA">
