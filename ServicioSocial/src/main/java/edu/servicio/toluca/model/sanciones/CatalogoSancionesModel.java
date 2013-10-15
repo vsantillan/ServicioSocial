@@ -41,8 +41,8 @@ public class CatalogoSancionesModel {
         if(!mv.maximoString(detalle, 300)){listaErrores.add("El campo detalle no puede exceder los 300 caracteres.");}
 //        if(!mv.maximoString(horasSancion.toString(),5)){listaErrores.add("El campo Horas sanción no puede no puede exceder los 5 caracteres.");}
 //        if(!mv.maximoString(tolerancia.toString(), 4)){listaErrores.add("El campo tolerancia no puede exceder los 4 caracteres.");}
-        if(horasSancion.compareTo(BigInteger.ZERO)>0){listaErrores.add("Las horas de sancion no pueden ser 0.");}
-        if(tolerancia.compareTo(BigInteger.ZERO)>0){listaErrores.add("La tolerancia no puede ser 0.");}
+        if(horasSancion.compareTo(BigInteger.ZERO)<0){listaErrores.add("Las horas de sancion no pueden ser 0.");}
+        if(tolerancia.compareTo(BigInteger.ZERO)<0){listaErrores.add("La tolerancia no puede ser 0.");}
         return listaErrores;
     }
 

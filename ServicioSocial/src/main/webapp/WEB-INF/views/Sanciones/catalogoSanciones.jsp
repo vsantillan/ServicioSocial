@@ -16,6 +16,7 @@
         <jsp:include page="../Template/metas.jsp" />
         <!-- CSS  Shadowbox-->
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
 
         <!--Script para DataTables-->
         <jsp:include page="../Template/headsJQueryUI.jsp" />
@@ -88,11 +89,11 @@
                     <div id="nuevaSancion">
                         <center> 
                             <p>Nueva Sanci&oacute;n</p>
-                            <form:form id="frmNuevaSancion">
+                            <form id="frmNuevaSancion">
                                 <table>
                                     <tr>
                                         <td> <p><label for="descripcion">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <textarea  name="descripcion" rows="4" cols="50" id="descripcion" pagoSanciones></textarea> </td>
+                                        <td>  <textarea  name="descripcion" required="required" rows="4" cols="50" id="descripcion" pagoSanciones></textarea> </td>
                                         </tr>
                                         <tr>
                                             <td> <p><label for="hora">Horas:</label></p> </td>
@@ -100,14 +101,14 @@
                                         </tr>
                                         <tr>
                                             <td> <p><label for="tolerancia">D&iacute;as de tolerancia</label></p> </td>
-                                            <td>  <input type="number" name="tolerancia" size="2" pagoSanciones/></td>  
+                                            <td>  <input type="number" name="tolerancia" size="2" value="0" pagoSanciones/></td>  
                                         </tr>
                                         <tr> 
-                                            <td> <input type ="submit" value = "Guardar " /> </td>
+                                            <td> <input type ="button" onclick="enviaSancionParaGuardado();" value = "Guardar " /> </td>
                                             <td> <input type ="reset" value = "Limpiar" /></td>
                                         </tr>
                                     </table>
-                            </form:form>
+                            </form>
                         </center>
                     </div>
                     <div id="catalogoPagoSanciones">
@@ -151,6 +152,7 @@
 
                 <%-- fin del contenido --%>
             </div>
+            <div style="clear:both;"></div>
             <div id="observaciones" style="display: none">
                 <b>Debes atender los siguientes puntos</b><br/>
                 <ul id="listaObservaciones" >

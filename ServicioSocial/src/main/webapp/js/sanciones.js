@@ -1,6 +1,5 @@
 $(document).ready(listo);
 var sancion = {};
-
 function listo() {
 
     $(".editaSancion").click(function() {
@@ -15,11 +14,11 @@ function listo() {
 }
 function enviaSancionParaGuardado()
 {
-    alert('asdasd');
     $('#observaciones').hide("fast");
     $("form#frmNuevaSancion :input").each(function() {
         prepararJSON($(this));
     });
+    
     $.post("nuevaSancion.do", sancion, function(respuesta) {
         var respJ = {};
         if (respuesta !== "noInfo")
@@ -29,7 +28,7 @@ function enviaSancionParaGuardado()
         if (respJ.length > 0)
         {
             //alert('Tienes errores');
-            console.log('Tienes errores');
+            alert('Tienes errores');
             $('.observacion').remove();
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');
@@ -39,6 +38,7 @@ function enviaSancionParaGuardado()
         else
         {
             alert('Informacion almacenada correctamente');
+            location.reload();
         }
     });
 }

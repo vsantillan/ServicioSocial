@@ -91,7 +91,19 @@ public class SancionesController {
         ArrayList<String> listaErrores = csm.valida();
         
         if (listaErrores.isEmpty()) {
-            //codigo de guardado
+            CatalogoSanciones sancion = new CatalogoSanciones();
+            sancion.setDetalle(descripcion);
+            sancion.setHorasSancion(horas);
+            sancion.setTolerancia(tolerancia);
+            try
+            {
+                catalogoSancionesFacade.create(sancion);
+            }
+            catch(Exception e)
+            {
+                arrJSON = arrJSON + "{\"observacion\":\"" + e.getMessage() + "\"},";
+            }
+            
         } else {
             int i = 1;
             for (String s : listaErrores) {
