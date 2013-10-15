@@ -45,6 +45,15 @@ public class CatalogoSancionesModel {
         if(tolerancia.compareTo(BigInteger.ZERO)<0){listaErrores.add("La tolerancia no puede ser 0.");}
         return listaErrores;
     }
+    public ArrayList valida2()
+    {
+        ArrayList<String> listaErrores = new ArrayList<String>();
+        MetodosValidacion mv = new MetodosValidacion();
+        
+        if(!mv.minimoString(detalle, 1)){listaErrores.add("El campo detalle no puede estar vacío.");}
+        if(!mv.maximoString(detalle, 300)){listaErrores.add("El campo detalle no puede exceder los 300 caracteres.");}
+        return listaErrores;
+    }
 
     public CatalogoSancionesModel(String detalle, BigInteger horasSancion, BigInteger tolerancia) {
         this.detalle = detalle;

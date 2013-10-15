@@ -121,14 +121,47 @@ public class SancionesController {
 
         System.out.println("Arrjson" + arrJSON);
         return arrJSON;
-//        if(result.hasErrors())
-//        {
-//            System.out.println("Bindiing" + result.toString());
-//        }
-//        modelo.addAttribute("descripcion", descripcion);
-//        modelo.addAttribute("horas", horas);
-//        System.out.println("desc: "+descripcion+"\n horas: "+horas);
-//        return "/Sanciones/catalogoSanciones";
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/nuevoPagoSancion.do")
+    public @ResponseBody
+    String nuevoPagoSancion(Model model, String descripcion,Model modelo) {
+        CatalogoSancionesModel csm = new CatalogoSancionesModel(descripcion, BigInteger.ZERO, BigInteger.ZERO);
+        String arrJSON = "[";
+        csm.arregla();
+        ArrayList<String> listaErrores = csm.valida2();
+        
+        if (listaErrores.isEmpty()) {
+            CatalogoSanciones sancion = new CatalogoSanciones();
+            sancion.setDetalle(descripcion);
+            sancion.setHorasSancion(BigInteger.ZERO);
+            sancion.setTolerancia(BigInteger.ZERO);
+            try
+            {
+                catalogoSancionesFacade.create(sancion);
+            }
+            catch(Exception e)
+            {
+                arrJSON = arrJSON + "{\"observacion\":\"" + e.getMessage() + "\"},";
+            }
+            
+        } else {
+            int i = 1;
+            for (String s : listaErrores) {
+                arrJSON = arrJSON + "{\"observacion\":\"" + s + "\"},";
+                System.out.println("Error " + i + " " + s);
+                i++;
+            }
+        }
+        if (arrJSON.equals("[")) {
+            arrJSON = "noInfo";
+        } else {
+            arrJSON = arrJSON.substring(0, arrJSON.length() - 1) + "]";
+        }
+
+
+        System.out.println("Arrjson" + arrJSON);
+        return arrJSON;
+     
 
     }
 }

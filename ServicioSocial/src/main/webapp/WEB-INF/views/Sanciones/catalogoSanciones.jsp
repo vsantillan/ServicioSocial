@@ -133,15 +133,15 @@
                     </div>
                     <div id="nuevoPagoSancion">
                         <center> 
-                            <p>Nueva Sanci&oacute;n</p>
-                            <form:form name="nuevaSancion.do" id="MyForm" action="#" method="POST">
+                            <p>Nuevo Pago de Sanci&oacute;n</p>
+                            <form:form id="frmNuevoPagoSancion">
                                 <table>
                                     <tr>
                                         <td> <p><label for="descripcion">Descripci&oacute;n:</label> </p></td>
                                         <td>  <textarea  name="descripcion" rows="4" cols="50" id="descripcion"></textarea> </td>
                                     </tr>
                                     <tr> 
-                                        <td> <input type ="submit" value = "Guardar " /> </td>
+                                        <td> <input type ="button" onclick="enviaPagoSancionParaGuardado();" value = "Guardar " /> </td>
                                         <td> <input type ="reset" value = "Limpiar" /></td>
                                     </tr>
                                 </table>
