@@ -28,6 +28,7 @@ import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
+import edu.servicio.toluca.model.codigospostales.CodigosPostalesModel;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
@@ -221,70 +222,15 @@ public class OrganizacionesController2 {
 
         } else {
             //Checa codigo postal
+            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
             if (existeCP.equals("true")) {
                 if (instancia.getIdColonia().getIdColonia().toString().equals("0")) {
                     //Agregar colonia                   
-//                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
-                    System.out.println("AgregarColonia");
-                    System.out.println("codigo postal:" + codigo_postal.toString());
-                    List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
-                    CodigosPostales codigoPostal = codigosPostales.get(0);
-                    Colonia nvaColonia = new Colonia();
-                    otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                    nvaColonia.setNombre(otra_colonia);
-                    nvaColonia.setIdCp(codigoPostal);
-                    nvaColonia.setStatus(BigInteger.ONE);
-                    coloniaFacade.create(nvaColonia);
-
-                    //Obtenemos la ultima colonia
-                    LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                    ordenamiento.put("idColonia", "desc");
-                    Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
-                    instancia.setIdColonia(colonia);
-                    System.out.println("Nueva colonia agregada!");
+                    instancia.setIdColonia(codigosPostales.agregaColonia(codigo_postal, otra_colonia));
                 }
             } else {
                 //Agregar codigo postal + colonia
-//                instancia.setIdColonia(new CodigosPostalesController().agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
-                EstadosSia estadoP = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(estado)));
-                MunicipiosSia municipioP = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
-                TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
-                Ciudades ciudadP = null;
-                try {
-                    ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
-                } catch (Exception e) {
-                    System.out.println("No tiene ciudad");
-                }
-
-                CodigosPostales codigoPostal = new CodigosPostales();
-                codigoPostal.setCp(Integer.parseInt(codigo_postal));
-                codigoPostal.setIdMunicipio(municipioP);
-                codigoPostal.setIdEstado(estadoP);
-                codigoPostal.setIdTipoLocalidad(localidad);
-                if (ciudad != null) {
-                    codigoPostal.setIdCiudad(ciudadP);
-                }
-                codigosPostalesFacade.create(codigoPostal);
-
-                //Obtenemos el Ultimo codigo postal
-                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("idCp", "desc");
-                CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
-
-                Colonia colonia = new Colonia();
-                colonia.setIdCp(codigoPostal);
-                otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                colonia.setNombre(otra_colonia);
-                colonia.setStatus(BigInteger.ONE);
-
-                coloniaFacade.create(colonia);
-
-                //Obtenemos la ultima colonia
-                ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("idColonia", "desc");
-                Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
-                instancia.setIdColonia(coloniaNew);
-                System.out.println("Nuevo codigo postal + colonia agregado!");
+                instancia.setIdColonia(codigosPostales.agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
             }
 
             System.out.print("no hubo errores");
@@ -471,71 +417,17 @@ public class OrganizacionesController2 {
                 System.out.print("no hubo errores");
 
                 //Checa codigo postal
+                CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
                 if (existeCP.equals("true")) {
                     if (proyecto.getIdColonia().getIdColonia().toString().equals("0")) {
                         //Agregar colonia                   
-//                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
-                        System.out.println("AgregarColonia");
-                        System.out.println("codigo postal:" + codigo_postal.toString());
-                        List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
-                        CodigosPostales codigoPostal = codigosPostales.get(0);
-                        Colonia nvaColonia = new Colonia();
-                        otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                        nvaColonia.setNombre(otra_colonia);
-                        nvaColonia.setIdCp(codigoPostal);
-                        nvaColonia.setStatus(BigInteger.ONE);
-                        coloniaFacade.create(nvaColonia);
-
-                        //Obtenemos la ultima colonia
-                        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                        ordenamiento.put("idColonia", "desc");
-                        Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
-                        proyecto.setIdColonia(colonia);
-                        System.out.println("Nueva colonia agregada!");
+                        proyecto.setIdColonia(codigosPostales.agregaColonia(codigo_postal, otra_colonia));
                     }
                 } else {
                     //Agregar codigo postal + colonia
-//                instancia.setIdColonia(new CodigosPostalesController().agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
-                    EstadosSia estadoP = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(estado)));
-                    MunicipiosSia municipioP = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
-                    TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
-                    Ciudades ciudadP = null;
-                    try {
-                        ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
-                    } catch (Exception e) {
-                        System.out.println("No tiene ciudad");
-                    }
-
-                    CodigosPostales codigoPostal = new CodigosPostales();
-                    codigoPostal.setCp(Integer.parseInt(codigo_postal));
-                    codigoPostal.setIdMunicipio(municipioP);
-                    codigoPostal.setIdEstado(estadoP);
-                    codigoPostal.setIdTipoLocalidad(localidad);
-                    if (ciudad != null) {
-                        codigoPostal.setIdCiudad(ciudadP);
-                    }
-                    codigosPostalesFacade.create(codigoPostal);
-
-                    //Obtenemos el Ultimo codigo postal
-                    LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                    ordenamiento.put("idCp", "desc");
-                    CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
-
-                    Colonia colonia = new Colonia();
-                    colonia.setIdCp(codigoPostal);
-                    otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                    colonia.setNombre(otra_colonia);
-                    colonia.setStatus(BigInteger.ONE);
-
-                    coloniaFacade.create(colonia);
-
-                    //Obtenemos la ultima colonia
-                    ordenamiento = new LinkedHashMap<String, String>();
-                    ordenamiento.put("idColonia", "desc");
-                    Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
-                    proyecto.setIdColonia(coloniaNew);
-                    System.out.println("Nuevo codigo postal + colonia agregado!");
+                    proyecto.setIdColonia(codigosPostales.agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
                 }
+
                 proyecto.setValidacionAdmin(BigInteger.ZERO);
                 proyecto.setEstatus(BigInteger.ONE);
                 proyecto.setFechaAlta(new Date());
@@ -548,17 +440,17 @@ public class OrganizacionesController2 {
                 proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
                 //Imprimir todo
                 System.out.println("Datos del alumno");
-                System.out.println("Nombre:"+proyecto.getNombre()+ " len:"+proyecto.getNombre().length());
-                System.out.println("Vacantes:"+proyecto.getVacantes()+ " len:"+proyecto.getVacantes().toString().length());
-                System.out.println("Vacantes disponibles:"+proyecto.getVacantesDisponibles()+ " len:"+proyecto.getVacantesDisponibles().toString().length());
-                System.out.println("Responsable puesto:"+proyecto.getResponsablePuesto()+ " len:"+proyecto.getResponsablePuesto().length());
-                System.out.println("Nombre Responsable:"+proyecto.getNombreResponsable()+ " len:"+proyecto.getNombreResponsable().length());
-                System.out.println("Telefono responsable:"+proyecto.getTelefonoResponsable()+ " len:"+(proyecto.getTelefonoResponsable()+"").length());
-                System.out.println("Domicilio:"+proyecto.getDomicilio()+ " len:"+proyecto.getDomicilio().length());
-                System.out.println("Id colonia:"+proyecto.getIdColonia().getIdColonia()+ " len:"+proyecto.getIdColonia().getIdColonia().toString().length());
-                System.out.println("Id tipo proyecto:"+proyecto.getIdTipoProyecto().getIdTipoProyecto()+ " len:"+proyecto.getIdTipoProyecto().getIdTipoProyecto().toString().length());
-                System.out.println("Id programa:"+proyecto.getIdPrograma().getIdPrograma()+ " len:"+proyecto.getIdPrograma().getIdPrograma().toString().length());
-                System.out.println("Modalidad:"+proyecto.getModalidad()+ " len:"+proyecto.getModalidad().length());
+                System.out.println("Nombre:" + proyecto.getNombre() + " len:" + proyecto.getNombre().length());
+                System.out.println("Vacantes:" + proyecto.getVacantes() + " len:" + proyecto.getVacantes().toString().length());
+                System.out.println("Vacantes disponibles:" + proyecto.getVacantesDisponibles() + " len:" + proyecto.getVacantesDisponibles().toString().length());
+                System.out.println("Responsable puesto:" + proyecto.getResponsablePuesto() + " len:" + proyecto.getResponsablePuesto().length());
+                System.out.println("Nombre Responsable:" + proyecto.getNombreResponsable() + " len:" + proyecto.getNombreResponsable().length());
+                System.out.println("Telefono responsable:" + proyecto.getTelefonoResponsable() + " len:" + (proyecto.getTelefonoResponsable() + "").length());
+                System.out.println("Domicilio:" + proyecto.getDomicilio() + " len:" + proyecto.getDomicilio().length());
+                System.out.println("Id colonia:" + proyecto.getIdColonia().getIdColonia() + " len:" + proyecto.getIdColonia().getIdColonia().toString().length());
+                System.out.println("Id tipo proyecto:" + proyecto.getIdTipoProyecto().getIdTipoProyecto() + " len:" + proyecto.getIdTipoProyecto().getIdTipoProyecto().toString().length());
+                System.out.println("Id programa:" + proyecto.getIdPrograma().getIdPrograma() + " len:" + proyecto.getIdPrograma().getIdPrograma().toString().length());
+                System.out.println("Modalidad:" + proyecto.getModalidad() + " len:" + proyecto.getModalidad().length());
                 System.out.println("fin");
                 //
                 proyectosFacade.create(proyecto);
@@ -685,7 +577,7 @@ public class OrganizacionesController2 {
             proyecto.setFechaAlta(new Date());
             proyecto.setVacantesDisponibles(proyecto.getVacantes());
 
-            //Convertir a mayuscular
+            //Convertir a mayusculas
             proyecto.setDomicilio(limpiar.tuneaStringParaBD(proyecto.getDomicilio()));
             proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
             proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
@@ -968,9 +860,9 @@ public class OrganizacionesController2 {
             //Regresar actividades
             model.addAttribute("nActividades", nActividades.substring(0, 1));
             System.out.println("nActividades:" + nActividades.substring(0, 1));
-            
+
             //Inyectamos lo que traia en la colonia1
-            model.addAttribute("otra_colonia", otra_colonia);            
+            model.addAttribute("otra_colonia", otra_colonia);
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
             try {
@@ -978,15 +870,15 @@ public class OrganizacionesController2 {
             } catch (Exception e) {
             }
             //Inyectamos lo que traia en la colonia2
-            model.addAttribute("otra_colonia2", otra_colonia2);            
+            model.addAttribute("otra_colonia2", otra_colonia2);
             //Regresar codigo postal
             model.addAttribute("cp2", codigo_postal2);
             try {
                 model.addAttribute("idColonia2", propuesta.getIdColonia_proyecto().getIdColonia());
             } catch (Exception e) {
             }
-            
-            
+
+
             for (int i = 0; i < actividadesModel.actividades.size(); i++) {
                 model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
                 System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
@@ -998,137 +890,26 @@ public class OrganizacionesController2 {
         } else {
             System.out.println("No hubo errores");
             //Checa codigo postal instancia
+            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
             if (existeCP.equals("true")) {
                 if (propuesta.getIdColonia_instancia().getIdColonia().toString().equals("0")) {
                     //Agregar colonia                   
-//                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
-                    System.out.println("AgregarColonia");
-                    System.out.println("codigo postal:" + codigo_postal.toString());
-                    List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
-                    CodigosPostales codigoPostal = codigosPostales.get(0);
-                    Colonia nvaColonia = new Colonia();
-                    otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                    nvaColonia.setNombre(otra_colonia);
-                    nvaColonia.setIdCp(codigoPostal);
-                    nvaColonia.setStatus(BigInteger.ONE);
-                    coloniaFacade.create(nvaColonia);
-
-                    //Obtenemos la ultima colonia
-                    LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                    ordenamiento.put("idColonia", "desc");
-                    Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
-                    propuesta.setIdColonia_instancia(colonia);
-                    System.out.println("Nueva colonia agregada!");
+                    propuesta.setIdColonia_instancia(codigosPostales.agregaColonia(codigo_postal, otra_colonia));
                 }
             } else {
                 //Agregar codigo postal + colonia
-//                instancia.setIdColonia(new CodigosPostalesController().agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
-                EstadosSia estadoP = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(estado)));
-                MunicipiosSia municipioP = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
-                TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
-                Ciudades ciudadP = null;
-                try {
-                    ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
-                } catch (Exception e) {
-                    System.out.println("No tiene ciudad");
-                }
-
-                CodigosPostales codigoPostal = new CodigosPostales();
-                codigoPostal.setCp(Integer.parseInt(codigo_postal));
-                codigoPostal.setIdMunicipio(municipioP);
-                codigoPostal.setIdEstado(estadoP);
-                codigoPostal.setIdTipoLocalidad(localidad);
-                if (ciudad != null) {
-                    codigoPostal.setIdCiudad(ciudadP);
-                }
-                codigosPostalesFacade.create(codigoPostal);
-
-                //Obtenemos el Ultimo codigo postal
-                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("idCp", "desc");
-                CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
-
-                Colonia colonia = new Colonia();
-                colonia.setIdCp(codigoPostal);
-                otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                colonia.setNombre(otra_colonia);
-                colonia.setStatus(BigInteger.ONE);
-
-                coloniaFacade.create(colonia);
-
-                //Obtenemos la ultima colonia
-                ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("idColonia", "desc");
-                Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
-                propuesta.setIdColonia_instancia(coloniaNew);
-                System.out.println("Nuevo codigo postal + colonia agregado!");
+                propuesta.setIdColonia_instancia(codigosPostales.agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
             }
             //Colonia proyecto
             //Checa codigo postal
             if (existeCP2.equals("true")) {
                 if (propuesta.getIdColonia_proyecto().getIdColonia().toString().equals("0")) {
                     //Agregar colonia                   
-//                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
-                    System.out.println("AgregarColonia");
-                    System.out.println("codigo postal:" + codigo_postal.toString());
-                    List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
-                    CodigosPostales codigoPostal = codigosPostales.get(0);
-                    Colonia nvaColonia = new Colonia();
-                    otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                    nvaColonia.setNombre(otra_colonia);
-                    nvaColonia.setIdCp(codigoPostal);
-                    nvaColonia.setStatus(BigInteger.ONE);
-                    coloniaFacade.create(nvaColonia);
-
-                    //Obtenemos la ultima colonia
-                    LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                    ordenamiento.put("idColonia", "desc");
-                    Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
-                    propuesta.setIdColonia_proyecto(colonia);
-                    System.out.println("Nueva colonia agregada!");
+                    propuesta.setIdColonia_proyecto(codigosPostales.agregaColonia(codigo_postal, otra_colonia));
                 }
             } else {
                 //Agregar codigo postal + colonia
-//                instancia.setIdColonia(new CodigosPostalesController().agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
-                EstadosSia estadoP = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(estado)));
-                MunicipiosSia municipioP = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
-                TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
-                Ciudades ciudadP = null;
-                try {
-                    ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
-                } catch (Exception e) {
-                    System.out.println("No tiene ciudad");
-                }
-
-                CodigosPostales codigoPostal = new CodigosPostales();
-                codigoPostal.setCp(Integer.parseInt(codigo_postal));
-                codigoPostal.setIdMunicipio(municipioP);
-                codigoPostal.setIdEstado(estadoP);
-                codigoPostal.setIdTipoLocalidad(localidad);
-                if (ciudad != null) {
-                    codigoPostal.setIdCiudad(ciudadP);
-                }
-                codigosPostalesFacade.create(codigoPostal);
-
-                //Obtenemos el Ultimo codigo postal
-                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("idCp", "desc");
-                CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
-
-                Colonia colonia = new Colonia();
-                colonia.setIdCp(codigoPostal);
-                otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                colonia.setNombre(otra_colonia);
-                colonia.setStatus(BigInteger.ONE);
-
-                coloniaFacade.create(colonia);
-
-                //Obtenemos la ultima colonia
-                ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("idColonia", "desc");
-                Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
-                propuesta.setIdColonia_proyecto(coloniaNew);
-                System.out.println("Nuevo codigo postal + colonia agregado!");
+                propuesta.setIdColonia_proyecto(codigosPostales.agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
             }
             //Se crea instancia
             Instancia instancia = new Instancia();
@@ -1198,7 +979,7 @@ public class OrganizacionesController2 {
             List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
             FormatoUnico formatoUnico = listaFormatoUnico.get(0);
             int idPerfilAlumno = datosPersonales.getAlumnoId().getCarreraId();
-            boolean agregoSuPerfil =false;
+            boolean agregoSuPerfil = false;
             //Insercion de Perfiles
             //ProyectoPerfilModel proyectoPerfilModel;
             if (selectto != null) {
@@ -1215,8 +996,8 @@ public class OrganizacionesController2 {
                     System.out.println("Token:" + perfil);
                     if (perfil != null && !perfil.equals("")) {
                         perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
-                        if(idPerfilAlumno == Integer.parseInt(perfil)){
-                            agregoSuPerfil=true;
+                        if (idPerfilAlumno == Integer.parseInt(perfil)) {
+                            agregoSuPerfil = true;
                         }
                     }
                 }
@@ -1228,13 +1009,13 @@ public class OrganizacionesController2 {
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
                 //Agregamos su perfil si no lo agrego
-                if(!agregoSuPerfil){
+                if (!agregoSuPerfil) {
                     Perfil suPerfil = perfilFacade.find(BigDecimal.valueOf(idPerfilAlumno));
                     ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
                     proyectoPerfil.setIdPerfil(suPerfil);
                     proyectoPerfil.setIdProyecto(newProyecto);
                     proyectoPerfilFacade.create(proyectoPerfil);
-                    
+
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
             } else {
@@ -1242,7 +1023,7 @@ public class OrganizacionesController2 {
             }
 
             //Relacionar proyecto con formato unico
-            
+
             formatoUnico.setIdproyecto(newProyecto);
             formatoUnicoFacade.edit(formatoUnico);
             System.out.println("Relacion a formato unico correcta");
@@ -1310,71 +1091,17 @@ public class OrganizacionesController2 {
 
             System.out.print("no hubo errores");
             //Checa codigo postal
+            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
             if (existeCP.equals("true")) {
                 if (proyecto.getIdColonia().getIdColonia().toString().equals("0")) {
                     //Agregar colonia                   
-//                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
-                    System.out.println("AgregarColonia");
-                    System.out.println("codigo postal:" + codigo_postal.toString());
-                    List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
-                    CodigosPostales codigoPostal = codigosPostales.get(0);
-                    Colonia nvaColonia = new Colonia();
-                    otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                    nvaColonia.setNombre(otra_colonia);
-                    nvaColonia.setIdCp(codigoPostal);
-                    nvaColonia.setStatus(BigInteger.ONE);
-                    coloniaFacade.create(nvaColonia);
-
-                    //Obtenemos la ultima colonia
-                    LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                    ordenamiento.put("idColonia", "desc");
-                    Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
-                    proyecto.setIdColonia(colonia);
-                    System.out.println("Nueva colonia agregada!");
+                    proyecto.setIdColonia(codigosPostales.agregaColonia(codigo_postal, otra_colonia));
                 }
             } else {
                 //Agregar codigo postal + colonia
-//                instancia.setIdColonia(new CodigosPostalesController().agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
-                EstadosSia estadoP = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(estado)));
-                MunicipiosSia municipioP = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
-                TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
-                Ciudades ciudadP = null;
-                try {
-                    ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
-                } catch (Exception e) {
-                    System.out.println("No tiene ciudad");
-                }
-
-                CodigosPostales codigoPostal = new CodigosPostales();
-                codigoPostal.setCp(Integer.parseInt(codigo_postal));
-                codigoPostal.setIdMunicipio(municipioP);
-                codigoPostal.setIdEstado(estadoP);
-                codigoPostal.setIdTipoLocalidad(localidad);
-                if (ciudad != null) {
-                    codigoPostal.setIdCiudad(ciudadP);
-                }
-                codigosPostalesFacade.create(codigoPostal);
-
-                //Obtenemos el Ultimo codigo postal
-                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("idCp", "desc");
-                CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
-
-                Colonia colonia = new Colonia();
-                colonia.setIdCp(codigoPostal);
-                otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
-                colonia.setNombre(otra_colonia);
-                colonia.setStatus(BigInteger.ONE);
-
-                coloniaFacade.create(colonia);
-
-                //Obtenemos la ultima colonia
-                ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("idColonia", "desc");
-                Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
-                proyecto.setIdColonia(coloniaNew);
-                System.out.println("Nuevo codigo postal + colonia agregado!");
+                proyecto.setIdColonia(codigosPostales.agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
             }
+            
             proyecto.setValidacionAdmin(BigInteger.ZERO); //No validado
             proyecto.setEstatus(BigInteger.valueOf(2)); //Proyecto propuesto por alumno
             proyecto.setFechaAlta(new Date());
@@ -1452,12 +1179,12 @@ public class OrganizacionesController2 {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
             String idInstancia = session.getAttribute("NCONTROL").toString();
             Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
-            System.out.println("idInstancia:"+idInstancia);
+            System.out.println("idInstancia:" + idInstancia);
             //Valida que no sea nula la collection
-            ArrayList<Proyectos> listaProyectos= new ArrayList<Proyectos>();
-            try{
-                listaProyectos= new ArrayList<Proyectos>(instancia.getProyectosCollection());
-            }catch(Exception e){
+            ArrayList<Proyectos> listaProyectos = new ArrayList<Proyectos>();
+            try {
+                listaProyectos = new ArrayList<Proyectos>(instancia.getProyectosCollection());
+            } catch (Exception e) {
                 System.out.println("Lista de proyectos vacia");
             }
             System.out.println("proyectos:" + listaProyectos);
@@ -1468,7 +1195,7 @@ public class OrganizacionesController2 {
                     filtroDeProyectos.add(listaProyectos.get(i));
                 }
             }
-            
+
             //List<Proyectos> proyectos = proyectosFacade.findBySpecificField("idInstancia", idInstancia, "equal", null, null);
 //            System.out.println("proyectos:"+proyectos);
             model.addAttribute("proyectos", filtroDeProyectos);
@@ -1478,20 +1205,20 @@ public class OrganizacionesController2 {
             return "redirect:login.do";
         }
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/verAlumnosProyecto.do")
     public String verAlumnosProyecto(Model model, HttpSession session, HttpServletRequest request, String idProyecto) {
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.validaOrganizacion() || valSession.validaAdmin() || valSession.validaConsultas() || valSession.validaOperador() || valSession.validaRegistro()) {
-            System.out.println("idProyecto"+idProyecto);
+            System.out.println("idProyecto" + idProyecto);
             List<FormatoUnico> alumnos = new ArrayList<FormatoUnico>();
-            try{
-                alumnos = new ArrayList<FormatoUnico>(proyectosFacade.find(BigDecimal.valueOf(Double.parseDouble(idProyecto))).getFormatoUnicoCollection());                
-            }catch(Exception e){
+            try {
+                alumnos = new ArrayList<FormatoUnico>(proyectosFacade.find(BigDecimal.valueOf(Double.parseDouble(idProyecto))).getFormatoUnicoCollection());
+            } catch (Exception e) {
                 System.out.println("Error cargando la lista");
             }
             model.addAttribute("alumnos", alumnos);
-            
+
             return "/Organizaciones/verAlumnosProyecto";
         } else {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
