@@ -75,7 +75,7 @@ public class ValidacionStatusServicio {
                             //Panel para egresado
                             servicioBean.setTipoPanel(1);
                             egresadoBean.setAccesoCartaMotivos(false);
-                            egresadoBean.setMensajeCartaMotivos("Tu carta de motivos se encuentra en corrección. Por favor revisa la sección de observaciones para saber que es lo que tienes que corregir en tu carta de motivos.");
+                            egresadoBean.setMensajeCartaMotivos("Tu carta de motivos se encuentra en revisión.");
                             egresadoBean.setStatusCartaMotivos(3);
                             servicioBean.setEgresado(egresadoBean);
                             break;
