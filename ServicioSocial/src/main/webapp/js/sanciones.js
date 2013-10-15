@@ -1,3 +1,4 @@
+///////Con éste commit llego a los 100 :D :D
 $(document).ready(listo);
 var sancion = {};
 function listo() {
