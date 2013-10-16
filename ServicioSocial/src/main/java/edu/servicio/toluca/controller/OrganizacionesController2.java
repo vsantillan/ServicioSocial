@@ -1191,7 +1191,7 @@ public class OrganizacionesController2 {
             ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
             //Muestra proyectos que esten activos, validados o no validados
             for (int i = 0; i < listaProyectos.size(); i++) {
-                if (listaProyectos.get(i).getEstatus() == BigInteger.ONE) {
+                if (listaProyectos.get(i).getEstatus().toString().equals("1")) {
                     filtroDeProyectos.add(listaProyectos.get(i));
                 }
             }

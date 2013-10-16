@@ -146,12 +146,12 @@ public class ValidaLogin {
                 int validacionAdmin=Integer.parseInt(instancia.get(0).getValidacionAdmin().toString());
                 int estatus=Integer.parseInt(instancia.get(0).getEstatus().toString());
                 
-                if (validacionAdmin == 1  && estatus== 1) {
+                if ((validacionAdmin == 1|| validacionAdmin==2)  && estatus== 1) {
                     System.out.println("Iniciando sesion con organziacion " + instancia.get(0).getNombre());
                     session.setAttribute("ROL", "ORGANIZACION");
                     session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
                     session.setAttribute("NOMBRE", instancia.get(0).getNombre());
-                    if (instancia.get(0).getValidacionAdmin() == BigInteger.valueOf(2)) {
+                    if (validacionAdmin==2) {
                         session.setAttribute("MENSAJE", "<div class='error'>Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
                     }
                     sesionBean.setPagReturn("redirect:panelOrganizacion.do");
