@@ -141,7 +141,12 @@ public class ValidaLogin {
             }
             if (inicioSesion) {
                 //Verificando si este usuario tiene permisos de entrar
-                if (instancia.get(0).getValidacionAdmin() != BigInteger.ZERO && instancia.get(0).getEstatus() == BigInteger.ONE) {
+                System.out.println("Validacion Admin:"+instancia.get(0).getValidacionAdmin());
+                System.out.println("Estatus:"+instancia.get(0).getEstatus());
+                int validacionAdmin=Integer.parseInt(instancia.get(0).getValidacionAdmin().toString());
+                int estatus=Integer.parseInt(instancia.get(0).getEstatus().toString());
+                
+                if (validacionAdmin == 1  && estatus== 1) {
                     System.out.println("Iniciando sesion con organziacion " + instancia.get(0).getNombre());
                     session.setAttribute("ROL", "ORGANIZACION");
                     session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
