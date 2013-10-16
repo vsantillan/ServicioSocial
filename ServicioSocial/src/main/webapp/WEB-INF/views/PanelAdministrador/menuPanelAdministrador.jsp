@@ -72,7 +72,7 @@
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')">9.2 Noticias | Convocatorias</a></li>
             </ul>
         </li>
-        <li><a href="javascript:void(0)" onclick="redirecciona('#')">Historial Servicio Social</a></li>
+        <li><a href="historialServicio.do" onclick="redirecciona('#')">Historial Servicio Social</a></li>
         <li><a href="liberaciones.do" onclick="redirecciona('liberaciones.do')">Cartas de Liberaci&oacute;n</a></li>
         <li><a href="javascript:void(0)" onclick="redirecciona('#')">Reportes</a></li>
         <li><a href="javascript:void(0)" onclick="redirecciona('#')">Casos Especiales</a>

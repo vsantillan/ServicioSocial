@@ -36,7 +36,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
- * @author roy
+ * Panel de Usuario
+ * Autor: Jose Manuel Nieto Gomez
  */
 @Controller
 public class PanelUsuarioController {

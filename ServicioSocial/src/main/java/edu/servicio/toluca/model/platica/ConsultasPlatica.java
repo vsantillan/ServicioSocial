@@ -50,8 +50,16 @@ public class ConsultasPlatica {
     public FoliosPlaticaBean checaAlumnoPlatica(StatusServicioBean servicioBean) {
 
         System.out.println("Checa platica");
-//        List<FoliosPlatica> platica = foliosPlaticaFacade.findBySpecificField("alumnoId", servicioBean.getVistaAlumno(), "equal", null, null);
-        List<FoliosPlatica> platica = new ArrayList<FoliosPlatica>(servicioBean.getVistaAlumno().getFoliosPlaticaCollection());
+                
+        List<FoliosPlatica> platica = new ArrayList<FoliosPlatica>();
+        
+        try{
+//            platica = new ArrayList<FoliosPlatica>(servicioBean.getVistaAlumno().getFoliosPlaticaCollection());
+            platica = foliosPlaticaFacade.findBySpecificField("alumnoId", servicioBean.getVistaAlumno(), "equal", null, null);
+        }catch(Exception e){
+            System.out.println("ERR. No tiene coleccion de platica");
+        }
+        
         List<FoliosPlatica> filtroPlatica = new ArrayList();
         System.out.println("No. de registros en platica:" + platica.size());
         short uno = 1;

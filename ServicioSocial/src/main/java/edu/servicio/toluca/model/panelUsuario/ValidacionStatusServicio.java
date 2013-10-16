@@ -94,6 +94,7 @@ public class ValidacionStatusServicio {
             System.out.println("Newbie en el sistema sin datos personales");
             servicioBean.setMensaje("Servicio Social Activo");
             servicioBean.setStatusServicio(1);
+            servicioBean.setDatosPersonales(null);
 
             //Ver si es egresado o interno
             if (vistaAlumno.getStaActual().equals("IN")) {

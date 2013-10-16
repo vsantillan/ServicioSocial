@@ -1,7 +1,7 @@
 <%-- 
     Document   : panelUsuario
     Created on : 3/06/2013, 10:52:04 AM
-    Author     : roy
+    Author     : Jose Manuel Nieto Gomez
 --%>
 <%
     HttpSession sesionOk = request.getSession();
@@ -44,7 +44,7 @@
                 <p>A continuaci&oacute;n se presenta un men&uacute; con el proceso de tu servicio social, te mostraremos que significan los &iacute;conos: </p>
                 <ul>
                     <li><img src="imagenes/paloma.png" height="30"/>: Proceso Completado</li>
-                    <li><img src="imagenes/reloj.png" height="30"/>: Proceso en Revisi&oacute;n</li>
+                    <li><img src="imagenes/reloj.png" height="30"/>: Proceso en Revisi&oacute;n o Correcci&oacute;n</li>
                     <li><img src="imagenes/tache.png" height="30"/>: Proceso No realizado</li>
                 </ul>
                 <p>Es importante que recuerdes que a pesar de que el proceso es digital, debes conservar todos tus documentos y formatos originales, ya que deben ser entregados f&iacute;sicamente al final de tu proceso de servicio social.</p>

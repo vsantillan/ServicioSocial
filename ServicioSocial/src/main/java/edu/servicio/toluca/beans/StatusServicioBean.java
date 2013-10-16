@@ -13,7 +13,7 @@ import edu.servicio.toluca.entidades.VistaAlumno;
 import java.util.ArrayList;
 
 /**
- *
+ *Autor: Jose Manuel Nieto Gomez
  * @author bustedvillain
  */
 public class StatusServicioBean {

@@ -5,6 +5,10 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.sesion.VistaAlumnoFacade;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class PanelAdministradorController 
 {
+    
     @RequestMapping(method = RequestMethod.GET, value = "/panelAdministrador.do")
     public String panelAdministrador(Model model, HttpSession session, HttpServletRequest request) 
     {
@@ -33,5 +38,6 @@ public class PanelAdministradorController
         
         
         
-    }
+    }    
+    
 }
