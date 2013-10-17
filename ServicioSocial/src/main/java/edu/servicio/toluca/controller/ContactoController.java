@@ -31,7 +31,8 @@ public class ContactoController {
                                               "roy_006@hotmail.com",
                                               "manolo7221@gmail.com",
                                               "m.jonatan.diaz@gmail.com",
-                                              "regulesteban@gmail.com"};
+                                              "regulesteban@gmail.com",
+                                                "oima_91@hotmail.com"};
     
     @RequestMapping(method = RequestMethod.GET)
     public String contacto(Model modelo) {
