@@ -395,7 +395,8 @@ public class FormatoUnicoController {
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         for (int i = 0; i < listaInstancias.size(); i++) {
-            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+//            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+            if (listaInstancias.get(i).getValidacionAdmin().toString().equals("1")) {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
@@ -735,7 +736,9 @@ public class FormatoUnicoController {
         //System.out.println("tamaño" +  instancia.getProyectosCollection().size());
         for (Proyectos proy : instancia.getProyectosCollection()) {
             //System.out.println("Aquiii");
-            if (proy.getVacantesDisponibles().compareTo(BigInteger.ZERO) > 0) {
+//            if (proy.getVacantesDisponibles().compareTo(BigInteger.ZERO) > 0) {
+            int numero = Integer.parseInt(proy.getVacantesDisponibles().toString());
+            if (numero > 0) {
                 if (proy.getProyectoPerfilCollection().isEmpty()) {
                     System.out.println("oxxAgregando uno sin coleccion perfiles");
                     fuiJSON.getId_instancia().add(instancia.getIdInstancia());

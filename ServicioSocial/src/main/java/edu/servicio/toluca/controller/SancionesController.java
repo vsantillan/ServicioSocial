@@ -52,11 +52,7 @@ public class SancionesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/catalogoSanciones.do")
     public String catalogoSanciones(Model model) {
-        CatalogoSanciones cs = new CatalogoSanciones();
-//        cs.setHorasSancion(BigInteger.valueOf(10));
-//        cs.setTolerancia(BigInteger.valueOf(10));
-//        cs.setDetalle("Es la tercera sancion");        
-        //catalogoSancionesFacade.create(cs);
+
         System.out.println("Conteo de registros Catalogo Sanciones:" + catalogoSancionesFacade.count());
         List<CatalogoSanciones> listaAllSanciones = catalogoSancionesFacade.findAll();
         List<CatalogoSanciones> listaSanciones = new ArrayList<CatalogoSanciones>();
