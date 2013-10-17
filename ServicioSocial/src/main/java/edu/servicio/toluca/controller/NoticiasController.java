@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class NoticiasController {
-    @EJB(mappedName = "java:global/ServicioSocial/LugaresPlaticaFacade")
+/*    @EJB(mappedName = "java:global/ServicioSocial/LugaresPlaticaFacade")
     private NoticiasFacade NoticiasFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/catalogoNoticias.do")
@@ -40,5 +40,5 @@ public class NoticiasController {
         modelo.addAttribute("noticia_n", new Noticias());
         modelo.addAttribute("noticias", NoticiasFacade.findAll());
         return "/Platicas/lugaresPlatica";
-    }
+    }*/
 }
