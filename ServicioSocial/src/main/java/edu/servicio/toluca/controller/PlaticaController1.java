@@ -46,32 +46,24 @@ public class PlaticaController1 {
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugar.do")
-    String nuevoLugar(Model modelo,@Valid LugaresPlatica lugar_i,BindingResult resultado) {
-        if (!resultado.hasErrors()) {
+    public @ResponseBody
+    String nuevoLugar(Model modelo, LugaresPlatica lugar_i,BindingResult resultado) {
             System.out.println("Result has no error");
             MetodosValidacion metodo = new MetodosValidacion();
             lugar_i.setStatus(BigInteger.valueOf(1));
 //            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
             LugaresPlaticaFacade.create(lugar_i);
             return "redirect:altaLugares.do";
-        } else{
-            System.out.println("Result has error");
-            modelo.addAttribute("errorBlanco", "<div class='error'>Error la descripcion esta vacia</div>");
-            LinkedHashMap ordenarDesc = new LinkedHashMap();
-            ordenarDesc.put("lugar","desc");        
-            modelo.addAttribute("lugar_i", new LugaresPlatica());
-            modelo.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
-            return "/Platicas/lugaresPlatica";
-        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusLugar.do")
     public @ResponseBody
-    String actualizarStatusOrganizaciones(int id, Model model) {
+    String actualizarStatusLugares(int id, Model model) {
         LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
         lugar.setStatus(BigInteger.valueOf(0));
+        System.out.println("se edito: " );
         LugaresPlaticaFacade.edit(lugar);
-        return "ok";
+        return "ok "+lugar.getLugar();
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/editarLugar.do")

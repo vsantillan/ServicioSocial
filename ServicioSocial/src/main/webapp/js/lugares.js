@@ -30,6 +30,7 @@ function updateLugar(e)
         var tabla = $('#example').dataTable();
         $.post("cambiaStatusLugar.do", {id: idUpdate}, function(response)
         {
+            row.remove();
         });
     }
 }
