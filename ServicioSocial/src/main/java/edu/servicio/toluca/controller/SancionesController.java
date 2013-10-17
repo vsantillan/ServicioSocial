@@ -54,7 +54,6 @@ public class SancionesController {
     public String catalogoSanciones(Model model) {
 
         System.out.println("Conteo de registros Catalogo Sanciones:" + catalogoSancionesFacade.count());
-        List<CatalogoSanciones> listaAllSanciones = catalogoSancionesFacade.findAll();
         List<CatalogoSanciones> listaSanciones = new ArrayList<CatalogoSanciones>();
         List<CatalogoSanciones> listaPagoSanciones = new ArrayList<CatalogoSanciones>();
         for (CatalogoSanciones sancion : catalogoSancionesFacade.findAll()) {
@@ -72,34 +71,51 @@ public class SancionesController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/editaSancion.do")
-    public String editaSancion(String descripcion, String horas, Model modelo) {
-        modelo.addAttribute("descripcion", descripcion);
-        modelo.addAttribute("horas", horas);
+    public String editaSancion(String descripcion, String horas, Model modelo, BigDecimal id) {
+        CatalogoSanciones sancion = catalogoSancionesFacade.find(id);
+        modelo.addAttribute("idSancion", sancion.getId());
+        modelo.addAttribute("descripcion", sancion.getDetalle());
+        modelo.addAttribute("horas", sancion.getHorasSancion());
+        modelo.addAttribute("tolerancia", sancion.getTolerancia());
         return "/Sanciones/editaSancion";
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/editaPagoSancion.do")
+    public String editaPagoSancion(String descripcion, String horas, Model modelo, BigDecimal id) {
+        CatalogoSanciones sancion = catalogoSancionesFacade.find(id);
+        modelo.addAttribute("idSancion", sancion.getId());
+        modelo.addAttribute("descripcion", sancion.getDetalle());
+        return "/Sanciones/editaPagoSancion";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/nuevaSancion.do")
     public @ResponseBody
-    String nuevaSancion(Model model, String descripcion, BigInteger horas, BigInteger tolerancia, Model modelo) {
+    String nuevaSancion(Model model, BigDecimal idSancion, String descripcion, BigInteger horas, BigInteger tolerancia, Model modelo, String tipo) {
         CatalogoSancionesModel csm = new CatalogoSancionesModel(descripcion, horas, tolerancia);
         String arrJSON = "[";
         csm.arregla();
         ArrayList<String> listaErrores = csm.valida();
-        
         if (listaErrores.isEmpty()) {
-            CatalogoSanciones sancion = new CatalogoSanciones();
+            CatalogoSanciones sancion = null;
+            if(tipo.equals("nuevo"))
+                 sancion = new CatalogoSanciones();
+            else
+                sancion = catalogoSancionesFacade.find(idSancion);
             sancion.setDetalle(descripcion);
             sancion.setHorasSancion(horas);
             sancion.setTolerancia(tolerancia);
-            try
-            {
-                catalogoSancionesFacade.create(sancion);
-            }
-            catch(Exception e)
-            {
+            try {
+                if (tipo.equals("nuevo")) {
+                    catalogoSancionesFacade.create(sancion);
+                }
+                else
+                {
+                    catalogoSancionesFacade.edit(sancion);
+                }
+
+            } catch (Exception e) {
                 arrJSON = arrJSON + "{\"observacion\":\"" + e.getMessage() + "\"},";
             }
-            
+
         } else {
             int i = 1;
             for (String s : listaErrores) {
@@ -118,28 +134,33 @@ public class SancionesController {
         System.out.println("Arrjson" + arrJSON);
         return arrJSON;
     }
+
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoPagoSancion.do")
     public @ResponseBody
-    String nuevoPagoSancion(Model model, String descripcion,Model modelo) {
+    String nuevoPagoSancion(Model model, BigDecimal idSancion, String descripcion, Model modelo, String tipo) {
         CatalogoSancionesModel csm = new CatalogoSancionesModel(descripcion, BigInteger.ZERO, BigInteger.ZERO);
         String arrJSON = "[";
         csm.arregla();
         ArrayList<String> listaErrores = csm.valida2();
-        
+
         if (listaErrores.isEmpty()) {
-            CatalogoSanciones sancion = new CatalogoSanciones();
+            CatalogoSanciones sancion = null;
+            if(tipo.equals("nuevo"))
+                sancion = new CatalogoSanciones();
+            else
+                sancion = catalogoSancionesFacade.find(idSancion);
             sancion.setDetalle(descripcion);
             sancion.setHorasSancion(BigInteger.ZERO);
             sancion.setTolerancia(BigInteger.ZERO);
-            try
-            {
-                catalogoSancionesFacade.create(sancion);
-            }
-            catch(Exception e)
-            {
+            try {
+                if(tipo.equals("nuevo"))
+                    catalogoSancionesFacade.create(sancion);
+                else
+                    catalogoSancionesFacade.edit(sancion);
+            } catch (Exception e) {
                 arrJSON = arrJSON + "{\"observacion\":\"" + e.getMessage() + "\"},";
             }
-            
+
         } else {
             int i = 1;
             for (String s : listaErrores) {
@@ -157,7 +178,7 @@ public class SancionesController {
 
         System.out.println("Arrjson" + arrJSON);
         return arrJSON;
-     
+
 
     }
 }

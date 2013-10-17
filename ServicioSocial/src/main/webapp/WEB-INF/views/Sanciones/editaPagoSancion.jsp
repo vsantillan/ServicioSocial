@@ -27,20 +27,13 @@
                     <form:form name="nuevaSancion"  onsubmit="window.parent.Shadowbox.close();">
                         <table>
                             <tr>
-                            <input type="hidden" value="${idSancion}" name ="id" id="idSancion"/>
+                            <input type="hidden" value="${idSancion}" name ="id" id="pidSancion"/>
                             <td> <label for="descripcion">Descripci&oacute;n:</label> </td>
-                            <td> <textarea name="descripcion" rows="4" cols="50" id="eDescripion">${descripcion}</textarea> </td>
+                            <td> <textarea name="descripcion" rows="4" cols="50" id="epDescripion">${descripcion}</textarea> </td>
                             </tr>
-                            <tr>
-                                <td>  <label for="hora">Horas:</label> </td>
-                                <td>  <input type="text" name="horas" id="eHoras" size="15" value="${horas}" /></td>  
-                            </tr>
-                            <tr>
-                                <td> <p><label for="tolerancia">D&iacute;as de tolerancia</label></p> </td>
-                                <td>  <input type="number" id="eTolerancia" name="tolerancia" size="2" value="${tolerancia}" pagoSanciones/></td>  
-                            </tr>
+                            
                             <tr> 
-                                <td> <input type ="button"  onclick="editarSancion2();" value = "Guardar " /> </td>
+                                <td> <input type ="button"  onclick="edtitarPagoSancion();" value = "Guardar " /> </td>
                                 <td> <input type ="reset" value = "Limpiar" /></td>
                             </tr>
                         </table>

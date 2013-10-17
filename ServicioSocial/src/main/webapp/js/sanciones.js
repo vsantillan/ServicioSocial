@@ -19,7 +19,8 @@ function enviaSancionParaGuardado()
     $("form#frmNuevaSancion :input").each(function() {
         prepararJSON($(this));
     });
-    
+    sancion['tipo']='nuevo';
+    console.log(sancion.valueOf());
     $.post("nuevaSancion.do", sancion, function(respuesta) {
         var respJ = {};
         if (respuesta !== "noInfo")
@@ -43,14 +44,50 @@ function enviaSancionParaGuardado()
         }
     });
 }
+function editarSancion2()
+{
+    console.log('aqui');
+    $('#observaciones').hide("fast");
+    var idSancion = $("#idSancion").val();
+    var horas = $("#eHoras").val();
+    var tolerancia = $("#eTolerancia").val();
+    var descripcion = $("#eDescripion").val();
+    $.post("nuevaSancion.do",{tipo:'editar', idSancion:idSancion, horas:horas, tolerancia:tolerancia, descripcion:descripcion},function(respuesta)
+    {
+        var respJ = {};
+        if (respuesta !== "noInfo")
+        {
+            respJ = jQuery.parseJSON(respuesta);
+        }
+        if (respJ.length > 0)
+        {
+            //alert('Tienes errores');
+            alert('Tienes errores');
+            $('.observacion').remove();
+            $.each(respJ, function(i, accion) {
+                $('#observaciones').show('slow');
+                $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
+            });
+        }
+        else
+        {
+            alert('Informacion almacenada correctamente');
+//            location.reload();
+            parent.location = parent.location;
+        }
+    });
+    
+}
 function enviaPagoSancionParaGuardado()
 {
     $('#observaciones').hide("fast");
     $("form#frmNuevoPagoSancion :input").each(function() {
         prepararJSON($(this));
     });
-    
+    sancion['tipo']='nuevo';
+    console.log(sancion.valueOf());
     $.post("nuevoPagoSancion.do", sancion, function(respuesta) {
+        console.log(sancion.valueOf());
         var respJ = {};
         if (respuesta !== "noInfo")
         {
@@ -70,6 +107,36 @@ function enviaPagoSancionParaGuardado()
         {
             alert('Informacion almacenada correctamente');
             location.reload();
+        }
+    });
+}
+function edtitarPagoSancion()
+{
+    $('#observaciones').hide("fast");
+    var idSancion = $("#pidSancion").val();
+    var descripcion = $("#epDescripion").val();
+    $.post("nuevoPagoSancion.do",{tipo:'editar', idSancion:idSancion,  descripcion:descripcion},function(respuesta)
+    {
+        var respJ = {};
+        if (respuesta !== "noInfo")
+        {
+            respJ = jQuery.parseJSON(respuesta);
+        }
+        if (respJ.length > 0)
+        {
+            //alert('Tienes errores');
+            alert('Tienes errores');
+            $('.observacion').remove();
+            $.each(respJ, function(i, accion) {
+                $('#observaciones').show('slow');
+                $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
+            });
+        }
+        else
+        {
+            alert('Informacion almacenada correctamente');
+//            location.reload();
+            parent.location = parent.location;
         }
     });
 }

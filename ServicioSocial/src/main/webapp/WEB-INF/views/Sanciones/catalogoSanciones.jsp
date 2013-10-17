@@ -80,7 +80,7 @@
                                         <th><core:out value="${current.detalle}" /></th>
                                         <th><core:out value="${current.horasSancion}" /></th>
                                         <th><core:out value="${current.tolerancia}" /></th>
-                                        <th><a href="#a" rel="shadowbox; width=1000px; height=400px"><img src="imagenes/editar.png" width="30" /></a></th>
+                                        <th><a href="editaSancion.do?id=${current.id}" class="fancyFUI" rel="shadowbox; width=1000px; height=400px"><img src="imagenes/editar.png" width="30" /></a></th>
                                     </tr>
                                 </core:forEach>
                             </tbody>
@@ -125,7 +125,7 @@
                                     <tr class='gradeX'>
                                         <th><core:out value="${current.id}" /></th>
                                         <th><core:out value="${current.detalle}" /></th>
-                                        <th><a href="#a" rel="shadowbox; width=1000px; height=400px"><img src="imagenes/editar.png" width="30" /></a></th>
+                                        <th><a href="editaPagoSancion.do?id=${current.id}" class="fancyFUI" rel="shadowbox; width=1000px; height=400px"><img src="imagenes/editar.png" width="30" /></a></th>
                                     </tr>
                                 </core:forEach>
                             </tbody>
