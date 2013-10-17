@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.entidades.CatalogoSanciones;
 import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.model.sanciones.CatalogoSancionesModel;
@@ -13,6 +14,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +35,8 @@ public class SancionesController {
     private CatalogoSancionesFacade catalogoSancionesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/sancionesAlumno.do")
-    public String sancionesAlumno(Model modelo) {
+    public String sancionesAlumno(Model modelo, HttpSession session, HttpServletRequest request) {
+        
         return "/Sanciones/sancionesAlumno";
     }
 
@@ -51,8 +55,13 @@ public class SancionesController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/catalogoSanciones.do")
-    public String catalogoSanciones(Model model) {
-
+    public String catalogoSanciones(Model model, HttpSession session, HttpServletRequest request) {
+        if (new ValidaSesion().validaAdmin(session, request)) {
+            //return "/PanelUsuario/panelUsuario";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
         System.out.println("Conteo de registros Catalogo Sanciones:" + catalogoSancionesFacade.count());
         List<CatalogoSanciones> listaSanciones = new ArrayList<CatalogoSanciones>();
         List<CatalogoSanciones> listaPagoSanciones = new ArrayList<CatalogoSanciones>();
@@ -71,7 +80,13 @@ public class SancionesController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/editaSancion.do")
-    public String editaSancion(String descripcion, String horas, Model modelo, BigDecimal id) {
+    public String editaSancion(String descripcion, String horas, Model modelo, BigDecimal id, HttpSession session, HttpServletRequest request) {
+        if (new ValidaSesion().validaAdmin(session, request)) {
+            //return "/PanelUsuario/panelUsuario";
+        } else {
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
         CatalogoSanciones sancion = catalogoSancionesFacade.find(id);
         modelo.addAttribute("idSancion", sancion.getId());
         modelo.addAttribute("descripcion", sancion.getDetalle());
@@ -80,7 +95,13 @@ public class SancionesController {
         return "/Sanciones/editaSancion";
     }
     @RequestMapping(method = RequestMethod.GET, value = "/editaPagoSancion.do")
-    public String editaPagoSancion(String descripcion, String horas, Model modelo, BigDecimal id) {
+    public String editaPagoSancion(String descripcion, String horas, Model modelo, BigDecimal id, HttpSession session, HttpServletRequest request) {
+        if (new ValidaSesion().validaAdmin(session, request)) {
+            //return "/PanelUsuario/panelUsuario";
+        } else {
+            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
         CatalogoSanciones sancion = catalogoSancionesFacade.find(id);
         modelo.addAttribute("idSancion", sancion.getId());
         modelo.addAttribute("descripcion", sancion.getDetalle());
