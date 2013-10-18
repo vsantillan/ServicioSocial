@@ -43,8 +43,8 @@ public class BecasController {
     public String preseleccionAlumnos(@ModelAttribute(value = "alumnoP") Becado alumnoP, BindingResult result, Model model) {
         Fecha fecha = new Fecha();
         fecha.CalculaPeriodo();
-//        model.addAttribute("alumno", formatoUnico.findAll());
-         model.addAttribute("alumno", formatoUnico.findBySpecificField("tipoServicio", "1", "equal", null, null));
+        model.addAttribute("alumno", formatoUnico.findAll());
+        
         return "/Becas/preseleccionAlumnos";
     }
 

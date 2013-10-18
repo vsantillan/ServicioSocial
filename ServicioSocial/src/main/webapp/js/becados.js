@@ -10,8 +10,8 @@ $(document).ready(function() {
         "sPaginationType": "full_numbers",
         "sScrollX": "100%",
         "sScrollXInner": "200%",
-        "bScrollCollapse": true,
-        "bDestroy": true
+        "bScrollCollapse": true
+        
 
 
     });
@@ -20,8 +20,8 @@ $(document).ready(function() {
         "sPaginationType": "full_numbers",
         "sScrollX": "100%",
         "sScrollXInner": "200%",
-        "bScrollCollapse": true,
-        "bDestroy": true
+        "bScrollCollapse": true
+        
 
     });
     $(document).ready(function() {

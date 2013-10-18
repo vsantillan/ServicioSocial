@@ -12,28 +12,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
+         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
-        <!-- CSS  Shadowbox-->
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+
 
         <!--Script para DataTables-->
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
 
-        <!--Scripts para shadowbox-->
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({language: "es",modal: true, players: ['img', 'html', 'iframe', 'qt',
-                    'wmp', 'swf', 'flv']});
-        </script> 
+        <!--Include para Ventanas Modales-->
+        <jsp:include page="../Template/headsModal.jsp" /> 
 
         <title>Administraci&oacute;n de Alumnos Becados</title>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
+    <body class="background">
         <jsp:include page="../Template/banner.jsp" />
         <div id ="contenido" align="left">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left; width: 700px;">
+            <div style="float:left; width: 80%;">
                 <div id="tabs">
                     <h1>Administraci&oacute;n de Alumnos Becados</h1>
                     <ul>
@@ -75,7 +71,7 @@
                         </table>
                         <table>
                             <tr>
-                                <td><a href="#preseleccionado" rel="shadowbox;height=300;width=500"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></a></td>
+                                <td><a href="preseleccionAlumnos.do" class="fancy"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></a></td>
                                 <td><a id="quitarAlumno" href="#" ><img src="imagenes/eliminar.jpg" title="Eliminar" width="29"/></a></td>
                                 <td><a  href="correo.do" rel="shadowbox"><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></a></td>
                                 <td><a id="aceptarAlumno" href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></a></td>
