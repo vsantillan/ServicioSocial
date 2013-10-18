@@ -9,6 +9,7 @@ import edu.servicio.toluca.entidades.CatalogoSanciones;
 import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.model.sanciones.CatalogoSancionesModel;
 import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
+import edu.servicio.toluca.sesion.SancionesFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -33,10 +34,13 @@ public class SancionesController {
 
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoSancionesFacade")
     private CatalogoSancionesFacade catalogoSancionesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
+    private SancionesFacade sancionesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/sancionesAlumno.do")
     public String sancionesAlumno(Model modelo, HttpSession session, HttpServletRequest request) {
         
+        modelo.addAttribute("sancionAlumno", sancionesFacade.findAll());
         return "/Sanciones/sancionesAlumno";
     }
 

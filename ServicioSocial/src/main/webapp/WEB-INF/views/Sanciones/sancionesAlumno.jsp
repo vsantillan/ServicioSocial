@@ -52,29 +52,24 @@
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
-                            <th>Detalle</th>
-                            <th>Periodo</th>
+                            <th>Historial Servicio</th>
+                            <th>Sanciones</th>
+                            <th>Pago Sanciones</th>
                             <th>No control</th>
                             <th>Nombre</th>
-                            <th>Estado</th>
-                            <th>Horas de sanci&oacute;n</th>
                             <th>Horas restantes</th>
-                            <th>Lugar</th>
-                            <th>Acci&oacute;n</th>
                         </tr>
                     </thead>
                     <tbody>
                         <core:forEach items="${sancionAlumno}" var="current">
                         <tr class='gradeX'>
-                            <th><a href="detalleSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><core:out value="${current.periodo}" /></th>
-                            <th><core:out value="${current.noControl}" /></th>
-                            <th><core:out value="${current.nombre}" /></th>
-                            <th><core:out value="${current.status}" /></th>
-                            <th><core:out value="${current.horasSancion}" /></th>
-                            <th><core:out value="${current.horasRestantes}" /></th>
-                            <th><core:out value="${current.lugar}" /></th>
-                            <th><a href="pagoSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox">Pagar</a></th>
+                            <th><a href="detalleSancionAlumno.do?noControl=${current.datosPersonalesId.alumnoId.id}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="detalleSancionAlumno.do?noControl=${current.datosPersonalesId.alumnoId.id}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="detalleSancionAlumno.do?noControl=${current.datosPersonalesId.alumnoId.id}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            
+                            <th><core:out value="${current.datosPersonalesId.alumnoId.id}" /></th>
+                            <th><core:out value="${current.datosPersonalesId.alumnoId.nombre}" /></th>
+                            <th><core:out value="" /></th>
                         </tr>
                       </core:forEach>
                     </tbody>
