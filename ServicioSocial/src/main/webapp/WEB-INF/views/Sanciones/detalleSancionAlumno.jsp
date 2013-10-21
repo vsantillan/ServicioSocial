@@ -35,28 +35,44 @@
         <div style="padding-left: 10px; padding-right: 10px ">
 
             <h1>Sanciones</h1>
-            <p>A continuaci&oacute;n se muestran los reportes de horas pagadas de sanci&oacute;n.</p>
+
             <br />
-            <p><b>Nombre: </b>${nombre}</p>
-            <p><b>No. Control: </b>${noControl}</p>
+            <h2><b>Nombre: </b>${nombre}</h2>
+            <h2><b>No. Control: </b>${nombre}</h2>
+            <div style ="background: #B5EBF6;  border-radius:30px; border: 2px; padding: 5px;border-color: #862E26; padding-left: 30px;">
+                <form>
+                    <input id="idDatosPersonales" type="hidden" value="${current.datosPersonalesId.id}"/>
+                    <h3>Nueva sanci&oacute;n</h3>
+                    <b>Sancion:</b>
+                    <select id="idSancion" id="comboSancion">
+                        <core:forEach items="${catalogoSanciones}" var="current">
+                            <option><core:out value="${current.detalle}" /></option>
+                        </core:forEach>
+                    </select>
+                    <b>Horas:</b>
+                    <input id="horas" type="number" value ="0"/>
+                    <input type="button" onclick="nuevaSancion();" value="Asignar"/>
+                </form>
+            </div>
+
+            <br/>
             <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                 <thead>
                     <tr>
-                        <th>No. Reporte</th>
+                        <th>Acciones</th>
                         <th>Fecha</th>
                         <th>Horas</th>
-                        <th>D&iacute;as de tolerancia.</th>
                         <th>Descripci&oacute;n</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <core:forEach items="${detalleSancionAlumno}" var="current">
+                    <core:forEach items="${listaSanciones}" var="current">
                         <tr class='gradeX'>
-                            <th><core:out value="${current.noReporte}" /></th>
+
+                            <th><a href="detalleSancionAlumno.do?ins=sancion" rel="shadowbox" class="fancyFUI"><img src="imagenes/lupa.png" width="30"/></a></th>
                             <th><core:out value="${current.fecha}" /></th>
-                            <th><core:out value="${current.horas}" /></th>
-                            <th><core:out value="${current.tolerancia}" /></th>
-                            <th><core:out value="${current.descripcion}" /></th>
+                            <th><core:out value="${current.horasSancion}" /></th>
+                            <th><core:out value="${current.catalogoSancionesId.detalle}" /></th>
                         </tr>
                     </core:forEach>
                 </tbody>
