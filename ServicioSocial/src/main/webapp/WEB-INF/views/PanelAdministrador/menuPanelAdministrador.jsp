@@ -83,6 +83,13 @@
             </ul>
         </li>
         <li><a href="catalogoObservaciones.do" onclick="redirecciona('catalogoObservaciones.do')">Observaciones</a></li>
+        <li><a href="javascript:void(0)" onclick="redirecciona('#')">Noticias</a>
+            <ul>
+                <li><a href="javascript:void(0)" onclick="redirecciona('#')">Alta Noticias</a></li>
+                <li><a href="javascript:void(0)" onclick="redirecciona('#')"></a></li>
+            </ul>
+        </li>
+        
         <li><a href="javascript:void(0)" onclick="redirecciona('#')">Acerca De</a>
             <ul>
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')">15.1 Ayuda</a></li>

@@ -7,6 +7,8 @@ package edu.servicio.toluca.model.noticias;
 import edu.servicio.toluca.beans.FechaAPalabras;
 import edu.servicio.toluca.entidades.Noticias;
 import edu.servicio.toluca.sesion.NoticiasFacade;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -53,4 +55,43 @@ public class ConsultasNoticias {
         }
         return noticias;
     }
+    
+    
+    public Noticias consultaNoticiaPrincipal(int id)
+    {
+        
+        try
+        {
+         BigDecimal idNoticia = null;   
+         idNoticia  = BigDecimal.valueOf(id);
+         Noticias noticia=noticiasFacade.find(idNoticia);
+         
+         //Uno para Noticias Generales
+         if(noticia.getTipoServicio().compareTo(new BigInteger("1")) == 0)
+             return noticia;
+         
+         return null;
+         
+         
+        }catch(Exception e)
+        {
+            return null;
+        }
+     
+    }
+    
+    public boolean nuevaNoticia(Noticias noticia)
+    {
+        try
+        {
+            noticiasFacade.create(noticia);
+            return true;
+        }catch(Exception e)
+        {
+            return false;
+        }
+        
+    }
+    
+    
 }
