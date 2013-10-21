@@ -93,5 +93,19 @@ public class ConsultasNoticias {
         
     }
     
+    public Noticias obtenterNoticia(int id)
+    {        
+        try
+        {
+          BigDecimal idNoticia = null;   
+          idNoticia  = BigDecimal.valueOf(id);
+          Noticias noticia=noticiasFacade.find(idNoticia);
+          return noticia;
+        }catch(Exception e)
+        {
+            return null;
+        }
+     
+    }
     
 }

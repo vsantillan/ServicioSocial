@@ -29,13 +29,13 @@
 
                 <%-- Formulario Nueva Noticia --%>
                 <center>
-                    <h1>Alta de Noticia</h1>
-                    <form:form commandName="Noticias" id="Noticias" name="Noticias" action="altaNoticia.do"  class="MyForm"   method="POST" style="width:80%;" >
+                    <h1>Editar Noticia</h1>
+                    <form:form commandName="Noticias" id="Noticias" name="Noticias" action="editarNoticia.do"  class="MyForm"   method="POST" style="width:80%;" >
                         <table>
                             <tr>
                                 <td> <label for="titulo">T&iacute;tulo:</label> </td>
                                 <td style="width: 120%"><form:input path="titulo"/><br/>
-                                    <form:hidden path="id" value='-1'/>
+                                    <form:hidden path="id" />
                                 </td>
                             </tr>
                             <tr> <td colspan="2"><form:errors path="titulo" cssClass="error"/> </td> </tr>

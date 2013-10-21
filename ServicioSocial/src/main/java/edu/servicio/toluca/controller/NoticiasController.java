@@ -84,4 +84,43 @@ public class NoticiasController {
     }
     
     
+    @RequestMapping(method = RequestMethod.GET, value = "/editarNoticia.do")
+    public String editarNoticia(Model modelo,int id)
+    {
+        ConsultasNoticias noticiasModel=new ConsultasNoticias(noticiasFacade);
+        Noticias noticia = noticiasModel.obtenterNoticia(id);
+        
+        if(noticia != null)
+        {
+            //System.out.println(noticia.getDetalle());
+            modelo.addAttribute("Noticias",noticia);
+            return "/Noticias/editarNoticia";
+        }
+        return "404";
+        
+    }
+    
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/editarNoticia.do")
+    public String editarNoticiaPOST(@ModelAttribute("Noticias") @Valid Noticias noticia, BindingResult result,Model modelo)
+    {
+        if(result.hasErrors()) {
+            modelo.addAttribute("Noticias",noticia);
+            return "redirect:editarNoticia.do?id="+noticia.getId();
+        }
+        noticia.setId(null);
+        noticia.setFecha(new Date());
+        ConsultasNoticias noticias=new ConsultasNoticias(noticiasFacade);
+        if(noticias.nuevaNoticia(noticia))
+        {
+            modelo.addAttribute("Noticias",new Noticias());
+            return "/Noticias/altaNoticia";
+        }
+        else
+        {
+            return "redirect:altaNoticia.do";
+        }
+    }
+    
+    
 }
