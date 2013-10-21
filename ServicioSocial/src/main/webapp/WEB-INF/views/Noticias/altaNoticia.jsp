@@ -14,9 +14,9 @@
         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
         <jsp:include page="../Template/metas.jsp" />
 
-        <script src="js/jquery.codigos.postales.js"></script>       
-        <script src="js/jquery.manolo.js"></script>
 
+        <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
+        
         <title>Administrador</title>
     </head>
     <body class="background">
@@ -34,7 +34,7 @@
                         <table>
                             <tr>
                                 <td> <label for="titulo">T&iacute;tulo:</label> </td>
-                                <td><form:input path="titulo"/><br/>
+                                <td style="width: 120%"><form:input path="titulo"/><br/>
                                     <form:hidden path="id" value='-1'/>
                                 </td>
                             </tr>
@@ -43,9 +43,9 @@
                                 <td>  <label for="tipoNoticia">Tipo Noticia:</label></td>
                                 <td>   
                                     <form:select path="tipoServicio">
-                                     <form:option value="1" label="1" />
-                                     <form:option value="2" label="2" />
-                                     <form:option value="3" label="3" />
+                                     <form:option value="1" label="Noticas para página principal" />
+                                     <form:option value="2" label="Noticias para alumnos"/>
+                                     <form:option value="3" label="Noticias para organizaciones" />
                                     </form:select>
                                 </td>  
                             </tr>
@@ -53,8 +53,13 @@
                             <tr>
                                 <td>  <label for="detalle">Descripci&oacute;n:</label></td>
                                 <td>   
-                                    <form:textarea path="detalle" />
-                                    
+                                    <form:textarea path="detalle" cols="200" rows="40"/>
+                                     <script type="text/javascript">
+                                         
+                                         CKEDITOR.replace ('detalle');
+                                         config.language = 'es';
+                                         
+                                    </script>
                                 </td>  
                             </tr>
                             <tr>
@@ -75,5 +80,6 @@
         </div>
         <%-- fin del contenido --%>
         <jsp:include page="../Template/footer.jsp" />
+        
     </body>
 </html>

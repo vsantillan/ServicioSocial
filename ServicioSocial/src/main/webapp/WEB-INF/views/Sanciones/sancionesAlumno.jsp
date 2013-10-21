@@ -17,10 +17,12 @@
         <jsp:include page="../Template/metas.jsp" />
         <!-- CSS  Shadowbox-->
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+        
 
         <!--Script para DataTables-->
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        <script type="text/javascript" language="javascript" src="js/sanciones.js"></script>
 
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
@@ -61,14 +63,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <core:forEach items="${sancionAlumno}" var="current">
+                        <core:forEach items="${listaSanciones}" var="current">
                         <tr class='gradeX'>
-                            <th><a href="detalleSancionAlumno.do?noControl=${current.datosPersonalesId.alumnoId.id}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="detalleSancionAlumno.do?noControl=${current.datosPersonalesId.alumnoId.id}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="detalleSancionAlumno.do?noControl=${current.datosPersonalesId.alumnoId.id}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="historialServicio.do"  target="_blank"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="detalleSancionAlumno.do?noControl=${current.idAlumno}&ins=sancion" rel="shadowbox" class="fancyFUI"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="detalleSancionAlumno.do?noControl=${current.idAlumno}&ins=pago" rel="shadowbox" class="fancyFUI"><img src="imagenes/lupa.png" width="30"/></a></th>
                             
-                            <th><core:out value="${current.datosPersonalesId.alumnoId.id}" /></th>
-                            <th><core:out value="${current.datosPersonalesId.alumnoId.nombre}" /></th>
+                            <th><core:out value="${current.alumno.id}" /></th>
+                            <th><core:out value="${current.alumno.nombre}" /></th>
                             <th><core:out value="" /></th>
                         </tr>
                       </core:forEach>
