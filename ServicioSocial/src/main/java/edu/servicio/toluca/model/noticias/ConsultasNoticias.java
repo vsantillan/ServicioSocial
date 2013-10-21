@@ -9,6 +9,7 @@ import edu.servicio.toluca.entidades.Noticias;
 import edu.servicio.toluca.sesion.NoticiasFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ConsultasNoticias {
      */
     public List<Noticias> consultaNoticiasGenerales(String orden) {
         FechaAPalabras fecha = new FechaAPalabras();
-        List<Noticias> noticias = null;
+        List<Noticias> noticias = new ArrayList<Noticias>();
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
 
         if (orden.equals("desc")) {
@@ -42,17 +43,24 @@ public class ConsultasNoticias {
             ordenamiento.put("fecha", "asc");
         }
         //Consulta a las noticias generales
-        noticias = noticiasFacade.findBySpecificField("tipoServicio", 2, "equal", ordenamiento, null);
-
-        //Imprime noticias en consola
+//        noticias = noticiasFacade.findBySpecificField("tipoServicio", 2, "equal", ordenamiento, null);
+        List<Noticias> noticiasCrude = noticiasFacade.findAll(ordenamiento);
+        System.out.println("Noticias crude:"+noticiasCrude.size());
+        for (int i = 0; i < noticiasCrude.size(); i++) {
+            int tipo = Integer.parseInt(noticiasCrude.get(i).getTipoServicio().toString());
+            if(tipo == 2 || tipo == 4){
+                noticias.add(noticiasCrude.get(i));
+            }
+        }
+//        //Imprime noticias en consola
 //        System.out.println("Noticias");
-        if (!noticias.isEmpty()) {
-            for (int i = 0; i < noticias.size(); i++) {
+//        if (!noticias.isEmpty()) {
+//            for (int i = 0; i < noticias.size(); i++) {
 //                System.out.println("--------------------------------");
 //                System.out.println("Fecha:"+fecha.fechaAPalabras(noticias.get(i).getFecha()));
 //                System.out.println("Detalle:"+noticias.get(i).getDetalle());                
-            }
-        }
+//            }
+//        }
         return noticias;
     }
     

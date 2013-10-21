@@ -59,7 +59,7 @@ public class Noticias implements Serializable {
     @Size(max = 300)
     @Column(name = "DETALLE")
     private String detalle;
-    //1. Noticas para pagina principal, 2. Noticias para alumnos, 3. Noticias para organizaciones
+    //1. Noticas para pagina principal, 2. Noticias para alumnos, 3. Noticias para organizaciones, 4. Noticias para becados
     @NotNull(message = "Selecciona un Tipo de Noticia") 
     @Column(name = "TIPO_SERVICIO")
     private BigInteger tipoServicio;

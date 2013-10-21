@@ -11,7 +11,8 @@ import java.util.ArrayList;
 
 
 import edu.servicio.toluca.beans.ValidaSesion;
-import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.VistaAlumno;
+import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.util.List;
 import javax.ejb.EJB;
@@ -21,19 +22,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Controlador para el historial de servicio social
- * Autor: Jose Manuel Nieto Gomez
+ * Controlador para el historial de servicio social Autor: Jose Manuel Nieto
+ * Gomez
+ *
  * @author bustedvillain
  */
-
 @Controller
 public class HistorialServicioController {
 
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     public DatosPersonalesFacade datosPersonalesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+    public VistaAlumnoFacade vistaAlumnoFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/historialServicio.do")
     public String historialServicio(Model model, HttpSession session, HttpServletRequest request) {
@@ -50,17 +53,37 @@ public class HistorialServicioController {
             } catch (Exception e) {
                 System.out.println("Error al cargar alumnos en el servicio social");
             }
-            
+
             //Inyectando alumnos
             model.addAttribute("alumnos", alumnos);
-            
+
             return "/HistorialServicio/historialServicio";
         } else {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/verProcesoAlumno.do")
+    public String historialServicio(Model model, HttpSession session, HttpServletRequest request, @RequestParam int id) {
+        //Valida sesion
+        ValidaSesion valSession = new ValidaSesion(session, request);
+        if (valSession.accesaPanelAdministrador()) {
+            try {
+                VistaAlumno alumno = vistaAlumnoFacade.find(id);
+                ValidacionStatusServicio validacionServicio = new ValidacionStatusServicio();
+                StatusServicioBean servicioBean = validacionServicio.validaServicio(alumno);
+                
+//                model.addAttribute("servicio", "")
+
+            } catch (Exception e) {
+            }
 
 
-
+            return "/HistorialServicio/verProcesoAlumno";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
     }
 }
