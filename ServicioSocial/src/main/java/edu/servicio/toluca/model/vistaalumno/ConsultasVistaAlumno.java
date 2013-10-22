@@ -26,4 +26,9 @@ public class ConsultasVistaAlumno {
         return vistaAlumnoFacade.findBySpecificField("id", session.getAttribute("NCONTROL").toString(), "equal", null, null).get(0);
     }
     
+    public VistaAlumno getAlumno(String id){
+        List<VistaAlumno> alumno = vistaAlumnoFacade.findBySpecificField("id", id, "equal", null, null);
+        return alumno.get(0);
+    }
+    
 }

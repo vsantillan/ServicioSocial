@@ -12,6 +12,7 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.LogServicioFacade;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -74,10 +75,23 @@ public class HistorialServicioModel {
         LogServicio logServicio = new LogServicio();
         logServicio.setDatosPersonalesId(datosPersonales);
         logServicio.setAlumnoId(BigInteger.valueOf(Long.parseLong(datosPersonales.getAlumnoId().getId())));
-        logServicio.setFecha(new Date());
+        
+        logServicio.setFecha(Calendar.getInstance().getTime());
         logServicio.setDetalle(detalle);
         logServicio.setTipoLog(BigInteger.ZERO);
         logServicioFacade.create(logServicio);
+    }
+    
+    public List<LogServicio> getHistorialEventos(DatosPersonales datosPersonales){
+        List<LogServicio> historial = new ArrayList<LogServicio>();
+        try{
+            System.out.println("logservicio:"+logServicioFacade);
+            historial=logServicioFacade.findBySpecificField("datosPersonalesId",datosPersonales , "equal", null, null);
+        }catch(Exception e){
+            System.out.println("Error al cargar el historial de eventos");
+            e.printStackTrace();
+        }
+        return historial;
     }
     
     

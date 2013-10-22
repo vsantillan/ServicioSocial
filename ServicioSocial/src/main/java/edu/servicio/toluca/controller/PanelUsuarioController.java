@@ -117,11 +117,6 @@ public class PanelUsuarioController {
                 //Valida Formato Unico
                 try {
                     if (servicioBean.getDatosPersonales() != null) {
-                        //Prueba de registro de evento
-                        HistorialServicioModel historial = new HistorialServicioModel(logServicioFacade);
-                        historial.registraEvento(servicioBean.getDatosPersonales(), "Entro al panel de usuario");
-                        System.out.println("Se registro historial");
-                        
                         ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
                         FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(servicioBean);
 

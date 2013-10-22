@@ -62,9 +62,9 @@
                                         <core:when test="${alumno.statusServicio ==1}">
                                             <tr class='gradeX'>
                                                 <td>
-                                                    <th><a href="editarAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" ><img src="imagenes/editar.png" width="30" title="Editar Proyecto"/></a><a href="#" ><img  ide="${current.idProyecto}" src="imagenes/trash.png" width="30" title="Borrar Proyecto"></a></th>
-                                                    <th><a href="verProcesoAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" class="fancyFU" title="Ver Proceso" alt="Ver Proceso"><img src="imagenes/lupa.png" width="30" title="Ver Proceso" alt="Ver Proceso"/></a></th>
-                                                    <th><a href="verInfo.do?id=${alumno.datosPersonales.alumnoId.id}" class="fancyFU" title="Ver Informacion" alt="Ver Informacion"><img src="imagenes/lupa.png" width="30" title="Ver Informacion" alt="Ver Informacion"/></a></th>
+                                                    <a href="editarAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" ><img src="imagenes/editar.png" width="20" title="Editar Proyecto"/></a>
+                                                    <a href="verProcesoAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" class="fancyFU" title="Ver Proceso" alt="Ver Proceso"><img src="imagenes/lupa.png" width="20" title="Ver Proceso" alt="Ver Proceso"/></a>
+                                                    <a href="verInfo.do?id=${alumno.datosPersonales.alumnoId.id}" class="fancyFU" title="Ver Informacion" alt="Ver Informacion"><img src="imagenes/lupa.png" width="20" title="Ver Informacion" alt="Ver Informacion"/></a>
                                                 </td>
 
                                                 <td>${alumno.formatoUnico.periodoInicio}</td>
