@@ -86,6 +86,7 @@
         <li><a href="javascript:void(0)" onclick="redirecciona('#')">Noticias</a>
             <ul>
                 <li><a href="javascript:void(0)" onclick="redirecciona('altaNoticia.do')">Alta Noticias</a></li>
+                <li><a href="javascript:void(0)" onclick="redirecciona('consultaNoticias.do')">Bajas | Consultas</a></li>
                 
             </ul>
         </li>

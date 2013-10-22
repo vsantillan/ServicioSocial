@@ -123,4 +123,10 @@ public class NoticiasController {
     }
     
     
+    @RequestMapping(method = RequestMethod.GET, value = "/consultaNoticias.do")
+    public String listadoNoticias(Model modelo)
+    {
+        return "/Noticias/consultaNoticias";
+    }
+    
 }
