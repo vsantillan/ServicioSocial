@@ -102,6 +102,7 @@ public class SancionesController {
         System.out.println("Recibí"+noControl);
         VistaAlumno alumno = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null).get(0);
         System.out.println("//Nocontrol"+alumno.getId());
+        
         DatosPersonales dpAlumno = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null).get(0);
         System.out.println("//Nomnre"+dpAlumno.getNombre());
         List<Sanciones> listaTodasSanciones = sancionesFacade.findBySpecificField("datosPersonalesId", dpAlumno, "equal", null, null);
@@ -110,21 +111,26 @@ public class SancionesController {
         
         for (Sanciones sancion : listaTodasSanciones) {
             System.out.println("La sancion a agregar es"+sancion.getCatalogoSancionesId().getDetalle());
-            if (sancion.getHorasSancion().compareTo(BigInteger.ONE) < 1) {
+            if (sancion.getHorasSancion().intValue() > 0) {
+//            if (sancion.getHorasSancion().compareTo(BigInteger.ZERO) > 1) {
                 listaSanciones.add(sancion);
             } else {
                 listaPagoSanciones.add(sancion);
             }
         }
         if (ins.equals("sancion")) {
+            modelo.addAttribute("tipo", "sancion");
+            modelo.addAttribute("titulo", "Sanciones");
             modelo.addAttribute("listaSanciones",listaSanciones);
         } else if (ins.equals("pago")) {
+            modelo.addAttribute("tipo", "pago");
+            modelo.addAttribute("titulo", "Pago de Sanciones");
             modelo.addAttribute("listaSanciones",listaPagoSanciones);
         }
-        
+        modelo.addAttribute("datosPersonalesId",dpAlumno);
         modelo.addAttribute("catalogoSanciones", catalogoSancionesFacade.findAll());
-        modelo.addAttribute("nombre", nombre);
-        modelo.addAttribute("noControl", noControl);
+        modelo.addAttribute("nombre", dpAlumno.getNombre());
+        modelo.addAttribute("noControl", alumno.getId());
         return "/Sanciones/detalleSancionAlumno";
     }
     
@@ -229,6 +235,48 @@ public class SancionesController {
         System.out.println("Arrjson" + arrJSON);
         return arrJSON;
     }
+    @RequestMapping(method = RequestMethod.POST, value = "/asignaSancion.do")
+    public @ResponseBody
+    String asignaSancion(Model model, BigDecimal idSancion, BigDecimal idDatosPersonales, BigInteger horas, Model modelo) {
+        Sanciones sancion = new Sanciones();
+        DatosPersonales datosPersonales = datosPersonalesFacade.find(idDatosPersonales);
+        System.out.println("--->Asignando sancion");
+        System.out.println("Datos Personales--id="+datosPersonales.getId()+", Nombre:"+datosPersonales.getNombre());
+        CatalogoSanciones catalogoSancion = catalogoSancionesFacade.find(idSancion);
+        System.out.println("Sancion id="+catalogoSancion.getId()+", detalle="+catalogoSancion.getDetalle());
+        sancion.setCatalogoSancionesId(catalogoSancion);
+        sancion.setDatosPersonalesId(datosPersonales);
+        sancion.setFecha(new java.util.Date());
+        sancion.setHorasSancion(horas);
+        try
+        {
+            sancionesFacade.create(sancion);
+        }
+        catch(Exception e)
+        {
+            return "Hubo un problema: "+e.getMessage();
+        }
+        
+        
+        return "Sancion asignada correctamente";
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/quitaSancion.do")
+    public @ResponseBody
+    String quitaSancion(Model model, BigDecimal idSancion, Model modelo) {
+        
+        Sanciones sancion = sancionesFacade.find(idSancion);
+        try
+        {
+            sancionesFacade.remove(sancion);
+        }
+        catch(Exception e)
+        {
+            return "Hubo un problema: "+e.getMessage();
+        }
+        
+        
+        return "Sancion Elminada correctamente";
+    }
     
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoPagoSancion.do")
     public @ResponseBody
@@ -278,4 +326,5 @@ public class SancionesController {
         
         
     }
+    
 }
