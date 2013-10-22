@@ -41,6 +41,7 @@
 
             });
         </script>
+        <script type="text/javascript" language="javascript" src="js/sanciones.js"></script>
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
     <body class="background" >
@@ -49,7 +50,7 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;width:80%">
-                <h1>Sanciones</h1>
+                <h1>Sanciones <input type="button" value="  Presiona para Actualizar  " onclick="location.reload()"/></h1> 
                 <p>A continuaci&oacute;n se muestran los alumnos con sanciones, de click en "Detalles" para ver sus reportes o click en "Pagar" para agregar reportes de pago de servicio.</p>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
@@ -71,7 +72,7 @@
                             
                             <th><core:out value="${current.alumno.id}" /></th>
                             <th><core:out value="${current.alumno.nombre}" /></th>
-                            <th><core:out value="" /></th>
+                            <th><core:out value="${current.horas}" /></th>
                         </tr>
                       </core:forEach>
                     </tbody>
