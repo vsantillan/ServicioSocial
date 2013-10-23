@@ -47,7 +47,8 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="noRevisadosDT" width='100%'>
                             <thead>
                                 <tr>
-                                    <th>Acci&oacute;nes</th>
+                                    <th>Ver Proceso</th>
+                                    <th>Ver Info</th>
                                     <th>Periodo</th>
                                     <th>N. Control</th>
                                     <th>Nombre</th>
@@ -61,12 +62,8 @@
                                     <core:choose> 
                                         <core:when test="${alumno.statusServicio ==1}">
                                             <tr class='gradeX'>
-                                                <td>
-                                                    <a href="editarAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" ><img src="imagenes/editar.png" width="20" title="Editar Proyecto"/></a>
-                                                    <a href="verProcesoAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" class="fancyFU" title="Ver Proceso" alt="Ver Proceso"><img src="imagenes/lupa.png" width="20" title="Ver Proceso" alt="Ver Proceso"/></a>
-                                                    <a href="verInfo.do?id=${alumno.datosPersonales.alumnoId.id}" class="fancyFU" title="Ver Informacion" alt="Ver Informacion"><img src="imagenes/lupa.png" width="20" title="Ver Informacion" alt="Ver Informacion"/></a>
-                                                </td>
-
+                                                <td><a href="verProcesoAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" class="fancy" title="Ver Proceso" alt="Ver Proceso"><img src="imagenes/lupa.png" width="20" title="Ver Proceso" alt="Ver Proceso"/></a></td>
+                                                <td><a href="verInfoAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" class="fancy" title="Ver Informacion del Alumno" alt="Ver Informacion del Alumno"><img src="imagenes/lupa.png" width="20" title="Ver Informacion del Alumno" alt="Ver Informacion del Alumno"/></a></td>
                                                 <td>${alumno.formatoUnico.periodoInicio}</td>
                                                 <td>${alumno.datosPersonales.alumnoId.id}</td>
                                                 <td>${alumno.datosPersonales.nombre} ${alumno.datosPersonales.apellidoP} ${alumno.datosPersonales.apellidoM}</td>

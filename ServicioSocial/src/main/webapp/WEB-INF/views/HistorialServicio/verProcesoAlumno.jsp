@@ -1,7 +1,6 @@
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
 <%-- 
-    Document   : verProcesoAlumno
-    Created on : 17-oct-2013, 10:31:52
+    Document   : verInfoAlumno
+    Created on : 23-oct-2013, 10:16:24
     Author     : bustedvillain
 --%>
 
@@ -22,86 +21,15 @@
 
         <script src="js/jquery.manolo.js"></script>       
         <title>Ver Proceso del Alumno</title>
-        <style>
-            .zebra td, .zebra th {
-                padding: 10px;
-                border-bottom: 1px solid #f2f2f2;    
-            }
-
-            .zebra tbody tr:nth-child(even) {
-                background: #f5f5f5;
-                -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset; 
-                -moz-box-shadow:0 1px 0 rgba(255,255,255,.8) inset;  
-                box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;        
-            }
-
-            .zebra th {
-                text-align: left;
-                text-shadow: 0 1px 0 rgba(255,255,255,.5); 
-                border-bottom: 1px solid #ccc;
-                background-color: #eee;
-                background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#eee));
-                background-image: -webkit-linear-gradient(top, #f5f5f5, #eee);
-                background-image:    -moz-linear-gradient(top, #f5f5f5, #eee);
-                background-image:     -ms-linear-gradient(top, #f5f5f5, #eee);
-                background-image:      -o-linear-gradient(top, #f5f5f5, #eee); 
-                background-image:         linear-gradient(top, #f5f5f5, #eee);
-            }
-
-            .zebra th:first-child {
-                -moz-border-radius: 6px 0 0 0;
-                -webkit-border-radius: 6px 0 0 0;
-                border-radius: 6px 0 0 0;  
-            }
-
-            .zebra th:last-child {
-                -moz-border-radius: 0 6px 0 0;
-                -webkit-border-radius: 0 6px 0 0;
-                border-radius: 0 6px 0 0;
-            }
-
-            .zebra th:only-child{
-                -moz-border-radius: 6px 6px 0 0;
-                -webkit-border-radius: 6px 6px 0 0;
-                border-radius: 6px 6px 0 0;
-            }
-
-            .zebra tfoot td {
-                border-bottom: 0;
-                border-top: 1px solid #fff;
-                background-color: #f1f1f1;  
-            }
-
-            .zebra tfoot td:first-child {
-                -moz-border-radius: 0 0 0 6px;
-                -webkit-border-radius: 0 0 0 6px;
-                border-radius: 0 0 0 6px;
-            }
-
-            .zebra tfoot td:last-child {
-                -moz-border-radius: 0 0 6px 0;
-                -webkit-border-radius: 0 0 6px 0;
-                border-radius: 0 0 6px 0;
-            }
-
-            .zebra tfoot td:only-child{
-                -moz-border-radius: 0 0 6px 6px;
-                -webkit-border-radius: 0 0 6px 6px;
-                border-radius: 0 0 6px 6px;
-            }
-
-        </style>
+        <link rel="stylesheet" type="text/css" href="css/zebra-tables.css" />
     </head>
     <body class="background">
     <center>
         <div class="MyForm" style="width:80%;" id="contenido">
-
-            <h1>Proceso del Servicio Social</h1>        
             <center>
                 <table class="zebra">
                     <thead>
-                    <th>Proceso</th>
-                    <th>Estatus</th>
+                    <th colspan="2"><h1>Proceso del Servicio Social</h1></th>
                     </thead>
                     <tbody>
                         <!--Carta de motivos-->
@@ -125,13 +53,13 @@
                                     <td>
                                         <core:choose>
                                             <core:when  test="${statusCartaMotivos==1}">
-                                                <img class="imagenes" src="imagenes/paloma.png"/>
+                                                <img class="imagenes" src="imagenes/paloma.png" width="30"/>
                                             </core:when>    
                                             <core:when  test="${statusCartaMotivos==2}">
-                                                <img class="imagenes" src="imagenes/tache.png"/>
+                                                <img class="imagenes" src="imagenes/tache.png" width="30"/>
                                             </core:when> 
                                             <core:when  test="${statusCartaMotivos==3}">
-                                                <img class="imagenes" src="imagenes/reloj.png"/>
+                                                <img class="imagenes" src="imagenes/reloj.png" width="30"/>
                                             </core:when>
                                         </core:choose> 
                                         ${mensajeCartaMotivos}
@@ -258,7 +186,7 @@
                                 <ul class="scrollDivInferior">
                                     <core:forEach items="${historialEventos}" var="evento">
                                         <li class="error"><b>${evento.fecha}</b>: ${evento.detalle}</li>
-                                    </core:forEach>
+                                            </core:forEach>
                                 </ul>
                             </td>
                         </tr>

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
+import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.LogServicio;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.documentosFinales.ValidaDocumentosFinalesModel;
@@ -289,6 +290,31 @@ public class HistorialServicioController {
 
 
             return "/HistorialServicio/verProcesoAlumno";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/verInfoAlumno.do")
+    public String historialServicio(Model model, HttpSession session, HttpServletRequest request, @RequestParam String id) {
+        //Valida sesion
+        ValidaSesion valSession = new ValidaSesion(session, request);
+        if (valSession.accesaPanelAdministrador()) {
+            //Obtenemos al alumno
+            ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+            VistaAlumno alumno = consultaVistaAlumno.getAlumno(id);
+
+            try {
+                List<DatosPersonales> datosPersonales = new ArrayList<DatosPersonales>(alumno.getDatosPersonalesCollection());
+                model.addAttribute("alumno", datosPersonales.get(0));
+                return "/HistorialServicio/verInfoAlumno";
+            } catch (Exception e) {
+                System.out.println("Error al cargar datos personales");
+                e.printStackTrace();
+                return "error";
+            }
+
         } else {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
