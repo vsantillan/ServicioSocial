@@ -21,9 +21,9 @@ public class ValidaReportesBimestralesModel {
         ReportesBean reportesBean = new ReportesBean();
 
         if (servicioBean.getPlaticaBean().isTienePlatica()) {
-            if (servicioBean.getFormatoUnico() != null) {
-
-
+            if (servicioBean.getFormatoUnico() != null && servicioBean.getFormatoUnico().getStatusFui() != null) {
+                System.out.println("Formato unico:"+servicioBean.getFormatoUnico());
+                System.out.println("Formato unico status:"+servicioBean.getFormatoUnico().getStatusFui().toString());
                 if (servicioBean.getFormatoUnico().getStatusFui().toString().equals("1")) {
                     ArrayList<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
                     int horasServicio = 0;
