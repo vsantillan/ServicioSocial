@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 /**
@@ -55,17 +56,16 @@ public class NoticiasController {
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/altaNoticia.do")
-    public String altaNoticia(Model modelo)
+    public String altaNoticia(Model modelo,boolean editar)
     {
-        modelo.addAttribute("Noticias",new Noticias());
-        return "/Noticias/altaNoticia";
+            modelo.addAttribute("Noticias",new Noticias());
+            return "/Noticias/altaNoticia";       
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/altaNoticia.do")
     public String altaNoticiaPOST(@ModelAttribute("Noticias") @Valid Noticias noticia, BindingResult result,Model modelo)
     {
         if(result.hasErrors()) {
-            System.out.println(noticia.getDetalle()+"dsad");
             modelo.addAttribute("Noticias",noticia);
             return "/Noticias/altaNoticia";
         }
@@ -84,8 +84,8 @@ public class NoticiasController {
     }
     
     
-    @RequestMapping(method = RequestMethod.GET, value = "/editarNoticia.do")
-    public String editarNoticia(Model modelo,int id)
+    @RequestMapping(method = RequestMethod.GET, value = "editarNoticia-{id}.do")
+    public String editarNoticia(Model modelo,@PathVariable int id)
     {
         ConsultasNoticias noticiasModel=new ConsultasNoticias(noticiasFacade);
         Noticias noticia = noticiasModel.obtenterNoticia(id);
@@ -93,6 +93,7 @@ public class NoticiasController {
         if(noticia != null)
         {
             //System.out.println(noticia.getDetalle());
+            modelo.addAttribute("id",id);
             modelo.addAttribute("Noticias",noticia);
             return "/Noticias/editarNoticia";
         }
@@ -101,12 +102,13 @@ public class NoticiasController {
     }
     
     
-    @RequestMapping(method = RequestMethod.POST, value = "/editarNoticia.do")
-    public String editarNoticiaPOST(@ModelAttribute("Noticias") @Valid Noticias noticia, BindingResult result,Model modelo)
+    @RequestMapping(method = RequestMethod.POST, value = "/editarNoticia-{id2}.do")
+    public String editarNoticiaPOST(@PathVariable int id2,@ModelAttribute("Noticias") @Valid Noticias noticia, BindingResult result,Model modelo)
     {
         if(result.hasErrors()) {
+            modelo.addAttribute("id",id2);
             modelo.addAttribute("Noticias",noticia);
-            return "redirect:editarNoticia.do?id="+noticia.getId();
+            return "/Noticias/editarNoticia";
         }
         noticia.setId(null);
         noticia.setFecha(new Date());

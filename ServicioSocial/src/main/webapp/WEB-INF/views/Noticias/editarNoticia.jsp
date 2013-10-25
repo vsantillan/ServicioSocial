@@ -30,7 +30,7 @@
                 <%-- Formulario Nueva Noticia --%>
                 <center>
                     <h1>Editar Noticia</h1>
-                    <form:form commandName="Noticias" id="Noticias" name="Noticias" action="editarNoticia.do"  class="MyForm"   method="POST" style="width:80%;" >
+                    <form:form commandName="Noticias" id="Noticias" name="Noticias" action="editarNoticia-${id}.do"  class="MyForm"   method="POST" style="width:80%;" >
                         <table>
                             <tr>
                                 <td> <label for="titulo">T&iacute;tulo:</label> </td>
