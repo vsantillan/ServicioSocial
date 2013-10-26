@@ -246,7 +246,7 @@ public class FormatoUnicoAdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR_Aceptado.do")
     public @ResponseBody String modificarFU_NR_Aceptados(String id) {
         //Obtener FormatoUnico en especifico 
-        System.out.println(id);
+        
         FormatoUnico fA=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
         //Se encontro el Objeto
         if(fA!=null)

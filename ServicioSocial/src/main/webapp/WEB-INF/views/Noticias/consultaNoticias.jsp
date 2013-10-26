@@ -1,16 +1,6 @@
-<%-- 
-    Document   : administrarOrganizaciones
-    Created on : 4/06/2013, 02:17:52 PM
-    Author     : roy
---%>
 
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ include file="../Template/taglibs.jsp" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -48,15 +38,28 @@
                     <thead>
                         <tr>
                             <th>Acci&oacute;n</th>
-                            <th>Detalle</th> 
-                            <th>Organizaci&oacute;n</th>
-                            <th>Titular</th>
-                            <th>RFC</th>
-                            <th>Tipo de Organizaci&oacute;n</th>                                            
+                            <th>Fecha Creación</th> 
+                            <th>Noticia</th>
+                            <th>Título Noticia  </th>                                          
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        <core:forEach items="${Noticias}" var="noticia">                                   
+                                    <tr class='gradeX'>
+                                    <td>
+                                        <a href="#"> <img class="aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/paloma.png" /></a>
+                                        <a href="#"> <img class="rechazar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/tache.png" /></a>
+                                        <a href="#"> <img class="correccion" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
+                                    </td>
+     
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        
+                                    </td>
+                                    
+                                    </tr>
+                                </core:forEach>
                     </tbody>
                 </table>
             </div>

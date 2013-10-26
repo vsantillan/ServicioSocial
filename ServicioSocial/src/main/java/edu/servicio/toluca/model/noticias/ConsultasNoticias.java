@@ -115,5 +115,21 @@ public class ConsultasNoticias {
         }
      
     }
+    public boolean editarNoticia(Noticias noticia)
+    {
+        try
+        {
+            Noticias noticiaEditar = noticiasFacade.find(noticia.getId());
+            
+            noticiaEditar.setTitulo(noticia.getTitulo());
+            noticiaEditar.setTipoServicio(noticia.getTipoServicio());
+            noticiaEditar.setDetalle(noticia.getDetalle());
+            noticiasFacade.edit(noticiaEditar);
+            return true;
+        }catch(Exception e)
+        {
+            return false;
+        }
+    }
     
 }
