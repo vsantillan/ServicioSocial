@@ -1013,10 +1013,10 @@ public class FormatoUnicoController {
 
                 try {
                 String noControl = session.getAttribute("NCONTROL").toString();
-                modelo.addAttribute("noControl", noControl);
+                
                 System.out.println("En el muestra :D" + noControl);
-                List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
-                VistaAlumno alumno = listaAlumnos.get(0);
+                VistaAlumno alumno = vistaAlumnoFacade.find(noControl);
+                System.out.println(alumno);
 
                 List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
                 DatosPersonales dp = listaDatosPersonales.get(0);
@@ -1025,20 +1025,14 @@ public class FormatoUnicoController {
                     System.out.println("La lista de formatoUnico está vacía");
                     return "PanelUsuario/panelUsuario";
                 }
-
-
-//                System.out.println("Ahh y su fui es" + listaFormatoUnico.get(0).getId());
-//                modelo.addAttribute("idProyecto", listaFormatoUnico.get(0).getId());
-//                session.setAttribute("idProyecto", listaFormatoUnico.get(0).getId());
                 
-
                 Conexion conn =new Conexion ();
                 /*Establecemos la ruta del reporte*/ 
                 File reportFile = new File(request.getRealPath("reportes//FormatoUnico.jasper")); 
                  /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
                 Map parameters = new HashMap();
                 parameters.put("noControl",noControl);
-                parameters.put("idProyecto", listaFormatoUnico.get(0).getId());//idProyecto
+                parameters.put("idProyecto", listaFormatoUnico.get(0).getIdproyecto().getIdProyecto().toString());//idProyecto
                 //parameters.put("Nombre_parametro", "Valor_Parametro"); 
                 /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
                 byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
@@ -1051,8 +1045,8 @@ public class FormatoUnicoController {
                 Exceptions.printStackTrace(ex);
             } 
 
-            //modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
-            return "";        
+            
+            return "OK";        
     }
 
     @RequestMapping(value = "/cambiaStatusSubidaFui.do", method = RequestMethod.GET)
