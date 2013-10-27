@@ -132,4 +132,24 @@ public class ConsultasNoticias {
         }
     }
     
+    
+    public List<Noticias> listadoNoticias()
+    {
+        try
+        {
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("fecha", "desc");
+            ordenamiento.put("id", "desc");
+            List<Noticias> noticiasListado= noticiasFacade.findAll(ordenamiento);
+            return noticiasListado;
+        }catch(Exception e)
+        {
+            return null;
+        }
+        
+        
+    
+    
+    }
+    
 }

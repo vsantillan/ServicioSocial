@@ -83,15 +83,15 @@
             </ul>
         </li>
         <li><a href="catalogoObservaciones.do" onclick="redirecciona('catalogoObservaciones.do')">Observaciones</a></li>
-        <li><a href="javascript:void(0)" onclick="redirecciona('#')">Noticias</a>
+        <li><a href="#">Noticias</a>
             <ul>
-                <li><a href="javascript:void(0)" onclick="redirecciona('altaNoticia.do')">Alta Noticias</a></li>
-                <li><a href="javascript:void(0)" onclick="redirecciona('consultaNoticias.do')">Bajas | Consultas</a></li>
+                <li><a href="altaNoticia.do">Alta Noticias</a></li>
+                <li><a href="consultaNoticias.do">Bajas | Consultas</a></li>
                 
             </ul>
         </li>
         
-        <li><a href="javascript:void(0)" onclick="redirecciona('#')">Acerca De</a>
+        <li><a href="javascript:void(0)" onclick="redirecciona('')">Acerca De</a>
             <ul>
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')">15.1 Ayuda</a></li>
                 <li><a href="javascript:void(0)" onclick="redirecciona('#')">15.2 Acerca De</a></li>

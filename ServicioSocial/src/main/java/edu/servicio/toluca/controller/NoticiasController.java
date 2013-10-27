@@ -61,11 +61,11 @@ public class NoticiasController {
         if(noticias.nuevaNoticia(noticia))
         {
             modelo.addAttribute("Noticias",new Noticias());
-            return "/Noticias/altaNoticia";
+            return "redirect:consultaNoticias.do";
         }
         else
         {
-            return "redirect:altaNoticia.do";
+            return "404";
         }
     }
     
@@ -109,6 +109,9 @@ public class NoticiasController {
     @RequestMapping(method = RequestMethod.GET, value = "/consultaNoticias.do")
     public String listadoNoticias(Model modelo)
     {
+        ConsultasNoticias noticias=new ConsultasNoticias(noticiasFacade);
+        
+        modelo.addAttribute("Noticias", noticias.listadoNoticias());
         return "/Noticias/consultaNoticias";
     }
     
