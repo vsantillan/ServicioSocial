@@ -75,7 +75,7 @@
                                 <td><a id="quitarAlumno" href="#" ><img src="imagenes/eliminar.jpg" title="Eliminar" width="29"/></a></td>
                                 <td><a  href="correo.do" rel="shadowbox"><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></a></td>
                                 <td><a id="aceptarAlumno" href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></a></td>
-                                <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></a></td>
+                                <td><a href="dbPreseleccionados.xls" target="_blank"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></a></td>
 
                             </tr>
                         </table>
@@ -117,8 +117,8 @@
                             <tr>
 
                                 <td><a href="correo.do" ><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></a></td>
-                                <td><a href="#" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></a></td>
-                                <td><a href="#"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></a></td>
+                                <td><a href="becados.pdf" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></a></td>
+                                <td><a href="becadosExcel.xls"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></a></td>
 
                             </tr>
                         </table>

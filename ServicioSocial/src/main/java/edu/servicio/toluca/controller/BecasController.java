@@ -38,10 +38,6 @@ public class BecasController {
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnico;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/progaramaGeneralAlumno.do")
-    public String progaramaGeneralAlumno(Model model) {
-        return "/Becas/progaramaGeneralAlumno";
-    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/preseleccionAlumnos.do")
     public String preseleccionAlumnos(@ModelAttribute(value = "alumnoP") Becado alumnoP, BindingResult result, Model model) throws ParseException {
@@ -71,21 +67,24 @@ public class BecasController {
         return "/Becas/administracionAlumnosBecados";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/reporteMensualAdministrador.do")
-    public String reporteMensualAdministrador(Model model) {
 
-        return "/Becas/reporteMensualAdministrador";
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/correo.do")
+    @RequestMapping(method = RequestMethod.GET, value = "/sadf.do")
     public String correo(Model model) {
 
         return "/Becas/correo";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/excel.do")
-    public String generaExcel(Model model) {
-        return "/Becas/excel";
+    @RequestMapping(method = RequestMethod.GET, value = "/dbPreseleccionados.xls")
+    public String generaPreseleccionadosExcel(Model model) {
+        return "/Becas/dbPreseleccionadosReporte";
+    }
+     @RequestMapping(method = RequestMethod.GET, value = "/becados.pdf")
+    public String generaPDFBecados(Model model) {
+        return "/Becas/becados";
+    }
+      @RequestMapping(method = RequestMethod.GET, value = "/becadosExcel.xls")
+    public String generaExcelBecados(Model model) {
+        return "/Becas/dbBecadosReporte";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/preseleccionadoBD.do")

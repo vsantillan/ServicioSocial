@@ -41,7 +41,7 @@
                         <li>Ing. Rodrigo L&oacute;pez Rosales</li>
                         <li>Ing. Esteban Ismael Regules P&eacute;rez</li>
                         <li>Ing. Hector Morales Palma</li>
-                        <li>Ing. Jonathan D&iacute;az Plata</li>
+                        <li>Ing. Martin Jonatan D&iacute;az Plata</li>
                         <li>Ing. Jos&eacute; Manuel Nieto G&oacute;mez</li>
                         <li>Ing. Jes&uacute;s Guzm&aacute;n Mondrag&oacute;n</li>                            
                     </ul>
