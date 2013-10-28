@@ -117,8 +117,8 @@
                             <tr>
 
                                 <td><a href="correo.do" ><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></a></td>
-                                <td><a href="becados.pdf" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></a></td>
-                                <td><a href="becadosExcel.xls"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></a></td>
+                                <td><a href="becados.pdf" target="_blank" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></a></td>
+                                <td><a href="becadosExcel.xls" target="_blank"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></a></td>
 
                             </tr>
                         </table>
