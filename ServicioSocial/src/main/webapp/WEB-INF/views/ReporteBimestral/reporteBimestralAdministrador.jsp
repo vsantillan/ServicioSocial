@@ -177,7 +177,21 @@
                                     <core:choose>
                                         <core:when test="${reporte.status==3}">
                                             <tr class='gradeX'>
-                                                <th><a href="mostarPDF.do?id=${1}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
+                                                <th>
+                                                    <core:forEach items="${datosPersonales}" var="datoPersonal">
+                                                        <core:choose>
+                                                            <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
+                                                                <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
+                                                                    <core:choose>
+                                                                        <core:when test="${documentos.status==3}">
+                                                                            <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                                        </core:when>
+                                                                    </core:choose>
+                                                                </core:forEach>
+                                                            </core:when>
+                                                        </core:choose>
+                                                    </core:forEach>
+                                                </th>
                                                 <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                                 <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
                                                 <th>
@@ -215,7 +229,23 @@
                                     <core:choose>
                                         <core:when test="${reporte.status==2}">
                                             <tr class='gradeX'>
-                                                <th><a href="mostarPDF.do?id=${1}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
+                                                <!--<th><a href="mostarPDF.do?id=${2}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
+                                                    <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>-->                                                
+                                                <th>
+                                                    <core:forEach items="${datosPersonales}" var="datoPersonal">
+                                                        <core:choose>
+                                                            <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
+                                                                <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
+                                                                    <core:choose>
+                                                                        <core:when test="${documentos.status==2}">
+                                                                            <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                                        </core:when>
+                                                                    </core:choose>
+                                                                </core:forEach>
+                                                            </core:when>
+                                                        </core:choose>
+                                                    </core:forEach>
+                                                </th>
                                                 <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                                 <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
                                                 <th>

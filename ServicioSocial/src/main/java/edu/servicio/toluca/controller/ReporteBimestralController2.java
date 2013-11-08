@@ -107,10 +107,11 @@ public class ReporteBimestralController2
         return "ok";
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestral.do")
-    String muestraReporte(String no_control,Model modelo,HttpSession session, HttpServletRequest request)
+    @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestralDoc.do")
+    String muestraReporte(Model modelo,HttpSession session, HttpServletRequest request)
     {
-        modelo.addAttribute("no_control", no_control);
+        session.setAttribute("no_reporte", 2);
+        session.setAttribute("id_reporte", 2);
         System.out.println("Agui genera el reporte");
         return "/ReporteBimestral/generaReporteBimestral";
     }

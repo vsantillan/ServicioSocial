@@ -40,6 +40,29 @@ public class Conexion {
         return connx;
 
     }
+    
+    public Connection conectarAux(String usu, String cont) throws ClassNotFoundException, SQLException {
+        String host = "192.168.57.111:1521:";
+        String sid = "XE";
+
+//        String host = "localhost:1521:";
+//        String sid = "xe";
+
+        String usuario = usu;
+
+        String contrasena = cont;
+        String cadenaconexion;
+        cadenaconexion = "jdbc:oracle:thin:@" + host + sid;
+
+//        String cadenaconexion ="jdbc:oracle:thin:@localhost:1521:XE";
+        System.out.println("Creando conexion...");
+        Connection connx = null;
+        Class.forName("oracle.jdbc.driver.OracleDriver");
+        connx = DriverManager.getConnection(cadenaconexion, usuario, contrasena);
+        System.out.println("Conexion exitosa!");
+        return connx;
+
+    }
 
     //conexion a la base de datos
     public static Connection conectar_dgest() {
