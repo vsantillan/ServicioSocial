@@ -47,8 +47,7 @@
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.promedio}" /></td>
                                 <td><core:out value="${current.modalidad}" /></td>
-                                <td><core:out value="${current.datosPersonalesId.sexo}" /></td>
-                                 
+                                <td><core:out value="${current.datosPersonalesId.sexo}" /></td>     
                             </tr>
                         </core:forEach>
                     </tbody>
