@@ -74,6 +74,10 @@
         <jsp:include page="../PanelUsuario/menuPanelUsuario.jsp" />
         <div id="contenido">
             <h1>Reporte Bimestral</h1>
+            <p>A continuación generarás un reporte bimestral, una vez sea descargado, 
+                debes acudir a la instancia donde realizas tu servicio social para que sea firmado y sellado por el responsable del programa. 
+                Una vez que este listo deberás escanearlo ya sea en formato: png, jpg, gif, pdf y subirlo en la sección de "Anexar Reporte"
+            </p>
             <div id="tabs">
                 <ul>
                     <li><a href="#Generar">Generar Reporte Bimestral</a></li>
@@ -85,7 +89,7 @@
                     <form:form commandName="Reportes" name="reportesBimestrales" id="reportesBimestrales"  action="insertaReporte.do" method="POST" target="_blank">
 
                         <table>
-                            <h4>N&uacute;mero de Reviciones del Reporte: ${noReviciones}</h4>
+                            <h4>N&uacute;mero de Revisiones del Reporte: ${noReviciones}</h4>
                             <tr>
                                 <td><label for="noReporte">No de Reporte:</label></td>
                                 <td><form:input path="numeroReporte" type="text" name=" numeroReporte" id=" numeroReporte"  value="${numeroReporte}" readonly="true" /></td>
