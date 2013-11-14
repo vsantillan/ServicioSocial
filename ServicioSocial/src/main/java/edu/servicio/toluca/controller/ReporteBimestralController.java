@@ -231,6 +231,11 @@ public class ReporteBimestralController {
                         actividadesBimestralesFacade.create(actividadesB);
                     }
                     System.out.println("Actualizo La Informacion Correctamente");
+                    session.setAttribute("no_reporte", bimestralU.getNumeroReporte());
+                    session.setAttribute("id_reporte", bimestralU.getId());
+                    System.out.println("El No. de reporte es "+bimestralU.getNumeroReporte().intValue());
+                    System.out.println("El ID. de reporte es "+bimestralU.getId().intValue());
+                    return "/ReporteBimestral/generaReporteBimestral";
                 } else {
                     fechas fecha = new fechas();
                     Reportes reporteBimestral = new Reportes();
@@ -272,11 +277,12 @@ public class ReporteBimestralController {
                         actividadesBimestralesFacade.create(actividadesB);
                     }
                     System.out.println("Inserto Segundo Reporte Correctamente");
-
+                    session.setAttribute("no_reporte", bimestralInsertado.getNumeroReporte().intValue());
+                    session.setAttribute("id_reporte", bimestralInsertado.getId().intValue());
                     return "/ReporteBimestral/generaReporteBimestral";
 
                 }
-                return "/ReporteBimestral/generaReporteBimestral";
+                //return "/ReporteBimestral/formatoReporteBimestral";
             }
 
             fechas fecha = new fechas();
@@ -318,7 +324,8 @@ public class ReporteBimestralController {
                 actividadesBimestralesFacade.create(actividadesB);
             }
             System.out.println("Inserto Por Primera Vez");
-
+            session.setAttribute("no_reporte", bimestralInsertado.getNumeroReporte().intValue());
+            session.setAttribute("id_reporte", bimestralInsertado.getId().intValue());
             return "/ReporteBimestral/generaReporteBimestral";
         }
 

@@ -91,36 +91,34 @@ public class PlaticaController {
         return "/Platicas/altaPlatica";
     }
 
- @RequestMapping(method = RequestMethod.GET, value = "/folio.pdf")
+    @RequestMapping(method = RequestMethod.GET, value = "/folio.pdf")
     @ResponseBody
     public void reporte2(Model modelo, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
-         try {/*Parametros para realizar la conexión*/
-                Conexion conn = new Conexion();
-                /*Establecemos la ruta del reporte*/
-                File reportFile = new File(request.getRealPath("reportes//folioPlatica.jasper"));
-                /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
-                Map parameters = new HashMap();
-                System.out.println("foli generado"+"809280531");
-                parameters.put("folio","809280531");
-                /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-                byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectar("ges_vin", "gst05a"));
-                System.out.println("numero control");
-                /*Indicamos que la respuesta va a ser en formato PDF*/
-                httpServletResponse.setContentType("application/pdf");
-                httpServletResponse.setContentLength(bytes.length);
-                httpServletResponse.getOutputStream().write(bytes);
-                
-    }
-         catch (Exception ex) {
+        try {/*Parametros para realizar la conexión*/
+            Conexion conn = new Conexion();
+            /*Establecemos la ruta del reporte*/
+            File reportFile = new File(request.getRealPath("reportes//folioPlatica.jasper"));
+            /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
+            Map parameters = new HashMap();
+            System.out.println("foli generado" + "809280531");
+            parameters.put("folio", "809280531");
+            /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
+            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectar("ges_vin", "gst05a"));
+            System.out.println("numero control");
+            /*Indicamos que la respuesta va a ser en formato PDF*/
+            httpServletResponse.setContentType("application/pdf");
+            httpServletResponse.setContentLength(bytes.length);
+            httpServletResponse.getOutputStream().write(bytes);
+
+        } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
-       //  modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
-                 
+        //  modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
 
-     // return "/Platicas/folio";
-        
+
+        // return "/Platicas/folio";
+
     }
-
 
     @RequestMapping(method = RequestMethod.GET, value = "/consultasBajas.do")
     public String consultasBajas(Model modelo, HttpSession session, HttpServletRequest request) {
@@ -146,11 +144,12 @@ public class PlaticaController {
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
         return "/Platicas/capturarAsistencia";
     }
- @RequestMapping(method = RequestMethod.GET, value = "/muestraPdf.do")
+
+    @RequestMapping(method = RequestMethod.GET, value = "/muestraPdf.do")
     public String pdfProcedimiento(Model modelo, HttpSession session, HttpServletRequest request) {
         return "/Platicas/muestraPdf";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/asistenciaPosteriorEspecial.do")
     public String AsistenciaPosteriorEspecial(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaAdmin(session, request)))) {
@@ -263,54 +262,52 @@ public class PlaticaController {
 
     }
 
- @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.pdf")
-    public String folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request)  {
+    @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.pdf")
+    public String folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request) {
 
-            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
-            if (lista.isEmpty()) {
-                 VistaAlumno alumnoRegistrado = new VistaAlumno();
-                 alumnoRegistrado.setId(session.getAttribute("NCONTROL").toString());
-                List<FoliosPlatica> tieneRegistros = foliosPlaticaFacade.findBySpecificField("alumnoId",alumnoRegistrado, "equal", null, null);
-              if(!tieneRegistros.isEmpty()) 
-              {    
-                  System.out.println("entro");
-                  for (int i = 0; i < tieneRegistros.size(); i++) {
-                   foliosPlaticaFacade.remove(tieneRegistros.get(i));}}
-                FoliosPlatica foliosPlatica = new FoliosPlatica();
-                Platica platica = new Platica();
-                VistaAlumno alumno = new VistaAlumno();
-                alumno.setId(session.getAttribute("NCONTROL").toString());
-                System.out.println("platica id:" + fecha);
-                platica.setId(Long.parseLong(fecha));
-                foliosPlatica.setPlaticaId(platica);
-                foliosPlatica.setAlumnoId(alumno);
-                //folio: numero de control+idPlatica
-                foliosPlatica.setNumeroFolio(fecha + session.getAttribute("NCONTROL").toString());
-                System.out.println(fecha + session.getAttribute("NCONTROL").toString());
-                foliosPlatica.setStatus((short) 1);
-                foliosPlaticaFacade.create(foliosPlatica);
-
-                //incrementar numero de asistentes +1
-                platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
-                int numero = platica.getNumeroAsistentes().intValue();
-                numero = numero + 1;
-                System.out.println("numero" + numero);
-                platica.setNumeroAsistentes(numero);
-                platicaFacade.edit(platica);
-                session.setAttribute("platica", fecha+"");
-                return "/Platicas/folio";
-                
-            } else {
-                modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
-                modelo.addAttribute("platica", new Platica());
-                modelo.addAttribute("existe", "<div class='error'>Ya te has registrado a esta platica anteriormente</div>");
-                return "/Platicas/seleccionarPlatica";
+        List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
+        if (lista.isEmpty()) {
+            VistaAlumno alumnoRegistrado = new VistaAlumno();
+            alumnoRegistrado.setId(session.getAttribute("NCONTROL").toString());
+            List<FoliosPlatica> tieneRegistros = foliosPlaticaFacade.findBySpecificField("alumnoId", alumnoRegistrado, "equal", null, null);
+            if (!tieneRegistros.isEmpty()) {
+                for (int i = 0; i < tieneRegistros.size(); i++) {
+                    foliosPlaticaFacade.remove(tieneRegistros.get(i));
+                }
             }
-        } 
+            FoliosPlatica foliosPlatica = new FoliosPlatica();
+            Platica platica = new Platica();
+            VistaAlumno alumno = new VistaAlumno();
+            alumno.setId(session.getAttribute("NCONTROL").toString());
+            System.out.println("platica id:" + fecha);
+            platica.setId(Long.parseLong(fecha));
+            foliosPlatica.setPlaticaId(platica);
+            foliosPlatica.setAlumnoId(alumno);
+            //folio: numero de control+idPlatica
+            foliosPlatica.setNumeroFolio(fecha + session.getAttribute("NCONTROL").toString());
+            System.out.println(fecha + session.getAttribute("NCONTROL").toString());
+            foliosPlatica.setStatus((short) 1);
+            foliosPlaticaFacade.create(foliosPlatica);
 
+            //incrementar numero de asistentes +1
+            platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
+            int numero = platica.getNumeroAsistentes().intValue();
+            numero = numero + 1;
+            System.out.println("numero" + numero);
+            platica.setNumeroAsistentes(numero);
+            platicaFacade.edit(platica);
+            session.setAttribute("platica", fecha + "");
+            return "/Platicas/folio";
+
+        } else {
+            modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+            modelo.addAttribute("platica", new Platica());
+            modelo.addAttribute("existe", "<div class='error'>Ya te has registrado a esta platica anteriormente</div>");
+            return "/Platicas/seleccionarPlatica";
+        }
+    }
 
 /////////ASISTENCIA.DO////////////////////
-
     @RequestMapping(value = "asistencia.do", method = RequestMethod.POST)
     public String Asistencia(@Valid FoliosPlatica foliosPlatica, BindingResult result, Model modelo) throws IOException {
 
@@ -363,7 +360,7 @@ public class PlaticaController {
     }
 
     @RequestMapping(value = "capturarAsistenciaPosteriorEspecial.do", method = RequestMethod.POST)
-    public String ponerAsistenciaEspecial(String idPlatica, String no_control, Model modelo) {
+    public String ponerAsistenciaEspecial(String idPlatica, String no_control, Model modelo,HttpSession session, HttpServletRequest request) {
 
         if (no_control.length() > 7 && no_control.length() < 9) {
             // List<Va> listaAlumno = vaFacade.findBySpecificField("id", no_control, "equal", null, null); 
@@ -379,6 +376,16 @@ public class PlaticaController {
                     modelo.addAttribute("error", "<div class='error'>El alumno no cuenta con los creditos suficientes</div>");
                     return "/Platicas/asistenciaPosteriorEspecial";
                 } else {
+                    VistaAlumno alumnoRegistrado1 = new VistaAlumno();
+                    alumnoRegistrado1.setId(no_control);
+                    System.out.println("creo alumno");
+                    List<FoliosPlatica> tieneRegistros = foliosPlaticaFacade.findBySpecificField("alumnoId", alumnoRegistrado1, "equal", null, null);
+                    if (!tieneRegistros.isEmpty()) {
+                        System.out.println("entro no esta vacia");
+                        for (int i = 0; i < tieneRegistros.size(); i++) {
+                            foliosPlaticaFacade.remove(tieneRegistros.get(i));
+                        }
+                    }
 
                     List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", idPlatica + "" + no_control, "equal", null, null);
                     if (lista.isEmpty()) {

@@ -10,7 +10,7 @@ function listo() {
         $("input#idI").attr("value", $(this).attr("idO"));
 
     });
-    
+
     $('#frmNuevaSancion').submit(enviaSancionParaGuardado);
 }
 function enviaSancionParaGuardado()
@@ -19,7 +19,7 @@ function enviaSancionParaGuardado()
     $("form#frmNuevaSancion :input").each(function() {
         prepararJSON($(this));
     });
-    sancion['tipo']='nuevo';
+    sancion['tipo'] = 'nuevo';
     console.log(sancion.valueOf());
     $.post("nuevaSancion.do", sancion, function(respuesta) {
         var respJ = {};
@@ -52,7 +52,7 @@ function editarSancion2()
     var horas = $("#eHoras").val();
     var tolerancia = $("#eTolerancia").val();
     var descripcion = $("#eDescripion").val();
-    $.post("nuevaSancion.do",{tipo:'editar', idSancion:idSancion, horas:horas, tolerancia:tolerancia, descripcion:descripcion},function(respuesta)
+    $.post("nuevaSancion.do", {tipo: 'editar', idSancion: idSancion, horas: horas, tolerancia: tolerancia, descripcion: descripcion}, function(respuesta)
     {
         var respJ = {};
         if (respuesta !== "noInfo")
@@ -76,7 +76,7 @@ function editarSancion2()
             parent.location = parent.location;
         }
     });
-    
+
 }
 function enviaPagoSancionParaGuardado()
 {
@@ -84,7 +84,7 @@ function enviaPagoSancionParaGuardado()
     $("form#frmNuevoPagoSancion :input").each(function() {
         prepararJSON($(this));
     });
-    sancion['tipo']='nuevo';
+    sancion['tipo'] = 'nuevo';
     console.log(sancion.valueOf());
     $.post("nuevoPagoSancion.do", sancion, function(respuesta) {
         console.log(sancion.valueOf());
@@ -115,7 +115,7 @@ function edtitarPagoSancion()
     $('#observaciones').hide("fast");
     var idSancion = $("#pidSancion").val();
     var descripcion = $("#epDescripion").val();
-    $.post("nuevoPagoSancion.do",{tipo:'editar', idSancion:idSancion,  descripcion:descripcion},function(respuesta)
+    $.post("nuevoPagoSancion.do", {tipo: 'editar', idSancion: idSancion, descripcion: descripcion}, function(respuesta)
     {
         var respJ = {};
         if (respuesta !== "noInfo")
@@ -150,4 +150,25 @@ function prepararJSON($atributo)
     {
         sancion[$atributo.attr("name")] = $("#" + $atributo.attr("name") + "1").is(":checked");
     }
+}
+function nuevaSancion(tipo) {
+    var idDatosPersonales = $('#idDatosPersonales').val();
+    var idSancion = $('#idSancion').val();
+    var horas = $('#horas').val();
+    if (tipo === 'pago')
+    {
+        horas = horas * (-1);
+    }
+    console.log('Se agregará una sanción con idDatosP=' + idDatosPersonales + ", con iDSancion=" + idSancion + ", y horas=" + horas);
+    $.post("asignaSancion.do", {idDatosPersonales: idDatosPersonales, idSancion: idSancion, horas: horas}, function(respuesta) {
+        alert(respuesta);
+        location.reload();
+    });
+}
+function quitaSancionAlumno(idSancion)
+{
+    $.post("quitaSancion.do", {idSancion: idSancion}, function(respuesta) {
+        alert(respuesta);
+        location.reload();
+    });
 }

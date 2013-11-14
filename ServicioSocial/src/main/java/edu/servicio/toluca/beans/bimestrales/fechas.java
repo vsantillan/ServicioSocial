@@ -39,8 +39,6 @@ public class fechas {
         try {
             fechaDate = formatoFecha.parse(fecha);
            sqlDate = new java.sql.Date(fechaDate.getTime());
-
-            System.out.println("sqlDate:" + sqlDate);
         } catch (Exception ex) {
             System.out.println("Ocurrio un error");
 

@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,6 +21,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
@@ -36,14 +38,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class BajaTemporal implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @GenericGenerator(name = "bajaTemporal", strategy = "increment")
     @Id
+    @GeneratedValue(generator="bajaTemporal")
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private BigDecimal id;
+    @NotNull (message ="Introduzca la Fecha de Inicio de la Baja temporal" )
     @Column(name = "FECHA_BAJA")
     @Temporal(TemporalType.DATE)
     private Date fechaBaja;
+    @NotNull (message ="Introduzca la Fecha Maxima para la baja Temporal" )
     @Column(name = "FECHA_LIMITE_BAJA")
     @Temporal(TemporalType.DATE)
     private Date fechaLimiteBaja;

@@ -50,7 +50,7 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
 public class Platica implements Serializable {
     private static final long serialVersionUID = 1L;
-   @GenericGenerator(name = "generator", strategy = "increment")
+    @GenericGenerator(name = "generator", strategy = "increment")
     @Id
     @GeneratedValue(generator = "generator")
     @Basic(optional = false)

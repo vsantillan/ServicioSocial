@@ -91,7 +91,10 @@ public class FormatoUnicoAdminController {
         
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador()) {
-
+            System.out.println("entro");
+            long time_start, 
+                    time_end;
+            time_start=System.currentTimeMillis();
             //Listas de Formato Unico en los diferentes Status
             List<FormatoUnicoBean> listadoFormatosNoRevisados=new ArrayList<FormatoUnicoBean>();
             List<FormatoUnicoBean> listadoFormatosAceptados=new ArrayList<FormatoUnicoBean>();
@@ -233,6 +236,9 @@ public class FormatoUnicoAdminController {
             model.addAttribute("listadoFormatoUnicoCorreccion",listadoFormatosCorreccion);
             //Catalogo Sanciones
             model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
+            
+            time_end=System.currentTimeMillis();
+            System.out.println("Tiempo: "+(time_end-time_start));
             return "/FormatoUnico/formatoUnicoAdministrador";
         }else{
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
@@ -246,7 +252,7 @@ public class FormatoUnicoAdminController {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR_Aceptado.do")
     public @ResponseBody String modificarFU_NR_Aceptados(String id) {
         //Obtener FormatoUnico en especifico 
-        System.out.println(id);
+        
         FormatoUnico fA=formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
         //Se encontro el Objeto
         if(fA!=null)

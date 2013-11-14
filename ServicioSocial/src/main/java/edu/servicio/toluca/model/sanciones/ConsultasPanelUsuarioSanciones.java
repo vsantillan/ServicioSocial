@@ -71,10 +71,10 @@ public class ConsultasPanelUsuarioSanciones {
                 int horasSancion = Integer.parseInt(sanciones.get(i).getHorasSancion().toString());
                 if (horasSancion > 0) {
                     sancion.setConcepto(0);
-                    sancion.setDetalle("SANCION: " + sanciones.get(i).getCatalogoSancionesId().getDetalle());
+                    sancion.setDetalle("SANCION: " + sanciones.get(i).getCatalogoSancionesId().getDetalle()+ " HORAS:"+sanciones.get(i).getHorasSancion());
                 } else {
                     sancion.setConcepto(1);
-                    sancion.setDetalle("PAGO DE SANCION: " + sanciones.get(i).getCatalogoSancionesId().getDetalle());
+                    sancion.setDetalle("PAGO DE SANCION: " + sanciones.get(i).getCatalogoSancionesId().getDetalle()+ " HORAS:"+sanciones.get(i).getHorasSancion());
                 }
                 sancionesBean.add(sancion);
             }

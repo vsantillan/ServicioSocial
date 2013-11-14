@@ -17,10 +17,12 @@
         <jsp:include page="../Template/metas.jsp" />
         <!-- CSS  Shadowbox-->
         <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
+        
 
         <!--Script para DataTables-->
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
+        <script type="text/javascript" language="javascript" src="js/sanciones.js"></script>
 
         <!--Scripts para shadowbox-->
         <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
@@ -39,6 +41,7 @@
 
             });
         </script>
+        <script type="text/javascript" language="javascript" src="js/sanciones.js"></script>
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
     <body class="background" >
@@ -47,34 +50,29 @@
         <div id="contenido">
             <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;width:80%">
-                <h1>Sanciones</h1>
+                <h1>Sanciones <input type="button" value="  Presiona para Actualizar  " onclick="location.reload()"/></h1> 
                 <p>A continuaci&oacute;n se muestran los alumnos con sanciones, de click en "Detalles" para ver sus reportes o click en "Pagar" para agregar reportes de pago de servicio.</p>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
                     <thead>
                         <tr>
-                            <th>Detalle</th>
-                            <th>Periodo</th>
+                            <th>Historial Servicio</th>
+                            <th>Sanciones</th>
+                            <th>Pago Sanciones</th>
                             <th>No control</th>
                             <th>Nombre</th>
-                            <th>Estado</th>
-                            <th>Horas de sanci&oacute;n</th>
                             <th>Horas restantes</th>
-                            <th>Lugar</th>
-                            <th>Acci&oacute;n</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <core:forEach items="${sancionAlumno}" var="current">
+                        <core:forEach items="${listaSanciones}" var="current">
                         <tr class='gradeX'>
-                            <th><a href="detalleSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><core:out value="${current.periodo}" /></th>
-                            <th><core:out value="${current.noControl}" /></th>
-                            <th><core:out value="${current.nombre}" /></th>
-                            <th><core:out value="${current.status}" /></th>
-                            <th><core:out value="${current.horasSancion}" /></th>
-                            <th><core:out value="${current.horasRestantes}" /></th>
-                            <th><core:out value="${current.lugar}" /></th>
-                            <th><a href="pagoSancionAlumno.do?nombre=${current.nombre}&noControl=${current.noControl}" rel="shadowbox">Pagar</a></th>
+                            <th><a href="historialServicio.do"  target="_blank"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="detalleSancionAlumno.do?noControl=${current.idAlumno}&ins=sancion" rel="shadowbox" class="fancyFUI"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <th><a href="detalleSancionAlumno.do?noControl=${current.idAlumno}&ins=pago" rel="shadowbox" class="fancyFUI"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            
+                            <th><core:out value="${current.alumno.id}" /></th>
+                            <th><core:out value="${current.alumno.nombre}" /></th>
+                            <th><core:out value="${current.horas}" /></th>
                         </tr>
                       </core:forEach>
                     </tbody>

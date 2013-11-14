@@ -11,8 +11,9 @@
          File reportFile = new File(application.getRealPath("reportes//plantilaReporteBimestral.jasper")); 
          /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
         Map parameters = new HashMap();
-        parameters.put("no_control","09280536");
-        parameters.put("no_reporte","1");
+        parameters.put("no_control",session.getAttribute("NCONTROL").toString());
+        parameters.put("no_reporte",session.getAttribute("no_reporte").toString());
+        parameters.put("id_reporte",session.getAttribute("id_reporte").toString());
         //parameters.put("Nombre_parametro", "Valor_Parametro"); 
         /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
         byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));

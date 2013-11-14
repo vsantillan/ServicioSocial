@@ -16,39 +16,9 @@
     <head>
         <jsp:include page="../Template/headsJQueryUI.jsp" />
         <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <script type="text/javascript" >
-            $(document).ready(function() {
-                $('#example').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script>
-        <script language="javascript">
-
-            function contar() {
-
-                var checkboxes = form1.alumno; //Array que contiene los checkbox
-                var cont = 0; //Variable que lleva la cuenta de los checkbox pulsados
-                for (var x = 0; x < checkboxes.length; x++) {
-                    if (checkboxes[x].checked) {
-                        cont = cont + 1;
-                    }
-                }
-                alert("El número de alumnos seleccionados es: " + cont);
-
-            }
-        </script>
-
-
         <title>Preselecci&oacute;n de Alumnos Becados</title>
     </head>
-    <body >
+    <body>
         <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
         <div>
             <form:form id="form1" action="preseleccionadoBD.do" commandName="alumnoP" method="POST" >
@@ -77,8 +47,7 @@
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.promedio}" /></td>
                                 <td><core:out value="${current.modalidad}" /></td>
-                                <td><core:out value="${current.datosPersonalesId.sexo}" /></td>
-                                 
+                                <td><core:out value="${current.datosPersonalesId.sexo}" /></td>     
                             </tr>
                         </core:forEach>
                     </tbody>

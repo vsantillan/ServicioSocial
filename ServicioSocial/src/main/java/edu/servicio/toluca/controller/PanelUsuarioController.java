@@ -15,6 +15,7 @@ import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
 import edu.servicio.toluca.model.documentosFinales.ValidaDocumentosFinalesModel;
 import edu.servicio.toluca.model.vistaalumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
+import edu.servicio.toluca.model.historialservicio.HistorialServicioModel;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
 import edu.servicio.toluca.model.observaciones.ObservacionesModel;
 import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
@@ -22,6 +23,7 @@ import edu.servicio.toluca.model.platica.ConsultasPlatica;
 import edu.servicio.toluca.model.reportesBimestrales.ValidaReportesBimestralesModel;
 import edu.servicio.toluca.model.sanciones.ConsultasPanelUsuarioSanciones;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
+import edu.servicio.toluca.sesion.LogServicioFacade;
 import edu.servicio.toluca.sesion.NoticiasFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.SancionesFacade;
@@ -36,8 +38,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  *
- * Panel de Usuario
- * Autor: Jose Manuel Nieto Gomez
+ * Panel de Usuario Autor: Jose Manuel Nieto Gomez
  */
 @Controller
 public class PanelUsuarioController {
@@ -52,6 +53,8 @@ public class PanelUsuarioController {
     public RegObservacionesFacade regObservacionesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
     public SancionesFacade sancionesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/LogServicioFacade")
+    public LogServicioFacade logServicioFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelUsuario.do")
     public String panelUsuario(Model model, HttpSession session, HttpServletRequest request, String mensaje) {
@@ -67,7 +70,7 @@ public class PanelUsuarioController {
         VistaAlumno alumno = consultaVistaAlumno.getAlumnoSesion(session);
 
         System.out.println("Bienvenido al panel de usuario " + alumno.getNombre());
-
+        
         //Cargar noticias noticias
         ConsultasNoticias noticias = new ConsultasNoticias(noticiasFacade);
         model.addAttribute("noticiasAlumnos", noticias.consultaNoticiasGenerales("desc"));
@@ -122,7 +125,7 @@ public class PanelUsuarioController {
                         model.addAttribute("statusFui", beanFU.getStatusFui());
                         model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
                     } else {
-                        model.addAttribute("accesoFormatoUnico", false);
+                        model.addAttribute("accesoFormatoUnico", true);
                         model.addAttribute("statusFui", 2);
                         model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
                     }

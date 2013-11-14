@@ -166,9 +166,10 @@ public class OrganizacionesController2 {
         //Organizacion
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
-
+        
         for (int i = 0; i < listaInstancias.size(); i++) {
-            if (listaInstancias.get(i).getEstatus() == BigInteger.ONE || listaInstancias.get(i).getEstatus() == BigInteger.valueOf(2)) {
+            int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
+            if (estatus == 1 || estatus == 2) {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
@@ -534,7 +535,8 @@ public class OrganizacionesController2 {
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
 
             for (int i = 0; i < listaInstancias.size(); i++) {
-                if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+                int validacion= Integer.parseInt(listaInstancias.get(i).getValidacionAdmin().toString());
+                if (validacion == 1) {
                     filtroInstancias.add(listaInstancias.get(i));
                 }
             }

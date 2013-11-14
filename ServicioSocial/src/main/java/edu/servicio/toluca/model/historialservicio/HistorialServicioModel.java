@@ -6,23 +6,44 @@ package edu.servicio.toluca.model.historialservicio;
 
 import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.LogServicio;
 import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
+import edu.servicio.toluca.sesion.LogServicioFacade;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
- *
+ * Autor: Jose Manuel Nieto Gomez
+ * Objetivo: Modelo para tratar eventos relacionados al historial del proceso
+ * del alumno
  * @author bustedvillain
  */
 public class HistorialServicioModel {
     
     public DatosPersonalesFacade datosPersonalesFacade;
+    public LogServicioFacade logServicioFacade;
+
+    public HistorialServicioModel(DatosPersonalesFacade datosPersonalesFacade, LogServicioFacade logServicioFacade) {
+        this.datosPersonalesFacade = datosPersonalesFacade;
+        this.logServicioFacade = logServicioFacade;
+    }
+
+    public HistorialServicioModel(LogServicioFacade logServicioFacade) {
+        this.logServicioFacade = logServicioFacade;
+    }
 
     public HistorialServicioModel(DatosPersonalesFacade datosPersonalesFacade) {
         this.datosPersonalesFacade = datosPersonalesFacade;
     }
     
+    /**
+     * Obtiene el historial de todos los alumnos que mantienen un registro en la base de datos
+     * @return 
+     */
     public List<StatusServicioBean> getHistorialAlumnos(){
         List<StatusServicioBean> servicios = new ArrayList<StatusServicioBean>();
         
@@ -44,4 +65,34 @@ public class HistorialServicioModel {
         
         return servicios;
     }
+    
+    /**
+     * Metodo que registra un nuevo evento en el historial del servicio social de un alumno
+     * @param datosPersonales alumno
+     * @param detalle detalle del evento que se esta registrando
+     */
+    public void registraEvento(DatosPersonales datosPersonales, String detalle){
+        LogServicio logServicio = new LogServicio();
+        logServicio.setDatosPersonalesId(datosPersonales);
+        logServicio.setAlumnoId(BigInteger.valueOf(Long.parseLong(datosPersonales.getAlumnoId().getId())));
+        
+        logServicio.setFecha(Calendar.getInstance().getTime());
+        logServicio.setDetalle(detalle);
+        logServicio.setTipoLog(BigInteger.ZERO);
+        logServicioFacade.create(logServicio);
+    }
+    
+    public List<LogServicio> getHistorialEventos(DatosPersonales datosPersonales){
+        List<LogServicio> historial = new ArrayList<LogServicio>();
+        try{
+            System.out.println("logservicio:"+logServicioFacade);
+            historial=logServicioFacade.findBySpecificField("datosPersonalesId",datosPersonales , "equal", null, null);
+        }catch(Exception e){
+            System.out.println("Error al cargar el historial de eventos");
+            e.printStackTrace();
+        }
+        return historial;
+    }
+    
+    
 }

@@ -46,9 +46,9 @@ public class PlaticaController1 {
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugar.do")
-    public @ResponseBody
+    //public @ResponseBody
     String nuevoLugar(Model modelo, LugaresPlatica lugar_i,BindingResult resultado) {
-            System.out.println("Result has no error");
+            //System.out.println("Result has no error");
             MetodosValidacion metodo = new MetodosValidacion();
             lugar_i.setStatus(BigInteger.valueOf(1));
 //            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));

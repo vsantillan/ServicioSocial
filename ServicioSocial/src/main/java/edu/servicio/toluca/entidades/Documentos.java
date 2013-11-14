@@ -38,6 +38,11 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "Documentos.findByExtension", query = "SELECT d FROM Documentos d WHERE d.extension = :extension"),
     @NamedQuery(name = "Documentos.findByFechaSubida", query = "SELECT d FROM Documentos d WHERE d.fechaSubida = :fechaSubida")})
 public class Documentos implements Serializable {
+    @Lob
+    @Column(name = "ARCHIVO")
+    private byte[] archivo;
+    @Column(name = "STATUS")
+    private Short status;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "documentosG", strategy = "increment")
@@ -47,9 +52,6 @@ public class Documentos implements Serializable {
     @NotNull
     @Column(name = "ID")
     private BigDecimal id;
-    @Lob
-    @Column(name = "ARCHIVO")
-    private byte[] archivo;
     @Size(max = 10)
     @Column(name = "EXTENSION")
     private String extension;
@@ -76,14 +78,6 @@ public class Documentos implements Serializable {
 
     public void setId(BigDecimal id) {
         this.id = id;
-    }
-
-    public byte[] getArchivo() {
-        return archivo;
-    }
-
-    public void setArchivo(byte[] archivo) {
-        this.archivo = archivo;
     }
 
     public String getExtension() {
@@ -141,6 +135,22 @@ public class Documentos implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.Documentos[ id=" + id + " ]";
+    }
+
+    public byte[] getArchivo() {
+        return archivo;
+    }
+
+    public void setArchivo(byte[] archivo) {
+        this.archivo = archivo;
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
     }
     
 }

@@ -109,12 +109,13 @@
                     <tr>
                         <td>Descripci&oacute;n:</td>
                         <td><form:textarea type="text" id="detalleE" path="detalle" rows="10" cols="70" name="detalleE" maxlength="300"  /></td>
+                    </tr>
                     <tr>
                         <td>
                             <div class='error' style="display:none;">Error la descripcion esta vacia</div>
                         </td>
                     </tr>
-                    </tr>
+           
                     <tr> 
                         <td> <input type ="submit" value = "Guardar " /> </td>
                     </tr>

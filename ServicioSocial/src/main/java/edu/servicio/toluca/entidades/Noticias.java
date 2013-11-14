@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -20,6 +21,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -35,23 +38,29 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Noticias.findByDetalle", query = "SELECT n FROM Noticias n WHERE n.detalle = :detalle"),
     @NamedQuery(name = "Noticias.findByTipoServicio", query = "SELECT n FROM Noticias n WHERE n.tipoServicio = :tipoServicio")})
 public class Noticias implements Serializable {
+    @NotEmpty(message = "Escribe el Título de la Noticia")
     @Size(max = 255)
     @Column(name = "TITULO")
     private String titulo;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+ 
+    @GenericGenerator(name = "noticiasG", strategy = "increment")
     @Id
+    @GeneratedValue(generator="noticiasG")
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "Saaaa") 
     @Column(name = "ID")
     private BigDecimal id;
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
+    @NotEmpty(message = "Escribe el Detalle de la Noticia")
     @Size(max = 300)
     @Column(name = "DETALLE")
     private String detalle;
-    //1. Noticas para pagina principal, 2. Noticias para alumnos, 3. Noticias para organizaciones
+    //1. Noticas para pagina principal, 2. Noticias para alumnos, 3. Noticias para organizaciones, 4. Noticias para becados
+    @NotNull(message = "Selecciona un Tipo de Noticia") 
     @Column(name = "TIPO_SERVICIO")
     private BigInteger tipoServicio;
 
