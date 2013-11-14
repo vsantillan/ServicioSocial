@@ -117,8 +117,9 @@ public class ValidacionStatusServicio {
 
     /**
      * Valida el status del servicio social
+     *
      * @param servicioBean
-     * @param statusServicio 
+     * @param statusServicio
      */
     public void switchStatus(StatusServicioBean servicioBean, int statusServicio) {
         switch (statusServicio) {
