@@ -1,4 +1,4 @@
-$(document).on('click', ".aceptarReporte", aceptarReporteA);
+$(document).on('click', ".aceptarDocumentos", aceptarReporteA);
 $(document).on('click', ".enviarRetroalimentacion", enviaRetroalimentacion);
 
 $(document).ready(retroalimentacion);
@@ -22,9 +22,8 @@ function aceptarReporteA(e)
         var row = $(this).parents('tr')[0];
         var idUpdate = $(e.target).attr('ide');
         var idStatus = $(e.target).attr('status');
-        var idDoc = $(e.target).attr('idDoc');
         var tabla = $('#NoRev').dataTable();
-        $.post("aceptarReporte.do", {id: idUpdate,status:idStatus, idDoc:idDoc}, function(response) 
+        $.post("aceptarDocumentos.do", {id: idUpdate,status:idStatus}, function(response) 
         {
             tabla.fnDeleteRow(row);
             $("#div-aceptar-reporte").show('slow');

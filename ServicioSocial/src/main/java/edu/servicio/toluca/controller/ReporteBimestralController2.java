@@ -89,13 +89,18 @@ public class ReporteBimestralController2
         reporte.setStatus(BigInteger.valueOf(retroalimentacionReporte.getStatus()));
         reporte.setNumeroRevisiones(BigInteger.valueOf(reporte.getNumeroRevisiones().intValue()+1));
         reportesFacade.edit(reporte);
+        Documentos documento;
+        documento=documentosFacade.find(BigDecimal.valueOf(retroalimentacionReporte.getIdDoc()));
+        documento.setStatus((short)2);
+        documentosFacade.edit(documento);
         System.out.println("Reporte Alterado con Status a: "+retroalimentacionReporte.getStatus());
+        System.out.println("El id de reporte es: "+retroalimentacionReporte.getIdReporte());
         return "redirect:reporteBimestralAdministrador.do";
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/aceptarReporte.do")
     public @ResponseBody
-    String aceptarReporte(int id,int status,Model model, HttpSession session, HttpServletRequest request) 
+    String aceptarReporte(int id,int status,int idDoc, Model model, HttpSession session, HttpServletRequest request) 
     {
         Reportes reporte;
         reporte=reportesFacade.find(BigDecimal.valueOf(id));
@@ -103,6 +108,11 @@ public class ReporteBimestralController2
         reporte.setStatus(BigInteger.ONE);
         reporte.setNumeroRevisiones(BigInteger.valueOf(reporte.getNumeroRevisiones().intValue()+1));
         reportesFacade.edit(reporte);
+        Documentos documento;
+        documento=documentosFacade.find(BigDecimal.valueOf(idDoc));
+        documento.setStatus((short)1);
+        documentosFacade.edit(documento);
+        System.out.println("id doc es: "+idDoc);
         System.out.println("Reporte Alterado con Status a: "+status);
         return "ok";
     }
@@ -152,9 +162,10 @@ public class ReporteBimestralController2
         documento.setExtension(extension);
         documento.setFechaSubida(new java.util.Date());
         documento.setCatalogoDocumentosId(catalogoDocumento);
+        documento.setStatus((short)4);
   
         try{
-            //documentosFacade.create(documento);
+            documentosFacade.create(documento);
             System.out.println("Se subio el Docuemnto con éxito!");
         }catch(Exception ex){
             modelo.addAttribute("error", "Error al subir el Reporte Bimestral");

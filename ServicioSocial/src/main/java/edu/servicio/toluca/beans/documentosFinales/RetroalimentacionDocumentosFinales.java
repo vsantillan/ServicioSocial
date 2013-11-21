@@ -2,20 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.servicio.toluca.beans.bimestrales;
+package edu.servicio.toluca.beans.documentosFinales;
 
 /**
  *
  * @author ekt
  */
-public class RetroalimentacionReporte 
+public class RetroalimentacionDocumentosFinales 
 {
     private String nombre;
     private String correo;
     private String descripcion;
     private int status;
-    private int idReporte;
-    private int idDoc;
+    private int idAlumno;
 
     /**
      * @return the nombre
@@ -74,31 +73,18 @@ public class RetroalimentacionReporte
     }
 
     /**
-     * @return the idReporte
+     * @return the idAlumno
      */
-    public int getIdReporte() {
-        return idReporte;
+    public int getIdAlumno() {
+        return idAlumno;
     }
 
     /**
-     * @param idReporte the idReporte to set
+     * @param idAlumno the idAlumno to set
      */
-    public void setIdReporte(int idReporte) {
-        this.idReporte = idReporte;
+    public void setIdAlumno(int idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
-    /**
-     * @return the idDoc
-     */
-    public int getIdDoc() {
-        return idDoc;
-    }
-
-    /**
-     * @param idDoc the idDoc to set
-     */
-    public void setIdDoc(int idDoc) {
-        this.idDoc = idDoc;
-    }
-    
+      
 }

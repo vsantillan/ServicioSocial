@@ -5,13 +5,11 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.DocumentosFinalesBean;
-import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
+import edu.servicio.toluca.beans.documentosFinales.RetroalimentacionDocumentosFinales;
 import edu.servicio.toluca.entidades.CatalogoDocumento;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
-import edu.servicio.toluca.entidades.Instancia;
-import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
@@ -22,7 +20,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +28,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -57,28 +54,49 @@ public class DocumentosFinalesController
     {
         List<DatosPersonales> listaDatosPer=datosPersonalesFacade.findAll();
         List<Documentos> listaDocum;//=documentosFacade.findBySpecificField("status", "1", "equal", null, null);
-        List<DocumentosFinalesBean> alumnoDocumentos;
+        List<DocumentosFinalesBean> alumnosDocumentos=new ArrayList<DocumentosFinalesBean>();
+        DocumentosFinalesBean nuevoAlumno;
         for(int i=0;i<listaDatosPer.size();i++)
         {
             listaDocum=documentosFacade.findBySpecificField("datosPersonalesId", listaDatosPer.get(i), "equal", null, null);
+            System.out.println("No Control: "+listaDatosPer.get(i).getAlumnoId().getId());
+            System.out.println("Nombre: "+listaDatosPer.get(i).getNombre());
+            nuevoAlumno=new DocumentosFinalesBean();
+            nuevoAlumno.setIdDatosPer(listaDatosPer.get(i).getId().intValue());
+            nuevoAlumno.setNoControl(listaDatosPer.get(i).getAlumnoId().getId());
+            nuevoAlumno.setNombreCompleto(listaDatosPer.get(i).getNombre()+" "+listaDatosPer.get(i).getApellidoP()+" "+listaDatosPer.get(i).getApellidoM());
+            nuevoAlumno.setCorreo(listaDatosPer.get(i).getCorreoElectronico());
             for(int j=0;j<listaDocum.size();j++)
             {
-                if(!"Reporte_Bimestral".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()) || !"Formato_Unico".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()))
+                if(listaDocum.get(j).getStatus().intValue()!=1)
+                System.out.println("estatus: "+listaDocum.get(j).getStatus());
                 {
-                    System.out.println("No Control: "+listaDatosPer.get(i).getAlumnoId().getId());
-                    System.out.println("Nombre: "+listaDatosPer.get(i).getNombre());
-                    System.out.println("Tipo Documento: "+listaDocum.get(j).getCatalogoDocumentosId().getTipo());
-                    DocumentosFinalesBean nuevoAlumno=new DocumentosFinalesBean(listaDatosPer.get(i).getId().intValue(),
-                                                                                listaDatosPer.get(i).getAlumnoId().getId(),
-                                                                                listaDatosPer.get(i).getNombre()+listaDatosPer.get(i).getApellidoP()+listaDatosPer.get(i).getApellidoM(),
-                                                                                1,3,4,5);
-                    
+                    if("Reporte_Bimestral".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()) || "Formato_Unico".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()))
+                    {
+
+                    }else if("Constancia_Pago".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()))
+                    {
+                        nuevoAlumno.setIdConstanciaPago(listaDocum.get(j).getId().intValue());
+                    }else if("Reporte_Evaluacion".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()))
+                    {
+                        nuevoAlumno.setIdReporteCalificacion(listaDocum.get(j).getId().intValue());
+                    }else if("Reporte_Final".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()))
+                    {
+                        nuevoAlumno.setIdReporteFinal(listaDocum.get(j).getId().intValue());
+                    }else if("Formato_Unico_Final".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()))
+                    {
+                        nuevoAlumno.setIdFormatoUnicoFinal(listaDocum.get(j).getId().intValue());
+                    }
                 }
-                //System.out.println("+++++++++++++++++++"+listaDocum.get(j).getCatalogoDocumentosId().getTipo());
             }
-            //System.out.println("***********"+listaDatosPer.get(i).getNombre());
+            if(nuevoAlumno.getIdConstanciaPago()!=0 || nuevoAlumno.getIdFormatoUnicoFinal()!=0 || nuevoAlumno.getIdReporteFinal()!=0 || nuevoAlumno.getIdReporteCalificacion()!=0)
+            {
+                alumnosDocumentos.add(nuevoAlumno);
+            }
+            System.out.println("***********aqui agregaria un nuevo alumno a la lista -- "+ listaDatosPer.get(i).getNombre());
         }
-        
+        model.addAttribute("documentosAlumno", alumnosDocumentos);
+        model.addAttribute("retroalimentacionDocumentosFinales", new RetroalimentacionDocumentosFinales());
         return "/DocumentosFinales/administrarDocumentosFinales";
     }
 
@@ -268,5 +286,17 @@ public class DocumentosFinalesController
 //        }
         
         return "/DocumentosFinales/documentosFinalesAlumno";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/aceptarDocumentos.do")
+    public @ResponseBody
+    String aceptarReporte(int id,int status,Model model, HttpSession session, HttpServletRequest request) 
+    {
+        Documentos documento;
+        documento=documentosFacade.find(BigDecimal.valueOf(id));
+        
+        documentosFacade.edit(documento);
+        System.out.println("Reporte Alterado con Status a: "+status);
+        return "ok";
     }
 }

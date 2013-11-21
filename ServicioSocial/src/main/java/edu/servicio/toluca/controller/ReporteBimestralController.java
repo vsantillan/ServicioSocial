@@ -265,8 +265,12 @@ public class ReporteBimestralController {
                     //Buscamos el reporte recien insertado
                     //DatosPersonales dp = datosPersonales.get(0);
                     List<Reportes> bimestrales = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
-                    Reportes bimestralInsertado = bimestrales.get(bimestrales.size() - 1);
-
+                    Reportes bimestralInsertado = bimestrales.get(bimestrales.size() - 1);//tenia -1
+                    for(int i=0;i<bimestrales.size();i++)
+                    {
+                        System.out.println("*********************** el num de reporte es: "+bimestrales.get(i).getNumeroReporte());
+                    }
+                    //System.out.println("*********************** el num de reporte es: "+bimestralInsertado.getNumeroReporte());
                     Iterator inserta = listaIds.iterator();
                     //while que inserta la lista de los perfiles para el proyecto
                     while (inserta.hasNext()) {

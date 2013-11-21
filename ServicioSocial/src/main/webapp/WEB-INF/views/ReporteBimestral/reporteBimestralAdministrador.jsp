@@ -68,11 +68,10 @@
                 <div id="tabs">
                     <h1>Administraci&oacute;n de Reportes Bimestrales</h1>
                     <ul>
+                        <li><a href="#Revisados">Revisados</a></li>
                         <li><a href="#noRevisados">No Revisados</a></li>
-                        <li><a href="#Rechazados">No Aceptados</a></li>
                         <li><a href="#enCorreccion">En Correcci&oacute;n</a></li>
-                        <li><a href="#Revisados">Aceptados</a></li>
-
+                        <li><a href="#Rechazados">Rechazados</a></li>
                     </ul>
                     <div id="Revisados">
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="Rev" width='100%'>
@@ -90,7 +89,21 @@
                                     <core:choose>
                                         <core:when test="${reporte.status==1}">
                                             <tr class='gradeX'>
-                                                <th><a href="detalleReporteBimestral.do?id=${reporte.id}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
+                                                <th>
+                                                    <core:forEach items="${datosPersonales}" var="datoPersonal">
+                                                        <core:choose>
+                                                            <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
+                                                                <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
+                                                                    <core:choose>
+                                                                        <core:when test="${documentos.status==1 && documentos.catalogoDocumentosId.id==2}">
+                                                                            <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                                        </core:when>
+                                                                    </core:choose>
+                                                                </core:forEach>
+                                                            </core:when>
+                                                        </core:choose>
+                                                    </core:forEach>
+                                                </th>
                                                 <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                                 <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
                                                 <th>
@@ -113,12 +126,12 @@
                         </table>
                     </div>
                     <div id="noRevisados">
-                        <div id="div-aceptar-reporte" style="display:none;">
-                            <center>
-                                <img src="imagenes/paloma.png" width="100"/>
-                                <h2>Reporte validado correctamente</h2>
-                            </center>
-                        </div>
+                    <div id="div-aceptar-reporte" style="display:none;">
+                        <center>
+                            <img src="imagenes/paloma.png" width="100"/>
+                            <h2>Reporte validado correctamente</h2>
+                        </center>
+                    </div>
                         <table cellpadding='0' cellspacing='0' border='0' class='display' id="NoRev" width='100%'>
                             <thead>
                                 <tr>
@@ -136,25 +149,37 @@
                                         <core:when test="${reporte.status==4}">
                                             <tr class='gradeX'>
                                                 <th>
-                                                    <a href="#"><img class="aceptarReporte" ide="${reporte.id}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                                    <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${reporte.datosPersonalesId.nombre}" correo="${reporte.datosPersonalesId.correoElectronico}" status="${2}" idReporte="${reporte.id}"><img src="imagenes/tache.png" width="30"></a>
-                                                    <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${reporte.datosPersonalesId.nombre}" correo="${reporte.datosPersonalesId.correoElectronico}" status="${3}" idReporte="${reporte.id}"><img src="imagenes/editar.png" width="30"/></a>
+                                                    <core:forEach items="${datosPersonales}" var="datoPersonal">
+                                                        <core:choose>
+                                                            <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
+                                                                <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
+                                                                    <core:choose>
+                                                                        <core:when test="${documentos.status==4 && documentos.catalogoDocumentosId.id==2}">
+                                                                            <a href="#"><img class="aceptarReporte" ide="${reporte.id}" status="${1}" idDoc="${documentos.id}" src="imagenes/paloma.png" width="30"/></a>
+                                                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${reporte.datosPersonalesId.nombre}" correo="${reporte.datosPersonalesId.correoElectronico}" status="${3}" idReporte="${reporte.id}" idDoc="${documentos.id}"><img src="imagenes/editar.png" width="30"/></a>
+                                                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${reporte.datosPersonalesId.nombre}" correo="${reporte.datosPersonalesId.correoElectronico}" status="${2}" idReporte="${reporte.id}" idDoc="${documentos.id}"><img src="imagenes/tache.png" width="30"></a>
+                                                                        </core:when>
+                                                                    </core:choose>
+                                                                </core:forEach>
+                                                            </core:when>
+                                                        </core:choose>
+                                                    </core:forEach>
                                                 </th>
-                                                <!--<th><a href="detalleReporteBimestral.do?id=${reporte.id}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th> -->
+<!--                                                <th><a href="detalleReporteBimestral.do?id=${reporte.id}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>-->
                                                 <th>
                                                     <core:forEach items="${datosPersonales}" var="datoPersonal">
                                                         <core:choose>
                                                             <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
                                                                 <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
                                                                     <core:choose>
-                                                                        <core:when test="${documentos.status==4}">
+                                                                        <core:when test="${documentos.status==4 && documentos.catalogoDocumentosId.id==2}">
                                                                             <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                                            </core:when>
-                                                                        </core:choose>
-                                                                    </core:forEach>
-                                                                </core:when>
-                                                            </core:choose>
-                                                        </core:forEach>
+                                                                        </core:when>
+                                                                    </core:choose>
+                                                                </core:forEach>
+                                                            </core:when>
+                                                        </core:choose>
+                                                    </core:forEach>
                                                 </th>
                                                 <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                                 <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
@@ -201,12 +226,12 @@
                                                                     <core:choose>
                                                                         <core:when test="${documentos.status==3}">
                                                                             <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                                            </core:when>
-                                                                        </core:choose>
-                                                                    </core:forEach>
-                                                                </core:when>
-                                                            </core:choose>
-                                                        </core:forEach>
+                                                                        </core:when>
+                                                                    </core:choose>
+                                                                </core:forEach>
+                                                            </core:when>
+                                                        </core:choose>
+                                                    </core:forEach>
                                                 </th>
                                                 <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                                 <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
@@ -253,14 +278,14 @@
                                                             <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
                                                                 <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
                                                                     <core:choose>
-                                                                        <core:when test="${documentos.status==2}">
+                                                                        <core:when test="${documentos.status==2 && documentos.catalogoDocumentosId.id==2}">
                                                                             <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                                            </core:when>
-                                                                        </core:choose>
-                                                                    </core:forEach>
-                                                                </core:when>
-                                                            </core:choose>
-                                                        </core:forEach>
+                                                                        </core:when>
+                                                                    </core:choose>
+                                                                </core:forEach>
+                                                            </core:when>
+                                                        </core:choose>
+                                                    </core:forEach>
                                                 </th>
                                                 <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
                                                 <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
@@ -298,6 +323,7 @@
                         <td>Nombre de la Organizaci&oacute;n:
                             <form:hidden id="status" nombre="status" path="status" size="20"/><br/>
                             <form:hidden id="idReporte" path="idReporte" name="idReporte" size="20"/>
+                            <form:hidden id="idDoc" path="idDoc" name="idDoc" size="20"/>
                         </td>
                         <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" disabled="true" /> </td>
                     </tr>
@@ -313,7 +339,7 @@
                     </tr>
                     <tr>
                         <td>
-
+                            
                         </td>
                         <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n" class="enviarRetroalimentacion"> </td>
                     </tr>
