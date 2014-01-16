@@ -16,9 +16,11 @@ import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Login;
 import edu.servicio.toluca.login.ValidaLogin;
+import edu.servicio.toluca.model.noticias.ConsultasNoticias;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
+import edu.servicio.toluca.sesion.NoticiasFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.math.BigInteger;
@@ -46,9 +48,13 @@ public class NavegacionPrincipalController {
     public EstadosSiaFacade estadosFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     public VistaAlumnoFacade vistaAlumnoFacade;
-
+    @EJB(mappedName = "java:global/ServicioSocial/NoticiasFacade")
+    public NoticiasFacade noticiasFacade;
+    
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
-    public String index(Model a) {
+    public String index(Model modelo) {
+        ConsultasNoticias noticiasBean = new ConsultasNoticias(noticiasFacade);
+        modelo.addAttribute("Noticias", noticiasBean.consultaNoticiasGenerales("asc"));
         return "/NavegacionPrincipal/index";
     }
 
@@ -110,6 +116,7 @@ public class NavegacionPrincipalController {
         
         if(sesionBean.getMensaje() != null){
             model.addAttribute("error", sesionBean.getMensaje());
+            model.addAttribute("MENSAJE", session.getAttribute("MENSAJE"));
         }
         System.out.println("retorna:"+sesionBean.getPagReturn());
         return sesionBean.getPagReturn();          

@@ -57,6 +57,7 @@
                             </td>
                         </tr>
                         ${error}
+                        ${MENSAJE}
                         <%=error%>
                     </table>
                     <h3>Recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</h3>

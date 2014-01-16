@@ -33,7 +33,7 @@ public class ValidaLogin {
             //Verifica que el campo usuario y contraseña no esten vacios de lo contrario retorna a loginPrincipal
             sesionBean.setMensaje("<div class='error'>Datos de acceso inválidos</div>");
             sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
-        } else {
+        }
             try {
                 String rol = new Login().ValidarUsuario(usuario, pass);
                 System.out.println("rol:" + rol);
@@ -148,7 +148,7 @@ public class ValidaLogin {
                     int estatus = Integer.parseInt(instancia.get(0).getEstatus().toString());
 
                     if ((validacionAdmin == 1 || validacionAdmin == 2) && estatus == 1) {
-                        System.out.println("Iniciando sesion con organziacion " + instancia.get(0).getNombre());
+                        System.out.println("Iniciando sesion con organizacion " + instancia.get(0).getNombre());
                         session.setAttribute("ROL", "ORGANIZACION");
                         session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
                         session.setAttribute("NOMBRE", instancia.get(0).getNombre());
@@ -167,7 +167,7 @@ public class ValidaLogin {
                     sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                 }
             }
-        }
+        
         return sesionBean;
     }
 }
