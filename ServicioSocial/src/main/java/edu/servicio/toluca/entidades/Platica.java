@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -57,11 +58,11 @@ public class Platica implements Serializable {
     @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "El campo fecha no puede estar vacio")
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Size(max = 8)
+    @Size(min=5,max = 5,message = "El campo hora no es correcto")
     @Column(name = "HORA")
     private String hora;
     @Basic(optional = false)
@@ -84,6 +85,7 @@ public class Platica implements Serializable {
     @Size(max = 400)
     @Column(name = "DESCRIPCION")
     private String descripcion;
+  
     @JoinColumn(name = "ID_LUGAR", referencedColumnName = "ID")
     @ManyToOne
     private LugaresPlatica idLugar;
