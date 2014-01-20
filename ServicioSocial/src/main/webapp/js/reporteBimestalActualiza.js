@@ -10,8 +10,6 @@ function enviaRetroalimentacion(e)
         $(".d").attr("style","border: 2px solid #990000;");
         $("#errorDescripcion").attr("style","display; block");
         return false;
-        $(".d").attr("style","border: 1px solid");
-        $("#errorDescripcion").attr("style","display; none");
     }   
 }
 
@@ -43,5 +41,6 @@ function retroalimentacion() {
         $("input#status").attr("value", $(this).attr("status"));
         $("input#idReporte").attr("value", $(this).attr("idReporte"));
         $("input#correo").attr("value", $(this).attr("correo"));
+        $("input#idDoc").attr("value", $(this).attr("idDoc"));
     });
 }

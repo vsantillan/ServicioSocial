@@ -1,5 +1,5 @@
 $(document).on('click', ".aceptarDocumentos", aceptarReporteA);
-$(document).on('click', ".enviarRetroalimentacion", enviaRetroalimentacion);
+//$(document).on('click', ".enviarRetroalimentacion", enviaRetroalimentacion);
 
 $(document).ready(retroalimentacion);
 

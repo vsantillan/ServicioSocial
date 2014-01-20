@@ -224,7 +224,7 @@
                                                             <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
                                                                 <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
                                                                     <core:choose>
-                                                                        <core:when test="${documentos.status==3}">
+                                                                        <core:when test="${documentos.status==3 && documentos.catalogoDocumentosId.id==2}">
                                                                             <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
                                                                         </core:when>
                                                                     </core:choose>
@@ -322,7 +322,7 @@
                     <tr>
                         <td>Nombre de la Organizaci&oacute;n:
                             <form:hidden id="status" nombre="status" path="status" size="20"/><br/>
-                            <form:hidden id="idReporte" path="idReporte" name="idReporte" size="20"/>
+                            <form:hidden id="idReporte" path="idReporte" name="idReporte" size="20"/><br/>
                             <form:hidden id="idDoc" path="idDoc" name="idDoc" size="20"/>
                         </td>
                         <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" disabled="true" /> </td>

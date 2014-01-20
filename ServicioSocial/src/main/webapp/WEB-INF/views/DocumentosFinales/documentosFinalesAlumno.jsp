@@ -37,7 +37,7 @@
                             <table>
                                 <tr>
                                     <td colspan="2">
-                                        <h3><p>Tu documento debe de tener un formato pdf, jpg, png o bmp. Para que pueda ser validado por el administrador</p></h3>
+                                        <h3><p>Tu documento debe de tener un formato <code>pdf</code> Para que pueda ser validado por el administrador</p></h3>
                                     </td>
                                 </tr>
                                 <tr>
@@ -50,24 +50,28 @@
                                     <td>Formato Unico Final</td>
                                     <td>
                                         <input type='file'  name ='fileFUF' value='Buscar en mi equipo'/> <br/>
+                                        ${error_fuf}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Constancia de Pago</td>
                                     <td>
                                         <input type='file'  name ='fileCP' value='Buscar en mi equipo'/> <br/>
+                                        ${error_cp}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Reporte Final</td>
                                     <td>
                                         <input type='file'  name ='fileRF' value='Buscar en mi equipo'/> <br/>
+                                        ${error_fr}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Reporte de Evaluación</td>
                                     <td>
                                         <input type='file'  name ='fileRE' value='Buscar en mi equipo'/> <br/>
+                                        ${error_fe}
                                     </td>
                                 </tr>
                                 <tr>
@@ -95,18 +99,21 @@
                                     <td>Formato Unico Final</td>
                                     <td>
                                         <input type='file'  name ='fileFUF' value='Buscar en mi equipo'/> <br/>
+                                        ${error_fuf}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Constancia de Pago</td>
                                     <td>
                                         <input type='file'  name ='fileCP' value='Buscar en mi equipo'/> <br/>
+                                        ${error_cp}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Reporte Final</td>
                                     <td>
                                         <input type='file'  name ='fileRF' value='Buscar en mi equipo'/> <br/>
+                                        ${error_fr}
                                     </td>
                                 </tr>
                                 <tr>

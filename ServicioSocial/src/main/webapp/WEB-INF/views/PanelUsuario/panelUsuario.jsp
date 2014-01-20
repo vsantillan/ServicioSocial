@@ -183,16 +183,14 @@
                             <tr>
                                 <td class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="DOCUMENTOS FINALES">
                                     <a class="b" href="#">DOCUMENTOS FINALES</a>
-                                    <!--
                                     <core:choose>
                                         <core:when test="${accesoDocumentosFinales}">
-                                            <a class="b" href="#">DOCUMENTOS FINALES</a>
+                                            <img class="imagenes" src="imagenes/paloma.png"/>
                                         </core:when>
                                         <core:otherwise>
-                                            <p class="text">DOCUMENTOS FINALES</p>
+                                            <img class="imagenes" src="imagenes/tache.png"/>
                                         </core:otherwise>
                                     </core:choose>    
-                                    -->
                                 </td>
                                 <td>
                                     <core:choose>

@@ -67,8 +67,16 @@
                                     <tr class='gradeX'>
                                         <th><core:out value="${alumno.noControl}" /></th>
                                         <th><core:out value="${alumno.nombreCompleto}" /></th>
-                                        <th><a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
-                                        <th><a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
+                                        <th>
+                                            <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                            <a href="#"><img class="aceptarDocumentos" ide="${alumno.noControl}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
+                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                        </th>
+                                        <th>
+                                            <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                            <a href="#"><img class="aceptarDocumentos" ide="${alumno.noControl}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
+                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                        </th>
                                         <th><a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
                                         <th>
                                             <core:choose>
@@ -79,9 +87,11 @@
                                                     <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
                                                 </core:otherwise>
                                             </core:choose>
+                                            <a href="#"><img class="aceptarDocumentos" ide="${alumno.noControl}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
+                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
                                         <th>
                                             <a href="#"><img class="aceptarDocumentos" ide="${alumno.noControl}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}"><img src="imagenes/tache.png" width="30"></a>
+                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
                                         </th>
                                     </tr>
                                 </core:forEach>
@@ -96,7 +106,7 @@
             <div style="clear: both;"/>
         </div>
         <div id="a" style="display: none; font-size: 15px">
-            <form:form commandName="retroalimentacionDocumentosFinales"  id="MyForm" method="POST" >
+            <form:form commandName="retroalimentacionDocumentosFinales" id="MyForm" method="POST" action="rechazaDocumentos.do">
                 <h1>Envio de Retroalimentaci&oacute;n</h1>
                 <h2>Motivos de Rechazo</h2>
                 <table >
@@ -104,6 +114,10 @@
                         <td>Nombre de la Organizaci&oacute;n:
                             <form:hidden id="status" nombre="status" path="status" size="20"/><br/>
                             <form:hidden id="idAlumno" path="idAlumno" name="idAlumno" size="20"/>
+                            <form:hidden id="idFUF" path="idFUF" name="idFUF" size="20"/>
+                            <form:hidden id="idCP" path="idCP" name="idCP" size="20"/>
+                            <form:hidden id="idRF" path="idRF" name="idRF" size="20"/>
+                            <form:hidden id="idRC" path="idRC" name="idRC" size="20"/>
                         </td>
                         <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" disabled="true" /> </td>
                     </tr>

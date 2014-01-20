@@ -15,6 +15,10 @@ public class RetroalimentacionDocumentosFinales
     private String descripcion;
     private int status;
     private int idAlumno;
+    private int idFUF;
+    private int idCP;
+    private int idRF;
+    private int idRC;
 
     /**
      * @return the nombre
@@ -84,6 +88,62 @@ public class RetroalimentacionDocumentosFinales
      */
     public void setIdAlumno(int idAlumno) {
         this.idAlumno = idAlumno;
+    }
+
+    /**
+     * @return the idFUF
+     */
+    public int getIdFUF() {
+        return idFUF;
+    }
+
+    /**
+     * @param idFUF the idFUF to set
+     */
+    public void setIdFUF(int idFUF) {
+        this.idFUF = idFUF;
+    }
+
+    /**
+     * @return the idCP
+     */
+    public int getIdCP() {
+        return idCP;
+    }
+
+    /**
+     * @param idCP the idCP to set
+     */
+    public void setIdCP(int idCP) {
+        this.idCP = idCP;
+    }
+
+    /**
+     * @return the idRF
+     */
+    public int getIdRF() {
+        return idRF;
+    }
+
+    /**
+     * @param idRF the idRF to set
+     */
+    public void setIdRF(int idRF) {
+        this.idRF = idRF;
+    }
+
+    /**
+     * @return the idRC
+     */
+    public int getIdRC() {
+        return idRC;
+    }
+
+    /**
+     * @param idRC the idRC to set
+     */
+    public void setIdRC(int idRC) {
+        this.idRC = idRC;
     }
 
       

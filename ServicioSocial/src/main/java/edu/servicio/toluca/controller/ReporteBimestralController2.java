@@ -81,8 +81,7 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarStatusReporte.do")
-    public @ResponseBody
-    String aceptarRactualizarStatusReporteporte(RetroalimentacionReporte retroalimentacionReporte,Model model, HttpSession session, HttpServletRequest request) {
+    public String aceptarRactualizarStatusReporteporte(RetroalimentacionReporte retroalimentacionReporte,Model model, HttpSession session, HttpServletRequest request) {
         Reportes reporte;
         reporte=reportesFacade.find(BigDecimal.valueOf(retroalimentacionReporte.getIdReporte()));
         //Checar el estatus del reporte
@@ -90,8 +89,10 @@ public class ReporteBimestralController2
         reporte.setNumeroRevisiones(BigInteger.valueOf(reporte.getNumeroRevisiones().intValue()+1));
         reportesFacade.edit(reporte);
         Documentos documento;
+        short nuevoStatus=(short) retroalimentacionReporte.getStatus();
         documento=documentosFacade.find(BigDecimal.valueOf(retroalimentacionReporte.getIdDoc()));
-        documento.setStatus((short)2);
+        documento.setStatus(nuevoStatus);
+        System.out.println("Reporte Alterado con Status a: "+retroalimentacionReporte.getIdDoc());
         documentosFacade.edit(documento);
         System.out.println("Reporte Alterado con Status a: "+retroalimentacionReporte.getStatus());
         System.out.println("El id de reporte es: "+retroalimentacionReporte.getIdReporte());
