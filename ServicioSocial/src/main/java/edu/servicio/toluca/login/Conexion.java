@@ -43,7 +43,7 @@ public class Conexion {
     
     public Connection conectarAux(String usu, String cont) throws ClassNotFoundException, SQLException {
         String host = "192.168.57.111:1521:";
-        String sid = "XE";
+        String sid = "orcl";
 
 //        String host = "localhost:1521:";
 //        String sid = "xe";

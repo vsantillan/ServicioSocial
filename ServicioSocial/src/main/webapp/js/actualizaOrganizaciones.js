@@ -43,7 +43,7 @@ function updateProyecto(e)
         var tabla = $('#example').dataTable();
         $.post("updateProyecto.do", {id: idUpdate}, function(response) {
             tabla.fnDeleteRow(row);
-            $("#div-validar-proyecto").show('slow');
+            $("#div-validar-proyecto").show('slow')
             setTimeout(function() {
                 $("#div-validar-proyecto").hide('slow')
             }, 3000)

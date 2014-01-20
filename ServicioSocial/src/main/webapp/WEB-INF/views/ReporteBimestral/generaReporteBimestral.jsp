@@ -1,9 +1,10 @@
+<%@page import="net.sf.jasperreports.engine.JasperRunManager"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.io.File"%>
 <%@page import="edu.servicio.toluca.login.Conexion"%>
 <%@page import="org.springframework.ui.Model"%>
-<%@page import="edu.servicio.toluca.beans.ClienteJasperReport, net.sf.jasperreports.engine.*,net.sf.jasperreports.engine.export.*"%>
+
 
 <%
         Conexion conn =new Conexion ();
@@ -16,7 +17,7 @@
         parameters.put("id_reporte",session.getAttribute("id_reporte").toString());
         //parameters.put("Nombre_parametro", "Valor_Parametro"); 
         /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-        byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
+        byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectarAux("ges_vin", "gst01a"));
         /*Indicamos que la respuesta va a ser en formato PDF*/ 
         response.setContentType("application/pdf"); 
         response.setContentLength(bytes.length);
