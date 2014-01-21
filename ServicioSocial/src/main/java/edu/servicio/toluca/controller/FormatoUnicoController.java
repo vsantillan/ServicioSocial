@@ -307,7 +307,7 @@ public class FormatoUnicoController {
             //Validar que el alumno esté rechazado o en correción
             if (formatoUnico.getStatusFui() != null) {
                 System.out.println("El status del fui es" + formatoUnico.getStatusFui().toString());
-                if (formatoUnico.getStatusFui().toString().equals("5") || formatoUnico.getStatusFui().toString().equals("2") || formatoUnico.getStatusFui().toString().equals("3") ||  formatoUnico.getStatusFui() == null) {
+                if (formatoUnico.getStatusFui().toString().equals("5") || formatoUnico.getStatusFui().toString().equals("2") || formatoUnico.getStatusFui().toString().equals("3") || formatoUnico.getStatusFui() == null) {
                     System.out.println("Su formato único está en correción o fue rechazado, puede entrar");
                 } else {
                     System.out.println("El formato único no puede entrar, anda en validaciones o ya fue aceptado");
@@ -401,21 +401,16 @@ public class FormatoUnicoController {
             }
         }
         listaInstancias = instanciaFacade.findBySpecificField("estatus", "3", "equal", null, null);
-        for(Instancia ins : listaInstancias)
-        {
+        for (Instancia ins : listaInstancias) {
             System.out.println("Revisando si la instancia es propuesta");
             System.out.println("La que se tiene en el fui es " + formatoUnico.getIdproyecto().getIdInstancia().getNombre());
-            System.out.println("La que está en el foreach es "+ ins.getNombre());
+            System.out.println("La que está en el foreach es " + ins.getNombre());
             String idLeido = formatoUnico.getIdproyecto().getIdInstancia().getIdInstancia().toString();
             String idInstFU = ins.getIdInstancia().toString();
-            if(idLeido.equals(idInstFU))
-            {
+            if (idLeido.equals(idInstFU)) {
                 System.out.println("Se agregará a la lista una instancia del alumno");
                 filtroInstancias.add(ins);
-            }
-            else
-            {
-                
+            } else {
             }
         }
         modelo.addAttribute("instancias", filtroInstancias);
@@ -474,7 +469,7 @@ public class FormatoUnicoController {
 ////////Para la subida de archivos/////////////////////
 //////////////////////////////////////////////////////////////////////////
         modelo.addAttribute("idDatSubida", datosPersonales.getId());
-        System.out.println("Antes de mostrar el status fui es:"+ formatoUnico.getStatusFui());
+        System.out.println("Antes de mostrar el status fui es:" + formatoUnico.getStatusFui());
         if (formatoUnico.getStatusFui() != null) {
             modelo.addAttribute("infoDescarga", "<input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>\n"
                     + "                        <input type='submit' value='Subir' />");
@@ -493,8 +488,14 @@ public class FormatoUnicoController {
 //    }
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosPersonales.do")
     public @ResponseBody
-    String modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) {
-
+    String modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) 
+    {   
+        if(resultado.hasErrors())
+        {
+            System.out.println("#####Todo estaa mal####");
+            System.out.println("Los errores son: " + resultado.toString());
+        }
+        
         String arrJSON = "[";
         dt.arregla();
         ArrayList<String> listaErrores = dt.Valida();
@@ -851,8 +852,7 @@ public class FormatoUnicoController {
         System.out.println("Size:" + file.getSize());
         System.out.println("ContentType:" + file.getContentType());
         Documentos doc = new Documentos();
-        if(!listaDocumento.isEmpty())
-        {
+        if (!listaDocumento.isEmpty()) {
             doc = documentoFacade.find(listaDocumento.get(0).getId());
         }
         doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
@@ -880,8 +880,7 @@ public class FormatoUnicoController {
 //        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", id.toString(), "equal", null, null);
 //        VistaAlumno alumno = listaAlumnos.get(0);
         List<FoliosPlatica> listaFolios = foliosPlaticaFacade.findBySpecificField("alumnoId", dp.getAlumnoId(), "equal", null, null);
-        if(listaFolios.isEmpty())
-        {
+        if (listaFolios.isEmpty()) {
             System.out.println("No aexiste alumno en platica");
         }
         FoliosPlatica folioPlatica = listaFolios.get(0);
@@ -892,13 +891,13 @@ public class FormatoUnicoController {
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         SancionesModelo sm = new SancionesModelo(catalogoSancionesFacade, sancionesFacade, fecha_max, dp, "S001");
         sm.asignaSancion();
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
 //        java.util.Date fecha_actual = new java.util.Date();
 //        System.out.println("La fecha actual es: " + fecha_actual);
 //        System.out.println("La fecha máxima es:" + fecha_max);
@@ -1009,44 +1008,44 @@ public class FormatoUnicoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteFUI.pdf")
-    public String muestraReporteFUI(Model modelo, String nControl, String idProyecto, HttpSession session, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException {
+    public String muestraReporteFUI(Model modelo, String nControl, String idProyecto, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
 
-                try {
-                String noControl = session.getAttribute("NCONTROL").toString();
-                
-                System.out.println("En el muestra :D" + noControl);
-                VistaAlumno alumno = vistaAlumnoFacade.find(noControl);
-                System.out.println(alumno);
+        try {
+            String noControl = session.getAttribute("NCONTROL").toString();
 
-                List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
-                DatosPersonales dp = listaDatosPersonales.get(0);
-                List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
-                if (listaFormatoUnico.isEmpty()) {
-                    System.out.println("La lista de formatoUnico está vacía");
-                    return "PanelUsuario/panelUsuario";
-                }
-                
-                Conexion conn =new Conexion ();
-                /*Establecemos la ruta del reporte*/ 
-                File reportFile = new File(request.getRealPath("reportes//FormatoUnico.jasper")); 
-                 /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
-                Map parameters = new HashMap();
-                parameters.put("noControl",noControl);
-                parameters.put("idProyecto", listaFormatoUnico.get(0).getIdproyecto().getIdProyecto().toString());//idProyecto
-                //parameters.put("Nombre_parametro", "Valor_Parametro"); 
+            System.out.println("En el muestra :D" + noControl);
+            VistaAlumno alumno = vistaAlumnoFacade.find(noControl);
+            System.out.println(alumno);
+
+            List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+            DatosPersonales dp = listaDatosPersonales.get(0);
+            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
+            if (listaFormatoUnico.isEmpty()) {
+                System.out.println("La lista de formatoUnico está vacía");
+                return "PanelUsuario/panelUsuario";
+            }
+
+            Conexion conn = new Conexion();
+            /*Establecemos la ruta del reporte*/
+            File reportFile = new File(request.getRealPath("reportes//FormatoUnico.jasper"));
+            /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
+            Map parameters = new HashMap();
+            parameters.put("noControl", noControl);
+            parameters.put("idProyecto", listaFormatoUnico.get(0).getIdproyecto().getIdProyecto().toString());//idProyecto
+            //parameters.put("Nombre_parametro", "Valor_Parametro"); 
                 /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-                byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
-                /*Indicamos que la respuesta va a ser en formato PDF*/ 
-                httpServletResponse.setContentType("application/pdf"); 
-                httpServletResponse.setContentLength(bytes.length);
-                httpServletResponse.getOutputStream().write(bytes);
-   
-            } catch (Exception ex) {
-                Exceptions.printStackTrace(ex);
-            } 
+            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin", "gst01a"));
+            /*Indicamos que la respuesta va a ser en formato PDF*/
+            httpServletResponse.setContentType("application/pdf");
+            httpServletResponse.setContentLength(bytes.length);
+            httpServletResponse.getOutputStream().write(bytes);
 
-            
-            return "OK";        
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
+
+        return "OK";
     }
 
     @RequestMapping(value = "/cambiaStatusSubidaFui.do", method = RequestMethod.GET)

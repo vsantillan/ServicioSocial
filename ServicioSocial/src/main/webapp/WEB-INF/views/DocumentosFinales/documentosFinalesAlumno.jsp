@@ -37,7 +37,7 @@
                             <table>
                                 <tr>
                                     <td colspan="2">
-                                        <h3><p>Tu documento debe de tener un formato <code>pdf</code> Para que pueda ser validado por el administrador</p></h3>
+                                        <h3><p>Tus documentos debe de tener un formato <code>pdf</code> para que pueda ser validado por el administrador</p></h3>
                                     </td>
                                 </tr>
                                 <tr>
@@ -86,7 +86,7 @@
                             <table>
                                 <tr>
                                     <td colspan="2">
-                                        <h3><p>Tu documento debe de tener un formato pdf, jpg, png o bmp. Para que pueda ser validado por el administrador</p></h3>
+                                        <h3><p>Tus documentos debe de tener un formato <code>pdf</code> para que pueda ser validado por el administrador</p></h3>
                                     </td>
                                 </tr>
                                 <tr>

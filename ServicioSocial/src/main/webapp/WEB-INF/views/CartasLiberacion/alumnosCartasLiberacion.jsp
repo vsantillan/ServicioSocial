@@ -82,7 +82,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <core:forEach items="${cartaDocumento}" var="carta">
+                                <core:forEach items="${cartaLiberacion}" var="carta">
                                     <tr class='gradeX'>
                                         <th><a href="detalleReporteBimestral.do?id=${1}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
                                         <th><core:out value="${carta.datosPersonalesId.nombre}"/></th>

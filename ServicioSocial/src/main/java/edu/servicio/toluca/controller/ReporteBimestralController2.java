@@ -5,6 +5,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.bimestrales.RetroalimentacionReporte;
+import edu.servicio.toluca.beans.documentosFinales.GeneraDocumento;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
 import edu.servicio.toluca.entidades.CatalogoDocumento;
 import edu.servicio.toluca.entidades.DatosPersonales;
@@ -197,43 +198,28 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestral.pdf")
-    public String muestraReporteBimestral(Model modelo, String no_reporte, HttpSession session, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException 
+    public @ResponseBody String muestraReporteBimestral(Model modelo, String nControl, String idProyecto, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException
     {
-        try {
-        String noControl = session.getAttribute("NCONTROL").toString();
-        modelo.addAttribute("noControl", noControl);
-        System.out.println("En el muestra :D" + noControl);
-        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null);
-        VistaAlumno alumno = listaAlumnos.get(0);
-
-        if (listaAlumnos.isEmpty()) 
-        {
-            System.out.println("La lista de formatoUnico está vacía");
-            return "PanelUsuario/panelUsuario";
-        }
-        System.out.println("Realiza el reporte");
-        Conexion conn =new Conexion ();
-        /*Establecemos la ruta del reporte*/ 
-        File reportFile = new File(request.getRealPath("reportes//plantilaReporteBimestral.jasper")); 
-         /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
-        Map parameters = new HashMap();
-        parameters.put("noControl",alumno.getId());
-        parameters.put("no_reporte", no_reporte);
-        System.out.println("Paso los siguientes parametros: "+parameters.toString());
-        //parameters.put("Nombre_parametro", "Valor_Parametro"); 
-        /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-        byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
-        System.out.println("aqui si entro");
-        /*Indicamos que la respuesta va a ser en formato PDF*/ 
-        httpServletResponse.setContentType("application/pdf"); 
-        httpServletResponse.setContentLength(bytes.length);
-        httpServletResponse.getOutputStream().write(bytes);
+         
         
+//        String[][] arr=new String [2][3];
+//        arr[0][0]="no_control";
+//        arr[1][0]="09280525";
+//        arr[0][1]="no_reporte";
+//        arr[1][1]="1";
+//        arr[0][2]="id_reporte";
+//        arr[1][2]="1";
+//        
+        Map parameters=new HashMap();
+        parameters.put("no_control", "09280525");
+        parameters.put("no_reporte", "1");
+        parameters.put("id_reporte", "1");
+        try {
+            GeneraDocumento obj = new GeneraDocumento();
+            obj.generar("ges_vin", "gst01a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         } 
-
-        //modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
-        return "";        
+        return "OK";        
     }
 }

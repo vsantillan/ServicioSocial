@@ -7,6 +7,7 @@ package edu.servicio.toluca.beans;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 
 /**
@@ -16,8 +17,12 @@ import java.util.List;
 public class FormatoUnicoDatosPersonalesBean {
     
     private BigDecimal id;
+    @NotNull (message = "El campo no puede estar vacio")
+    @Size(min = 1, max = 45, message = "El campo Nombre no puede estar vacío")
     private String nombre;
+    @Size(min = 1, max = 20, message = "El campo Nombre no puede estar vacío")
     private String apellidoP;
+    @Size(min = 1, max = 20, message = "El campo Nombre no puede estar vacío")
     private String apellidoM;
     private String sexo;
     private String estado_civil;
