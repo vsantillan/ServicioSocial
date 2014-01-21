@@ -73,6 +73,12 @@ public class ReporteBimestralController {
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
     public String reporteBimestralUsuario(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
         FormatoUnico fechaInicioFU = null;
+        
+          //Obtenemos Objetos del Alumno
+        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+        VistaAlumno alumnoB = consultaVistaAlumno.getAlumnoSesion(session);
+        ValidacionStatusServicio validaServicio = new ValidacionStatusServicio();
+        StatusServicioBean servicioBean = validaServicio.validaServicio(alumnoB);
 
 
 
@@ -80,6 +86,12 @@ public class ReporteBimestralController {
             modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
+        ///////////MUESTRA REPORTES/////////////
+        List<Reportes> listaReportes=reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+        List<FormatoUnico> listaFormatoUnicos=(List)servicioBean.getDatosPersonales().getFormatoUnicoCollection();
+        modelo.addAttribute("Plan",listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
+        modelo.addAttribute("listaReportes", listaReportes);
+        ////////////////////////////////////////
         alumno_id = session.getAttribute("NCONTROL").toString();
         reporteBimestral RBObjeto = new reporteBimestral();
         ///////////BUSCAR ALUMNO///////////

@@ -26,15 +26,7 @@
             $(document).ready(function() {
 
                 $("#tabs").tabs();
-                $('#Rev').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#NoRev').dataTable({
+                $('#Rep').dataTable({
                     "bJQueryUI": true,
                     "sPaginationType": "full_numbers",
                     "sScrollXInner": "100%",
@@ -80,10 +72,11 @@
             </p>
             <div id="tabs">
                 <ul>
-                    <li><a href="#Generar">Generar Reporte Bimestral</a></li>
+                    <li><a href="#Guardar">Guardar Informacion del Reporte</a></li>
+                    <li><a href="#Generar">Generar Reportes</a></li>
                     <li><a href="#Subir">Anexar Reporte</a></li>
                 </ul>
-                <div id="Generar">
+                <div id="Guardar">
                     <h1>Generar Reporte</h1>
                     <p>Introduzca los datos requeridos para llenar su formulario</p>
                     <form:form commandName="Reportes" name="reportesBimestrales" id="reportesBimestrales"  action="insertaReporte.do" method="POST" target="_blank">
@@ -137,11 +130,11 @@
                                                 </core:forEach>
                                             </core:forEach>
                                         </select>
-                                        
+
                                         <a href="JavaScript:void(0);" id="btn-add">&laquo; Quitar</a>
                                         <a href="JavaScript:void(0);" id="btn-remove">Agregar &raquo;</a>
-                                        
-                                        
+
+
 
                                         <select name="selectto" id="select-to" multiple size="5">
                                         </select>
@@ -181,6 +174,41 @@
                         </table>
                     </form:form>
                 </div>
+                <div id="Generar">
+                    <h1>Generar Reporte Bimestral</h1>
+                    <table cellpadoding='0' cellspacing='0' border='0' class='display' id="Rep" width='100%'>
+                        <thead>
+                            <tr>
+                                <th>N&uacute;mero de Reporte</th>
+                                <th>Horas del Reporte</th>
+                                <th>Fecha de Entrega M&acute;xima</th>
+                                <th>N&uacute;mero de Revisiones</th>
+                                <th>Calificaci&oacute;n</th>
+                                <th>Ver Reporte</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <core:forEach items="${listaReportes}" var="reportes">
+                                <tr class='gradeX'>
+                                    <th><core:out value="${reportes.numeroReporte}"/></th>
+                                    <th><core:out value="${reportes.horas}"/></th>
+                                    <th><core:out value="${reportes.fechaEntregaMax}"/></th>
+                                    <th><core:out value="${reportes.numeroRevisiones}"/></th>
+                                        <core:choose>
+                                            <core:when test="${plan=='S'}" >
+                                                <th>reportes.calificacion</th>
+                                            </core:when> 
+                                        <core:otherwise>
+                                                <th>No requerida</th>
+                                    </core:otherwise>
+                                </core:choose>
+                            <th><a href="#" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
+                            </tr>
+
+                        </core:forEach>
+                        </tbody>
+                    </table>
+                </div>
                 <div id="Subir">
                     <h1>Subir Reporte</h1>
                     <p>Seleccione su Reporte Bimestral</p>
@@ -207,14 +235,14 @@
                     $(this).remove();
                 });
             });
-            
-                    $('input#envia').click(function() {
-            $('#select-from option').each(function()
-            {
-                $(this).attr("selected", "selected");
+
+            $('input#envia').click(function() {
+                $('#select-from option').each(function()
+                {
+                    $(this).attr("selected", "selected");
+                });
             });
-        });
-  
+
 
 
         </script>
