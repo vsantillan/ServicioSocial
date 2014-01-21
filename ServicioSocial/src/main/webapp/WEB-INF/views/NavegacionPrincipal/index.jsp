@@ -29,6 +29,19 @@
 
                 <br/><br/><br/><br/><br/><br/><br/>
                 <h1>Noticias</h1>
+                <div style="float:left;width:80%">
+                    <table cellpadding='0' cellspacing='0' border='0' class='display' id="" width='100%'>
+                        <tbody>
+                            <core:forEach items="${Noticias}" var="Noticia">
+                                <tr class='gradeX'>
+                                    <th><core:out value="${Noticia.titulo}" /></th>
+                                    <th><core:out value="${Noticia.fecha}" /></th>
+                                    <th><core:out value="${Noticia.detalle}" /></th>
+                                </tr>
+                            </core:forEach>
+                        </tbody>
+                    </table>
+                </div>
                 <br/><br/><br/><br/><br/><br/><br/>
             </center>
             <div style="clear:both;"></div>
