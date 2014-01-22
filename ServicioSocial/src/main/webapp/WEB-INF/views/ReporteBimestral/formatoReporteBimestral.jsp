@@ -21,6 +21,7 @@
         <!--Scripts Datapicker-->
         <script src="js/jqueryUI/jquery.ui.datepicker.js"></script>
         <script type="text/javascript" language="javascript" src="js/reportesBimestrales.js"></script>
+        <script type="text/javascript" language="javascript" src="js/validaFiles.js"></script>
         <script type="text/javascript">
 
             $(document).ready(function() {
@@ -79,7 +80,7 @@
                 <div id="Guardar">
                     <h1>Generar Reporte</h1>
                     <p>Introduzca los datos requeridos para llenar su formulario</p>
-                    <form:form commandName="Reportes" name="reportesBimestrales" id="reportesBimestrales"  action="insertaReporte.do" method="POST" target="_blank">
+                    <form:form commandName="Reportes" name="reportesBimestrales" id="reportesBimestrales"  action="insertaReporte.do" method="POST">
 
                         <table>
                             <h4>N&uacute;mero de Revisiones del Reporte: ${noReviciones}</h4>
@@ -184,6 +185,7 @@
                                 <th>Fecha de Entrega M&acute;xima</th>
                                 <th>N&uacute;mero de Revisiones</th>
                                 <th>Calificaci&oacute;n</th>
+                                <th>Estatus del reporte</th>
                                 <th>Ver Reporte</th>
                             </tr>
                         </thead>
@@ -194,27 +196,55 @@
                                     <th><core:out value="${reportes.horas}"/></th>
                                     <th><core:out value="${reportes.fechaEntregaMax}"/></th>
                                     <th><core:out value="${reportes.numeroRevisiones}"/></th>
+                                        <core:choose>    
+                                            <core:when test="${reportes.status==0}">
+                                            <th>No has subido tu reporte</th>
+                                            </core:when>
+                                            <core:when test="${reportes.status==1}">
+                                            <th>Aceptado</th>
+                                            </core:when>
+                                            <core:when test="${reportes.status==2}">
+                                            <th>Rechazado</th>
+                                            </core:when>
+                                            <core:when test="${reportes.status==3}">
+                                            <th>En correci&oacute;n</th>
+                                            </core:when>
+                                            <core:when test="${reportes.status==4}">
+                                            <th>En revisi&oacute;n</th>
+                                            </core:when>
+                                        </core:choose>
                                         <core:choose>
                                             <core:when test="${plan=='S'}" >
-                                                <th>reportes.calificacion</th>
+                                            <th>reportes.calificacion</th>
                                             </core:when> 
-                                        <core:otherwise>
-                                                <th>No requerida</th>
-                                    </core:otherwise>
-                                </core:choose>
-                            <th><a href="#" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
-                            </tr>
+                                            <core:otherwise>
+                                            <th>No requerida</th>
+                                            </core:otherwise>
+                                        </core:choose>
+                                    <th><a href="muestraReporteBimestral.pdf?idReporte=${reportes.id}&noReporte=${reportes.numeroReporte}" target="_blank"><img width="30" src="imagenes/lupa.png"/></a></th>
+                                </tr>
 
-                        </core:forEach>
+                            </core:forEach>
                         </tbody>
                     </table>
                 </div>
                 <div id="Subir">
                     <h1>Subir Reporte</h1>
                     <p>Seleccione su Reporte Bimestral</p>
-                    <form:form name="subirReporte" id="MyForm" action="guardarReporteBimestral.do" method="POST" enctype="multipart/form-data">
-                        <input type="file" name="file" value="Buscar Reporte" />
-                        <input type="submit" value="Enviar"/>
+                    <form:form name="subirReporte" id="subirArchivo" action="guardarReporteBimestral.do" method="POST" enctype="multipart/form-data">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input id="archivo" type="file" name="file" value="Buscar Reporte" />
+                                    <div class='error' style="display:none;"></div> 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="enviarArchivo" type="button" value="Enviar"/>
+                                </td>
+                            </tr>
+                        </table>
                     </form:form>
                 </div>
             </div>

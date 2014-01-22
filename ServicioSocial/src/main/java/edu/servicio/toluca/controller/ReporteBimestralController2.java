@@ -127,14 +127,11 @@ public class ReporteBimestralController2
         System.out.println("Agui genera el reporte");
         return "/ReporteBimestral/generaReporteBimestral";
     }
-    
+
     @RequestMapping(value = "/guardarReporteBimestral.do", method = RequestMethod.POST)
     public String subirReporteBi(@RequestParam("file") MultipartFile file,Model modelo,HttpSession session, HttpServletRequest request) throws IOException 
     {
         String no_control = session.getAttribute("NCONTROL").toString();
-        System.out.println("Inicia Subir carta motivos");
-        System.out.println("El no control del alumno es->" + no_control);
-        
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
         if (vistaAlumnoFacade.count() < 1 || listaAlumnos.isEmpty()) {
             System.out.println("O no hay registros en la tabla o no existe tal alumno en la base de datos de Vista LAumno");
@@ -198,22 +195,13 @@ public class ReporteBimestralController2
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestral.pdf")
-    public @ResponseBody String muestraReporteBimestral(Model modelo, String nControl, String idProyecto, HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException
+    public @ResponseBody String muestraReporteBimestral(Model modelo, String noReporte,String idReporte,HttpSession session,  HttpServletRequest request,HttpServletResponse httpServletResponse) throws ParseException, JRException
     {
-         
-        
-//        String[][] arr=new String [2][3];
-//        arr[0][0]="no_control";
-//        arr[1][0]="09280525";
-//        arr[0][1]="no_reporte";
-//        arr[1][1]="1";
-//        arr[0][2]="id_reporte";
-//        arr[1][2]="1";
-//        
+
         Map parameters=new HashMap();
-        parameters.put("no_control", "09280525");
-        parameters.put("no_reporte", "1");
-        parameters.put("id_reporte", "1");
+        parameters.put("no_control", session.getAttribute("NCONTROL").toString());
+        parameters.put("no_reporte", noReporte);
+        parameters.put("id_reporte", idReporte);
         try {
             GeneraDocumento obj = new GeneraDocumento();
             obj.generar("ges_vin", "gst01a", "plantilaReporteBimestral", parameters, request, httpServletResponse);

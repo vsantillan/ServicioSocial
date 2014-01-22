@@ -130,8 +130,9 @@ public class ReporteBimestralController {
                 }
                 Reportes ultimoReporte = RB.get(RB.size() - 1);
                 RBObjeto.setNumeroReporte(noReportes);
+                modelo.addAttribute("noReviciones",ultimoReporte.getNumeroRevisiones());
                 //Buscar el ultimo reporte Bimestral con status aprobado
-                //Y sacar esa fecha fin
+                //Y sacar esa fecha finwt
                 //Verificar el status para en correccion  o para aceptado
                 RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
                 //Sumar los dos meses a fecha FIn
@@ -170,6 +171,13 @@ public class ReporteBimestralController {
         VistaAlumno alumnoB = consultaVistaAlumno.getAlumnoSesion(session);
         ValidacionStatusServicio validaServicio = new ValidacionStatusServicio();
         StatusServicioBean servicioBean = validaServicio.validaServicio(alumnoB);
+        
+        ///////////MUESTRA REPORTES/////////////
+        List<Reportes> listaReportes=reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+        List<FormatoUnico> listaFormatoUnicos=(List)servicioBean.getDatosPersonales().getFormatoUnicoCollection();
+        modelo.addAttribute("Plan",listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
+        modelo.addAttribute("listaReportes", listaReportes);
+        ////////////////////////////////////////
 
         String alumno_id = session.getAttribute("NCONTROL").toString();
         List<String> listaIds = null;
@@ -243,11 +251,8 @@ public class ReporteBimestralController {
                         actividadesBimestralesFacade.create(actividadesB);
                     }
                     System.out.println("Actualizo La Informacion Correctamente");
-                    session.setAttribute("no_reporte", bimestralU.getNumeroReporte());
-                    session.setAttribute("id_reporte", bimestralU.getId());
-                    System.out.println("El No. de reporte es "+bimestralU.getNumeroReporte().intValue());
-                    System.out.println("El ID. de reporte es "+bimestralU.getId().intValue());
-                    return "/ReporteBimestral/generaReporteBimestral";
+
+                    return "/ReporteBimestral/formatoReporteBimestral";
                 } else {
                     fechas fecha = new fechas();
                     Reportes reporteBimestral = new Reportes();
@@ -292,10 +297,9 @@ public class ReporteBimestralController {
                         actividadesB.setIdActividades(actividades.get(0));
                         actividadesBimestralesFacade.create(actividadesB);
                     }
-                    System.out.println("Inserto Segundo Reporte Correctamente");
-                    session.setAttribute("no_reporte", bimestralInsertado.getNumeroReporte().intValue());
-                    session.setAttribute("id_reporte", bimestralInsertado.getId().intValue());
-                    return "/ReporteBimestral/generaReporteBimestral";
+                    System.out.println("Inserto N Reporte Correctamente");
+
+                    return "/ReporteBimestral/formatoReporteBimestral";
 
                 }
                 //return "/ReporteBimestral/formatoReporteBimestral";
@@ -339,10 +343,9 @@ public class ReporteBimestralController {
                 actividadesB.setIdActividades(actividades.get(0));
                 actividadesBimestralesFacade.create(actividadesB);
             }
-            System.out.println("Inserto Por Primera Vez");
-            session.setAttribute("no_reporte", bimestralInsertado.getNumeroReporte().intValue());
-            session.setAttribute("id_reporte", bimestralInsertado.getId().intValue());
-            return "/ReporteBimestral/generaReporteBimestral";
+            System.out.println("Inserto por Primera vez");
+
+            return "/ReporteBimestral/formatoReporteBimestral";
         }
 
     }
