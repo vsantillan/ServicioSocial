@@ -4,10 +4,9 @@
  */
 package edu.servicio.toluca.beans;
 
-import edu.servicio.toluca.configuracion.ExpresionesRegulares;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 import javax.validation.constraints.*;
 
 
