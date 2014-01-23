@@ -27,7 +27,7 @@ function validaFile() {
             case ".jpeg":
             case ".png":
             case ".pdf":
-                alert("Formato valido");
+                $("#subirArchivo").submit();
                 break;
             default :
                 $('.error').show("slow").delay(2500).hide("slow");
@@ -35,7 +35,6 @@ function validaFile() {
                 break;
         }
     }
-    //$("#subirArchivo").submit();
 }
 
 

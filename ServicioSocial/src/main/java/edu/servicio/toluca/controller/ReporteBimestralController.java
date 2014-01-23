@@ -130,7 +130,10 @@ public class ReporteBimestralController {
                 }
                 Reportes ultimoReporte = RB.get(RB.size() - 1);
                 RBObjeto.setNumeroReporte(noReportes);
-                modelo.addAttribute("noReviciones",ultimoReporte.getNumeroRevisiones());
+                if(noReportes==Integer.parseInt(String.valueOf(ultimoReporte.getNumeroReporte())))
+                    modelo.addAttribute("noReviciones",ultimoReporte.getNumeroRevisiones());
+                    else
+                modelo.addAttribute("noReviciones","0");
                 //Buscar el ultimo reporte Bimestral con status aprobado
                 //Y sacar esa fecha finwt
                 //Verificar el status para en correccion  o para aceptado
@@ -252,7 +255,7 @@ public class ReporteBimestralController {
                     }
                     System.out.println("Actualizo La Informacion Correctamente");
 
-                    return "/ReporteBimestral/formatoReporteBimestral";
+                    return "redirect:formatoReporteBimestral.do";
                 } else {
                     fechas fecha = new fechas();
                     Reportes reporteBimestral = new Reportes();
@@ -299,7 +302,7 @@ public class ReporteBimestralController {
                     }
                     System.out.println("Inserto N Reporte Correctamente");
 
-                    return "/ReporteBimestral/formatoReporteBimestral";
+                    return "redirect:formatoReporteBimestral.do";
 
                 }
                 //return "/ReporteBimestral/formatoReporteBimestral";
@@ -345,7 +348,7 @@ public class ReporteBimestralController {
             }
             System.out.println("Inserto por Primera vez");
 
-            return "/ReporteBimestral/formatoReporteBimestral";
+            return "redirect:formatoReporteBimestral.do";
         }
 
     }

@@ -28,6 +28,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
+import edu.servicio.toluca.configuracion.ExpresionesRegularesErrores;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -51,7 +53,8 @@ import org.hibernate.validator.constraints.Email;
     @NamedQuery(name = "Instancia.findByUsuario", query = "SELECT i FROM Instancia i WHERE i.usuario = :usuario"),
     @NamedQuery(name = "Instancia.findByPassword", query = "SELECT i FROM Instancia i WHERE i.password = :password"),
     @NamedQuery(name = "Instancia.findByCorreo", query = "SELECT i FROM Instancia i WHERE i.correo = :correo")})
-public class Instancia implements Serializable {
+public class Instancia  implements Serializable, ExpresionesRegularesErrores  {
+      
     @Size(max = 7)
     @Column(name = "EXT")
     private String ext;
@@ -68,7 +71,8 @@ public class Instancia implements Serializable {
     private BigDecimal idInstancia;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45, message = "Nombre de la Organización vacía")
+    @Size(min = 1, max = 45, message =errorBetween+" 1 y 45")
+    @Pattern(regexp =letrasNumeros, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
@@ -121,8 +125,7 @@ public class Instancia implements Serializable {
 //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
 //    private Collection<RetroalimentacionInstancia> retroalimentacionInstanciaCollection;
 
-    public Instancia() {
-    }
+    public Instancia() {}
 
     public Instancia(BigDecimal idInstancia) {
         this.idInstancia = idInstancia;

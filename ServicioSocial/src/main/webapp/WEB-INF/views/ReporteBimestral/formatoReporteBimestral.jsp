@@ -170,7 +170,7 @@
                             </core:forEach>  
                             <form:input path="actividades" hidden="hidden" name="nActividades" id="nActividades" value="0" />
                             <tr> 
-                                <td> <input type ="submit" value = "Generar Reporte" id="envia"  /></td>
+                                <td> <input type ="submit" value = "Guardar Informaci&oacute;n" id="envia"  /></td>
                             </tr>
                         </table>
                     </form:form>
@@ -184,8 +184,8 @@
                                 <th>Horas del Reporte</th>
                                 <th>Fecha de Entrega M&acute;xima</th>
                                 <th>N&uacute;mero de Revisiones</th>
-                                <th>Calificaci&oacute;n</th>
                                 <th>Estatus del reporte</th>
+                                <th>Calificaci&oacute;n</th>
                                 <th>Ver Reporte</th>
                             </tr>
                         </thead>

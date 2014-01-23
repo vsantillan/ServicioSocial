@@ -6,7 +6,7 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.DocumentosFinalesBean;
 import edu.servicio.toluca.beans.documentosFinales.RetroalimentacionDocumentosFinales;
-import edu.servicio.toluca.configuracion.ExpresionesRegulares;
+import edu.servicio.toluca.configuracion.ExpresionesRegularesErrores;
 import edu.servicio.toluca.entidades.CatalogoDocumento;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
