@@ -31,7 +31,7 @@ public class ValidaLogin {
 
         if (usuario.equals("") || pass.equals("")) {
             //Verifica que el campo usuario y contraseña no esten vacios de lo contrario retorna a loginPrincipal
-            sesionBean.setMensaje("<div class='error'>Datos de acceso inválidos</div>");
+            sesionBean.setMensaje("<div class=\"alert alert-danger\">Datos de acceso inválidos</div>");
             sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
         }
             try {
@@ -53,12 +53,12 @@ public class ValidaLogin {
 
                             //Cancelado
                             if (formatoUnico.get(0).getStatusServicio().toString().equals("2")) {
-                                sesionBean.setMensaje("<div class='error'>Lo sentimos tu servicio social ha sido cancelado. Contacta al Jefe del Departamento de Servicio Social para solucionar esta situacion.</div>");
+                                sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos tu servicio social ha sido cancelado. Contacta al Jefe del Departamento de Servicio Social para solucionar esta situacion.</div>");
                                 sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                             } else {
                                 //Baja Temporal
                                 if (formatoUnico.get(0).getStatusServicio().toString().equals("3")) {
-                                    sesionBean.setMensaje("<div class='error'>Lo sentimos tu servicio social ha sido dado de baja temporalmente. Contacta al Jefe del Departamento de Servicio Social para solucionar esta situacion.</div>");
+                                    sesionBean.setMensaje("<div class=\"alert alert-danger\"'>Lo sentimos tu servicio social ha sido dado de baja temporalmente. Contacta al Jefe del Departamento de Servicio Social para solucionar esta situacion.</div>");
                                     sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                                 } else {
                                     System.out.println("Inicia sesion en proceso...");
@@ -77,7 +77,7 @@ public class ValidaLogin {
                             sesionBean.setPagReturn("redirect:panelUsuario.do");
                         }
                     } else {
-                        sesionBean.setMensaje("<div class='error'>Lo sentimos no cumples con el minimo de 70% de créditos para tramitar tu servicio social</div>");
+                        sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos no cumples con el minimo de 70% de créditos para tramitar tu servicio social</div>");
                         sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                     }
                 }
@@ -107,7 +107,7 @@ public class ValidaLogin {
                 }
                 //OTRO
                 if (rol.equals("OTRO")) {
-                    sesionBean.setMensaje("<div class='error'>Lo sentimos no tiene los permisos necesarios para accesar al sistema.</div>");
+                    sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos no tiene los permisos necesarios para accesar al sistema.</div>");
                     sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                 }
 
@@ -153,17 +153,17 @@ public class ValidaLogin {
                         session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
                         session.setAttribute("NOMBRE", instancia.get(0).getNombre());
                         if (validacionAdmin == 2) {
-                            session.setAttribute("MENSAJE", "<div class='error'>Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
+                            session.setAttribute("MENSAJE", "<div class=\"alert alert-danger\">Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
                         }
                         sesionBean.setPagReturn("redirect:panelOrganizacion.do");
                     } else {
                         System.out.println("La organizacion no puede ingresar, estatus inactivo");
-                        sesionBean.setMensaje("<div class='error'>Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
+                        sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
                         sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                     }
 
                 } else {
-                    sesionBean.setMensaje("<div class='error'>Usuario o contraseña incorrecta</div>");
+                    sesionBean.setMensaje("<div class=\"alert alert-danger\">Usuario o contraseña incorrecta</div>");
                     sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                 }
             }

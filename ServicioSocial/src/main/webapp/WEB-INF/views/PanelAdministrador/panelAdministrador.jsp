@@ -3,37 +3,37 @@
     Created on : 3/06/2013, 01:01:53 PM
     Author     : Regules
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%
-HttpSession sesionOk = request.getSession();
-
-%>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-        <title>Administrador</title>
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body class="background">
-        <jsp:include page="../Template/banner.jsp" />
+    <body>
+        <div class="container">
 
-        <%-- inicio del contenido --%>
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left; width: 80%">
-                <h1>Panel Administrador</h1>
-                <center><img src="imagenes/admin.png" width="600"/></center>
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%> 
+                <div class="row ">
+                    <!---------------------------------------------Contenido------------------------------------------->                
 
-                
-            </div>
-            <div style="clear:both;"></div>
-        </div>
-        <%-- fin del contenido --%>
-        <jsp:include page="../Template/footer.jsp" />
+                    <div class="jumbotron">
+                        <h1>Panel Administrador!</h1>
+                        <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+                    </div>
+
+                    <div class="col-6 col-sm-6 col-lg-4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                    </div><!--/span-->
+                    
+                    <!---------------------------------------------Fin Contenido-------------------------------------------> 
+                </div><!--/row--> 
+                <%@include file="../General/footer.jsp"%>           
+            </div><!--/row-->
+        </div> <!-- /container -->
+        <%@include file="../General/js.jsp"%>
     </body>
 </html>

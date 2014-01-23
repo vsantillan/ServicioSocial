@@ -317,10 +317,10 @@ $(document).ready(function() {
     //Panel de usuario
     $(".filas").mouseover(function(event) {
         $(this).popover("show");
-        
+
     });
-    
-    $(".filas").mouseleave(function(event){
+
+    $(".filas").mouseleave(function(event) {
         $(this).popover("hide");
     });
 //
@@ -383,7 +383,7 @@ $(document).ready(function() {
 //    $("#filaSanciones").mouseleave(function(event) {
 //        $("#sanciones").hide("fast");
 //    });
-    
+
 
 });
 
