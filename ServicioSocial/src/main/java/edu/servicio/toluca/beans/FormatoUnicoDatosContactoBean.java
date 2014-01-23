@@ -8,6 +8,9 @@ import edu.servicio.toluca.entidades.Colonia;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -15,18 +18,35 @@ import javax.validation.constraints.NotNull;
  */
 public class FormatoUnicoDatosContactoBean {
     private BigDecimal id;
+    @Size(min = 1, max = 100, message = "El campo Calle no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-z0-9/\\s/.,#-_+*]+$", message = "El campo Calle sólo puede contener Letras y los caracteres .-_,#+*")
     private String calle;
+    @Size(min = 1, max = 5, message = "El campo Número Interior no puede estar vacío")
+    @Pattern(regexp = "^[0-9]+$", message = "El campo Número Interior sólo puede contener Números")
     private String numeroI;
+    @Size(min = 1, max = 5, message = "El campo Número Exterior no puede estar vacío")
+    @Pattern(regexp = "^[0-9]+$", message = "El campo Número Exterior sólo puede contener Números")
     private String numeroE;
-  //  private Colonia colonia;
+    @Size(min = 1, max = 100, message = "El campo Entre Calle no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-z0-9/\\s/.,#-_+*]+$", message = "El campo Entre Calle sólo puede contener Letras y los caracteres .-_,#+*")
     private String entreCalles;
+    @Size(min = 1, max = 100, message = "El campo Referencias no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-z0-9/\\s/.,#-_+*]+$", message = "El campo Referencias sólo puede contener Letras y los caracteres .-_,#+*")
     private String referencias;
+    @Size(min = 10, max = 10, message = "El campo Telefono de Casa está incompleto")
+    @Pattern(regexp = "^[0-9]+$", message = "El campo Telefono de Casa sólo puede contener Números")
     private String telefono_casa;
+    @Size(min = 10, max = 10, message = "El campo Telefono Celular está incompleto")
+    @Pattern(regexp = "^[0-9]+$", message = "El campo Telefono Celular sólo puede contener Números")
     private String telefono_cel;
+    @Size(min = 10, max = 10, message = "El campo Telefono de Oficina está incompleto")
+    @Pattern(regexp = "^[0-9]+$", message = "El campo Telefono de Oficina sólo puede contener Números")
     private String telefono_oficina;
+    @Email(message = "El campo Correo Electrónico no es un email válido")
     private String correo_electronico;
-    
+    @Size(min = 1, max = 100, message = "El campo Twitter no puede estar vacío")
     private String twitter;
+    @Size(min = 1, max = 100, message = "El campo Facebook no puede estar vacío")
     private String facebook;
     private Colonia idColonia;
     private ArrayList<String> listaErrores = new ArrayList<String>();

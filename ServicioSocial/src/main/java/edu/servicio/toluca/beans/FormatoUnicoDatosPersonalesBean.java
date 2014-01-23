@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.beans;
 
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,23 +15,35 @@ import javax.validation.constraints.*;
  *
  * @author Héctor
  */
-public class FormatoUnicoDatosPersonalesBean {
-    
+public class FormatoUnicoDatosPersonalesBean 
+{
     private BigDecimal id;
-    @NotNull (message = "El campo no puede estar vacio")
-    @Size(min = 1, max = 45, message = "El campo Nombre no puede estar vacío")
+    @Size(min = 3, max = 45, message = "El campo Nombre no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Nombre sólo puede contener Letras")
     private String nombre;
-    @Size(min = 1, max = 20, message = "El campo Nombre no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Apellido Paterno sólo puede contener Letras")
+    @Size(min = 3, max = 20, message = "El campo Apellido Paterno no puede estar vacío")
     private String apellidoP;
-    @Size(min = 1, max = 20, message = "El campo Nombre no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Apellido Materno sólo puede contener Letras")
+    @Size(min = 3, max = 20, message = "El campo Apellido Materno no puede estar vacío")
     private String apellidoM;
     private String sexo;
     private String estado_civil;
+    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Ocupación sólo puede contener Letras")
+    @Size(min = 1, max = 20, message = "El campo Ocupación no puede estar vacío")
     private String ocupacion;
+    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "El campo CUPR sólo puede contener Letras y Números")
+    @Size(min = 16, max = 18, message = "El campo CURP está incompleto")
     private String curp;
+    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "El campo Clave Documento Identificación sólo puede contener Letras y Números")
+    @Size(min = 1, max = 40, message = "El campo Clave Documento Identificación no puede estar vacío")
     private String claveDocIdentificacion;
+    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "El campo Folio Documento Identificación sólo puede contener Números")
+    @Size(min = 1, max = 40, message = "El campo Folio Documento Identificación no puede estar vacío")
     private String folioDocIdentificacion;
     private boolean acuerdoC;
+    @Size(min = 1, max = 100, message = "El campo Lugar de Nacimiento no puede estar vacío")
+    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Lugar de Nacimiento sólo puede contener Letras")
     private String lugar_nacimiento;
     private ArrayList<String> listaErrores = new ArrayList<String>();
     MetodosValidacion mv = new MetodosValidacion();
@@ -43,15 +56,15 @@ public class FormatoUnicoDatosPersonalesBean {
     public ArrayList<String> Valida()
     { 
         //Validar que no estén vacíos
-        if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); }
-        if(nombre == null || nombre.equals("")){listaErrores.add("El campo nombre no puede estar vacío"); }
-        if(apellidoP == null || apellidoP.equals("")){listaErrores.add("El campo Apellido Paterno no puede estar vacío"); }
-        if(apellidoM == null || apellidoM.equals("")){listaErrores.add("El campo Apellido Materno no puede estar vacío"); }
-        if(ocupacion == null || ocupacion.equals("")){listaErrores.add("El campo ocupacion no puede estar vacío"); }
-        if(curp == null || curp.equals("")){listaErrores.add("El campo curp no puede estar vacío"); }
-        if(claveDocIdentificacion.equals("")){listaErrores.add("El campo Clave del Documento de indentificación no puede estar vacío"); }
-        if(folioDocIdentificacion == null || folioDocIdentificacion.equals("0")){listaErrores.add("El campo folio del Documento de indentificación no puede estar vacío"); }
-        if(lugar_nacimiento == null || lugar_nacimiento.equals("0")){listaErrores.add("El campo lugar de Nacimiento no puede estar vacío"); }
+//        if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); }
+//        if(nombre == null || nombre.equals("")){listaErrores.add("El campo nombre no puede estar vacío"); }
+//        if(apellidoP == null || apellidoP.equals("")){listaErrores.add("El campo Apellido Paterno no puede estar vacío"); }
+//        if(apellidoM == null || apellidoM.equals("")){listaErrores.add("El campo Apellido Materno no puede estar vacío"); }
+//        if(ocupacion == null || ocupacion.equals("")){listaErrores.add("El campo ocupacion no puede estar vacío"); }
+//        if(curp == null || curp.equals("")){listaErrores.add("El campo curp no puede estar vacío"); }
+//        if(claveDocIdentificacion.equals("")){listaErrores.add("El campo Clave del Documento de indentificación no puede estar vacío"); }
+//        if(folioDocIdentificacion == null || folioDocIdentificacion.equals("0")){listaErrores.add("El campo folio del Documento de indentificación no puede estar vacío"); }
+//        if(lugar_nacimiento == null || lugar_nacimiento.equals("0")){listaErrores.add("El campo lugar de Nacimiento no puede estar vacío"); }
         //Validar tamaños de texto
         if(!mv.minimoString(nombre, 1) && !mv.maximoString(nombre, 60)){listaErrores.add("El campo nombre debe tener entre 1 y 60 letras");}
         if(!mv.minimoString(apellidoP, 1) && !mv.maximoString(apellidoP, 30)){listaErrores.add("El campo apellido paterno debe tener entre 1 y 30 letras");}

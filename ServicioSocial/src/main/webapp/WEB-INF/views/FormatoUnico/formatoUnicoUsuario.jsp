@@ -88,7 +88,8 @@
                             <tr>
                                 <form:input  type="hidden" path ="id" />
                                 <td>*Nombre:</td>
-                                <td><form:input   maxlength="60" path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input   maxlength="60" path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();"/> 
+                                </td>
                             </tr>
                             <tr>
                                 <td>*Apellido Paterno</td>
@@ -152,7 +153,7 @@
                             </tr>
                             <tr>
                                 <td>*Lugar de Nacimiento:</td>
-                                <td><form:input maxlength="150" path ="lugar_nacimiento" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                <td><form:input maxlength="100" path ="lugar_nacimiento" onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
                             </tr>
                             <tr>
                                 <td>*Folio de Documento de Identificaci&oacute;n:</td>
@@ -317,8 +318,9 @@
                 </div>
                 <div id="datosOrganizaciones">
                     <form:form id="frmDatosOrganizaciones" modelAttribute="formatoUnicoDatosOrganizaciones" >
-                        Los datos marcados con * son Obligatorios
                         <table>
+                            <tr>Los datos marcados con * son Obligatorios<br/></tr>
+                        <tr></tr>
                             <tr>
                                 <form:input class="idDatosPersonalesOrg" type="hidden" path ="id" />
                                 <td>*Organizaci&oacute;n:</td>
@@ -331,8 +333,8 @@
                                     <a id="linkNuevoI" href="propAlInstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancyFU" >Agregar una Instancia/Proyecto Nuevo</a>
                                 </td>
                                 <td style="padding-left: 50px; text-align:right">
-                                    *Fecha de Inicio 
-                                    <form:input  type="text" require="true"  size="15" path ="fecha_inicio"  style="width:100px"/>
+                                    *Fecha de Inicio (Fecha en que el Prestante del Servicio Social inicia sus actividades) 
+                                    <form:input type="text" require="true"  size="15" path ="fecha_inicio"  style="width:100px"/>
                                 </td>
                             </tr>
                             <tr>
@@ -382,7 +384,7 @@
 
                             </tr>
                             <tr>
-                                
+
                                 <td>Para ver más informaci&oacute;n del proyecto, da clic en la lupa
                                     <!--<input type="text" id="idProyecto" />-->
                                 </td>
@@ -441,11 +443,10 @@
                 </div>
                 <div id="subirFui">
                     <h1>Sube aqu&iacute; tu formato &uacute;nico dellado como el que está a continuaci&oacute;n</h1>
-                    <img src="imagenes/fui.png" style="width:300; height:500px" alt="Formato Unico inicial"/>
+                    <img src="imagenes/fui.png" style="width:300px; height:500px" alt="Formato Unico inicial"/>
                     <form method="post" id="frmSubirFui" action="subirFui.do"  enctype="multipart/form-data">
+                        <p>Subir Formato Único:</p>
                         <input type="hidden" name ="id" id="idSubirFui" value="${idDatSubida}"/>
-<!--                        <input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>
-                        <input type='submit' value='Subir' />-->
                         ${infoDescarga}
                     </form>
                 </div>

@@ -471,8 +471,8 @@ public class FormatoUnicoController {
         modelo.addAttribute("idDatSubida", datosPersonales.getId());
         System.out.println("Antes de mostrar el status fui es:" + formatoUnico.getStatusFui());
         if (formatoUnico.getStatusFui() != null) {
-            modelo.addAttribute("infoDescarga", "<input type='file'  name ='file' value='Buscar en mi equipo'/> <br/>\n"
-                    + "                        <input type='submit' value='Subir' />");
+            modelo.addAttribute("infoDescarga", "<input type='file' id='idfile' name ='file' value='Buscar en mi equipo'/> <br/>\n"
+                    + "                        <input type='submit' id='subeFui' value='Subir' />");
         } else {
             modelo.addAttribute("infoDescarga", "<h1 style='color: #990000'>Se ha detectado que aun no descargas tu formato &uacute;nico, dicha tarea la puedes hacer en la secci&oacute; anterior. Gracias</h1>");
 
@@ -489,19 +489,24 @@ public class FormatoUnicoController {
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosPersonales.do")
     public @ResponseBody
     String modificarDatosPersonalesAlumno(@Valid FormatoUnicoDatosPersonalesBean dt, BindingResult resultado) 
-    {   
-        if(resultado.hasErrors())
-        {
-            System.out.println("#####Todo estaa mal####");
-            System.out.println("Los errores son: " + resultado.toString());
-        }
-        
+    {          
         String arrJSON = "[";
         dt.arregla();
         ArrayList<String> listaErrores = dt.Valida();
         if (!dt.isAcuerdoC()) {
             listaErrores.add("No has seleccionado la opción del Acuerdo de confidencialidad");
         }
+        
+        if(resultado.hasErrors())
+        {
+            System.out.println("#####Todo estaa mal####");
+            for(int i=0;i<resultado.getAllErrors().size();i++)
+            {
+                System.out.println("Los errores son: " + resultado.getAllErrors().get(i).getDefaultMessage());
+                listaErrores.add(resultado.getAllErrors().get(i).getDefaultMessage());
+            }
+        }
+        
         if (listaErrores.isEmpty()) {
             System.out.println("No hubo errores");
             System.out.println(dt.getId());
@@ -540,12 +545,21 @@ public class FormatoUnicoController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosContacto.do")
     public @ResponseBody
-    String modificarDatosContactoAlumno(Model modelo, FormatoUnicoDatosContactoBean dt, BindingResult resultado, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad) {
+    String modificarDatosContactoAlumno(Model modelo,@Valid FormatoUnicoDatosContactoBean dt, BindingResult resultado, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad) {
         MetodosValidacion mv = new MetodosValidacion();
         String arrJSON = "[";
         dt.arregla();
 
         ArrayList<String> listaErrores = dt.Valida();
+        if(resultado.hasErrors())
+        {
+            System.out.println("#####Todo estaa mal####");
+            for(int i=0;i<resultado.getAllErrors().size();i++)
+            {
+                System.out.println("Los errores son: " + resultado.getAllErrors().get(i).getDefaultMessage());
+                listaErrores.add(resultado.getAllErrors().get(i).getDefaultMessage());
+            }
+        }
         if (listaErrores.isEmpty()) {
             DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
             datosPersonales.setCalle(dt.getCalle());
@@ -675,11 +689,24 @@ public class FormatoUnicoController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarDatosOrganizaciones.do")
     public @ResponseBody
-    String modificarDatosOrganizaciones(FormatoUnicoDatosContactoBean dt, Date fecha_inicio, BigDecimal proyecto, BindingResult resultado) {
+    String modificarDatosOrganizaciones(FormatoUnicoDatosContactoBean dt,Date fecha_inicio, BigDecimal proyecto, BindingResult resultado) {
         System.out.println("recibí" + proyecto);
         DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
         System.out.println("Datos per" + datosPersonales.getNombre());
         System.out.println("Rec" + dt.getId());
+        
+        System.out.println("La fecha recibida es" + fecha_inicio);
+        List<FoliosPlatica> listaF = foliosPlaticaFacade.findBySpecificField("alumnoId", datosPersonales.getAlumnoId(), "equal", null, null);
+        FoliosPlatica fp = listaF.get(0);
+        Date fechaMax = new java.sql.Date(fp.getPlaticaId().getFechaMxFui().getTime());
+        if(fecha_inicio==null)
+        {
+            return "El campo Fecha de Inicio está vacío. Verificalo";
+        }
+        if (fecha_inicio.after(fechaMax)) {
+            return "El campo Fecha de Inicio sobrepasa la fecha máxima permitida con respecto a la Plática del Servicio Social. Verificalo";
+        }
+        
         List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
         FormatoUnico formatoUnico = listaFormatoUnico.get(0);
         // System.out.println("Recibí" + organizacion);
@@ -687,19 +714,13 @@ public class FormatoUnicoController {
         proyectoG.setIdProyecto(proyecto);
         formatoUnico.setIdproyecto(proyectoG);
         formatoUnico.setFechaInicio(fecha_inicio);
-        System.out.println("La fecha recibida es" + fecha_inicio);
-        List<FoliosPlatica> listaF = foliosPlaticaFacade.findBySpecificField("alumnoId", datosPersonales.getAlumnoId(), "equal", null, null);
-        FoliosPlatica fp = listaF.get(0);
-        Date fechaMax = new java.sql.Date(fp.getPlaticaId().getFechaMxFui().getTime());
-        if (fecha_inicio.after(fechaMax)) {
-            return "La fecha de inicio sobrepasa la fecha maxima permitida";
-        }
+        
         // formatoUnico.setFechaInicio(fj.getFecha_inicio());
         try {
             formatoUnicoFacade.edit(formatoUnico);
             return "Informacion Almacenada correctamente";
         } catch (Exception e) {
-            return "Hubo un Problema al Guardar tu informacion";
+            return "Hubo un Problema al Guardar tu información";
         }
 
 
@@ -842,8 +863,7 @@ public class FormatoUnicoController {
     ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
 
     @RequestMapping(value = "/subirFui.do", method = RequestMethod.POST)
-    public String save(
-            @RequestParam("file") MultipartFile file, BigDecimal id) throws IOException {
+    public String save(MultipartFile file, BigDecimal id, Model modelo) throws IOException {
         List<Documentos> listaDocumento = documentoFacade.findBySpecificField("datosPersonalesId", id, "equal", null, null);
         List<CatalogoDocumento> listaCatalogoDocumento = catalogoDocumentoFacade.findBySpecificField("tipo", "Formato_Unico", "equal", null, null);
         System.out.println("Inicia subida de info");

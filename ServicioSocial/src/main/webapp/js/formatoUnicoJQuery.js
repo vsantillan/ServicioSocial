@@ -11,7 +11,7 @@ function listo()
     $('#frmHorarios').submit(enviarHorarios);
     
     $('#cmdDescargaFui').click(cambiaStatusSubidaFui);
-    
+    $('#subeFui').click(subirFUI);
 
     $('.otraorg').click(function(event) {
         alert('ola ke ase');
@@ -36,6 +36,7 @@ function listo()
     }
 
 }
+
 function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
 {
     console.log('--IdProyactual:' + idProyActual);
@@ -243,18 +244,37 @@ function enviarHorarios()
 }
 function enviarDatosOrganizaciones()
 {
+    $('#observaciones').hide("fast");
     console.log('el id de proy que subo ' + $('#proyectos').val());
     $("form#frmDatosOrganizaciones :input").each(function() {
         prepararJSON($(this));
     });
+    $('.observacion').remove();
+    if($("input#fecha_inicio").val()===""){
+        $('#observaciones').show('slow');
+        $('#listaObservaciones').append("<li class= 'observacion'>El campo Fecha de Inicio no puede estar vacío</li>");
+    }
     console.log(alumno);
-    $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta) {
-        alert(respuesta);
+    $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta){
+        $('#observaciones').show('slow');
+        $('#listaObservaciones').append("<li class= 'observacion'>" + respuesta + "</li>");
+         
         //console.log(respuesta);
     });
 
-
     return false;
+}
+function subirFUI()
+{
+    $('#observaciones').hide("fast");
+    $('.observacion').remove();
+    if($('input#idfile').val()==="")
+    {
+        $('#observaciones').show('slow');
+        $('#listaObservaciones').append("<li class= 'observacion'>El campo Subir Formato Único está vacío.</li>");
+        return false;
+    }
+    
 }
 function prepararJSON($atributo)
 {
