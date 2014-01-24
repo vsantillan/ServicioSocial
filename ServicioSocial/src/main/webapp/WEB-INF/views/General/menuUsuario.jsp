@@ -23,11 +23,11 @@
                         <li><a href="preguntasFrecuentes.do">Preguntas Frecuentes</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Contacto</a></li>
-                <li><a href="#">Mi perfil</a></li>
+                <li><a href="contacto.do">Contacto</a></li>
+                <li><a href="panelUsuario.do">Mi perfil</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Cerrar Sesión</a></li>
+                <li><a href="cerrarSesion.do">Cerrar Sesión</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

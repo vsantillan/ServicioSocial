@@ -17,7 +17,7 @@
 <div class="nav navbar-inverse " role="navigation">
     <div class="container">
         <div class="navbar-inner">
-            <ul class="nav navbar-nav" role="navigation">
+            <ul class="nav navbar-nav " role="navigation">
                 <li class="active"><a href="index.do" >Inicio</a></li>
                 <li><a href="manualProcedimiento.do">Manual de Procedimiento</a></li>
                 <li class="dropdown">

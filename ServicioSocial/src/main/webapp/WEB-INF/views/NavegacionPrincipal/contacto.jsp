@@ -19,13 +19,18 @@
                 <!---------------------------------------------Contenido------------------------------------------->                
                 <center>
                     <h1>Contacto</h1>
-
-                    <div>${message}</div>
-                    <form:form commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do" class="MyForm" method="POST" acceptCharset="UTF-8">
+                    <div>${message}</div>  
+                    <form:form class="form-horizontal" role="form" commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do"  method="POST">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-2 control-label">Nombre:</label>
+                            <div class="col-sm-3">
+                                <form:input path="nombre" class="form-control"/>
+                            </div>
+                        </div>
                         <table>
                             <tr>
                                 <td>Nombre:</td>
-                                <td><form:input path="nombre"/><br/>
+                                <td><br/>
                                     <form:errors path="nombre" cssClass="error"/>  
 
                                 </td>
@@ -55,6 +60,7 @@
                         </table>
                     </form:form>
                 </center>
+
             </div><!--/row-->
             <%@include file="../General/footer.jsp"%>           
         </div> <!-- /container -->

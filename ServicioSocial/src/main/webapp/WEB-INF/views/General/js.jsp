@@ -29,3 +29,4 @@
 <script src="<%=request.getContextPath()%>/js/reportesBimestrales.js"></script>
 <script src="<%=request.getContextPath()%>/js/sanciones.js"></script>
 <script src="<%=request.getContextPath()%>/js/script2PlaticaEliminar.js"></script>
+
