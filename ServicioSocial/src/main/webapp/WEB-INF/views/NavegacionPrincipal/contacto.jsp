@@ -18,13 +18,16 @@
             <div class="row ">
                 <!---------------------------------------------Contenido------------------------------------------->                
                 <center>
-                    <h1>Contacto</h1>
+                    <br>
                     <div>${message}</div>  
                     <form:form class="form-horizontal" role="form" commandName="Contacto" id="Contacto" name="Contacto" action="contacto.do"  method="POST">
+                         <legend>C</legend>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-2 control-label">Nombre:</label>
                             <div class="col-sm-3">
                                 <form:input path="nombre" class="form-control"/>
+                                <br>
+                                 <legend>Nuevo Usuario</legend>
                             </div>
                         </div>
                         <table>
