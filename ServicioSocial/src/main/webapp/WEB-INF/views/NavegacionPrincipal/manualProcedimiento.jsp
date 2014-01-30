@@ -3,37 +3,63 @@
     Created on : 10-jun-2013, 11:23:45
     Author     : bustedvillain
 --%>
-
-
+<%@page import="edu.servicio.toluca.beans.ValidaSesion"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <%@ include file="../Template/headsMenuUsuario.jsp" %>
-        <%@ include file="../Template/metas.jsp" %>
-        <title>Departamento de Servicio Social</title>
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body class="background">
-        <%@ include file="../Template/banner.jsp" %>
-
-        <%-- inicio del contenido --%>
-        <jsp:include page="menuPrincipal.jsp" />
-        <div id="contenido">
-            <center>
-                <br/>
-                <h1>Manual de Procedimiento del Servicio Social</h1>
-
-                <br/><br/><br/><br/><br/><br/><br/>
+    <body>
+        <div class="container">
+               <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuPrincipal.jsp"%> 
+            <div class="row ">
+ <!---------------------------------------------Contenido------------------------------------------->                
+                <div class="jumbotron">
+                    <h1>Manual de procedimientos!</h1>
+                    <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+                </div>
+<!--
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>/span
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>/span
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>/span
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>/span
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>/span
+                <div class="col-6 col-sm-6 col-lg-4">
+                    <h2>Heading</h2>
+                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+                </div>/span-->
                 
-            </center>
-            <div style="clear:both;"></div>
-        </div>
-        <%-- fin del contenido --%>
-        <%@ include file="../Template/footer.jsp" %>
-    </body>
+ <!---------------------------------------------Fin Contenido------------------------------------------->                
+
+            </div><!--/row--> 
+            <%@include file="../General/footer.jsp"%>           
+        </div><!--/row-->
+    </div> <!-- /container -->
+    <%@include file="../General/js.jsp"%>
+</body>
 </html>
