@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.entidades;
 
+import edu.servicio.toluca.configuracion.ExpresionesRegularesErrores;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.GenericGenerator;
@@ -37,9 +39,10 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Noticias.findByFecha", query = "SELECT n FROM Noticias n WHERE n.fecha = :fecha"),
     @NamedQuery(name = "Noticias.findByDetalle", query = "SELECT n FROM Noticias n WHERE n.detalle = :detalle"),
     @NamedQuery(name = "Noticias.findByTipoServicio", query = "SELECT n FROM Noticias n WHERE n.tipoServicio = :tipoServicio")})
-public class Noticias implements Serializable {
+public class Noticias implements Serializable, ExpresionesRegularesErrores {
     @NotEmpty(message = "Escribe el Título de la Noticia")
     @Size(max = 255)
+    @Pattern(regexp = letrasNumeros, message = errorLetrasNumeros)
     @Column(name = "TITULO")
     private String titulo;
     private static final long serialVersionUID = 1L;
