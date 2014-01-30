@@ -13,9 +13,9 @@
                 <span class="glyphicon glyphicon-time"></span>: Proceso en Corrección o Revisión<br> 
                 <span class="glyphicon glyphicon-remove"></span>: Proceso no Realizado <br>
 
-            <div class="bs-sidebar hidden-print" role="complementary">
-                <ul class="nav bs-sidenav">
-                    <li class="filas" data-toggle="popover" data-placement="right" data-content="${mensajePlatica}" title="Plática">
+            <div class="bs-sidebar hidden-print panelLateral list-group" role="complementary">
+                <ul class="nav bs-sidenav ">
+                    <li class="filas borde" data-toggle="popover" data-placement="right" data-content="${mensajePlatica}" title="Plática">
                         <core:choose>
                             <core:when test="${accesoPlatica}">
                                  <a data-toggle="popover" href="seleccionarPlatica.do">Pl&aacute;tica
@@ -34,7 +34,7 @@
                         </core:choose>
                                 </a>
                     </li>
-                    <li class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeFormatoUnico}" title="Formato Único"> 
+                    <li class="filas borde" data-toggle="popover" data-placement="right" data-content="${mensajeFormatoUnico}" title="Formato Único"> 
                         <core:choose>
                             <core:when test="${accesoFormatoUnico}">
                                 <a class="b" href="formatoUnicoUsuario.do">Formato Único
@@ -56,7 +56,7 @@
                         </core:choose>   
                                  </a>
                     </li>
-                    <li  class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeReportesBimestrales}" title="Reportes Bimestrales">
+                    <li  class="filas borde" data-toggle="popover" data-placement="right" data-content="${mensajeReportesBimestrales}" title="Reportes Bimestrales">
                         <core:choose>
                             <core:when test="${accesoReportesBimestrales}">
                                 <a  href="formatoReporteBimestral.do">Reportes Bimestrales
@@ -77,7 +77,7 @@
                             </core:when>
                         </core:choose> 
                       </a> </li>
-                    <li class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="Documentos Finales">
+                    <li class="filas borde" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="Documentos Finales">
                         <core:choose>
                             <core:when test="${accesoDocumentosFinales}">
                                 <a class="b" href="#">Documentos Finales
@@ -103,7 +103,7 @@
                         </core:choose> 
                       </a>
                     </li>
-                    <li class="filas" data-toggle="popover" data-placement="right" data-content="${mensajeSanciones}" title="Sanciones">
+                    <li class="filas borde" data-toggle="popover" data-placement="right" data-content="${mensajeSanciones}" title="Sanciones">
                         <a href="#">Sanciones 
                         <core:choose>
                             <core:when test="${tieneSancion}">
