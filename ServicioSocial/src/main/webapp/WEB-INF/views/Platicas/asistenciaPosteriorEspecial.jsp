@@ -34,10 +34,10 @@
                                             <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
                                                 <core:choose>
                                                     <core:when test="${idP==platicasPeriodo.id}">
-                                                        <option value="${platicasPeriodo.id}" selected="selected" ><fmt:formatDate pattern="dd-MM-yyyy"  value="${platicasPeriodo.fecha}" /></option> 
+                                                        <option value="${platicasPeriodo.id}" selected="selected" ><fmt:formatDate pattern="dd-mm-yyyy"  value="${platicasPeriodo.fecha}" /></option> 
                                                     </core:when>
                                                     <core:otherwise>
-                                                        <option value="${platicasPeriodo.id}">${platicasPeriodo.fecha}</option> 
+                                                        <option value="${platicasPeriodo.id}"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}"/></option> 
                                                     </core:otherwise>
                                                 </core:choose>                                   
                                             </core:forEach>

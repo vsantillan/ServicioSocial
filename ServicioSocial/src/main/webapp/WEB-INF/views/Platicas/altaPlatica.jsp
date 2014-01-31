@@ -26,7 +26,7 @@
 
                             <div class="form-group">
                                 <label for="fecha">Fecha </label>
-                                <form:input class="form-control" path="fecha" id="datepicker" size="15"/>
+                                
                             </div>
                             <div class="form-group">
                                 <label for="hora" >Hora </label>

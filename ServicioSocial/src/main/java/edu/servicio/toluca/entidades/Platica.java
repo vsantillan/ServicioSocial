@@ -80,14 +80,14 @@ public class Platica implements ExpresionesRegularesErrores, Serializable{
     @Column(name = "ANIO")
     private String anio;
     @Column(name = "NUMERO_ASISTENTES")
-    @Pattern(regexp = numeros, message = "El campo Número de Asistentes sólo puede contener Números")
+    //@Pattern(regexp = numeros, message = "El campo Número de Asistentes sólo puede contener Números")
     private Integer numeroAsistentes;
     @Column(name = "TIPO")
     private Short tipo;
     @Column(name = "STATUS")
     private Short status;
     @Column(name = "FECHA_MX_FUI")
-    @Pattern(regexp = fechaER, message = "El campo Fecha Máxima Formato Único tiene formato incorrecto (DD/MM/AA).")
+    //@Pattern(regexp = fechaER, message = "El campo Fecha Máxima Formato Único tiene formato incorrecto (DD/MM/AAAA).")
     @Temporal(TemporalType.DATE)
     private Date fechaMxFui;
     @Pattern(regexp = comentarios, message = "El campo Descripción sólo puede contener Letras")
