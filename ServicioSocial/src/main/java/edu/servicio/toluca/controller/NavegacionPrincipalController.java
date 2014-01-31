@@ -86,7 +86,6 @@ public class NavegacionPrincipalController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/registroOrganizaciones.do")
     public String registroOrganizaciones(Model model) {
-
         model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
         model.addAttribute("instancia", new Instancia());
         model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
