@@ -9,8 +9,8 @@
 <script src="<%=request.getContextPath()%>/js/jquery.dataTables.js"></script>
 <script src="<%=request.getContextPath()%>/js/DT_bootstrap.js"></script>
 <script src="<%=request.getContextPath()%>/js/utilerias.js"></script>
-<script src="<%=request.getContextPath()%>/js/datepicker.js"></script>
-<script src="<%=request.getContextPath()%>/js/datepicker-es.js"></script>
+<script src="<%=request.getContextPath()%>/js/dataPickers.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.es.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/actualizaOrganizaciones.js"></script>
 <script src="<%=request.getContextPath()%>/js/actualizaPlatica.js"></script>

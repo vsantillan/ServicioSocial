@@ -21,7 +21,7 @@
                 <%@include file="../General/menuAdministrador.jsp"%> 
                 <div class="row">
                     <%-- inicio del contenido --%>
-                    <div class="col-md-4 col-md-offset-4">
+                    <div class="col-md-6 col-md-offset-3">
                         <%-- Formulario Nueva Noticia --%>
                         <h1>Alta de Noticia</h1>
                         <form:form class="form-horizontal" role="form" commandName="Noticias" id="Noticias" name="Noticias" action="altaNoticia.do"   method="POST" >
@@ -62,8 +62,8 @@
                             <form:errors path="id" cssClass="error"/> 
                             
                             <div class="control-group">
-                            <input type ="submit" value = "Guardar " />
-                            <input type ="reset" value = "Limpiar" />
+                            <input class="btn btn-primary" type ="submit" value = "Guardar " />
+                            <input class="btn btn-primary" type ="reset" value = "Limpiar" />
                             </div>
 
                         </form:form>
