@@ -1,4 +1,4 @@
-<%@include file="General/jstl.jsp"%>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
