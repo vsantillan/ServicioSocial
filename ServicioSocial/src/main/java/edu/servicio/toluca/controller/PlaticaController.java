@@ -367,13 +367,13 @@ public class PlaticaController {
             List<VistaAlumno> listaAlumno = VistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
             if (listaAlumno.isEmpty()) {
                 modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
-                modelo.addAttribute("error", "<div class='error'>Numero de control no encontrado</div>");
+                modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control no encontrado</p>");
                 return "/Platicas/asistenciaPosteriorEspecial";
             } else {
                 VistaAlumno porcentaje = listaAlumno.get(0);
                 if (Float.parseFloat(porcentaje.getPorcentaje()) < 70) {
                     modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
-                    modelo.addAttribute("error", "<div class='error'>El alumno no cuenta con los creditos suficientes</div>");
+                    modelo.addAttribute("error", "<p class='alert alert-danger'>El alumno no cuenta con los creditos suficientes</p>");
                     return "/Platicas/asistenciaPosteriorEspecial";
                 } else {
                     VistaAlumno alumnoRegistrado1 = new VistaAlumno();
@@ -429,7 +429,7 @@ public class PlaticaController {
             }
         } else {
             modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
-            modelo.addAttribute("error", "<div class='error'>Numero de control incorrecto</div>");
+            modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control incorrecto</p>");
             return "/Platicas/asistenciaPosteriorEspecial";
         }
 

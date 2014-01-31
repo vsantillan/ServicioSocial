@@ -4,77 +4,71 @@
     Author     : mary
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="../Template/taglibs.jsp" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-
-        <link rel="stylesheet" href="css/platicasEstiloFormularioformly.css" type="text/css" />
-
-
-        <script type="text/javascript" src="js/platicasEstiloFormularioformly.js"></script>
-
-        <script>
-
-            $(document).ready(function() {
-
-                $('#casistenciaespecial').formly();
-            });
-        </script>
-        <title>Capturar Asistencia Especial Posterior</title>
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body class="background">
-        <jsp:include page="../Template/banner.jsp" />
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;">
-                <center><h2>Capturar Asistencia Especial Posterior</h2></center> 
-                    <c:choose>
-                     <c:when test="${empty platicasPeriodo}">
-                        <div class='error'>No hay platicas activas</div>
-                    </c:when>
-                    <c:otherwise>                         
-                        <center> ${error}
-                            <form:form name="casistenciaespecial" id="casistenciaespecial" action="capturarAsistenciaPosteriorEspecial.do" method="Post">
-                                <table>
-                                    <tr>
-                                        <td><label><fmt:message key="select_platica"/></label></td>
-                                        <td>
-                                            <select name="idPlatica" id="idPlatica">
-                                                <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
-                                                    <c:choose>
-                                                        <c:when test="${idP==platicasPeriodo.id}">
-                                                            <option value="${platicasPeriodo.id}" selected="selected" ><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <option value="${platicasPeriodo.id}"><fmt:formatDate pattern="dd/MM/yyyy" value="${platicasPeriodo.fecha}" /></option> 
-                                                        </c:otherwise>
-                                                    </c:choose>                                   
-                                                </core:forEach>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="alumno"><fmt:message key="no_control"/></label></td>
-                                        <td> <input type="text" autofocus="true"name="no_control" id="no_control" size="15" /> </td>
-                                    </tr>
-                                    <tr>
-                                        <td><button type="submit"> AsistiÃ³</button></td>
-                                        <td><button type="reset">Limpiar</button></td>
-                                    </tr>
-                                </table>
-                                <fmt:message key="datosRequeridos" />
-                            </form:form>
-                            <h3>Folio:${folio}</h3>
-                        </c:otherwise>
-                    </c:choose> 
-                </center>
-            </div>
-            <div style="clear:both;"></div>
-        </div>
-        <jsp:include page="../Template/footer.jsp" />
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%> 
+                <div class="row ">
+                    <!---------------------------------------------Contenido------------------------------------------->      
+                    <div class="col-md-6 col-md-offset-3">
+                        <center><h2>Capturar Asistencia Especial Posterior</h2></center> 
+                            
+                        ${alert}
+                        <!-- Formulario Plática Posterios -->  
+                        <core:choose>
+                            <core:when test="${empty platicasPeriodo}">
+                                <p class="bg-warning">No hay platicas activas</p>
+                            </core:when>
+                            <core:otherwise>                         
+                                <form:form name="casistenciaespecial" id="casistenciaespecial" action="capturarAsistenciaPosteriorEspecial.do" method="Post" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="seleccionaFecha">Seleccione Plática:</label>
+                                        <select class="form-control" name="idPlatica" id="idPlatica">
+                                            <core:forEach items="${platicasPeriodo}" var="platicasPeriodo" >
+                                                <core:choose>
+                                                    <core:when test="${idP==platicasPeriodo.id}">
+                                                        <option value="${platicasPeriodo.id}" selected="selected" >${platicasPeriodo.fecha}</option> 
+                                                    </core:when>
+                                                    <core:otherwise>
+                                                        <option value="${platicasPeriodo.id}">${platicasPeriodo.fecha}</option> 
+                                                    </core:otherwise>
+                                                </core:choose>                                   
+                                            </core:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="no_control">Número de Control:</label>
+                                        <input type="text" class="form-control" autofocus="true"name="no_control" id="no_control" size="15" />
+                                    </div>
+                                    ${error}
+                                    <div class="form-group">
+                                        <div class=" col-md-offset-2 col-sm-5">
+                                            <input  class="btn btn-primary" type ="reset" value = "Limpiar" />
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <input   class="btn btn-primary" type ="submit" value = "Guardar " /> 
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="losCampos">Los campos con * son obligatorios</label>
+                                    </div>
+                                </form:form>
+                                <h3>Folio:${folio}</h3>
+                            </core:otherwise>
+                        </core:choose>
+                    </div>
+                    <!---------------------------------------------Fin Contenido-------------------------------------------> 
+                </div><!--/row--> 
+                <%@include file="../General/footer.jsp"%>           
+            </div><!--/row-->
+        </div> <!-- /container -->
+        <%@include file="../General/js.jsp"%>
     </body>
 </html>
