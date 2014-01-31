@@ -17,7 +17,10 @@ public class DocumentosFinalesBean
     private int idConstanciaPago;
     private int idFormatoUnicoFinal;
     private int idReporteCalificacion;
-    private int status;
+    private int statusRF;
+    private int statusCP;
+    private int statusFUF;
+    private int statusRC;
     private String correo;
     
     public DocumentosFinalesBean()
@@ -25,7 +28,7 @@ public class DocumentosFinalesBean
         
     }
     
-    public DocumentosFinalesBean(int idDatosPer, String noControl, String nombreCompleto, int idReporteFinal, int idConstanciaPago, int idFormatoUnicoFinal, int idReporteCalificacion, int status, String correo)
+    public DocumentosFinalesBean(int idDatosPer, String noControl, String nombreCompleto, int idReporteFinal, int idConstanciaPago, int idFormatoUnicoFinal, int idReporteCalificacion, int statusRF, int statusCP, int statusFUF, int statusRC, String correo)
     {
         this.idConstanciaPago=idConstanciaPago;
         this.idDatosPer=idDatosPer;
@@ -33,7 +36,10 @@ public class DocumentosFinalesBean
         this.idReporteCalificacion=idReporteCalificacion;
         this.noControl=noControl;
         this.nombreCompleto=nombreCompleto;
-        this.status=status;
+        this.statusRF=statusRF;
+        this.statusCP=statusCP;
+        this.statusFUF=statusFUF;
+        this.statusRC=statusRC;
         this.correo=correo;
     }
 
@@ -136,20 +142,6 @@ public class DocumentosFinalesBean
     }
 
     /**
-     * @return the status
-     */
-    public int getStatus() {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    /**
      * @return the correo
      */
     public String getCorreo() {
@@ -161,6 +153,62 @@ public class DocumentosFinalesBean
      */
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    /**
+     * @return the statusRF
+     */
+    public int getStatusRF() {
+        return statusRF;
+    }
+
+    /**
+     * @param statusRF the statusRF to set
+     */
+    public void setStatusRF(int statusRF) {
+        this.statusRF = statusRF;
+    }
+
+    /**
+     * @return the statusCP
+     */
+    public int getStatusCP() {
+        return statusCP;
+    }
+
+    /**
+     * @param statusCP the statusCP to set
+     */
+    public void setStatusCP(int statusCP) {
+        this.statusCP = statusCP;
+    }
+
+    /**
+     * @return the statusFUF
+     */
+    public int getStatusFUF() {
+        return statusFUF;
+    }
+
+    /**
+     * @param statusFUF the statusFUF to set
+     */
+    public void setStatusFUF(int statusFUF) {
+        this.statusFUF = statusFUF;
+    }
+
+    /**
+     * @return the statusRC
+     */
+    public int getStatusRC() {
+        return statusRC;
+    }
+
+    /**
+     * @param statusRC the statusRC to set
+     */
+    public void setStatusRC(int statusRC) {
+        this.statusRC = statusRC;
     }
     
 }
