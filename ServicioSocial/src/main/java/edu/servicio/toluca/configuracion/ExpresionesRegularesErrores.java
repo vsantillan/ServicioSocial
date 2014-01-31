@@ -15,8 +15,9 @@ public interface ExpresionesRegularesErrores
     static final  String letras="^[A-Za-z/\\s/]+$";
     static final  String numeros="^[0-9]+$";
     static final  String letrasNumeros="^[A-Za-z0-9/\\s/]+$";
-    static final  String fecha="\\d{1,2}/\\d{1,2}/\\d\\d";
+    static final  String fechaER="\\d{1,2}/\\d{1,2}/\\d\\d";
     static final  String horas="\\d{1,2}:\\d{1,2}";
+    static final  String comentarios="^[A-Za-z/\\s/.,\"\'+*]+$";
     
     static final  String errorCorreos="Introduzca un formato de correo válido";
     static final  String errorletras="Introduzca  unicamente letras";

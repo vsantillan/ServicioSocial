@@ -29,7 +29,6 @@
     <body class="background">
         <jsp:include page="../Template/banner.jsp" />
         <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
             <div style="float:left;">
                 <center><h2>Capturar Asistencia Especial Posterior</h2></center> 
                     <c:choose>

@@ -4,6 +4,10 @@
  */
 package edu.servicio.toluca.entidades;
 
+import edu.servicio.toluca.configuracion.ExpresionesRegularesErrores;
+import static edu.servicio.toluca.configuracion.ExpresionesRegularesErrores.comentarios;
+import static edu.servicio.toluca.configuracion.ExpresionesRegularesErrores.fechaER;
+import static edu.servicio.toluca.configuracion.ExpresionesRegularesErrores.numeros;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -21,6 +25,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -49,7 +54,7 @@ import org.hibernate.validator.constraints.Email;
     @NamedQuery(name = "Platica.findByStatus", query = "SELECT p FROM Platica p WHERE p.status = :status"),
     @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui"),
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
-public class Platica implements Serializable {
+public class Platica implements ExpresionesRegularesErrores, Serializable{
     private static final long serialVersionUID = 1L;
     @GenericGenerator(name = "generator", strategy = "increment")
     @Id
@@ -64,25 +69,30 @@ public class Platica implements Serializable {
     private Date fecha;
     @Size(min=5,max = 5,message = "El campo hora no es correcto")
     @Column(name = "HORA")
+    @Pattern(regexp = horas, message = "El campo Horas tiene formato incorrecto (HH:MM).")
     private String hora;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
     @Column(name = "PERIODO")
     private String periodo;
-    @Size(max = 6)
+    @Size(min=1, max = 4, message = "El campo Año debe tener 4 números")
+    @Pattern(regexp = numeros, message = "El campo año sólo puede contener Números")
     @Column(name = "ANIO")
     private String anio;
     @Column(name = "NUMERO_ASISTENTES")
+    @Pattern(regexp = numeros, message = "El campo Número de Asistentes sólo puede contener Números")
     private Integer numeroAsistentes;
     @Column(name = "TIPO")
     private Short tipo;
     @Column(name = "STATUS")
     private Short status;
     @Column(name = "FECHA_MX_FUI")
+    @Pattern(regexp = fechaER, message = "El campo Fecha Máxima Formato Único tiene formato incorrecto (DD/MM/AA).")
     @Temporal(TemporalType.DATE)
     private Date fechaMxFui;
-    @Size(max = 400)
+    @Pattern(regexp = comentarios, message = "El campo Descripción sólo puede contener Letras")
+    @Size(min = 1, max = 100, message = "El campo Descripción no puede estar vacío")
     @Column(name = "DESCRIPCION")
     private String descripcion;
   
