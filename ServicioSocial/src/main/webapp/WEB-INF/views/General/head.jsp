@@ -14,5 +14,6 @@
 <link href="<%=request.getContextPath()%>/css/datepicker.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/fixed" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/datepicker.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/customize.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 <title>Servicio Social</title>

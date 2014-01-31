@@ -8,43 +8,8 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-
-<!--        <link rel="stylesheet" type="text/css" href="css/platicaSyntaxHighlighter.css" />
-
-
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.8.17.custom.css"/>
-
-        <link rel="stylesheet" type="text/css" href="css/jqueryUI/site.css">
-
-        <link rel="stylesheet" type="text/css" href="css/jqueryUI/dataTables.editor.css">-->
-
-<!--
-        <script type="text/javascript" src="js/platicasEstiloFormularioformly.js"></script>
-        <script type="text/javascript" src="js/platicajquery-latest.js"></script>
-
-        <script type="text/javascript" charset="utf-8" src="js/jqueryUI/datables1.9.js" ></script>
-        <script type="text/javascript" src="js/jqueryUI/KeyTable/js/KeyTable.js"></script>
-        <script type="text/javascript" src="js/jqueryUI/dataTables.editor.js"></script>
-        <script type="text/javascript" src="js/jqueryUI/TableTools.js"></script>
-        <script type="text/javascript" src="js/script2PlaticaEliminar.js"></script>-->
-<!--        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#platicas').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-
-            });
-        </script>-->
-
-
-
-        <title>Consultas y Bajas de Pláticas</title>
+        <script type="text/javascript" src="js/script2PlaticaEliminar.js"></script>
+       <title>Consultas y Bajas de Pláticas</title>
     </head>
     <body>
         <div class="container">

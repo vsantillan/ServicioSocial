@@ -4,104 +4,100 @@
     Author     : mary
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="../Template/taglibs.jsp" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />       
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <jsp:include page="../Template/headsModal.jsp" />
-        
-        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>      
+        <%@include file="../General/head.jsp"%>
         <script type="text/javascript" language="javascript" src="js/lugares.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script type="text/javascript" >
-            $(document).ready(function() {
-                $('#example').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script>
-        <title>Cat√°logo de lugares</title>
+        <title>Cat·logo de lugares</title>
     </head>
-    <body class="background">
-        <jsp:include page="../Template/banner.jsp" />
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;width:80%">
-                <h1>Administrar Lugares</h1>
-                <p>A continuaci&oacute;n se muestran los lugares dados de alta en el sistema.</p>
-                <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
-                    <thead>
-                        <tr>
-                            <th>Acci&oacute;n</th>
-                            <th>Lugar</th>                                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <core:forEach items="${lugares}" var="current">
-                            <tr class='gradeX'>
-                                <th><a href="#editarL" class="fancybox-effects-a"><img class="editLugar" ide="${current.id}" id="${current.lugar}" src="imagenes/editar.png" width="30" title="Editar Lugar"/></a>
-                                    <a href="#" class="btn-validar-org"><img class="cambiaStatusLugar" ide="${current.id}" src="imagenes/trash.png" width="30" title="Borrar Lugar"></a></th>
-                                <th><core:out value="${current.lugar}" /></th>
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%>
+                <div class="row col-md-12 center-block">
+                    <h1>Administrar Lugares</h1>
+                    <p>A continuaci&oacute;n se muestran los lugares dados de alta en el sistema.</p>
+                    <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'>
+                        <thead>
+                            <tr>
+                                <th>Acci&oacute;n</th>
+                                <th>Lugar</th>                                            
                             </tr>
-                        </core:forEach>
-                    </tbody>
-                    ${errorBlanco}
-                </table>
-                <table>
-                    <tr>
-                        <td><a href="#nuevoL" class="fancybox-effects-a" id="nuevoLB"><img id="nuevoLB" src="imagenes/agregar.jpg" title="Agregar Lugar" width="30"/></a></td>
-                    </tr>
-                </table>
-                <div id="nuevoL" style="display:none">
-                    <%-- Formulario Nueva lugar para platica de inducci√≥n --%>
-                    <h1>Agregar un Lugar</h1>
-                    <p>Escriba la descripcion del lugar.</p>
-                    <form:form commandName="lugar_i" id="nuevoLugar" action="nuevoLugar.do" method="POST">
-                                <table>
-                                    <tr>
-                                        <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:input id="lugar" class="lugares" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
-                                    </tr>
-                                    <tr> 
-                                        <td> <input type ="submit" value = "Guardar " /> </td>
-                                    </tr>
-                                </table>
-                    </form:form>
+                        </thead>
+                        <tbody>
+                            <core:forEach items="${lugares}" var="current">
+                                <tr class='gradeX'>
+                                    <th><a href="#editarL" data-toggle="modal"><span class="glyphicon glyphicon-edit editLugar sizeIcon" ide="${current.id}" id="${current.lugar}" title="Editar Lugar"></span></a>
+                                        <a href="#" class="btn-validar-org"><span class="glyphicon glyphicon-trash cambiaStatusLugar sizeIcon" ide="${current.id}"  title="Borrar Lugar"></span></a></th>
+                                    <th><core:out value="${current.lugar}" /></th>
+                                </tr>
+                            </core:forEach>
+                        </tbody>
+                        ${errorBlanco}
+                    </table>
+                    <table>
+                        <tr>
+                            <td><a href="#nuevoL" role="button" data-toggle="modal" id="nuevoLB"><button class="btn btn-primary glyphicon glyphicon-plus" id="nuevoLB" title="Agregar Lugar" > Agregar Lugar</button></a></td>
+                        </tr>
+                    </table>
+                    </br>
                 </div>
-                <div id="editarL" style="display:none">
-                    <%-- Formulario editar lugar para platica de inducci√≥n --%>
-                    <h1>Editar un Lugar</h1>
-                    <p>Escriba la descripcion del lugar.</p>
-                    <form:form commandName="lugar_i" id="editarLugar" action="editarLugar.do" method="POST">
-                                <table>
-                                     <form:input hidden="hidden" id="id" name="name" path="id" />
-                                    <tr>
-                                        <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
-                                        <td>  <form:input id="lugar_s" class="lugares"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
-                                    </tr>
-                                    <tr> 
-                                        <td> <input id="envioB" type ="submit" value = "Guardar " /> </td>
-                                    </tr>
-                                </table>
-                    </form:form>
-                </div>
-
-                <%-- fin del contenido --%>
+                <%@include file="../General/footer.jsp"%> 
             </div>
-            <div style="clear:both;"></div> 
         </div>
-        <%-- fin del contenido --%>
-        <jsp:include page="../Template/footer.jsp" />
+        <div id="nuevoL" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <%-- Formulario Nueva lugar para platica de inducciÛn --%>
+                        <h1>Agregar un Lugar</h1>
+                        <p>Escriba la descripcion del lugar.</p>
+                    </div>
+                    <div class="modal-body">
+                        <form:form commandName="lugar_i" id="nuevoLugar" action="nuevoLugar.do" method="POST">
+                            <table>
+                                <tr>
+                                    <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
+                                    <td>  <form:input id="lugar" class="lugares" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                </tr>
+                                <tr> 
+                                    <td> <input type ="submit" value = "Guardar " /> </td>
+                                </tr>
+                            </table>
+                        </form:form>
+                    </div>
+                    <div class="modal-footer">Instituto Tecnologico de Toluca</div>
+                </div>
+        </div>
+        <div id="editarL" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <%-- Formulario editar lugar para platica de inducciÛn --%>
+                        <h1>Editar un Lugar</h1>
+                        <p>Escriba la descripcion del lugar.</p>
+                    </div>
+                    <div class="modal-body">
+                        <form:form commandName="lugar_i" id="editarLugar" action="editarLugar.do" method="POST">
+                            <table>
+                                <form:input hidden="hidden" id="id" name="name" path="id" />
+                                <tr>
+                                    <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
+                                    <td>  <form:input id="lugar_s" class="lugares"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
+                                </tr>
+                                <tr> 
+                                    <td> <input id="envioB" type ="submit" value = "Guardar " /> </td>
+                                </tr>
+                            </table>
+                        </form:form>
+                    </div>
+                    <div class="modal-footer">Instituto Tecnologico de Toluca</div>
+                </div>
+            </div>
+            <%@include file="../General/js.jsp"%>
     </body>
 </html>
