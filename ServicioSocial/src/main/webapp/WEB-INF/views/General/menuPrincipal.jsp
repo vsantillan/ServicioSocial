@@ -57,7 +57,7 @@
                 <%}%>
                 <% if (sesion.accesaPanelAdministrador()) {%>
                 <li><a href="panelAdministrador.do">Panel Administrador</a></li>
-            </ul>
+            
             <%}%>
                 <li><a href="cerrarSesion.do">Cerrar Sesi&oacute;n</a></li>
 
