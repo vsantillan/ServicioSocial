@@ -54,6 +54,7 @@ public class NavegacionPrincipalController {
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model modelo) {
         ConsultasNoticias noticiasBean = new ConsultasNoticias(noticiasFacade);
+        System.out.println("Noticias Size: "+noticiasBean.consultaNoticiasPrincipales("asc").size());
         modelo.addAttribute("Noticias", noticiasBean.consultaNoticiasPrincipales("asc"));
         return "/NavegacionPrincipal/index";
     }
