@@ -59,7 +59,6 @@
                                     <th>Reporte Final</th>
                                     <th>Constancia de Pago</th>
                                     <th>Reporte de Evaluaci&oacute;n</th>
-                                    <th>Acción</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,30 +67,83 @@
                                         <th><core:out value="${alumno.noControl}" /></th>
                                         <th><core:out value="${alumno.nombreCompleto}" /></th>
                                         <th>
-                                            <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                            <a href="#"><img class="aceptarDocumentos" ide="${alumno.noControl}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                            <core:choose>
+                                                <core:when test="${alumno.statusFUF==4}">
+                                                    <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                    <a href="#"><img class="aceptarDocumentos" ide="${alumno.idFormatoUnicoFinal}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
+                                                    <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                                    </core:when>
+                                                    <core:when test="${alumno.statusFUF==1}">
+                                                    <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                    </core:when>
+                                                    <core:when test="${alumno.statusFUF==2}">
+                                                        <core:out value="Se encuentra en corrección por parte del alumno"/>
+                                                    </core:when>
+                                                    <core:otherwise>
+                                                        <core:out value="Sin documento"/>
+                                                    </core:otherwise>
+                                                </core:choose>
                                         </th>
                                         <th>
-                                            <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                            <a href="#"><img class="aceptarDocumentos" ide="${alumno.noControl}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                            <core:choose>
+                                                <core:when test="${alumno.statusRF==4}">
+                                                    <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                    <a href="#"><img class="aceptarDocumentos" ide="${alumno.idReporteFinal}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
+                                                    <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                                    </core:when>
+                                                    <core:when test="${alumno.statusRF==1}">
+                                                    <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                    </core:when>
+                                                    <core:when test="${alumno.statusRF==2}">
+                                                        <core:out value="Se encuentra en corrección por parte del alumno"/>
+                                                    </core:when>
+                                                    <core:otherwise>
+                                                        <core:out value="Sin documento"/>
+                                                    </core:otherwise>
+                                                </core:choose>
                                         </th>
-                                        <th><a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
+                                        <th>
+                                            <core:choose>
+                                                <core:when test="${alumno.statusCP==4}">
+                                                    <a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                    <a href="#"><img class="aceptarDocumentos" ide="${alumno.idConstanciaPago}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
+                                                    <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                                    </core:when>
+                                                    <core:when test="${alumno.statusCP==1}">
+                                                        <a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                    </core:when>
+                                                    <core:when test="${alumno.statusCP==2}">
+                                                        <core:out value="Se encuentra en corrección por parte del alumno"/>
+                                                    </core:when>
+                                                    <core:otherwise>
+                                                        <core:out value="Sin documento"/>
+                                                    </core:otherwise>
+                                                </core:choose>
+                                        </th>
                                         <th>
                                             <core:choose>
                                                 <core:when test="${alumno.idReporteCalificacion==0}">
                                                     <core:out value="Alumno con Retícula 2004"/>
                                                 </core:when>
                                                 <core:otherwise>
-                                                    <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
-                                                </core:otherwise>
-                                            </core:choose>
-                                            <a href="#"><img class="aceptarDocumentos" ide="${alumno.noControl}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
-                                        <th>
-                                            <a href="#"><img class="aceptarDocumentos" ide="${alumno.noControl}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                            <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${0}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                                    <core:choose>
+                                                        <core:when test="${alumno.statusRC==4}">
+                                                                <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                                <a href="#"><img class="aceptarDocumentos" ide="${alumno.idReporteCalificacion}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
+                                                                <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
+                                                            </core:when>
+                                                            <core:when test="${alumno.statusRC==1}">
+                                                                <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                            </core:when>
+                                                            <core:when test="${alumno.statusRC==2}">
+                                                                <core:out value="Se encuentra en corrección por parte del alumno"/>
+                                                            </core:when>
+                                                            <core:otherwise>
+                                                                <core:out value="Sin documento"/>
+                                                            </core:otherwise>
+                                                        </core:choose>
+                                                    </core:otherwise>
+                                                </core:choose>
                                         </th>
                                     </tr>
                                 </core:forEach>
@@ -112,7 +164,7 @@
                 <table >
                     <tr>
                         <td>Nombre de la Organizaci&oacute;n:
-                            <form:hidden id="status" nombre="status" path="status" size="20"/><br/>
+
                             <form:hidden id="idAlumno" path="idAlumno" name="idAlumno" size="20"/>
                             <form:hidden id="idFUF" path="idFUF" name="idFUF" size="20"/>
                             <form:hidden id="idCP" path="idCP" name="idCP" size="20"/>
@@ -133,7 +185,7 @@
                     </tr>
                     <tr>
                         <td>
-                            
+
                         </td>
                         <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n" class="enviarRetroalimentacion"> </td>
                     </tr>

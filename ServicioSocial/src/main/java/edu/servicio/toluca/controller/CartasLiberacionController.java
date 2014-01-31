@@ -4,8 +4,16 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.CartasLiberacionBean;
+import edu.servicio.toluca.beans.DocumentosFinalesBean;
+import edu.servicio.toluca.beans.documentosFinales.RetroalimentacionDocumentosFinales;
+import edu.servicio.toluca.entidades.Documentos;
+import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
+import edu.servicio.toluca.sesion.FormatoUnicoFacade;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +29,49 @@ public class CartasLiberacionController
 {
     @EJB(mappedName = "java:global/ServicioSocial/DocumentosFacade")
     private DocumentosFacade documentosFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
+    private FormatoUnicoFacade formatoUnicoFacade;
     
     @RequestMapping(method = RequestMethod.GET, value = "/alumnosCartasLiberacion.do")
     public String alumnosCartasLiberacion(Model modelo) 
     {
-        modelo.addAttribute("cartaDocumento", documentosFacade.findAll());
-        return "/CartasLiberacion/alumnosCartasLiberacion";
+        List<Documentos> listaDocum; boolean siCP=false, siFUF=false, siRF=false, siRE=false;
+        List<CartasLiberacionBean> listAlumnos=new ArrayList<CartasLiberacionBean>();
+        List<FormatoUnico> fu = formatoUnicoFacade.findAll();
+        for (int i = 0; i < fu.size(); i++) {
+            if (fu.get(i).getHorasAcumuladas().intValue() >= 480) {
+                listaDocum = documentosFacade.findBySpecificField("datosPersonalesId", fu.get(i).getDatosPersonalesId(), "equal", null, null);
+                System.out.println("No Control: " + fu.get(i).getDatosPersonalesId().getAlumnoId().getId());
+                System.out.println("Nombre: " + fu.get(i).getDatosPersonalesId().getNombre());
+                for (int j = 0; j < listaDocum.size(); j++) {
+                    if ("Constancia_Pago".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()) && listaDocum.get(j).getStatus().intValue()==1) {
+                        siCP=true;
+                    }
+                    if ("Reporte_Evaluacion".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()) && listaDocum.get(j).getStatus().intValue()==1) {
+                        siRE=true;
+                    }
+                    if ("Reporte_Final".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()) && listaDocum.get(j).getStatus().intValue()==1) {
+                        siRF=true;
+                    }
+                    if ("Formato_Unico_Final".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()) && listaDocum.get(j).getStatus().intValue()==1) {
+                        siFUF=true;
+                    }
+                }
+                if(siCP && siRF && siFUF)
+                {
+                    if ("S".equals(fu.get(i).getCatalogoPlanId().getDetalle()))
+                    {
+                        if(siRE){
+                            listAlumnos.add(null);
+                        }
+                    }else if ("N".equals(fu.get(i).getCatalogoPlanId().getDetalle()))
+                    {
+                        listAlumnos.add(null);
+                    }
+                }
+            }
+        }
+        return "/DocumentosFinales/administrarDocumentosFinales";
     }
+    
 }

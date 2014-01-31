@@ -4,13 +4,13 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
     <head>
-        <%@include file="General/head.jsp"%>
+        <%@include file="../General/head.jsp"%>
     </head>
     <body>
         <div class="container">
                <div class="row">
-                <%@include file="General/banner.jsp"%>  
-                <%@include file="General/menuPrincipal.jsp"%> 
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuPrincipal.jsp"%> 
             <div class="row ">
  <!---------------------------------------------Contenido------------------------------------------->                
                 <div class="jumbotron">
@@ -52,9 +52,9 @@
  <!---------------------------------------------Fin Contenido------------------------------------------->                <%@include file="General/banner.jsp"%>  
 
             </div><!--/row--> 
-            <%@include file="General/footer.jsp"%>           
+            <%@include file="../General/footer.jsp"%>           
         </div><!--/row-->
     </div> <!-- /container -->
-    <%@include file="General/js.jsp"%>
+    <%@include file="../General/js.jsp"%>
 </body>
 </html>

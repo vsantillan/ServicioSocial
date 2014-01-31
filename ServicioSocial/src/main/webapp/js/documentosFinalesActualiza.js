@@ -25,12 +25,14 @@ function aceptarReporteA(e)
         var tabla = $('#NoRev').dataTable();
         $.post("aceptarDocumentos.do", {id: idUpdate,status:idStatus}, function(response) 
         {
-            tabla.fnDeleteRow(row);
-            $("#div-aceptar-reporte").show('slow');
-            setTimeout(function() 
-            {
-                $("#div-aceptar-reporte").hide('slow');
-            }, 3000);
+//            tabla.fnDeleteRow(row);
+//            $("#div-aceptar-reporte").show('slow');
+//            setTimeout(function() 
+//            {
+//                $("#div-aceptar-reporte").hide('slow');
+//            }, 3000);
+            window.location.reload();
+            location.reload();
         });
     }
     

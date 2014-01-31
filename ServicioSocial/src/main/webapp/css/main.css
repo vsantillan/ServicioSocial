@@ -34,10 +34,13 @@
           color:#333;
           background: #fff;
           font-size:13px;
+          border-color:#f1a244;
       }
       .lateral-menu
       {
-         background:#f7f5f4; 
+         background:#f7f5f4;
+         color:#333;
+          
       }
       .derecha{
           text-align:right;
@@ -52,5 +55,19 @@
             background:#f7f5f4;
             border-color:  #f1a244;
             border-width: 1px;  
+      }
+      .panelLateral{
+          color:#fff;
+          background:#fff;
+          font-size:16px;
+          
+      }
+      .borde{
+          border-width: 1px;
+          border-radius: 3px;
+          border-style: solid;
+          border-bottom-color:#428bca;
+         
+          
       }
       

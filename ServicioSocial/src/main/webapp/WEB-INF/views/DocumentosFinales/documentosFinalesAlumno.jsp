@@ -31,6 +31,7 @@
         <div id="contenido">
             <div id="tabs">
                 <h1>Documentos Finales</h1>
+                ${error}
                 <core:choose>
                     <core:when test="${planAlumno=='S'}">
                         <form method="post" id="frmSubirCartaMotivos" action="guardarDocumentosFinales.do"  enctype="multipart/form-data">
@@ -46,34 +47,14 @@
                                         <input name ="no_control" id="no_control" value="${no_control}" disabled="disabled"/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Formato Unico Final</td>
-                                    <td>
-                                        <input type='file'  name ='fileFUF' value='Buscar en mi equipo'/> <br/>
-                                        ${error_fuf}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Constancia de Pago</td>
-                                    <td>
-                                        <input type='file'  name ='fileCP' value='Buscar en mi equipo'/> <br/>
-                                        ${error_cp}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Reporte Final</td>
-                                    <td>
-                                        <input type='file'  name ='fileRF' value='Buscar en mi equipo'/> <br/>
-                                        ${error_fr}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Reporte de Evaluación</td>
-                                    <td>
-                                        <input type='file'  name ='fileRE' value='Buscar en mi equipo'/> <br/>
-                                        ${error_fe}
-                                    </td>
-                                </tr>
+                                ${muestraRF}
+                                ${error_fr}
+                                ${muestraCP}
+                                ${error_cp}
+                                ${muestraFUF}
+                                ${error_fuf}
+                                ${muestraRE}
+                                ${error_fe}
                                 <tr>
                                     <td></td>
                                     <td><input type='submit' value='Subir' /></td>
@@ -82,7 +63,7 @@
                         </form>
                     </core:when>
                     <core:when test="${planAlumno=='N'}">
-                        <form method="post" id="frmSubirCartaMotivos" action="guardarDocumentosFinales.do"  enctype="multipart/form-data">
+                        <form method="post" id="frmSubirCartaMotivos" action="guardarDocumentosFinalesAux.do"  enctype="multipart/form-data">
                             <table>
                                 <tr>
                                     <td colspan="2">
@@ -93,29 +74,15 @@
                                     <td>No. de Control</td>
                                     <td>
                                         <input name ="no_control" id="no_control" value="${no_control}" disabled="disabled"/>
+                                        <form:hidden  name ="no_control" path="no_control" value="${no_control}" size="20"/>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>Formato Unico Final</td>
-                                    <td>
-                                        <input type='file'  name ='fileFUF' value='Buscar en mi equipo'/> <br/>
-                                        ${error_fuf}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Constancia de Pago</td>
-                                    <td>
-                                        <input type='file'  name ='fileCP' value='Buscar en mi equipo'/> <br/>
-                                        ${error_cp}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Reporte Final</td>
-                                    <td>
-                                        <input type='file'  name ='fileRF' value='Buscar en mi equipo'/> <br/>
-                                        ${error_fr}
-                                    </td>
-                                </tr>
+                                ${muestraRF}
+                                ${error_fr}
+                                ${muestraCP}
+                                ${error_cp}
+                                ${muestraFUF}
+                                ${error_fuf}
                                 <tr>
                                     <td></td>
                                     <td><input type='submit' value='Subir' /></td>
