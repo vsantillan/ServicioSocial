@@ -138,11 +138,10 @@ public class PlaticaController {
     public String capturarAsistencia(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaRegistro(session, request))
                 || (new ValidaSesion().validaAdmin(session, request)))) {
-<<<<<<< HEAD
-            modelo.addAttribute("error", "<div class=''alert alert-danger''>Debes iniciar sesión para acceder a esta sección.</div>");
-=======
+
+
             modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
->>>>>>> 08d8cd7bff2ffbb6740f6a2a0616a62a6c40a851
+
             return "redirect:login.do";
         }
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
@@ -371,13 +370,13 @@ public class PlaticaController {
             List<VistaAlumno> listaAlumno = VistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
             if (listaAlumno.isEmpty()) {
                 modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
-                modelo.addAttribute("error", "<p class=''alert alert-danger''>Numero de control no encontrado</p>");
+                modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control no encontrado</p>");
                 return "/Platicas/asistenciaPosteriorEspecial";
             } else {
                 VistaAlumno porcentaje = listaAlumno.get(0);
                 if (Float.parseFloat(porcentaje.getPorcentaje()) < 70) {
                     modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
-                    modelo.addAttribute("error", "<p class=''alert alert-danger''>El alumno no cuenta con los creditos suficientes</p>");
+                    modelo.addAttribute("error", "<p class='alert alert-danger'>El alumno no cuenta con los creditos suficientes</p>");
                     return "/Platicas/asistenciaPosteriorEspecial";
                 } else {
                     VistaAlumno alumnoRegistrado1 = new VistaAlumno();
@@ -433,7 +432,7 @@ public class PlaticaController {
             }
         } else {
             modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
-            modelo.addAttribute("error", "<p class=''alert alert-danger''>Numero de control incorrecto</p>");
+            modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control incorrecto</p>");
             return "/Platicas/asistenciaPosteriorEspecial";
         }
 

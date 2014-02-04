@@ -23,7 +23,7 @@ function alterLugar(e)
 
 function updateLugar(e)
 {
-    if (confirm('&iquest;Seguro que desea eliminar el lugar?'))
+    if (confirm('\u00BFSeguro que desea eliminar el lugar?'))
     {
         var row = $(this).parents('tr')[0];
         var idUpdate = $(e.target).attr('ide');
