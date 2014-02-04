@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.entidades;
 
+import edu.servicio.toluca.configuracion.CatalogoErrores;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -28,7 +29,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
-import edu.servicio.toluca.configuracion.ExpresionesRegularesErrores;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -53,7 +54,7 @@ import javax.validation.constraints.Pattern;
     @NamedQuery(name = "Instancia.findByUsuario", query = "SELECT i FROM Instancia i WHERE i.usuario = :usuario"),
     @NamedQuery(name = "Instancia.findByPassword", query = "SELECT i FROM Instancia i WHERE i.password = :password"),
     @NamedQuery(name = "Instancia.findByCorreo", query = "SELECT i FROM Instancia i WHERE i.correo = :correo")})
-public class Instancia  implements Serializable, ExpresionesRegularesErrores  {
+public class Instancia  implements Serializable, ExpresionesRegulares,CatalogoErrores  {
       
     @Size(max = 7)
     @Column(name = "EXT")

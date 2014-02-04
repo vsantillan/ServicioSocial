@@ -4,7 +4,8 @@
  */
 package edu.servicio.toluca.entidades;
 
-import edu.servicio.toluca.configuracion.ExpresionesRegularesErrores;
+import edu.servicio.toluca.configuracion.CatalogoErrores;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -39,7 +40,7 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Noticias.findByFecha", query = "SELECT n FROM Noticias n WHERE n.fecha = :fecha"),
     @NamedQuery(name = "Noticias.findByDetalle", query = "SELECT n FROM Noticias n WHERE n.detalle = :detalle"),
     @NamedQuery(name = "Noticias.findByTipoServicio", query = "SELECT n FROM Noticias n WHERE n.tipoServicio = :tipoServicio")})
-public class Noticias implements Serializable, ExpresionesRegularesErrores {
+public class Noticias implements Serializable, ExpresionesRegulares, CatalogoErrores {
     @NotEmpty(message = "Escribe el Título de la Noticia")
     @Size(max = 255)
     @Pattern(regexp = letrasNumeros, message = errorLetrasNumeros)
@@ -47,7 +48,6 @@ public class Noticias implements Serializable, ExpresionesRegularesErrores {
     private String titulo;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
- 
     @GenericGenerator(name = "noticiasG", strategy = "increment")
     @Id
     @GeneratedValue(generator="noticiasG")

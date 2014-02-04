@@ -11,6 +11,7 @@
                <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuPrincipal.jsp"%> 
+               </div>
             <div class="row ">
  <!---------------------------------------------Contenido------------------------------------------->                
                 <div class="jumbotron">
@@ -49,7 +50,7 @@
                     <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
                 </div><!--/span-->
                 
- <!---------------------------------------------Fin Contenido------------------------------------------->                <%@include file="General/banner.jsp"%>  
+ <!---------------------------------------------Fin Contenido------------------------------------------->                
 
             </div><!--/row--> 
             <%@include file="../General/footer.jsp"%>           

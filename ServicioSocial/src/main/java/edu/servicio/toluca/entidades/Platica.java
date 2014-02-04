@@ -4,10 +4,10 @@
  */
 package edu.servicio.toluca.entidades;
 
-import edu.servicio.toluca.configuracion.ExpresionesRegularesErrores;
-import static edu.servicio.toluca.configuracion.ExpresionesRegularesErrores.comentarios;
-import static edu.servicio.toluca.configuracion.ExpresionesRegularesErrores.fechaER;
-import static edu.servicio.toluca.configuracion.ExpresionesRegularesErrores.numeros;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
+import static edu.servicio.toluca.configuracion.ExpresionesRegulares.comentarios;
+import static edu.servicio.toluca.configuracion.ExpresionesRegulares.fechaER;
+import static edu.servicio.toluca.configuracion.ExpresionesRegulares.numeros;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -53,7 +53,7 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "Platica.findByStatus", query = "SELECT p FROM Platica p WHERE p.status = :status"),
     @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui"),
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
-public class Platica implements ExpresionesRegularesErrores, Serializable{
+public class Platica implements ExpresionesRegulares, Serializable{
     private static final long serialVersionUID = 1L;
     @GenericGenerator(name = "generator", strategy = "increment")
     @Id

@@ -16,6 +16,7 @@
                <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuPrincipal.jsp"%> 
+               </div>
             <div class="row ">
  <!---------------------------------------------Contenido------------------------------------------->                
                 <div class="jumbotron">
