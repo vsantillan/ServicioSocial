@@ -79,7 +79,7 @@ public class PlaticaController {
     public String altaPlatica(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaRegistro(session, request))
                 || (new ValidaSesion().validaAdmin(session, request)))) {
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         Fecha anio = new Fecha();
@@ -113,7 +113,7 @@ public class PlaticaController {
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }
-        //  modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+        //  modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
 
 
         // return "/Platicas/folio";
@@ -124,7 +124,7 @@ public class PlaticaController {
     public String consultasBajas(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaRegistro(session, request))
                 || (new ValidaSesion().validaAdmin(session, request)))) {
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         LinkedHashMap ordenarDesc = new LinkedHashMap();
@@ -138,7 +138,7 @@ public class PlaticaController {
     public String capturarAsistencia(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaRegistro(session, request))
                 || (new ValidaSesion().validaAdmin(session, request)))) {
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
@@ -153,7 +153,7 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.GET, value = "/asistenciaPosteriorEspecial.do")
     public String AsistenciaPosteriorEspecial(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaAdmin(session, request)))) {
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
@@ -163,7 +163,7 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.GET, value = "/seleccionarPlatica.do")
     public String seleccionarPlatica(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(new ValidaSesion().validaAlumno(session, request))) {
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
@@ -202,7 +202,7 @@ public class PlaticaController {
                         modelo.addAttribute("anioFin", anio.anioFin());
                         modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-                        modelo.addAttribute("errorHora", "<div class='error'>La hora no es valida</div>");
+                        modelo.addAttribute("errorHora", "<div class='alert alert-danger'>La hora no es valida</div>");
                         return "/Platicas/altaPlatica";
                     } else {
                         platica.setStatus((short) 1);
@@ -227,7 +227,7 @@ public class PlaticaController {
                             modelo.addAttribute("anioFin", anio.anioFin());
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-                            modelo.addAttribute("exito", "<div class='error'> LA PLÁTICA YA EXISTE</div>");
+                            modelo.addAttribute("exito", "<div class='alert alert-danger'> LA PLÁTICA YA EXISTE</div>");
                             System.out.println("ya existia");
                             return "/Platicas/altaPlatica";
                         } else {
@@ -249,7 +249,7 @@ public class PlaticaController {
                     modelo.addAttribute("anioFin", anio.anioFin());
                     modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                     modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
-                    modelo.addAttribute("errorFm", "<div class='error'>La fecha de platica debe ser menor a la de Formato unico</div>");
+                    modelo.addAttribute("errorFm", "<div class='alert alert-danger'>La fecha de platica debe ser menor a la de Formato unico</div>");
                     return "/Platicas/altaPlatica";
                 }
             }
@@ -302,7 +302,7 @@ public class PlaticaController {
         } else {
             modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
             modelo.addAttribute("platica", new Platica());
-            modelo.addAttribute("existe", "<div class='error'>Ya te has registrado a esta platica anteriormente</div>");
+            modelo.addAttribute("existe", "<div class='alert alert-danger'>Ya te has registrado a esta platica anteriormente</div>");
             return "/Platicas/seleccionarPlatica";
         }
     }
@@ -329,7 +329,7 @@ public class PlaticaController {
                 return "/Platicas/capturarAsistencia2";
             } else {
                 modelo.addAttribute("foliosPlatica", new FoliosPlatica());
-                modelo.addAttribute("existe", "<div class='error'>No existe numero de folio</div>");
+                modelo.addAttribute("existe", "<div class='alert alert-danger'>No existe numero de folio</div>");
                 return "/Platicas/capturarAsistencia";
             }
         }
@@ -353,7 +353,7 @@ public class PlaticaController {
                 return "/Platicas/capturarAsistencia";
             } else {
                 modelo.addAttribute("foliosPlatica", new FoliosPlatica());
-                modelo.addAttribute("existe", "<div class='error'>No existe numero de folio</div>");
+                modelo.addAttribute("existe", "<div class='alert alert-danger'>No existe numero de folio</div>");
                 return "/Platicas/capturarAsistencia";
             }
         }

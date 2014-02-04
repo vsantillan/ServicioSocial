@@ -31,7 +31,7 @@
                         <h3 class="titulos-naranja">Noticias Generales</h3>
                         <!---------------------------------------Contenido Noticias Generales-------------------> 
                         <core:forEach items="${noticiasAlumnos}" var="noticia">
-                            <li class="error"><b>${noticia.fecha}</b>: ${noticia.detalle}</li>
+                            <li ><b>${noticia.fecha}</b>: ${noticia.detalle}</li>
                                 </core:forEach>
                         <!---------------------------------------Fin Contenido Noticias Generales------------------->
                     </div>          
@@ -46,7 +46,7 @@
                         <h3 class="titulos-naranja">Observaciones</h3>
                         <!---------------------------------------Contenido Observaciones----------------------------->
                         <core:forEach items="${observaciones}" var="observacion">
-                            <li class="error"><b>${observacion.fecha}</b>: ${observacion.catalogoObservacionId.detalle}</li>
+                            <li ><b>${observacion.fecha}</b>: ${observacion.catalogoObservacionId.detalle}</li>
                                 </core:forEach>
                         <!---------------------------------------Fin Contenido Observaciones------------------->
                     </div>
@@ -56,10 +56,10 @@
                         <core:forEach items="${sanciones}" var="sancion">
                             <core:choose>
                                 <core:when  test="${sancion.concepto==0}">
-                                    <li class="error"><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
+                                    <li ><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
                                         </core:when>    
                                         <core:when  test="${sancion.concepto==1}">
-                                    <li class="success"><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
+                                    <li ><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
                                         </core:when> 
                                     </core:choose> 
                                 </core:forEach>
