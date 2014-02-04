@@ -16,27 +16,26 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
-                <center><h3>Capturar Asistencia</h3></center>
-
-           
-                    ${existe}
-                    <form:form  name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="foliosPlatica">
-                        <center>
-                            <table >
-                                <tr>
-                                    <td><label for="alumno">Número de Folio</label></td>
-                                    <td><form:input type="text" path="numeroFolio" size="25" name="numeroFolio" /></td>
-                                </tr>
-
-                                <tr>
-                                    <td><button type="submit" class="btn btn-primary">Enviar</button></td>  
-                                </tr>
-
-                            </table>
-                            <form:errors path="numeroFolio" cssClass="error"/>
-                        </center>
-                    </form:form>
-                    <image src="${foto}"/>
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-4">
+                        <center><h3>Capturar Asistencia</h3></center>
+                    
+                        <form:form  name="casistencia" id="casistencia" action="asistencia.do" method="post" commandName="foliosPlatica" class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="alumno">Número de Folio</label>
+                                <form:input class="form-control" type="text" path="numeroFolio" size="15" name="numeroFolio" />
+                            </div>
+                            <div class="form-group">
+                                <form:errors path="numeroFolio" class="alert alert-danger"/>
+                                ${existe}
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Enviar</button>
+                            </div>
+                        </form:form>
+                        <image src="${foto}"/>
+                    </div>
+                </div>
                 <%@include file="../General/footer.jsp"%> 
             </div>
         </div>

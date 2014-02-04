@@ -31,9 +31,9 @@
                         <tbody>
                             <core:forEach items="${lugares}" var="current">
                                 <tr class='gradeX'>
-                                    <th><a href="#editarL" data-toggle="modal"><span class="glyphicon glyphicon-edit editLugar sizeIcon" ide="${current.id}" id="${current.lugar}" title="Editar Lugar"></span></a>
-                                        <a href="#" class="btn-validar-org"><span class="glyphicon glyphicon-trash cambiaStatusLugar sizeIcon" ide="${current.id}"  title="Borrar Lugar"></span></a></th>
-                                    <th><core:out value="${current.lugar}" /></th>
+                                    <td><a href="#editarL" data-toggle="modal"><span class="glyphicon glyphicon-edit editLugar sizeIcon" ide="${current.id}" id="${current.lugar}" title="Editar Lugar"></span></a>
+                                        <a href="#" class="btn-validar-org"><span class="glyphicon glyphicon-trash cambiaStatusLugar sizeIcon" ide="${current.id}"  title="Borrar Lugar"></span></a></td>
+                                    <td><core:out value="${current.lugar}" /></td>
                                 </tr>
                             </core:forEach>
                         </tbody>
@@ -54,30 +54,29 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <%-- Formulario Nueva lugar para platica de inducción --%>
+                        <a data-dismiss="modal" class="close"><span class="glyphicon glyphicon-remove"></span></a>
                         <h1>Agregar un Lugar</h1>
                         <p>Escriba la descripcion del lugar.</p>
                     </div>
                     <div class="modal-body">
                         <form:form commandName="lugar_i" id="nuevoLugar" action="nuevoLugar.do" method="POST">
-                            <table>
-                                <tr>
-                                    <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
-                                    <td>  <form:input id="lugar" class="lugares" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
-                                </tr>
-                                <tr> 
-                                    <td> <input type ="submit" value = "Guardar " /> </td>
-                                </tr>
-                            </table>
+                            <div class="form-group">
+                                <p><label for="lugar">Descripci&oacute;n:</label> </p>
+                                <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> 
+                            </div>
+                            <input type ="submit" value = "Guardar " class="btn btn-primary" />
+
                         </form:form>
                     </div>
                     <div class="modal-footer">Instituto Tecnologico de Toluca</div>
                 </div>
+            </div>
         </div>
         <div id="editarL" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <%-- Formulario editar lugar para platica de inducción --%>
+                        <a data-dismiss="modal" class="close"><span class="glyphicon glyphicon-remove"></span></a>
                         <h1>Editar un Lugar</h1>
                         <p>Escriba la descripcion del lugar.</p>
                     </div>
@@ -85,19 +84,18 @@
                         <form:form commandName="lugar_i" id="editarLugar" action="editarLugar.do" method="POST">
                             <table>
                                 <form:input hidden="hidden" id="id" name="name" path="id" />
-                                <tr>
-                                    <td> <p><label for="lugar">Descripci&oacute;n:</label> </p></td>
-                                    <td>  <form:input id="lugar_s" class="lugares"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> </td>
-                                </tr>
-                                <tr> 
-                                    <td> <input id="envioB" type ="submit" value = "Guardar " /> </td>
-                                </tr>
-                            </table>
-                        </form:form>
+                                <div class="form-group">
+                                    <p><label for="lugar">Descripci&oacute;n:</label> </p>
+                                    <form:input id="lugar_s" class="lugares form-control"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                </div>
+                                <input id="envioB" type ="submit" value = "Guardar " class="btn btn-primary" />
+
+                            </form:form>
                     </div>
                     <div class="modal-footer">Instituto Tecnologico de Toluca</div>
                 </div>
             </div>
-            <%@include file="../General/js.jsp"%>
+        </div>
+        <%@include file="../General/js.jsp"%>
     </body>
 </html>

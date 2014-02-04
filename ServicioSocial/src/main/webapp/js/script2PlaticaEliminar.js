@@ -12,7 +12,7 @@
                 $("a.elimina").click(function(){
                     id = $(this).parents("tr").find("td").eq(10).html();
                     fecha = $(this).parents("tr").find("td").find("div").eq(0).html();
-                    respuesta = confirm("Está seguro que desea eliminar la platica con fecha: " + fecha);
+                    respuesta = confirm("\u00BFEst\u00E1 seguro que desea eliminar la pl\u00E1tica con fecha: " + fecha+" ?");
                     if (respuesta){
                         $(this).parents("tr").fadeOut("normal", function(){
                             $(this).remove();

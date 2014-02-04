@@ -38,16 +38,16 @@
                         <tbody>
                             <core:forEach items="${platica}" var="platica">
                                 <tr>
-                                    <td><a class="elimina" href="#"> <span class="glyphicon glyphicon-trash center-block" style="font-size:30px; margin-top:5%"></span></a></td>
-                                    <td style="width: 100px"><div  contenteditable >${platica.fecha}</div></td>
-                                    <td><div  contenteditable >${platica.hora}</div></td>
-                                    <td style="width: 150px"><div  contenteditable >${platica.idLugar.lugar}</div></td>
-                                    <td><div  contenteditable >${platica.periodo}</div></td>
-                                    <td><div  contenteditable >${platica.anio}</div></td>
-                                    <td style="width: 150px"><div  contenteditable >${platica.descripcion}</div></td>
-                                    <td ><div  contenteditable >${platica.tipo}</div></td>
-                                    <td ALIGN="RIGHT"><div  contenteditable >${platica.numeroAsistentes}</div></td>
-                                    <td style="width: 150px"><div  contenteditable >${platica.fechaMxFui}</div></td>
+                                    <td><a class="elimina" href="#"> <span class="glyphicon glyphicon-trash center-block sizeIcon" ></span></a></td>
+                                    <td ><div><fmt:formatDate value="${platica.fecha}" pattern="dd-MM-yyyy"></fmt:formatDate></div></td>
+                                    <td>${platica.hora}</td>
+                                    <td>${platica.idLugar.lugar}</td>
+                                    <td>${platica.periodo}</td>
+                                    <td>${platica.anio}</td>
+                                    <td>${platica.descripcion}</td>
+                                    <td>${platica.tipo}</td>
+                                    <td>${platica.numeroAsistentes}</td>
+                                    <td><fmt:formatDate value="${platica.fechaMxFui}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
                                     <td style="visibility: hidden">${platica.id}</td>              
                                 </tr>
                             </core:forEach>
