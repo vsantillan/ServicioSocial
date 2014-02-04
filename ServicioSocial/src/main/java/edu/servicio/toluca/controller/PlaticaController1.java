@@ -35,7 +35,7 @@ public class PlaticaController1 {
     public String obtieneLugares(Model modelo , HttpSession session, HttpServletRequest request)
     { 
         if (! new ValidaSesion().validaOperador(session, request)) {
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         LinkedHashMap ordenarDesc = new LinkedHashMap();
@@ -78,7 +78,7 @@ public class PlaticaController1 {
                 return "redirect:altaLugares.do";
             } else{
                 System.out.println("Result has error");
-                model.addAttribute("errorBlanco", "<div class='error'>Error la descripción esta vacia</div>");
+                model.addAttribute("errorBlanco", "<div class='alert alert-danger'>Error la descripción esta vacia</div>");
                 LinkedHashMap ordenarDesc = new LinkedHashMap();
                 ordenarDesc.put("lugar","desc");        
                 model.addAttribute("lugar_i", new LugaresPlatica());
@@ -87,7 +87,7 @@ public class PlaticaController1 {
             }
         } else{
             System.out.println("Result has error");
-            model.addAttribute("errorBlanco", "<div class='error'>Error la descripción esta vacia</div>");
+            model.addAttribute("errorBlanco", "<div class='alert alert-danger'>Error la descripción esta vacia</div>");
             LinkedHashMap ordenarDesc = new LinkedHashMap();
             ordenarDesc.put("lugar","desc");        
             model.addAttribute("lugar_i", new LugaresPlatica());

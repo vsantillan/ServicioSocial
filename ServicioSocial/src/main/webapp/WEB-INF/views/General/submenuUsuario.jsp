@@ -13,7 +13,7 @@
                 <span class="glyphicon glyphicon-time"></span>: Proceso en Corrección o Revisión<br> 
                 <span class="glyphicon glyphicon-remove"></span>: Proceso no Realizado <br>
 
-            <div class="bs-sidebar hidden-print panelLateral list-group" role="complementary">
+            <div class=" hidden-print panelLateral " role="complementary">
                 <ul class="nav bs-sidenav ">
                     <li class="filas borde" data-toggle="popover" data-placement="right" data-content="${mensajePlatica}" title="Plática">
                         <core:choose>

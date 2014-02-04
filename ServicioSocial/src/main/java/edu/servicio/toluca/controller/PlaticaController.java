@@ -138,7 +138,11 @@ public class PlaticaController {
     public String capturarAsistencia(Model modelo, HttpSession session, HttpServletRequest request) {
         if (!(((new ValidaSesion().validaOperador(session, request))) || (new ValidaSesion().validaRegistro(session, request))
                 || (new ValidaSesion().validaAdmin(session, request)))) {
+<<<<<<< HEAD
             modelo.addAttribute("error", "<div class=''alert alert-danger''>Debes iniciar sesión para acceder a esta sección.</div>");
+=======
+            modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
+>>>>>>> 08d8cd7bff2ffbb6740f6a2a0616a62a6c40a851
             return "redirect:login.do";
         }
         modelo.addAttribute("foliosPlatica", new FoliosPlatica());
