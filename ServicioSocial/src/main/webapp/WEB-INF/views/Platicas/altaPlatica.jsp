@@ -26,11 +26,17 @@
 
                             <div class="form-group">
                                 <label for="fecha">Fecha </label>
-                                
+                                <div class="input-group date" id="dp3" data-date="" data-date-format="dd-mm-yyyy">
+                                    <input class="form-control" path="fecha" type="text" readonly="" value="" >
+                                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="hora" >Hora </label>
-                                <form:input class="form-control" path="fecha" id="datepicker" size="15"/>
+                                 <div class="input-group input-append bootstrap-timepicker">
+                                    <input id="timepicker1" path="fecha" type="text" readonly="" class="form-control">
+                                    <span class="input-group-addon add-on"><i class="glyphicon glyphicon-time"></i></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="lugar" >Lugar de la plática de inducción </label>                              
@@ -62,7 +68,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="fecha_max_fui">Fecha m&aacute;xima para subir formato &uacute;nico</label>
-                                <form:input class="form-control"  path="fechaMxFui" id="datepicker2" size="15" /> 
+                                <div class="input-group date" id="dp2" data-date="" data-date-format="dd-mm-yyyy">
+                                    <input class="form-control" path="fechaMxFui" type="text" readonly="" value="" >
+                                  <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
                             </div>
                             <div class="form-group">
 
@@ -87,5 +96,15 @@
             </div><!--/row-->
         </div> <!-- /container -->
         <%@include file="../General/js.jsp"%>
+        <script type="text/javascript">
+            $('#timepicker1').timepicker();
+        </script>
+        <script>
+            $("#dp3").datepicker("setValue", new Date());
+            $("#dp3").datepicker("update", new Date());
+            $("#dp2").datepicker("setValue", new Date());
+            $("#dp2").datepicker("update", new Date());
+            $("#dp2").datepicker('setStartDate', new Date());
+        </script>
     </body>
 </html>

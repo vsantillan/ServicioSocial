@@ -31,7 +31,7 @@
 								//mousedown: $.proxy(this.mousedown, this)
 							});
 		this.isInput = this.element.is('input');
-		this.component = this.element.is('.date') ? this.element.find('.add-on') : false;
+		this.component = this.element.is('.date') ? this.element.find('.input-group-addon') : false;
 		
 		if (this.isInput) {
 			this.element.on({
@@ -260,7 +260,7 @@
 					case 'th':
 						switch(target[0].className) {
 							case 'switch':
-								this.showMode(1);
+								//this.showMode(1);
 								break;
 							case 'prev':
 							case 'next':
@@ -369,11 +369,11 @@
 				navStep: 10
 		}],
 		dates:{
-			days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-			daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-			daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-			months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+			days: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
+			daysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab", "Dom"],
+			daysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa", "Do"],
+			months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+			monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
 		},
 		isLeapYear: function (year) {
 			return (((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0))
@@ -457,18 +457,18 @@
 									'<tbody></tbody>'+
 								'</table>'+
 							'</div>'+
-							'<div class="datepicker-months">'+
-								'<table class="table-condensed">'+
-									DPGlobal.headTemplate+
-									DPGlobal.contTemplate+
-								'</table>'+
-							'</div>'+
-							'<div class="datepicker-years">'+
-								'<table class="table-condensed">'+
-									DPGlobal.headTemplate+
-									DPGlobal.contTemplate+
-								'</table>'+
-							'</div>'+
+//							'<div class="datepicker-months">'+
+//								'<table class="table-condensed">'+
+//									DPGlobal.headTemplate+
+//									DPGlobal.contTemplate+
+//								'</table>'+
+//							'</div>'+
+//							'<div class="datepicker-years">'+
+//								'<table class="table-condensed">'+
+//									DPGlobal.headTemplate+
+//									DPGlobal.contTemplate+
+//								'</table>'+
+//							'</div>'+
 						'</div>';
 
 }( window.jQuery );

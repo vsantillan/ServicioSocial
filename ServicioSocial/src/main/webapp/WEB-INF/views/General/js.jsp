@@ -9,14 +9,12 @@
 <script src="<%=request.getContextPath()%>/js/jquery.dataTables.js"></script>
 <script src="<%=request.getContextPath()%>/js/DT_bootstrap.js"></script>
 <script src="<%=request.getContextPath()%>/js/utilerias.js"></script>
-<script src="<%=request.getContextPath()%>/js/dataPickers.js"></script>
-<script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.es.js"></script>
-<script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/actualizaOrganizaciones.js"></script>
 <script src="<%=request.getContextPath()%>/js/actualizaPlatica.js"></script>
 <!--<script src="<%=request.getContextPath()%>/js/becados.js"></script>-->
 <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/docs.min.js.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap-popover.js"></script>
 <script src="<%=request.getContextPath()%>/js/documentosFinalesActualiza.js"></script>
 <script src="<%=request.getContextPath()%>/js/editaOrganizacion.js"></script>
 <script src="<%=request.getContextPath()%>/js/egresadoAdmin.js"></script>
@@ -28,5 +26,8 @@
 <script src="<%=request.getContextPath()%>/js/reporteBimestalActualiza.js"></script>
 <script src="<%=request.getContextPath()%>/js/reportesBimestrales.js"></script>
 <script src="<%=request.getContextPath()%>/js/sanciones.js"></script>
+<script src="<%=request.getContextPath()%>/js/platica.js"></script>
 <script src="<%=request.getContextPath()%>/js/script2PlaticaEliminar.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap-timepicker.js"></script>
+<script src="<%=request.getContextPath()%>/js/bootstrap-timepicker.min.js"></script>
 
