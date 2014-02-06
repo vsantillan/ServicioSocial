@@ -103,10 +103,10 @@ $(document).ready(function() {
         console.log("actividad:" + actividad);
         if (nActividades < 5) {
             if (typeof(actividad) === 'undefined') {
-                $("#actividades").append("<li style='float:left;'><input type='text' size='35' maxlength='60' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' /><input type ='button' class='borrar' value = 'Quitar'  /></li>");
+                $("#actividades").append("<li style='float:left;'><input type='text' size='35' maxlength='60' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' /><input type ='button' class='borrar btn btn-primary' value = 'Quitar'  /></li>");
             }
             else {
-                $("#actividades").append("<li style='float:left;'><input type='text' size='35' maxlength='60' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' value='" + actividad + "'/><input type ='button' class='borrar' value = 'Quitar'  /></li>");
+                $("#actividades").append("<li style='float:left;'><input type='text' size='35' maxlength='60' name='actividades[" + nActividades + "]' class='actividad' id='" + nActividades + "' value='" + actividad + "'/><input type ='button' class='borrar btn btn-primary' value = 'Quitar'  /></li>");
             }
             masActividad();
             console.log("Actividad agregada");

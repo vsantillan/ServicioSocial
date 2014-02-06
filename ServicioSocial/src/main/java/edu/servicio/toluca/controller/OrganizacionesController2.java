@@ -143,7 +143,7 @@ public class OrganizacionesController2 {
 
             return "/Organizaciones/altaProyecto";
         } else {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesió para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesió para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
     }
@@ -252,7 +252,7 @@ public class OrganizacionesController2 {
                 System.out.println("Instancia Creada");
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
-                model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
 
                 return "/Organizaciones/registroOrganizaciones";
             }
@@ -306,7 +306,7 @@ public class OrganizacionesController2 {
                 instanciaFacade.edit(instancia);
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
-                model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
 
                 return "/Organizaciones/registroOrganizaciones";
             }
@@ -502,7 +502,7 @@ public class OrganizacionesController2 {
                 return "/Organizaciones/confirmaAltaProyectos";
             }
         } else {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesió para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesió para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
 
@@ -710,7 +710,7 @@ public class OrganizacionesController2 {
             }
             return "/PanelOrganizacion/panelOrganizacion";
         } else {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
 
@@ -766,7 +766,7 @@ public class OrganizacionesController2 {
 
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
-                model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
             }
             return "/PanelOrganizacion/panelOrganizacion";
         }
@@ -1203,7 +1203,7 @@ public class OrganizacionesController2 {
             model.addAttribute("proyectos", filtroDeProyectos);
             return "/Organizaciones/verProyectos";
         } else {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
     }
@@ -1223,7 +1223,7 @@ public class OrganizacionesController2 {
 
             return "/Organizaciones/verAlumnosProyecto";
         } else {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
     }

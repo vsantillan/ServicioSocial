@@ -208,7 +208,7 @@ public class OrganizacionesController {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
             return "/Organizaciones/mensajeOrganizacion";
         } else {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesió para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesió para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
     }
@@ -233,7 +233,7 @@ public class OrganizacionesController {
         if (valid_pass == 1) {
             if (!confirma_password.equals(instancia.getPassword())) {
                 result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
-                model.addAttribute("confirma_password", "<div class='error'>Las contraseñas no coinciden</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
+                model.addAttribute("confirma_password", "<div class='alert alert-danger'>Las contraseñas no coinciden</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
             }
         }
 
@@ -335,7 +335,7 @@ public class OrganizacionesController {
                 instanciaFacade.edit(instancia);
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
-                model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
 
                 return "/Organizaciones/editarOrganizacion";
             }
@@ -535,7 +535,7 @@ public class OrganizacionesController {
                 proyectosFacade.edit(proyecto);
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
-                model.addAttribute("error_sql", "<div class='error'>Error de llave unica</div>");
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
 
                 return "/Organizaciones/editarProyecto";
             }
