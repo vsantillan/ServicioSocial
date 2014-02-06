@@ -455,10 +455,12 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.POST, value = "/eliminarPlatica.do")
     public void eliminarPlatica(long id_platica) throws ParseException {
         //System.out.print("eliminar platica.do");
-        Platica platica = new Platica();
+        try{
+        Platica platica;
         platica = platicaFacade.find(id_platica);
         platica.setStatus((short) 0);
         platicaFacade.edit(platica);
+        }catch(Exception e){}
 
 
     }
