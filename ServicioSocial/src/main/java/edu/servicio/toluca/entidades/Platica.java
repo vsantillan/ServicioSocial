@@ -66,9 +66,9 @@ public class Platica implements ExpresionesRegulares, Serializable{
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Size(min=5,max = 5,message = "El campo hora no es correcto")
+    @Size(min=7,max = 8,message = "El campo hora no es correcto")
     @Column(name = "HORA")
-    @Pattern(regexp = horas, message = "El campo Horas tiene formato incorrecto (HH:MM).")
+    //@Pattern(regexp = horas, message = "El campo Horas tiene formato incorrecto.")
     private String hora;
     @Basic(optional = false)
     @NotNull

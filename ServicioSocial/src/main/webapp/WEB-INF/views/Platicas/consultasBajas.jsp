@@ -22,15 +22,14 @@
                         <thead>
                             <tr>
                                 <th class="elimina">Eliminar</th>
-                                <th >Fecha</th>
+                                <th >Fecha de la platica</th>
                                 <th>Hora</th>
                                 <th>Lugar</th>
                                 <th>Periodo</th>
-                                <th>Año</th>
                                 <th>Descripción</th>
                                 <th>Tipo</th>
                                 <th>Asistentes</th>
-                                <th>Fecha máxima formato unico</th>
+                                
                                 <th style="visibility: hidden">ID</th>
                             </tr>
                         </thead>
@@ -42,12 +41,10 @@
                                     <td ><div><fmt:formatDate value="${platica.fecha}" pattern="dd-MM-yyyy"></fmt:formatDate></div></td>
                                     <td>${platica.hora}</td>
                                     <td>${platica.idLugar.lugar}</td>
-                                    <td>${platica.periodo}</td>
-                                    <td>${platica.anio}</td>
+                                    <td>${platica.periodo}</td>            
                                     <td>${platica.descripcion}</td>
                                     <td>${platica.tipo}</td>
                                     <td>${platica.numeroAsistentes}</td>
-                                    <td><fmt:formatDate value="${platica.fechaMxFui}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
                                     <td style="visibility: hidden">${platica.id}</td>              
                                 </tr>
                             </core:forEach>

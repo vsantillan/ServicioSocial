@@ -176,22 +176,26 @@ public class PlaticaController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"), true);
+        CustomDateEditor editor = new CustomDateEditor(new SimpleDateFormat("dd-MM-yyyy"), true);
         binder.registerCustomEditor(Date.class, editor);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/altaPlaticaBD.do")
     public String insertarPlatica(@Valid Platica platica, BindingResult result, Model modelo) throws ParseException, JRException {
         try {
-            platica.setNumeroAsistentes(0);
             Fecha anio = new Fecha();
-            System.out.println("intentando guardar");
+            platica.setNumeroAsistentes(0);
+//            platica.setAnio(platica.getFecha().getYear()+"");
+//            platica.setPeriodo("ENE-JUN");
+            
+            System.out.println("---"+platica.getFecha());
             if (result.hasErrors()) {
                 System.out.println("intentando guardar errores");
                 modelo.addAttribute("anioInicio", anio.anioActual());
                 modelo.addAttribute("anioFin", anio.anioFin());
                 modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                System.out.println("--"+result.getAllErrors());
                 return "/Platicas/altaPlatica";
             } else {
                 System.out.println("sin errores entidad");
@@ -258,7 +262,7 @@ public class PlaticaController {
             }
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
-            System.out.println(ex);
+            System.out.println(ex.getCause()+""+ex.getCause()+""+ex.getLocalizedMessage());
             return null;
         }
 
