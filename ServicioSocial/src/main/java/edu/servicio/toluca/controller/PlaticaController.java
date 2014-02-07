@@ -189,20 +189,10 @@ public class PlaticaController {
             platica.setNumeroAsistentes(0);
 //            platica.setAnio(platica.getFecha().getYear()+"");
 //            platica.setPeriodo("ENE-JUN");
-            
-            System.out.println("---"+platica.getFecha());
-            
-//////////////Obtemoe el Periodo y año de la platica apartir de la fecha de la platica//////////////
-            DateFormat formateador = DateFormat.getDateInstance();
-            String[] arrayFecha = formateador.format(platica.getFecha()).split("/"); 
- 
-            if(Integer.parseInt(arrayFecha[1])<=6)
-                platica.setPeriodo("ENE-JUN");
-                else
-                platica.setPeriodo("AGO-DIC");
-            
-            platica.setAnio(String.valueOf(arrayFecha[2]));
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
+            System.out.println("---" + platica.getFecha());
+
+
 
 
             if (result.hasErrors()) {
@@ -212,9 +202,21 @@ public class PlaticaController {
                 modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                 modelo.addAttribute("lugar_i", new LugaresPlatica());
-                System.out.println("--"+result.getAllErrors());
+                System.out.println("--" + result.getAllErrors());
                 return "/Platicas/altaPlatica";
             } else {
+   //////////////Obtenemos el Periodo y año de la platica apartir de la fecha de la platica//////////////
+                DateFormat formateador = DateFormat.getDateInstance();
+                String[] arrayFecha = formateador.format(platica.getFecha()).split("/");
+
+                if (Integer.parseInt(arrayFecha[1]) <= 6) {
+                    platica.setPeriodo("ENE-JUN");
+                } else {
+                    platica.setPeriodo("AGO-DIC");
+                }
+
+                platica.setAnio(String.valueOf(arrayFecha[2]));
+///////////////////////////////////////////////////////////////////////////////////////////////////
                 System.out.println("sin errores entidad");
                 System.out.println("fecha" + platica.getFechaMxFui().toString());
                 if (platica.getFechaMxFui().compareTo(platica.getFecha()) > 0) {
@@ -283,7 +285,7 @@ public class PlaticaController {
             }
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
-            System.out.println(ex.getCause()+""+ex.getCause()+""+ex.getLocalizedMessage());
+            System.out.println(ex.getCause() + "" + ex.getCause() + "" + ex.getLocalizedMessage());
             return null;
         }
 
@@ -388,7 +390,7 @@ public class PlaticaController {
     }
 
     @RequestMapping(value = "capturarAsistenciaPosteriorEspecial.do", method = RequestMethod.POST)
-    public String ponerAsistenciaEspecial(String idPlatica, String no_control, Model modelo,HttpSession session, HttpServletRequest request) {
+    public String ponerAsistenciaEspecial(String idPlatica, String no_control, Model modelo, HttpSession session, HttpServletRequest request) {
 
         if (no_control.length() > 7 && no_control.length() < 9) {
             // List<Va> listaAlumno = vaFacade.findBySpecificField("id", no_control, "equal", null, null); 
@@ -476,12 +478,13 @@ public class PlaticaController {
     @RequestMapping(method = RequestMethod.POST, value = "/eliminarPlatica.do")
     public void eliminarPlatica(long id_platica) throws ParseException {
         //System.out.print("eliminar platica.do");
-        try{
-        Platica platica;
-        platica = platicaFacade.find(id_platica);
-        platica.setStatus((short) 0);
-        platicaFacade.edit(platica);
-        }catch(Exception e){}
+        try {
+            Platica platica;
+            platica = platicaFacade.find(id_platica);
+            platica.setStatus((short) 0);
+            platicaFacade.edit(platica);
+        } catch (Exception e) {
+        }
 
 
     }
