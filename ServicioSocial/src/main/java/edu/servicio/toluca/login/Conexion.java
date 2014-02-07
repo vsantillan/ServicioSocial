@@ -22,8 +22,8 @@ public class Conexion {
 //        String host = "192.168.2.1:1521:";
 //        String sid = "sia";
 
-        String host = "192.168.2.1:1521:";
-        String sid = "sia";
+        String host = "localhost:1521:";
+        String sid = "ORCL";
 
         String usuario = usu;
 
