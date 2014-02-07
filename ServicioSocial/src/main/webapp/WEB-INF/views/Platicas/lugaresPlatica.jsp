@@ -91,8 +91,9 @@
                                 <input id="envioB" type ="submit" value = "Guardar " class="btn btn-primary" />
 
                             </form:form>
+
+                            <div class="modal-footer">Instituto Tecnologico de Toluca</div>
                     </div>
-                    <div class="modal-footer">Instituto Tecnologico de Toluca</div>
                 </div>
             </div>
         </div>
