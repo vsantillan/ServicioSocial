@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -190,12 +191,27 @@ public class PlaticaController {
 //            platica.setPeriodo("ENE-JUN");
             
             System.out.println("---"+platica.getFecha());
+            
+//////////////Obtemoe el Periodo y año de la platica apartir de la fecha de la platica//////////////
+            DateFormat formateador = DateFormat.getDateInstance();
+            String[] arrayFecha = formateador.format(platica.getFecha()).split("/"); 
+ 
+            if(Integer.parseInt(arrayFecha[1])<=6)
+                platica.setPeriodo("ENE-JUN");
+                else
+                platica.setPeriodo("AGO-DIC");
+            
+            platica.setAnio(String.valueOf(arrayFecha[2]));
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
             if (result.hasErrors()) {
                 System.out.println("intentando guardar errores");
                 modelo.addAttribute("anioInicio", anio.anioActual());
                 modelo.addAttribute("anioFin", anio.anioFin());
                 modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                modelo.addAttribute("lugar_i", new LugaresPlatica());
                 System.out.println("--"+result.getAllErrors());
                 return "/Platicas/altaPlatica";
             } else {
@@ -210,6 +226,7 @@ public class PlaticaController {
                         modelo.addAttribute("anioFin", anio.anioFin());
                         modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                        modelo.addAttribute("lugar_i", new LugaresPlatica());
                         modelo.addAttribute("errorHora", "<div class='alert alert-danger'>La hora no es valida</div>");
                         return "/Platicas/altaPlatica";
                     } else {
@@ -235,6 +252,7 @@ public class PlaticaController {
                             modelo.addAttribute("anioFin", anio.anioFin());
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                            modelo.addAttribute("lugar_i", new LugaresPlatica());
                             modelo.addAttribute("exito", "<div class='alert alert-danger'> LA PLÁTICA YA EXISTE</div>");
                             System.out.println("ya existia");
                             return "/Platicas/altaPlatica";
@@ -246,6 +264,7 @@ public class PlaticaController {
                             modelo.addAttribute("anioFin", anio.anioFin());
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                            modelo.addAttribute("lugar_i", new LugaresPlatica());
 
                             modelo.addAttribute("alert", "<script>alert('Platica Guardada');</script>");
                             System.out.println("creada");
@@ -257,6 +276,7 @@ public class PlaticaController {
                     modelo.addAttribute("anioFin", anio.anioFin());
                     modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                     modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
+                    modelo.addAttribute("lugar_i", new LugaresPlatica());
                     modelo.addAttribute("errorFm", "<div class='alert alert-danger'>La fecha de platica debe ser menor a la de Formato unico</div>");
                     return "/Platicas/altaPlatica";
                 }

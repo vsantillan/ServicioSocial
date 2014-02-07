@@ -70,14 +70,14 @@ public class Platica implements ExpresionesRegulares, Serializable{
     @Column(name = "HORA")
     //@Pattern(regexp = horas, message = "El campo Horas tiene formato incorrecto.")
     private String hora;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "PERIODO")
+//    @Basic(optional = false)
+//    @NotNull
+//    @Size(min = 1, max = 20)
+//    @Column(name = "PERIODO")
     private String periodo;
-    @Size(min=1, max = 4, message = "El campo Año debe tener 4 números")
-    @Pattern(regexp = numeros, message = "El campo año sólo puede contener Números")
-    @Column(name = "ANIO")
+//    @Size(min=1, max = 4, message = "El campo Año debe tener 4 números")
+//    @Pattern(regexp = numeros, message = "El campo año sólo puede contener Números")
+//    @Column(name = "ANIO")
     private String anio;
     @Column(name = "NUMERO_ASISTENTES")
     //@Pattern(regexp = numeros, message = "El campo Número de Asistentes sólo puede contener Números")

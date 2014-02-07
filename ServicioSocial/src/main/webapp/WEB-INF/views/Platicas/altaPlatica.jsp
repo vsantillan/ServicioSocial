@@ -49,7 +49,7 @@
                                 </form:select><br>
                                 <input type ="button" href="#nuevoL" class="btn btn-primary" id="agregaLugar" value = "Agregar lugar" data-toggle="modal" />
                             </div>
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label for="periodo">Periodo</label>
                                 <form:select class="form-control" path="periodo">
                                     <form:option value="ENE-JUN"/>
@@ -63,7 +63,7 @@
                                         <form:option value="${i}"/><core:out value="${i}" />
                                     </core:forEach>
                                 </form:select>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label for="tipoPlatica">Tipo de  pl&aacute;tica:</label>
                                 <form:select  class="form-control" id="tipo" path="tipo">
@@ -75,6 +75,7 @@
                             <div class="form-group">
                                 <label for="descripcion">Descripci&oacute;n de la pl&aacute;tica</label> 
                                 <form:textarea  path="descripcion"  id="descripcion"  class="form-control" rows="10"/>
+                                <form:errors path="descripcion" class="alert alert-danger" />
                             </div>
                             <div class="form-group">
                                 <label for="fecha_max_fui">Fecha m&aacute;xima para subir formato &uacute;nico</label>
@@ -82,7 +83,7 @@
                                     <form:input class="form-control"  path="fechaMxFui" type="text" />
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 </div><br>
-                                <form:errors path="fechaMxFui" cssClass="error" />
+                                <form:errors path="fechaMxFui" class="alert alert-danger" />
                                 ${errorFm}
                             </div>
                             <div class="form-group">
