@@ -55,6 +55,17 @@ public class PlaticaController1 {
             LugaresPlaticaFacade.create(lugar_i);
             return "redirect:altaLugares.do";
     }
+    
+        @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugarAltaPlatica.do")
+    //public @ResponseBody
+    String nuevoLugarAltaPlatica(Model modelo, LugaresPlatica lugar_i,BindingResult resultado) {
+            //System.out.println("Result has no error");
+            MetodosValidacion metodo = new MetodosValidacion();
+            lugar_i.setStatus(BigInteger.valueOf(1));
+//            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
+            LugaresPlaticaFacade.create(lugar_i);
+            return "redirect:altaPlatica.do";
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusLugar.do")
     public @ResponseBody

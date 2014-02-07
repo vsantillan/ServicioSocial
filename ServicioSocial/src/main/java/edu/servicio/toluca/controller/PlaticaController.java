@@ -86,6 +86,7 @@ public class PlaticaController {
         modelo.addAttribute("anioInicio", anio.anioActual());
         modelo.addAttribute("anioFin", anio.anioFin());
         modelo.addAttribute("platica", new Platica());
+        modelo.addAttribute("lugar_i", new LugaresPlatica());
         modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
         return "/Platicas/altaPlatica";
