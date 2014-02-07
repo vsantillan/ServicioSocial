@@ -286,7 +286,7 @@ public class PlaticaController {
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
             System.out.println(ex.getCause() + "" + ex.getCause() + "" + ex.getLocalizedMessage());
-            return null;
+            return "/Platicas/altaPlatica";
         }
 
 
