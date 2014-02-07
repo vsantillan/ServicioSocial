@@ -30,7 +30,7 @@
                                     <form:input class="form-control" path="fecha"/>
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 </div><br>
-                                <form:errors path="fecha" cssClass="alert alert-danger" />
+                                <form:errors path="fecha" class="alert alert-danger" />
                             </div>
                             <div class="form-group">
                                 <label for="hora" >Hora de la pl&aacute;tica: </label>
@@ -38,7 +38,7 @@
                                     <form:input id="timepicker1" path="hora" type="text" readonly="" class="form-control"/>
                                     <span class="input-group-addon add-on"><i class="glyphicon glyphicon-time"></i></span>
                                 </div><br>
-                                <form:errors path="hora" cssClass="alert alert-danger" />
+                                <form:errors path="hora" class="alert alert-danger" />
                             </div>
                             <div class="form-group">
                                 <label for="lugar" >Lugar de la plática: </label>                              
