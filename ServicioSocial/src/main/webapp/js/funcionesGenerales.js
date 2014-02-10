@@ -27,5 +27,14 @@ $(document).ready(function() {
         checkin.hide();
     }).data('datepicker');
     $('.dp3').datepicker()
-    .datepicker('setValue', new Date());
+            .datepicker('setValue', new Date());
+    $('.dp2').datepicker({});
+
+
+
+
+
+
+
+
 });

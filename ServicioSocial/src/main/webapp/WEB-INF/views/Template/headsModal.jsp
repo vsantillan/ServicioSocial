@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="js/modal/jquery.fancybox.css" />
 
 <script type="text/javascript" >
+
     $(document).ready(function() {
         // FANCY EFFECTT
         $(".fancybox-effects-a").fancybox({
