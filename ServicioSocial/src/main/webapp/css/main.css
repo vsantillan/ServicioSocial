@@ -68,9 +68,9 @@
           border-width: 1px;
           border-radius: 3px;
           border-style: solid;
-          border-bottom-color:#428bca;
-          
-         
-          
+          border-bottom-color:#428bca; 
+      }
+      .tabAzul{
+          background: #428bca; 
       }
       
