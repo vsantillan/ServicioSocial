@@ -22,7 +22,7 @@
                         <center><h3>Nueva Pl&aacute;tica</h3></center>
                             ${alert}
                         <!-- Formulario Nueva Plática -->  
-                        <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica"  class="form-horizontal" role="form" name="altaPlatica" > 
+                        <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica"  class="form-horizontal EnviarEnter" role="form" name="altaPlatica" > 
 
                             <div class="form-group">
                                 <label for="fecha">Fecha de la pl&aacute;tica:</label>
@@ -74,7 +74,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="descripcion">Descripci&oacute;n de la pl&aacute;tica</label> 
-                                <form:textarea  path="descripcion"  id="descripcion"  class="form-control" rows="10"/>
+                                <form:textarea  path="descripcion"  id="descripcion"  class="form-control" rows="10"/><br>
                                 <form:errors path="descripcion" class="alert alert-danger" />
                             </div>
                             <div class="form-group">
@@ -83,7 +83,7 @@
                                     <form:input class="form-control"  path="fechaMxFui" type="text" />
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 </div><br>
-                                <form:errors path="fechaMxFui" class="alert alert-danger" />
+                                <form:errors  path="fechaMxFui" class="alert alert-danger" /><br>
                                 ${errorFm}
                             </div>
                             <div class="form-group">
@@ -118,13 +118,13 @@
                                 <form:form commandName="lugar_i" id="nuevoLugar" action="nuevoLugarAltaPlatica.do" method="POST">
                                     <div class="form-group">
                                         <p><label for="lugar">Descripci&oacute;n:</label> </p>
-                                        <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> 
+                                        <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50"/> 
                                     </div>
                                     <input type ="submit" value = "Guardar " class="btn btn-primary" />
 
                                 </form:form>
                             </div>
-                            <div class="modal-footer">Instituto Tecnologico de Toluca</div>
+                                <div class="modal-footer">Instituto Tecnol&oacute;gico de Toluca</div>
                         </div>
                     </div>
                 </div>

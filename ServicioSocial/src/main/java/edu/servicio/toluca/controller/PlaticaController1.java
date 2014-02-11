@@ -52,6 +52,7 @@ public class PlaticaController1 {
             MetodosValidacion metodo = new MetodosValidacion();
             lugar_i.setStatus(BigInteger.valueOf(1));
 //            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
+           lugar_i.setLugar(lugar_i.getLugar().toUpperCase());
             LugaresPlaticaFacade.create(lugar_i);
             return "redirect:altaLugares.do";
     }
@@ -63,6 +64,7 @@ public class PlaticaController1 {
             MetodosValidacion metodo = new MetodosValidacion();
             lugar_i.setStatus(BigInteger.valueOf(1));
 //            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
+            lugar_i.setLugar(lugar_i.getLugar().toUpperCase());
             LugaresPlaticaFacade.create(lugar_i);
             return "redirect:altaPlatica.do";
     }
@@ -85,6 +87,7 @@ public class PlaticaController1 {
             
             lugar_r.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
             if(lugar_r.getLugar().length()>0){
+                lugar_r.setLugar(lugar_r.getLugar().toUpperCase());
                 LugaresPlaticaFacade.edit(lugar_r);
                 return "redirect:altaLugares.do";
             } else{

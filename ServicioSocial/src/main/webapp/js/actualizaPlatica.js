@@ -6,10 +6,11 @@ $(document).ready(function() {
     $("#fecha").change(function(event) {
         var fecha = document.getElementById("fecha").value;
         $.post("actualizarDetalle.do", {fecha: fecha}, function(respuesta) {
-            $('#hora').val(respuesta.detalle);
+            $('#hora').val(respuesta.hora);
+            $('#lugar').val(respuesta.lugar);
             $('#descripcion').val(respuesta.descripcion);
-        })
+        });
 
-    })
-})
+    });
+});
 

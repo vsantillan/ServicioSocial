@@ -8,7 +8,7 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-       <title>Consultas y Bajas de Pláticas</title>
+        <title>Consultas y Bajas de Pláticas</title>
     </head>
     <body>
         <div class="container">
@@ -16,7 +16,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <center> <h2 id="h1p">Consultas y Bajas de Pláticas</h2></center>
+                    <center> <h2 id="h1p">Eliminar y Consultar Pláticas</h2></center>
                     <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' >
                         <thead>
                             <tr>
@@ -30,30 +30,41 @@
                                 <th>Asistentes</th>
                             </tr>
                         </thead>
-                        
+
                         <tbody>
                             <core:forEach items="${platica}" var="platica">
                                 <tr>
                                     <td><a class="elimina" href="#" idP="${platica.id}" fecha="${platica.fecha}"> <span class="glyphicon glyphicon-trash center-block sizeIcon" ></span></a></td>
                                     <td ><div><fmt:formatDate value="${platica.fecha}" pattern="dd-MM-yyyy"></fmt:formatDate><div></td>
-                                    <td>${platica.hora}</td>
-                                    <td>${platica.idLugar.lugar}</td>
-                                    <td>${platica.periodo}</td>            
-                                    <td>${platica.descripcion}</td>
-                                    <td>${platica.tipo}</td>
-                                    <td>${platica.numeroAsistentes}</td>            
-                                </tr>
-                            </core:forEach>
-                        </tbody>
-                    </table>
-                </div><!--/row--> 
-                <%@include file="../General/footer.jsp"%> 
-            </div>
-            <!---------------------------------------------Contenido-------------------------------------------> 
-        </div> <!-- /container -->
+                                                <td>${platica.hora}</td>
+                                                <td>${platica.idLugar.lugar}</td>
+                                                <td>${platica.periodo}</td>            
+                                                <td>${platica.descripcion}</td>
+                                                <td><core:choose>
+                                                    <core:when test="${platica.tipo==1}">
+                                                        NORMAL
+                                                    </core:when>
+                                                    <core:when test="${platica.tipo==2}">
+                                                         BECADOS
+                                                    </core:when>
+                                                    <core:otherwise>
+                                                         ESPECIAL
+                                                    </core:otherwise>
+                                                </core:choose>
+                                                </td>
+                                                <td>${platica.numeroAsistentes}</td>            
+                                                </tr>
+                                            </core:forEach>
+                                            </tbody>
+                                            </table>
+                                        </div><!--/row--> 
+                                        <%@include file="../General/footer.jsp"%> 
+                                    </div>
+                                    <!---------------------------------------------Contenido-------------------------------------------> 
+                                    </div> <!-- /container -->
 
-        <%@include file="../General/js.jsp"%>
-        <script type="text/javascript" src="js/script2PlaticaEliminar.js"></script>
-    </body>
+                                    <%@include file="../General/js.jsp"%>
+                                    <script type="text/javascript" src="js/script2PlaticaEliminar.js"></script>
+                                    </body>
 
-</html>
+                                    </html>

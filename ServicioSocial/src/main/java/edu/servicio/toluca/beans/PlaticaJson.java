@@ -10,22 +10,27 @@ package edu.servicio.toluca.beans;
  */
 public class PlaticaJson {
     
-    private String detalle;
+    private String hora;
+    private String lugar;
     private String descripcion;
 
-    /**
-     * @return the detalle
-     */
-    public String getDetalle() {
-        return detalle;
+    public String getHora() {
+        return hora;
     }
 
-    /**
-     * @param detalle the detalle to set
-     */
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
+    public void setHora(String hora) {
+        this.hora = hora;
     }
+
+    public String getLugar() {
+        return lugar;
+    }
+
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
+    }
+
+   
 
     /**
      * @return the descripción

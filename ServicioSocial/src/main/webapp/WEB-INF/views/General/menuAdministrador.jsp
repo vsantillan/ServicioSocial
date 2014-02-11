@@ -12,7 +12,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pl&aacute;ticas<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="altaPlatica.do" onclick="redirecciona('altaPlatica.do');">1.1 Nueva Pl&aacute;tica</a></li>
-                        <li><a href="consultasBajas.do" onclick="redirecciona('consultasBajas.do');">1.2 Bajas | Consultas</a></li>
+                        <li><a href="consultasBajas.do" onclick="redirecciona('consultasBajas.do');">1.2 Eliminar y Consultar Pl&aacute;tica</a></li>
                         <li><a href="capturarAsistencia.do" onclick="redirecciona('capturarAsistencia.do');">1.3 Capturar Asistencia</a></li>
                         <li><a href="asistenciaPosteriorEspecial.do" onclick="redirecciona('asistenciaPosteriorEspecial.do');">1.4 Alta Posterior</a></li>
                         <li><a href="altaLugares.do" onclick="redirecciona('altaLugares.do');">1.4 Catálogo lugares</a></li>

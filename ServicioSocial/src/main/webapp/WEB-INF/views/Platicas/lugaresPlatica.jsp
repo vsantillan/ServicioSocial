@@ -62,13 +62,13 @@
                         <form:form commandName="lugar_i" id="nuevoLugar" action="nuevoLugar.do" method="POST">
                             <div class="form-group">
                                 <p><label for="lugar">Descripci&oacute;n:</label> </p>
-                                <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> 
+                                <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50" /> 
                             </div>
                             <input type ="submit" value = "Guardar " class="btn btn-primary" />
 
                         </form:form>
                     </div>
-                    <div class="modal-footer">Instituto Tecnologico de Toluca</div>
+                    <div class="modal-footer">Instituto Tecnol&oacute;gico de Toluca</div>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
 
                             </form:form>
 
-                            <div class="modal-footer">Instituto Tecnologico de Toluca</div>
+                            <div class="modal-footer">Instituto Tecnol&oacute;gico de Toluca</div>
                     </div>
                 </div>
             </div>

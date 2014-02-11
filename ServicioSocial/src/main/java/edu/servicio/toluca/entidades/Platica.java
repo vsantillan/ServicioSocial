@@ -4,10 +4,8 @@
  */
 package edu.servicio.toluca.entidades;
 
+import edu.servicio.toluca.configuracion.CatalogoErrores;
 import edu.servicio.toluca.configuracion.ExpresionesRegulares;
-import static edu.servicio.toluca.configuracion.ExpresionesRegulares.comentarios;
-import static edu.servicio.toluca.configuracion.ExpresionesRegulares.fechaER;
-import static edu.servicio.toluca.configuracion.ExpresionesRegulares.numeros;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -53,7 +51,7 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "Platica.findByStatus", query = "SELECT p FROM Platica p WHERE p.status = :status"),
     @NamedQuery(name = "Platica.findByFechaMxFui", query = "SELECT p FROM Platica p WHERE p.fechaMxFui = :fechaMxFui"),
     @NamedQuery(name = "Platica.findByDescripcion", query = "SELECT p FROM Platica p WHERE p.descripcion = :descripcion")})
-public class Platica implements ExpresionesRegulares, Serializable{
+public class Platica implements ExpresionesRegulares, CatalogoErrores,Serializable{
     private static final long serialVersionUID = 1L;
     @GenericGenerator(name = "generator", strategy = "increment")
     @Id
@@ -90,8 +88,8 @@ public class Platica implements ExpresionesRegulares, Serializable{
     //@Pattern(regexp = fechaER, message = "El campo Fecha Máxima Formato Único tiene formato incorrecto (DD/MM/AAAA).")
     @Temporal(TemporalType.DATE)
     private Date fechaMxFui;
-    @Pattern(regexp = comentarios, message = "El campo Descripción sólo puede contener Letras")
-    @Size(min = 1, max = 100, message = "El campo Descripción no puede estar vacío")
+    //@Size(min = 1, max = 100, message = "El campo Descripción no puede estar vacío")
+    @Pattern(regexp = letrasNumerosEspeciales, message = errorLetrasNumeros)
     @Column(name = "DESCRIPCION")
     private String descripcion;
   

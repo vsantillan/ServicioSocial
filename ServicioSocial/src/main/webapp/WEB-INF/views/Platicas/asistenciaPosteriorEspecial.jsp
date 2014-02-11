@@ -27,7 +27,7 @@
                                 <p class="bg-warning">No hay platicas activas</p>
                             </core:when>
                             <core:otherwise>                         
-                                <form:form name="casistenciaespecial" id="casistenciaespecial" action="capturarAsistenciaPosteriorEspecial.do" method="Post" class="form-horizontal">
+                                <form:form name="casistenciaespecial" id="casistenciaespecial" action="capturarAsistenciaPosteriorEspecial.do" method="Post" class="form-horizontal ">
                                     <div class="form-group">
                                         <label for="seleccionaFecha">Seleccione Plática:</label>
                                         <select class="form-control" name="idPlatica" id="idPlatica">

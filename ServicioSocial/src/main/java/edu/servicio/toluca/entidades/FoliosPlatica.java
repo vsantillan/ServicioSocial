@@ -4,6 +4,8 @@
  */
 package edu.servicio.toluca.entidades;
 
+import edu.servicio.toluca.configuracion.CatalogoErrores;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.annotations.Cache;
@@ -36,7 +39,7 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "FoliosPlatica.findByAsistencia", query = "SELECT f FROM FoliosPlatica f WHERE f.asistencia = :asistencia"),
     @NamedQuery(name = "FoliosPlatica.findByNumeroFolio", query = "SELECT f FROM FoliosPlatica f WHERE f.numeroFolio = :numeroFolio"),
     @NamedQuery(name = "FoliosPlatica.findByStatus", query = "SELECT f FROM FoliosPlatica f WHERE f.status = :status")})
-public class FoliosPlatica implements Serializable {
+public class FoliosPlatica implements ExpresionesRegulares,CatalogoErrores,Serializable {
     @Size(max = 10)
     @Column(name = "NUMERO_CONTROL")
     private String numeroControl;
@@ -52,7 +55,8 @@ public class FoliosPlatica implements Serializable {
     private Short asistencia;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    //@Size(min = 1, max = 20,message ="El campo no puede estar vacio")
+    @Pattern(regexp = numeros, message = errorNumeros)
     @Column(name = "NUMERO_FOLIO")
     private String numeroFolio;
     @Column(name = "STATUS")

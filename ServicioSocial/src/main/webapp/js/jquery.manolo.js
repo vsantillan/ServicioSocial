@@ -290,15 +290,25 @@ $(document).ready(function() {
 
     $("#btnLogin").click(function(event) {
         $("#respLoginOrg").show("fast");
-        $("#formLogin").animate({width: 400, height: 300}, "slow");
+        $("#formLogin").animate({width: 400, height: 400}, "slow");
         document.forms["formLogin"].submit();
     });
 
-    $("#formLogin").keyup(function(event) {
+    $(".EnviarEnter").keyup(function(event) {
         if (event.keyCode === 13) {
             $("#respLoginOrg").show("fast");
             $("#formLogin").animate({width: 400, height: 300}, "slow");
             document.forms["formLogin"].submit();
+        }
+    });
+     $("#casistenciaespecial").keyup(function(event) {
+        if (event.keyCode === 13) {
+            document.forms["casistenciaespecial"].submit();
+        }
+    });
+     $("#casistencia").keyup(function(event) {
+        if (event.keyCode === 13) {
+            document.forms["casistencia"].submit();
         }
     });
 

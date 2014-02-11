@@ -187,14 +187,6 @@ public class PlaticaController {
         try {
             Fecha anio = new Fecha();
             platica.setNumeroAsistentes(0);
-//            platica.setAnio(platica.getFecha().getYear()+"");
-//            platica.setPeriodo("ENE-JUN");
-
-            System.out.println("---" + platica.getFecha());
-
-
-
-
             if (result.hasErrors()) {
                 System.out.println("intentando guardar errores");
                 modelo.addAttribute("anioInicio", anio.anioActual());
@@ -202,10 +194,12 @@ public class PlaticaController {
                 modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                 modelo.addAttribute("lugar_i", new LugaresPlatica());
+                modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
                 System.out.println("--" + result.getAllErrors());
+
                 return "/Platicas/altaPlatica";
             } else {
-   //////////////Obtenemos el Periodo y año de la platica apartir de la fecha de la platica//////////////
+                //////////////Obtenemos el Periodo y año de la platica apartir de la fecha de la platica//////////////
                 DateFormat formateador = DateFormat.getDateInstance();
                 String[] arrayFecha = formateador.format(platica.getFecha()).split("/");
 
@@ -229,9 +223,11 @@ public class PlaticaController {
                         modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                         modelo.addAttribute("lugar_i", new LugaresPlatica());
+                        modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
                         modelo.addAttribute("errorHora", "<div class='alert alert-danger'>La hora no es valida</div>");
                         return "/Platicas/altaPlatica";
                     } else {
+                        platica.setDescripcion(platica.getDescripcion().toUpperCase());
                         platica.setStatus((short) 1);
                         List<Platica> listaPlaticas = platicaFacade.findAll();
                         Boolean existe = false;
@@ -255,20 +251,20 @@ public class PlaticaController {
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                             modelo.addAttribute("lugar_i", new LugaresPlatica());
-                            modelo.addAttribute("exito", "<div class='alert alert-danger'> LA PLÁTICA YA EXISTE</div>");
+                            modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
+                            modelo.addAttribute("exito", "<div class='alert alert-danger'> La platica ya existe</div>");
                             System.out.println("ya existia");
                             return "/Platicas/altaPlatica";
                         } else {
                             MetodosValidacion limpiar = new MetodosValidacion();
-                            platica.setDescripcion(limpiar.pasaMayusculas(limpiar.quitaCaracteresEspeciales(platica.getDescripcion())));
+                            platica.setDescripcion(platica.getDescripcion().toUpperCase());
                             platicaFacade.create(platica);
                             modelo.addAttribute("anioInicio", anio.anioActual());
                             modelo.addAttribute("anioFin", anio.anioFin());
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                             modelo.addAttribute("lugar_i", new LugaresPlatica());
-
-                            modelo.addAttribute("alert", "<script>alert('Platica Guardada');</script>");
+                            modelo.addAttribute("alert", "<div class='alert alert-success'><h2><span class=\"glyphicon glyphicon-saved sizeIcon\" ></span>Plática Guardada</h2></div>");
                             System.out.println("creada");
                             return "/Platicas/altaPlatica";
                         }
@@ -279,6 +275,7 @@ public class PlaticaController {
                     modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                     modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                     modelo.addAttribute("lugar_i", new LugaresPlatica());
+                    modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
                     modelo.addAttribute("errorFm", "<div class='alert alert-danger'>La fecha de platica debe ser menor a la de Formato unico</div>");
                     return "/Platicas/altaPlatica";
                 }
@@ -332,6 +329,7 @@ public class PlaticaController {
         } else {
             modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
             modelo.addAttribute("platica", new Platica());
+
             modelo.addAttribute("existe", "<div class='alert alert-danger'>Ya te has registrado a esta platica anteriormente</div>");
             return "/Platicas/seleccionarPlatica";
         }
@@ -403,7 +401,7 @@ public class PlaticaController {
                 VistaAlumno porcentaje = listaAlumno.get(0);
                 if (Float.parseFloat(porcentaje.getPorcentaje()) < 70) {
                     modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
-                    modelo.addAttribute("error", "<p class='alert alert-danger'>El alumno no cuenta con los creditos suficientes</p>");
+                    modelo.addAttribute("error", "<p class='alert alert-danger'>El alumno no cuenta con los creditos suficientes , tiene" + Float.parseFloat(porcentaje.getPorcentaje()) + "% de creditos</p>");
                     return "/Platicas/asistenciaPosteriorEspecial";
                 } else {
                     VistaAlumno alumnoRegistrado1 = new VistaAlumno();
@@ -555,7 +553,8 @@ public class PlaticaController {
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
 
         Platica platica = platicaFacade.find(Long.parseLong(fecha));
-        platicaJson.setDetalle("Hora:" + platica.getHora() + "\t" + "Lugar:" + platica.getIdLugar().getLugar());
+        platicaJson.setHora("Hora:" + platica.getHora());
+        platicaJson.setLugar("Lugar:"+platica.getIdLugar().getLugar());
         platicaJson.setDescripcion("Descripción:" + platica.getDescripcion());
         return platicaJson;
     }

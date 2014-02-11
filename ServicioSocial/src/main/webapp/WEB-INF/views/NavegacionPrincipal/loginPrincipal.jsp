@@ -24,7 +24,7 @@
                 <div class="row ">
                     <!---------------------------------------------Contenido------------------------------------------->                
                     <br>
-                    <form:form name="formLogin" class="form-signin" role="form" action="validaLogin.do" method="POST"  id="formLogin">
+                    <form:form name="formLogin" class="form-signin EnviarEnter" role="form" action="validaLogin.do" method="POST"  >
                         <h3 class="form-signin-heading">Iniciar Sesión</h3>
                         <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario o alu_00289999" required autofocus>
                         <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
