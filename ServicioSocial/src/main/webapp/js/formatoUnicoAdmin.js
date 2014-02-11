@@ -13,32 +13,32 @@ function listo()
     $(document).on("click",".rechazar",cambiarEstadoFormatoRechazado);
 }
 
-function inicializarDataTables()
-{
-    $('#noRevisadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-    $('#noAceptadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-    $('#enCorreccionDT').dataTable({
-                    "bJQueryUI": true,
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-                });
-     $('#aceptadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-                });
-}
+//function inicializarDataTables()
+//{
+//    $('#noRevisados_dt').dataTable({
+//                    "bJQueryUI": true,
+//                    "sScrollX": "100%",
+//                    "sScrollXInner": "100%",
+//                    "bScrollCollapse": true
+//
+//                });
+//    $('#noAceptadosDT').dataTable({
+//                    "bJQueryUI": true,
+//                    "sScrollXInner": "100%",
+//                    "bScrollCollapse": true
+//
+//                });
+//    $('#enCorreccionDT').dataTable({
+//                    "bJQueryUI": true,
+//                    "sScrollXInner": "100%",
+//                    "bScrollCollapse": true
+//                });
+//     $('#aceptadosDT').dataTable({
+//                    "bJQueryUI": true,
+//                    "sScrollXInner": "100%",
+//                    "bScrollCollapse": true
+//                });
+//}
 
 function confirmacionEvento()
 {

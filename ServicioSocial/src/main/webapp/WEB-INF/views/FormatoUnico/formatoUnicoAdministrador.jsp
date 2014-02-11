@@ -4,46 +4,29 @@
     Author     : bustedvillain
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="../Template/taglibs.jsp" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
-        
-        
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-          <!--Include para Ventanas Modales-->
-        <jsp:include page="../Template/headsModal.jsp" />
-        
-        <title>Administrador</title>
-        
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body class="background" >
-        <jsp:include page="../Template/banner.jsp" />
-
-        <%-- inicio del contenido --%>
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left; width:80%;">
-                
-                <h1>P&aacute;gina del Formato Unico - Administrador</h1>
-                <div id="tabs">
-                    
-                    <ul>
-                        <li><a href="#noRevisados">No revisados</a></li>
-                        <li><a href="#noAceptados">No aceptados</a></li>
-                        <li><a href="#enCorreccion">En correcci&oacute;n</a></li>
-                        <li><a href="#aceptados">Aceptados</a></li>
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%>
+                <div class="row col-md-12 center-block">
+                <center><h2>Página del Formato Unico - Administrador</h2></center>
+                <div class="tab-content">
+                    <ul class="nav nav-tabs" id="formatoUnico-tabla">
+                        <li><a href="#noRevisados" data-toggle="tab">No revisados</a></li>
+                        <li><a href="#noAceptados" data-toggle="tab">No aceptados</a></li>
+                        <li><a href="#enCorreccion" data-toggle="tab">En correcci&oacute;n</a></li>
+                        <li><a href="#aceptados" data-toggle="tab">Aceptados</a></li>
                     </ul>
-                    <div id="noRevisados">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="noRevisadosDT" width='100%'>
+                    <div id="noRevisados" class="tab-pane">
+                        <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="noRevisados_dt" width='100%'>
+                            
                             <thead>
                                 <tr>
                                     <th>Acci&oacute;nes</th>
@@ -60,9 +43,9 @@
                                 <core:forEach items="${listadoFormatoUnicoNORevisados}" var="filaNR">                                   
                                     <tr class='gradeX'>
                                     <td>
-                                        <a href="#"> <img class="aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/paloma.png" /></a>
-                                        <a href="#"> <img class="rechazar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/tache.png" /></a>
-                                        <a href="#"> <img class="correccion" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="CorrecciÃ³n" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
+                                        <a href="#"> <span class="aceptar glyphicon glyphicon-ok sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
+                                        <a href="#"> <span class="rechazar glyphicon glyphicon-remove sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
+                                        <a href="#"> <span class="correccion glyphicon glyphicon-edit sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
                                     </td>
      
                                     <td>${filaNR.periodo}</td>
@@ -70,7 +53,7 @@
                                     <td>
                                         <core:out value="${filaNR.nombre}"/>
                                     </td>
-                                    <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                    <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
                                     <td><core:out value="${filaNR.fechaSubida}"/></td>
 
                                     </tr>
@@ -78,8 +61,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <div id="noAceptados">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="noAceptadosDT" width='100%'>
+                    <div id="noAceptados" class="tab-pane">
+                        <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="noAceptados_dt" width='100%'>
                             <thead>
                                 <tr>
                                     <th>Periodo</th>
@@ -96,7 +79,7 @@
                                         <td>${filaRech.periodo}</td>
                                         <td> <core:out value="${filaRech.noControl}"/>  </td>
                                         <td><core:out value="${filaRech.nombre}"/></td>
-                                        <td><a href="mostarPDF.do?id=${filaRech.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                        <td><a href="mostarPDF.do?id=${filaRech.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
                                         <td><core:out value="${filaRech.fechaSubida}"/></td>
                                         <td>
                                             <%/*
@@ -111,8 +94,8 @@
                             </tbody>
                         </table>
                     </div>    
-                    <div id="enCorreccion">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="enCorreccionDT" width='100%'>
+                    <div id="enCorreccion" class="tab-pane">
+                        <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="enCorreccion_dt" width='100%'>
                             <thead>
                                 <tr>
                                    <th>Periodo</th>
@@ -129,7 +112,7 @@
                                         <td>${filaCorrec.periodo}</td>
                                         <td> <core:out value="${filaCorrec.noControl}"/>  </td>
                                         <td><core:out value="${filaCorrec.nombre}"/></td>
-                                        <td><a href="mostarPDF.do?id=${filaCorrec.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                        <td><a href="mostarPDF.do?id=${filaCorrec.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
                                         <td><core:out value="${filaCorrec.fechaSubida}"/></td>
                                         <td>
                                             <%/*
@@ -147,8 +130,8 @@
                             </tbody>
                         </table>
                     </div>    
-                    <div id="aceptados">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="aceptadosDT" width='100%'>
+                    <div id="aceptados" class="tab-pane">
+                        <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="aceptados_dt" width='100%'>
                             <thead>
                                 <tr>
                                     <th>Periodo</th>
@@ -164,7 +147,7 @@
                                     <td>${filaA.periodo}</td>
                                     <td> <core:out value="${filaA.noControl}"/>  </td>
                                     <td><core:out value="${filaA.nombre}"/></td>
-                                    <td><a href="mostarPDF.do?id=${filaA.idDocumentoFormatoUnico}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></td>
+                                    <td><a href="mostarPDF.do?id=${filaA.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
                                     <td><core:out value="${filaA.fechaSubida}"/></td>
                                    
                                     </tr>
@@ -173,16 +156,11 @@
                         </table>
                     </div>    
                 </div>
-                
+                </div>
+                <%@include file="../General/footer.jsp"%> 
             </div>
-            
-            
-            <div style="clear:both;"></div>
-            
         </div>
-        <%-- fin del contenido --%>
-        <jsp:include page="../Template/footer.jsp" />
-        
+        <%-- fin del contenido --%>     
         
         <div id="motivos" style="display: none; ">
              <form id="observacionesCat" action="#"  onsubmit="return  false;">
@@ -200,13 +178,16 @@
                 </div>
                  <div>
                       <button id="guardarObservaciones">Guardar</button>
-                      &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do')"   style="font-size: 20px"> Agregar ObservaciÃ³n</a>
+                      &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do')"   style="font-size: 20px"> Agregar Observación</a>
                  </div>
                  </form>  
-                
             </div>
         
+        <%@include file="../General/js.jsp"%>
         <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
+        <script type="text/javascript">
+            $('#formatoUnico-tabla a:first').tab('show');
+        </script>
     </body>
 </html>
 
