@@ -18,194 +18,140 @@
             </div>
             <div class="row ">
                 <!---------------------------------------------Contenido------------------------------------------->                
-                <div class="col-md-6 col-md-offset-3">
+                <div class="col-md-8 col-md-offset-2">
                     <h1>Registro de Organizaciones</h1>
-                    <p><h4>Busque si la Organizaci&oacute;n ya esta pre-registrada</h4></p>
-                    <form:form name="altaOrganizacion" class="form-horizontal" action="confirmaOrganizacionVisitante.do" method="POST" >
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
+                    <div class="panel panel-info ">
+                        <div class="panel-heading"><h3>Busque si la Organizaci&oacute;n ya esta pre-registrada</h3></div>
+                        <div class="panel-body">
+                            <form:form name="altaOrganizacion" class="form-horizontal" action="confirmaOrganizacionVisitante.do" method="POST" >
+                                <div class="form-group">
+                                    <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
+                                    <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
+                                        <option value="">Busqueda de Organizaci&oacute;n</option>
+                                        <core:forEach items="${preOrganizaciones}" var="organizacion">
+                                            <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
+                                        </core:forEach> 
+                                    </select>
+                                    <br/>${pre_registro} 
+                                </div>
+                                <div class="form-group">
+                                    <input class="btn btn-primary" type ="button" id="btnPreInstancia" value = "Seleccionar Organizaci&oacute;n" /> 
+                                </div>
+                            </form:form>
                         </div>
-                    <div class="form-group">
-                            <input class="btn btn-primary" type ="button" id="btnPreInstancia" value = "Seleccionar Organizaci&oacute;n" /> 
+                    </div>
+                    <div class="panel panel-info">
+                        <div class="panel-heading"><h3>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h3></div> 
+                        <div class="panel-body">
+                            <form:form name="altaOrganizacion" commandName="instancia" class="form-horizontal" action="gdaAltaOrganizacion.do"  method="POST"  >
+                                <p>${error_sql}</p>
+                                <div class="form-group">
+                                    <label for="nombre">Nombre de la Organizaci&oacute;n:</label> 
+                                    <form:input class="form-control" placeholder="Nombre de la Organización" path="nombre" id="nombre" size="20"/><br/>
+                                    <form:errors path="nombre" cssClass="error"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rfc">RFC:</label>  
+                                    <form:input class="form-control" placeholder="RFC" path="rfc" id="rfc" size="20" maxlength="12"/><br/>
+                                    <form:errors path="rfc" cssClass="alert alert-danger"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="titular">Titular:</label> 
+                                    <form:input path="titular" id="titular" placeholder="Titular" class="form-control" size="20"/><br/>
+                                    <form:errors path="titular" cssClass="alert alert-danger"/> 
+                                </div>
+                                <div class="form-group">
+                                    <label for="puesto">Puesto:</label> 
+                                    <form:input path="puesto" id="puesto" placeholder="Puesto" class="form-control"size="20"/><br/>
+                                    <form:errors path="puesto" cssClass="alert alert-danger"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="telefono">Tel&eacute;fono:</label> 
+                                    <form:input path="telefono" id="telefono" placeholder="Telefono" class="form-control" size="20" maxlength="10"/>
+                                    Ext:<form:input path="ext" id="ext" size="7" placeholder="Ext" class="form-control" maxlength="7"/><br/>
+                                    ${telefono}
+                                </div>
+                                <div class="form-group">
+                                    <label for="calle">Calle:</label> 
+                                    <form:input path="domicilio" placeholder="Calle" class="form-control" id="domicilio" size="20"/><br/>
+                                    <form:errors path="domicilio" cssClass="alert alert-danger"/> 
+                                </div>
+                                <div class="form-group">
+                                    <label for="codigo_postal">C&oacute;digo Postal:</label> 
+                                    <input type="text" name="codigo_postal"  class="form-control" id="codigo_postal" size="20" maxlength="5" autocomplete="off">
+                                    <input type="hidden" id="preCP" value="${cp}"/><br>${codigo_postal} 
+                                </div>
+                                <div class="form-group">
+                                    <label for="estado">Estado:</label> 
+                                    <select name="estado" class="form-control" id="estado" disabled="true">                                   
+                                        <core:forEach items="${estados}" var="estados">
+                                            <option value="${estados.idEstado}">${estados.nombre}</option>
+                                        </core:forEach> 
+                                    </select> 
+                                </div>
+                                <div class="form-group">
+                                    <label for="municipio">Municipio:</label> 
+                                    <select name="municipio" class="form-control" id="municipio" disabled="true"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ciudad">Ciudad</label>
+                                    <select name="ciudad" class="form-control" id="ciudad" disabled="true"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="colonia">Colonia:</label>
+                                    <div id="notice"></div>
+                                    <!--select name="colonia" id="colonia" disabled="true"></select--> 
+                                    <form:select  class="form-control" id="idColonia" path="idColonia.idColonia" name="idColonia"></form:select> 
+                                        <div id="otra_colonia" style="display:none;">
+                                            <input type="text" name="otra_colonia" value="${otra_colonia}"/>
+                                        <input type="hidden" id="existeCP" name="existeCP" value="true">
+                                        <input type="hidden" id="preColonia" value="${idColonia}"/>
+                                        ${error_otra_colonia}
+                                    </div>
+                                    <br/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label>  
+                                    <form:select  class="form-control"id="tipoOrganizacion" path="TipoOrganizacion.idTipoOrganizacion" name="tipoOrganizacion">
+                                        <core:forEach items="${tipoOrganizaciones}" var="tipoOrganizaciones">
+                                            <form:option  value="${tipoOrganizaciones.idTipoOrganizacion}">${tipoOrganizaciones.detalle}</form:option>
+                                        </core:forEach> 
+                                    </form:select>  
+                                    <br/><form:errors path="tipoOrganizacion" cssClass="alert alert-danger"/>
+
+                                </div>
+                                <h3>Datos de contacto y de acceso:</h3>
+                                <div class="form-group">
+                                    <label for="lugar">Nombre de Usuario:</label>
+                                    <form:input path="usuario" class="form-control" placeholder="Usuario" id="usuario" size="20"/><br/>
+                                    ${usuario}
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="lugar">Correo:</label>
+                                    <form:input path="correo" class="form-control" placeholder="Correo" id="correo" size="20"/><br/>
+                                    <form:errors path="correo" cssClass="alert alert-danger"/>${correo}
+                                </div>
+                                <div class="form-group">
+                                    <label for="lugar">Contrase&ntilde;a:</label> 
+                                    <form:input class="form-control "path="password" id="password" size="20" type="password"/><br/>
+                                    ${password}
+                                </div>
+                                <div class="form-group">
+                                    <label for="lugar">Confirmar Contrase&ntilde;a:</label> 
+                                    <input type="password" class="form-control name="confirma_password" id="confirma_password" size="20"/> <br>
+                                ${confirma_password}  
+                                </div>
+                                <div class="form-group">
+                                     
+                                     <input type ="submit" class="btn btn-primary" value = "Guardar " />
+                                     
+                                     <input type ="reset" class="btn btn-primary" value = "Limpiar" />
+                                </div>   
+                            </form:form>
                         </div>
-                    </form:form>
-                <p><h4>Si no encontr&oacute; su Organizaci&oacute;n, reg&iacute;strela:</h4></p>
-                  <form:form name="altaOrganizacion" commandName="instancia" class="form-horizontal" action="gdaAltaOrganizacion.do"  method="POST"  >
-                  <p>${error_sql}</p>
-                  <div class="form-group">
-                            <label for="nombre">Nombre de la Organizaci&oacute;n:</label> 
-                            <form:input class="form-control" path="nombre" id="nombre" size="20"/><br/>
-                                <form:errors path="nombre" cssClass="alert alert-danger"/>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                             <label for="rfc">RFC:</label>  
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-organizacion">Organizaci&oacute;n:</label> 
-                            <select name="idInstancia" id="idInstancia" class="combobox-autocomplete form-control">
-                                <option value="">Busqueda de Organizaci&oacute;n</option>
-                                <core:forEach items="${preOrganizaciones}" var="organizacion">
-                                    <option value="${organizacion.idInstancia}">${organizacion.nombre}</option>
-                                </core:forEach> 
-                            </select>
-                            <br/>${pre_registro} 
-                        </div>   
-                </form:form>
+                    </div>
                 </div>
                 <!---------------------------------------------Fin Contenido-------------------------------------------> 
             </div><!--/row--> 
