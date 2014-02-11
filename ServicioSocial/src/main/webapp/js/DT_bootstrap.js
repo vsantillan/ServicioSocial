@@ -159,7 +159,7 @@ $(document).ready(function() {
             "sProcessing": "&nbsp; &nbsp; &nbsp;Procesando...",
             "sLengthMenu": " &nbsp; &nbsp; &nbsp;Mostrar _MENU_ registros",
             "sZeroRecords": "    No se encontraron resultados",
-            "sEmptyTable": "    Ningún dato disponible en esta tabla",
+            "sEmptyTable": "    Ning&uacute;n dato disponible en esta tabla",
             "sInfo": "&nbsp; &nbsp; &nbsp;    Mostrando registro(s) de la _START_ a la _END_ de un total de _TOTAL_ registro(s)",
             "sInfoEmpty": " &nbsp; &nbsp; &nbsp;   Mostrando registros del 0 al 0 de un total de 0 registros",
             "sInfoFiltered": "    (filtrado de un total de _MAX_ registros)",

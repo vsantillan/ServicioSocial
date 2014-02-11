@@ -123,7 +123,7 @@
                                             </ul>
                                             */%>
                                             
-                                            <a href="mostarObservacion.do?idDatosPersonales=${filaCorrec.idDatosPersonales}" class="fancy">Detalles</a>
+                                            <a href="mostarObservacion.do?idDatosPersonales=${filaCorrec.idDatosPersonales}" class="fancyFUI">Detalles</a>
                                         </td>
                                     </tr>
                                 </core:forEach>
@@ -188,6 +188,7 @@
         <script type="text/javascript">
             $('#formatoUnico-tabla a:first').tab('show');
         </script>
+        <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>
 
