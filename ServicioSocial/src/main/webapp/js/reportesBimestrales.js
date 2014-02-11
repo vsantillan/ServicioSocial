@@ -4,10 +4,10 @@ function actualizaFecha(fechaInicio) {
     var fecha = fechaInicio.value;
     alert(fecha);
     var arrayFecha = fecha.split('-');
-    var año = arrayFecha[0];
+    var anio = arrayFecha[0];
     var mes = arrayFecha[1] - 1;
     var dia = arrayFecha[2];
-    var final = new Date(año, mes, dia);
+    var final = new Date(anio, mes, dia);
     final.setMonth(final.getMonth() + 2);
 
     //FORMATEANDO LA FECHA

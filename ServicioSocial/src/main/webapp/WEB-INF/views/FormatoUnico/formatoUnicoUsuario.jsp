@@ -7,35 +7,6 @@
         <%@include file="../General/head.jsp"%>
 
         <!--        <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />-->
-
-
-
-
-        <script>
-            $(function() {
-                $("#tabs").tabs();
-                $('#timepicker').timepicker();
-                $('#fecha_inicio').datepicker(
-                        {
-                            closeText: 'Cerrar',
-                            prevText: 'Anterior',
-                            nextText: 'Siguiente',
-                            currentText: 'Hoy',
-                            dateFormat: 'yy-mm-dd',
-                            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-                            minDate: 0
-
-                        });
-
-            });
-        </script>
-
-        <script src="js/jquery.codigos.postales.js"></script>   
-        <script type="text/javascript" src="js/formatoUnicoJQuery.js"></script>
-
         <title>Formato &Uacute;nico - Usuario</title>
 
     </head>
@@ -50,18 +21,20 @@
                     <div class="tabbable">
                         <h1>P&aacute;gina del Formato Unico</h1>
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#datosPersonales">1.Datos Personales</a></li>
-                            <li><a data-toggle="tab" href="#datosContacto">2.Datos Contacto</a></li>
-                            <li><a data-toggle="tab" href="#datosAcademicos">3.Datos Acad&eacute;micos</a></li>
-                            <li><a data-toggle="tab" href="#datosOrganizaciones">4.Datos Organizaciones</a></li>
-                            <li><a data-toggle="tab" href="#horarios">5.Horario</a></li>
-                            <li><a data-toggle="tab" href="#imprimirFui">6.Imprimir Formato &Uacute;nico</a></li>
-                            <li><a data-toggle="tab" href="#subirFui">7.Subir Formato &Uacute;nico</a></li>
+                            <li class="active"><a data-toggle="tab" href="#datosPersonales" onclick="ocultaDiv();">1.Datos Personales</a></li>
+                            <li><a data-toggle="tab" href="#datosContacto" onclick="ocultaDiv();">2.Datos Contacto</a></li>
+                            <li><a data-toggle="tab" href="#datosAcademicos" onclick="ocultaDiv();">3.Datos Acad&eacute;micos</a></li>
+                            <li><a data-toggle="tab" href="#datosOrganizaciones" onclick="ocultaDiv();">4.Datos Organizaciones</a></li>
+                            <li><a data-toggle="tab" href="#horarios" onclick="ocultaDiv();">5.Horario</a></li>
+                            <li><a data-toggle="tab" href="#imprimirFui" onclick="ocultaDiv();">6.Imprimir Formato &Uacute;nico</a></li>
+                            <li><a data-toggle="tab" href="#subirFui" onclick="ocultaDiv();">7.Subir Formato &Uacute;nico</a></li>
                         </ul>
                         <div class="tab-content">
                             <div id="datosPersonales" class="tab-pane active col-md-6">
                                 <form:form id="frmDatosPersonales" modelAttribute="formatoUnicoDatosPersonales">
-                                    Los datos marcados con * son Obligatorios
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
+                                    </div>
                                     <div class="form-group">
                                         <form:input  type="hidden" path ="id" />
                                         <label>*Nombre:</label>
@@ -151,7 +124,9 @@
                             </div>
                             <div id="datosContacto" class="tab-pane col-md-6">
                                 <form:form id="frmDatosContacto" commandName="formatoUnicoDatosContacto" >
-                                    Los datos marcados con * son Obligatorios
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
+                                    </div>
                                     <div class="form-group">
                                         <form:input  type="hidden" path ="id" />
                                         <label>*Calle:</label>
@@ -279,7 +254,9 @@
                             <div id="datosOrganizaciones" class="tab-pane col-md-6">
                                 <form:form id="frmDatosOrganizaciones" modelAttribute="formatoUnicoDatosOrganizaciones" >
                                     <table>
-                                        <div class="form-group">Los datos marcados con * son Obligatorios<br/></div>
+                                        <div class="panel panel-warning">
+                                            <div class="panel-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
+                                        </div>
                                         <div class="form-group">
                                             <form:input class="idDatosPersonalesOrg form-control" type="hidden" path ="id"/>
                                             <label>*Organizaci&oacute;n:</label>
@@ -411,12 +388,19 @@
                                     </div>
                                 </form:form>
                             </div>
-                            <div id="imprimirFui" class="tab-pane col-md-6">
-                                <h1>A continuaci&oacute; descargar&aacute;s tu formato &uacute;nico, para posteriormente imprimirlo y acudir a la instancia donde realizarás tu servicio social para que te sellen tu documento como se muestra a continuación:</h1>
+                            <div id="imprimirFui" class="tab-pane col-md-12">
+                                <div class="col-md-6">
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading "><span class="glyphicon glyphicon-info-sign"></span>                <h5>A continuaci&oacute; descargar&aacute;s tu formato &uacute;nico, para posteriormente imprimirlo y acudir a la instancia donde realizarás tu servicio social para que te sellen tu documento como se muestra a continuación:</h5></div>
+                                    </div>
+                                
                                 <img src="imagenes/fui.png" style="width:300; height:500px" alt="Formato Unico inicial"/>
+                                </div>
+                                <div class="col-md-6">
                                 <h1>Ahora pulsa en el botón de descargar.</h1>
                                 <h2>Cuando tu formato tenga el sello corespondiente s&uacute;belo en la siguiente secci&oacute;n</h2>
-                                <a href="muestraReporteFUI.pdf" id="cmdDescargaFui" target="_blank" onclick="window.location.reload();"><img src="imagenes/descargar.png" /></a>
+                                <a href="muestraReporteFUI.pdf" id="cmdDescargaFui" target="_blank" onclick="window.location.reload();" class="btn btn-primary col-md-4 col-md-offset-3"><span class="glyphicon glyphicon-download"></span>&nbsp;Descargar</a>
+                                </div>
                             </div>
                             <div id="subirFui" class="tab-pane" col-md-6>
                                 <h1>Sube aqu&iacute; tu formato &uacute;nico dellado como el que está a continuaci&oacute;n</h1>
@@ -429,12 +413,13 @@
                             </div>
                         </div>
                     </div>
-                    <div id="observaciones" style="display: none">
-                        <b>Debes atender los siguientes puntos</b><br/>
-                        <ul id="listaObservaciones" >
-
-                        </ul>
-
+                </div>
+            </div>
+            <div class="row">
+                <div id="observaciones" class="col-md-6 panel panel-danger" style="display: none;">
+                    <div class="panel-heading"><b>Debes atender los siguientes puntos</b></div>
+                    <div class="panel-body">
+                        <ul id="listaObservaciones" ></ul>
                     </div>
                 </div>
             </div>

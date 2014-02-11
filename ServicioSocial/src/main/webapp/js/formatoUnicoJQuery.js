@@ -161,7 +161,6 @@ function enviarDatosAlumno()
         }
         if (respJ.length > 0)
         {
-            //alert('Tienes errores');
             console.log('Tienes errores');
             $('.observacion').remove();
             $.each(respJ, function(i, accion) {
@@ -307,6 +306,11 @@ function timePicker()
         idCadena = ".timepicker\\.\\[" + i + "\\]";
         $(idCadena).timepicker(parametros);
     }
+}
+
+
+function ocultaDiv(){
+    $('#observaciones').hide();
 }
 
 
