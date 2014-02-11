@@ -393,23 +393,31 @@
                                     <div class="panel panel-warning">
                                         <div class="panel-heading "><span class="glyphicon glyphicon-info-sign"></span>                <h5>A continuaci&oacute; descargar&aacute;s tu formato &uacute;nico, para posteriormente imprimirlo y acudir a la instancia donde realizarás tu servicio social para que te sellen tu documento como se muestra a continuación:</h5></div>
                                     </div>
-                                
-                                <img src="imagenes/fui.png" style="width:300; height:500px" alt="Formato Unico inicial"/>
+
+                                    <img src="imagenes/fui.png" style="width:300; height:500px" alt="Formato Unico inicial"/>
                                 </div>
                                 <div class="col-md-6">
-                                <h1>Ahora pulsa en el botón de descargar.</h1>
-                                <h2>Cuando tu formato tenga el sello corespondiente s&uacute;belo en la siguiente secci&oacute;n</h2>
-                                <a href="muestraReporteFUI.pdf" id="cmdDescargaFui" target="_blank" onclick="window.location.reload();" class="btn btn-primary col-md-4 col-md-offset-3"><span class="glyphicon glyphicon-download"></span>&nbsp;Descargar</a>
+                                    <div class="panel panel-warning">
+                                        <div class="panel-heading "><span class="glyphicon glyphicon-info-sign"></span>
+                                            <h5>Ahora pulsa en el botón de descargar.</h5></p>
+                                            <a href="muestraReporteFUI.pdf" id="cmdDescargaFui" target="_blank" onclick="window.location.reload();" class="btn btn-primary col-md-4 col-md-offset-3"><span class="glyphicon glyphicon-download"></span>&nbsp;Descargar</a><br><br>
+                                            <h4>Cuando tu formato tenga el sello corespondiente s&uacute;belo en la siguiente secci&oacute;n</h4>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
-                            <div id="subirFui" class="tab-pane" col-md-6>
-                                <h1>Sube aqu&iacute; tu formato &uacute;nico dellado como el que está a continuaci&oacute;n</h1>
-                                <img src="imagenes/fui.png" style="width:300px; height:500px" alt="Formato Unico inicial"/>
-                                <form method="post" id="frmSubirFui" action="subirFui.do"  enctype="multipart/form-data">
-                                    <p>Subir Formato Único:</p>
-                                    <input type="hidden" name ="id" id="idSubirFui" value="${idDatSubida}" class="form-control"/>
-                                    ${infoDescarga}
-                                </form>
+                            <div id="subirFui" class="tab-pane col-md-8 col-md-offset-2">
+                                <div class="panel panel-warning">
+                                    <div class="panel-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sube aqu&iacute; tu formato &uacute;nico dellado como el que está a continuaci&oacute;n</h4></div>
+                                    <div class="panel-body">
+                                        <img src="imagenes/fui.png" style="width:300px; height:500px" alt="Formato Unico inicial"/>
+                                        <form method="post" id="frmSubirFui" action="subirFui.do"  enctype="multipart/form-data">
+                                            <input type="hidden" name ="id" id="idSubirFui" value="${idDatSubida}"/>
+                                            ${infoDescarga}
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
