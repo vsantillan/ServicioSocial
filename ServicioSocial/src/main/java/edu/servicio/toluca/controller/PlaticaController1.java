@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,45 +29,46 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class PlaticaController1 {
+
     @EJB(mappedName = "java:global/ServicioSocial/LugaresPlaticaFacade")
     private LugaresPlaticaFacade LugaresPlaticaFacade;
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/altaLugares.do")
-    public String obtieneLugares(Model modelo , HttpSession session, HttpServletRequest request)
-    { 
-        if (! new ValidaSesion().validaOperador(session, request)) {
+    public String obtieneLugares(Model modelo, HttpSession session, HttpServletRequest request) {
+        if (!new ValidaSesion().validaOperador(session, request)) {
             modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         LinkedHashMap ordenarDesc = new LinkedHashMap();
-        ordenarDesc.put("lugar","desc");        
+        ordenarDesc.put("lugar", "desc");
         modelo.addAttribute("lugar_i", new LugaresPlatica());
         modelo.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
         return "/Platicas/lugaresPlatica";
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugar.do")
     //public @ResponseBody
-    String nuevoLugar(Model modelo, LugaresPlatica lugar_i,BindingResult resultado) {
-            //System.out.println("Result has no error");
-            MetodosValidacion metodo = new MetodosValidacion();
+    String nuevoLugar(Model modelo,@ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
+        if (!resultado.hasErrors()) {
             lugar_i.setStatus(BigInteger.valueOf(1));
 //            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
-           lugar_i.setLugar(lugar_i.getLugar().toUpperCase());
             LugaresPlaticaFacade.create(lugar_i);
-            return "redirect:altaLugares.do";
+        } else {
+            System.out.println("Result"+resultado);
+            modelo.addAttribute("Lugar",lugar_i);
+        }
+        return "redirect:altaLugares.do";
     }
-    
-        @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugarAltaPlatica.do")
+
+    @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugarAltaPlatica.do")
     //public @ResponseBody
-    String nuevoLugarAltaPlatica(Model modelo, LugaresPlatica lugar_i,BindingResult resultado) {
-            //System.out.println("Result has no error");
-            MetodosValidacion metodo = new MetodosValidacion();
-            lugar_i.setStatus(BigInteger.valueOf(1));
+    String nuevoLugarAltaPlatica(Model modelo, @ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
+        //System.out.println("Result has no error");
+        MetodosValidacion metodo = new MetodosValidacion();
+        lugar_i.setStatus(BigInteger.valueOf(1));
 //            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
-            lugar_i.setLugar(lugar_i.getLugar().toUpperCase());
-            LugaresPlaticaFacade.create(lugar_i);
-            return "redirect:altaPlatica.do";
+        LugaresPlaticaFacade.create(lugar_i);
+        return "redirect:altaPlatica.do";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusLugar.do")
@@ -74,36 +76,35 @@ public class PlaticaController1 {
     String actualizarStatusLugares(int id, Model model) {
         LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
         lugar.setStatus(BigInteger.valueOf(0));
-        System.out.println("se edito: " );
+        System.out.println("se edito: ");
         LugaresPlaticaFacade.edit(lugar);
-        return "ok "+lugar.getLugar();
+        return "ok " + lugar.getLugar();
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/editarLugar.do")
-    String editarLugar_r(Model model, @Valid LugaresPlatica lugar_i,BindingResult resultado, HttpSession session, HttpServletRequest request) {
+    String editarLugar_r(Model model, @Valid LugaresPlatica lugar_i, BindingResult resultado, HttpSession session, HttpServletRequest request) {
         if (!resultado.hasErrors()) {
             MetodosValidacion metodo = new MetodosValidacion();
             LugaresPlatica lugar_r = LugaresPlaticaFacade.find(lugar_i.getId());
-            
+
             lugar_r.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
-            if(lugar_r.getLugar().length()>0){
-                lugar_r.setLugar(lugar_r.getLugar().toUpperCase());
+            if (lugar_r.getLugar().length() > 0) {
                 LugaresPlaticaFacade.edit(lugar_r);
                 return "redirect:altaLugares.do";
-            } else{
+            } else {
                 System.out.println("Result has error");
                 model.addAttribute("errorBlanco", "<div class='alert alert-danger'>Error la descripción esta vacia</div>");
                 LinkedHashMap ordenarDesc = new LinkedHashMap();
-                ordenarDesc.put("lugar","desc");        
+                ordenarDesc.put("lugar", "desc");
                 model.addAttribute("lugar_i", new LugaresPlatica());
                 model.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
                 return "/Platicas/lugaresPlatica";
             }
-        } else{
+        } else {
             System.out.println("Result has error");
             model.addAttribute("errorBlanco", "<div class='alert alert-danger'>Error la descripción esta vacia</div>");
             LinkedHashMap ordenarDesc = new LinkedHashMap();
-            ordenarDesc.put("lugar","desc");        
+            ordenarDesc.put("lugar", "desc");
             model.addAttribute("lugar_i", new LugaresPlatica());
             model.addAttribute("lugares", LugaresPlaticaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
             return "/Platicas/lugaresPlatica";
@@ -111,3 +112,4 @@ public class PlaticaController1 {
     }
 
 }
+
