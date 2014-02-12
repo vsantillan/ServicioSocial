@@ -19,7 +19,7 @@
                 <div class="bs-docs-section">
 
                     <div class="tabbable">
-                        <h1>P&aacute;gina del Formato Unico</h1>
+                        <h1 class="col-md-offset-4"><span class="label label-info"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Formato &Uacute;nico</span></h1>
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#datosPersonales" onclick="ocultaDiv();">1.Datos Personales</a></li>
                             <li><a data-toggle="tab" href="#datosContacto" onclick="ocultaDiv();">2.Datos Contacto</a></li>
@@ -32,8 +32,8 @@
                         <div class="tab-content">
                             <div id="datosPersonales" class="tab-pane active col-md-6">
                                 <form:form id="frmDatosPersonales" modelAttribute="formatoUnicoDatosPersonales">
-                                    <div class="panel panel-warning">
-                                        <div class="panel-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
+                                    <div class="alert alert-warning">
+                                        <div class="alert-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
                                     </div>
                                     <div class="form-group">
                                         <form:input  type="hidden" path ="id" />
@@ -124,8 +124,9 @@
                             </div>
                             <div id="datosContacto" class="tab-pane col-md-6">
                                 <form:form id="frmDatosContacto" commandName="formatoUnicoDatosContacto" >
-                                    <div class="panel panel-warning">
-                                        <div class="panel-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
+                                    <div class="alert alert-warning">
+                                        <a class="close" data-dismiss="alert"></a>
+                                        <div class="alert-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
                                     </div>
                                     <div class="form-group">
                                         <form:input  type="hidden" path ="id" />
@@ -254,8 +255,9 @@
                             <div id="datosOrganizaciones" class="tab-pane col-md-6">
                                 <form:form id="frmDatosOrganizaciones" modelAttribute="formatoUnicoDatosOrganizaciones" >
                                     <table>
-                                        <div class="panel panel-warning">
-                                            <div class="panel-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
+                                        <div class="alert alert-warning">
+                                            <a class="close" data-dismiss="alert"></a>
+                                            <div class="alert-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Los datos marcados con * son Obligatorios</h4></div>
                                         </div>
                                         <div class="form-group">
                                             <form:input class="idDatosPersonalesOrg form-control" type="hidden" path ="id"/>
@@ -394,7 +396,7 @@
                                         <div class="panel-heading "><span class="glyphicon glyphicon-info-sign"></span>                <h5>A continuaci&oacute; descargar&aacute;s tu formato &uacute;nico, para posteriormente imprimirlo y acudir a la instancia donde realizarás tu servicio social para que te sellen tu documento como se muestra a continuación:</h5></div>
                                     </div>
 
-                                    <img src="imagenes/fui.png" style="width:300; height:500px" alt="Formato Unico inicial"/>
+                                    <img src="img/fui.png" class="img-responsive center-block" style="width:300px; height:500px" alt="Formato Unico inicial"/>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="panel panel-warning">
@@ -411,10 +413,11 @@
                                 <div class="panel panel-warning">
                                     <div class="panel-heading "><h4><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Sube aqu&iacute; tu formato &uacute;nico dellado como el que está a continuaci&oacute;n</h4></div>
                                     <div class="panel-body">
-                                        <img src="imagenes/fui.png" style="width:300px; height:500px" alt="Formato Unico inicial"/>
+                                        <img src="img/fui.png" class="img-responsive" style="width:300px; height:500px" alt="Formato Unico inicial"/>
                                         <form method="post" id="frmSubirFui" action="subirFui.do"  enctype="multipart/form-data">
                                             <input type="hidden" name ="id" id="idSubirFui" value="${idDatSubida}"/>
-                                            ${infoDescarga}
+                                            <div class='form-group'><label>Seleccione un Formato &Uacute;nico</label><br><input type='file' id='idfile' name ='file' class='btn btn-primary' title='Buscar en mi equipo'></input></div>
+                                            <div class='form-group'><label>&nbsp;</label><input type='submit' id='subeFui' value='Subir' class='btn btn-primary' /></div>
                                         </form>
                                     </div>
                                 </div>
@@ -435,7 +438,13 @@
             <%@include file="../General/footer.jsp"%>  
         </div><!--/row--> 
         <%@include file="../General/js.jsp"%>
-        <script src="js/formatoUnicoJQuery.js"></script> 
+        <script src="js/formatoUnicoJQuery.js"></script>
+        <script src="js/bootstrap.fileInput.js"></script> 
+        <script>
+        $(document).ready(function() {
+            $('input[type=file]').bootstrapFileInput();
+        });
+        </script>
         <jsp:include page="../Template/headsModal.jsp" />
 
     </body>

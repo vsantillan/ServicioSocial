@@ -299,9 +299,16 @@ function timePicker()
 {
     var idTimePicker = 14;
     var idCadena = "";
-    var parametros = {hours: {starts: 6, ends: 21},
-        minutes: {interval: 15}, showAnim: 'blind'};
-    for (var i = 0; i <= idTimePicker; i++)
+//    var parametros = {hours: {starts: 6, ends: 21},
+//        minutes: {interval: 15}, showAnim: 'blind'};
+    var parametros=  {   
+                defaultTime:'00:00',
+                minuteStep: 15,
+                showInputs: false,
+                modalBackdrop: true,
+                showSeconds: false,
+                showMeridian: true};
+    for (var i = 1; i <= idTimePicker; i++)
     {
         idCadena = ".timepicker\\.\\[" + i + "\\]";
         $(idCadena).timepicker(parametros);
