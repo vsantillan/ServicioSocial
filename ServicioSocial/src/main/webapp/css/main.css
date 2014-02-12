@@ -70,7 +70,13 @@
           border-style: solid;
           border-bottom-color:#428bca; 
       }
-      .tabAzul{
-          background: #428bca; 
+      .noticia{
+          margin: 1px;
+          padding:10px 0px 0px 40px;
+          width:48%;
+          float:left;
+      }
+      .panelNoticia{
+          height:340px;
       }
       
