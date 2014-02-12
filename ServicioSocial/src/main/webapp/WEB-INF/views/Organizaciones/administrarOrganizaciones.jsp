@@ -9,7 +9,6 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
     <body onmousedown="elemento(event);">
@@ -35,8 +34,9 @@
                             <core:forEach items="${organizaciones}" var="current">
                                 <tr class='gradeX'>
                                     <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
-                                    <td><a href="editarOrganizacion.do?id=${current.idInstancia}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Organizaci&oacute;n"></span></a><a href="#" class="btn-validar-org"><img class="cambiaStatusInstancia" ide="${current.idInstancia}" src="imagenes/trash.png" width="30" title="Borrar Organizaci&oacute;n"></a></td>
-                                    <td><a href="detalleOrganizacion.do?id=${current.idInstancia}" data-modal="modal"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
+                                    <td><a href="editarOrganizacion.do?id=${current.idInstancia}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Organizaci&oacute;n"></span></a>&nbsp;&nbsp;
+                                        <a href="#" class="btn-validar-org"><span class="cambiaStatusInstancia glyphicon glyphicon-remove sizeIcon" ide="${current.idInstancia}" title="Borrar Organización"></span></a></td>
+                                    <td><a href="detalleOrganizacion.do?id=${current.idInstancia}" data-modal="modal" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                     <td><core:out value="${current.nombre}" /></td>
                                     <td><core:out value="${current.titular}" /></td>
                                     <td><core:out value="${current.rfc}" /></td>
@@ -49,11 +49,10 @@
                 <%@include file="../General/footer.jsp"%> 
             </div>
         </div>
-
-        <div id="a" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
+<div class="modal-dialog" id="a" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+        
                         <h1>Motivos de Rechazo</h1>
                     </div>
                     <div class="modal-body">
@@ -82,7 +81,8 @@
             </div>
         </div>
         <%@include file="../General/js.jsp"%>
-
+        <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
+        <jsp:include page="../Template/headsModal.jsp" />
     </body>
 
 

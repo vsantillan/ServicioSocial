@@ -1,63 +1,62 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="css/cssTablaDetallesOrganizaciones.css" />
+        <%@include file="../General/head.jsp"%>
     </head>
     <body>
-        <div id="muestradatos">
-            <center>
-                <table class="table">
+        <div class="container">
+            <div class="row">
+                <div class="row col-md-12 center-block">
+                <table class="table table-hover">
                     <tr>
                         <td colspan="2">
-                            <h2>Detalle de Empresas</h2>
+                            <h2 class="text-info">Detalles de Instancia</h2>
                         </td>
                     </tr>
                     <tr>
-                        <td><p>Nombre de la Organizaci&oacute;n</p></td>
+                        <th><p>Nombre de la Organizaci&oacute;n</p></th>
                         <td><p><core:out value="${instancia.nombre}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>Usuario:</p></td>
+                        <th><p>Usuario:</p></th>
                         <td><p><core:out value="${instancia.usuario}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>Correo:</p></td>
+                        <th><p>Correo:</p></th>
                         <td><p><core:out value="${instancia.correo}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>RCF:</p></td>
+                        <th><p>RCF:</p></th>
                         <td><p><core:out value="${instancia.rfc}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>Titular:</p></td>
+                        <th><p>Titular:</p></th>
                         <td><p><core:out value="${instancia.titular}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>Puesto del Titular:</p></td>
+                        <th><p>Puesto del Titular:</p></th>
                         <td><p><core:out value="${instancia.puesto}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>Tel&eacute;fono:</p></td>
+                        <th><p>Tel&eacute;fono:</p></th>
                         <td><p><core:out value="${instancia.telefono}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>Ext:</p></td>
+                        <th><p>Ext:</p></th>
                         <td><p><core:out value="${instancia.ext}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>Domicilio:</p></td>
+                        <th><p>Domicilio:</p></th>
                         <td><p><core:out value="${instancia.domicilio}" /></p></td>
                     </tr>
                     <tr>
-                        <td><p>Tipo de Organizaci&oacute;n:</p></td>
+                        <th><p>Tipo de Organizaci&oacute;n:</p></th>
                         <td><p><core:out value="${instancia.tipoOrganizacion.detalle}" /></p></td>
                     </tr>
                 </table>
-            </center>
+            </div>
+            </div>
         </div> 
     </body>
 </html>

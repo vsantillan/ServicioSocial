@@ -3,45 +3,16 @@
     Created on : 19/06/2013, 12:21:32 PM
     Author     : ekt
 --%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="../Template/taglibs.jsp" %>
-
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <%@ include file="../Template/metas.jsp" %>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-
-        <link rel="stylesheet" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
-        <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
-        <script src="js/cargaCodigosPostalesParaEditarOP.js"></script>
-        <script src="js/jquery.manolo.js"></script>
-        
-        <script>
-            function pass(elemento)
-            {
-                if (elemento.value === "no")
-                {
-                    document.getElementById("cambiaPass").style.display = "none";
-                    document.getElementById("valid_pass").value = 0;
-                    document.getElementById("confirmPass").removeAttribute("required");
-                } else {
-                    document.getElementById("cambiaPass").style.display = "block";
-                    document.getElementById("valid_pass").value = 1;
-                    document.getElementById("confirmPass").required = "true";
-                }
-            }
-        </script>
-        <title>Editar Organizaci&oacute;n</title>
+        <%@include file="../General/head.jsp"%>
+        <title>Administraci&oacute;n de Organizaciones</title>
     </head>
-    <body class="background" onmousedown="elemento(event);">
-        <jsp:include page="../Template/banner.jsp" />
-        <%-- inicio del contenido --%>
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;width:80%">
+    <body onmousedown="elemento(event);">
+        <div class="container">
+            <div class="row">
                 <h1>Editar Organizacion</h1>
                 <form:form name="modificarOrganizacion" commandName="instancia" class="MyForm" action="modificarOrganizacion.do"  method="POST" >
                     <p>${error_sql}</p>
@@ -162,7 +133,7 @@
                         </td>  
                         </tr>
                         <tr>
-                            <td>  <label for="validacionAdmin">ValidaciÃ³n:</label></td>
+                            <td>  <label for="validacionAdmin">Validación:</label></td>
                             <td>  <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
                                 <form:select id="validacionAdmin" path="validacionAdmin" name="validacionAdmin">
                                     <form:option  value="0">Rechazada</form:option>
@@ -188,10 +159,10 @@
                             </td>  
                         </tr>                        
                         <tr>
-                            <td><label for="lugar">Cambiar contraseÃ±a:</label></td>
+                            <td><label for="lugar">Cambiar contraseña:</label></td>
                             <td>
-                                <input type="radio" name="passG1" id="passG1" value="si" onclick="pass(this)">Cambiar contraseÃ±a<br/>
-                                <input type="radio" name="passG1" id="passG1" value="no" onclick="pass(this)" checked="checked">Mantener contraseÃ±a<br/>
+                                <input type="radio" name="passG1" id="passG1" value="si" onclick="pass(this)">Cambiar contraseña<br/>
+                                <input type="radio" name="passG1" id="passG1" value="no" onclick="pass(this)" checked="checked">Mantener contraseña<br/>
                                 ${confirma_password}
                             </td>
                         </tr>
@@ -224,6 +195,22 @@
         </div>
     </div>
     <jsp:include page="../Template/footer.jsp" />
+    
+    <script>
+            function pass(elemento)
+            {
+                if (elemento.value === "no")
+                {
+                    document.getElementById("cambiaPass").style.display = "none";
+                    document.getElementById("valid_pass").value = 0;
+                    document.getElementById("confirmPass").removeAttribute("required");
+                } else {
+                    document.getElementById("cambiaPass").style.display = "block";
+                    document.getElementById("valid_pass").value = 1;
+                    document.getElementById("confirmPass").required = "true";
+                }
+            }
+        </script>
 </body>
 </html>
 
