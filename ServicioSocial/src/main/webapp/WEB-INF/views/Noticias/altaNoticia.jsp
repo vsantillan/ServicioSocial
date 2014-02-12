@@ -72,11 +72,10 @@
                 </div><!--/row--> 
                 <%@include file="../General/footer.jsp"%>  
             </div><!--/row--> 
+            <%@include file="../General/js.jsp"%>
         </div><!-- /container -->
-        <%@include file="../General/js.jsp"%>
-    </div>
+        
     <%-- fin del contenido --%>
-    <jsp:include page="../Template/footer.jsp" />
 
 </body>
 </html>

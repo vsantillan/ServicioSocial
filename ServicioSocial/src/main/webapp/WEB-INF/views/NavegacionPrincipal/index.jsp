@@ -64,37 +64,35 @@
                 </div>
             </div>
 
-            <div class="row clearfix">
-                <div class="col-md-12 column">
-                    <core:forEach items="${Noticias}" var="noticia" varStatus="x">
-                        <core:if test="${(x.index%2 == 0) && (x.index != 0)}">
-                            <div class="row clearfix">    
-                            </core:if>
-                            <div class="col-md-4 column"> <!--Noticia-->
-                                <div class="panel-group" id="panel-${noticia.id}">
-                                    <div class="panel panel-default alert-info"> 
-                                        <div class="panel-heading">
-                                            <button class="btn btn-lg btn-primary btn-block panel-title collapsed" input type ="button" data-toggle="collapse" data-parent="#panel-${noticia.id}" href="#panel-element-${noticia.id}"><b>${noticia.titulo} &nbsp; ${noticia.fecha}</b></button>
-                                        </div>
-                                        <div id="panel-element-${noticia.id}" class="panel-collapse collapse ">
-                                            <div class="panel-body alert-info">
-                                                ${noticia.detalle}
-                                            </div>
-                                        </div>
+            <core:forEach items="${Noticias}" var="noticia" varStatus="x">
+                <core:if test="${(x.index%3 == 0)}">
+                    <div class="row clearfix" ide="gato"> <!--Row para noticias-->
+                    </core:if>
+                    <div class="col-md-4 column"> <!--Noticia-->
+                        <div class="panel-group" id="panel-${noticia.id}">
+                            <div class="panel panel-default alert-info"> 
+                                <div class="panel-heading">
+                                    <button class="btn btn-lg btn-primary btn-block panel-title collapsed" input type ="button" data-toggle="collapse" data-parent="#panel-${noticia.id}" href="#panel-element-${noticia.id}"><b>${noticia.titulo} &nbsp; ${noticia.fecha}</b></button>
+                                </div>
+                                <div id="panel-element-${noticia.id}" class="panel-collapse collapse ">
+                                    <div class="panel-body alert-info">
+                                        ${noticia.detalle}
                                     </div>
                                 </div>
-                            </div> <!--Noticia-->
-                            <core:if test="${((x.index%2 == 0) && (x.index != 0)) }">
-                            </div>   
-                        </core:if>
-                    </core:forEach>
+                            </div>
+                        </div>
+                    </div> <!--Noticia-->
+                    <core:if test="${((x.index%3 == 0) && (x.index != 0)) || (fn:length(Noticias) == x.index+1) }">
+                    </div>   
+                </core:if>
+            </core:forEach>
 
-                </div>
-            </div>
             <!---------------------------------------------Fin Contenido------------------------------------------->                
-
-            <%@include file="../General/footer.jsp"%>           
+            <div class="row">
+                <%@include file="../General/footer.jsp"%>  
+            </div>
+            <%@include file="../General/js.jsp"%>         
         </div> <!-- /container -->
-        <%@include file="../General/js.jsp"%>
+
     </body>
 </html>

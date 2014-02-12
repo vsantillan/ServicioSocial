@@ -22,7 +22,7 @@
                             <tr>
                                 <th>Acci&oacute;n</th>
                                 <th>Fecha Creación</th> 
-                                <th>Noticia</th>
+                                <th>Tipo de Noticia</th>
                                 <th>Título Noticia  </th>                                          
                             </tr>
                         </thead>
@@ -30,37 +30,36 @@
                             <core:forEach items="${Noticias}" var="noticia">                                   
                                 <tr class='gradeX'>
                                     <td>
-                                        <a href="editarNoticia-${noticia.id}.do"><span class="glyphicon glyphicon-edit center-block sizeIcon"></span></a>
-                                        <a href="#"> <img class="rechazar"  title="Rechazar" /><span class="glyphicon glyphicon-trash center-block sizeIcon"></span></a>
-
+                                        <a href="editarNoticia-${noticia.id}.do"><span class="glyphicon glyphicon-edit sizeIcon"></span></a>
+                                        <a href="#"> <img class="rechazar"  title="Rechazar" /><span class="glyphicon glyphicon-trash sizeIcon"></span></a>
                                     </td>
                                     <td>${noticia.fecha}</td>
                                     <td>
-                            <c:choose>
-                                <c:when test="${noticia.tipoServicio == 1}">
+                            <core:choose>
+                                <core:when test="${noticia.tipoServicio == 1}">
                                     Página Principal
-                                </c:when>
-                                <c:when test="${noticia.tipoServicio == 2}">
-                                    Alumnos                                        </c:when>
-                                <c:when test="${noticia.tipoServicio == 3}">
+                                </core:when>
+                                <core:when test="${noticia.tipoServicio == 2}">
+                                    Alumnos                                        
+                                </core:when>
+                                <core:when test="${noticia.tipoServicio == 3}">
                                     Organizaciones
-                                </c:when>
-                                <c:otherwise>
+                                </core:when>
+                                <core:otherwise>
                                     Desconocido
-                                </c:otherwise>
-                            </c:choose>
+                                </core:otherwise>
+                            </core:choose>
                             </td>
                             <td>${noticia.titulo}</td>
-
-
                             </tr>
                         </core:forEach>
                         </tbody>
                     </table>
                 </div>
+                <%@include file="../General/footer.jsp"%> 
             </div>
-            <%@include file="../General/footer.jsp"%> 
+            <%@include file="../General/js.jsp"%>
         </div>
-        <%@include file="../General/js.jsp"%>
+        
     </body>
 </html>

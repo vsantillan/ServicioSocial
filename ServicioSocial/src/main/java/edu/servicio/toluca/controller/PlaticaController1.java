@@ -50,8 +50,8 @@ public class PlaticaController1 {
     //public @ResponseBody
     String nuevoLugar(Model modelo,@ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
         if (!resultado.hasErrors()) {
+            lugar_i.setId(null);
             lugar_i.setStatus(BigInteger.valueOf(1));
-//            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
             LugaresPlaticaFacade.create(lugar_i);
         } else {
             System.out.println("Result"+resultado);
@@ -63,11 +63,14 @@ public class PlaticaController1 {
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugarAltaPlatica.do")
     //public @ResponseBody
     String nuevoLugarAltaPlatica(Model modelo, @ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
-        //System.out.println("Result has no error");
-        MetodosValidacion metodo = new MetodosValidacion();
-        lugar_i.setStatus(BigInteger.valueOf(1));
-//            lugar_i.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
-        LugaresPlaticaFacade.create(lugar_i);
+        if (!resultado.hasErrors()) {
+            lugar_i.setId(null);
+            lugar_i.setStatus(BigInteger.valueOf(1));
+            LugaresPlaticaFacade.create(lugar_i);
+        } else {
+            System.out.println("Result"+resultado);
+            modelo.addAttribute("Lugar",lugar_i);
+        }
         return "redirect:altaPlatica.do";
     }
 
@@ -75,6 +78,7 @@ public class PlaticaController1 {
     public @ResponseBody
     String actualizarStatusLugares(int id, Model model) {
         LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
+        lugar.setId(null);
         lugar.setStatus(BigInteger.valueOf(0));
         System.out.println("se edito: ");
         LugaresPlaticaFacade.edit(lugar);

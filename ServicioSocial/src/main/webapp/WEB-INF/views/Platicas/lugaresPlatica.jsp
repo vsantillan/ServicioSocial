@@ -19,6 +19,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
+                    <form:errors path="lugar" cssClass="error"/>
                     <h1>Administrar Lugares</h1>
                     <p>A continuaci&oacute;n se muestran los lugares dados de alta en el sistema.</p>
                     <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'>
