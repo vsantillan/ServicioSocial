@@ -9,6 +9,9 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
+        <style type="text/css">
+            .bs-example{margin: 20px;}
+        </style>
     </head>
     <body>
         <div class="container">
@@ -30,7 +33,7 @@
                             <thead>
                                 <tr>
                                     <th>Acci&oacute;nes</th>
-                                    <td>Periodo</td>
+                                    <th>Periodo</th>
                                     <th>N. Control</th>
                                     <th>Nombre</th>
                                     <th>Documento</th>
@@ -43,9 +46,9 @@
                                 <core:forEach items="${listadoFormatoUnicoNORevisados}" var="filaNR">                                   
                                     <tr class='gradeX'>
                                     <td>
-                                        <a href="#"> <span class="aceptar glyphicon glyphicon-ok sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
-                                        <a href="#"> <span class="rechazar glyphicon glyphicon-remove sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
-                                        <a href="#"> <span class="correccion glyphicon glyphicon-edit sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
+                                        <a href="#"> <span class="aceptar glyphicon glyphicon-ok sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
+                                        <a href="#"> <span class="rechazar glyphicon glyphicon-remove sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Rechazar"  idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
+                                        <a href="#"> <span class="correccion glyphicon glyphicon-edit sizeIcon" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" title="Corrección" idFU="${filaNR.idFormatoUnico}" idDP="${filaNR.idDatosPersonales}" ></span></a>
                                     </td>
      
                                     <td>${filaNR.periodo}</td>
@@ -66,7 +69,7 @@
                             <thead>
                                 <tr>
                                     <th>Periodo</th>
-                                    <td>No. Control</td>
+                                    <th>No. Control</th>
                                     <th>Nombre</th>
                                     <th>Documento</th>
                                     <th>Fecha Subida</th>
@@ -87,7 +90,7 @@
                                                 <li>${observacion}</li>
                                             </core:forEach>
                                             */%>
-                                            <a href="mostarObservacion.do?idDatosPersonales=${filaRech.idDatosPersonales}" class="fancy">Detalles</a>
+                                            <a href="mostarObservacion.do?idDatosPersonales=${filaRech.idDatosPersonales}" class="fancy"><i class="glyphicon glyphicon-list"></i>  Detalles</a>
                                         </td>
                                     </tr>
                                 </core:forEach>
@@ -98,8 +101,8 @@
                         <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="enCorreccion_dt" width='100%'>
                             <thead>
                                 <tr>
-                                   <th>Periodo</th>
-                                    <td>No. Control</td>
+                                    <th>Periodo</th>
+                                    <th>No. Control</th>
                                     <th>Nombre</th>
                                     <th>Documento</th>
                                     <th>Fecha Subida</th>
@@ -115,15 +118,7 @@
                                         <td><a href="mostarPDF.do?id=${filaCorrec.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
                                         <td><core:out value="${filaCorrec.fechaSubida}"/></td>
                                         <td>
-                                            <%/*
-                                             * <ul>
-                                            <core:forEach items="${filaCorrec.listaObservaciones}" var="observacion">
-                                                <li>${observacion}</li>
-                                            </core:forEach>
-                                            </ul>
-                                            */%>
-                                            
-                                            <a href="mostarObservacion.do?idDatosPersonales=${filaCorrec.idDatosPersonales}" class="fancyFUI">Detalles</a>
+                                            <a href="mostarObservacion.do?idDatosPersonales=${filaCorrec.idDatosPersonales}" class="fancyFUI"><i class="glyphicon glyphicon-list"></i>  Detalles</a>
                                         </td>
                                     </tr>
                                 </core:forEach>
@@ -161,27 +156,36 @@
             </div>
         </div>
         <%-- fin del contenido --%>     
-        
-        <div id="motivos" style="display: none; ">
-             <form id="observacionesCat" action="#"  onsubmit="return  false;">
-            <div style="height: 350px; overflow: scroll" >
-                <h1>Motivos de Rechazo</h1>
-                    <table>
-                        <core:forEach items="${listadoObservaciones}" var="observacion">
-                        <tr>
-                            <td style="width: 450px;font-size: 20px"><label><input name="id[]" value="${observacion.id}" type="checkbox"/>&nbsp;&nbsp;&nbsp;
-                             <core:out value="${observacion.detalle}" /></label>
-                            </td>
-                        </tr> 
-                    </core:forEach>
-                   </table>
-                </div>
-                 <div>
-                      <button id="guardarObservaciones">Guardar</button>
-                      &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do')"   style="font-size: 20px"> Agregar Observación</a>
-                 </div>
-                 </form>  
+             
+        <div class="modal-dialog" id="motivos" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title titulos-naranja">Motivos de Rechazo del Formato Único</h3>
             </div>
+            <form id="observacionesCat" action="#"  onsubmit="return  false;">
+            <div class="modal-body">
+              <div class="list-group">
+              <core:forEach items="${listadoObservaciones}" var="observacion">
+              <a href="#" class="list-group-item">
+                  <div class="checkbox">
+                      <label>
+                      <input name="id[]" value="${observacion.id}" type="checkbox"/>
+                      <h4 class="list-group-item-heading">${observacion.detalle}</h4>
+                      </label>
+                  </div>
+              </a>
+              </core:forEach>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
+              <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
+              <button id="guardarObservaciones" type="button" class="btn btn-primary">Guardar las observaciones de el Formato Único</button>
+            </div>
+            </form>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+
         
         <%@include file="../General/js.jsp"%>
         <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>

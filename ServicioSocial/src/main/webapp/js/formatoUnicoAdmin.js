@@ -1,16 +1,16 @@
 var idDatosPersonales2 = "";
 var idFormatoUnico2 = "";
-var tipo2="";
+var tipo2 = "";
 
 $(document).ready(listo);
 function listo()
 {
-    
-    inicializarDataTables();
-    $(document).on("click","#guardarObservaciones",obtenerDatos);
-    $(document).on("click",".aceptar",cambiarEstadoFormatoAceptado);
-    $(document).on("click",".correccion",cambiarEstadoFormatoCorreccion);
-    $(document).on("click",".rechazar",cambiarEstadoFormatoRechazado);
+
+    //inicializarDataTables();
+    $(document).on("click", "#guardarObservaciones", obtenerDatos);
+    $(document).on("click", ".aceptar", cambiarEstadoFormatoAceptado);
+    $(document).on("click", ".correccion", cambiarEstadoFormatoCorreccion);
+    $(document).on("click", ".rechazar", cambiarEstadoFormatoRechazado);
 }
 
 //function inicializarDataTables()
@@ -22,18 +22,18 @@ function listo()
 //                    "bScrollCollapse": true
 //
 //                });
-//    $('#noAceptadosDT').dataTable({
+//    $('#noAceptados_dt').dataTable({
 //                    "bJQueryUI": true,
 //                    "sScrollXInner": "100%",
 //                    "bScrollCollapse": true
 //
 //                });
-//    $('#enCorreccionDT').dataTable({
+//    $('#enCorreccion_dt').dataTable({
 //                    "bJQueryUI": true,
 //                    "sScrollXInner": "100%",
 //                    "bScrollCollapse": true
 //                });
-//     $('#aceptadosDT').dataTable({
+//     $('#aceptados_dt').dataTable({
 //                    "bJQueryUI": true,
 //                    "sScrollXInner": "100%",
 //                    "bScrollCollapse": true
@@ -42,7 +42,7 @@ function listo()
 
 function confirmacionEvento()
 {
-    if(! window.confirm("¿Desea realizar esta acción?"))
+    if (!confirm('\u00BF'+"Desea realizar esta acci"+'\u00f3'+"n?"))
     {
         return false;
     }
@@ -52,13 +52,13 @@ function confirmacionEvento()
 function cambiarEstadoFormatoAceptado(event)
 {
     console.log($(this).attr('idFU'));
-    if(confirmacionEvento())
+    if (confirmacionEvento())
     {
         $('#guardarObservaciones').attr('disabled', true);
-        
-        $.post("modificarFormatoUnicoNR_Aceptado.do",{id:$(this).attr('idFU')},function(respuesta)
+
+        $.post("modificarFormatoUnicoNR_Aceptado.do", {id: $(this).attr('idFU')}, function(respuesta)
         {
-            if(respuesta==="OK")
+            if (respuesta === "OK")
             {
                 window.location.reload();
                 console.log(respuesta);
@@ -70,76 +70,77 @@ function cambiarEstadoFormatoAceptado(event)
         });
         $('#guardarObservaciones').attr('disabled', false);
     }
-    
+
 }
 
 function cambiarEstadoFormatoCorreccion(event)
 {
-    if(confirmacionEvento())
+    console.log("entro aqui a la correccion");
+    if (confirmacionEvento())
     {
-       idDatosPersonales2 =$(this).attr('idDP');
-       idFormatoUnico2=$(this).attr('idFU');
-       tipo2="1";
-       mostrarDIVMotivos();
+        idDatosPersonales2 = $(this).attr('idDP');
+        idFormatoUnico2 = $(this).attr('idFU');
+        tipo2 = "1";
+        mostrarDIVMotivos();
     }
-    
+
 }
 function cambiarEstadoFormatoRechazado()
 {
-    if(confirmacionEvento())
+    if (confirmacionEvento())
     {
-       idDatosPersonales2 =$(this).attr('idDP');
-       idFormatoUnico2=$(this).attr('idFU');
-       tipo2="2";
-       mostrarDIVMotivos();
+        idDatosPersonales2 = $(this).attr('idDP');
+        idFormatoUnico2 = $(this).attr('idFU');
+        tipo2 = "2";
+        mostrarDIVMotivos();
     }
 }
 
 function  mostrarDIVMotivos()
 {
- $.fancybox(
-             $("#motivos").html(), //fancybox works perfect with hidden divs
-             {}
-        );
+    $.fancybox(
+            $("#motivos").html(), //fancybox works perfect with hidden divs
+            {}
+    );
 }
 
 
 function obtenerDatos()
 {
-  var array = [];
-     
-  $("form#observacionesCat input").each(function() {
-     
-      if( $(this).is(":checked") )
-      {
-          array.push($(this).attr("value")); // id de Obserbacion
-      }
-  });
-  
-  
-  if(array.length > 0)
-  {
-      
-      $('#guardarObservaciones').attr('disabled', true);
-      $.post("modificarFormatoUnicoNR.do",{idDatoPersonales:idDatosPersonales2,idFormatoUnico:idFormatoUnico2,tipo:tipo2,observaciones:array},function(respuesta)
-        {        
-            if(respuesta==="OK")
+    var array = [];
+
+    $("form#observacionesCat input").each(function() {
+
+        if ($(this).is(":checked"))
+        {
+            array.push($(this).attr("value")); // id de Obserbacion
+        }
+    });
+
+
+    if (array.length > 0)
+    {
+
+        $('#guardarObservaciones').attr('disabled', true);
+        $.post("modificarFormatoUnicoNR.do", {idDatoPersonales: idDatosPersonales2, idFormatoUnico: idFormatoUnico2, tipo: tipo2, observaciones: array}, function(respuesta)
+        {
+            if (respuesta === "OK")
             {
                 //$.fancybox.close();
                 window.location.reload();
-            }else
+            } else
             {
                 alert("Imposible Realizar Acción");
             }
             $('#guardarObservaciones').attr('disabled', false);
         }
         );
-  }
-  else
-  {
+    }
+    else
+    {
         alert('No se ha seleccionado Observación');
-  }
-  
+    }
+
 }
 
 

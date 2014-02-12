@@ -289,7 +289,7 @@ public class FormatoUnicoAdminController {
                          String idDatoPersonales,
                          String idFormatoUnico,
                          String tipo) {
-        
+        System.out.println("Entro a modificar el status del formato unico");
         for(String idObservacion:observaciones)
         {
             //Objeto a Registrar
@@ -303,7 +303,8 @@ public class FormatoUnicoAdminController {
             //Creacion de Registro
             regisObservacionesFacade.create(registro);
         }
-        
+        System.out.println("Ya ingreso las observaciones");
+        System.out.println("Inicia la modificación... tipo: "+tipo+" idDatosPersonales: "+idDatoPersonales+" idFormatoUnico: "+idFormatoUnico);
         String nombre=" ";
         switch(Integer.parseInt(tipo))
         {
@@ -333,10 +334,11 @@ public class FormatoUnicoAdminController {
                 enviarCorreo(3,fuR.getDatosPersonalesId().getCorreoElectronico(),nombre,fuR.getDatosPersonalesId());
                 break;
         }
-        
+        System.out.println("fui modificado");
         
         return "OK";
     }
+    
     @RequestMapping(value = "/mostarPDF.do", method = RequestMethod.GET)
     @ResponseBody
     public void showPDF(String id,HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {

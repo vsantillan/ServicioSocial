@@ -4,25 +4,32 @@
     Author     : bustedvillain
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
+    <head>
+        <%@include file="../General/head.jsp"%>
+        <style type="text/css">
+            .bs-example{margin: 20px;}
+        </style>
+    </head>
     <body>
-        <div>
-                <h1>Motivos de Rechazo</h1>
-                <div id="scroll">
-                    <ul>
+        <div class="container">
+            <div class="row">
+                <h3 class="modal-title titulos-naranja">Motivos de Rechazo del Formato Único</h3>
+                <div class="list-group">
                     <core:forEach items="${listadoObservaciones}" var="observacion">
-                        <li> <core:out value="${observacion.catalogoObservacionId.detalle}" /></li>   
-                     </core:forEach>
-                        </ul>
+                        <a href="#" class="list-group-item">
+                            <div class="checkbox">
+                                <label>
+                                <h4 class="list-group-item-heading">${observacion.catalogoObservacionId.detalle}</h4>
+                                </label>
+                            </div>
+                        </a>
+                    </core:forEach>
                 </div>
             </div>
+        </div>
     </body>
 </html>
 
