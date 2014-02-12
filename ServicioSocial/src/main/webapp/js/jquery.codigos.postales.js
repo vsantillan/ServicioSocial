@@ -41,7 +41,7 @@ $(document).ready(function() {
 
         var notice = document.getElementById("notice");
 
-        notice.innerHTML = "<img src='imagenes/loading.gif' width='30'>";
+        notice.innerHTML = "<center><img src='img/loading.gif' width='10'></center>";
         $.get("cargarColonias.do?cp=" + cp, null, function(respuesta) {
             notice.innerHTML = "";
             console.log(respuesta);
@@ -104,7 +104,7 @@ $(document).ready(function() {
             } else {
                 existeCP = false;
                 $("#existeCP").val(existeCP);
-                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta...</h4>";
+                notice.innerHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta...</h4>";
                 $("#otra_colonia").show("slow");
                 comboEstado.disabled = false;
                 comboMunicipio.disabled = false;
@@ -131,7 +131,7 @@ $(document).ready(function() {
 
         var notice = document.getElementById("notice2");
 
-        notice.innerHTML = "<img src='imagenes/loading.gif' width='30'>";
+        notice.innerHTML = "<center><img src='img/loading.gif' width='10'></center>";
         $.get("cargarColonias.do?cp=" + cp, null, function(respuesta) {
             notice.innerHTML = "";
             console.log(respuesta);
@@ -191,7 +191,7 @@ $(document).ready(function() {
             } else {
                 existeCP2 = false;
                 $("#existeCP2").val(existeCP2);
-                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta.</h4>";
+                notice.innerHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta.</h4>";
                 $("#otra_colonia2").show("slow");
                 comboEstado.disabled = false;
                 comboMunicipio.disabled = false;
@@ -383,7 +383,7 @@ $(document).ready(function() {
             var comboMunicipio = document.getElementById("municipio");
             comboMunicipio.length = 0;
             var idEstado = document.getElementById("estado").value;
-            notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. </h4><img src='imagenes/loading.gif' width='30'><h4>Cargando municipios, espere un momento...<h4>";
+            notice.innerHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta. </h4><img src='img/loading.gif' width='10'><h4>Cargando municipios, espere un momento...<h4>";
             $.get("cargarMunicipios.do?idEstado=" + idEstado, null, function(respuesta) {
                 console.log(respuesta);
                 if (respuesta.statusJSON) {
@@ -397,7 +397,7 @@ $(document).ready(function() {
                 } else {
                     alert("Error al cargar los municipios del estado");
                 }
-                notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>";
+                notice.innerHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta</h4>";
             });
         }
 
@@ -407,7 +407,7 @@ $(document).ready(function() {
 
         if (!existeCP2) {
             var idEstado = document.getElementById("estado2").value;
-            notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. </h4><img src='imagenes/loading.gif' width='30'><h4>Cargando municipios, espere un momento...<h4>";
+            notice.innerHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta. </h4><img src='img/loading.gif' width='10'><h4>Cargando municipios, espere un momento...<h4>";
             $.get("cargarMunicipios.do?idEstado=" + idEstado, null, function(respuesta) {
                 console.log(respuesta);
                 var comboMunicipio = document.getElementById("municipio2");
@@ -423,7 +423,7 @@ $(document).ready(function() {
                     alert("Error al cargar los municipios del estado");
                 }
             });
-            notice.innerHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta</h4>";
+            notice.innerHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta</h4>";
         }
 
     }
@@ -433,7 +433,7 @@ $(document).ready(function() {
         var notice = document.getElementById("notice");
         if (!existeCP) {
             var idMunicipio = document.getElementById("municipio").value;
-            notice.inneHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. </h4><img src='imagenes/loading.gif' width='30'><h4>Cargando ciudades, espere un momento...<h4>";
+            notice.inneHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta. </h4><img src='img/loading.gif' width='10'><h4>Cargando ciudades, espere un momento...<h4>";
             var comboCiudad = document.getElementById("ciudad");
             comboCiudad.length = 0;
             $.get("cargarCiudades.do?idMunicipio=" + idMunicipio, null, function(respuesta) {
@@ -453,7 +453,7 @@ $(document).ready(function() {
                 } else {
                     alert("Error al cargar ciudades del municipio");
                 }
-                notice.inneHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. ";
+                notice.inneHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta. ";
             });
         }
     }
@@ -463,7 +463,7 @@ $(document).ready(function() {
         var notice = document.getElementById("notice2");
         if (!existeCP2) {
             var idMunicipio = document.getElementById("municipio2").value;
-            notice.inneHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. </h4><img src='imagenes/loading.gif' width='30'><h4>Cargando ciudades, espere un momento...<h4>";
+            notice.inneHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta. </h4><img src='img/loading.gif' width='10'><h4>Cargando ciudades, espere un momento...<h4>";
             var comboCiudad = document.getElementById("ciudad2");
             comboCiudad.length = 0;
             $.get("cargarCiudades.do?idMunicipio=" + idMunicipio, null, function(respuesta) {
@@ -486,7 +486,7 @@ $(document).ready(function() {
                 } else {
                     alert("Error al cargar ciudades del municipio");
                 }
-                notice.inneHTML = "<h4>No poseemos información sobre este código postal, porfavor delo de alta. ";
+                notice.inneHTML = "<h4>No poseemos informaci\u00f3n sobre este c\u00f3digo postal, porfavor delo de alta. ";
             });
         }
     }
