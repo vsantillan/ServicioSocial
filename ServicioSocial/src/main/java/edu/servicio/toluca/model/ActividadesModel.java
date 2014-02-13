@@ -53,16 +53,16 @@ public class ActividadesModel {
                     respuesta.setMensaje("");
                 } else {
                     respuesta.setSuccess(false);
-                    respuesta.setMensaje("<div class='error'>Hay actividades vacías</div>");
+                    respuesta.setMensaje("<div class='alert alert-danger'>Hay actividades vacías</div>");
                 }
             } else {
                 respuesta.setSuccess(false);
-                respuesta.setMensaje("<div class='error'>Hay actividades repetidas</div>");
+                respuesta.setMensaje("<div class='alert alert-danger'>Hay actividades repetidas</div>");
             }
 
         } else {
             respuesta.setSuccess(false);
-            respuesta.setMensaje("<div class='error'>Actividades vacías</div>");
+            respuesta.setMensaje("<div class='alert alert-danger'>Actividades vacías</div>");
         }
 
         return respuesta;

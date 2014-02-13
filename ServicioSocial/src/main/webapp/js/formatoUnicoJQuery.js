@@ -307,7 +307,7 @@ function timePicker()
                 showInputs: false,
                 modalBackdrop: true,
                 showSeconds: false,
-                showMeridian: true};
+                showMeridian:false};
     for (var i = 1; i <= idTimePicker; i++)
     {
         idCadena = ".timepicker\\.\\[" + i + "\\]";

@@ -1,111 +1,109 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.ArrayList"%>
+<%@include file="../General/jstl.jsp"%>
+
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="css/cssTablaDetallesOrganizaciones.css" />
+        <%@ include file="../Template/sinJavascript.jsp" %>
+        <%@include file="../General/head.jsp"%>
     </head>
     <body>
-        <div id="muestradatos">
-            <table class="table">
-                <tr>
-                    <td colspan="2">
-                        <h2>Detalle de Proyectos</h2>
-                    </td>
-                </tr>
-                <tr>
-                    <td><p>Nombre del Proyecto:</p></td>
-                    <td><p>${proyectoDetalle.nombre}</p></td>
-                </tr>
-                <tr>
-                    <td><p>N&uacute;mero de vacantes:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.vacantes}" /></p></td>
-                </tr> 
-                <tr>
-                    <td><p>N&uacute;mero de vacantes disponibles:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.vacantesDisponibles}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Instancia:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.nombre}"/></p></td>
-                </tr>                
-                <tr>
-                    <td><p>Titular:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.titular}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Puesto del Titular:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.puesto}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Tel&eacute;fono:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.telefono}"/> EXT:<core:out value="${proyectoDetalle.idInstancia.ext}"/> </p></td>
-                </tr>
-                <tr>
-                    <td><p>Domicilio de la Instancia:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.domicilio}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>C&oacute;digo Postal de la Instancia:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.idCp.cp}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Colonia de la Instancia:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.nombre}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Actividades:</p></td>
-                    <td><p>                        
-                            <core:choose>
-                                <core:when test="${empty proyectoDetalle.actividadesCollection}">
-                                <p>No hay actividades</p>
-                            </core:when>
-                            <core:otherwise>
-                                <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
-                                    <p>${actividades.detalle}</p>
-                                </core:forEach>
-                            </core:otherwise>
-                        </core:choose>                                                          
-                        </p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><p>Responsable del Programa:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.nombreResponsable}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Puesto del Responsable:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.responsablePuesto}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Tel&eacute;fono del Responsable:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.telefonoResponsable}"/> EXT:<core:out value="${proyectoDetalle.ext}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Domicilio del programa:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.domicilio}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>C&oacute;digo Postal del programa:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idColonia.idCp.cp}"/></p></td>
-                </tr>
-                <tr>
-                    <td><p>Colonia del programa:</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idColonia.nombre}"/></p></td>
-                </tr>                
-                <tr>
-                    <td><p>Tipo de Proyecto</p></td>
-                    <td><p><core:out value="${proyectoDetalle.idTipoProyecto.descripcion}" /></p></td>
-                </tr>
-                <tr>
-                    <td><p>Perfil buscado:</p></td>
-                    <td><p>
-                            <core:choose>
-                                    <core:when test="${empty proyectoDetalle.proyectoPerfilCollection}">
+        <div class="container">
+            <div class="row">
+                <div class="row col-md-12 center-block">
+                    <table class="table">
+                        <tr>
+                            <td colspan="2">
+                                <h2 class="text-info">Detalle de Proyectos</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><p>Nombre del Proyecto:</p></th>
+                            <td><p>${proyectoDetalle.nombre}</p></td>
+                        </tr>
+                        <tr>
+                            <th><p>N&uacute;mero de vacantes:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.vacantes}" /></p></td>
+                        </tr> 
+                        <tr>
+                            <th><p>N&uacute;mero de vacantes disponibles:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.vacantesDisponibles}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Instancia:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idInstancia.nombre}"/></p></td>
+                        </tr>                
+                        <tr>
+                            <th><p>Titular:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idInstancia.titular}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Puesto del Titular:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idInstancia.puesto}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Tel&eacute;fono:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idInstancia.telefono}"/> EXT:<core:out value="${proyectoDetalle.idInstancia.ext}"/> </p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Domicilio de la Instancia:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idInstancia.domicilio}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>C&oacute;digo Postal de la Instancia:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.idCp.cp}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Colonia de la Instancia:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.nombre}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Actividades:</p></th>
+                            <td><p>                        
+                                    <core:choose>
+                                        <core:when test="${empty proyectoDetalle.actividadesCollection}">
+                                        <p>No hay actividades</p>
+                                    </core:when>
+                                    <core:otherwise>
+                                        <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
+                                            <p>${actividades.detalle}</p>
+                                        </core:forEach>
+                                    </core:otherwise>
+                                </core:choose>                                                          
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><p>Responsable del Programa:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.nombreResponsable}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Puesto del Responsable:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.responsablePuesto}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Tel&eacute;fono del Responsable:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.telefonoResponsable}"/> EXT:<core:out value="${proyectoDetalle.ext}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Domicilio del programa:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.domicilio}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>C&oacute;digo Postal del programa:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idColonia.idCp.cp}"/></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Colonia del programa:</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idColonia.nombre}"/></p></td>
+                        </tr>                
+                        <tr>
+                            <th><p>Tipo de Proyecto</p></th>
+                            <td><p><core:out value="${proyectoDetalle.idTipoProyecto.descripcion}" /></p></td>
+                        </tr>
+                        <tr>
+                            <th><p>Perfil buscado:</p></th>
+                            <td><p>
+                                    <core:choose>
+                                        <core:when test="${empty proyectoDetalle.proyectoPerfilCollection}">
                                         <p>Ninguno</p>
                                     </core:when>
                                     <core:otherwise>
@@ -115,11 +113,14 @@
                                             </ul>
                                         </core:forEach>
                                     </core:otherwise>
-                        </core:choose>
-                        </p>
-                    </td>
-                </tr>
-            </table>
-        </div> 
+                                </core:choose>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <%@include file="../General/js.jsp"%>
     </body>
 </html>

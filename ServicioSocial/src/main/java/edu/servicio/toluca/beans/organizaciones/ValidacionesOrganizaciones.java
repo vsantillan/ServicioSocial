@@ -423,6 +423,6 @@ public class ValidacionesOrganizaciones {
     }
 
     public String error(String error) {
-        return "<div class='error'>" + error + "</div>";
+        return "<div class='alert alert-danger'>" + error + "</div>";
     }
 }
