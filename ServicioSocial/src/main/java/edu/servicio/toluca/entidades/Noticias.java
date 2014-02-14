@@ -41,7 +41,7 @@ import org.hibernate.validator.constraints.NotEmpty;
     @NamedQuery(name = "Noticias.findByDetalle", query = "SELECT n FROM Noticias n WHERE n.detalle = :detalle"),
     @NamedQuery(name = "Noticias.findByTipoServicio", query = "SELECT n FROM Noticias n WHERE n.tipoServicio = :tipoServicio")})
 public class Noticias implements Serializable, ExpresionesRegulares, CatalogoErrores {
-    @NotEmpty(message = "Escribe el Título de la Noticia")
+    
     @Size(max = 255)
     @Pattern(regexp = letrasNumeros, message = errorLetrasNumeros)
     @Column(name = "TITULO")

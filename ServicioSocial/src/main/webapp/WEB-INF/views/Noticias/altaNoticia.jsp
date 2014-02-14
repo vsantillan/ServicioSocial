@@ -14,68 +14,70 @@
         <%@include file="../General/head.jsp"%>
         <title>Administrador</title>
     </head>
-    <body class="background">
+    <body>
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%> 
+
                 <div class="row">
-                    <%-- inicio del contenido --%>
                     <div class="col-md-6 col-md-offset-3">
-                        <%-- Formulario Nueva Noticia --%>
-                        <h1>Alta de Noticia</h1>
-                        <form:form class="form-horizontal" role="form" commandName="Noticias" id="Noticias" name="Noticias" action="altaNoticia.do"   method="POST" >
-
-                            <div class="form-group">
-                                <label for="titulo">T&iacute;tulo:</label>
-                                
-                                    <form:input class="form-control" path="titulo"/>
-                                
-                                <form:hidden path="id" value='-1'/>
-                                <form:errors path="titulo" cssClass="error"/>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="tipoNoticia">Tipo Noticia:</label>
-                                
-                                    <form:select class="form-control" path="tipoServicio">
-                                        <form:option value="1" label="Noticas para página principal" />
-                                        <form:option value="2" label="Noticias para alumnos"/>
-                                        <form:option value="3" label="Noticias para organizaciones" />
-                                    </form:select>
-                                
-                            </div>
-
-                            <div class="form-group">
-                                <label for="detalle">Descripci&oacute;n:</label>
-                                
-                                    <form:textarea class="form-control" path="detalle"/>
-                                    <script type="text/javascript">
-
-                                        CKEDITOR.replace('detalle');
-                                        config.language = 'es';
-
-                                    </script>
-                                
-                            </div>
-
-                            <form:errors path="id" cssClass="error"/> 
-                            
-                            <div class="control-group">
-                            <input class="btn btn-primary" type ="submit" value = "Guardar " />
-                            <input class="btn btn-primary" type ="reset" value = "Limpiar" />
-                            </div>
-
-                        </form:form>
                         <br/>
-                    </div>
-                </div><!--/row--> 
-                <%@include file="../General/footer.jsp"%>  
-            </div><!--/row--> 
-            <%@include file="../General/js.jsp"%>
-        </div><!-- /container -->
-        
-    <%-- fin del contenido --%>
+                        <div class="panel panel-info">
+                            <div class="panel-heading"><h3>Alta de Noticia</h3></div>
+                            <div class="panel-body">
+                                <form:form class="form-horizontal" role="form" commandName="Noticias" id="Noticias" name="Noticias" action="altaNoticia.do"   method="POST" >
 
-</body>
+                                    <div class="form-group">
+                                        <label for="titulo">T&iacute;tulo:</label>
+
+                                        <form:input class="form-control" path="titulo"/>
+                                        <br/>
+                                        <form:hidden path="id" value='-1'/>
+                                        <form:errors class="alert alert-danger" path="titulo"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tipoNoticia">Tipo Noticia:</label>
+
+                                        <form:select class="form-control" path="tipoServicio">
+                                            <form:option value="1" label="Noticas para página principal" />
+                                            <form:option value="2" label="Noticias para alumnos"/>
+                                            <form:option value="3" label="Noticias para organizaciones" />
+                                        </form:select>
+                                        <br/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="detalle">Descripci&oacute;n:</label>
+
+                                        <form:textarea class="form-control" path="detalle"/>
+                                        <script type="text/javascript">
+
+                                            CKEDITOR.replace('detalle');
+                                            config.language = 'es';
+
+                                        </script>
+                                        
+                                    </div>
+
+                                    <form:errors path="id" cssClass="error"/> 
+
+                                    <div class="control-group">
+                                        <input class="btn btn-primary" type ="submit" value = "Guardar " />
+                                        <input class="btn btn-primary" type ="reset" value = "Limpiar" />
+                                    </div>
+
+                                </form:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <%@include file="../General/footer.jsp"%>
+                <%@include file="../General/js.jsp"%>
+
+            </div>
+        </div>
+    </body>
 </html>

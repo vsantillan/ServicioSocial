@@ -78,7 +78,6 @@ public class PlaticaController1 {
     public @ResponseBody
     String actualizarStatusLugares(int id, Model model) {
         LugaresPlatica lugar = LugaresPlaticaFacade.find(BigDecimal.valueOf(id));
-        lugar.setId(null);
         lugar.setStatus(BigInteger.valueOf(0));
         System.out.println("se edito: ");
         LugaresPlaticaFacade.edit(lugar);
