@@ -14,9 +14,9 @@ public interface CatalogoErrores {
      * 
      */
     static final  String errorCorreos="Introduzca un formato de correo válido";
-    static final  String errorletras="Introduzca  unicamente letras";
-    static final  String errorNumeros="Introduzca  unicamente números";
-    static final  String errorLetrasNumeros="Introduzca unicamente caracteres alfanumericos"; 
+    static final  String errorletras="Introduzca  únicamente letras";
+    static final  String errorNumeros="Introduzca  únicamente números";
+    static final  String errorLetrasNumeros="Introduzca únicamente caracteres alfanuméricos"; 
     static final  String errorFecha="El formato de la fecha debe de ser dd/mm/aaaa";
     static final  String errorhoras="El formato de la hora debe de ser";
     static final  String errorCampoVacio="El campo no puede estar vacío";

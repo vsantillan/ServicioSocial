@@ -71,14 +71,14 @@ public class Instancia  implements Serializable, ExpresionesRegulares,CatalogoEr
     @Column(name = "ID_INSTANCIA")    
     private BigDecimal idInstancia;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45, message =errorBetween+" 1 y 45")
-    @Pattern(regexp =letrasNumeros, message = errorLetrasNumeros)
+    @Size(max = 45, message =errorBetween+" 1 y 45")
+    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 12, max = 12, message = "El RFC debe tener una longitud de 12 caracteres")
+    @Size(max = 12, message = "El campo RFC debe tener al menos 12 caracteres")
+    @Pattern(regexp =letrasNumeros, message = errorLetrasNumeros)
     @Column(name = "RFC")
     private String rfc;
     @Basic(optional = false)

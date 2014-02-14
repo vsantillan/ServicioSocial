@@ -225,6 +225,8 @@ public class OrganizacionesController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarOrganizacion.do")
     public String modificarOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, int valid_pass, HttpSession session, HttpServletRequest request, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad) {
+        System.out.println("nombre: "+instancia.getNombre());
+        System.out.println("con id: "+instancia.getIdInstancia());
         System.out.println("contraseña:" + instancia.getPassword());
         System.out.println("confirma_contraseña:" + confirma_password);
 
@@ -335,6 +337,7 @@ public class OrganizacionesController {
                 instanciaFacade.edit(instancia);
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
+                System.out.println(result.getGlobalError().toString());
                 model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
 
                 return "/Organizaciones/editarOrganizacion";
