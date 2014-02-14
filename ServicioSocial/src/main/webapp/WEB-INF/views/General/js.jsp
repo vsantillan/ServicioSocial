@@ -28,4 +28,5 @@
 <script src="<%=request.getContextPath()%>/js/platica.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap-timepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap-timepicker.min.js"></script>
+<script src="<%=request.getContextPath()%>/js/noticia.js"></script>
 

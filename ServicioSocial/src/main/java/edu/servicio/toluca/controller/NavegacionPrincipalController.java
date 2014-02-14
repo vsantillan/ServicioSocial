@@ -8,11 +8,13 @@ package edu.servicio.toluca.controller;
  *
  * @author bustedvillain
  */
+import edu.servicio.toluca.beans.NoticiaJson;
 import edu.servicio.toluca.beans.SesionBean;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.Noticias;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Login;
 import edu.servicio.toluca.login.ValidaLogin;
@@ -34,6 +36,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class NavegacionPrincipalController {
@@ -54,9 +57,18 @@ public class NavegacionPrincipalController {
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model modelo) {
         ConsultasNoticias noticiasBean = new ConsultasNoticias(noticiasFacade);
-        System.out.println("Noticias Size: "+noticiasBean.consultaNoticiasPrincipales("desc").size());
         modelo.addAttribute("Noticias", noticiasBean.consultaNoticiasPrincipales("desc"));
         return "/NavegacionPrincipal/index";
+    }
+      @RequestMapping(method = RequestMethod.POST, value = "/mostrarNoticiaCompleta.do")
+      @ResponseBody
+      public NoticiaJson mostarNoticiaCompleta (Model modelo,String idNoticia) {
+         NoticiaJson noticia=new NoticiaJson();
+        ConsultasNoticias noticiasBean = new ConsultasNoticias(noticiasFacade);
+        noticia.setTitulo(noticiasBean.consultaNoticiaPrincipal(Integer.parseInt(idNoticia)).getTitulo());
+         noticia.setDetalle(noticiasBean.consultaNoticiaPrincipal(Integer.parseInt(idNoticia)).getDetalle());
+       System.out.println("descrpcion"+noticia.getDetalle());
+        return noticia;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/convocatorias.do")
