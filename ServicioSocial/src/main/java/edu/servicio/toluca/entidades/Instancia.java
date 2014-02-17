@@ -30,6 +30,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Email;
 import edu.servicio.toluca.configuracion.ExpresionesRegulares;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -71,48 +73,55 @@ public class Instancia  implements Serializable, ExpresionesRegulares,CatalogoEr
     @Column(name = "ID_INSTANCIA")    
     private BigDecimal idInstancia;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45, message =errorBetween+" 1 y 45")
-    @Pattern(regexp =letrasNumeros, message = errorLetrasNumeros)
+    @Size(max = 45, message =errorBetween+" 1 y 45")
+    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 12, max = 12, message = "El RFC debe tener una longitud de 12 caracteres")
+    @Size(min = 12, message = "El campo RFC debe tener al menos 12 caracteres")
+    @Pattern(regexp =letrasNumeros, message = errorLetrasNumeros)
     @Column(name = "RFC")
     private String rfc;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45, message = "Nombre del Titular vacío")
+    @Size(max = 45, message = "El campo Nombre del Titular está vacío")
+    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "TITULAR")
     private String titular;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45, message = "Puesto vacío")
+    @Size(max = 45, message = "El campo Puesto está vacío")
+    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "PUESTO")
     private String puesto;
     @Basic(optional = false)
     @NotNull
+    //@Size(min = 10, message = "El campo Teléfono debe contener al menos 10 números")
+    //@Pattern(regexp =numeros, message = errorNumeros)
+    
     @Column(name = "TELEFONO")
     private long telefono;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(max = 100, message = "El campo Domicilio sólo puede tener hasta 100 caracteres")
+    @Pattern(regexp =letrasNumerosEspeciales, message = errorCampoVacio)
     @Column(name = "DOMICILIO")
     private String domicilio;
     @Column(name = "VALIDACION_ADMIN")
     private BigInteger validacionAdmin;
     @Column(name = "ESTATUS")
     private BigInteger estatus;
-    @Size(max = 30)
+    @Size(max = 30, message = "El campo Usuario sólo puede tener hasta 30 caracteres")
+    @Pattern(regexp =letrasNumeros, message = errorLetrasNumeros)
     @Column(name = "USUARIO")
     private String usuario;
     @Size(max = 120)
     @Column(name = "PASSWORD")
     private String password;
-    @Size(max = 60)
     @Column(name = "CORREO")
-    @Email
+    @Size(min = 1,max = 60, message = "El campo Correo no puede estar vacío")
+    @Email(message = "El campo Correo no contiene un correo válido")
     private String correo;
     @JoinColumn(name = "TIPO_ORGANIZACION", referencedColumnName = "ID_TIPO_ORGANIZACION")
     @ManyToOne(optional = false)

@@ -11,7 +11,7 @@
         <%@include file="../General/head.jsp"%>
         <title>Administraci&oacute;n de Organizaciones</title>
     </head>
-    <body onmousedown="elemento(event);">
+    <body>
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
@@ -49,7 +49,7 @@
                 <%@include file="../General/footer.jsp"%> 
             </div>
         </div>
-<div class="modal-dialog" id="a" style="display: none;">
+        <div class="modal-dialog" id="a" style="display: none;">
           <div class="modal-content">
             <div class="modal-header">
         
@@ -79,11 +79,8 @@
                     <div class="modal-footer">Instituto Tecnologico de Toluca</div>
                 </div>
             </div>
-        </div>
         <%@include file="../General/js.jsp"%>
         <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />
     </body>
-
-
 </html>

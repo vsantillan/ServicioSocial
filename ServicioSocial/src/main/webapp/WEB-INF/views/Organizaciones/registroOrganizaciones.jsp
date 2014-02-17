@@ -18,7 +18,7 @@
             </div>
             <div class="row ">
                 <!---------------------------------------------Contenido------------------------------------------->                
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-12">
                     <h1>Registro de Organizaciones</h1>
                     <div class="panel panel-warning ">
                         <div class="panel-heading"><h3>Busque si la Organizaci&oacute;n ya esta pre-registrada</h3></div>
@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                            <div class=" col-md-offset-2 col-sm-5">
+                                <div class=" col-md-offset-2 col-sm-5">
                                     <input  class="btn btn-primary" type ="reset" value = " Limpiar " />
                                 </div>
                                 <div class="col-sm-5">
@@ -171,8 +171,7 @@
                 <!---------------------------------------------Fin Contenido-------------------------------------------> 
             </div><!--/row--> 
             <%@include file="../General/footer.jsp"%>           
-        </div><!--/row-->
-    </div> <!-- /container -->
+        </div> <!-- /container -->
     <%@include file="../General/js.jsp"%>
 </body>
 </html>

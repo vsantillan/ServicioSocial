@@ -4,7 +4,6 @@
     Author     : bustedvillain
 --%>
 
-
 <%@include file="../General/jstl.jsp"%>
 
 <!DOCTYPE html>
@@ -14,45 +13,65 @@
         <%@include file="../General/head.jsp"%>
         <title>Administrador</title>
     </head>
-    <body class="background">
+    <body>
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
-                <%@include file="../General/menuAdministrador.jsp"%> 
+                <%@include file="../General/menuAdministrador.jsp"%>
+
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <h1>Editar Noticia</h1>
-                        <form:form commandName="Noticias" id="Noticias" name="Noticias" action="editarNoticia-${id}.do"  class="MyForm"   method="POST" style="width:80%;" >
-                            <label for="titulo">T&iacute;tulo:</label>
-                            <form:input path="titulo"/>
-                            <form:hidden path="id" />
-                            <form:errors path="titulo" cssClass="error"/>
+                        <br/>
+                        <div class="panel panel-info">
+                            <div class="panel-heading"><h3>Editar Noticia</h3></div>
+                            <div class="panel-body">
+                                <form:form commandName="Noticias" id="Noticias" name="Noticias" action="editarNoticia-${id}.do"  method="POST" >
 
-                            <label for="tipoNoticia">Tipo Noticia:</label> 
-                            <form:select path="tipoServicio">
-                                <form:option value="1" label="Noticas para página principal" />
-                                <form:option value="2" label="Noticias para alumnos"/>
-                                <form:option value="3" label="Noticias para organizaciones" />
-                            </form:select>
+                                    <div class="form-group">
+                                        <label for="titulo">T&iacute;tulo:</label>
+                                        <form:input class="form-control" path="titulo"/>
+                                        <form:hidden path="id" />
+                                        <br/>
+                                        <form:errors class="alert alert-danger" path="titulo"/>
+                                    </div>
 
-                            <label for="detalle">Descripci&oacute;n:</label>
-                            <form:textarea path="detalle" cols="200" rows="40"/>
-                            <script type="text/javascript">
+                                    <div class="form-group">
+                                        <label for="tipoNoticia">Tipo Noticia:</label> 
+                                        <form:select class="form-control" path="tipoServicio">
+                                            <form:option value="1" label="Noticas para página principal" />
+                                            <form:option value="2" label="Noticias para alumnos"/>
+                                            <form:option value="3" label="Noticias para organizaciones" />
+                                        </form:select>
+                                        <br/>
+                                    </div>
 
-                                CKEDITOR.replace('detalle');
-                                config.language = 'es';
+                                    <div class="form-group">
+                                        <label for="detalle">Descripci&oacute;n:</label>
+                                        <form:textarea class="form-control" path="detalle" cols="200" rows="40"/>
+                                        <script type="text/javascript">
 
-                            </script>
-                            <form:errors path="id" cssClass="error"/>   
-                            <input type ="submit" value = "Guardar " />
-                            <input type ="reset" value = "Limpiar" />
-                        </form:form>
+                                            CKEDITOR.replace('detalle');
+                                            config.language = 'es';
+
+                                        </script>
+                                        <form:errors path="id" cssClass="error"/>
+                                        <br/>
+                                        <div class="control-group">
+                                            <input class="btn btn-primary" type ="submit" value = "Guardar " />
+                                            <input class="btn btn-primary" type ="reset" value = "Limpiar" />
+                                        </div>
+                                        <br/>
+                                    </div>
+                                </form:form>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <%@include file="../General/footer.jsp"%> 
-            </div>
-            <%@include file="../General/js.jsp"%>
-        </div>
 
+                <%@include file="../General/footer.jsp"%>
+                <%@include file="../General/js.jsp"%>
+
+            </div>
+        </div>
     </body>
 </html>
