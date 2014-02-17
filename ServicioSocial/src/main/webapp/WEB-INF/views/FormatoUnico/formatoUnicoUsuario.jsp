@@ -45,7 +45,7 @@
                                                 <div class="form-group">
                                                     <form:input  type="hidden" path ="id" />
                                                     <label>*Nombre:</label>
-                                                    <form:input   maxlength="60" path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
+                                                    <form:input   maxlength="61" path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
                                                 </div>
                                                 <div class="form-group">
                                                     <label>*Apellido Paterno</label>
@@ -485,8 +485,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        <div class="row ">
             <div id="observaciones" class="col-md-6 panel panel-danger col-md-offset-3" style="display: none;">
                 <div class="panel-heading"><b>Debes atender los siguientes puntos</b></div>
                 <div class="panel-body">
@@ -494,6 +493,15 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div id="observacionesOK" class="col-md-6 alert alert-success col-md-offset-3" style="display: none;">
+                <div class="alert-heading"><b>Registro guardado con exito</b></div>
+                <div class="alert-body">
+                    <ul id="listaObservacionesOK" ></ul>
+                </div>
+            </div>
+        </div>
+                                                        </div>
         <!--------------------------------------------------Fin Contenido-->          
         <%@include file="../General/footer.jsp"%>  
     </div><!--/row--> 

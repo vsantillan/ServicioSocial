@@ -9,7 +9,7 @@ function listo()
     $('#frmDatosContacto').submit(enviarDatosContactoAlumno);
     $('#frmDatosOrganizaciones').submit(enviarDatosOrganizaciones);
     $('#frmHorarios').submit(enviarHorarios);
-    
+
     $('#cmdDescargaFui').click(cambiaStatusSubidaFui);
     $('#subeFui').click(subirFUI);
 
@@ -59,7 +59,7 @@ function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
 function cambiaStatusSubidaFui()
 {
     var idDP = $('#idSubirFui').val();
-    console.log('Se cambiará el estatus por descargado al id de datos personales '+idDP);
+    console.log('Se cambiará el estatus por descargado al id de datos personales ' + idDP);
     $.get("cambiaStatusSubidaFui.do?&id_datos_personales=" + idDP, null, function(respuesta) {
         console.log('Subida con respuesta = ' + respuesta);
     });
@@ -148,6 +148,7 @@ function recargaCombosOrgs(idProyecto)
 
 function enviarDatosAlumno()
 {
+    $('#observacionesOK').hide("fast");
     $('#observaciones').hide("fast");
     $("form#frmDatosPersonales :input").each(function() {
         prepararJSON($(this));
@@ -171,6 +172,9 @@ function enviarDatosAlumno()
         else
         {
             alert('Informacion almacenada correctamente');
+            $('#listaObservacionesOK').empty();
+            $('#observacionesOK').show('slow');
+            $('#listaObservacionesOK').append("<li class= 'observacion'>Datos de alumno guradados correctamente</li>");
         }
     });
 
@@ -179,6 +183,7 @@ function enviarDatosAlumno()
 }
 function enviarDatosContactoAlumno()
 {
+    $('#observacionesOK').hide("fast");
     $('#observaciones').hide("fast");
     $("form#frmDatosContacto :input").each(function() {
         prepararJSON($(this));
@@ -203,6 +208,9 @@ function enviarDatosContactoAlumno()
         else
         {
             alert('Informacion almacenada correctamente');
+            $('#listaObservacionesOK').empty();
+            $('#observacionesOK').show('slow');
+            $('#listaObservacionesOK').append("<li class= 'observacion'>Datos de contacto guradados correctamente</li>");
         }
     });
 
@@ -211,6 +219,7 @@ function enviarDatosContactoAlumno()
 }
 function enviarHorarios()
 {
+    $('#observacionesOK').hide("fast");
     $('#observaciones').hide("fast");
     $("form#frmHorarios :input").each(function() {
         prepararJSON($(this));
@@ -226,7 +235,6 @@ function enviarHorarios()
         {
             //alert('Tienes errores');
             console.log('Tienes errores');
-            $('.observacion').remove();
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
@@ -235,6 +243,9 @@ function enviarHorarios()
         else
         {
             alert('Informacion almacenada correctamente');
+            $('#listaObservacionesOK').empty();
+            $('#observacionesOK').show('slow');
+            $('#listaObservacionesOK').append("<li class= 'observacion'>Horarios guradados correctamente</li>");
         }
     });
 
@@ -243,21 +254,28 @@ function enviarHorarios()
 }
 function enviarDatosOrganizaciones()
 {
+    $('#observacionesOK').hide("fast");
     $('#observaciones').hide("fast");
     console.log('el id de proy que subo ' + $('#proyectos').val());
     $("form#frmDatosOrganizaciones :input").each(function() {
         prepararJSON($(this));
     });
     $('.observacion').remove();
-    if($("input#fecha_inicio").val()===""){
+    if ($("input#fecha_inicio").val() === "") {
         $('#observaciones').show('slow');
         $('#listaObservaciones').append("<li class= 'observacion'>El campo Fecha de Inicio no puede estar vacío</li>");
     }
     console.log(alumno);
-    $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta){
-        $('#observaciones').show('slow');
-        $('#listaObservaciones').append("<li class= 'observacion'>" + respuesta + "</li>");
-         
+    $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta) {
+        if (respuesta !== "") {
+            $('#listaObservacionesOK').empty();
+            $('#observacionesOK').show('slow');
+            $('#listaObservacionesOK').append("<li class= 'observacion'>Organizacion y proyecto almacenados correctamente</li>");
+        } else {
+            $('#listaObservaciones').empty();
+            $('#observaciones').show('slow');
+            $('#listaObservaciones').append("<li class= 'observacion'>" + respuesta + "</li>");
+        }
         //console.log(respuesta);
     });
 
@@ -267,13 +285,13 @@ function subirFUI()
 {
     $('#observaciones').hide("fast");
     $('.observacion').remove();
-    if($('input#idfile').val()==="")
+    if ($('input#idfile').val() === "")
     {
         $('#observaciones').show('slow');
         $('#listaObservaciones').append("<li class= 'observacion'>El campo Subir Formato Único está vacío.</li>");
         return false;
     }
-    
+
 }
 function prepararJSON($atributo)
 {
@@ -301,14 +319,14 @@ function timePicker()
     var idCadena = "";
 //    var parametros = {hours: {starts: 6, ends: 21},
 //        minutes: {interval: 15}, showAnim: 'blind'};
-    var parametros=  {   
-                defaultTime:'00:00',
-                minuteStep: 15,
-                showInputs: false,
-                modalBackdrop: true,
-                showSeconds: false,
-                showMeridian:false};
-    for (var i = 1; i <= idTimePicker; i++)
+    var parametros = {
+        defaultTime: '6:00',
+        minuteStep: 15,
+        showInputs: false,
+        modalBackdrop: true,
+        showSeconds: false,
+        showMeridian: false};
+    for (var i = 0; i <= idTimePicker; i++)
     {
         idCadena = ".timepicker\\.\\[" + i + "\\]";
         $(idCadena).timepicker(parametros);
@@ -316,8 +334,9 @@ function timePicker()
 }
 
 
-function ocultaDiv(){
+function ocultaDiv() {
     $('#observaciones').hide();
+    $('#observacionesOK').hide();
 }
 
 

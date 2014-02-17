@@ -4,6 +4,8 @@
  */
 package edu.servicio.toluca.entidades;
 
+import edu.servicio.toluca.configuracion.CatalogoErrores;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -57,7 +59,7 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "DatosPersonales.findByOcupacion", query = "SELECT d FROM DatosPersonales d WHERE d.ocupacion = :ocupacion"),
     @NamedQuery(name = "DatosPersonales.findByTelefonoOficina", query = "SELECT d FROM DatosPersonales d WHERE d.telefonoOficina = :telefonoOficina"),
     @NamedQuery(name = "DatosPersonales.findByEstadoCivil", query = "SELECT d FROM DatosPersonales d WHERE d.estadoCivil = :estadoCivil")})
-public class DatosPersonales implements Serializable {
+public class DatosPersonales implements Serializable,ExpresionesRegulares, CatalogoErrores {
     @Size(max = 10)
     @Column(name = "NUMERO_CONTROL")
     private String numeroControl;
@@ -72,67 +74,67 @@ public class DatosPersonales implements Serializable {
     private BigDecimal id;
     @Column(name = "FOLIO_DOC_IDENTIFICACIIN")
     private BigInteger folioDocIdentificaciin;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "CLAVE_DOC_IDENTIFICACION")
     private String claveDocIdentificacion;
-    @Size(max = 150)
+    @Size(max = 150,message = errorBetween+"1 y 150")
     @Column(name = "LUGAR_NACIMIENTO")
     private String lugarNacimiento;
-    @Size(max = 50)
+    @Size(max = 50,message = errorBetween+"1 y 50")
     @Column(name = "TELEFONO_CASA")
     private String telefonoCasa;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "TELEFONO_CEL")
     private String telefonoCel;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "DOMICILIO")
     private String domicilio;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "CURP")
     private String curp;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "SEXO")
     private String sexo;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "CORREO_ELECTRONICO")
     private String correoElectronico;
-    @Size(max = 60)
+    @Size(max = 60,message = errorBetween+"1 y 60")
     @Column(name = "NOMBRE")
     private String nombre;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "APELLIDO_P")
     private String apellidoP;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "APELLIDO_M")
     private String apellidoM;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "FACEBOOK")
     private String facebook;
-    @Size(max = 25)
+    @Size(max = 25,message = errorBetween+"1 y 25")
     @Column(name = "TWITTER")
     private String twitter;
-    @Size(max = 200)
+    @Size(max = 200,message = errorBetween+"1 y 200")
     @Column(name = "CALLE")
     private String calle;
-    @Size(max = 5)
+    @Size(max = 5,message = errorBetween+"1 y 5")
     @Column(name = "NUMERO_I")
     private String numeroI;
-    @Size(max = 5)
+    @Size(max = 5,message = errorBetween+"1 y 5")
     @Column(name = "NUMERO_E")
     private String numeroE;
-    @Size(max = 255)
+    @Size(max = 255,message = errorBetween+"1 y 255")
     @Column(name = "ENTRE_CALLES")
     private String entreCalles;
-    @Size(max = 70)
+    @Size(max = 70,message = errorBetween+"1 y 70")
     @Column(name = "REFERENCIA")
     private String referencia;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "OCUPACION")
     private String ocupacion;
-    @Size(max = 30)
+    @Size(max = 30,message = errorBetween+"1 y 30")
     @Column(name = "TELEFONO_OFICINA")
     private String telefonoOficina;
-    @Size(max = 15)
+    @Size(max = 15,message = errorBetween+"1 y 15")
     @Column(name = "ESTADO_CIVIL")
     private String estadoCivil;
     @OneToMany(mappedBy = "datosPersonalesId")

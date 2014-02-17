@@ -4,6 +4,8 @@
  */
 package edu.servicio.toluca.entidades;
 
+import edu.servicio.toluca.configuracion.CatalogoErrores;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -55,7 +57,7 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "FormatoUnico.findByRevisionesFui", query = "SELECT f FROM FormatoUnico f WHERE f.revisionesFui = :revisionesFui"),
     @NamedQuery(name = "FormatoUnico.findByRevisionesFuf", query = "SELECT f FROM FormatoUnico f WHERE f.revisionesFuf = :revisionesFuf"),
     @NamedQuery(name = "FormatoUnico.findByModalidad", query = "SELECT f FROM FormatoUnico f WHERE f.modalidad = :modalidad")})
-public class FormatoUnico implements Serializable {
+public class FormatoUnico implements Serializable,ExpresionesRegulares, CatalogoErrores {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "formatoUnicoG", strategy = "increment")
