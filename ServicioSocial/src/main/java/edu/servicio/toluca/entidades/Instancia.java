@@ -74,7 +74,7 @@ public class Instancia  implements Serializable, ExpresionesRegulares,CatalogoEr
     private BigDecimal idInstancia;
     @Basic(optional = false)
     @Size(max = 45, message =errorBetween+" 1 y 45")
-    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
+    @Pattern(regexp =letrasNumerosPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
     @Basic(optional = false)
@@ -86,13 +86,13 @@ public class Instancia  implements Serializable, ExpresionesRegulares,CatalogoEr
     @Basic(optional = false)
     @NotNull
     @Size(max = 45, message = "El campo Nombre del Titular está vacío")
-    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
+    @Pattern(regexp =letrasNumerosPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "TITULAR")
     private String titular;
     @Basic(optional = false)
     @NotNull
     @Size(max = 45, message = "El campo Puesto está vacío")
-    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
+    @Pattern(regexp =letrasNumerosPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "PUESTO")
     private String puesto;
     @Basic(optional = false)

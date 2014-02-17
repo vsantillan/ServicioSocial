@@ -5,7 +5,9 @@
 package edu.servicio.toluca.entidades;
 
 import edu.servicio.toluca.configuracion.CatalogoErrores;
+import static edu.servicio.toluca.configuracion.CatalogoErrores.errorLetrasNumeros;
 import edu.servicio.toluca.configuracion.ExpresionesRegulares;
+import static edu.servicio.toluca.configuracion.ExpresionesRegulares.letrasNumerosPrimeroDespuesEspacios;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -22,6 +24,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -99,6 +102,7 @@ public class DatosPersonales implements Serializable,ExpresionesRegulares, Catal
     @Column(name = "CORREO_ELECTRONICO")
     private String correoElectronico;
     @Size(max = 60,message = errorBetween+"1 y 60")
+    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorletras)
     @Column(name = "NOMBRE")
     private String nombre;
     @Size(max = 30,message = errorBetween+"1 y 30")

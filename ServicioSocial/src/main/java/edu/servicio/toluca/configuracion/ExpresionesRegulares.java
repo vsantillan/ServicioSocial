@@ -19,7 +19,8 @@ public interface ExpresionesRegulares
     static final  String horas="\\d{1,2}:\\d{1,2}/\\s/[A-Z]+$";
     static final  String comentarios="^[A-Za-z/\\s/.,\"\'+*]+$";
     static final  String letrasNumerosEspeciales="^[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü!\";:%#&?¿¡+*,.)(/\\s/]+$";
-    static final  String letrasPrimeroDespuesEspacios="^[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü]+[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü/\\s/]+$";
+    static final  String letrasNumerosPrimeroDespuesEspacios="^[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü]+[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü/\\s/]+$";
+    static final  String letrasPrimeroDespuesEspacios="^[A-Za-zÑñÁÉÍÓÚáéíóúü]+[A-Za-zÑñÁÉÍÓÚáéíóúü/\\s/]+$";
     
     
     
