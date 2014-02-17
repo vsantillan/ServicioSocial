@@ -9,14 +9,12 @@
 <script src="<%=request.getContextPath()%>/js/jquery.dataTables.js"></script>
 <script src="<%=request.getContextPath()%>/js/DT_bootstrap.js"></script>
 <script src="<%=request.getContextPath()%>/js/utilerias.js"></script>
-<script src="<%=request.getContextPath()%>/js/actualizaOrganizaciones.js"></script>
 <script src="<%=request.getContextPath()%>/js/actualizaPlatica.js"></script>
 <!--<script src="<%=request.getContextPath()%>/js/becados.js"></script>-->
 <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/docs.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/documentosFinalesActualiza.js"></script>
 <script src="<%=request.getContextPath()%>/js/editaOrganizacion.js"></script>
-<!--<script src="<%=request.getContextPath()%>/js/egresadoAdmin.js"></script>-->
 <script src="<%=request.getContextPath()%>/js/funcionesGenerales.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery.codigos.postales.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery.manolo.js"></script>

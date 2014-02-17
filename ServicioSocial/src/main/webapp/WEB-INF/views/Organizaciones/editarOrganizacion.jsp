@@ -29,12 +29,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="titular">Titular:</label> 
-                                    <form:input path="titular" id="titular" placeholder="Titular" class="form-control" size="20"/><br/>
+                                    <form:input path="titular" id="titular" placeholder="Nombre del Titular" class="form-control" maxlength="45"/><br/>
                                     <form:errors path="titular" cssClass="alert alert-danger"/> 
                                 </div>
                                 <div class="form-group">
                                     <label for="puesto">Puesto:</label> 
-                                    <form:input path="puesto" id="puesto" placeholder="Puesto" class="form-control"size="20"/><br/>
+                                    <form:input path="puesto" id="puesto" placeholder="Puesto del Titular" class="form-control" maxlength="45"/><br/>
                                     <form:errors path="puesto" cssClass="alert alert-danger"/>
                                 </div>
                                 <div class="form-group">
@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="calle">Calle:</label> 
-                                    <form:input path="domicilio" placeholder="Calle" class="form-control" id="domicilio" size="20"/><br/>
+                                    <form:input path="domicilio" placeholder="Calle" class="form-control" id="domicilio" maxlength="100"/><br/>
                                     <form:errors path="domicilio" cssClass="alert alert-danger"/> 
                                 </div>
 
@@ -82,13 +82,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="rfc">RFC:</label>
-                                    <form:input class="form-control" placeholder="RFC" path="rfc" id="rfc" size="12"/><br/>
+                                    <form:input class="form-control" placeholder="RFC" path="rfc" id="rfc" maxlength="12"/><br/>
                                     <form:errors path="rfc" cssClass="alert alert-danger"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="telefono">Tel&eacute;fono:</label> 
-                                    <form:input path="telefono" id="telefono" placeholder="Telefono" class="form-control" maxlength="10"/><br/>
-                                    <form:errors path="telefono" cssClass="alert alert-danger"/>
+                                    <form:input path="telefono" id="telefono" placeholder="Telefono" class="form-control" maxlength="13"/><br/>
+                                    ${telefono}
                                 </div>
                                 <div class="form-group">
                                     <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label>
@@ -116,45 +116,42 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="lugar">Nombre de Usuario:</label>
-                                    <form:input path="usuario" id="usuario" size="20" class="form-control" /><br/>
+                                    <form:input path="usuario" id="usuario" placeholder="Nombre de Usuario" class="form-control" maxlength="29" /><br/>
                                     <form:errors path="usuario" cssClass="alert alert-danger"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="lugar">Correo:</label>
-                                    <form:input path="correo" id="correo" size="20" class="form-control"/><br/>
-                                    <form:errors path="correo" cssClass="alert alert-danger"/>
+                                    <form:input path="correo" id="correo" size="20" placeholder="Correo" class="form-control" maxlength="50"/><br/>
+                                    <form:errors path="correo" cssClass="alert alert-danger" />
                                 </div>
-                                <div class="form-group">
-                                    <label for="lugar">Cambiar contraseña:</label>
-                                    <div class="radio">
-                                        <input type="radio" name="passG1" id="passG1" value="si" onclick="pass(this)">Cambiar contraseña<br/>
+                                <div class="col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label for="lugar">Cambiar contraseña:</label>
+                                        <div class="radio">
+                                            <input type="radio" name="passG1" id="passG1" value="si" onclick="pass(this)">Cambiar contraseña<br/>
+                                        </div>
+                                        <div class="radio">
+                                            <input type="radio" name="passG1" id="passG1" value="no" onclick="pass(this)" checked="checked">Mantener contraseña<br/>
+                                        </div>
+                                        ${confirma_password}
                                     </div>
-                                    <div class="radio">
-                                        <input type="radio" name="passG1" id="passG1" value="no" onclick="pass(this)" checked="checked">Mantener contraseña<br/>
+                                    <div class="form-group col-md-6" id="cambiaPass" style="display: none">
+                                        <div class="form-group">
+                                            <label for="lugar">Contrase&ntilde;a:</label>
+                                            <form:input path="password" id="password" class="form-control" type="password"/><br/>
+                                            <form:errors path="password" cssClass="alert alert-danger"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lugar">Confirmar Contrase&ntilde;a:</label>
+                                            <input type="text" name="valid_pass" id="valid_pass" size="1" hidden="hidden" value="0"/> 
+                                            <input type="password" name="confirma_password" class="form-control" id="confirmPass" /> <br/>
+                                        </div>
                                     </div>
-                                    ${confirma_password}
                                 </div>
                                 <div class=" col-md-offset-2 col-sm-5"></div>
                                 <div class="col-sm-5">
                                     <input   class="btn btn-primary" type ="submit" value = " Guardar cambios " /> 
                                 </div>
-                                <table  id="cambiaPass" style="display: none">
-                                    <tr>
-                                        <td><label for="lugar">Contrase&ntilde;a:</label></td>
-                                        <td>  
-                                            <form:input path="password" id="password" size="20" type="password"/><br/>
-                                            <form:errors path="password" cssClass="error"/>
-                                            <!--                                input type="password" name="lugar" id="puesto" size="20" require="true"/ -->
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="lugar">Confirmar Contrase&ntilde;a:</label>
-                                            <input type="text" name="valid_pass" id="valid_pass" size="1" hidden="hidden" value="0"/> 
-                                        </td>
-                                        <td><input type="password" name="confirma_password" id="confirmPass" size="20"/> <br/>
-                                        </td>
-                                    </tr>
-                                </table>
                             </div>
                         </form:form>
                     </div>

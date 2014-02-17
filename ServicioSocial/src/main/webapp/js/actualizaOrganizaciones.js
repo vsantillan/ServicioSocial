@@ -8,14 +8,21 @@ $(document).ready(retroalimentacion);
 
 function editarStatusInstancia(e)
 {
-    if (confirm('¿Seguro que desea eliminar instancia?'))
+    if (confirm('\u00BF'+'Seguro que desea eliminar instancia?'))
     {
         var row = $(this).parents('tr')[0];
         var idUpdate = $(e.target).attr('ide');
         var tabla = $('#example').dataTable();
-        $.post("cambiaStatusInstancia.do", {id: idUpdate}, function(response)
+        $.post("cambiaStatusInstancia.do", {id: idUpdate}, function(respuesta)
         {
-            tabla.fnDeleteRow(row);
+            if(respuesta==="ok")
+            {
+                alert("Instancia eliminada");
+                window.location.reload();
+            }else{
+                alert("ERROR: Imposible eliminar Instancia.");
+            }
+            
         });
     }
 }
