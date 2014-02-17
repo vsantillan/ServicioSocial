@@ -4,6 +4,13 @@
  */
 package edu.servicio.toluca.beans;
 
+import edu.servicio.toluca.configuracion.CatalogoErrores;
+import static edu.servicio.toluca.configuracion.CatalogoErrores.errorBetween;
+import static edu.servicio.toluca.configuracion.CatalogoErrores.errorLetrasNumeros;
+import static edu.servicio.toluca.configuracion.CatalogoErrores.errorletras;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
+import static edu.servicio.toluca.configuracion.ExpresionesRegulares.letrasNumerosPrimeroDespuesEspacios;
+import static edu.servicio.toluca.configuracion.ExpresionesRegulares.letrasPrimeroDespuesEspacios;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,35 +21,35 @@ import javax.validation.constraints.*;
  *
  * @author Héctor
  */
-public class FormatoUnicoDatosPersonalesBean 
+public class FormatoUnicoDatosPersonalesBean implements ExpresionesRegulares, CatalogoErrores
 {
     private BigDecimal id;
-    @Size(min = 3, max = 45, message = "El campo Nombre no puede estar vacío")
-    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Nombre sólo puede contener Letras")
+    @Size(min = 3, max = 45, message = errorBetween+" 3 y 45 para el campo Nombre")
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorletras+" en el campo Nombre")
     private String nombre;
-    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Apellido Paterno sólo puede contener Letras")
-    @Size(min = 3, max = 20, message = "El campo Apellido Paterno no puede estar vacío")
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorletras+" en el campo Apellido Paterno")
+    @Size(min = 3, max = 20, message = errorBetween+" 3 y 20 para el campo Apellido Paterno")
     private String apellidoP;
-    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Apellido Materno sólo puede contener Letras")
-    @Size(min = 3, max = 20, message = "El campo Apellido Materno no puede estar vacío")
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorletras+" en el campo Apellido Materno")
+    @Size(min = 3, max = 20, message = errorBetween+" 3 y 20 para el campo Apellido Materno")
     private String apellidoM;
     private String sexo;
     private String estado_civil;
-    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Ocupación sólo puede contener Letras")
-    @Size(min = 1, max = 20, message = "El campo Ocupación no puede estar vacío")
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorletras+" en el campo Ocupacion")
+    @Size(min = 1, max = 20, message = errorBetween+" 1 y 20 para el campo Ocupacion")
     private String ocupacion;
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "El campo CUPR sólo puede contener Letras y Números")
-    @Size(min = 16, max = 18, message = "El campo CURP está incompleto")
+    @Size(min = 16, max = 18, message = errorBetween+" 16 y 18 para el campo CURP")
+    @Pattern(regexp = letrasNumerosPrimeroDespuesEspacios, message = errorLetrasNumeros+" en el campo CURP")
     private String curp;
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "El campo Clave Documento Identificación sólo puede contener Letras y Números")
-    @Size(min = 1, max = 40, message = "El campo Clave Documento Identificación no puede estar vacío")
+    @Size(min = 1, max = 40, message = errorBetween+" 1 y 40 para el campo Clave de Indentificacion")
+    @Pattern(regexp = letrasNumerosPrimeroDespuesEspacios, message = errorLetrasNumeros+" en el campo Clave de Indentificacion")
     private String claveDocIdentificacion;
-    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "El campo Folio Documento Identificación sólo puede contener Números")
-    @Size(min = 1, max = 40, message = "El campo Folio Documento Identificación no puede estar vacío")
+    @Size(min = 1, max = 40, message = errorBetween+" 1 y 40 para el campo Folio Documento Identificacion")
+    @Pattern(regexp = numeros, message = errorNumeros+" en el campo Folio Documento Identificacion")
     private String folioDocIdentificacion;
     private boolean acuerdoC;
-    @Size(min = 1, max = 100, message = "El campo Lugar de Nacimiento no puede estar vacío")
-    @Pattern(regexp = "^[A-Za-z/\\s/]+$", message = "El campo Lugar de Nacimiento sólo puede contener Letras")
+    @Size(min = 1, max = 100, message = errorBetween+" 1 y 100")
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorletras+" en el campo Lugar de Nacimiento")
     private String lugar_nacimiento;
     private ArrayList<String> listaErrores = new ArrayList<String>();
     MetodosValidacion mv = new MetodosValidacion();

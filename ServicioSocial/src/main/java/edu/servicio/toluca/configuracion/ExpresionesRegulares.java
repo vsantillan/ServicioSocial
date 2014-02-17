@@ -21,6 +21,7 @@ public interface ExpresionesRegulares
     static final  String letrasNumerosEspeciales="^[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü!\";:%#&?¿¡+*,.)(/\\s/]+$";
     static final  String letrasNumerosPrimeroDespuesEspacios="^[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü]+[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü/\\s/]+$";
     static final  String letrasPrimeroDespuesEspacios="^[A-Za-zÑñÁÉÍÓÚáéíóúü]+[A-Za-zÑñÁÉÍÓÚáéíóúü/\\s/]+$";
+    static final  String letrasNumerosCaractesEspeciales="^[A-Za-z0-9ÑñÁÉÍÓÚáéíóúü.-_,#+*)(/\\s/]+$";
     
     
     

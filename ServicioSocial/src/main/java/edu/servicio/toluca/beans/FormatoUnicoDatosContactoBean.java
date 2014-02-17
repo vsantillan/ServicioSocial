@@ -4,6 +4,9 @@
  */
 package edu.servicio.toluca.beans;
 
+
+import edu.servicio.toluca.configuracion.CatalogoErrores;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
 import edu.servicio.toluca.entidades.Colonia;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,37 +19,37 @@ import org.hibernate.validator.constraints.Email;
  *
  * @author SATELLITE
  */
-public class FormatoUnicoDatosContactoBean {
+public class FormatoUnicoDatosContactoBean implements ExpresionesRegulares, CatalogoErrores {
     private BigDecimal id;
-    @Size(min = 1, max = 100, message = "El campo Calle no puede estar vacío")
-    @Pattern(regexp = "^[A-Za-z0-9/\\s/.,#-_+*]+$", message = "El campo Calle sólo puede contener Letras y los caracteres .-_,#+*")
+    @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Calle")
+    @Pattern(regexp = letrasNumerosCaractesEspeciales, message = errorNumerosLetrasCaracteresEspeciales+" en el campo Calle")
     private String calle;
-    @Size(min = 1, max = 5, message = "El campo Número Interior no puede estar vacío")
-    @Pattern(regexp = "^[0-9]+$", message = "El campo Número Interior sólo puede contener Números")
+    @Size(min = 1, max = 5, message = errorBetween+" 1 y 5 para el campo Numero Interior")
+    @Pattern(regexp = numeros, message = errorNumeros+" en el campo Numero Interior")
     private String numeroI;
-    @Size(min = 1, max = 5, message = "El campo Número Exterior no puede estar vacío")
-    @Pattern(regexp = "^[0-9]+$", message = "El campo Número Exterior sólo puede contener Números")
+    @Size(min = 1, max = 5, message = errorBetween+" 1 y 5 para el campo Numero exterior")
+    @Pattern(regexp = numeros, message = errorNumeros+" en el campo Numero Exterior")
     private String numeroE;
-    @Size(min = 1, max = 100, message = "El campo Entre Calle no puede estar vacío")
-    @Pattern(regexp = "^[A-Za-z0-9/\\s/.,#-_+*]+$", message = "El campo Entre Calle sólo puede contener Letras y los caracteres .-_,#+*")
+    @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Entre Calles")
+    @Pattern(regexp = letrasNumerosCaractesEspeciales, message = errorNumerosLetrasCaracteresEspeciales+" en el campo Entre Calles")
     private String entreCalles;
-    @Size(min = 1, max = 100, message = "El campo Referencias no puede estar vacío")
-    @Pattern(regexp = "^[A-Za-z0-9/\\s/.,#-_+*]+$", message = "El campo Referencias sólo puede contener Letras y los caracteres .-_,#+*")
+    @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo referencias")
+    @Pattern(regexp =letrasNumerosCaractesEspeciales, message =errorNumerosLetrasCaracteresEspeciales+" en el campo Referencias")
     private String referencias;
-    @Size(min = 10, max = 10, message = "El campo Telefono de Casa está incompleto")
-    @Pattern(regexp = "^[0-9]+$", message = "El campo Telefono de Casa sólo puede contener Números")
+    @Size(min = 10, max = 10, message = "El campo Telefono debe ser a 10 digitos ")
+    @Pattern(regexp = numeros, message = errorNumeros+" en el campo Telefono de Casa")
     private String telefono_casa;
-    @Size(min = 10, max = 10, message = "El campo Telefono Celular está incompleto")
-    @Pattern(regexp = "^[0-9]+$", message = "El campo Telefono Celular sólo puede contener Números")
+    @Size(min = 10, max = 10, message = "El campo Telefono Celular debe ser a 10 digitos")
+    @Pattern(regexp = numeros, message = errorNumeros+ "en el campo Telefono Celular")
     private String telefono_cel;
-    @Size(min = 10, max = 10, message = "El campo Telefono de Oficina está incompleto")
-    @Pattern(regexp = "^[0-9]+$", message = "El campo Telefono de Oficina sólo puede contener Números")
+    @Size(min = 10, max = 10, message = "El campo Telefono de Oficina debe ser a 10 digitos")
+    @Pattern(regexp = numeros, message = errorNumeros+ "en el campo Telefono de Oficina")
     private String telefono_oficina;
-    @Email(message = "El campo Correo Electrónico no es un email válido")
+    @Email(message = errorEmail)
     private String correo_electronico;
-    @Size(min = 1, max = 100, message = "El campo Twitter no puede estar vacío")
+    @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Twitter")
     private String twitter;
-    @Size(min = 1, max = 100, message = "El campo Facebook no puede estar vacío")
+    @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Facebook")
     private String facebook;
     private Colonia idColonia;
     private ArrayList<String> listaErrores = new ArrayList<String>();
@@ -55,11 +58,11 @@ public class FormatoUnicoDatosContactoBean {
     public ArrayList<String> Valida()
     { 
         //Validar que no estén vacíos
-        if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); }
-        if(calle == null || calle.equals("")){listaErrores.add("El campo calle no puede estar vacío"); }
-        if(numeroE == null || numeroE.equals("")){listaErrores.add("El campo Numero Exterior no puede estar vacío"); }
-        if(entreCalles == null || entreCalles.equals("")){listaErrores.add("El campo Entre Calles no puede estar vacío"); }
-        if(referencias == null || referencias.equals("")){listaErrores.add("El campo Referencias no puede estar vacío"); }
+//        if(id == null || id.equals("")){listaErrores.add("Error interno, nuestros ingenieros trabajan para resolverlo"); }
+//        if(calle == null || calle.equals("")){listaErrores.add("El campo calle no puede estar vacío"); }
+////        if(numeroE == null || numeroE.equals("")){listaErrores.add("El campo Numero Exterior no puede estar vacío"); }
+//        if(entreCalles == null || entreCalles.equals("")){listaErrores.add("El campo Entre Calles no puede estar vacío"); }
+//        if(referencias == null || referencias.equals("")){listaErrores.add("El campo Referencias no puede estar vacío"); }
         //Validar tamaños de texto
         if(!mv.minimoString(calle, 1) && !mv.maximoString(calle, 200)){listaErrores.add("El campo calle debe tener entre 1 y 200 letras");} 
         if(!mv.minimoString(numeroE, 1) && !mv.maximoString(numeroE, 5)){listaErrores.add("El campo numero exterior debe tener entre 1 y 5 digitos");} 

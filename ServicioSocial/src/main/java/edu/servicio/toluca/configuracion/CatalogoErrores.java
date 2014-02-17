@@ -20,6 +20,8 @@ public interface CatalogoErrores {
     static final  String errorFecha="El formato de la fecha debe de ser dd/mm/aaaa";
     static final  String errorhoras="El formato de la hora debe de ser";
     static final  String errorCampoVacio="El campo no puede estar vacío";
-    static final  String errorBetween="El tamaño de campo debe de estar entre";
+    static final  String errorBetween="El tamaño debe de estar entre";
+    static final  String errorEmail="El correo electronico no es un email valido";
+    static final  String errorNumerosLetrasCaracteresEspeciales="Introduzca unicamente caracteres alfanumericos y los caractes especiales permitidos .-_,#+*";
     
 }

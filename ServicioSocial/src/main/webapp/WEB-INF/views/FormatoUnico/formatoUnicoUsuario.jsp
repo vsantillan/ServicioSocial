@@ -45,7 +45,7 @@
                                                 <div class="form-group">
                                                     <form:input  type="hidden" path ="id" />
                                                     <label>*Nombre:</label>
-                                                    <form:input   maxlength="61" path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
+                                                    <form:input   maxlength="60" path ="nombre" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
                                                 </div>
                                                 <div class="form-group">
                                                     <label>*Apellido Paterno</label>
@@ -501,9 +501,9 @@
                 </div>
             </div>
         </div>
-                                                        </div>
         <!--------------------------------------------------Fin Contenido-->          
         <%@include file="../General/footer.jsp"%>  
+        </div>
     </div><!--/row--> 
     <%@include file="../General/js.jsp"%>
     <script src="js/formatoUnicoJQuery.js"></script>
