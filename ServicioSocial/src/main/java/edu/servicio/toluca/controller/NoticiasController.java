@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 /**
  *
  * @author Jesus
@@ -74,7 +75,7 @@ public class NoticiasController {
     public String editarNoticia(Model modelo,@PathVariable int id)
     {
         ConsultasNoticias noticiasModel=new ConsultasNoticias(noticiasFacade);
-        Noticias noticia = noticiasModel.obtenterNoticia(id);
+        Noticias noticia = noticiasModel.obtenerNoticia(id);
         
         if(noticia != null)
         {
@@ -115,4 +116,13 @@ public class NoticiasController {
         return "/Noticias/consultaNoticias";
     }
     
+    @RequestMapping(method = RequestMethod.POST, value = "/eliminarNoticia.do")
+    public @ResponseBody
+    String eliminarNoticia(int id, Model modelo)
+    {
+        ConsultasNoticias noticias=new ConsultasNoticias(noticiasFacade);
+        Noticias noticia = noticias.obtenerNoticia(id);
+        noticias.eliminarNoticia(noticia);
+        return "ok ";
+    }
 }

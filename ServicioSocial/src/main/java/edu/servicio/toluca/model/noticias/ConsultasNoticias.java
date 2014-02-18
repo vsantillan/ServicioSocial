@@ -46,8 +46,6 @@ public class ConsultasNoticias {
         List<Noticias> noticiasCrude = noticiasFacade.findAll(ordenamiento);
         System.out.println("Noticias crude:" + noticiasCrude.size());
 
-
-
         for (int i = 0; i < noticiasCrude.size(); i++) {
             int tipo = Integer.parseInt(noticiasCrude.get(i).getTipoServicio().toString());
 
@@ -98,7 +96,6 @@ public class ConsultasNoticias {
 
             return null;
 
-
         } catch (Exception e) {
             return null;
         }
@@ -115,7 +112,7 @@ public class ConsultasNoticias {
 
     }
 
-    public Noticias obtenterNoticia(int id) {
+    public Noticias obtenerNoticia(int id) {
         try {
             BigDecimal idNoticia = null;
             idNoticia = BigDecimal.valueOf(id);
@@ -125,6 +122,10 @@ public class ConsultasNoticias {
             return null;
         }
 
+    }
+
+    public void eliminarNoticia(Noticias noticia) {
+        noticiasFacade.remove(noticia);
     }
 
     public boolean editarNoticia(Noticias noticia) {
@@ -151,9 +152,6 @@ public class ConsultasNoticias {
         } catch (Exception e) {
             return null;
         }
-
-
-
 
     }
 }

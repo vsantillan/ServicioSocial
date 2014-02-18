@@ -4,11 +4,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
         <%@include file="../General/head.jsp"%>
         <title>Administraci&oacute;n de Noticias</title>
     </head>
-    <body class="background" onmousedown="elemento(event);">
+    <body class="background">
 
         <div class="container">
             <div class="row">
@@ -31,7 +30,7 @@
                                 <tr class='gradeX'>
                                     <td>
                                         <a href="editarNoticia-${noticia.id}.do"><span class="glyphicon glyphicon-edit sizeIcon"></span></a>
-                                        <a href="#"> <img class="rechazar"  title="Rechazar" /><span class="glyphicon glyphicon-trash sizeIcon"></span></a>
+                                        <a href="#"><span ide="${noticia.id}" class="glyphicon glyphicon-trash sizeIcon eliminarNoticia"></span></a>
                                     </td>
                                     <td>${noticia.fecha}</td>
                                     <td>
@@ -59,6 +58,7 @@
                 <%@include file="../General/footer.jsp"%> 
             </div>
             <%@include file="../General/js.jsp"%>
+            <script type="text/javascript" language="javascript" src="js/noticias.js"></script>
         </div>
         
     </body>

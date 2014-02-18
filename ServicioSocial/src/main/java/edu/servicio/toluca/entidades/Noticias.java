@@ -43,7 +43,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class Noticias implements Serializable, ExpresionesRegulares, CatalogoErrores {
     
     @Size(max = 255)
-    @Pattern(regexp = letrasNumeros, message = errorLetrasNumeros)
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "TITULO")
     private String titulo;
     private static final long serialVersionUID = 1L;

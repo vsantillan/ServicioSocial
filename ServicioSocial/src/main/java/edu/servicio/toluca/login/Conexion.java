@@ -20,8 +20,8 @@ public class Conexion {
     //conexion a la base de datos
     public Connection conectar(String usu, String cont) throws ClassNotFoundException, SQLException {
 
-        String host = "192.168.2.1:1521:";
-        String sid = "sia";
+        String host = "localhost:1521:";
+        String sid = "orcl";
 
         String usuario = usu;
 
