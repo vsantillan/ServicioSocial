@@ -16,8 +16,8 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuUsuario.jsp"%> 
                 <!--------------------------------------------------Contenido--> 
-                <div class="bs-docs-section">
-                    <h1 class="col-md-offset-4"><span class="label label-info"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Formato &Uacute;nico</span></h1>
+                <div class="bs-docs-section col-md-12">
+                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Formato &Uacute;nico</h1></div>
                     <p>&nbsp;</p>
                     <div class="tabbable">
                         <ul class="nav nav-tabs">
@@ -508,6 +508,7 @@
     <%@include file="../General/js.jsp"%>
     <script src="js/formatoUnicoJQuery.js"></script>
     <script src="js/bootstrap.fileInput.js"></script> 
+    <script src="js/validaFiles.js"></script> 
     <script>
         $(document).ready(function() {
             $('input[type=file]').bootstrapFileInput();

@@ -472,7 +472,8 @@ public class FormatoUnicoController {
         System.out.println("Antes de mostrar el status fui es:" + formatoUnico.getStatusFui());
         if (formatoUnico.getStatusFui() != null) {
             modelo.addAttribute("infoDescarga","<div class='form-group'><label>Seleccione un Formato &Uacute;nico</label><br><input type='file' id='idfile' name ='file' class='btn btn-primary' title='Buscar en mi equipo'></input></div>\n"
-                    + "                         <div class='form-group'><label>&nbsp;</label><input type='submit' id='subeFui' value='Subir' class='btn btn-primary' /></div>");
+                    + "                         <div class='form-group'><label>&nbsp;</label><input type='button' id='subeFui' value='Subir' class='btn btn-primary' /></div>"
+                    + "                         <div class='error alert alert-danger' style=\"display:none;\"></div> ");
         } else {
             modelo.addAttribute("infoDescarga", "<h1 style='color: #990000'>Se ha detectado que aun no descargas tu formato &uacute;nico, dicha tarea la puedes hacer en la secci&oacute; anterior. Gracias</h1>");
 

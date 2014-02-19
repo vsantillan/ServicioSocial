@@ -11,7 +11,7 @@ function listo()
     $('#frmHorarios').submit(enviarHorarios);
 
     $('#cmdDescargaFui').click(cambiaStatusSubidaFui);
-    $('#subeFui').click(subirFUI);
+//    $('#subeFui').click(subirFUI);
 
     $('.otraorg').click(function(event) {
         alert('ola ke ase');
@@ -167,6 +167,7 @@ function enviarDatosAlumno()
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
+                window.location.hash = '#observaciones';
             });
         }
         else
@@ -175,6 +176,7 @@ function enviarDatosAlumno()
             $('#listaObservacionesOK').empty();
             $('#observacionesOK').show('slow');
             $('#listaObservacionesOK').append("<li class= 'observacion'>Datos de alumno guradados correctamente</li>");
+            window.location.hash = '#observacionesOK';
         }
     });
 
@@ -203,6 +205,7 @@ function enviarDatosContactoAlumno()
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
+                window.location.hash = '#observaciones';
             });
         }
         else
@@ -211,6 +214,7 @@ function enviarDatosContactoAlumno()
             $('#listaObservacionesOK').empty();
             $('#observacionesOK').show('slow');
             $('#listaObservacionesOK').append("<li class= 'observacion'>Datos de contacto guradados correctamente</li>");
+            window.location.hash = '#observacionesOK';
         }
     });
 
@@ -238,6 +242,7 @@ function enviarHorarios()
             $.each(respJ, function(i, accion) {
                 $('#observaciones').show('slow');
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
+                window.location.hash = '#observaciones';
             });
         }
         else
@@ -246,6 +251,7 @@ function enviarHorarios()
             $('#listaObservacionesOK').empty();
             $('#observacionesOK').show('slow');
             $('#listaObservacionesOK').append("<li class= 'observacion'>Horarios guradados correctamente</li>");
+            window.location.hash = '#observacionesOK';
         }
     });
 
@@ -264,6 +270,7 @@ function enviarDatosOrganizaciones()
     if ($("input#fecha_inicio").val() === "") {
         $('#observaciones').show('slow');
         $('#listaObservaciones').append("<li class= 'observacion'>El campo Fecha de Inicio no puede estar vacío</li>");
+        window.location.hash = '#observaciones';
     }
     console.log(alumno);
     $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta) {
@@ -271,12 +278,13 @@ function enviarDatosOrganizaciones()
             $('#listaObservacionesOK').empty();
             $('#observacionesOK').show('slow');
             $('#listaObservacionesOK').append("<li class= 'observacion'>Organizacion y proyecto almacenados correctamente</li>");
+            window.location.hash = '#observaciones';
         } else {
             $('#listaObservaciones').empty();
             $('#observaciones').show('slow');
             $('#listaObservaciones').append("<li class= 'observacion'>" + respuesta + "</li>");
+            window.location.hash = '#observacionesOK';
         }
-        //console.log(respuesta);
     });
 
     return false;
