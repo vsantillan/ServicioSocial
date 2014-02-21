@@ -31,7 +31,7 @@
                         <h3 class="titulos-naranja">Noticias Generales</h3>
                         <!---------------------------------------Contenido Noticias Generales-------------------> 
                         <core:forEach items="${noticiasAlumnos}" var="noticia">
-                            <li ><b><fmt:formatDate pattern="dd-MM-yyyy" value="${noticia.fecha}"/></b>: ${noticia.detalle}</li>
+                            <li ><b>${noticia.fecha}</b>: ${noticia.detalle}</li>
                                 </core:forEach>
                         <!---------------------------------------Fin Contenido Noticias Generales------------------->
                     </div>          
@@ -46,7 +46,7 @@
                         <h3 class="titulos-naranja">Observaciones</h3>
                         <!---------------------------------------Contenido Observaciones----------------------------->
                         <core:forEach items="${observaciones}" var="observacion">
-                            <li ><b><fmt:formatDate pattern="dd-MM-yyyy" value="${observacion.fecha}"/></b>: ${observacion.catalogoObservacionId.detalle}</li>
+                            <li ><b>${observacion.fecha}</b>: ${observacion.catalogoObservacionId.detalle}</li>
                                 </core:forEach>
                         <!---------------------------------------Fin Contenido Observaciones------------------->
                     </div>
@@ -56,17 +56,17 @@
                         <core:forEach items="${sanciones}" var="sancion">
                             <core:choose>
                                 <core:when  test="${sancion.concepto==0}">
-                                    <li ><b><fmt:formatDate pattern="dd-MM-yyyy" value="${sancion.fecha}"/></b>: ${sancion.detalle}</li>
+                                    <li ><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
                                         </core:when>    
                                         <core:when  test="${sancion.concepto==1}">
-                                    <li ><b><fmt:formatDate pattern="dd-MM-yyyy" value="${sancion.fecha}"/></b>: ${sancion.detalle}</li>
+                                    <li ><b>${sancion.fecha}</b>: ${sancion.detalle}</li>
                                         </core:when> 
                                     </core:choose> 
                                 </core:forEach>
                         <!---------------------------------------Fin Contenido Sanciones------------------->
                     </div>
                 </div>
-                |<!--------------------------------------------------Fin Contenido-------------------------> 
+                <!--------------------------------------------------Fin Contenido--> 
             </div>         
         </div><!--/row--> 
         <%@include file="../General/footer.jsp"%>            

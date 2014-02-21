@@ -6,32 +6,49 @@
 
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!DOCTYPE html>
 <html>
     <head>
-        <%@include file="../General/head.jsp"%>
+        <%@ include file="../Template/headsMenuUsuario.jsp" %>
+        <%@ include file="../Template/metas.jsp" %>       
+<script>
+            $(document).ready(function() {
+                $(".MyForm").formly();
+            })
+        </script>
+
+        <script src="js/jquery.codigos.postales.js"></script>
+        <script src="js/jquery.manolo.js"></script>
+        <link rel="stylesheet" href="css/jqueryUI/jquery.ui.autocomplete.custom.css" />
+        <script src="js/jqueryUI/jquery.ui.autocomplete.custom.js"></script>
+        
+
+        <title>Departamento de Servicio Social :: Organizaciones ::</title>
     </head>
-    <body>
-        <div class="container">
-               <div class="row">
-                <%@include file="../General/banner.jsp"%>  
-                <%@include file="../General/menuPrincipal.jsp"%> 
-               </div>
-            <div class="row ">    
+    <body class="background">
+        <%@ include file="../Template/banner.jsp" %>
+
+        <%-- inicio del contenido --%>
+        <jsp:include page="../NavegacionPrincipal/menuPrincipal.jsp" />
+        <div id="contenido">
+            <center>
                 <br/>
-                <div class="jumbotron">
-                    <h1><span class="glyphicon glyphicon-saved"></span>Organizaci&oacute;n registrada correctamente</h1>
+                
+                <h1>Organizaci&oacute;n registrada correctamente</h1>
+                <img src="imagenes/paloma.png"/>
                 <h3>Espere la confirmaci&oacute;n del administrador para validar su cuenta. Ser&aacute; notificado en la direcci&oacute;n de correo que nos ha proporcionado a la brevedad posible.</h3>
-                </div>
+                
                 <br/>
 
-        <!---------------------------------------------Fin Contenido------------------------------------------->                
-
-            </div><!--/row--> 
-            <%@include file="../General/footer.jsp"%>           
-        </div><!--/row-->
-    </div> <!-- /container -->
-    <%@include file="../General/js.jsp"%>
-</body>
+            </center>
+            <div style="clear:both;"></div>
+        </div>
+        <%-- fin del contenido --%>
+        <%@ include file="../Template/footer.jsp" %>
+    </body>
 </html>

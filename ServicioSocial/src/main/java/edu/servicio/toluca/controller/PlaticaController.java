@@ -194,7 +194,7 @@ public class PlaticaController {
                 modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                 modelo.addAttribute("lugar_i", new LugaresPlatica());
-                modelo.addAttribute("alert", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</div>");
+                modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
                 System.out.println("--" + result.getAllErrors());
 
                 return "/Platicas/altaPlatica";
@@ -223,8 +223,8 @@ public class PlaticaController {
                         modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                         modelo.addAttribute("lugar_i", new LugaresPlatica());
-                        modelo.addAttribute("alert", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</div>");
-                        modelo.addAttribute("errorHora", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>La hora no es valida</div>");
+                        modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
+                        modelo.addAttribute("errorHora", "<div class='alert alert-danger'>La hora no es valida</div>");
                         return "/Platicas/altaPlatica";
                     } else {
                         platica.setDescripcion(platica.getDescripcion().toUpperCase());
@@ -251,8 +251,8 @@ public class PlaticaController {
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                             modelo.addAttribute("lugar_i", new LugaresPlatica());
-                            modelo.addAttribute("alert", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</div>");
-                            modelo.addAttribute("exito", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span> La platica ya existe</div>");
+                            modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
+                            modelo.addAttribute("exito", "<div class='alert alert-danger'> La platica ya existe</div>");
                             System.out.println("ya existia");
                             return "/Platicas/altaPlatica";
                         } else {
@@ -264,7 +264,7 @@ public class PlaticaController {
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                             modelo.addAttribute("lugar_i", new LugaresPlatica());
-                            modelo.addAttribute("alert", "<div class='alert alert-success'><span class=\"glyphicon glyphicon-saved sizeIcon\" ></span>Plática Guardada</div>");
+                            modelo.addAttribute("alert", "<div class='alert alert-success'><h2><span class=\"glyphicon glyphicon-saved sizeIcon\" ></span>Plática Guardada</h2></div>");
                             System.out.println("creada");
                             return "/Platicas/altaPlatica";
                         }

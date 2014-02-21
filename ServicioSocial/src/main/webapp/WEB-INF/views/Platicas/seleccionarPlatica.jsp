@@ -35,8 +35,9 @@
                                         <input id="hora"disabled="true" class="form-control alert alert-info" value="Hora: ${platicasPeriodo.get(0).hora}"> </input>
                                         <input id="lugar" disabled="true" class="form-control alert alert-info" value="Lugar: ${platicasPeriodo.get(0).idLugar.lugar}"></input>
                                         <textarea  id="descripcion" rows="4" cols="50" disabled="true" class="form-control alert alert-info" >Descripción:${platicasPeriodo.get(0).descripcion}</textarea>
-                                        <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"><a href="muestraPdf.do" style="color:#029bef" class="fancyFU">  Acepto haber leído el manual</a>
-                                        donde se describe el uso del sistema via web sobre como dar de alta mi servicio social<p></p>
+                                        <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"><a href="muestraPdf.do" class="fancyFUI">  Acepto haber leído el manual</a>
+                                        donde se describe el uso del<br>
+                                        sistema via web sobre como dar de alta mi servicio social<p></p>
                                         <input type="submit" value="Generar Folio" class="btn btn-primary" /> <br>
                                     </form:form>
                         ${existe}
@@ -45,10 +46,9 @@
 
             </div>         
         </div><!--/row--> 
-        <%@include file="../General/footer.jsp"%> 
+        <%@include file="../General/footer.jsp"%>            
     </div><!--/row-->
 </div> <!-- /container -->
 <%@include file="../General/js.jsp"%>
-<%@include file="../Template/headsModal.jsp" %>
 </body>
 </html>
