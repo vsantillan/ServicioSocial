@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="folioPlatica" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ba616a3-db79-41c6-9c8b-7ada2b2b344e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.jasperserver.reportUnit" value="/reports/ServicioSocial/FolioPlatica"/>
+	<property name="ireport.jasperserver.url" value="http://192.168.40.21:8083/jasperserver/services/repository"/>
+	<parameter name="folio" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT FP.NUMERO_FOLIO,CONCAT (CONCAT(CONCAT (CONCAT (VA.NOMBRE,' '),VA.APELLIDO_PAT),' '),VA.APELLIDO_MAT) AS NOMBRE,
+VA.ID AS NUMERO_CONTROL,VA.CARRERA,VA.SEM_ACTUAL,VA.PORCENTAJE,TO_CHAR(P.FECHA, 'DD/MM/YYYY') FECHA_PLATICA,
+P.HORA,LP.LUGAR,P.PERIODO,P.ANIO,TO_CHAR(P.FECHA_MX_FUI, 'DD/MM/YYYY') AS FECHA_MX_FU
+FROM FOLIOS_PLATICA FP,PLATICA P,LUGARES_PLATICA LP,VISTA_ALUMNO VA
+WHERE FP.NUMERO_FOLIO=$P{folio} AND FP.ALUMNO_ID=VA.ID AND FP.PLATICA_ID=P.ID AND P.ID_LUGAR=LP.ID]]>
+	</queryString>
+	<field name="NUMERO_FOLIO" class="java.lang.String"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="NUMERO_CONTROL" class="java.lang.String"/>
+	<field name="CARRERA" class="java.lang.String"/>
+	<field name="SEM_ACTUAL" class="java.math.BigDecimal"/>
+	<field name="PORCENTAJE" class="java.lang.String"/>
+	<field name="FECHA_PLATICA" class="java.lang.String"/>
+	<field name="HORA" class="java.lang.String"/>
+	<field name="LUGAR" class="java.lang.String"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="ANIO" class="java.lang.String"/>
+	<field name="FECHA_MX_FU" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="beee8cba-3268-4e6c-8156-6ecfcd404264" x="422" y="0" width="110" height="58"/>
+				<jr:Code39 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$P{folio}]]></jr:codeExpression>
+				</jr:Code39>
+			</componentElement>
+			<image>
+				<reportElement uuid="3177e3aa-52ab-495c-bf27-6eb6d7b4d84e" x="29" y="0" width="204" height="74"/>
+				<imageExpression><![CDATA["download.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="57" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6f57e21e-483c-4cc4-85c2-5535b156c832" x="28" y="11" width="487" height="46" isPrintWhenDetailOverflows="true"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMPROBANTE DE REGISTRO A LA PLÁTICA DE INDUCCIÓN]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="51" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="66d43619-1f00-478d-871a-92839f131dc6" mode="Transparent" x="29" y="13" width="504" height="28"/>
+				<graphicElement>
+					<pen lineColor="#000099"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="b88cbaa8-0af7-4b09-9cf8-18576f2104b8" mode="Transparent" x="29" y="13" width="486" height="28"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[DATOS DEL ALUMNO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="432" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b4c5cff4-a85a-40ca-96ed-f25f9e269d09" x="165" y="6" width="368" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5c0a17ec-1b4e-4aaa-9c1e-d7494b6be941" x="165" y="69" width="367" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{CARRERA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c5b0a53c-01d6-4593-a994-56d6f11555a1" x="50" y="8" width="69" height="20"/>
+				<textElement/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="03f5c871-905a-400b-aee4-c86f1cd4be22" x="50" y="69" width="69" height="20"/>
+				<textElement/>
+				<text><![CDATA[CARRERA]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5653405b-f533-4378-99ca-a303c4ba53ba" x="165" y="38" width="367" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{NUMERO_CONTROL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="144daa09-32d5-425b-a375-036cbb7eb3be" x="50" y="38" width="69" height="20"/>
+				<textElement/>
+				<text><![CDATA[NO CONTROL]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="567e2cf7-daf9-4fc5-aed8-566efaefc8e5" x="165" y="102" width="367" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{SEM_ACTUAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="81a9bdf8-e5f4-4def-992c-65da972615b5" x="50" y="102" width="94" height="20"/>
+				<textElement/>
+				<text><![CDATA[SEMESTRE ACTUAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="031669c7-171c-459a-9537-de8aa66211b7" x="218" y="134" width="314" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PORCENTAJE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f4787f32-0632-4ff7-a129-286b28b05f55" x="50" y="134" width="148" height="20"/>
+				<textElement/>
+				<text><![CDATA[PORCENTAJE DE CRÉDITOS]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="8b4734c1-8207-44b7-85bd-8b6d3a80e4e5" mode="Transparent" x="29" y="160" width="504" height="28"/>
+				<graphicElement>
+					<pen lineColor="#000099"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="6a32bb8a-555c-4a33-8644-0e9813d2d52e" mode="Transparent" x="76" y="160" width="398" height="28"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[DATOS DE LA PLÁTICA]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="329a1dc8-a494-41e0-86b6-97071ba600ed" x="199" y="210" width="123" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{FECHA_PLATICA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d3266110-f9ec-4dae-a8b1-2260f57a8064" x="50" y="210" width="126" height="20"/>
+				<textElement/>
+				<text><![CDATA[FECHA DE LA PLÁTICA]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f6fca2c2-259c-4032-a314-3fa3fe8dd948" x="199" y="242" width="123" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{HORA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f27d8311-d3c2-4571-8e36-ebbf88a76cf0" x="50" y="242" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2701e3cf-86a0-4ca2-a2b4-fe310a44eabb" x="199" y="277" width="339" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{LUGAR}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6a980c06-a809-48bc-9484-6d1c3ce2c792" x="50" y="277" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[LUGAR]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="706683fd-7e6f-406e-8ea6-dccf58224432" x="199" y="310" width="123" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{PERIODO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d9ee1b23-7a09-46e3-a88e-fb5249017388" x="50" y="310" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[PERÍODO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="23775285-b4fb-4253-a746-7a9f03915027" positionType="Float" mode="Transparent" x="18" y="340" width="520" height="92"/>
+				<graphicElement>
+					<pen lineColor="#000099"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="2bf7e7aa-3cb7-46e4-ae10-aa87ce22bcbd" x="29" y="351" width="291" height="70" isPrintWhenDetailOverflows="true"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LA FECHA MÁXIMA PARA SUBIR TU FORMATO ÚNICO.
+EN CASO DE NO HACERLO SERÁS ACREDOR A UNA SANCIÓN.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9be850a0-43a2-47d9-9bae-4706d56872e7" x="342" y="369" width="151" height="24"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA_MX_FU}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="63eca1da-af6d-42e5-8fd2-d6a8ad4c6d31" x="342" y="310" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{ANIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

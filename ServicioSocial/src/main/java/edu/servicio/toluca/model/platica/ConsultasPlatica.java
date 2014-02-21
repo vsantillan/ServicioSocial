@@ -12,6 +12,7 @@ import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.PlaticaFacade;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -77,7 +78,7 @@ public class ConsultasPlatica {
         }
 
         FoliosPlaticaBean beanPlatica = new FoliosPlaticaBean();
-
+        Date d= new Date();
         //Checa si se registro a alguna platica
         if (!filtroPlatica.isEmpty()) {
             //Checa si asistio a la platica en la cual se registro
@@ -95,10 +96,18 @@ public class ConsultasPlatica {
                     System.out.println("No asistio a la platica");
                 }
             } else {
+                if(filtroPlatica.get(0).getPlaticaId().getFecha().compareTo(d)>0) {
+                    beanPlatica.setTienePlatica(false);
+                    beanPlatica.setAccesoPanelPlatica(false);
+                    beanPlatica.setMensajeUsuario("Te has egistrado a la platica del " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFecha()) + ", la fecha máxima para que subas tu formato único es hasta el " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFechaMxFui()) + ", de lo contrario serás acreedor a una sanción.");
+                    System.out.println("Asistio a la platica");
+                }
+                else{
                 beanPlatica.setTienePlatica(false);
                 beanPlatica.setAccesoPanelPlatica(false);
-                beanPlatica.setMensajeUsuario("Te registraste a la platica, pero no asististe a ella. Favor de pasar a la oficina de servicio social para solicitar un alta posterior.");
+                beanPlatica.setMensajeUsuario("Te registraste a la platica del " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFecha()) + ", pero no asististe a ella. Favor de pasar a la oficina de servicio social para solicitar un alta posterior.");
                 System.out.println("No asistio a la platica");
+                }
             }
 
         } else {
