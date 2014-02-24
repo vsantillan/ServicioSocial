@@ -99,8 +99,8 @@ public class ConsultasPlatica {
                 if(filtroPlatica.get(0).getPlaticaId().getFecha().compareTo(d)>0) {
                     beanPlatica.setTienePlatica(false);
                     beanPlatica.setAccesoPanelPlatica(false);
-                    beanPlatica.setMensajeUsuario("Te has egistrado a la platica del " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFecha()) + ", la fecha máxima para que subas tu formato único es hasta el " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFechaMxFui()) + ", de lo contrario serás acreedor a una sanción.");
-                    System.out.println("Asistio a la platica");
+                    beanPlatica.setMensajeUsuario("Te has registrado a la platica del " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFecha()) + ", la fecha máxima para que subas tu formato único es hasta el " + fecha.fechaAPalabras(platica.get(0).getPlaticaId().getFechaMxFui()) + ", de lo contrario serás acreedor a una sanción.");
+                    System.out.println("aun no es la platica");
                 }
                 else{
                 beanPlatica.setTienePlatica(false);

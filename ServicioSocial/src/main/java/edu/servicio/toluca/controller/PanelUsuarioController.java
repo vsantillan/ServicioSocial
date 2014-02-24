@@ -60,7 +60,7 @@ public class PanelUsuarioController {
     public String panelUsuario(Model model, HttpSession session, HttpServletRequest request, String mensaje) {
         //Valida sesion
         if (!new ValidaSesion().validaAlumno(session, request)) {
-            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         System.out.println("NCONTROL:" + session.getAttribute("NCONTROL").toString());
@@ -136,7 +136,7 @@ public class PanelUsuarioController {
 
                 //Mensaje personal
                 if (mensaje != null) {
-                    model.addAttribute("mensajePersonal", "<div class='error'>" + mensaje + "</div>");
+                    model.addAttribute("mensajePersonal", "<div class='alert alert-danger'>" + mensaje + "</div>");
                 }
 
                 //Observaciones

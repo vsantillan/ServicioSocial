@@ -378,10 +378,12 @@ public class PlaticaController {
                 foliosPlatica = foliosPlaticaFacade.find(lista.get(0).getId());
                 foliosPlatica.setAsistencia((short) 1);
                 foliosPlaticaFacade.edit(foliosPlatica);
+                modelo.addAttribute("colocado"," <div ><span class=\"glyphicon glyphicon-ok  alert-succes\" ></span></div>");
                 return "/Platicas/capturarAsistencia";
             } else {
                 modelo.addAttribute("foliosPlatica", new FoliosPlatica());
-                modelo.addAttribute("existe", "<div class='alert alert-danger'>No existe numero de folio</div>");
+                modelo.addAttribute("colocado"," <div ><span class=\"glyphicon glyphicon-remove alert-danger\" ></span></div>");
+                modelo.addAttribute("existe", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span> No existe numero de folio</div>");
                 return "/Platicas/capturarAsistencia";
             }
         }
