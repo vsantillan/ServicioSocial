@@ -180,7 +180,7 @@
                                                                         <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
                                                                             <core:choose>
                                                                                 <core:when test="${documentos.status==3 && documentos.catalogoDocumentosId.id==2}">
-                                                                                    <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                                                    <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
                                                                                     </core:when>
                                                                                 </core:choose>
                                                                             </core:forEach>

@@ -71,12 +71,13 @@ public class ReporteBimestralController {
 //        return "/ReporteBimestral/reporteBimestralAdministrador";
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
-    public String reporteBimestralUsuario(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request,String OK) throws ParseException {
-        if(OK!=null)
-        if(OK.equals("true")){
-            modelo.addAttribute("alertCorrecto","<script>alert('Informacion guardada correctamente');</script>");
+    public String reporteBimestralUsuario(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request, String OK) throws ParseException {
+        if (OK != null) {
+            if (OK.equals("true")) {
+                modelo.addAttribute("alertCorrecto", "<script>alert('Informacion guardada correctamente');</script>");
+            }
         }
-        
+
         FormatoUnico fechaInicioFU = null;
 
         //Obtenemos Objetos del Alumno
@@ -143,9 +144,15 @@ public class ReporteBimestralController {
                 //Buscar el ultimo reporte Bimestral con status aprobado
                 //Y sacar esa fecha finwt
                 //Verificar el status para en correccion  o para aceptado
-                RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
-                //Sumar los dos meses a fecha FIn
-                RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
+                if (ultimoReporte.getNumeroRevisiones().compareTo(BigInteger.ZERO)>0) {
+                    RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
+                    RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
+                } else {
+                    RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
+                    //Sumar los dos meses a fecha FIn
+                    RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
+                }
+
                 RBObjeto.setHorasAcumuladas(fechaInicioFU.getHorasAcumuladas());
                 if (ultimoReporte.getStatus() == BigInteger.valueOf(0) || ultimoReporte.getStatus() == BigInteger.valueOf(3)) {
                     RBObjeto.setHoras(Integer.parseInt(ultimoReporte.getHoras().toString()));
@@ -213,11 +220,11 @@ public class ReporteBimestralController {
             if (!datosPersonales.isEmpty()) {
                 modelo.addAttribute("datosPersonales", datosPersonales);
             }
-            modelo.addAttribute("errorHoras","<div class='alert alert-danger'>El campo horas debe de ser numerico</div>");
+            modelo.addAttribute("errorHoras", "<div class='alert alert-danger'>El campo horas debe de ser numerico</div>");
             modelo.addAttribute("Reportes", reporte);
             return "/ReporteBimestral/formatoReporteBimestral";
         }
-        modelo.addAttribute("errorHoras","");
+        modelo.addAttribute("errorHoras", "");
         if (resultado.hasErrors()) {
             System.out.println("Hubo errores:" + resultado.toString());
             if (!datosPersonales.isEmpty()) {
