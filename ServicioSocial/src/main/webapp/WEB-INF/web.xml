@@ -41,10 +41,10 @@
     
     <error-page>
         <error-code>404</error-code>
-        <location>/WEB-INF/views/Errors/404.html</location>
+        <location>/WEB-INF/views/Errors/error404.jsp</location>
     </error-page>
     <error-page>
         <error-code>405</error-code>
-        <location>/WEB-INF/views/Errors/405.html</location>
+        <location>/WEB-INF/views/Errors/error405.jsp</location>
     </error-page>
 </web-app>
