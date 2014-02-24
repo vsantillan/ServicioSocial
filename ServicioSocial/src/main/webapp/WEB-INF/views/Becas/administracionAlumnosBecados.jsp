@@ -4,47 +4,35 @@
     Author     : Jonny
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-         <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-
-
-        <!--Script para DataTables-->
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-
-        <!--Include para Ventanas Modales-->
-        <jsp:include page="../Template/headsModal.jsp" /> 
-
-        <title>Administraci&oacute;n de Alumnos Becados</title>
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body class="background">
-        <jsp:include page="../Template/banner.jsp" />
-        <div id ="contenido" align="left">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left; width: 80%;">
-                <div id="tabs">
-                    <h1>Administraci&oacute;n de Alumnos Becados</h1>
-                    <ul>
-                        <li><a href="#preseleccion">Alumnos Preseleccionados</a></li>
-                        <li><a href="#aceptados">Alumnos Becados</a></li>
+    <body>
+        <div class="container">
+
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%> 
+            <div class="row ">
+<!---------------------------------------------Contenido-------------------------------------------> 
+                     <div class="row col-md-12 center-block">
+                         <center><h1>Administraci&oacute;n de Alumnos Becados</h1></center>
+                    <div id="tab-content">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#preseleccion" data-toggle="tab">Alumnos Preseleccionados</a></li>
+                        <li><a href="#aceptados" data-toggle="tab">Alumnos Becados</a></li>
                     </ul>
-                    <div id="preseleccion">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="NoAceptados" width='100%'>
+                    <div id="preseleccion" class="tab-pane">
+                        <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="NoAceptados" width='100%'>
                             <thead>
                                 <tr>
                                     <th>&nbsp;</th>
-                                    <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
                                     <th>&nbsp;Nombre&nbsp;</th>
                                     <th>&nbsp;Carrera&nbsp;</th>
-                                    <th>&nbsp;Correo ElectrÃ³nico&nbsp;</th>
+                                    <th>&nbsp;Correo Electrónico&nbsp;</th>
                                     <th>&nbsp;Telefono celular&nbsp;</th>
                                     <th>&nbsp;Telefono de Casa&nbsp;</th>
                                     <th>&nbsp;Facebook&nbsp;</th>
@@ -56,7 +44,6 @@
                                 <core:forEach items="${preseleccionado}" var="current">
                                     <tr class='gradeX'>
                                         <td><input type="checkbox" name="checkbox" value="${current.id}"></td> 
-                                        <td><core:out value="${current.id}" /></td>
                                         <td><core:out value="${current.datosPersonalesId.apellidoP} ${espacio} ${current.datosPersonalesId.apellidoM} ${espacio} ${current.datosPersonalesId.nombre}" /></td>
                                         <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
                                         <td><core:out value="${current.datosPersonalesId.correoElectronico}" /></td>
@@ -71,24 +58,23 @@
                         </table>
                         <table>
                             <tr>
-                                <td><a href="preseleccionAlumnos.do" class="fancy"><img src="imagenes/agregar.jpg" title="Agregar" width="30"/></a></td>
-                                <td><a id="quitarAlumno" href="#" ><img src="imagenes/eliminar.jpg" title="Eliminar" width="29"/></a></td>
-                                <td><a  href="correo.do" rel="shadowbox"><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></a></td>
-                                <td><a id="aceptarAlumno" href="#" ><img src="imagenes/paloma.png" title="Aceptar Alumno(s)" width="30"/></a></td>
-                                <td><a href="dbPreseleccionados.xls" target="_blank"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></a></td>
+                                <td><a href="preseleccionAlumnos.do" title="Agregar alumno" class="fancy"><span class="glyphicon-adjust sizeIcon"></span>&nbsp;&nbsp;</a></td>
+                                <td><a id="quitarAlumno" href="#" title="Quitar alumno" ><span class="glyphicon glyphicon-remove-circle sizeIcon"></span>&nbsp;&nbsp;</a></td>
+                                <td><a  href="correo.do" rel="shadowbox" title="Enviar correo"><span class="glyphicon glyphicon-send sizeIcon"></span>&nbsp;&nbsp;</a></td>
+                                <td><a id="aceptarAlumno" href="#" title="Aceptar alumno" ><span class="glyphicon glyphicon-ok-circle sizeIcon"></a>&nbsp;&nbsp;</td>
+                                <td><a href="dbPreseleccionados.xls"  title="Descargar Excel" target="_blank"><span class="glyphicon glyphicon-download sizeIcon "></a></td>
 
                             </tr>
                         </table>
                     </div>
-                    <div id="aceptados">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="Aceptados" width='100%'>
+                    <div id="aceptados" class="tab-pane">
+                        <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="Aceptados" width='100%'>
                             <thead>
                                 <tr>
                                     <th>&nbsp;</th>
-                                    <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
                                     <th>&nbsp;Nombre&nbsp;</th>
                                     <th>&nbsp;Carrera&nbsp;</th>
-                                    <th>&nbsp;Correo ElectrÃ³nico&nbsp;</th>
+                                    <th>&nbsp;Correo Electrónico&nbsp;</th>
                                     <th>&nbsp;Telefono celular&nbsp;</th>
                                     <th>&nbsp;Telefono de Casa&nbsp;</th>
                                     <th>&nbsp;Facebook&nbsp;</th>
@@ -99,8 +85,7 @@
                             <tbody>
                                 <core:forEach items="${becado}" var="current">
                                     <tr class='gradeX'>
-                                        <td><input type="checkbox" name="checkbox" value="${current.id}"></td> 
-                                        <td><core:out value="${current.id}" /></td>
+                                        <td><input type="checkbox" name="checkbox" value="${current.id}"></td>                                
                                         <td><core:out value="${current.datosPersonalesId.apellidoP} ${espacio} ${current.datosPersonalesId.apellidoM} ${espacio} ${current.datosPersonalesId.nombre}" /></td>
                                         <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
                                         <td><core:out value="${current.datosPersonalesId.correoElectronico}" /></td>
@@ -116,19 +101,17 @@
                         <table>
                             <tr>
 
-                                <td><a href="correo.do" ><img src="imagenes/enviarcorreo.jpg" title="Enviar Correo" width="30"/></a></td>
-                                <td><a href="becados.pdf" target="_blank" ><img src="imagenes/imprimir.jpg" title="Imprimir" width="30"/></a></td>
-                                <td><a href="becadosExcel.xls" target="_blank"><img src="imagenes/excel.jpg" title="Generar Excel" width="30"/></a></td>
+                                <td><a href="correo.do" title="Enviar Correo" ><span class="glyphicon glyphicon-send sizeIcon"></span>&nbsp;&nbsp;</a></td>
+                                <td><a href="becados.pdf" title="Imprimir" target="_blank" ><span class="glyphicon glyphicon-print sizeIcon "></span>&nbsp;&nbsp;</a></td>
+                                <td><a href="becadosExcel.xls"  title="Descargar" target="_blank"><span class="glyphicon glyphicon-download sizeIcon "></span>&nbsp;&nbsp;</a></td>
 
                             </tr>
                         </table>
                     </div>       
-                </div>  
             </div>
         </div>
-        <div style="clear:both;"></div>
         <%-- fin del contenido --%>
-        <jsp:include page="../Template/footer.jsp" />
+        
         <script type="text/javascript" language="javascript" src="js/becados.js"></script> 
         <div id="preseleccionado" style="display: none; ">
             <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
@@ -139,7 +122,6 @@
                         <thead>
                             <tr>
                                 <th>&nbsp;</th>
-                                <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
                                 <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
                                 <th>&nbsp;Nombre&nbsp;</th>
                                 <th>&nbsp;Carrera&nbsp;</th>
@@ -153,7 +135,6 @@
                             <core:forEach items="${alumno}" var="current">
                                 <tr class='gradeX'>
                                     <td><form:checkbox path="alumno" value="${current.id}"/></td>
-                                    <td><core:out value="${current.datosPersonalesId.id}" /></td>
                                     <td><core:out value="${current.datosPersonalesId.alumnoId.id}" /></td>
                                     <td><core:out value="${current.datosPersonalesId.apellidoP} ${espacio} ${current.datosPersonalesId.apellidoM} ${espacio} ${current.datosPersonalesId.nombre}" /></td>
                                     <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
@@ -174,8 +155,11 @@
                 </form:form>            
             </div>
 
-        </div>
-
-
-    </body>
+  <!---------------------------------------------Fin Contenido-------------------------------------------> 
+            </div><!--/row--> 
+            <%@include file="../General/footer.jsp"%>           
+        </div><!--/row-->
+    </div> <!-- /container -->
+    <%@include file="../General/js.jsp"%>
+</body>
 </html>

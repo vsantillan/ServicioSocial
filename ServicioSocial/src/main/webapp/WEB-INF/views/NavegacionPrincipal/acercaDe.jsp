@@ -43,12 +43,11 @@
                         
                            
                             <br/><br/><br/><br/><br/><br/><br/>
-                    </div>
+                   
                     <!---------------------------------------------Fin Contenido------------------------------------------->                
 
                 </div><!--/row--> 
                 <%@include file="../General/footer.jsp"%>           
-            </div><!--/row-->
         </div> <!-- /container -->
         <%@include file="../General/js.jsp"%>
     </body>

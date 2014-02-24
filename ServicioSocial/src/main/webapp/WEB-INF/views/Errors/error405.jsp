@@ -20,7 +20,7 @@
             <div class="row ">
  <!---------------------------------------------Contenido------------------------------------------->                
                 <div class="jumbotron alert alert-danger col-md-offset-1 col-md-10">
-                    <h1>Error 405!</h1>
+                    <h1>¡Error 405!</h1>
                     <p>La peticion del metodo POST es inapropiada para está URL</p>
                 </div> 
  <!---------------------------------------------Fin Contenido------------------------------------------->                
