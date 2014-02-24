@@ -240,6 +240,7 @@ function enviarHorarios()
             //alert('Tienes errores');
             console.log('Tienes errores');
             $.each(respJ, function(i, accion) {
+                $('#listaObservaciones').empty();
                 $('#observaciones').show('slow');
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
                 window.location.hash = '#observaciones';

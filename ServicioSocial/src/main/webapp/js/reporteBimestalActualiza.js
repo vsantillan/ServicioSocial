@@ -15,7 +15,7 @@ function enviaRetroalimentacion(e)
 
 function aceptarReporteA(e)
 {
-    if (confirm('¿Seguro que desea aprobar este reporte?'))
+    if (confirm('\u00BFSeguro que desea aprobar este reporte?'))
     {
         var row = $(this).parents('tr')[0];
         var idUpdate = $(e.target).attr('ide');
