@@ -71,10 +71,15 @@ public class ReporteBimestralController {
 //        return "/ReporteBimestral/reporteBimestralAdministrador";
 //    }
     @RequestMapping(method = RequestMethod.GET, value = "/formatoReporteBimestral.do")
-    public String reporteBimestralUsuario(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException {
-        FormatoUnico fechaInicioFU = null;
+    public String reporteBimestralUsuario(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request,String OK) throws ParseException {
+        if(OK!=null)
+        if(OK.equals("true")){
+            modelo.addAttribute("alertCorrecto","<script>alert('Informacion guardada correctamente');</script>");
+        }
         
-          //Obtenemos Objetos del Alumno
+        FormatoUnico fechaInicioFU = null;
+
+        //Obtenemos Objetos del Alumno
         ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
         VistaAlumno alumnoB = consultaVistaAlumno.getAlumnoSesion(session);
         ValidacionStatusServicio validaServicio = new ValidacionStatusServicio();
@@ -83,13 +88,13 @@ public class ReporteBimestralController {
 
 
         if (!new ValidaSesion().validaAlumno(session, request)) {
-            modelo.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            modelo.addAttribute("error", "<div class='alert alert-danger''>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         ///////////MUESTRA REPORTES/////////////
-        List<Reportes> listaReportes=reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
-        List<FormatoUnico> listaFormatoUnicos=(List)servicioBean.getDatosPersonales().getFormatoUnicoCollection();
-        modelo.addAttribute("Plan",listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
+        List<Reportes> listaReportes = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+        List<FormatoUnico> listaFormatoUnicos = (List) servicioBean.getDatosPersonales().getFormatoUnicoCollection();
+        modelo.addAttribute("Plan", listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
         modelo.addAttribute("listaReportes", listaReportes);
         ////////////////////////////////////////
         alumno_id = session.getAttribute("NCONTROL").toString();
@@ -130,10 +135,11 @@ public class ReporteBimestralController {
                 }
                 Reportes ultimoReporte = RB.get(RB.size() - 1);
                 RBObjeto.setNumeroReporte(noReportes);
-                if(noReportes==Integer.parseInt(String.valueOf(ultimoReporte.getNumeroReporte())))
-                    modelo.addAttribute("noReviciones",ultimoReporte.getNumeroRevisiones());
-                    else
-                modelo.addAttribute("noReviciones","0");
+                if (noReportes == Integer.parseInt(String.valueOf(ultimoReporte.getNumeroReporte()))) {
+                    modelo.addAttribute("noReviciones", ultimoReporte.getNumeroRevisiones());
+                } else {
+                    modelo.addAttribute("noReviciones", "0");
+                }
                 //Buscar el ultimo reporte Bimestral con status aprobado
                 //Y sacar esa fecha finwt
                 //Verificar el status para en correccion  o para aceptado
@@ -141,11 +147,10 @@ public class ReporteBimestralController {
                 //Sumar los dos meses a fecha FIn
                 RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
                 RBObjeto.setHorasAcumuladas(fechaInicioFU.getHorasAcumuladas());
-                if(ultimoReporte.getStatus()==BigInteger.valueOf(0) || ultimoReporte.getStatus()==BigInteger.valueOf(3)){
-                     RBObjeto.setHoras(Integer.parseInt(ultimoReporte.getHoras().toString()));
-                     RBObjeto.setCalificacion(Integer.parseInt(ultimoReporte.getCalificacion().toString()));
-                }
-                else{
+                if (ultimoReporte.getStatus() == BigInteger.valueOf(0) || ultimoReporte.getStatus() == BigInteger.valueOf(3)) {
+                    RBObjeto.setHoras(Integer.parseInt(ultimoReporte.getHoras().toString()));
+                    RBObjeto.setCalificacion(Integer.parseInt(ultimoReporte.getCalificacion().toString()));
+                } else {
                     RBObjeto.setHoras(0);
                     RBObjeto.setCalificacion(0);
                 }
@@ -168,17 +173,17 @@ public class ReporteBimestralController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/insertaReporte.do")
     public String insertaBimestral(@ModelAttribute("Reportes") @Valid reporteBimestral reporte, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request) {
-        selectfrom+="";
+        selectfrom += "";
         //Obtenemos Objetos del Alumno
         ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
         VistaAlumno alumnoB = consultaVistaAlumno.getAlumnoSesion(session);
         ValidacionStatusServicio validaServicio = new ValidacionStatusServicio();
         StatusServicioBean servicioBean = validaServicio.validaServicio(alumnoB);
-        
+
         ///////////MUESTRA REPORTES/////////////
-        List<Reportes> listaReportes=reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
-        List<FormatoUnico> listaFormatoUnicos=(List)servicioBean.getDatosPersonales().getFormatoUnicoCollection();
-        modelo.addAttribute("Plan",listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
+        List<Reportes> listaReportes = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+        List<FormatoUnico> listaFormatoUnicos = (List) servicioBean.getDatosPersonales().getFormatoUnicoCollection();
+        modelo.addAttribute("Plan", listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
         modelo.addAttribute("listaReportes", listaReportes);
         ////////////////////////////////////////
 
@@ -192,7 +197,7 @@ public class ReporteBimestralController {
             }
             System.out.println("tamaño de la lista:" + listaIds.size());
             if (listaIds.size() <= 1 || listaIds.isEmpty()) {
-                modelo.addAttribute("errorActividades", "<div class='error'>Seleccione como minimo 2 Actividades</div>");
+                modelo.addAttribute("errorActividades", "<div class='alert alert-danger'>Seleccione como minimo 2 Actividades</div>");
                 //---------------------------------------------------------//
                 //Agregamos el error de las actividaes para regresarlos    //
                 //todos de una sola vez                                    //
@@ -204,6 +209,15 @@ public class ReporteBimestralController {
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        if (reporte.getHoras() == null) {
+            if (!datosPersonales.isEmpty()) {
+                modelo.addAttribute("datosPersonales", datosPersonales);
+            }
+            modelo.addAttribute("errorHoras","<div class='alert alert-danger'>El campo horas debe de ser numerico</div>");
+            modelo.addAttribute("Reportes", reporte);
+            return "/ReporteBimestral/formatoReporteBimestral";
+        }
+        modelo.addAttribute("errorHoras","");
         if (resultado.hasErrors()) {
             System.out.println("Hubo errores:" + resultado.toString());
             if (!datosPersonales.isEmpty()) {
@@ -229,7 +243,7 @@ public class ReporteBimestralController {
                     actualizaHoras.setHorasAcumuladas(actualizaHoras.getHorasAcumuladas().subtract(bimestralU.getHoras()));
                     actualizaHoras.setHorasAcumuladas(BigInteger.valueOf(reporte.getHoras()).add(actualizaHoras.getHorasAcumuladas()));
                     formatoUnicoFacade.edit(actualizaHoras);
-                        
+
                     //Actualizamos La informacion del Reporte
                     bimestralU.setHoras(BigInteger.valueOf(reporte.getHoras()));
                     bimestralU.setCalificacion(BigInteger.valueOf(reporte.getCalificacion()));
@@ -254,8 +268,7 @@ public class ReporteBimestralController {
                         actividadesBimestralesFacade.create(actividadesB);
                     }
                     System.out.println("Actualizo La Informacion Correctamente");
-
-                    return "redirect:formatoReporteBimestral.do";
+                    return "redirect:formatoReporteBimestral.do?OK=true";
                 } else {
                     fechas fecha = new fechas();
                     Reportes reporteBimestral = new Reportes();
@@ -286,9 +299,8 @@ public class ReporteBimestralController {
                     //DatosPersonales dp = datosPersonales.get(0);
                     List<Reportes> bimestrales = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
                     Reportes bimestralInsertado = bimestrales.get(bimestrales.size() - 1);//tenia -1
-                    for(int i=0;i<bimestrales.size();i++)
-                    {
-                        System.out.println("*********************** el num de reporte es: "+bimestrales.get(i).getNumeroReporte());
+                    for (int i = 0; i < bimestrales.size(); i++) {
+                        System.out.println("*********************** el num de reporte es: " + bimestrales.get(i).getNumeroReporte());
                     }
                     //System.out.println("*********************** el num de reporte es: "+bimestralInsertado.getNumeroReporte());
                     Iterator inserta = listaIds.iterator();
@@ -301,7 +313,6 @@ public class ReporteBimestralController {
                         actividadesBimestralesFacade.create(actividadesB);
                     }
                     System.out.println("Inserto N Reporte Correctamente");
-
                     return "redirect:formatoReporteBimestral.do";
 
                 }
@@ -347,14 +358,13 @@ public class ReporteBimestralController {
                 actividadesBimestralesFacade.create(actividadesB);
             }
             System.out.println("Inserto por Primera vez");
-
             return "redirect:formatoReporteBimestral.do";
         }
 
     }
 }
 //caundo sean 480 horas sumar 15 dias de la fecha final del ultimo reporte y se asigna en fecha_entrega_fuf de formato unico
-        //Obtenemos Objetos del Alumno
+//Obtenemos Objetos del Alumno
 //        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
 //        VistaAlumno alumnoB = consultaVistaAlumno.getAlumnoSesion(session);
 //        ValidacionStatusServicio validaServicio = new ValidacionStatusServicio();
