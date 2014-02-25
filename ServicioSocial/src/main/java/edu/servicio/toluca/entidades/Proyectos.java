@@ -4,6 +4,8 @@
  */
 package edu.servicio.toluca.entidades;
 
+import edu.servicio.toluca.configuracion.CatalogoErrores;
+import edu.servicio.toluca.configuracion.ExpresionesRegulares;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -13,6 +15,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,6 +28,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -55,7 +59,7 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Proyectos.findByVacantes", query = "SELECT p FROM Proyectos p WHERE p.vacantes = :vacantes"),
     @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles"),
     @NamedQuery(name = "Proyectos.findByNombre", query = "SELECT p FROM Proyectos p WHERE p.nombre = :nombre")})
-public class Proyectos implements Serializable {
+public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErrores {
     @Size(max = 7)
     @Column(name = "EXT")
     private String ext;
@@ -71,18 +75,21 @@ public class Proyectos implements Serializable {
     @Column(name = "ID_PROYECTO")
     private BigDecimal idProyecto;
     @Basic(optional = false)
-    @Size(min = 1, max = 100)
+    @Size(max = 100,message = "El campo Domicilio sólo puede tener hasta 100 caracteres.")
+    @Pattern(regexp =letrasNumerosEspeciales, message = errorCampoVacio)
     @Column(name = "DOMICILIO")
     private String domicilio;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45, message = "El campo Nombre del Responsable sólo puede tener hasta 45 caracteres.")
+    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE_RESPONSABLE")
     @NotBlank
     private String nombreResponsable;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45, message = "El campo Puesto del Responsable sólo puede tener hasta 45 caracteres.")
+    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "RESPONSABLE_PUESTO")
     private String responsablePuesto;
     @Basic(optional = false)
@@ -104,7 +111,7 @@ public class Proyectos implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaAlta;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "No puede estar vacio")
     @Column(name = "VACANTES")
     @Min(1)
     private BigInteger vacantes;
@@ -113,16 +120,17 @@ public class Proyectos implements Serializable {
     @Min(1)
     private BigInteger vacantesDisponibles;
     @Basic(optional = false)
-    @Size(min = 1,max = 60)
     @NotNull
-    @NotBlank
+    @Size(max = 60, message = "El Campo Nombre del Proyecto sólo puede tener hasta 60 caracteres.")
+    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
     @Cache(usage = CacheConcurrencyStrategy.NONE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<ProyectoPerfil> proyectoPerfilCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     @Cache(usage = CacheConcurrencyStrategy.NONE)
+    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Actividades> actividadesCollection;
     @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
     @ManyToOne(optional = false)
