@@ -58,8 +58,8 @@ public class Noticias implements Serializable, ExpresionesRegulares, CatalogoErr
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @NotEmpty(message = "Escribe el Detalle de la Noticia")
-    @Size(max = 300)
+    //@NotEmpty(message = "Escribe el Detalle de la Noticia")
+    @Size(max =300,message = "El detalle debe de ser mayor a 1 caracter y menor que 300")
     @Column(name = "DETALLE")
     private String detalle;
     //1. Noticas para pagina principal, 2. Noticias para alumnos, 3. Noticias para organizaciones, 4. Noticias para becados 0.Noticia Eliminada
