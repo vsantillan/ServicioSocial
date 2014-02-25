@@ -19,11 +19,12 @@
                     <div class="col-md-4 col-md-offset-0">
                         <div class="panel panel-primary panelNoticia  ">
                             <div class="panel-heading"><h4>${noticia.titulo}</h4></div>
-                            <div class="panel-body ">
-                                <p>${noticia.detalle}</p>
-                                <br/>
+                            <div class="panel-body">
                                 <p><strong>Fecha de publicaci&oacute;n:<fmt:formatDate pattern="dd-MM-yyyy"  value="${noticia.fecha}"/></strong></p>
-                                <p><a class="btn btn-warning mustraNoticiaCompleta"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Ver Detalles &raquo;</a></p>
+                                <br/>
+                                <p>${fn:substring(noticia.detalle, 0, 90)}<b>...&nbsp;</b><a class="mustraNoticiaCompleta btn btn-info btn-xs"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Leer M&aacutes.</a></p>
+                                
+                                <!--<p><a class="btn btn-warning mustraNoticiaCompleta"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Ver Detalles &raquo;</a></p>-->
 
                             </div><!--/span-->
                         </div>
