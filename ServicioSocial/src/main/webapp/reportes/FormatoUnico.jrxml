@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormatoUnico" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ff8df54-78ed-4b02-a7d1-dd231445f55d">
 	<property name="ireport.zoom" value="2.357947691000105"/>
-	<property name="ireport.x" value="463"/>
+	<property name="ireport.x" value="169"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="idProyecto" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -13,7 +13,7 @@
 		<![CDATA[select to_char(vaA.fec_nac, 'dd/MM/yyyy') as fechaNac,
 dp.apellido_p ||' '||dp.apellido_m ||' '|| dp.nombre || '' as nombreDP,
 SUBSTR(dp.SEXO,0,1) as sexoDP,
-(SELECT NUMERO_FOLIO FROM  FOLIOS_PLATICA WHERE ALUMNO_ID='09280536') as folioPlatica,
+(SELECT NUMERO_FOLIO FROM  FOLIOS_PLATICA WHERE ALUMNO_ID=$P{noControl}) as folioPlatica,
 NVL(dp.lugar_nacimiento,' ') as lugarNacimientoDP,
 NVL(dp.curp,' ') as curpDP,
 NVL2(dp.FOLIO_DOC_IDENTIFICACIIN,dp.FOLIO_DOC_IDENTIFICACIIN||'',' ') as ifeDP,
@@ -612,21 +612,21 @@ En la ciudad de Metepec, Estado de México, el día            del mes de       
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="98b366f7-b834-4f54-bd30-bfb0b2eede9d" x="143" y="50" width="46" height="20"/>
+				<reportElement uuid="98b366f7-b834-4f54-bd30-bfb0b2eede9d" x="132" y="50" width="46" height="14"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<text><![CDATA[Nombre:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="26766eeb-b3ca-47cc-b62f-5fb43d7a5dc6" x="364" y="50" width="65" height="20"/>
+				<reportElement uuid="26766eeb-b3ca-47cc-b62f-5fb43d7a5dc6" x="360" y="50" width="60" height="14"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<text><![CDATA[Folio Plática:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b52fbef4-adc2-4a5f-8942-5ff6bff547fa" x="509" y="50" width="33" height="13"/>
+				<reportElement uuid="b52fbef4-adc2-4a5f-8942-5ff6bff547fa" x="495" y="50" width="29" height="13"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
@@ -697,16 +697,16 @@ electrónico:]]></text>
 				<reportElement uuid="022e1f8b-4a05-4b0b-abdd-58b549c0c478" x="202" y="114" width="72" height="1"/>
 			</line>
 			<textField>
-				<reportElement uuid="dd12be24-afa2-4f0a-9548-1b744a19769f" x="183" y="51" width="181" height="14"/>
+				<reportElement uuid="dd12be24-afa2-4f0a-9548-1b744a19769f" x="174" y="50" width="186" height="14"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NOMBREDP}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="c072a4f6-57a0-4b40-8683-419d4ecf06ec" x="537" y="52" width="35" height="13"/>
+				<reportElement uuid="c072a4f6-57a0-4b40-8683-419d4ecf06ec" x="527" y="50" width="19" height="13"/>
 				<textElement>
-					<font fontName="Arial" size="8"/>
+					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{SEXODP}]]></textFieldExpression>
 			</textField>
@@ -1040,7 +1040,7 @@ electrónico:]]></text>
 				<text><![CDATA[%]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="64d0ea20-84c9-4b44-823c-b53bba366468" x="425" y="52" width="84" height="11"/>
+				<reportElement uuid="64d0ea20-84c9-4b44-823c-b53bba366468" x="418" y="50" width="75" height="13"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
