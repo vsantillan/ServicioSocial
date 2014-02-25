@@ -75,7 +75,6 @@ function cambiarEstadoFormatoAceptado(event)
 
 function cambiarEstadoFormatoCorreccion(event)
 {
-    console.log("entro aqui a la correccion");
     if (confirmacionEvento())
     {
         idDatosPersonales2 = $(this).attr('idDP');
