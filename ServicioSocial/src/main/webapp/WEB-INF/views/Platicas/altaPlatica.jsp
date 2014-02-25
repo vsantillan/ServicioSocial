@@ -18,11 +18,15 @@
                 <div class="row ">
                     <!---------------------------------------------Contenido------------------------------------------->      
 
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-8 col-md-offset-2">
+                        <br>
+                        <div class="panel panel-info">
+                            <div class="panel-heading "
                         <center><h3>Nueva Pl&aacute;tica</h3></center>
-                            ${alert}
+                            ${alert}</div>
                         <!-- Formulario Nueva Plática -->  
-                        <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica"  class="form-horizontal EnviarEnter" role="form" name="altaPlatica" > 
+                        <div class="panel-body">
+                        <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica"  class=" EnviarEnter" role="form" name="altaPlatica" > 
 
                             <div class="form-group">
                                 <label for="fecha">Fecha de la pl&aacute;tica:</label>
@@ -96,8 +100,9 @@
                                 </div>
                             </div>
                         </form:form>
+                        </div>
 
-
+                        </div>
                     </div>
 
 
