@@ -1029,7 +1029,7 @@ public class FormatoUnicoController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteFUI.pdf")
-    public String muestraReporteFUI(Model modelo, String nControl, String idProyecto, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
+    public @ResponseBody void muestraReporteFUI(Model modelo, String nControl, String idProyecto, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
 
         try {
             String noControl = session.getAttribute("NCONTROL").toString();
@@ -1043,7 +1043,7 @@ public class FormatoUnicoController {
             List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp, "equal", null, null);
             if (listaFormatoUnico.isEmpty()) {
                 System.out.println("La lista de formatoUnico está vacía");
-                return "PanelUsuario/panelUsuario";
+                //return "PanelUsuario/panelUsuario";
             }
 
             Conexion conn = new Conexion();
@@ -1055,7 +1055,7 @@ public class FormatoUnicoController {
             parameters.put("idProyecto", listaFormatoUnico.get(0).getIdproyecto().getIdProyecto().toString());//idProyecto
             //parameters.put("Nombre_parametro", "Valor_Parametro"); 
                 /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin", "gst01a"));
+            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin", "gst05a"));
             /*Indicamos que la respuesta va a ser en formato PDF*/
             httpServletResponse.setContentType("application/pdf");
             httpServletResponse.setContentLength(bytes.length);
@@ -1066,7 +1066,7 @@ public class FormatoUnicoController {
         }
 
 
-        return "OK";
+        //return "OK";
     }
 
     @RequestMapping(value = "/cambiaStatusSubidaFui.do", method = RequestMethod.GET)

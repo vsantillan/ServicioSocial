@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormatoUnico" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ff8df54-78ed-4b02-a7d1-dd231445f55d">
 	<property name="ireport.zoom" value="2.357947691000105"/>
-	<property name="ireport.x" value="735"/>
-	<property name="ireport.y" value="743"/>
+	<property name="ireport.x" value="463"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="idProyecto" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -61,7 +61,6 @@ proy.DOMICILIO || ', '|| colProyecto.nombre||', '|| municipioProyecto.Nombre ||'
 proy.TELEFONO_RESPONSABLE||NVL2(proy.ext,' ext. '||proy.ext,' ') as telefonoProyecto,
 to_char(fu.FECHA_INICIO, 'dd/MM/yyyy') as  fechaInicio,
 fu.IDPROYECTO as idProyecto,
-vaA.FOTO as fotoAlumno,
 fu.ID as idFormatoUnico,
    NVL((Select HORA_INICIO||'-'||HORA_FIN
         FROM HORARIOS_ALUMNO
@@ -177,7 +176,6 @@ where dp.id (+) = fu.datos_personales_id
 	<field name="TELEFONOPROYECTO" class="java.lang.String"/>
 	<field name="FECHAINICIO" class="java.lang.String"/>
 	<field name="IDPROYECTO" class="java.math.BigDecimal"/>
-	<field name="FOTOALUMNO" class="oracle.sql.BLOB"/>
 	<field name="IDFORMATOUNICO" class="java.math.BigDecimal"/>
 	<field name="HORARIOLUNES" class="java.lang.String"/>
 	<field name="HORARIOMARTES" class="java.lang.String"/>
@@ -1058,10 +1056,6 @@ electrónico:]]></text>
 			<image>
 				<reportElement uuid="84658671-a025-4edc-ac77-0627f6da3676" x="43" y="1" width="53" height="48"/>
 				<imageExpression><![CDATA["logoTec.jpg"]]></imageExpression>
-			</image>
-			<image>
-				<reportElement uuid="308bb5ce-c43a-472c-8b90-36f59e2fb465" x="488" y="2" width="54" height="50"/>
-				<imageExpression><![CDATA[$F{FOTOALUMNO}]]></imageExpression>
 			</image>
 		</band>
 	</detail>
