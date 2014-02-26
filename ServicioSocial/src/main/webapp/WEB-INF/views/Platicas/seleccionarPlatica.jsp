@@ -32,8 +32,8 @@
                                             </core:forEach>
                                         </form:select>
                                         <p></p>               
-                                        <input id="hora"disabled="true" class="form-control alert alert-info" value="Hora: ${platicasPeriodo.get(0).hora}"> </input>
-                                        <input id="lugar" disabled="true" class="form-control alert alert-info" value="Lugar: ${platicasPeriodo.get(0).idLugar.lugar}"></input>
+                                        <textarea id="hora"disabled="true" rows="1" class="form-control alert alert-info">Hora: ${platicasPeriodo.get(0).hora} </textarea>
+                                        <textarea id="lugar" disabled="true" rows="1" class="form-control alert alert-info">Lugar: ${platicasPeriodo.get(0).idLugar.lugar}</textarea>
                                         <textarea  id="descripcion" rows="4" cols="50" disabled="true" class="form-control alert alert-info" >Descripción:${platicasPeriodo.get(0).descripcion}</textarea>
                                         <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"><a href="muestraPdf.do" style="color:#029bef" class="fancyFU">  Acepto haber leído el manual</a>
                                         donde se describe el uso del sistema via web sobre como dar de alta mi servicio social<p></p>
