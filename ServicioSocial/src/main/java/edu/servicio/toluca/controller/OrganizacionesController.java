@@ -25,8 +25,10 @@ import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
 import edu.servicio.toluca.entidades.MunicipiosSia;
+import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.sesion.ActividadesFacade;
+import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
@@ -62,6 +64,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -105,6 +108,8 @@ public class OrganizacionesController {
     private TipoLocalidadFacade tipoLocalidadFacade;
     @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
     private ColoniaFacade coloniaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
+    private CatalogoObservacionesFacade observacionesCatalogoFacade;
     MetodosValidacion limpiar = new MetodosValidacion();
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
@@ -119,7 +124,7 @@ public class OrganizacionesController {
             }
         }
         model.addAttribute("organizaciones", filtroInstancias);
-        model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
         return "/Organizaciones/administrarOrganizaciones";
     }
 
@@ -136,7 +141,7 @@ public class OrganizacionesController {
             }
         }
         model.addAttribute("proyectos", filtroDeProyectos);
-        model.addAttribute("retroalimentacionProyecto", new BorrarProyecto());
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
         return "/Organizaciones/administrarProyectos";
     }
 
@@ -176,20 +181,6 @@ public class OrganizacionesController {
         return "/Organizaciones/validarProyectos";
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/retroalimentacionInstancia.do")
-    public String retroalimentacionInstancia(int id, Model model, HttpSession session, HttpServletRequest request) {
-        model.addAttribute("instancia", instanciaFacade.find(BigDecimal.valueOf(id)));
-        model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
-        return "/Organizaciones/retroalimentacionInstancia";
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/retroalimentacionProyecto.do")
-    public String retoalimentacionProyectos(int id, Model model, HttpSession session, HttpServletRequest request) {
-        model.addAttribute("proyectos", proyectosFacade.find(BigDecimal.valueOf(id)));
-        model.addAttribute("borrarProyecto", new BorrarProyecto());
-        return "/Organizaciones/retroalimentacionProyectos";
-    }
-
     @RequestMapping(method = RequestMethod.GET, value = "/detalleProyecto.do")
     public String detalleProyecto(BigDecimal id, Model model, HttpSession session, HttpServletRequest request) {
         model.addAttribute("proyectoDetalle", proyectosFacade.find(id));
@@ -208,7 +199,7 @@ public class OrganizacionesController {
         if (new ValidaSesion().validaOrganizacion(session, request)) {
             return "/Organizaciones/mensajeOrganizacion";
         } else {
-            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesió para acceder a esta sección.</div>");
+            model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
     }
@@ -378,28 +369,36 @@ public class OrganizacionesController {
         model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
         model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
         List<Perfil> perfilesNoSonDelProyecto = new ArrayList<Perfil>();
-        List<Perfil> listaPerfil;
+        List<Perfil> perfilesSonDelProyecto = new ArrayList<Perfil>();
+        List<Perfil> listaPerfil=perfilFacade.findAll();
         Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
-        listaPerfil = perfilFacade.findAll();
         boolean agregar;
-        String nombrePerfilCollection;
-        for (int i = 0; i < listaPerfil.size(); i++) {
+        for (int i = 0; i < listaPerfil.size(); i++) 
+        {
             agregar = true;
             iteratorProyectosPerfilCollection = proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().iterator();
-            while (iteratorProyectosPerfilCollection.hasNext()) {
-                nombrePerfilCollection = iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre();
-                if (!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar) {
+            while (iteratorProyectosPerfilCollection.hasNext()) 
+            {
+                if (!listaPerfil.get(i).getNombre().equals(iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre()) && agregar) 
+                {
                     agregar = true;
                 } else {
                     agregar = false;
                 }
             }
-            if (agregar) {
+            if (agregar && listaPerfil.get(i).getEstatus().intValue()==1) 
+            {
                 perfilesNoSonDelProyecto.add(listaPerfil.get(i));
+            } else if(listaPerfil.get(i).getEstatus().intValue()==1)
+            {
+                perfilesSonDelProyecto.add(listaPerfil.get(i));
             }
         }
         model.addAttribute("perfilesProyectoEx", perfilesNoSonDelProyecto);
+        //List<Actividades> dameActividades=actividadesFacade.findBySpecificField("ID_PROYECTO", 12, "equal", null, null);
+        model.addAttribute("damePerfilesDelProyecto", perfilesSonDelProyecto);
         return "/Organizaciones/editarProyecto";
+        //pass de mi base Regules123
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarProyecto.do")
@@ -457,9 +456,11 @@ public class OrganizacionesController {
                         agregar = false;
                     }
                 }
-                if (agregar) {
+                if (agregar && listaPerfil.get(i).getEstatus().intValue()==1) 
+                {
                     perfilesNoSonDelProyecto.add(listaPerfil.get(i));
-                } else {
+                } else if(listaPerfil.get(i).getEstatus().intValue()==1)
+                {
                     perfilesSonDelProyecto.add(listaPerfil.get(i));
                 }
             }
@@ -510,6 +511,7 @@ public class OrganizacionesController {
                 while (recorreActividades.hasNext()) {
                     Actividades borrarActividadesProyecto;
                     borrarActividadesProyecto = recorreActividades.next();
+                    System.out.println("no las esta borrandoooooooooooooooooooooooooooooooooo"+borrarActividadesProyecto.getDetalle());
                     actividadesFacade.remove(borrarActividadesProyecto);
                 }
                 List<String> listaActividades = new ArrayList<String>();
@@ -524,7 +526,7 @@ public class OrganizacionesController {
                     actividadesObj.setDetalle(insertaActividades.next().toString());//String
                     actividadesObj.setEstatus(BigInteger.ONE);//BigInteger
                     actividadesObj.setIdProyecto(proyecto);//Proyectos
-                    actividadesFacade.create(actividadesObj);
+                    //actividadesFacade.create(actividadesObj);
                 }
             }
             //Pasar todo a mayusculas
@@ -558,98 +560,29 @@ public class OrganizacionesController {
         }
     }
 
-    //Borrar Organizacion & Proyecto
-    @RequestMapping(method = RequestMethod.POST, value = "/borrarInstancia.do")
-    public @ResponseBody
-    String borrarInstancia(BorrarInstancia retroalimentacionInstancia, BindingResult resultado, HttpSession session, HttpServletRequest request) {
-        if (resultado.hasErrors()) {
-            for (ObjectError error : resultado.getAllErrors()) {
-                System.out.println(error.getDefaultMessage());
-            }
-            return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
-        } else {
-            Instancia instancia;
-            instancia = instanciaFacade.find(BigDecimal.valueOf(retroalimentacionInstancia.getId()));
-//            instancia.setEstatus(BigInteger.valueOf(0));
-
-            if (retroalimentacionInstancia.getControl() == 0) {
-                instancia.setEstatus(BigInteger.valueOf(0));
-                instanciaFacade.edit(instancia);
-                return "<script>"
-                        + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
-                        + "location.href='administrarOrganizaciones.do';"
-                        + "</script>";
-            } else {
-                instancia.setValidacionAdmin(BigInteger.valueOf(2));
-                //Prepara retroalimentacion
-                EnviarCorreo correo = new EnviarCorreo("Retroalimentacion de Instancia Rechazada", retroalimentacionInstancia.getDescripcion(), instancia.getCorreo());
-                RetroalimentacionInstancia2 retro = new RetroalimentacionInstancia2();
-                retro.setEstatus(BigInteger.ONE);
-                retro.setFecha(new Date());
-                retro.setDetalle(retroalimentacionInstancia.getDescripcion());
-                retro.setIdInstancia(instancia);
-                retroalimentacionInstanciaFacade.create(retro);
-
-                instanciaFacade.edit(instancia);
-                correo.enviaCorreo();
-                return "<script>"
-                        + "alert('¡Correo enviado exitosamente a: " + retroalimentacionInstancia.getCorreo() + "!');"
-                        + "location.href='validarOrganizaciones.do';"
-                        + "</script>";
-            }
-
-
-
-
-        }
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/borrarProyecto.do")
-    public @ResponseBody
-    String borrarProyecto(BorrarProyecto retroalimentacionProyecto, BindingResult resultado, HttpSession session, HttpServletRequest request) {
-        if (resultado.hasErrors()) {
-            for (ObjectError error : resultado.getAllErrors()) {
-                System.out.println(error.getDefaultMessage());
-            }
-            return "<script>alert('¡Error al intentar enviar!, verifica los datos')</script>";
-        } else {
-
-            Proyectos proyecto;
-            proyecto = proyectosFacade.find(BigDecimal.valueOf(retroalimentacionProyecto.getId()));
-
-            if (retroalimentacionProyecto.getControl() == 0) {
-                proyecto.setEstatus(BigInteger.valueOf(0));
-                proyectosFacade.edit(proyecto);
-                return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
-                        + "location.href='administrarProyectos.do';"
-                        + "</script>";
-            } else {
-                proyecto.setValidacionAdmin(BigInteger.valueOf(2));
-
-                //Prepara retroalimentacion
-                EnviarCorreo correo = new EnviarCorreo("Retroalimentacion de Proyecto Rechazado", proyecto.getIdInstancia().getCorreo(), retroalimentacionProyecto.getDescripcion());
-                RetroalimentacionProyecto2 retro = new RetroalimentacionProyecto2();
-                retro.setDetalle(retroalimentacionProyecto.getDescripcion());
-                retro.setEstatus(BigInteger.ONE);
-                retro.setFecha(new Date());
-                retro.setIdProyecto(proyecto);
-                retroalimentacionProyectoFacade.create(retro);
-
-                proyectosFacade.edit(proyecto);
-                correo.enviaCorreo();
-
-                return "<script>alert('¡Correo enviado exitosamente a: " + retroalimentacionProyecto.getEmail() + "!');"
-                        + "location.href='validarProyectos.do';"
-                        + "</script>";
-            }
-
-        }
-    }
-
     //Eliminar instancia y proyecto (solo cambia el estatus a 0)
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusInstancia.do")
     public @ResponseBody
-    String cambiaStatusInstancia(int id, Model model, HttpSession session, HttpServletRequest request) {
+    String cambiaStatusInstancia(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
+                                int id, Model model, HttpSession session, HttpServletRequest request) {
+        System.out.println("Entro a modificar el status del formato unico");
+        for(String idObservacion:observaciones)
+        {
+            //Objeto a Registrar
+            //RegObservaciones registro=new RegObservaciones();
+            //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
+            //registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
+            //registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            //Asignar Fecha Actual al momento para registro 
+            //registro.setFecha(new Date());
+            //Creacion de Registro
+            //regisObservacionesFacade.create(registro);
+            System.out.println("las observaciones son: "+idObservacion);
+            //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        }
+        System.out.println("Ya ingreso las observaciones");
+        
         Instancia instancia;
         instancia = instanciaFacade.find(BigDecimal.valueOf(id));
         Iterator<Proyectos> proyectos = instancia.getProyectosCollection().iterator();
@@ -666,7 +599,26 @@ public class OrganizacionesController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusProyecto.do")
     public @ResponseBody
-    String cambiaStatusProyecto(int id, Model model, HttpSession session, HttpServletRequest request) {
+    String cambiaStatusProyecto(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
+                                int id, Model model, HttpSession session, HttpServletRequest request) {
+        System.out.println("Entro a modificar el status del formato unico");
+        for(String idObservacion:observaciones)
+        {
+            //Objeto a Registrar
+            //RegObservaciones registro=new RegObservaciones();
+            //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
+            //registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
+            //registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            //Asignar Fecha Actual al momento para registro 
+            //registro.setFecha(new Date());
+            //Creacion de Registro
+            //regisObservacionesFacade.create(registro);
+            System.out.println("las observaciones son: "+idObservacion);
+            //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        }
+        System.out.println("Ya ingreso las observaciones");
+        
         Proyectos proyecto;
         proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
         proyecto.setEstatus(BigInteger.ZERO);

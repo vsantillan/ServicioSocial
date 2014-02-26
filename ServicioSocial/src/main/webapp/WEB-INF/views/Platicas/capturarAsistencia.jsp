@@ -40,7 +40,7 @@
                                 <button type="submit" class="btn btn-primary">Enviar</button>
                             </div>
                         </form:form>
-                        <image src="${foto}"/>
+<!--                        <image src="${foto}"/>-->
                     </div>
                 </div>
                 <%@include file="../General/footer.jsp"%> 

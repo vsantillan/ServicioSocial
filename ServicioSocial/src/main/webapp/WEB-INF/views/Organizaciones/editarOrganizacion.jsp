@@ -49,7 +49,6 @@
                                             <option value="${estados.idEstado}">${estados.nombre}</option>
                                         </core:forEach> 
                                     </select> 
-
                                 </div>
                                 <div class="form-group">
                                     <label for="municipio">Municipio:</label> 
@@ -77,7 +76,6 @@
                                     <form:input path="domicilio" placeholder="Calle" class="form-control" id="domicilio" maxlength="100"/><br/>
                                     <form:errors path="domicilio" cssClass="alert alert-danger"/> 
                                 </div>
-
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -150,7 +148,7 @@
                                 </div>
                                 <div class=" col-md-offset-2 col-sm-5"></div>
                                 <div class="col-sm-5">
-                                    <input   class="btn btn-primary" type ="submit" value = " Guardar cambios " /> 
+                                    <input class="btn btn-primary" type ="submit" value = " Guardar cambios " /> 
                                 </div>
                             </div>
                         </form:form>

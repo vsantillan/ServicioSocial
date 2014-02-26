@@ -26,7 +26,7 @@
                         <div class="panel panel-info">
                             <div class="panel-heading"><h3>Alta de Noticia</h3></div>
                             <div class="panel-body">
-                                <form:form class="form-horizontal" role="form" commandName="Noticias" id="Noticias" name="Noticias" action="altaNoticia.do"   method="POST" >
+                                <form:form  role="form" commandName="Noticias" id="Noticias" name="Noticias" action="altaNoticia.do"   method="POST" >
 
                                     <div class="form-group">
                                         <label for="titulo">T&iacute;tulo:</label>
@@ -61,9 +61,10 @@
                                         
                                     </div>
 
-                                    <form:errors path="id" cssClass="error"/> 
+                                        <br><form:errors path="detalle" cssClass="alert alert-danger"/> 
 
                                     <div class="control-group">
+                                         <br>
                                         <input class="btn btn-primary" type ="submit" value = "Guardar " />
                                         <input class="btn btn-primary" type ="reset" value = "Limpiar" />
                                     </div>

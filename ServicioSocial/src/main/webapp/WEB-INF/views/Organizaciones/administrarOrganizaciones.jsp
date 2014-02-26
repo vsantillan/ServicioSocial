@@ -49,36 +49,36 @@
                 <%@include file="../General/footer.jsp"%> 
             </div>
         </div>
-        <div class="modal-dialog" id="a" style="display: none;">
+        
+        <div class="modal-dialog" id="motivos" style="display: none;">
           <div class="modal-content">
             <div class="modal-header">
-        
-                        <h1>Motivos de Rechazo</h1>
-                    </div>
-                    <div class="modal-body">
-                        <form:form commandName="retroalimentacionInstancia"  id="MyForm" method="POST"  action="borrarInstancia.do">
-                            <form:input hidden="hidden" type ="text"  id="idI" path="id" name="id" />                   
-                            <form:input hidden="hidden" id="control" path="control" value="0" />
-                            <div class="form-group">
-                                <label>Nombre de la Organizaci&oacute;n:</label>
-                                <form:input type ="text"  id="nombre" path="nombre" name="nombre" /> 
-                            </div>
-                            <div class="form-group">
-                                <label>E-Mail:</label>
-                                <td><form:input type ="text"  id="correo" path="correo" name="correo" /> 
-                            </div>
-                            <div class="form-group">
-                                <label>Descripci&oacute;n:</label>
-                                <form:textarea  id="descripcion" path="descripcion" rows="10" cols="70" name="descripcion" />
-                            </div>
-                            <div class="form-group">
-                                <input type ="submit" value="Enviar Retroalimentaci&oacute;n"  class="enviarRetro btn btn-primary" >
-                            </div>
-                        </form:form>
-                    </div>
-                    <div class="modal-footer">Instituto Tecnologico de Toluca</div>
-                </div>
+              <h3 class="modal-title titulos-naranja">Motivos de Rechazo de la Instancia</h3>
             </div>
+            <form id="observacionesCat" action="#"  onsubmit="return  false;">
+            <div class="modal-body">
+              <div class="list-group">
+              <core:forEach items="${listadoObservaciones}" var="observacion">
+              <a href="#" class="list-group-item">
+                  <div class="checkbox">
+                      <label>
+                      <input name="id[]" value="${observacion.id}" type="checkbox"/>
+                      <h4 class="list-group-item-heading">${observacion.detalle}</h4>
+                      </label>
+                  </div>
+              </a>
+              </core:forEach>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
+              <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
+              <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Guardar las observaciones de el Formato Único</button>
+            </div>
+            </form>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+            
         <%@include file="../General/js.jsp"%>
         <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />
