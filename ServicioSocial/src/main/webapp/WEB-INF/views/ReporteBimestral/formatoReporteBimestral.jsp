@@ -18,7 +18,7 @@
             ${alertCorrecto}
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
-                <%@include file="../General/menuAdministrador.jsp"%>
+                <%@include file="../General/menuUsuario.jsp"%>
                 <div class="row col-md-12 center-block">
                     <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Reportes Bimestrales</h1></div>
                     <p>&nbsp;</p>
@@ -84,18 +84,18 @@
                                                         <form:input path="horasAcumuladas" type="text" name="horasAcumuladas" id="horasAcumuladas" readonly="true" value="${horasAcumuladas}" class="form-control"  />  
                                                     </div>
                                                 </div>
-                                                    <br>
-                                                    <div class="row col-md-6">
-                                                        <core:choose>
-                                                            <core:when test="${errorHoras==''}" >
-                                                                <form:errors path="horas" class="alert alert-danger"/>
-                                                            </core:when>
-                                                            <core:otherwise>
-                                                                ${errorHoras}
-                                                            </core:otherwise>
-                                                        </core:choose>
-                                                        <div class="row">&nbsp;</div>
-                                                    </div>
+                                                <br>
+                                                <div class="row col-md-6">
+                                                    <core:choose>
+                                                        <core:when test="${errorHoras==''}" >
+                                                            <form:errors path="horas" class="alert alert-danger"/>
+                                                        </core:when>
+                                                        <core:otherwise>
+                                                            ${errorHoras}
+                                                        </core:otherwise>
+                                                    </core:choose>
+                                                    <div class="row">&nbsp;</div>
+                                                </div>
                                                 <div class="row col-md-12">
                                                     <div class="form-group col-md-10">
                                                         <label for="actividad">Actividades:</label>
@@ -134,9 +134,23 @@
                                                     <core:forEach items="${current.formatoUnicoCollection}" var="formato">
                                                         <core:choose>
                                                             <core:when test="${formato.catalogoPlanId.detalle=='S'}" >
-                                                                <label for="calificacion">Calificaci&oacute;n</label>
-                                                                <form:input path="calificacion" type="text" name="actividad" class="form-control"/>
-                                                                <form:errors path="calificacion" class="alert alert-danger"/>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="calificacion">Calificaci&oacute;n</label>
+                                                                    <form:input path="calificacion" type="text" name="actividad" class="form-control"/>
+                                                                </div>                                                                
+                                                                <div class="form-group col-md-7">
+                                                                    <div>&nbsp;</div>
+                                                                    <label for="calificacion">&nbsp;</label>                                                                    
+                                                                    <core:choose>
+                                                                        <core:when test="${errorCalificacion==''}" >
+                                                                            <form:errors path="calificacion" class="alert alert-danger"/>
+                                                                        </core:when>
+                                                                        <core:otherwise>
+                                                                            ${errorCalificacion}
+                                                                        </core:otherwise>
+                                                                    </core:choose>
+                                                                    <br>
+                                                                </div> 
                                                             </core:when> 
                                                             <core:otherwise>
                                                                 <div class="row">
@@ -149,10 +163,8 @@
                                                     </core:forEach>
                                                 </core:forEach>  
                                                 <form:input path="actividades" hidden="hidden" name="nActividades" id="nActividades" value="0" />
-                                                <div class="row col-md-offset-3">
-                                                    <div class="form-group col-md-9"> 
-                                                        <input type ="submit" value = "Guardar Informaci&oacute;n" id="envia" class="btn btn-primary" />
-                                                    </div>
+                                                <div class="form-group col-md-9 col-md-offset-3"> 
+                                                    <input type ="submit" value = "Guardar Informaci&oacute;n" id="envia" class="btn btn-primary" />
                                                 </div>
                                             </form:form>
                                         </div>
@@ -205,14 +217,18 @@
                                                                 <th>En revisi&oacute;n</th>
                                                                 </core:when>
                                                             </core:choose>
-                                                            <core:choose>
-                                                                <core:when test="${plan=='S'}" >
-                                                                <th>reportes.calificacion</th>
-                                                                </core:when> 
-                                                                <core:otherwise>
-                                                                <th>No requerida</th>
-                                                                </core:otherwise>
-                                                            </core:choose>
+                                                            <core:forEach items="${datosPersonales}" var="current">
+                                                                <core:forEach items="${current.formatoUnicoCollection}" var="formato">
+                                                                    <core:choose>
+                                                                        <core:when test="${formato.catalogoPlanId.detalle=='S'}" >
+                                                                        <th>${reportes.calificacion}</th>
+                                                                        </core:when> 
+                                                                        <core:otherwise>
+                                                                        <th>No requerida</th>
+                                                                        </core:otherwise>
+                                                                    </core:choose>
+                                                                </core:forEach>
+                                                            </core:forEach>
                                                         <th><a href="muestraReporteBimestral.pdf?idReporte=${reportes.id}&noReporte=${reportes.numeroReporte}" target="_blank"><span class="glyphicon glyphicon-search sizeIcon"></span></a></th>
                                                     </tr>
                                                 </core:forEach>

@@ -144,7 +144,7 @@ public class ReporteBimestralController {
                 //Buscar el ultimo reporte Bimestral con status aprobado
                 //Y sacar esa fecha finwt
                 //Verificar el status para en correccion  o para aceptado
-                if (ultimoReporte.getNumeroRevisiones().compareTo(BigInteger.ZERO)>0) {
+                if (ultimoReporte.getNumeroRevisiones().compareTo(BigInteger.ZERO) > 0) {
                     RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
                     RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
                 } else {
@@ -190,7 +190,7 @@ public class ReporteBimestralController {
         ///////////MUESTRA REPORTES/////////////
         List<Reportes> listaReportes = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
         List<FormatoUnico> listaFormatoUnicos = (List) servicioBean.getDatosPersonales().getFormatoUnicoCollection();
-        modelo.addAttribute("Plan", listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
+        //modelo.addAttribute("Plan", listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
         modelo.addAttribute("listaReportes", listaReportes);
         ////////////////////////////////////////
 
@@ -216,15 +216,34 @@ public class ReporteBimestralController {
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+
+        //------------------------------------------------------------------------//
+        //Validacion cuando entra String en tipo Number campo Hora----------------//
+        //------------------------------------------------------------------------//
         if (reporte.getHoras() == null) {
             if (!datosPersonales.isEmpty()) {
                 modelo.addAttribute("datosPersonales", datosPersonales);
             }
-            modelo.addAttribute("errorHoras", "<div class='alert alert-danger'>El campo horas debe de ser numerico</div>");
+            modelo.addAttribute("errorHoras", "<div class='alert alert-danger'>El campo horas debe de ser n&uacute;merico</div>");
             modelo.addAttribute("Reportes", reporte);
             return "/ReporteBimestral/formatoReporteBimestral";
         }
         modelo.addAttribute("errorHoras", "");
+        //------------------------------------------------------------------------//
+        //------Validacion cuando entra String en tipo Number campo Calificacion--//
+        //------------------------------------------------------------------------//
+        if (reporte.getCalificacion() == null) {
+            if (!datosPersonales.isEmpty()) {
+                modelo.addAttribute("datosPersonales", datosPersonales);
+            }
+            modelo.addAttribute("errorCalificacion", "<div class='alert alert-danger'>El campo calificaci&oacute;n debe de ser n&uacute;merico</div>");
+            modelo.addAttribute("Reportes", reporte);
+            return "/ReporteBimestral/formatoReporteBimestral";
+        }
+        modelo.addAttribute("errorCalificacion", "");
+        //------------------------------------------------------------------------//
+        //------Validacion de Errores con el bean---------------------------------//
+        //------------------------------------------------------------------------//
         if (resultado.hasErrors()) {
             System.out.println("Hubo errores:" + resultado.toString());
             if (!datosPersonales.isEmpty()) {
@@ -275,6 +294,7 @@ public class ReporteBimestralController {
                         actividadesBimestralesFacade.create(actividadesB);
                     }
                     System.out.println("Actualizo La Informacion Correctamente");
+                    //return "/ReporteBimestral/formatoReporteBimestral";
                     return "redirect:formatoReporteBimestral.do?OK=true";
                 } else {
                     fechas fecha = new fechas();
@@ -320,7 +340,7 @@ public class ReporteBimestralController {
                         actividadesBimestralesFacade.create(actividadesB);
                     }
                     System.out.println("Inserto N Reporte Correctamente");
-                    return "redirect:formatoReporteBimestral.do";
+                    return "redirect:formatoReporteBimestral.do?OK=true";
 
                 }
                 //return "/ReporteBimestral/formatoReporteBimestral";
@@ -365,7 +385,7 @@ public class ReporteBimestralController {
                 actividadesBimestralesFacade.create(actividadesB);
             }
             System.out.println("Inserto por Primera vez");
-            return "redirect:formatoReporteBimestral.do";
+            return "redirect:formatoReporteBimestral.do?OK=true";
         }
 
     }
