@@ -4,94 +4,63 @@
     Author     : roy
 --%>
 
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="../Template/taglibs.jsp" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
-
-        <!--Include para Ventanas Modales-->
-        <jsp:include page="../Template/headsModal.jsp" />
-
-        <!--        Scripts para tablas-->
-        <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"></script>
-        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
-        <script type="text/javascript" charset="utf-8">
-            $(document).ready(function() {
-                $('#example').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script>   
-
-        <script src="js/jquery.manolo.js"></script>        
+        <%@include file="../General/head.jsp"%>      
         <title>Administraci&oacute;n de Organizaciones
             <title>Administracion de Proyectos</title>
     </head>
-    <body class="background">
-        <jsp:include page="../Template/banner.jsp" />
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%>
+                <div class="row col-md-12 center-block">
+                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Validar Proyectos</h1></div>
+                    <p>&nbsp;</p>
+                    <div class="row">
+                        <div class="alert alert-warning col-md-6  col-md-offset-3">
+                            <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestran los proyectos por validar.</h4></div>
+                        </div>
+                    </div>
+                    <div id="div-validar-proyecto" style="display:none;">
+                        <center>
+                            <span class="glyphicon glyphicon-ok-circle sizeIconValid"></span>
+                            <h2>Proyecto validado correctamente</h2>
+                        </center>
+                    </div>
+                    <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'  width='100%'>
+                        <thead>
+                            <tr>
+                                <th>Acci&oacute;n</th>
+                                <th>Ver proyecto</th>
+                                <th>Nombre del proyecto</th>
+                                <th>Organizaci&oacute;n</th>
+                                <th>Numero de vacantes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <core:forEach items="${proyecto}" var="current">
+                                <core:choose>
+                                    <core:when test="${current.estatus==1}">
+                                        <tr class='gradeX'>
+                                            <td><a href="#" class="btn-validar-proyecto"><span class="editProy glyphicon glyphicon-ok sizeIcon" ide="${current.idProyecto}"></span></a><a href="#a" class="fancybox-effects-a mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a></td>
+                                            <td><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
+                                            <td><core:out value="${current.nombre}" /></td>
+                                            <td><core:out value="${current.idInstancia.nombre}" /></td>
+                                            <td><core:out value="${current.vacantes}" /></td>                                      
+                                        </tr>
+                                    </core:when>
+                                </core:choose>
+                            </core:forEach>
 
-
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;width: 80%">
-                <h1>Validar Proyectos</h1>
-
-                <p>A continuaci&oacute;n se muestran los proyectos por validar.</p>
-                <div id="div-validar-proyecto" style="display:none;">
-                    <center>
-                        <img src="imagenes/paloma.png" width="100"/>
-                        <h2>Proyecto validado correctamente</h2>
-                    </center>
+                        </tbody>
+                    </table>
                 </div>
-                <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
-                    <thead>
-                        <tr>
-                            <th>Acci&oacute;n</th>
-                            <th>Ver proyecto</th>
-                            <th>Nombre del proyecto</th>
-                            <th>Organizaci&oacute;n</th>
-                            <th>Numero de vacantes</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <core:forEach items="${proyecto}" var="current">
-                            <core:choose>
-                                <core:when test="${current.estatus==1}">
-                                    <tr class='gradeX'>
-                                        <th><a href="#" class="btn-validar-proyecto"><img class="editProy" ide="${current.idProyecto}" src="imagenes/paloma.png" width="30"/></a><a href="#a" class="fancybox-effects-a mandaRetro" nombreProyecto="${current.nombre}" nombre="${current.idInstancia.nombre}" correo="${current.idInstancia.correo}" idO="${current.idProyecto}"><img src="imagenes/tache.png" width="30"/></a></th>
-                                        <th><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
-                                        <th><core:out value="${current.nombre}" /></th>
-                                        <th><core:out value="${current.idInstancia.nombre}" /></th>
-                                        <th><core:out value="${current.vacantes}" /></th>                                      
-                                    </tr>
-                                </core:when>
-                            </core:choose>
-                        </core:forEach>
-
-                    </tbody>
-                </table>
+                <%@include file="../General/footer.jsp"%> 
             </div>
-
-            <div style="clear:both;"></div>
-            <%-- fin del contenido --%>
         </div>
         <div id="a" style="display: none; font-size: 15px">
             <form:form commandName="borrarProyecto" id="MyForm" action="borrarProyecto.do" method="POST" onsubmit="return validarForm(this);">
@@ -128,10 +97,9 @@
                 </table>
             </form:form>
         </div>
-        <jsp:include page="../Template/footer.jsp" />
-
+        <%@include file="../General/js.jsp"%>
+        <jsp:include page="../Template/headsModal.jsp" />
+        <script type="text/javascript" language="javascript" src="js/actualizaOrganizaciones.js"></script>
     </body>
-
-
 </html>
 

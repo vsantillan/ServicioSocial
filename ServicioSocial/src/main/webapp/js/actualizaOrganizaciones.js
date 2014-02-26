@@ -8,75 +8,75 @@ $(document).on('click', ".cambiaStatusInstancia", rechazarInstancia);
 $(document).on('click', ".cambiaStatusProyecto", editarStatusProyecto);
 $(document).ready(listo);
 
-//function editarStatusInstancia(e)
-//{
-//    if (confirm('\u00BF'+'Seguro que desea eliminar instancia?'))
-//    {
-//        var row = $(this).parents('tr')[0];
-//        var idUpdate = $(e.target).attr('ide');
-//        var tabla = $('#example').dataTable();
-//        $.post("cambiaStatusInstancia.do", {id: idUpdate}, function(respuesta)
-//        {
-//            if(respuesta==="ok")
-//            {
-//                alert("Instancia eliminada");
-//                window.location.reload();
-//            }else{
-//                alert("ERROR: Imposible eliminar Instancia.");
-//            }
-//            
-//        });
-//    }
-//}
+function editarStatusInstancia(e)
+{
+    if (confirm('\u00BF'+'Seguro que desea eliminar instancia?'))
+    {
+        var row = $(this).parents('tr')[0];
+        var idUpdate = $(e.target).attr('ide');
+        var tabla = $('#example').dataTable();
+        $.post("cambiaStatusInstancia.do", {id: idUpdate}, function(respuesta)
+        {
+            if(respuesta==="ok")
+            {
+                alert("Instancia eliminada");
+                window.location.reload();
+            }else{
+                alert("ERROR: Imposible eliminar Instancia.");
+            }
+            
+        });
+    }
+}
+
+function editarStatusProyecto(e)
+{
+    if (confirm('\u00BFSeguro que desea eliminar proyecto?'))
+    {
+        var row = $(this).parents('tr')[0];
+        var idUpdate = $(e.target).attr('ide');
+        var tabla = $('#example').dataTable();
+        $.post("cambiaStatusProyecto.do", {id: idUpdate}, function(response)
+        {
+            tabla.fnDeleteRow(row);
+        });
+    }
+}
+
+function updateProyecto(e)
+{
+    if (confirm('\u00BFSeguro que desea aprobar el proyecto?'))
+    {
+        var row = $(this).parents('tr')[0];
+        var idUpdate = $(e.target).attr('ide');
+        var tabla = $('.example').dataTable();
+        $.post("updateProyecto.do", {id: idUpdate}, function(response) {
+            tabla.fnDeleteRow(row);
+            $("#div-validar-proyecto").show('slow')
+            setTimeout(function() {
+                $("#div-validar-proyecto").hide('slow')
+            }, 3000)
+        });
+    }
+}
 //
-//function editarStatusProyecto(e)
-//{
-//    if (confirm('¿Seguro que desea eliminar proyecto?'))
-//    {
-//        var row = $(this).parents('tr')[0];
-//        var idUpdate = $(e.target).attr('ide');
-//        var tabla = $('#example').dataTable();
-//        $.post("cambiaStatusProyecto.do", {id: idUpdate}, function(response)
-//        {
-//            tabla.fnDeleteRow(row);
-//        });
-//    }
-//}
 //
-//function updateProyecto(e)
-//{
-//    if (confirm('¿Seguro que desea aprobar el proyecto?'))
-//    {
-//        var row = $(this).parents('tr')[0];
-//        var idUpdate = $(e.target).attr('ide');
-//        var tabla = $('#example').dataTable();
-//        $.post("updateProyecto.do", {id: idUpdate}, function(response) {
-//            tabla.fnDeleteRow(row);
-//            $("#div-validar-proyecto").show('slow')
-//            setTimeout(function() {
-//                $("#div-validar-proyecto").hide('slow')
-//            }, 3000)
-//        });
-//    }
-//}
-//
-//
-//function updateOrganisation(e)
-//{
-//    if (confirm('¿Seguro que desea aprobar esta organizacion?'))
-//    {
-//        var row = $(this).parents('tr')[0];
-//        var idUpdate = $(e.target).attr('ide');
-//        var tabla = $('#example').dataTable();
-//        $.post("updateStatus.do", {id: idUpdate}, function(response) {
-//            tabla.fnDeleteRow(row);
-//            $("#div-validar-organizacion").show('slow')
-//            setTimeout(function() {
-//                $("#div-validar-organizacion").hide('slow')
-//            }, 3000)
-//        });
-//    }
-//}
+function updateOrganisation(e)
+{
+    if (confirm('\u00BFSeguro que desea aprobar esta organizacion?'))
+    {
+        var row = $(this).parents('tr')[0];
+        var idUpdate = $(e.target).attr('ide');
+        var tabla = $('.example').dataTable();
+        $.post("updateStatus.do", {id: idUpdate}, function(response) {
+            tabla.fnDeleteRow(row);
+            $("#div-validar-organizacion").show('slow')
+            setTimeout(function() {
+                $("#div-validar-organizacion").hide('slow')
+            }, 3000)
+        });
+    }
+}
 
 function listo() {
     $(document).on("click", "#guardarObservacionesInstancia", obtenerDatosInstancia);
