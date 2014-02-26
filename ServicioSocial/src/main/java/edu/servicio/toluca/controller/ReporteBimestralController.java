@@ -145,12 +145,24 @@ public class ReporteBimestralController {
                 //Y sacar esa fecha finwt
                 //Verificar el status para en correccion  o para aceptado
                 if (ultimoReporte.getNumeroRevisiones().compareTo(BigInteger.ZERO) > 0) {
-                    RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
-                    RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
-                } else {
                     RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
                     //Sumar los dos meses a fecha FIn
                     RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
+                    System.out.println("Es mayor que cero el numero de revisiones");
+                } else {
+                    if (ultimoReporte.getNumeroReporte().compareTo(BigInteger.ONE) == 1) {
+                        RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
+                        //Sumar los dos meses a fecha FIn
+                        RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
+                        System.out.println("Es mayor que uno el numero de reportes");
+                    } else {
+                        RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
+                        RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
+                        System.out.println("No es mayor que uno el numero de reportes");
+                    }
+                    RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
+                    RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
+                   System.out.println("No es mayor que cero el numero de revisiones");
                 }
 
                 RBObjeto.setHorasAcumuladas(fechaInicioFU.getHorasAcumuladas());
