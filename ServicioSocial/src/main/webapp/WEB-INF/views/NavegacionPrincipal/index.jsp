@@ -22,7 +22,9 @@
                             <div class="panel-body">
                                 <p><strong>Fecha de publicaci&oacute;n:<fmt:formatDate pattern="dd-MM-yyyy"  value="${noticia.fecha}"/></strong></p>
                                 <br/>
-                                <p>${fn:substring(noticia.detalle, 0, 150)}<b>...&nbsp;</b><a class="mustraNoticiaCompleta btn btn-warning btn-xs"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Leer M&aacutes.</a></p>
+                                <div>
+                                    <p>${fn:substring(noticia.detalle, 0, 150)}<b>...&nbsp;</b><a class="mustraNoticiaCompleta btn btn-warning btn-xs"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Leer M&aacutes.</a></p>
+                                </div>
                                 
                                 <!--<p><a class="btn btn-warning mustraNoticiaCompleta"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Ver Detalles &raquo;</a></p>-->
 

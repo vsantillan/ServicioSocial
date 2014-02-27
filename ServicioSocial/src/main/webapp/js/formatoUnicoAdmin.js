@@ -13,33 +13,6 @@ function listo()
     $(document).on("click", ".rechazar", cambiarEstadoFormatoRechazado);
 }
 
-//function inicializarDataTables()
-//{
-//    $('#noRevisados_dt').dataTable({
-//                    "bJQueryUI": true,
-//                    "sScrollX": "100%",
-//                    "sScrollXInner": "100%",
-//                    "bScrollCollapse": true
-//
-//                });
-//    $('#noAceptados_dt').dataTable({
-//                    "bJQueryUI": true,
-//                    "sScrollXInner": "100%",
-//                    "bScrollCollapse": true
-//
-//                });
-//    $('#enCorreccion_dt').dataTable({
-//                    "bJQueryUI": true,
-//                    "sScrollXInner": "100%",
-//                    "bScrollCollapse": true
-//                });
-//     $('#aceptados_dt').dataTable({
-//                    "bJQueryUI": true,
-//                    "sScrollXInner": "100%",
-//                    "bScrollCollapse": true
-//                });
-//}
-
 function confirmacionEvento()
 {
     if (!confirm('\u00BF'+"Desea realizar esta acci"+'\u00f3'+"n?"))

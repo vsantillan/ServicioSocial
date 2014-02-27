@@ -298,7 +298,7 @@
         {
             console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
             if (nActividades < 5) {
-                $("#actividades").append("<li><input type='text' name='actividades[" + nActividades + "]' class='actividad form-control' id='" + nActividades + "' required='true' value='" + valor + "'/><input type ='button' class='borrar btn btn-primary' value = 'Quitar' /></li>");
+                $("#actividades").append("<li><input type='text' size='90' maxlength='90' name='actividades[" + nActividades + "]' class='actividad form-control' id='" + nActividades + "' required='true' value='" + valor + "'/><input type ='button' class='borrar btn btn-primary' value = 'Quitar' /></li>");
                 masActividad();
                 console.log("Actividad agregada");
             }
@@ -307,7 +307,7 @@
         function agregarActividad() {
             console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
             if (nActividades < 5) {
-                $("#actividades").append("<li><input type='text' name='actividades[" + nActividades + "]' class='actividad form-control' id='" + nActividades + "' required='true'/><input type ='button' class='borrar btn btn-primary' value = 'Quitar'  /></li>");
+                $("#actividades").append("<li><input type='text' size='90' maxlength='90' name='actividades[" + nActividades + "]' class='actividad form-control' id='" + nActividades + "' required='true'/><input type ='button' class='borrar btn btn-primary' value = 'Quitar'  /></li>");
                 masActividad();
                 console.log("Actividad agregada");
             }

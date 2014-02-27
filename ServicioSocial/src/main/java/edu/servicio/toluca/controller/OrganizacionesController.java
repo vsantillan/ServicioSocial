@@ -149,6 +149,7 @@ public class OrganizacionesController {
     public String panelAdministradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request) {
         model.addAttribute("organizacion", instanciaFacade.findBySpecificField("validacionAdmin", "0", "equal", null, null));
         model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
         return "/Organizaciones/validarOrganizaciones";
     }
 
@@ -526,7 +527,7 @@ public class OrganizacionesController {
                     actividadesObj.setDetalle(insertaActividades.next().toString());//String
                     actividadesObj.setEstatus(BigInteger.ONE);//BigInteger
                     actividadesObj.setIdProyecto(proyecto);//Proyectos
-                    //actividadesFacade.create(actividadesObj);
+                    actividadesFacade.create(actividadesObj);
                 }
             }
             //Pasar todo a mayusculas
@@ -564,7 +565,7 @@ public class OrganizacionesController {
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusInstancia.do")
     public @ResponseBody
     String cambiaStatusInstancia(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
-                                int id, Model model, HttpSession session, HttpServletRequest request) {
+                                int id,int status, Model model, HttpSession session, HttpServletRequest request) {
         System.out.println("Entro a modificar el status del formato unico");
         for(String idObservacion:observaciones)
         {
@@ -582,16 +583,16 @@ public class OrganizacionesController {
             //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
         System.out.println("Ya ingreso las observaciones");
-        
+        System.out.println("El estatus que recibio es: "+BigInteger.valueOf(status));
         Instancia instancia;
         instancia = instanciaFacade.find(BigDecimal.valueOf(id));
         Iterator<Proyectos> proyectos = instancia.getProyectosCollection().iterator();
         while (proyectos.hasNext()) {
             Proyectos proyectoEdit = proyectos.next();
-            proyectoEdit.setEstatus(BigInteger.ZERO);
+            proyectoEdit.setEstatus(BigInteger.valueOf(status));
             proyectosFacade.edit(proyectoEdit);
         }
-        instancia.setEstatus(BigInteger.ZERO);
+        instancia.setEstatus(BigInteger.valueOf(status));
         instanciaFacade.edit(instancia);
         System.out.println("Ya actualizo");
         return "ok";
