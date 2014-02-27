@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.ejb.EJB;
@@ -111,7 +112,9 @@ public class ReporteBimestralController {
             fechaInicioFU = formatoUnico.get(0);
 
             /////////////Validamos si es su primer reporte//////////////
-            List<Reportes> RB = reportesFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
+            LinkedHashMap ordenarAsc = new LinkedHashMap();
+            ordenarAsc.put("id", "asc");
+            List<Reportes> RB = reportesFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", ordenarAsc, null);
             if (RB.isEmpty()) {
 
                 modelo.addAttribute("numeroReporte", 1);
@@ -145,12 +148,24 @@ public class ReporteBimestralController {
                 //Y sacar esa fecha finwt
                 //Verificar el status para en correccion  o para aceptado
                 if (ultimoReporte.getNumeroRevisiones().compareTo(BigInteger.ZERO) > 0) {
-                    RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
-                    RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
-                } else {
                     RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
                     //Sumar los dos meses a fecha FIn
                     RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
+                    System.out.println("Es mayor que cero el numero de revisiones");
+                } else {
+                    if (ultimoReporte.getNumeroReporte().compareTo(BigInteger.ONE) == 1) {
+                        RBObjeto.setFechaInicio(fechas.convierteDate(ultimoReporte.getFechaFin()));
+                        //Sumar los dos meses a fecha FIn
+                        RBObjeto.setFechaFin(fechas.dameFechaFin(ultimoReporte.getFechaFin()));
+                        System.out.println("Es mayor que uno el numero de reportes");
+                    } else {
+                        RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
+                        RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
+                        System.out.println("No es mayor que uno el numero de reportes");
+                    }
+                    RBObjeto.setFechaInicio(fechas.convierteDate(fechaInicioFU.getFechaInicio()));
+                    RBObjeto.setFechaFin(fechas.dameFechaFin(fechaInicioFU.getFechaInicio()));
+                    System.out.println("No es mayor que cero el numero de revisiones");
                 }
 
                 RBObjeto.setHorasAcumuladas(fechaInicioFU.getHorasAcumuladas());
@@ -161,6 +176,8 @@ public class ReporteBimestralController {
                     RBObjeto.setHoras(0);
                     RBObjeto.setCalificacion(0);
                 }
+                System.out.println("Horas" + Integer.parseInt(ultimoReporte.getHoras().toString()));
+                System.out.println("Calificacion" + Integer.parseInt(ultimoReporte.getCalificacion().toString()));
                 modelo.addAttribute("Reportes", RBObjeto);
 
             }
@@ -180,6 +197,8 @@ public class ReporteBimestralController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/insertaReporte.do")
     public String insertaBimestral(@ModelAttribute("Reportes") @Valid reporteBimestral reporte, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request) {
+        LinkedHashMap ordenarAsc = new LinkedHashMap();
+        ordenarAsc.put("id", "asc");
         selectfrom += "";
         //Obtenemos Objetos del Alumno
         ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
@@ -259,7 +278,7 @@ public class ReporteBimestralController {
             //Verificar si el status del utimo reporte es rechazado
             //Se borran las Actividades que hay con este
 
-            List<Reportes> bimestralesUltimos = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+            List<Reportes> bimestralesUltimos = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal",ordenarAsc, null);
 
             if (!bimestralesUltimos.isEmpty()) {
                 Reportes bimestralU = bimestralesUltimos.get(bimestralesUltimos.size() - 1);
@@ -285,7 +304,7 @@ public class ReporteBimestralController {
                         actividadesBimestralesFacade.remove(borraActividades);
                     }
                     Iterator inserta = listaIds.iterator();
-                    //while que inserta la lista de los perfiles para el proyecto
+                    //while que inserta la lista de las actividades
                     while (inserta.hasNext()) {
                         BimestralesActividades actividadesB = new BimestralesActividades();
                         actividadesB.setIdReporte(bimestralU);
@@ -324,6 +343,7 @@ public class ReporteBimestralController {
 
                     //Buscamos el reporte recien insertado
                     //DatosPersonales dp = datosPersonales.get(0);
+
                     List<Reportes> bimestrales = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
                     Reportes bimestralInsertado = bimestrales.get(bimestrales.size() - 1);//tenia -1
                     for (int i = 0; i < bimestrales.size(); i++) {
