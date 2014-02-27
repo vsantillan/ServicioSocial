@@ -527,7 +527,7 @@ public class OrganizacionesController {
                     actividadesObj.setDetalle(insertaActividades.next().toString());//String
                     actividadesObj.setEstatus(BigInteger.ONE);//BigInteger
                     actividadesObj.setIdProyecto(proyecto);//Proyectos
-                    //actividadesFacade.create(actividadesObj);
+                    actividadesFacade.create(actividadesObj);
                 }
             }
             //Pasar todo a mayusculas

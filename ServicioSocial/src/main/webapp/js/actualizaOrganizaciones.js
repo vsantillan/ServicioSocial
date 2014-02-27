@@ -1,45 +1,21 @@
 var row="";
 var idUpdate="";
 var tabla="";
+var tipo2 = "";
 
 $(document).on('click', ".editOrg", updateOrganisation);
 $(document).on('click', ".editProy", updateProyecto);
 $(document).on('click', ".cambiaStatusInstancia", rechazarInstancia);
-$(document).on('click', ".cambiaStatusProyecto", editarStatusProyecto);
+$(document).on('click', ".mandaObservacionesInstancia", cambiarEstadoInstancia);
 $(document).ready(listo);
 
-function editarStatusInstancia(e)
+function cambiarEstadoInstancia(e)
 {
     if (confirm('\u00BF'+'Seguro que desea eliminar instancia?'))
     {
-        var row = $(this).parents('tr')[0];
-        var idUpdate = $(e.target).attr('ide');
-        var tabla = $('#example').dataTable();
-        $.post("cambiaStatusInstancia.do", {id: idUpdate}, function(respuesta)
-        {
-            if(respuesta==="ok")
-            {
-                alert("Instancia eliminada");
-                window.location.reload();
-            }else{
-                alert("ERROR: Imposible eliminar Instancia.");
-            }
-            
-        });
-    }
-}
-
-function editarStatusProyecto(e)
-{
-    if (confirm('\u00BFSeguro que desea eliminar proyecto?'))
-    {
-        var row = $(this).parents('tr')[0];
-        var idUpdate = $(e.target).attr('ide');
-        var tabla = $('#example').dataTable();
-        $.post("cambiaStatusProyecto.do", {id: idUpdate}, function(response)
-        {
-            tabla.fnDeleteRow(row);
-        });
+        idUpdate = $(this).attr('idO');
+        tipo2 = "0";
+        mostrarDIVMotivos();
     }
 }
 
@@ -69,11 +45,16 @@ function updateOrganisation(e)
         var idUpdate = $(e.target).attr('ide');
         var tabla = $('.example').dataTable();
         $.post("updateStatus.do", {id: idUpdate}, function(response) {
-            tabla.fnDeleteRow(row);
-            $("#div-validar-organizacion").show('slow')
-            setTimeout(function() {
-                $("#div-validar-organizacion").hide('slow')
-            }, 3000)
+             if(response==="ok")
+            {
+                tabla.fnDeleteRow(row);
+                $("#div-validar-organizacion").show('slow');
+                setTimeout(function() {
+                    $("#div-validar-organizacion").hide('slow');
+                }, 3000);
+            }else{
+                alert("Imposible aceptar Instancia. ERROR Interno");
+            }
         });
     }
 }
@@ -90,19 +71,10 @@ function rechazarInstancia(e)
         row = $(this).parents('tr')[0];
         idUpdate = $(e.target).attr('ide');
         tabla = $('#example').dataTable();
+        tipo2 = "0";
         mostrarDIVMotivos();
     }
 
-}
-function cambiarEstadoFormatoRechazado(e)
-{
-    if (confirm('\u00BF'+"Seguro que desea eliminar la Instancia?"))
-    {
-        row = $(this).parents('tr')[0];
-        idUpdate = $(e.target).attr('ide');
-        tabla = $('#example').dataTable();
-        mostrarDIVMotivos();
-    }
 }
 
 function  mostrarDIVMotivos()
@@ -126,7 +98,7 @@ function obtenerDatosInstancia()
     if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("cambiaStatusInstancia.do", {id: idUpdate, observaciones: array}, function(respuesta)
+        $.post("cambiaStatusInstancia.do", {id: idUpdate,status: tipo2, observaciones: array}, function(respuesta)
         {
             if(respuesta==="ok")
             {

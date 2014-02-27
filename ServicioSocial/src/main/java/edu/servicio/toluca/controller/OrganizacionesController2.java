@@ -630,7 +630,7 @@ public class OrganizacionesController2 {
                 System.out.println("No se agregaran perfiles");
             }
 
-            return "/Organizaciones/confirmaAltaAdminProyectos";
+            return "/Organizaciones/administrarProyectos";
         }
     }
 
