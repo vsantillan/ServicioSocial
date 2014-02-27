@@ -9,9 +9,6 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-        <style type="text/css">
-            .bs-example{margin: 20px;}
-        </style>
     </head>
     <body>
         <div class="container">
@@ -85,11 +82,6 @@
                                         <td><a href="mostarPDF.do?id=${filaRech.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
                                         <td><core:out value="${filaRech.fechaSubida}"/></td>
                                         <td>
-                                            <%/*
-                                             * <core:forEach items="${filaRech.listaObservaciones}" var="observacion">
-                                                <li>${observacion}</li>
-                                            </core:forEach>
-                                            */%>
                                             <a href="mostarObservacion.do?idDatosPersonales=${filaRech.idDatosPersonales}" class="fancy"><i class="glyphicon glyphicon-list"></i>  Detalles</a>
                                         </td>
                                     </tr>

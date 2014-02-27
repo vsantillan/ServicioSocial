@@ -77,7 +77,8 @@
                                 <div class="form-group">
                                     <label for="codigo_postal">C&oacute;digo Postal:</label>
                                     <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" class="form-control">
-                                    <input type="hidden" id="preCP" value="${cp}"/><br>${codigo_postal}
+                                    <input type="hidden" id="preCP" value="${cp}"/><br/>
+                                    ${codigo_postal}
                                 </div>
                                 <div class="form-group">
                                     <label for="estado">Estado:</label>
@@ -85,19 +86,19 @@
                                         <core:forEach items="${estados}" var="estados">
                                             <option value="${estados.idEstado}">${estados.nombre}</option>
                                         </core:forEach> 
-                                    </select>
+                                    </select><br/>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="municipio">Municipio:</label>
                                     <!--input type="text" name="lugar" id="municipio" size="20" require="true" disabled="true"/--> 
-                                    <select name="municipio" id="municipio" disabled="true" class="form-control"></select>
+                                    <select name="municipio" id="municipio" disabled="true" class="form-control"></select><br/>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="ciudad">Ciudad</label>
                                     <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
-                                    <select name="ciudad" id="ciudad" disabled="true" class="form-control"></select>
+                                    <select name="ciudad" id="ciudad" disabled="true" class="form-control"></select><br/>
                                 </div>
                                 <div class="form-group">
                                     <label for="colonia">Colonia:</label>

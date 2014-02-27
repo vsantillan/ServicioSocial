@@ -16,8 +16,8 @@
 <script src="<%=request.getContextPath()%>/js/documentosFinalesActualiza.js"></script>
 <script src="<%=request.getContextPath()%>/js/editaOrganizacion.js"></script>
 <script src="<%=request.getContextPath()%>/js/funcionesGenerales.js"></script>
-<script src="<%=request.getContextPath()%>/js/jquery.codigos.postales.js"></script>
-<script src="<%=request.getContextPath()%>/js/jquery.manolo.js"></script>
+<!--<script src="<%=request.getContextPath()%>/js/jquery.codigos.postales.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery.manolo.js"></script>-->
 <script src="<%=request.getContextPath()%>/js/lugares.js"></script>
 <script src="<%=request.getContextPath()%>/js/observaciones.js"></script>
 <script src="<%=request.getContextPath()%>/js/reporteBimestalActualiza.js"></script>
