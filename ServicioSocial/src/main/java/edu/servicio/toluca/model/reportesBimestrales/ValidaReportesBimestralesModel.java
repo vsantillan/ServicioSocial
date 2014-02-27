@@ -8,6 +8,8 @@ import edu.servicio.toluca.beans.ReportesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.Reportes;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,16 +18,19 @@ import java.util.List;
  */
 public class ValidaReportesBimestralesModel {
 
+
+
     public ReportesBean validaReportesBimestrales(StatusServicioBean servicioBean) {
         System.out.println("Valida reportes bimestrales");
         ReportesBean reportesBean = new ReportesBean();
 
         if (servicioBean.getPlaticaBean().isTienePlatica()) {
             if (servicioBean.getFormatoUnico() != null && servicioBean.getFormatoUnico().getStatusFui() != null) {
-                System.out.println("Formato unico:"+servicioBean.getFormatoUnico());
-                System.out.println("Formato unico status:"+servicioBean.getFormatoUnico().getStatusFui().toString());
+                System.out.println("Formato unico:" + servicioBean.getFormatoUnico());
+                System.out.println("Formato unico status:" + servicioBean.getFormatoUnico().getStatusFui().toString());
                 if (servicioBean.getFormatoUnico().getStatusFui().toString().equals("1")) {
                     ArrayList<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
+                    Collections.sort(reportes, new OrdenarPersonaPorId());
                     int horasServicio = 0;
                     int nReportes = 0;
                     nReportes = reportes.size();
@@ -128,4 +133,12 @@ public class ValidaReportesBimestralesModel {
 
         return reportesBean;
     }
+}
+
+class OrdenarPersonaPorId implements Comparator<Reportes> {
+
+    public int compare(Reportes o1, Reportes o2) {
+        return Integer.valueOf(String.valueOf(o1.getId())) - Integer.valueOf(String.valueOf(o2.getId()));
+    }
+
 }
