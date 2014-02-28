@@ -509,7 +509,7 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaAdminProyecto.do")
-    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectto, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad, HttpSession session, HttpServletRequest request) {
+    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectfrom, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad, HttpSession session, HttpServletRequest request) {
         System.out.println("hola admin gda alta organizacion");
 
         //Validaciones
@@ -584,10 +584,15 @@ public class OrganizacionesController2 {
             proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
             proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
-
+            System.out.println("el nombre del proyecto es: "+proyecto.getNombre());
             proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
 
+            List<Proyectos> listaProyectos=proyectosFacade.findAll();
+            for(int i=0;i<listaProyectos.size();i++)
+            {
+                System.out.println("el id del proyecto es: "+listaProyectos.get(i).getIdProyecto()+" y el nombre del proyecto es: "+listaProyectos.get(i).getNombre());
+            }
             //Obtenemos el proyecto creado
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idProyecto", "desc");
@@ -604,13 +609,13 @@ public class OrganizacionesController2 {
             }
             //Insercion de Perfiles
             //ProyectoPerfilModel proyectoPerfilModel;
-            if (selectto != null) {
+            if (selectfrom != null) {
                 //proyectoPerfilModel = new ProyectoPerfilModel(selectto);                
                 //Analisis de la cadena
-                StringTokenizer token = new StringTokenizer(selectto, ",");
+                StringTokenizer token = new StringTokenizer(selectfrom, ",");
                 ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
 
-                System.out.println("Analizar cadena:" + selectto);
+                System.out.println("Analizar cadena:" + selectfrom);
                 System.out.println("No de tokens:" + token.countTokens());
                 while (token.hasMoreTokens()) {
                     String perfil = token.nextToken();
@@ -630,7 +635,7 @@ public class OrganizacionesController2 {
                 System.out.println("No se agregaran perfiles");
             }
 
-            return "/Organizaciones/administrarProyectos";
+            return "redirect:administrarProyectos.do";
         }
     }
 

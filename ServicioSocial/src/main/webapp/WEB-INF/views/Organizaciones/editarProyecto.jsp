@@ -115,6 +115,7 @@
                                     </div>
                                 </div>
                                 </fieldset>
+                                <div class="alert alert-warning"><h5>Nota: Escoja el perfil que desea de los disponibles y de click Agregar para moverlo a los seleccionados. Y a su vez si desea remover un perfil seleccionado, escojalo en los seleccionados y de click en Quitar.</h5></div>
                             </div>
                         </div>
                         <div class="panel panel-info">
