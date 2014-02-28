@@ -55,7 +55,7 @@
                 </div>--%>
                 <!---***************************************************************************************************************-->
                 <div class="row col-md-14">
-                    <div class="panel-heading"><h1>Editar Organizacion</h1></div> 
+                    <div class="panel-heading"><h1>Nuevo Proyecto</h1></div> 
                     <div class="panel-body">
                     <form:form  name="altaOrganizacion" modelAttribute="proyecto" class="MyForm" action="gdaAltaAdminProyecto.do" method="POST">
                         <p>${error_sql}</p>
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                                 </fieldset>
-                                <h5>Nota: Escoja el perfil que desea de los disponibles y de click Agregar para moverlo a los seleccionados. Y a su vez si desea remover un perfil seleccionado, escojalo en los seleccionados y de click en Quitar.</h5>
+                                <div class="alert alert-warning"><h5>Nota: Escoja el perfil que desea de los disponibles y de click Agregar para moverlo a los seleccionados. Y a su vez si desea remover un perfil seleccionado, escojalo en los seleccionados y de click en Quitar.</h5></div>
                             </div>
                         </div>
                         <div class="panel panel-info">
