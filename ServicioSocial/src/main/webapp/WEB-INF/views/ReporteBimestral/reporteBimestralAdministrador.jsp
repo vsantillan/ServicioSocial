@@ -83,7 +83,7 @@
                             <div id="noRevisados" class="tab-pane col-md-12">
                                 <div id="div-aceptar-reporte" style="display:none;">
                                     <center>
-                                        <img src="imagenes/paloma.png" width="100"/>
+                                        <span class="glyphicon glyphicon-ok-circle sizeIconValid"><span/>
                                         <h2>Reporte validado correctamente</h2>
                                     </center>
                                 </div>

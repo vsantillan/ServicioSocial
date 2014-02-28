@@ -760,7 +760,7 @@ public class OrganizacionesController2 {
 
             try {
                 instanciaFacade.edit(instancia);
-                model.addAttribute("mensaje", "<p><img src='imagenes/paloma.png' width='70'></p><h2>Información editada correctamente</h2>");
+                model.addAttribute("mensaje", "<p><span class='glyphicon glyphicon-ok-circle sizeIconValid'></span></p><h2>Información editada correctamente</h2>");
                 model.addAttribute("idInstancia", idInstancia);
                 model.addAttribute("instancia", instancia);
 

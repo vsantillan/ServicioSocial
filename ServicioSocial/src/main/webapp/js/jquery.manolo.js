@@ -11,6 +11,7 @@ $(document).ready(function() {
             $("#div-validar-organizacion").hide('slow');
         }, 3000);
     });
+    $('#edicionCorrecta').show("slow").delay(2500).hide("slow");
 
 //    $(".btn-validar-proyecto").click(function(event) {
 //        $("#div-validar-proyecto").show('slow');

@@ -18,7 +18,7 @@
                 <%@include file="../General/menuOrganizacion.jsp"%>
                 <div class="col-md-12">
                     <div class="help-block col-md-12 text-center"><h1><span class="glyphicon glyphicon-user"></span>&nbsp;Bienvenido al Sitio para Organizaciones</h1></div>
-                    <center>${mensaje1}</center>
+                    <div class="row" id="edicionCorrecta" ><center>${mensaje1} ${mensaje}</center></div>
                     <p>&nbsp;</p>
                     <div class="col-md-12">
                         <form:form name="editarOrganizacion" commandName="instancia" class="MyForm" action="gdaEdicionOrganizacion.do"  method="POST" >
@@ -27,7 +27,6 @@
                                 <div class="panel-body">
                                     <div class="col-md-6">
                                         <p>${error_sql}</p>
-                                        <center><p>${mensaje}</p></center>
                                         <input type="hidden" name="idInstancia" value="${instancia.idInstancia}" class="form-control">
                                         <div class="form-group"> 
                                             <label for="nombre">Nombre de la Organizaci&oacute;n:</label> 
