@@ -344,7 +344,7 @@ public class ReporteBimestralController {
                     //Buscamos el reporte recien insertado
                     //DatosPersonales dp = datosPersonales.get(0);
 
-                    List<Reportes> bimestrales = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+                    List<Reportes> bimestrales = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", ordenarAsc, null);
                     Reportes bimestralInsertado = bimestrales.get(bimestrales.size() - 1);//tenia -1
                     for (int i = 0; i < bimestrales.size(); i++) {
                         System.out.println("*********************** el num de reporte es: " + bimestrales.get(i).getNumeroReporte());

@@ -198,7 +198,7 @@
                                                     <tr class='gradeX'>
                                                         <th><core:out value="${reportes.numeroReporte}"/></th>
                                                         <th><core:out value="${reportes.horas}"/></th>
-                                                        <th><core:out value="${reportes.fechaEntregaMax}"/></th>
+                                                        <th><fmt:formatDate value="${reportes.fechaEntregaMax}" pattern="dd-MM-yyyy"></fmt:formatDate></th>
                                                         <th><core:out value="${reportes.numeroRevisiones}"/></th>
                                                             <core:choose>    
                                                                 <core:when test="${reportes.status==0}">

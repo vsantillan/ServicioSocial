@@ -1,11 +1,14 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package edu.servicio.toluca.entidades;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -24,7 +27,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
- * @author SATELLITE
+ * @author Jesus
  */
 @Entity
 @Table(name = "CATALOGO_OBSERVACIONES", catalog = "", schema = "GES_VIN")
@@ -32,22 +35,28 @@ import org.hibernate.annotations.GenericGenerator;
 @NamedQueries({
     @NamedQuery(name = "CatalogoObservaciones.findAll", query = "SELECT c FROM CatalogoObservaciones c"),
     @NamedQuery(name = "CatalogoObservaciones.findById", query = "SELECT c FROM CatalogoObservaciones c WHERE c.id = :id"),
-    @NamedQuery(name = "CatalogoObservaciones.findByDetalle", query = "SELECT c FROM CatalogoObservaciones c WHERE c.detalle = :detalle")})
+    @NamedQuery(name = "CatalogoObservaciones.findByDetalle", query = "SELECT c FROM CatalogoObservaciones c WHERE c.detalle = :detalle"),
+    @NamedQuery(name = "CatalogoObservaciones.findByTipo", query = "SELECT c FROM CatalogoObservaciones c WHERE c.tipo = :tipo")})
 public class CatalogoObservaciones implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @GeneratedValue(generator = "generator")
     @GenericGenerator(name = "generator", strategy = "increment")
     @Id
-    @GeneratedValue(generator = "generator")
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ID")
     private BigDecimal id;
     @NotNull
     @Size(min=1,max = 300,message="El tamaño debe ser menor a 300 caracteres")
     @Column(name = "DETALLE")
     private String detalle;
+    //tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales
+    @Column(name = "TIPO") 
+    private BigInteger tipo;
     @OneToMany(mappedBy = "catalogoObservacionId")
     private Collection<RegObservaciones> regObservacionesCollection;
+
 
     public CatalogoObservaciones() {
     }
@@ -64,12 +73,28 @@ public class CatalogoObservaciones implements Serializable {
         this.id = id;
     }
 
+    
     public String getDetalle() {
         return detalle;
     }
 
     public void setDetalle(String detalle) {
         this.detalle = detalle;
+    }
+
+    public BigInteger getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(BigInteger tipo) {
+        this.tipo = tipo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
     @XmlTransient
@@ -80,14 +105,7 @@ public class CatalogoObservaciones implements Serializable {
     public void setRegObservacionesCollection(Collection<RegObservaciones> regObservacionesCollection) {
         this.regObservacionesCollection = regObservacionesCollection;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
