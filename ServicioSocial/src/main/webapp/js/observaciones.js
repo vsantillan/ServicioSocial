@@ -12,14 +12,14 @@ function listo() {
 function borrarObservacion(e) {
     
     var row = $(this).parents('tr')[0];
-    var idDelete = $(e.target).attr('ide');
+    var idDelete = $(e.target).attr('idex');
     var tabla = $('#example').dataTable();
     tabla.fnDeleteRow(row);
     alert("Este es el delete" + idDelete);
     //ajax(idUpdate);
-   // $.post("deleteObservacion.do", {id: idDelete}, function(response) {
+    $.post("deleteObservacion.do", {id: idDelete}, function(response) {
         //alert("Ya hizo el update");
-   // });
+    });
 }
 function validarForm(formulario) {
 

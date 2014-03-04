@@ -6,9 +6,11 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.NuevaObservacion;
+import edu.servicio.toluca.beans.ObservacionesBean;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.ejb.EJB;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -30,26 +32,28 @@ public class ObservacionesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/catalogoObservaciones.do")
     public String catalogoObservaciones(Model modelo) {
-        modelo.addAttribute("Observacion",new CatalogoObservaciones());
-        modelo.addAttribute("Observaciones", catalogoObservacionesFacade.findAll());
+        ObservacionesBean consultas = new ObservacionesBean(catalogoObservacionesFacade);
+        modelo.addAttribute("Observacion", new CatalogoObservaciones());
+        modelo.addAttribute("Observaciones", consultas.ConsultaTodas());
         return "/Observaciones/catalogoObservaciones";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/nuevaObservacion.do")
-    public 
-    String nuevaObservacion(@Valid CatalogoObservaciones Observacion, BindingResult resultado,Model modelo) {
+    public
+            String nuevaObservacion(@Valid CatalogoObservaciones Observacion, BindingResult resultado, Model modelo) {
         if (!resultado.hasErrors()) {
+            Observacion.setId(null);
             MetodosValidacion cleaner = new MetodosValidacion();
             Observacion.setDetalle(cleaner.tuneaStringParaBD(Observacion.getDetalle()));
             catalogoObservacionesFacade.create(Observacion);
             modelo.addAttribute("Observaciones", catalogoObservacionesFacade.findAll());
             modelo.addAttribute("Observacion", new CatalogoObservaciones());
-             return "/Observaciones/catalogoObservaciones";
-        }else{
+            return "/Observaciones/catalogoObservaciones";
+        } else {
             modelo.addAttribute("Observaciones", catalogoObservacionesFacade.findAll());
-             modelo.addAttribute("Observacion",Observacion);
-             modelo.addAttribute("errorBlanco", "<div class='error'>Error la descripcion esta vacia</div>");
-           return "/Observaciones/catalogoObservaciones";
+            modelo.addAttribute("Observacion", Observacion);
+            modelo.addAttribute("errorBlanco", "<div cssClass=\"alert alert-danger\">Error la descripcion esta vacia</div>");
+            return "/Observaciones/catalogoObservaciones";
         }
     }
 
@@ -58,8 +62,10 @@ public class ObservacionesController {
     String eliminaObservacion(int id, Model model) {
         CatalogoObservaciones catalogo;
         catalogo = catalogoObservacionesFacade.find(BigDecimal.valueOf(id));
+        catalogo.setTipo(BigInteger.ZERO);
+        catalogoObservacionesFacade.edit(catalogo);
         //catalogo.setValidacionAdmin(BigInteger.valueOf(1));
-        //System.out.println("Ya actualizo");
+        System.out.println("Ya actualizo");
         // instanciaFacade.edit(instancia);
 
         return "ok";
@@ -77,7 +83,6 @@ public class ObservacionesController {
                 + "alert('¡Observacion Actualizada  Correctamente!');"
                 + "location.href='catalogoObservaciones.do';"
                 + "</script>";
-
 
     }
 }
