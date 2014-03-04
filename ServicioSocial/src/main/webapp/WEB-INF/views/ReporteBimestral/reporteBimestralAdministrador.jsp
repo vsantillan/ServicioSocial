@@ -36,13 +36,11 @@
                                             <th>Nombre</th>
                                             <th>N. Control</th>
                                             <th>Periodo</th>
-                                            <th>Horas del Reporte</th>
+                                            <th>Horas Acumuladas</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <core:forEach items="${reportes}" var="reporte">
-                                            <core:choose>
-                                                <core:when test="${reporte.status==1}">
+                                    <core:forEach items="${reportesRevisados}" var="reporte">
                                                     <tr class='gradeX'>
                                                         <th>
                                                             <core:forEach items="${datosPersonales}" var="datoPersonal">
@@ -60,22 +58,18 @@
                                                                 </core:forEach>
                                                         </th>
                                                         <th><core:out value="${reporte.datosPersonalesId.nombre}"/> <core:out value="${reporte.datosPersonalesId.apellidoP}"/> <core:out value="${reporte.datosPersonalesId.apellidoM}"/></th>
-                                                        <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
-                                                        <th>
+                                                        <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>                                                       
                                                             <core:forEach items="${datosPersonales}" var="datoPersonal">
                                                                 <core:choose>
                                                                     <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
                                                                         <core:forEach items="${datoPersonal.formatoUnicoCollection}" var="fu">
-                                                                            <core:out value="${fu.periodoInicio}"/>
+                                                                            <th><core:out value="${fu.periodoInicio}"/></th>
+                                                                            <th><core:out value="${fu.horasAcumuladas}"/></th>
                                                                         </core:forEach>
                                                                     </core:when>
                                                                 </core:choose>
                                                             </core:forEach>
-                                                        </th>
-                                                        <th><core:out value="${reporte.horas}"/></th>
                                                     </tr>
-                                                </core:when>
-                                            </core:choose>
                                         </core:forEach>
                                     </tbody>
                                 </table>
@@ -99,9 +93,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <core:forEach items="${reportes}" var="reporte">
-                                            <core:choose>
-                                                <core:when test="${reporte.status==4}">
+                                        <core:forEach items="${reportesNoRevisados}" var="reporte">
                                                     <tr class='gradeX'>
                                                         <th>
                                                             <core:forEach items="${datosPersonales}" var="datoPersonal">
@@ -151,8 +143,6 @@
                                                         </th>
                                                         <th><core:out value="${reporte.horas}"/></th>
                                                     </tr>
-                                                </core:when>
-                                            </core:choose>
                                         </core:forEach>
                                     </tbody>
                                 </table>
@@ -169,9 +159,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <core:forEach items="${reportes}" var="reporte">
-                                            <core:choose>
-                                                <core:when test="${reporte.status==3}">
+                                        <core:forEach items="${reportesEnCorreccion}" var="reporte">
                                                     <tr class='gradeX'>
                                                         <th>
                                                             <core:forEach items="${datosPersonales}" var="datoPersonal">
@@ -203,8 +191,6 @@
                                                         </th>
                                                         <th><core:out value="${reporte.horas}"/></th>
                                                     </tr>
-                                                </core:when>
-                                            </core:choose>
                                         </core:forEach>
                                     </tbody>
                                 </table>
@@ -221,9 +207,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <core:forEach items="${reportes}" var="reporte">
-                                            <core:choose>
-                                                <core:when test="${reporte.status==2}">
+                                        <core:forEach items="${reportesRechazados}" var="reporte">
                                                     <tr class='gradeX'>
                                                         <!--<th><a href="mostarPDF.do?id=${2}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
                                                             <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>-->                                                
@@ -257,8 +241,6 @@
                                                         </th>
                                                         <th><core:out value="${reporte.horas}"/></th>
                                                     </tr>
-                                                </core:when>
-                                            </core:choose>
                                         </core:forEach>
                                     </tbody>
                                 </table>
