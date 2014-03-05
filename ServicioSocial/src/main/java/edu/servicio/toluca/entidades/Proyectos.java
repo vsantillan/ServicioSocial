@@ -38,10 +38,9 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- *
+ * 
  * @author SATELLITE
  */
-@Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
 @Table(name = "PROYECTOS", catalog = "", schema = "GES_VIN")
 @XmlRootElement
@@ -63,7 +62,6 @@ public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErr
     @Size(max = 7)
     @Column(name = "EXT")
     private String ext;
-    @Cache(usage = CacheConcurrencyStrategy.NONE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection;
     private static final long serialVersionUID = 1L;
@@ -125,11 +123,11 @@ public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErr
     @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
-    @Cache(usage = CacheConcurrencyStrategy.NONE)
+   
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<ProyectoPerfil> proyectoPerfilCollection;
-    @Cache(usage = CacheConcurrencyStrategy.NONE)
+    
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Actividades> actividadesCollection;
     @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
@@ -140,13 +138,13 @@ public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErr
     private Programa idPrograma;
     @JoinColumn(name = "ID_INSTANCIA", referencedColumnName = "ID_INSTANCIA")
     @ManyToOne(optional = false)
-    @Cache(usage = CacheConcurrencyStrategy.NONE)
+   
     private Instancia idInstancia;
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
     @OneToMany(mappedBy = "idproyecto")
-    @Cache(usage = CacheConcurrencyStrategy.NONE)
+ 
     private Collection<FormatoUnico> formatoUnicoCollection;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
 //    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;

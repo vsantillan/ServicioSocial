@@ -443,24 +443,64 @@ public class FormatoUnicoController {
         List<HorariosAlumno> listaHorariosAlumno = horarioFacade.findBySpecificField("formatoUnicoId", formatoUnico, "equal", null, null);
         for (HorariosAlumno hor : listaHorariosAlumno) {
             if (hor.getDia().equals("1")) {
-                formatoUnicoHorariosBean.setLuI(hor.getHoraInicio());
-                formatoUnicoHorariosBean.setLuF(hor.getHoraFin());
+                if (hor.getHoraInicio() == null) {
+                    formatoUnicoHorariosBean.setLuI(" ");
+                } else {
+                    formatoUnicoHorariosBean.setLuI(hor.getHoraInicio());
+                }
+                if (hor.getHoraFin() == null) {
+                    formatoUnicoHorariosBean.setLuF(" ");
+                } else {
+                    formatoUnicoHorariosBean.setLuF(hor.getHoraFin());
+                }
             }
             if (hor.getDia().equals("2")) {
+                if (hor.getHoraInicio() == null) {
+                    formatoUnicoHorariosBean.setMaI(" ");
+                }
                 formatoUnicoHorariosBean.setMaI(hor.getHoraInicio());
-                formatoUnicoHorariosBean.setMaF(hor.getHoraFin());
+                if (hor.getHoraFin() == null) {
+                    formatoUnicoHorariosBean.setMaF(" ");
+                } else {
+                    formatoUnicoHorariosBean.setMaF(hor.getHoraFin());
+                }
             }
             if (hor.getDia().equals("3")) {
-                formatoUnicoHorariosBean.setMiI(hor.getHoraInicio());
-                formatoUnicoHorariosBean.setMiF(hor.getHoraFin());
+                System.out.println("horrio" + hor.getHoraFin());
+                if (hor.getHoraInicio() == null) {
+                    formatoUnicoHorariosBean.setMiI(" ");
+                } else {
+                    formatoUnicoHorariosBean.setMiI(hor.getHoraInicio());
+                }
+                if (hor.getHoraFin() == null) {
+                    formatoUnicoHorariosBean.setMiF(" ");
+                } else {
+                    formatoUnicoHorariosBean.setMiF(hor.getHoraFin());
+                }
             }
             if (hor.getDia().equals("4")) {
-                formatoUnicoHorariosBean.setJuI(hor.getHoraInicio());
-                formatoUnicoHorariosBean.setJuF(hor.getHoraFin());
+                if (hor.getHoraInicio() == null) {
+                    formatoUnicoHorariosBean.setJuI(" ");
+                } else {
+                    formatoUnicoHorariosBean.setJuI(hor.getHoraInicio());
+                }
+                if (hor.getHoraFin() == null) {
+                    formatoUnicoHorariosBean.setJuF(" ");
+                } else {
+                    formatoUnicoHorariosBean.setJuF(hor.getHoraFin());
+                }
             }
             if (hor.getDia().equals("5")) {
-                formatoUnicoHorariosBean.setViI(hor.getHoraInicio());
-                formatoUnicoHorariosBean.setViF(hor.getHoraFin());
+                if (hor.getHoraInicio() == null) {
+                    formatoUnicoHorariosBean.setViI(" ");
+                } else {
+                    formatoUnicoHorariosBean.setViI(hor.getHoraInicio());
+                }
+                if (hor.getHoraFin() == null) {
+                    formatoUnicoHorariosBean.setViF(" ");
+                } else {
+                    formatoUnicoHorariosBean.setViF(hor.getHoraFin());
+                }
             }
 
         }

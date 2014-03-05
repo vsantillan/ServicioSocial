@@ -31,10 +31,6 @@ public class FormatoUnicoHorariosBean {
     private ArrayList<String> listaErrores = new ArrayList<String>();
     MetodosValidacion mv = new MetodosValidacion();
 
-    public void roy()
-    {
-        
-    }
     public ArrayList<String> Valida() throws ParseException
     {
         boolean luih = true;
@@ -72,19 +68,19 @@ public class FormatoUnicoHorariosBean {
             Date h2 = (Date)formato.parse(maF);
             if(h1.after(h2)){listaErrores.add("La hora de fin del Martes, es menor a la de inicio");}
         }
-        if(!miI.equals(" ") && !miF.equals(" "))
+        if(!miI.equals(" ") && !miF.equals(" ")&& !miI.equals("") && !miF.equals(""))
         {
             Date h1 = (Date)formato.parse(miI);
             Date h2 = (Date)formato.parse(miF);
             if(h1.after(h2)){listaErrores.add("La hora de fin del Miercoles, es menor a la de inicio");}
         }
-        if(!juI.equals(" ") && !juF.equals(" "))
+        if(!juI.equals(" ") && !juF.equals(" ")&& !juI.equals("") && !juF.equals(""))
         {
             Date h1 = (Date)formato.parse(juI);
             Date h2 = (Date)formato.parse(juF);
             if(h1.after(h2)){listaErrores.add("La hora de fin del Jueves, es menor a la de inicio");}
         }
-        if(!viI.equals(" ") && !viF.equals(" "))
+        if(!viI.equals(" ") && !viF.equals(" ")&& !viI.equals("") && !viF.equals(""))
         {
             Date h1 = (Date)formato.parse(viI);
             Date h2 = (Date)formato.parse(viF);

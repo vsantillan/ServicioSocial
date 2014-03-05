@@ -248,7 +248,6 @@ function enviarHorarios()
         }
         else
         {
-            alert('Informacion almacenada correctamente');
             $('#listaObservacionesOK').empty();
             $('#observacionesOK').show('slow');
             $('#listaObservacionesOK').append("<li class= 'observacion'>Horarios guradados correctamente</li>");
