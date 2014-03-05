@@ -7,6 +7,7 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.bimestrales.RetroalimentacionReporte;
 import edu.servicio.toluca.beans.documentosFinales.GeneraDocumento;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
+import edu.servicio.toluca.entidades.BimestralesActividades;
 import edu.servicio.toluca.entidades.CatalogoDocumento;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
@@ -26,7 +27,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -67,7 +70,62 @@ public class ReporteBimestralController2 {
     @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
     public String reporteBimestralAdministrador(Model modelo, HttpSession session, HttpServletRequest request) {
         modelo.addAttribute("datosPersonales", datosPersonalesFacade.findAll());
-        modelo.addAttribute("reportes", reportesFacade.findAll());
+        List<Reportes> listaBimestrales = reportesFacade.findAll();
+        List<Reportes> reportesRevisados = new ArrayList<Reportes>();
+        List<Reportes> reportesRevisadosUnicos = new ArrayList<Reportes>();
+        List<Reportes> reportesNoRevisados = new ArrayList<Reportes>();
+        List<Reportes> reportesEnCorreccion = new ArrayList<Reportes>();
+        List<Reportes> reportesRechazados = new ArrayList<Reportes>();
+        Iterator<Reportes> recorreListaBimestrales = listaBimestrales.iterator();
+
+        while (recorreListaBimestrales.hasNext()) {
+            Reportes reporteActual = recorreListaBimestrales.next();
+            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(1)) == 0) {
+                reportesRevisados.add(reporteActual);
+            }
+            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(4)) == 0) {
+                reportesNoRevisados.add(reporteActual);
+            }
+            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(3)) == 0) {
+                reportesEnCorreccion.add(reporteActual);
+            }
+            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(2)) == 0) {
+                reportesRechazados.add(reporteActual);
+            }
+        }
+
+        boolean existe = false;
+        Iterator<Reportes> recorreListaRevisados = reportesRevisados.iterator();
+
+        while (recorreListaRevisados.hasNext()) {
+            Reportes reporte = recorreListaRevisados.next();
+            System.out.println("Tamaño de los Unicos" + reportesRevisadosUnicos.size());
+            if (!reportesRevisadosUnicos.isEmpty()) {
+                for (int i = 0; i <= reportesRevisadosUnicos.size() - 1; i++) {
+                    BigDecimal id = reportesRevisadosUnicos.get(i).getDatosPersonalesId().getId();
+                    System.out.println("i for:" + (i + 1) + "Size" + (reportesRevisadosUnicos.size() - 1));
+
+                    if (reporte.getDatosPersonalesId().getId().compareTo(id) == 0) {
+                        existe = true;
+                        System.out.println("Existe y corto el while interno");
+                        break;
+                    } else {
+                        if ((i) == reportesRevisadosUnicos.size() - 1) {
+                            existe = false;
+                            System.out.println("Debo agregar" + reporte.getDatosPersonalesId().getId());
+                            reportesRevisadosUnicos.add(reporte);
+                        }
+                    }
+                }
+            } else {
+                reportesRevisadosUnicos.add(reporte);
+            }
+
+        }
+        modelo.addAttribute("reportesRevisados", reportesRevisadosUnicos);
+        modelo.addAttribute("reportesNoRevisados", reportesNoRevisados);
+        modelo.addAttribute("reportesEnCorreccion", reportesEnCorreccion);
+        modelo.addAttribute("reportesRechazados", reportesRechazados);
         modelo.addAttribute("retroalimentacionReporte", new RetroalimentacionReporte());
         return "/ReporteBimestral/reporteBimestralAdministrador";
     }
