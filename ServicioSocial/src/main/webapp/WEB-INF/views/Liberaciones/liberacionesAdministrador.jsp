@@ -1,77 +1,19 @@
-<%-- 
-    Document   : liberacionesAdministrador
-    Created on : 12/06/2013, 12:02:37 PM
-    Author     : mary
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
-
 <html>
     <head>
-
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-        <!--Scripts para shadowbox-->
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
-                    'wmp', 'swf', 'flv']});</script> 
-            <jsp:include page="../Template/headsJQueryUI.jsp" />
-            <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#noRevisadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#noAceptadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#enCorreccionDT').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#aceptadosDT').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script>
-        <title>Administrador Liberaciones</title>
-
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body onload="MM_preloadImages('imagenes/logo_tec_r.png');">
-        <jsp:include page="../Template/banner.jsp" />
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%>
+                <div class="row col-md-12 center-block">
 
-        <%-- inicio del contenido --%>
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left; width:80%;">
+                <center><h2>Liberaciones Pendientes</h2></center>
 
-                <h1>Liberaciones Pendientes</h1>
-
-
-
-
-                <table cellpadding='0' cellspacing='0' border='0' class='display' id="noRevisadosDT" width='100%'>
+                <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'  width='100%'>
                     <thead>
                         <tr>
                             <td>Periodo</td>
@@ -105,10 +47,46 @@
 
 
             </div>
-            <div style="clear:both;"></div>
-
+            <%@include file="../General/footer.jsp"%> 
+            </div>
         </div>
-        <%-- fin del contenido --%>
-        <jsp:include page="../Template/footer.jsp" />
+        <%-- fin del contenido --%>     
+             
+        <div class="modal-dialog" id="motivos" style="display: none;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title titulos-naranja">Motivos de Rechazo del Formato Único</h3>
+            </div>
+            <form id="observacionesCat" action="#"  onsubmit="return  false;">
+            <div class="modal-body">
+              <div class="list-group">
+              <core:forEach items="${listadoObservaciones}" var="observacion">
+              <a href="#" class="list-group-item">
+                  <div class="checkbox">
+                      <label>
+                      <input name="id[]" value="${observacion.id}" type="checkbox"/>
+                      <h4 class="list-group-item-heading">${observacion.detalle}</h4>
+                      </label>
+                  </div>
+              </a>
+              </core:forEach>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
+              <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
+              <button id="guardarObservaciones" type="button" class="btn btn-primary">Guardar las observaciones de el Formato Único</button>
+            </div>
+            </form>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+
+        
+        <%@include file="../General/js.jsp"%>
+        <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
+        <script type="text/javascript">
+            $('#formatoUnico-tabla a:first').tab('show');
+        </script>
+        <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>
