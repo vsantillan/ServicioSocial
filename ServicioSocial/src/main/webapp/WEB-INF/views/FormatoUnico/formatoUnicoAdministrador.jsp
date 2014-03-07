@@ -23,7 +23,7 @@
                         <li><a href="#noAceptados" data-toggle="tab">No aceptados</a></li>
                         <li><a href="#enCorreccion" data-toggle="tab">En correcci&oacute;n</a></li>
                         <li><a href="#aceptados" data-toggle="tab">Aceptados</a></li>
-                    </ul>
+                    </ul>&nbsp;
                     <div id="noRevisados" class="tab-pane">
                         <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="noRevisados_dt" width='100%'>
                             
