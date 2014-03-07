@@ -1,55 +1,15 @@
-<%-- 
-    Document   : sancionesAlumno
-    Created on : 10/06/2013, 09:27:13 AM
-    Author     : ekt
---%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="../Template/taglibs.jsp" %>
-
-
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-        <!-- CSS  Shadowbox-->
-        <link href="shadowbox/shadowbox.css" rel="stylesheet" type="text/css" />
-        
-
-        <!--Script para DataTables-->
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <script type="text/javascript" language="javascript" src="js/sanciones.js"></script>
-
-        <!--Scripts para shadowbox-->
-        <script type="text/javascript" src="shadowbox/shadowbox.js"></script>  
-        <script type="text/javascript"> Shadowbox.init({language: "es", players: ['img', 'html', 'iframe', 'qt',
-                    'wmp', 'swf', 'flv']});</script> 
-        <script type="text/javascript" >
-            $(document).ready(function() {
-                $('#example').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script>
-        <script type="text/javascript" language="javascript" src="js/sanciones.js"></script>
-        <title>Administraci&oacute;n de Organizaciones</title>
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body class="background" >
-        <jsp:include page="../Template/banner.jsp" />
-
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;width:80%">
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%>
+                <div class="row col-md-12 center-block">
                 <h1>Sanciones <input type="button" value="  Presiona para Actualizar  " onclick="location.reload()"/></h1> 
                 <p>A continuaci&oacute;n se muestran los alumnos con sanciones, de click en "Detalles" para ver sus reportes o click en "Pagar" para agregar reportes de pago de servicio.</p>
                 <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
@@ -79,13 +39,10 @@
                 </table>
 
                 <%-- fin del contenido --%>
-            </div>
-            <div style="clear: both;"/>
-        </div>
-    </div>
-  <jsp:include page="../Template/footer.jsp" />
-
-</body>
-
-
+            </div><!--/row--> 
+                <%@include file="../General/footer.jsp"%>           
+            </div><!--/row-->
+        </div> <!-- /container -->
+        <%@include file="../General/js.jsp"%>
+    </body>
 </html>

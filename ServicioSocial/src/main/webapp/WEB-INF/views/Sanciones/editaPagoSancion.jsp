@@ -1,43 +1,41 @@
-<%-- 
-    Document   : editaSancion
-    Created on : 11/06/2013, 11:21:00 AM
-    Author     : Regules
---%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-        <script type="text/javascript" language="javascript" src="js/sanciones.js"></script>
-        <title>Editar Sanci&oacute;n</title>
+        <%@include file="../General/head.jsp"%>
     </head>
     <body>
-        <%-- inicio del contenido --%>
-        <div id="contenido" style="width: 700px">
-            <div style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px ">
-                <center> 
-                    <h1>Editar Sanci&oacute;n</h1>
-                    <form:form name="nuevaSancion"  onsubmit="window.parent.Shadowbox.close();">
-                        <table>
-                            <tr>
+        <div class="container">
+            <div class="row">
+                <%--<%@include file="../General/banner.jsp"%>--%>  
+                <%--<%@include file="../General/menuAdministrador.jsp"%>--%> 
+                <div class="row col-md-12 center-block">
+                    <center><h2>Editar Sanci&oacute;n</h2></center>
+                    <div class="row col-md-6 col-md-offset-3">
+                        <form:form name="nuevaSancion"  onsubmit="window.parent.Shadowbox.close();">
                             <input type="hidden" value="${idSancion}" name ="id" id="pidSancion"/>
-                            <td> <label for="descripcion">Descripci&oacute;n:</label> </td>
-                            <td> <textarea name="descripcion" rows="4" cols="50" id="epDescripion">${descripcion}</textarea> </td>
-                            </tr>
-                            
-                            <tr> 
-                                <td> <input type ="button"  onclick="edtitarPagoSancion();" value = "Guardar " /> </td>
-                                <td> <input type ="reset" value = "Limpiar" /></td>
-                            </tr>
-                        </table>
-                    </form:form>
+                            <label for="descripcion">Descripci&oacute;n:</label>
+                            <textarea name="descripcion" class="form-control" rows="4" cols="50" id="epDescripion">${descripcion}</textarea>
+                            <div class="col-md-4 col-md-offset-4"><br/>
+                                <input type ="button" class="form-control btn btn-primary" onclick="edtitarPagoSancion();" value = "Guardar " />
+                            </div>
+                        </form:form>
+                    </div>
+
+
+<!--                    <table>
+                        <tr>
+                        
+                        <td> <label for="descripcion">Descripci&oacute;n:</label> </td>
+                        <td>  </td>
+                        </tr>
+
+                        <tr> 
+                            <td>  </td>
+                            <td> <input type ="reset" value = "Limpiar" /></td>
+                        </tr>
+                    </table>-->
+
                     <div id="observaciones" style="display: none">
                         <b>Debes atender los siguientes puntos</b><br/>
                         <ul id="listaObservaciones" >
@@ -45,9 +43,11 @@
                         </ul>
 
                     </div>
-                </center>
-            </div>                
-        </div>
+                    </center>
+                </div><!--/row--> 
+                <%--<%@include file="../General/footer.jsp"%>--%>           
+            </div><!--/row-->
+        </div> <!-- /container -->
+        <%@include file="../General/js.jsp"%>
     </body>
 </html>
-

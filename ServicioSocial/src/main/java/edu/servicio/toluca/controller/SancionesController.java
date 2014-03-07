@@ -53,6 +53,9 @@ public class SancionesController {
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("datosPersonalesId", "asc");
         List<Sanciones> listaTodasSanciones = sancionesFacade.findAll(ordenamiento);
+        if(listaTodasSanciones.isEmpty()){
+            return "redirect:panelAdministrador.do";
+        }
         //List<String> listaSancionesVista = new ArrayList();
         int horas = 0;
         String noControl = listaTodasSanciones.get(0).getDatosPersonalesId().getAlumnoId().getId().toString();
@@ -145,6 +148,9 @@ public class SancionesController {
         System.out.println("Conteo de registros Catalogo Sanciones:" + catalogoSancionesFacade.count());
         List<CatalogoSanciones> listaSanciones = new ArrayList<CatalogoSanciones>();
         List<CatalogoSanciones> listaPagoSanciones = new ArrayList<CatalogoSanciones>();
+        if(catalogoSancionesFacade.findAll().isEmpty()){
+            return "redirect:panelAdministrador.do";
+        }
         for (CatalogoSanciones sancion : catalogoSancionesFacade.findAll()) {
             
             if (sancion.getHorasSancion().compareTo(BigInteger.ZERO) > 0) {

@@ -72,8 +72,9 @@ function editarSancion2()
         else
         {
             alert('Informacion almacenada correctamente');
-//            location.reload();
-            parent.location = parent.location;
+            parent.location.reload();
+//            parent.location = parent.location;
+//            window.parent.location = window.parent.location;
         }
     });
 
@@ -136,7 +137,8 @@ function edtitarPagoSancion()
         {
             alert('Informacion almacenada correctamente');
 //            location.reload();
-            parent.location = parent.location;
+//            parent.location = parent.location;
+parent.location.reload();
         }
     });
 }

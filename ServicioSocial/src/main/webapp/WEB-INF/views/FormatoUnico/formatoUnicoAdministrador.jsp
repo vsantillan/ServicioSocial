@@ -19,7 +19,7 @@
                 <center><h2>Página del Formato Unico - Administrador</h2></center>
                 <div class="tab-content">
                     <ul class="nav nav-tabs" id="formatoUnico-tabla">
-                        <li><a href="#noRevisados" data-toggle="tab">No revisados</a></li>
+                        <li class="active"><a href="#noRevisados" data-toggle="tab">No revisados</a></li>
                         <li><a href="#noAceptados" data-toggle="tab">No aceptados</a></li>
                         <li><a href="#enCorreccion" data-toggle="tab">En correcci&oacute;n</a></li>
                         <li><a href="#aceptados" data-toggle="tab">Aceptados</a></li>
