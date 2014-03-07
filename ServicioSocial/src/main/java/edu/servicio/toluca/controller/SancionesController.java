@@ -54,7 +54,8 @@ public class SancionesController {
         ordenamiento.put("datosPersonalesId", "asc");
         List<Sanciones> listaTodasSanciones = sancionesFacade.findAll(ordenamiento);
         if(listaTodasSanciones.isEmpty()){
-            return "redirect:panelAdministrador.do";
+            modelo.addAttribute("listaSanciones", null);
+            return "/Sanciones/sancionesAlumno";
         }
         //List<String> listaSancionesVista = new ArrayList();
         int horas = 0;

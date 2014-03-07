@@ -5,66 +5,7 @@
         <%@include file="../General/head.jsp"%>
     </head>
     <body>
-<!--        <script src="<%=request.getContextPath()%>/js/jquery-1.9.1.js"></script>
-        <script type="text/javascript" language="javascript" src="js/modal/jquery.fancybox.js"></script>
-<link rel="stylesheet" type="text/css" href="js/modal/jquery.fancybox.css" />
-        <script type="text/javascript">
-        $(document).ready(function() {
-        console.log('cargando fancy en doc ready');
-        // FANCY EFFECTT
-        $(".fancybox-effects-a").fancybox({
-            helpers: {
-                title: {
-                    type: 'outside'
-                },
-                overlay: {
-                    speedOut: 0
-                }
-            }
-        });
-        //FACY EXTERNO
-        $(".fancy").fancybox({
-            'autoScale': false,
-            'transitionIn': 'none',
-            'transitionOut': 'none',
-            'width': 680,
-            'height': 450,
-            'type': 'iframe'
-        });
-        
-        //FACY Alumnos Proyecto
-        $(".fancyProy").fancybox({
-            'autoScale': true,
-            'transitionIn': 'none',
-            'transitionOut': 'none',
-            'width': 800,
-            'height': 700,            
-            'type': 'iframe'
-        });
 
-
-        $(".fancyFU").fancybox({
-            'autoScale': false,
-            'transitionIn': 'none',
-            'transitionOut': 'none',
-            'width': '90%',
-            'height': '90%',
-            'type': 'iframe'
-        });
-        $(".fancyFUI").fancybox({
-            'autoScale': false,
-            'transitionIn': 'none',
-            'transitionOut': 'none',
-            'width': '90%',
-            'height': '90%',
-            'type': 'iframe',
-            'autoDimensions': false,
-            
-        });
-
-
-    });
-    </script>-->
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  

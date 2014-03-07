@@ -10,9 +10,9 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                <h1>Sanciones <input type="button" value="  Presiona para Actualizar  " onclick="location.reload()"/></h1> 
-                <p>A continuaci&oacute;n se muestran los alumnos con sanciones, de click en "Detalles" para ver sus reportes o click en "Pagar" para agregar reportes de pago de servicio.</p>
-                <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
+                <center><h2>Sanciones</h2>  <input type="button" value="  Presiona para Actualizar  " onclick="location.reload()"/></center>
+                <h5>A continuaci&oacute;n se muestran los alumnos con sanciones.</h5>
+                <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' width='100%'>
                     <thead>
                         <tr>
                             <th>Historial Servicio</th>
@@ -26,13 +26,13 @@
                     <tbody>
                         <core:forEach items="${listaSanciones}" var="current">
                         <tr class='gradeX'>
-                            <th><a href="historialServicio.do"  target="_blank"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="detalleSancionAlumno.do?noControl=${current.idAlumno}&ins=sancion" rel="shadowbox" class="fancyFUI"><img src="imagenes/lupa.png" width="30"/></a></th>
-                            <th><a href="detalleSancionAlumno.do?noControl=${current.idAlumno}&ins=pago" rel="shadowbox" class="fancyFUI"><img src="imagenes/lupa.png" width="30"/></a></th>
+                            <td><a href="historialServicio.do"  target="_blank"><i class="glyphicon glyphicon-search"></i></a></td>
+                            <td><a href="detalleSancionAlumno.do?noControl=${current.idAlumno}&ins=sancion" rel="shadowbox" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
+                            <td><a href="detalleSancionAlumno.do?noControl=${current.idAlumno}&ins=pago" rel="shadowbox" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
                             
-                            <th><core:out value="${current.alumno.id}" /></th>
-                            <th><core:out value="${current.alumno.nombre}" /></th>
-                            <th><core:out value="${current.horas}" /></th>
+                            <td><core:out value="${current.alumno.id}" /></td>
+                            <td><core:out value="${current.alumno.nombre}" /></td>
+                            <td><core:out value="${current.horas}" /></td>
                         </tr>
                       </core:forEach>
                     </tbody>
@@ -44,5 +44,6 @@
             </div><!--/row-->
         </div> <!-- /container -->
         <%@include file="../General/js.jsp"%>
+        <%@include file="../Template/headsModal.jsp" %>
     </body>
 </html>

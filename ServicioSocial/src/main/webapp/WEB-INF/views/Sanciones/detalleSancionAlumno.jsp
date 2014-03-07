@@ -1,45 +1,21 @@
-<%-- 
-    Document   : detalleSancionAlumno
-    Created on : 10/06/2013, 10:42:15 AM
-    Author     : Regules
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.ArrayList"%>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="format" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Seguimiento a Sancionado</title>
-        <!--Scripts para tabla-->
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <script type="text/javascript" >
-            $(document).ready(function() {
-                $('#example').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script>
-        <script type="text/javascript" language="javascript" src="js/sanciones.js"></script>
+        <%@include file="../General/head.jsp"%>
     </head>
     <body>
-        <div style="padding-left: 10px; padding-right: 10px ">
+        <div class="container">
+            <div class="row">
+                <%--<%@include file="../General/banner.jsp"%>--%>  
+                <%--<%@include file="../General/menuAdministrador.jsp"%>--%> 
+                <div class="row col-md-12 center-block">
 
-            <h1>${titulo}</h1>
+            <center><h2>${titulo}</h2></center>
 
             <br />
-            <h2><b>Nombre: </b>${nombre}</h2>
-            <h2><b>No. Control: </b>${noControl}</h2>
+            <h4><b>Nombre: </b>${nombre}</h4>
+            <h4><b>No. Control: </b>${noControl}</h4>
             <div style ="background: #B5EBF6;  border-radius:30px; border: 2px; padding: 5px;border-color: #862E26; padding-left: 30px;">
                 <form>
                     <input id="idDatosPersonales" type="hidden" value="${datosPersonalesId.id}" />
@@ -57,7 +33,7 @@
             </div>
 
             <br/>
-            <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
+            <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'  width='100%'>
                 <thead>
                     <tr>
                         <th>Acciones</th>
@@ -70,7 +46,7 @@
                     <core:forEach items="${listaSanciones}" var="current">
                         <tr class='gradeX'>
 
-                            <th><a href="#" onclick="quitaSancionAlumno(${current.id})"><img src="imagenes/tache.png" width="30"/></a></th>
+                            <th><a href="#" onclick="quitaSancionAlumno(${current.id})"><i class="glyphicon glyphicon-remove"></i></a></th>
                             <th><core:out value="${current.fecha}" /></th>
                             <th><core:out value="${current.horasSancion}" /></th>
                             <th><core:out value="${current.catalogoSancionesId.detalle}" /></th>
@@ -80,6 +56,10 @@
             </table>
 
             <%-- fin del contenido --%>
-        </div>
+        </div><!--/row--> 
+                <%--<%@include file="../General/footer.jsp"%>--%>           
+            </div><!--/row-->
+        </div> <!-- /container -->
+        <%@include file="../General/js.jsp"%>
     </body>
 </html>
