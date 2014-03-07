@@ -44,10 +44,30 @@ public class BajasTemporalesController {
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
 
+    @RequestMapping(method = RequestMethod.GET, value = "/cambioDependencia.do")
+    public String cambioDependencia(Model modelo) {
+
+
+        List<FormatoUnico> formatos = formatoUnicoFacade.findAll();
+        List<BajaTemporal> bajasTemporales = bajaTemporal.findAll();
+        Iterator listaFormatos = formatos.iterator();
+        List<FormatoUnico> formatosSinBaja = new ArrayList<FormatoUnico>();
+        while (listaFormatos.hasNext()) {
+            FormatoUnico FU = (FormatoUnico) listaFormatos.next();
+            if (FU.getStatusServicio() != BigInteger.ONE) {
+                formatosSinBaja.add(FU);
+            } 
+
+        }
+        modelo.addAttribute("alumnos", formatosSinBaja);
+        return "/BajasTemporales/cambioDependencia";
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/administrarBajas.do")
     public String administrarBajas(Model modelo) {
 
         List<FormatoUnico> formatos = formatoUnicoFacade.findAll();
+        List<BajaTemporal> bajasTemporales = bajaTemporal.findAll();
         Iterator listaFormatos = formatos.iterator();
         List<FormatoUnico> formatosBaja = new ArrayList<FormatoUnico>();
         List<FormatoUnico> formatosSinBaja = new ArrayList<FormatoUnico>();
@@ -65,6 +85,7 @@ public class BajasTemporalesController {
 //        modelo.addAttribute("alumnos", formatoUnicoFacade.findBySpecificField("statusServicio", "1", "equal", null, null));
 //        modelo.addAttribute("alumnosBaja", formatoUnicoFacade.findBySpecificField("statusServicio", "3", "equal", null, null));
         modelo.addAttribute("bajas", new bajasTemporales());
+        modelo.addAttribute("bajasTemporales", bajasTemporales);
         return "/BajasTemporales/administrarBajas";
     }
 
@@ -72,14 +93,21 @@ public class BajasTemporalesController {
     public String insertaBaja(@ModelAttribute("bajas") bajasTemporales baja, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request) {
         BajaTemporal bt = new BajaTemporal();
         fechas fechas = new fechas();
-
-        //Insertamos el registro 
-        bt.setFechaBaja(fechas.covierteString(baja.getFechaBaja()));
-        bt.setFechaLimiteBaja(fechas.covierteString(baja.getFechaLimiteBaja()));
+        List<BajaTemporal> listaBajas = bajaTemporal.findBySpecificField("datosPersonalesId", baja.getIdDatosPer(), "equal", null, null);
         List<DatosPersonales> DP = datosPersonalesFacade.findBySpecificField("id", baja.getIdDatosPer(), "equal", null, null);
-        bt.setDatosPersonalesId(DP.get(0));
-        bajaTemporal.create(bt);
-        System.out.println("Se inserto la baja temporal");
+        if (listaBajas.isEmpty()) {
+            //Insertamos el registro 
+            bt.setFechaBaja(fechas.covierteString(baja.getFechaBaja()));
+            bt.setFechaLimiteBaja(fechas.covierteString(baja.getFechaLimiteBaja()));
+            bt.setDatosPersonalesId(DP.get(0));
+            bajaTemporal.create(bt);
+            System.out.println("Se inserto la baja temporal");
+        } else {
+            BajaTemporal bajaAntigua = listaBajas.get(0);
+            bajaAntigua.setFechaBaja(fechas.covierteString(baja.getFechaBaja()));
+            bajaAntigua.setFechaLimiteBaja(fechas.covierteString(baja.getFechaLimiteBaja()));
+            bajaTemporal.edit(bajaAntigua);
+        }
 
         //Cambiamos el Status de Servicio a 3
         List<FormatoUnico> editarFU = formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.get(0).getId(), "equal", null, null);

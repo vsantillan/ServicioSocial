@@ -24,7 +24,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentos Finales<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="javascript:void(0)" onclick="redirecciona('#');">5.1 Documentos Originales</a></li>
+                        <li><a href="javascript:void(0)" onclick="redirecciona('documentoFinales.do');">Documentos Finales</a></li>
                         <li><a href="liberaciones.do" onclick="redirecciona('liberaciones.do');">Cartas de Liberaci&oacute;n</a></li>
                     </ul>
                 </li>
@@ -39,7 +39,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bajas Temporales<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="administrarBajas.do" onclick="redirecciona('administrarBajas.do');">7.1 Administrar</a></li>
-                        <li><a href="javascript:void(0)" onclick="redirecciona('#');">7.2 Cambio de Proyecto</a></li>
+                        <li><a href="javascript:void(0)" onclick="redirecciona('cambioDependencia.do');">7.2 Cambio de Proyecto</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
