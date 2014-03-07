@@ -29,4 +29,6 @@ $(document).ready(function() {
     $('.dp3').datepicker()
             .datepicker('setValue', new Date());
     $('.dp2').datepicker({});
+    $('.dpAltaBaja').datepicker({});
+    $('.dpFinBaja').datepicker({});
 });

@@ -33,11 +33,13 @@ public class fechas {
     }
 
     public java.sql.Date covierteString(String fecha) {
+        System.out.println("La fecha en Cadena es: "+fecha);
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         Date fechaDate = null;
         java.sql.Date sqlDate=null;
         try {
             fechaDate = formatoFecha.parse(fecha);
+            System.out.println("La fecha Parseada es: "+fechaDate.toLocaleString());
            sqlDate = new java.sql.Date(fechaDate.getTime());
         } catch (Exception ex) {
             System.out.println("Ocurrio un error");
