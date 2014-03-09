@@ -53,14 +53,7 @@
                         <li><a href="validarProyectos.do" onclick="redirecciona('validarProyectos.do');">8.6 Validar Proyectos</a></li>  
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administraci&oacute;n<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="javascript:void(0)" onclick="redirecciona('#');">9.1 Administrar Observaciones</a></li>
-                        <li><a href="catalogoNoticias.do" onclick="redirecciona('#');">9.2 Noticias</a></li>
-                        <li><a href="catalogoConvocatorias.do" onclick="redirecciona('#');">9.3 Convocatorias</a></li>
-                    </ul>
-                </li>
+                <li><a href="#" onclick="redirecciona('#');">Convocatorias</a></li>
                 <li><a href="historialServicio.do" onclick="redirecciona('#');">Historial Servicio Social</a></li>
                 <li><a href="liberaciones.do" onclick="redirecciona('#');">Estadisticas</a></li>
                 <li class="dropdown">
