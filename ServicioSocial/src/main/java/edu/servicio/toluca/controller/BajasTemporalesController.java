@@ -7,13 +7,18 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.beans.bajasTemporales.bajasTemporales;
+import edu.servicio.toluca.beans.bajasTemporales.cambioDependencia;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.entidades.BajaTemporal;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
+import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.sesion.BajaTemporalFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
+import edu.servicio.toluca.sesion.InstanciaFacade;
+import edu.servicio.toluca.sesion.ProyectosFacade;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -43,22 +48,63 @@ public class BajasTemporalesController {
     private BajaTemporalFacade bajaTemporal;
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
+    private InstanciaFacade instanciaFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
+    private ProyectosFacade proyectoFacade;
+
+    @RequestMapping(method = RequestMethod.POST, value = "/actualizaInstancia.do")
+    public String actualizaInstancia(Model modelo, String idFormatoUnico, String proyectosInstancia) {
+        System.out.println("idDatos: " + idFormatoUnico + "Proyectos: " + proyectosInstancia);
+        List<FormatoUnico> formatoUnico = formatoUnicoFacade.findBySpecificField("id", idFormatoUnico, "equal", null, null);
+        List<Proyectos> proyectos = proyectoFacade.findBySpecificField("idProyecto", proyectosInstancia, "equal", null, null);
+        FormatoUnico formatoActualizar = formatoUnico.get(0);
+        formatoActualizar.setIdproyecto(proyectos.get(0));
+        formatoUnicoFacade.edit(formatoActualizar);
+        return "redirect:cambioDependencia.do";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/dameProyectos.do")
+    public @ResponseBody
+    String dameProyctos(Model modelo, int idInstancia) {
+        String arrJSON = "";
+        List<Proyectos> listProyectos = proyectoFacade.findBySpecificField("idInstancia", idInstancia, "equal", null, null);
+        Iterator<Proyectos> recorreProyectos = listProyectos.iterator();
+
+        while (recorreProyectos.hasNext()) {
+            Proyectos proyectoAcual = recorreProyectos.next();
+            arrJSON += "<option value='" + proyectoAcual.getIdProyecto() + "'>" + proyectoAcual.getNombre() + "</option>";
+
+        }
+        return arrJSON;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cambioDependencia.do")
     public String cambioDependencia(Model modelo) {
-
 
         List<FormatoUnico> formatos = formatoUnicoFacade.findAll();
         List<BajaTemporal> bajasTemporales = bajaTemporal.findAll();
         Iterator listaFormatos = formatos.iterator();
         List<FormatoUnico> formatosSinBaja = new ArrayList<FormatoUnico>();
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+        ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
+
+
+        for (int i = 0; i < listaInstancias.size(); i++) {
+            String estatus = listaInstancias.get(i).getEstatus().toString();
+            if ((estatus.equals("1")) || (estatus.equals("2"))) {
+                filtroInstancias.add(listaInstancias.get(i));
+            }
+        }
         while (listaFormatos.hasNext()) {
             FormatoUnico FU = (FormatoUnico) listaFormatos.next();
-            if (FU.getStatusServicio() != BigInteger.ONE) {
+            if (FU.getStatusServicio() == BigInteger.ONE) {
                 formatosSinBaja.add(FU);
-            } 
+            }
 
         }
+        modelo.addAttribute("cambioDependencia", new cambioDependencia());
+        modelo.addAttribute("instancias", filtroInstancias);
         modelo.addAttribute("alumnos", formatosSinBaja);
         return "/BajasTemporales/cambioDependencia";
     }
