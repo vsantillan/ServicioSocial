@@ -82,8 +82,8 @@ function actualizaInstancia() {
     }
     if (OK){
         alert("Se actualizo correctamente la informaci\u00f3n");
-    }
         $("#actulizaInstancia").submit();
+    }
 }
 
 function actualizaInput(){
