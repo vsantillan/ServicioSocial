@@ -82,7 +82,7 @@
           max-width: 280px;*/   
       }
       .panel-tec{border-color:#f1a244;}
-      .panel-tec>.panel-heading{color:#fff;background-color:#f1a244;border-color:#f1a244;}.
+      .panel-tec>.panel-heading{color:#fff;background-color:#f1a244;border-color:#f1a244;}
       .panel-tec>.panel-heading+.panel-collapse .panel-body{border-top-color:#f1a244;}
       .panel-tec>.panel-footer+.panel-collapse .panel-body{border-bottom-color:#f1a244;}
       
