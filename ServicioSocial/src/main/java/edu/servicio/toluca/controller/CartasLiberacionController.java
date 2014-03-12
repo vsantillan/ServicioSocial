@@ -37,12 +37,14 @@ public class CartasLiberacionController
     {
         List<Documentos> listaDocum; boolean siCP=false, siFUF=false, siRF=false, siRE=false;
         List<CartasLiberacionBean> listAlumnos=new ArrayList<CartasLiberacionBean>();
+        CartasLiberacionBean nuevaCarta;
         List<FormatoUnico> fu = formatoUnicoFacade.findAll();
         for (int i = 0; i < fu.size(); i++) {
             if (fu.get(i).getHorasAcumuladas().intValue() >= 480) {
                 listaDocum = documentosFacade.findBySpecificField("datosPersonalesId", fu.get(i).getDatosPersonalesId(), "equal", null, null);
                 System.out.println("No Control: " + fu.get(i).getDatosPersonalesId().getAlumnoId().getId());
                 System.out.println("Nombre: " + fu.get(i).getDatosPersonalesId().getNombre());
+                nuevaCarta=new CartasLiberacionBean();
                 for (int j = 0; j < listaDocum.size(); j++) {
                     if ("Constancia_Pago".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()) && listaDocum.get(j).getStatus().intValue()==1) {
                         siCP=true;
@@ -62,16 +64,25 @@ public class CartasLiberacionController
                     if ("S".equals(fu.get(i).getCatalogoPlanId().getDetalle()))
                     {
                         if(siRE){
-                            listAlumnos.add(null);
+                            nuevaCarta.setIdDatosPer(fu.get(i).getDatosPersonalesId().getId().intValue());
+                            nuevaCarta.setNoControl(fu.get(i).getDatosPersonalesId().getAlumnoId().getId());
+                            nuevaCarta.setNombreCompleto(fu.get(i).getDatosPersonalesId().getNombre()+" "+fu.get(i).getDatosPersonalesId().getApellidoP()+" "+fu.get(i).getDatosPersonalesId().getApellidoM());
+                            nuevaCarta.setHorasAcumuladas(fu.get(i).getHorasAcumuladas().intValue());
+                            listAlumnos.add(nuevaCarta);
                         }
                     }else if ("N".equals(fu.get(i).getCatalogoPlanId().getDetalle()))
                     {
-                        listAlumnos.add(null);
+                        nuevaCarta.setIdDatosPer(fu.get(i).getDatosPersonalesId().getId().intValue());
+                        nuevaCarta.setNoControl(fu.get(i).getDatosPersonalesId().getAlumnoId().getId());
+                        nuevaCarta.setNombreCompleto(fu.get(i).getDatosPersonalesId().getNombre()+" "+fu.get(i).getDatosPersonalesId().getApellidoP()+" "+fu.get(i).getDatosPersonalesId().getApellidoM());
+                        nuevaCarta.setHorasAcumuladas(fu.get(i).getHorasAcumuladas().intValue());
+                        listAlumnos.add(nuevaCarta);
                     }
                 }
             }
         }
-        return "/DocumentosFinales/administrarDocumentosFinales";
+        modelo.addAttribute("listaCartasLiberacion", listAlumnos);
+        return "/CartasLiberacion/alumnosCartasLiberacion";
     }
     
 }

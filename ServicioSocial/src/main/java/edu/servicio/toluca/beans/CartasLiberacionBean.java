@@ -12,8 +12,10 @@ public class CartasLiberacionBean
 {
     private int idDatosPer;
     private String noControl;
-    private String NombreCompleto;
-    private int seEntrego;
+    private String nombreCompleto;
+    private int seEntrego;//no funciona por el momento
+    private int horasAcumuladas;
+    
 
     public CartasLiberacionBean(){}
     /**
@@ -48,14 +50,14 @@ public class CartasLiberacionBean
      * @return the NombreCompleto
      */
     public String getNombreCompleto() {
-        return NombreCompleto;
+        return nombreCompleto;
     }
 
     /**
-     * @param NombreCompleto the NombreCompleto to set
+     * @param nombreCompleto the NombreCompleto to set
      */
     public void setNombreCompleto(String NombreCompleto) {
-        this.NombreCompleto = NombreCompleto;
+        this.nombreCompleto = NombreCompleto;
     }
 
     /**
@@ -70,5 +72,19 @@ public class CartasLiberacionBean
      */
     public void setSeEntrego(int seEntrego) {
         this.seEntrego = seEntrego;
+    }
+
+    /**
+     * @return the horasAcumuladas
+     */
+    public int getHorasAcumuladas() {
+        return horasAcumuladas;
+    }
+
+    /**
+     * @param horasAcumuladas the horasAcumuladas to set
+     */
+    public void setHorasAcumuladas(int horasAcumuladas) {
+        this.horasAcumuladas = horasAcumuladas;
     }
 }
