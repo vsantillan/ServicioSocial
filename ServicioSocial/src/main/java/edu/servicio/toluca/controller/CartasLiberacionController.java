@@ -6,6 +6,7 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.CartasLiberacionBean;
 import edu.servicio.toluca.beans.DocumentosFinalesBean;
+import edu.servicio.toluca.beans.documentosFinales.GeneraDocumento;
 import edu.servicio.toluca.beans.documentosFinales.RetroalimentacionDocumentosFinales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
@@ -13,12 +14,17 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
+import org.openide.util.Exceptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -83,6 +89,26 @@ public class CartasLiberacionController
         }
         modelo.addAttribute("listaCartasLiberacion", listAlumnos);
         return "/CartasLiberacion/alumnosCartasLiberacion";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/generarCartasLiberacion.do")
+    public @ResponseBody String generarCartasLiberacion(@RequestParam(value = "arrayAlumnos[]", required = false) String [] arrayAlumnos, Model modelo)
+    {
+        for(int i=0;i<arrayAlumnos.length;i++)
+        {
+            System.out.println("control alumno: "+arrayAlumnos[i]);
+        }
+//        Map parameters = new HashMap();
+//        parameters.put("no_control", session.getAttribute("NCONTROL").toString());
+//        parameters.put("no_reporte", noReporte);
+//        parameters.put("id_reporte", idReporte);
+//        try {
+//            GeneraDocumento obj = new GeneraDocumento();
+//            obj.generar("ges_vin", "gst01a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
+//        } catch (Exception ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
+        return "ok";
     }
     
 }

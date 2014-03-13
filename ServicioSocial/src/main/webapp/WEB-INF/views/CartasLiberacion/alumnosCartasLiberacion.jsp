@@ -17,6 +17,7 @@
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
                     <h1>Cartas de Liberación</h1>
+                    <p>A continuaci&oacute;n se muestra una lista de los alumnos a los cuales se les puede generar la Carta de Liberación.</p>
                     <div id="cartasLiberacion">
                         <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="Rev" width='100%'>
                             <thead>
@@ -31,7 +32,7 @@
                             <tbody>
                                 <core:forEach items="${listaCartasLiberacion}" var="carta">
                                     <tr class='gradeX'>
-                                        <td><span class="glyphicon glyphicon-search sizeIcon"><input type="checkbox" name="option1" value="${carta.noControl}"/></span>Generar Carta de Liberación</td>
+                                        <td><input type="checkbox" name="checkbox" value="${carta.noControl}">&nbsp;Generar Carta de Liberación</td>
                                         <td><core:out value="${carta.nombreCompleto}"/></td>
                                         <td><core:out value="${carta.noControl}"/></td>
                                         <td><core:out value="No"/></td>
@@ -40,6 +41,9 @@
                                 </core:forEach>
                             </tbody>
                         </table>
+                        <br/>
+                        <button type="button" class="btn btn-primary generaCartas">Genera Cartas de Liberación</button>
+                        <hr>
                     </div>
                 </div>  
                 <%@include file="../General/footer.jsp"%> 
@@ -47,6 +51,7 @@
         </div>
         
         <%@include file="../General/js.jsp"%>
+        <script type="text/javascript" language="javascript" src="js/cartasLiberacion.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>

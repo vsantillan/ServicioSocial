@@ -24,8 +24,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentos Finales<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="javascript:void(0)" onclick="redirecciona('documentoFinales.do');">Documentos Finales</a></li>
-                        <li><a href="liberaciones.do" onclick="redirecciona('liberaciones.do');">Cartas de Liberaci&oacute;n</a></li>
+                        <li><a href="documentoFinales.do" onclick="redirecciona('documentoFinales.do');">Documentos Finales</a></li>
+                        <li><a href="alumnosCartasLiberacion.do" onclick="redirecciona('alumnosCartasLiberacion.do');">Cartas de Liberaci&oacute;n</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
