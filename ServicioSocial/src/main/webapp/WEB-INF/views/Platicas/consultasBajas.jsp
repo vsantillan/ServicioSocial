@@ -16,7 +16,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <center> <h2 id="h1p">Eliminar y Consultar Pláticas</h2></center>
+                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp; Eliminar y Consultar Pl&aacute;ticas</h1></div>
                     <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' >
                         <thead>
                             <tr>
