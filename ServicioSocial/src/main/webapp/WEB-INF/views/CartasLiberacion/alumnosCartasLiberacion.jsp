@@ -15,9 +15,11 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
+                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp; Cartas de Liberaci&oacute;n</h1></div>
                 <div class="row col-md-12 center-block">
-                    <h1>Cartas de Liberación</h1>
-                    <p>A continuaci&oacute;n se muestra una lista de los alumnos a los cuales se les puede generar la Carta de Liberación.</p>
+                    <div class="alert alert-warning col-md-10 col-md-offset-1">
+                        <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestra una lista de los alumnos a los cuales se les puede generar la Carta de Liberación.</h4></div>
+                    </div>
                     <div id="cartasLiberacion">
                         <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="Rev" width='100%'>
                             <thead>
@@ -49,7 +51,7 @@
                 <%@include file="../General/footer.jsp"%> 
             </div>
         </div>
-        
+
         <%@include file="../General/js.jsp"%>
         <script type="text/javascript" language="javascript" src="js/cartasLiberacion.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />
