@@ -13,9 +13,8 @@
 <!--<script src="<%=request.getContextPath()%>/js/becados.js"></script>-->
 <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/docs.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/documentosFinalesActualiza.js"></script>
 <script src="<%=request.getContextPath()%>/js/editaOrganizacion.js"></script>
-<script src="<%=request.getContextPath()%>/js/funcionesGenerales.js"></script>
+<!--<script src="<%=request.getContextPath()%>/js/funcionesGenerales.js"></script>-->
 <script src="<%=request.getContextPath()%>/js/inicia.session.js"></script>
 <script src="<%=request.getContextPath()%>/js/lugares.js"></script>
 <script src="<%=request.getContextPath()%>/js/observaciones.js"></script>

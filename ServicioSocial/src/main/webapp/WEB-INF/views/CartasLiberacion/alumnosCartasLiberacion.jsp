@@ -1,105 +1,57 @@
 <%-- 
     Document   : alumnosCartasLiberacion
     Created on : 7/10/2013, 10:23:20 AM
-    Author     : ekt
+    Author     : Regules
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="../Template/taglibs.jsp" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-
-
-        <!--Script para DataTables-->
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-
-        <!--Include para Ventanas Modales-->
-        <jsp:include page="../Template/headsModal.jsp" />
-
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $("#tabs").tabs();
-                $('#Rev').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#NoRev').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#Correccion').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-                $('#Recha').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script> 
-        <script type="text/javascript" language="javascript" src="js/reporteBimestalActualiza.js"></script> 
-
-
-        <title>Cartas de LiberaciÃ³n</title>
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body class="background">
-        <jsp:include page="../Template/banner.jsp" />
-        <div id ="contenido" align="left">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left; width: 80%;">
-                <div id="tabs">
-                    <h1>Cartas de LiberaciÃ³n</h1>
-                    <ul>
-                        <li><a href="#cartasLiberacion">Cartas de LiberaciÃ³n</a></li>
-                    </ul>
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%>
+                <div class="row col-md-12 center-block">
+                    <h1>Cartas de Liberación</h1>
+                    <p>A continuaci&oacute;n se muestra una lista de los alumnos a los cuales se les puede generar la Carta de Liberación.</p>
                     <div id="cartasLiberacion">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="Rev" width='100%'>
+                        <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="Rev" width='100%'>
                             <thead>
                                 <tr>
                                     <th>Generar</th>
                                     <th>Nombre</th>
                                     <th>N. Control</th>
-                                    <th>Â¿Se entrego anteriormente?</th>
+                                    <th>¿Se entrego anteriormente?</th>
                                     <th>Horas Acumuladas</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <core:forEach items="${cartaLiberacion}" var="carta">
+                                <core:forEach items="${listaCartasLiberacion}" var="carta">
                                     <tr class='gradeX'>
-                                        <th><a href="detalleReporteBimestral.do?id=${1}" class="fancy"><img src="imagenes/lupa.png" width="30"/></a></th>
-                                        <th><core:out value="${carta.datosPersonalesId.nombre}"/></th>
-                                        <th><core:out value="${carta.datosPersonalesId.alumnoId.id}"/></th>
-                                        <th><core:out value="${2}"/></th>
-                                        <th><core:out value="${1}"/></th>
+                                        <td><input type="checkbox" name="checkbox" value="${carta.noControl}">&nbsp;Generar Carta de Liberación</td>
+                                        <td><core:out value="${carta.nombreCompleto}"/></td>
+                                        <td><core:out value="${carta.noControl}"/></td>
+                                        <td><core:out value="No"/></td>
+                                        <td><core:out value="${carta.horasAcumuladas}"/></td>
                                     </tr>
                                 </core:forEach>
                             </tbody>
                         </table>
+                        <br/>
+                        <button type="button" class="btn btn-primary generaCartas">Genera Cartas de Liberación</button>
+                        <hr>
                     </div>
                 </div>  
+                <%@include file="../General/footer.jsp"%> 
             </div>
-            <div style="clear:both;"></div>
-
-            <%-- fin del contenido --%>
         </div>
-        <jsp:include page="../Template/footer.jsp" />
+        
+        <%@include file="../General/js.jsp"%>
+        <script type="text/javascript" language="javascript" src="js/cartasLiberacion.js"></script>
+        <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>

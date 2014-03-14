@@ -4,195 +4,163 @@
     Author     : Regules
 --%>
 
-<%@page import="java.util.Map"%>
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.ArrayList"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />       
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsModal.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <script type="text/javascript" language="javascript" src="js/documentosFinalesActualiza.js"></script>
-
-        <script type="text/javascript" >
-            $(document).ready(function() {
-                $('#example').dataTable({
-                    "bJQueryUI": true,
-                    "sPaginationType": "full_numbers",
-                    "sScrollX": "100%",
-                    "sScrollXInner": "100%",
-                    "bScrollCollapse": true
-
-                });
-
-            });
-        </script>
-        <title>Administraci&oacute;n Documentos Originales</title>
+        <%@include file="../General/head.jsp"%>
+        <title>Administraci&oacute;n de Organizaciones</title>
     </head>
-    <body class="background" onmousedown="elemento(event);">
-        <jsp:include page="../Template/banner.jsp" />
-
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left;width:80%">
-                <h1>Administraci&oacute;n Documentos Finales</h1>
-                <p>A continuaci&oacute;n se muestra una vista de los documentos originales de cada alumno.</p>
-                <div id="tabs">
-                    <ul>
-                        <li><a href="#completos">Documentos Finales</a></li>
-                    </ul>
-                    <div id="completos">
-                        <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
-                            <thead>
-                                <tr>
-                                    <th>No. Control</th>
-                                    <th>Nombre</th>
-                                    <th>Formato &Uacute;nico</th>
-                                    <th>Reporte Final</th>
-                                    <th>Constancia de Pago</th>
-                                    <th>Reporte de Evaluaci&oacute;n</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <core:forEach items="${documentosAlumno}" var="alumno">
-                                    <tr class='gradeX'>
-                                        <th><core:out value="${alumno.noControl}" /></th>
-                                        <th><core:out value="${alumno.nombreCompleto}" /></th>
-                                        <th>
-                                            <core:choose>
-                                                <core:when test="${alumno.statusFUF==4}">
-                                                    <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                    <a href="#"><img class="aceptarDocumentos" ide="${alumno.idFormatoUnicoFinal}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                                    <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
-                                                    </core:when>
-                                                    <core:when test="${alumno.statusFUF==1}">
-                                                    <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                    </core:when>
-                                                    <core:when test="${alumno.statusFUF==2}">
-                                                        <core:out value="Se encuentra en correcci贸n por parte del alumno"/>
-                                                    </core:when>
-                                                    <core:otherwise>
-                                                        <core:out value="Sin documento"/>
-                                                    </core:otherwise>
-                                                </core:choose>
-                                        </th>
-                                        <th>
-                                            <core:choose>
-                                                <core:when test="${alumno.statusRF==4}">
-                                                    <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                    <a href="#"><img class="aceptarDocumentos" ide="${alumno.idReporteFinal}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                                    <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
-                                                    </core:when>
-                                                    <core:when test="${alumno.statusRF==1}">
-                                                    <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                    </core:when>
-                                                    <core:when test="${alumno.statusRF==2}">
-                                                        <core:out value="Se encuentra en correcci贸n por parte del alumno"/>
-                                                    </core:when>
-                                                    <core:otherwise>
-                                                        <core:out value="Sin documento"/>
-                                                    </core:otherwise>
-                                                </core:choose>
-                                        </th>
-                                        <th>
-                                            <core:choose>
-                                                <core:when test="${alumno.statusCP==4}">
-                                                    <a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                    <a href="#"><img class="aceptarDocumentos" ide="${alumno.idConstanciaPago}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                                    <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
-                                                    </core:when>
-                                                    <core:when test="${alumno.statusCP==1}">
-                                                        <a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                    </core:when>
-                                                    <core:when test="${alumno.statusCP==2}">
-                                                        <core:out value="Se encuentra en correcci贸n por parte del alumno"/>
-                                                    </core:when>
-                                                    <core:otherwise>
-                                                        <core:out value="Sin documento"/>
-                                                    </core:otherwise>
-                                                </core:choose>
-                                        </th>
-                                        <th>
-                                            <core:choose>
-                                                <core:when test="${alumno.idReporteCalificacion==0}">
-                                                    <core:out value="Alumno con Ret铆cula 2004"/>
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%>
+                <div class="row col-md-12 center-block">
+                    <h1>Administraci&oacute;n Documentos Finales</h1>
+                    <p>A continuaci&oacute;n se muestra una vista de los documentos originales de cada alumno.</p>
+                    <div id="div-validar-organizacion" style="display:none;">
+                        <center>
+                            <span class="glyphicon glyphicon-ok-circle sizeIconValid"></span>
+                            <h2>Reporte validada correctamente</h2>
+                        </center>
+                    </div>
+                    <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="example" width='100%'>
+                        <thead>
+                            <tr>
+                                <th>No. Control</th>
+                                <th>Nombre</th>
+                                <th>Formato &Uacute;nico</th>
+                                <th>Reporte Final</th>
+                                <th>Constancia de Pago</th>
+                                <th>Reporte de Evaluaci&oacute;n</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <core:forEach items="${documentosAlumno}" var="alumno">
+                                <tr class='gradeX'>
+                                    <td><core:out value="${alumno.noControl}" /></td>
+                                    <td><core:out value="${alumno.nombreCompleto}" /></td>
+                                    <td>
+                                        <core:choose>
+                                            <core:when test="${alumno.statusFUF==4}">
+                                                <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idFormatoUnicoFinal}" status="${1}"></span></a>
+                                                <a href="#" class="mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
+                                                </core:when>
+                                                <core:when test="${alumno.statusFUF==1}">
+                                                <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                </core:when>
+                                                <core:when test="${alumno.statusFUF==2}">
+                                                    <core:out value="Se encuentra en correcci髇 por parte del alumno"/>
                                                 </core:when>
                                                 <core:otherwise>
-                                                    <core:choose>
-                                                        <core:when test="${alumno.statusRC==4}">
-                                                                <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                                <a href="#"><img class="aceptarDocumentos" ide="${alumno.idReporteCalificacion}" status="${1}" src="imagenes/paloma.png" width="30"/></a>
-                                                                <a href="#a" class="fancybox-effects-a mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><img src="imagenes/tache.png" width="30"></a>
-                                                            </core:when>
-                                                            <core:when test="${alumno.statusRC==1}">
-                                                                <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
-                                                            </core:when>
-                                                            <core:when test="${alumno.statusRC==2}">
-                                                                <core:out value="Se encuentra en correcci贸n por parte del alumno"/>
-                                                            </core:when>
-                                                            <core:otherwise>
-                                                                <core:out value="Sin documento"/>
-                                                            </core:otherwise>
-                                                        </core:choose>
-                                                    </core:otherwise>
-                                                </core:choose>
-                                        </th>
-                                    </tr>
-                                </core:forEach>
-                            </tbody>
-                        </table>
-                    </div>
-
+                                                    <core:out value="Sin documento"/>
+                                                </core:otherwise>
+                                            </core:choose>
+                                    </td>
+                                    <td>
+                                        <core:choose>
+                                            <core:when test="${alumno.statusRF==4}">
+                                                <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idReporteFinal}" status="${1}" ></span></a>
+                                                <a href="#" class="mandaRetro" ide="${alumno.idReporteFinal}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
+                                                </core:when>
+                                                <core:when test="${alumno.statusRF==1}">
+                                                <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                </core:when>
+                                                <core:when test="${alumno.statusRF==2}">
+                                                    <core:out value="Se encuentra en correcci髇 por parte del alumno"/>
+                                                </core:when>
+                                                <core:otherwise>
+                                                    <core:out value="Sin documento"/>
+                                                </core:otherwise>
+                                            </core:choose>
+                                    </td>
+                                    <td>
+                                        <core:choose>
+                                            <core:when test="${alumno.statusCP==4}">
+                                                <a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idConstanciaPago}" status="${1}"></span></a>
+                                                <a href="#" class="mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
+                                                </core:when>
+                                                <core:when test="${alumno.statusCP==1}">
+                                                <a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                </core:when>
+                                                <core:when test="${alumno.statusCP==2}">
+                                                    <core:out value="Se encuentra en correcci髇 por parte del alumno"/>
+                                                </core:when>
+                                                <core:otherwise>
+                                                    <core:out value="Sin documento"/>
+                                                </core:otherwise>
+                                            </core:choose>
+                                    </td>
+                                    <td>
+                                        <core:choose>
+                                            <core:when test="${alumno.idReporteCalificacion==0}">
+                                                <core:out value="Alumno con Ret韈ula 2004"/>
+                                            </core:when>
+                                            <core:otherwise>
+                                                <core:choose>
+                                                    <core:when test="${alumno.statusRC==4}">
+                                                        <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                        <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idReporteCalificacion}" status="${1}"></span></a>
+                                                        <a href="#" class="mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
+                                                        </core:when>
+                                                        <core:when test="${alumno.statusRC==1}">
+                                                        <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                        </core:when>
+                                                        <core:when test="${alumno.statusRC==2}">
+                                                            <core:out value="Se encuentra en correcci髇 por parte del alumno"/>
+                                                        </core:when>
+                                                        <core:otherwise>
+                                                            <core:out value="Sin documento"/>
+                                                        </core:otherwise>
+                                                    </core:choose>
+                                                </core:otherwise>
+                                            </core:choose>
+                                    </td>
+                                </tr>
+                            </core:forEach>
+                        </tbody>
+                    </table>
                 </div>
 
-                <%-- fin del contenido --%>
+                <div class="modal-dialog" id="motivos" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title titulos-naranja">Motivos de Rechazo del Reporte</h3>
+                        </div>
+                        <form id="observacionesCat" action="#"  onsubmit="return  false;">
+                            <div class="modal-body">
+                                <div class="list-group">
+                                    <core:forEach items="${listadoObservaciones}" var="observacion">
+                                        <a href="#" class="list-group-item">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input name="id[]" value="${observacion.id}" type="checkbox"/>
+                                                    <h4 class="list-group-item-heading">${observacion.detalle}</h4>
+                                                </label>
+                                            </div>
+                                        </a>
+                                    </core:forEach>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
+                                <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observaci髇</a>
+                                <button id="guardarObservacionesDocumentos" type="button" class="btn btn-primary">Guardar las observaciones del Reporte</button>
+                            </div>
+                        </form>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+
+
+                <%@include file="../General/footer.jsp"%> 
             </div>
-            <div style="clear: both;"/>
         </div>
-        <div id="a" style="display: none; font-size: 15px">
-            <form:form commandName="retroalimentacionDocumentosFinales" id="MyForm" method="POST" action="rechazaDocumentos.do">
-                <h1>Envio de Retroalimentaci&oacute;n</h1>
-                <h2>Motivos de Rechazo</h2>
-                <table >
-                    <tr>
-                        <td>Nombre de la Organizaci&oacute;n:
-
-                            <form:hidden id="idAlumno" path="idAlumno" name="idAlumno" size="20"/>
-                            <form:hidden id="idFUF" path="idFUF" name="idFUF" size="20"/>
-                            <form:hidden id="idCP" path="idCP" name="idCP" size="20"/>
-                            <form:hidden id="idRF" path="idRF" name="idRF" size="20"/>
-                            <form:hidden id="idRC" path="idRC" name="idRC" size="20"/>
-                        </td>
-                        <td><form:input type ="text"  id="nombre" path="nombre" name="nombre" disabled="true" /> </td>
-                    </tr>
-                    <tr>
-                        <td>E-Mail:</td>
-                        <td><form:input type ="text"  id="correo" path="correo" name="correo" disabled="true" /> </td>
-                    </tr>
-                    <tr>
-                        <td>Descripci&oacute;n:</td>
-                        <td><form:textarea  id="descripcion" path="descripcion" rows="10" cols="70" name="descripcion" cssClass="d"/><br/>
-                            <label id="errorDescripcion" style="display: none" class="error">La descripci贸n no debe ser vac铆a</label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-
-                        </td>
-                        <td><input type ="submit" value="Enviar Retroalimentaci&oacute;n" class="enviarRetroalimentacion"> </td>
-                    </tr>
-                </table>
-            </form:form>
-        </div>
-    </div>
-    <jsp:include page="../Template/footer.jsp" />
-</body>
+        <%@include file="../General/js.jsp"%>
+        <script type="text/javascript" language="javascript" src="js/documentosFinalesActualiza.js"></script>
+        <jsp:include page="../Template/headsModal.jsp" />
+    </body>
 </html>

@@ -6,6 +6,7 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.CartasLiberacionBean;
 import edu.servicio.toluca.beans.DocumentosFinalesBean;
+import edu.servicio.toluca.beans.documentosFinales.GeneraDocumento;
 import edu.servicio.toluca.beans.documentosFinales.RetroalimentacionDocumentosFinales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
@@ -13,12 +14,17 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
+import org.openide.util.Exceptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -37,12 +43,14 @@ public class CartasLiberacionController
     {
         List<Documentos> listaDocum; boolean siCP=false, siFUF=false, siRF=false, siRE=false;
         List<CartasLiberacionBean> listAlumnos=new ArrayList<CartasLiberacionBean>();
+        CartasLiberacionBean nuevaCarta;
         List<FormatoUnico> fu = formatoUnicoFacade.findAll();
         for (int i = 0; i < fu.size(); i++) {
             if (fu.get(i).getHorasAcumuladas().intValue() >= 480) {
                 listaDocum = documentosFacade.findBySpecificField("datosPersonalesId", fu.get(i).getDatosPersonalesId(), "equal", null, null);
                 System.out.println("No Control: " + fu.get(i).getDatosPersonalesId().getAlumnoId().getId());
                 System.out.println("Nombre: " + fu.get(i).getDatosPersonalesId().getNombre());
+                nuevaCarta=new CartasLiberacionBean();
                 for (int j = 0; j < listaDocum.size(); j++) {
                     if ("Constancia_Pago".equals(listaDocum.get(j).getCatalogoDocumentosId().getTipo()) && listaDocum.get(j).getStatus().intValue()==1) {
                         siCP=true;
@@ -62,16 +70,45 @@ public class CartasLiberacionController
                     if ("S".equals(fu.get(i).getCatalogoPlanId().getDetalle()))
                     {
                         if(siRE){
-                            listAlumnos.add(null);
+                            nuevaCarta.setIdDatosPer(fu.get(i).getDatosPersonalesId().getId().intValue());
+                            nuevaCarta.setNoControl(fu.get(i).getDatosPersonalesId().getAlumnoId().getId());
+                            nuevaCarta.setNombreCompleto(fu.get(i).getDatosPersonalesId().getNombre()+" "+fu.get(i).getDatosPersonalesId().getApellidoP()+" "+fu.get(i).getDatosPersonalesId().getApellidoM());
+                            nuevaCarta.setHorasAcumuladas(fu.get(i).getHorasAcumuladas().intValue());
+                            listAlumnos.add(nuevaCarta);
                         }
                     }else if ("N".equals(fu.get(i).getCatalogoPlanId().getDetalle()))
                     {
-                        listAlumnos.add(null);
+                        nuevaCarta.setIdDatosPer(fu.get(i).getDatosPersonalesId().getId().intValue());
+                        nuevaCarta.setNoControl(fu.get(i).getDatosPersonalesId().getAlumnoId().getId());
+                        nuevaCarta.setNombreCompleto(fu.get(i).getDatosPersonalesId().getNombre()+" "+fu.get(i).getDatosPersonalesId().getApellidoP()+" "+fu.get(i).getDatosPersonalesId().getApellidoM());
+                        nuevaCarta.setHorasAcumuladas(fu.get(i).getHorasAcumuladas().intValue());
+                        listAlumnos.add(nuevaCarta);
                     }
                 }
             }
         }
-        return "/DocumentosFinales/administrarDocumentosFinales";
+        modelo.addAttribute("listaCartasLiberacion", listAlumnos);
+        return "/CartasLiberacion/alumnosCartasLiberacion";
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/generarCartasLiberacion.do")
+    public @ResponseBody String generarCartasLiberacion(@RequestParam(value = "arrayAlumnos[]", required = false) String [] arrayAlumnos, Model modelo)
+    {
+        for(int i=0;i<arrayAlumnos.length;i++)
+        {
+            System.out.println("control alumno: "+arrayAlumnos[i]);
+        }
+//        Map parameters = new HashMap();
+//        parameters.put("no_control", session.getAttribute("NCONTROL").toString());
+//        parameters.put("no_reporte", noReporte);
+//        parameters.put("id_reporte", idReporte);
+//        try {
+//            GeneraDocumento obj = new GeneraDocumento();
+//            obj.generar("ges_vin", "gst01a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
+//        } catch (Exception ex) {
+//            Exceptions.printStackTrace(ex);
+//        }
+        return "ok";
     }
     
 }

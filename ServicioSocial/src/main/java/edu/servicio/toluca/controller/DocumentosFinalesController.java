@@ -15,13 +15,16 @@ import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
+import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -31,6 +34,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -51,6 +55,8 @@ public class DocumentosFinalesController {
     private CatalogoDocumentoFacade catalogoDocumentoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnicoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
+    private CatalogoObservacionesFacade observacionesCatalogoFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/documentosFinales.do")
     public String administradorDocumentosFinales(Model model) {
@@ -91,7 +97,7 @@ public class DocumentosFinalesController {
         }
 
         model.addAttribute("documentosAlumno", alumnosDocumentos);
-        model.addAttribute("retroalimentacionDocumentosFinales", new RetroalimentacionDocumentosFinales());
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
         return "/DocumentosFinales/administrarDocumentosFinales";
     }
 
@@ -134,13 +140,31 @@ public class DocumentosFinalesController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/rechazaDocumentos.do")
     public @ResponseBody
-    String rechazaReporte(RetroalimentacionDocumentosFinales retroalimentacionDocumentosFinales, Model model, HttpSession session, HttpServletRequest request) {
-        System.out.println("fuf: " + retroalimentacionDocumentosFinales.getIdFUF());
-        System.out.println("cp: " + retroalimentacionDocumentosFinales.getIdCP());
-        System.out.println("rf: " + retroalimentacionDocumentosFinales.getIdRF());
-        System.out.println("rc: " + retroalimentacionDocumentosFinales.getIdRC());
-
-        System.out.println("Reporte Alterado con Status a: " + retroalimentacionDocumentosFinales.getStatus());
+    String rechazaReporte(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
+                                int id,int status, Model model, HttpSession session, HttpServletRequest request) 
+    {
+        for(String idObservacion:observaciones)
+        {
+            //Objeto a Registrar
+            //RegObservaciones registro=new RegObservaciones();
+            //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
+            //registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
+            //registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            //Asignar Fecha Actual al momento para registro 
+            //registro.setFecha(new Date());
+            //Creacion de Registro
+            //regisObservacionesFacade.create(registro);
+            System.out.println("las observaciones son: "+idObservacion);
+            //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        }
+        System.out.println("Ya ingreso las observaciones");
+        System.out.println("El estatus que recibio es: "+BigInteger.valueOf(status));
+        Documentos documentos;
+        documentos = documentosFacade.find(BigDecimal.valueOf(id));
+        documentos.setStatus((short)status);
+        documentosFacade.edit(documentos);
+        System.out.println("Ya actualizo");
         return "ok";
     }
 
