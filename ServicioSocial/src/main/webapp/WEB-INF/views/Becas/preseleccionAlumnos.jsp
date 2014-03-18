@@ -13,17 +13,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <head>
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <title>Preselecci&oacute;n de Alumnos Becados</title>
+        <%@include file="../General/head.jsp"%>
     </head>
     <body>
-        <h1>Preselecci&oacute;n de Alumnos Becados</h1> 
-        <div>
+         <div class="container">
+
+            <div class="row col-md-12">
+                <h2 class="text-info">Preselecci&oacute;n de Alumnos Becados</h2> 
+        
             <form:form id="form1" action="preseleccionadoBD.do" commandName="alumnoP" method="POST" >
 
-                <table cellpadding='0' cellspacing='0' border='0' class='display' id="example" width='100%'>
+                <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' width='100%'>
                     <thead>
                         <tr>
                             <th>&nbsp;</th>
@@ -55,13 +55,15 @@
                 <br>
                 <table>
                     <tr>
-                        <td> <input id="a" type ="submit" value = "Aceptar "  /> </td>                                
-                        <td> <input type="button" value="Contar Alumnos" onClick="contar();"></td>
+                        <td> <input class="btn btn-primary " id="a" type ="submit" value = "&nbsp;&nbsp;  Aceptar &nbsp;&nbsp;"  /> </td>                                
+                        <td> <input class="btn btn-warning " type="button" value="Contar Alumnos" onClick="contar();"></td>
                     </tr>
                 </table>
+                <br> <br>
             </form:form>            
         </div>
-        <div style="clear:both;"></div>
+         </div>
+         <%@include file="../General/js.jsp"%>
         <script type="text/javascript" language="javascript" src="js/becados.js"></script>
     </body>
 </html>

@@ -75,7 +75,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Acerca De<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="javascript:void(0)" onclick="redirecciona('#');">15.1 Ayuda</a></li>
-                        <li><a href="javascript:void(0)" onclick="redirecciona('#');">15.2 Acerca De</a></li>
+                        <li><a href="acercaDeAdmin.do" >15.2 Acerca De</a></li>
                     </ul>
                 </li>
                 <li><a href="cerrarSesion.do" onclick="redirecciona('cerrarSesion.do');">Cerrar Sesi&oacute;n</a></li>

@@ -101,6 +101,10 @@ public class NavegacionPrincipalController {
     public String acercaDe(Model a) {
         return "/NavegacionPrincipal/acercaDe";
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/acercaDeAdmin.do")
+    public String acercaDeAdmin(Model a) {
+        return "/NavegacionPrincipal/acercaDeAdmin";
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/loginOrganizaciones.do")
     public String loginOrganizaciones(Model a) {

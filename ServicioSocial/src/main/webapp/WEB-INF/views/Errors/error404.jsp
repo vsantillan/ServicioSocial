@@ -22,7 +22,7 @@
                 <br>               
                 <div class="jumbotron alert alert-danger col-md-offset-1 col-md-10 ">
 
-                    <h1>!Error 404!</h1>
+                    <h1>¡Error 404!</h1>
                     <p>Página no encontrada</p>
                 </div> 
                 <!---------------------------------------------Fin Contenido------------------------------------------->                
