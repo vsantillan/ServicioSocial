@@ -116,7 +116,7 @@
                 </ul>   
             </div>
             <br>
-            <p class="lateral">Es importante que recuerdes que a pesar de que el proceso es digital, debes conservar todos tus documentos y formatos originales,
+            <p class="alert alert-info informativo">Es importante que recuerdes que a pesar de que el proceso es digital, debes conservar todos tus documentos y formatos originales,
                 ya que deben ser entregados físicamente al final de tu proceso de servicio social.<p>  
         </div>
         <div class="col-md-9" role="main">

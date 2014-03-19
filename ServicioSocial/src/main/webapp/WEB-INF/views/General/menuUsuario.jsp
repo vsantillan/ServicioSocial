@@ -7,12 +7,12 @@
     <div class="container">
         <div class="navbar-inner">
             <ul class="nav navbar-nav" role="navigation">                                
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Manual de Procedimiento</a></li>
+                <li><a href="index.do">Inicio</a></li>
+                <li><a href="manualProcedimiento.do">Manual de Procedimiento</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizaciones<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="ayuda.do">Registro</a></li>
+                        <li><a href="registroOrganizaciones.do">Registro</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

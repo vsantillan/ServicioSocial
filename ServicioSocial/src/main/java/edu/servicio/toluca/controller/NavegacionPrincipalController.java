@@ -53,27 +53,38 @@ public class NavegacionPrincipalController {
     public VistaAlumnoFacade vistaAlumnoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/NoticiasFacade")
     public NoticiasFacade noticiasFacade;
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model modelo) {
         ConsultasNoticias noticiasBean = new ConsultasNoticias(noticiasFacade);
         modelo.addAttribute("Noticias", noticiasBean.consultaNoticiasPrincipales("desc"));
         return "/NavegacionPrincipal/index";
     }
-      @RequestMapping(method = RequestMethod.POST, value = "/mostrarNoticiaCompleta.do")
-      @ResponseBody
-      public NoticiaJson mostarNoticiaCompleta (Model modelo,String idNoticia) {
-         NoticiaJson noticia=new NoticiaJson();
+
+    @RequestMapping(method = RequestMethod.POST, value = "/mostrarNoticiaCompleta.do")
+    @ResponseBody
+    public NoticiaJson mostarNoticiaCompleta(Model modelo, String idNoticia) {
+        NoticiaJson noticia = new NoticiaJson();
         ConsultasNoticias noticiasBean = new ConsultasNoticias(noticiasFacade);
         noticia.setTitulo(noticiasBean.consultaNoticiaPrincipal(Integer.parseInt(idNoticia)).getTitulo());
-         noticia.setDetalle(noticiasBean.consultaNoticiaPrincipal(Integer.parseInt(idNoticia)).getDetalle());
-       System.out.println("descrpcion"+noticia.getDetalle());
+        noticia.setDetalle(noticiasBean.consultaNoticiaPrincipal(Integer.parseInt(idNoticia)).getDetalle());
+        System.out.println("descrpcion" + noticia.getDetalle());
         return noticia;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/convocatorias.do")
     public String convocatorias(Model a) {
         return "/NavegacionPrincipal/convocatorias";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/muestraReglamento.do")
+    public String muestraReglamento(Model modelo, String alumno_id) {
+        return "/NavegacionPrincipal/muestraReglamento";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/muestraReglamentoFinal.do")
+    public String muestraReglamentoFinal(Model modelo, String alumno_id) {
+        return "/NavegacionPrincipal/muestraReglamentoFinal";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/manualProcedimiento.do")
@@ -89,6 +100,10 @@ public class NavegacionPrincipalController {
     @RequestMapping(method = RequestMethod.GET, value = "/acercaDe.do")
     public String acercaDe(Model a) {
         return "/NavegacionPrincipal/acercaDe";
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/acercaDeAdmin.do")
+    public String acercaDeAdmin(Model a) {
+        return "/NavegacionPrincipal/acercaDeAdmin";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/loginOrganizaciones.do")
@@ -122,16 +137,16 @@ public class NavegacionPrincipalController {
     @RequestMapping(method = RequestMethod.POST, value = "/validaLogin.do")
     public String validaLogin(Model model, String usuario, String pass, HttpSession session, HttpServletRequest request) {
         session = request.getSession();
-        
-        ValidaLogin login = new ValidaLogin();        
+
+        ValidaLogin login = new ValidaLogin();
         SesionBean sesionBean = login.validaLogin(usuario, pass, vistaAlumnoFacade, instanciaFacade, session);
-        
-        if(sesionBean.getMensaje() != null){
+
+        if (sesionBean.getMensaje() != null) {
             model.addAttribute("error", sesionBean.getMensaje());
             model.addAttribute("MENSAJE", session.getAttribute("MENSAJE"));
         }
-        System.out.println("retorna:"+sesionBean.getPagReturn());
-        return sesionBean.getPagReturn();          
+        System.out.println("retorna:" + sesionBean.getPagReturn());
+        return sesionBean.getPagReturn();
 
     }
 }

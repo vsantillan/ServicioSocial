@@ -1,63 +1,41 @@
-<%-- 
-    Document   : manualProcedimiento
-    Created on : 10-jun-2013, 11:23:45
-    Author     : bustedvillain
---%>
-<%@page import="edu.servicio.toluca.beans.ValidaSesion"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<%@include file="../General/jstl.jsp"%>
+<!DOCTYPE html>
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
     </head>
     <body>
         <div class="container">
-               <div class="row">
+            <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuPrincipal.jsp"%> 
-               </div>
-            <div class="row ">
- <!---------------------------------------------Contenido------------------------------------------->                
-                <div class="jumbotron">
-                    <h1>Manual de procedimientos!</h1>
-                    <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+            </div>
+            <div class=" row help-block col-md-10 col-md-offset-2"><h1><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Manual de Procedimientos</h1></div>
+            <div class="row col-md-12 ">               
+                &nbsp;
+                <div class="panel panel-info">
+                    <div class="panel-heading">Informaci&oacute;n Importante</div>
+                    <div class="panel-body">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <h1 class="text-info">Reglamento de Servicio Social</h1>
+                            </div>
+                            <div class="row col-md-offset-5">
+                                <a href="muestraReglamento.do" class="fancyFUI" target="_blank"><span class="glyphicon glyphicon-search sizeIconValid"></span></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <h1 class="text-info">Instructivo de Reporte Final</h1>
+                            </div>
+                            <div class="row col-md-offset-5">
+                                <a href="muestraReglamentoFinal.do" class="fancyFUI" target="_blank"><span class="glyphicon glyphicon-search sizeIconValid"></span></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-<!--
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>/span
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>/span
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>/span
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>/span
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>/span
-                <div class="col-6 col-sm-6 col-lg-4">
-                    <h2>Heading</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-                </div>/span-->
-                
- <!---------------------------------------------Fin Contenido------------------------------------------->                
 
-            </div><!--/row--> 
+            </div>
             <%@include file="../General/footer.jsp"%>           
         </div><!--/row-->
     </div> <!-- /container -->

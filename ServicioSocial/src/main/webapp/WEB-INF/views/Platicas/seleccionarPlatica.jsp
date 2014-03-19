@@ -19,7 +19,7 @@
                 <div class="col-md-6 col-md-offset-3">
                 <core:choose>
                     <core:when test="${empty platicasPeriodo}">
-                        <h1>No hay pláticas disponibles</h1>
+                        <h1 class="alert alert-warning">  <span class="glyphicon glyphicon-warning-sign"></span> &nbsp; No hay pláticas disponibles</h1>
                     </core:when>
                     <core:otherwise>
                         <center><h1>Selecciona Plática</h1></center>

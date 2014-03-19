@@ -39,7 +39,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bajas Temporales<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="administrarBajas.do" onclick="redirecciona('administrarBajas.do');">7.1 Administrar</a></li>
-                        <li><a href="javascript:void(0)" onclick="redirecciona('cambioDependencia.do');">7.2 Cambio de Instancia</a></li>
+                        <li><a href="cambioDependencia.do" onclick="redirecciona('cambioDependencia.do');">7.2 Cambio de Instancia</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -55,7 +55,7 @@
                 </li>
                 <li><a href="#" onclick="redirecciona('#');">Convocatorias</a></li>
                 <li><a href="historialServicio.do" onclick="redirecciona('#');">Historial Servicio Social</a></li>
-                <li><a href="liberaciones.do" onclick="redirecciona('#');">Estadisticas</a></li>
+                <li><a href="estadisticas.do" onclick="redirecciona('estadisticas.do');">Estadisticas</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos Especiales<b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -75,7 +75,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Acerca De<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="javascript:void(0)" onclick="redirecciona('#');">15.1 Ayuda</a></li>
-                        <li><a href="javascript:void(0)" onclick="redirecciona('#');">15.2 Acerca De</a></li>
+                        <li><a href="acercaDeAdmin.do" >15.2 Acerca De</a></li>
                     </ul>
                 </li>
                 <li><a href="cerrarSesion.do" onclick="redirecciona('cerrarSesion.do');">Cerrar Sesi&oacute;n</a></li>

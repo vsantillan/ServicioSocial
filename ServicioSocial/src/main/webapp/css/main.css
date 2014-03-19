@@ -36,6 +36,12 @@
           font-size:13px;
           border-color:#f1a244;
       }
+      .informativo
+      {
+           color:#333;
+           background: #fff;
+           border-color: #428bca;
+      }
       .lateral-menu
       {
          background:#f7f5f4;

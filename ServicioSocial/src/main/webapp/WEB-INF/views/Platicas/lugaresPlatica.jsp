@@ -18,10 +18,13 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
+                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp; Administrar Lugares</h1></div>
                 <div class="row col-md-12 center-block">
                     <form:errors path="lugar" cssClass="error"/>
-                    <h1>Administrar Lugares</h1>
-                    <p>A continuaci&oacute;n se muestran los lugares dados de alta en el sistema.</p>
+                    <div class="alert alert-warning col-md-9  col-md-offset-1">
+                        <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestran los lugares dados de alta en el sistema.</h4></div>
+                    </div>
+
                     <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'>
                         <thead>
                             <tr>
@@ -84,16 +87,16 @@
                     </div>
                     <div class="modal-body">
                         <form:form commandName="lugar_i" id="editarLugar" action="editarLugar.do" method="POST">
-                                <form:input hidden="hidden" id="id" name="name" path="id" />
-                                <div class="form-group">
-                                    <p><label for="lugar">Descripci&oacute;n:</label> </p>
-                                    <form:input id="lugar_s" class="lugares form-control"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/>
-                                </div>
-                                <input id="envioB" type ="submit" value = "Guardar " class="btn btn-primary" />
+                            <form:input hidden="hidden" id="id" name="name" path="id" />
+                            <div class="form-group">
+                                <p><label for="lugar">Descripci&oacute;n:</label> </p>
+                                <form:input id="lugar_s" class="lugares form-control"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                            </div>
+                            <input id="envioB" type ="submit" value = "Guardar " class="btn btn-primary" />
 
-                            </form:form>
+                        </form:form>
 
-                            <div class="modal-footer">Instituto Tecnologico de Toluca</div>
+                        <div class="modal-footer">Instituto Tecnologico de Toluca</div>
                     </div>
                 </div>
             </div>
