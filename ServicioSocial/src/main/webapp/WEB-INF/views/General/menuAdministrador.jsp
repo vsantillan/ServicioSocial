@@ -55,7 +55,7 @@
                 </li>
                 <li><a href="#" onclick="redirecciona('#');">Convocatorias</a></li>
                 <li><a href="historialServicio.do" onclick="redirecciona('#');">Historial Servicio Social</a></li>
-                <li><a href="liberaciones.do" onclick="redirecciona('#');">Estadisticas</a></li>
+                <li><a href="estadisticas.do" onclick="redirecciona('estadisticas.do');">Estadisticas</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos Especiales<b class="caret"></b></a>
                     <ul class="dropdown-menu">
