@@ -48,7 +48,7 @@
                             <td><a href="#nuevoL" role="button" data-toggle="modal" id="nuevoLB"><button class="btn btn-primary glyphicon glyphicon-plus" id="nuevoLB" title="Agregar Lugar" > Agregar Lugar</button></a></td>
                         </tr>
                     </table>
-                    </br>
+                    <br/>
                 </div>
                 <%@include file="../General/footer.jsp"%> 
             </div>
@@ -83,7 +83,7 @@
                     <div class="modal-header">
                         <a data-dismiss="modal" class="close"><span class="glyphicon glyphicon-remove"></span></a>
                         <h1>Editar un Lugar</h1>
-                        <p>Escriba la descripcion del lugar.</p>
+                        <p>Escriba la descripci&oacute;n del lugar.</p>
                     </div>
                     <div class="modal-body">
                         <form:form commandName="lugar_i" id="editarLugar" action="editarLugar.do" method="POST">
