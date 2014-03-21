@@ -17,20 +17,20 @@
                 <%@include file="../General/menuUsuario.jsp"%> 
                 <!--------------------------------------------------Contenido--> 
                 <div class="bs-docs-section col-md-12">
-                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Formato &Uacute;nico</h1></div>
+                    <div id="foco" class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Formato &Uacute;nico</h1></div>
                     <p>&nbsp;</p>
                     <div class="tabbable">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#datosPersonales" onclick="ocultaDiv();">1.Datos Personales</a></li>
-                            <li><a data-toggle="tab" href="#datosContacto" onclick="ocultaDiv();">2.Datos Contacto</a></li>
-                            <li><a data-toggle="tab" href="#datosAcademicos" onclick="ocultaDiv();">3.Datos Acad&eacute;micos</a></li>
-                            <li><a data-toggle="tab" href="#datosOrganizaciones" onclick="ocultaDiv();">4.Datos Organizaciones</a></li>
-                            <li><a data-toggle="tab" href="#horarios" onclick="ocultaDiv();">5.Horario</a></li>
-                            <li><a data-toggle="tab" href="#imprimirFui" onclick="ocultaDiv();">6.Imprimir Formato &Uacute;nico</a></li>
-                            <li><a data-toggle="tab" href="#subirFui" onclick="ocultaDiv();">7.Subir Formato &Uacute;nico</a></li>
+                            <li id="tab1" class="active tabsFormanotUnico" noTab="1"><a data-toggle="tab" href="#contensFormanotUnico1" onclick="ocultaDiv();">1.Datos Personales</a></li>
+                            <li id="tab2" class="tabsFormanotUnico" noTab="2"><a data-toggle="tab" href="#contensFormanotUnico2" onclick="ocultaDiv();">2.Datos Contacto</a></li>
+                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Acad&eacute;micos</a></li>
+                            <li id="tab4" class="tabsFormanotUnico" noTab="4"><a data-toggle="tab" href="#contensFormanotUnico4" onclick="ocultaDiv();">4.Datos Organizaciones</a></li>
+                            <li id="tab5" class="tabsFormanotUnico" noTab="5"><a data-toggle="tab" href="#contensFormanotUnico5" onclick="ocultaDiv();">5.Horario</a></li>
+                            <li id="tab6" class="tabsFormanotUnico" noTab="6"><a data-toggle="tab" href="#contensFormanotUnico6" onclick="ocultaDiv();">6.Imprimir Formato &Uacute;nico</a></li>
+                            <li id="tab7" class="tabsFormanotUnico" noTab="7"><a data-toggle="tab" href="#contensFormanotUnico7" onclick="ocultaDiv();">7.Subir Formato &Uacute;nico</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div id="datosPersonales" class="tab-pane active col-md-12">
+                            <div id="contensFormanotUnico1" class="contensFormanotUnico tab-pane active col-md-12">
                                 <p>&nbsp;</p>
                                 <div class="row">
                                     <div class="alert alert-warning col-md-6  col-md-offset-3">
@@ -82,7 +82,7 @@
                                                 <div class="form-group">
                                                     <label>*Estado civil:</label>
                                                     <select name="estado_civil" class="form-control">
-                                                        <option value="SOLTERO(A)">SOLTERO</option>
+                                                        <option value="SOLTERO(A)">SOLTERO(A)</option>
                                                         <option value="CASADO(A)">CASADO(A)</option>
                                                         <option value="VIUDO(A)">VIUDO(A)</option>
                                                         <option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
@@ -120,7 +120,7 @@
                                                     <form:checkbox path="acuerdoC"/>
                                                 </div> 
                                                 <div class="row col-md-10">
-                                                    <label>*He le&iacute;do y acepto el <a href="showpdf.do" class="fancyFUI" target="_blank">Acuerdo de Confidencialidad</a></label>
+                                                    <label>*He le&iacute;do y acepto el <a href="showpdf.do" class="fancyFUI" target="_blank"><b>Acuerdo de Confidencialidad</b></a></label>
                                                 </div>  
 
 
@@ -134,7 +134,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="datosContacto" class="tab-pane col-md-12">
+                            <div id="contensFormanotUnico2" class="contensFormanotUnico tab-pane col-md-12">
                                 <p>&nbsp;</p>
                                 <div class="row">
                                     <div class="alert alert-warning col-md-6  col-md-offset-3">
@@ -246,7 +246,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="datosAcademicos" class="tab-pane col-md-6 col-md-offset-3">
+                            <div id="contensFormanotUnico3" class="contensFormanotUnico tab-pane col-md-6 col-md-offset-3">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Datos Academicos</div>
@@ -282,7 +282,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="datosOrganizaciones" class="tab-pane col-md-12">
+                            <div id="contensFormanotUnico4" class="contensFormanotUnico tab-pane col-md-12">
                                 <p>&nbsp;</p>
                                 <div class="row">
                                     <div class="alert alert-warning col-md-6  col-md-offset-3">
@@ -372,7 +372,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="horarios" class="tab-pane col-md-8 col-md-offset-2">
+                            <div id="contensFormanotUnico5" class="contensFormanotUnico tab-pane col-md-8 col-md-offset-2">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Horarios</div>
@@ -435,7 +435,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="imprimirFui" class="tab-pane col-md-12">
+                            <div id="contensFormanotUnico6" class="contensFormanotUnico tab-pane col-md-12">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Imprimir Formato &Uacute;nico</div>
@@ -458,7 +458,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="subirFui" class="tab-pane col-md-10 col-md-offset-1">
+                            <div id="contensFormanotUnico7" class="contensFormanotUnico tab-pane col-md-10 col-md-offset-1">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Subir Formato &Uacute;nico</div>
@@ -485,30 +485,45 @@
                     </div>
                 </div>
             </div>
-        <div class="row ">
-            <div id="observaciones" class="col-md-6 panel panel-danger col-md-offset-3" style="display: none;">
-                <div class="panel-heading"><b>Debes atender los siguientes puntos</b></div>
-                <div class="panel-body">
-                    <ul id="listaObservaciones" ></ul>
+            <div class="row ">
+                <div id="observaciones" class="col-md-6 panel panel-danger col-md-offset-3" style="display: none;">
+                    <div class="panel-heading"><b>Debes atender los siguientes puntos</b></div>
+                    <div class="panel-body">
+                        <ul id="listaObservaciones" ></ul>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div id="observacionesOK" class="col-md-6 alert alert-success col-md-offset-3" style="display: none;">
-                <div class="alert-heading"><b>Registro guardado con exito</b></div>
-                <div class="alert-body">
-                    <ul id="listaObservacionesOK" ></ul>
-                </div>
-            </div>
-        </div>
-        <!--------------------------------------------------Fin Contenido-->          
-        <%@include file="../General/footer.jsp"%>  
+            <div class="modal fade" id="contenidoRespuesta" tabindex="-1" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div id="observacionesOK" class="alert alert-success" style="display: none;">
+                                    <div class="alert-heading"><h3><b>Informaci&oacute;n guardada con exito</b></h3></div>
+                                    <div class="alert-body">
+                                        <ul id="listaObservacionesOK" ></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+
+            <!--------------------------------------------------Fin Contenido-->          
+            <%@include file="../General/footer.jsp"%>  
         </div>
     </div><!--/row--> 
     <%@include file="../General/js.jsp"%>
     <script src="js/formatoUnicoJQuery.js"></script>
     <script src="js/bootstrap.fileInput.js"></script> 
     <script src="js/validaFiles.js"></script> 
+    <script src="js/jquery.codigos.postales.js"></script> 
     <script>
         $(document).ready(function() {
             $('input[type=file]').bootstrapFileInput();
