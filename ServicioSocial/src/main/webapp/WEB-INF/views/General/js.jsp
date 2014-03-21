@@ -10,11 +10,10 @@
 <script src="<%=request.getContextPath()%>/js/DT_bootstrap.js"></script>
 <script src="<%=request.getContextPath()%>/js/utilerias.js"></script>
 <script src="<%=request.getContextPath()%>/js/actualizaPlatica.js"></script>
-<!--<script src="<%=request.getContextPath()%>/js/becados.js"></script>-->
 <script src="<%=request.getContextPath()%>/js/bootstrap-datepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/docs.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/editaOrganizacion.js"></script>
-<!--<script src="<%=request.getContextPath()%>/js/funcionesGenerales.js"></script>-->
+<script src="<%=request.getContextPath()%>/js/funcionesGenerales.js"></script>
 <script src="<%=request.getContextPath()%>/js/inicia.session.js"></script>
 <script src="<%=request.getContextPath()%>/js/lugares.js"></script>
 <script src="<%=request.getContextPath()%>/js/observaciones.js"></script>
@@ -25,4 +24,5 @@
 <script src="<%=request.getContextPath()%>/js/bootstrap-timepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap-timepicker.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/noticia.js"></script>
+<script src="<%=request.getContextPath()%>/js/becados.js"></script>
 

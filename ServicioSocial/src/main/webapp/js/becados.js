@@ -1,40 +1,6 @@
 /* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Funciones del modulo de becados
  */
-
-$(document).ready(function() {
-    $("#tabs").tabs();
-    $('#NoAceptados').dataTable({
-        "bJQueryUI": true,
-        "sPaginationType": "full_numbers",
-        "sScrollX": "100%",
-        "sScrollXInner": "200%",
-        "bScrollCollapse": true
-        
-
-
-    });
-    $('#Aceptados').dataTable({
-        "bJQueryUI": true,
-        "sPaginationType": "full_numbers",
-        "sScrollX": "100%",
-        "sScrollXInner": "200%",
-        "bScrollCollapse": true
-        
-
-    });
-    $(document).ready(function() {
-        $('#example').dataTable({
-            "bJQueryUI": true,
-            "sPaginationType": "full_numbers",
-            "sScrollX": "100%",
-            "sScrollXInner": "100%",
-            "bScrollCollapse": true
-
-        });
-
-    });
 
     $('#aceptarAlumno').click(function() {
         var alumno = [];
@@ -93,19 +59,7 @@ $(document).ready(function() {
         }
 
     });
-//    $('#sb-nav-close').click(function() {
 
-//    $(".seleccionar").click(function() {
-//
-//        $("input:checkbox").attr('checked', true);
-//        $("input[type=checkbox]").attr('checked', true);
-//    });
-//    $(".desseelcionar").click(function() {
-//
-//        $("input:checkbox").attr('checked', false);
-//        $("input[type=checkbox]").attr('checked', false);
-//    });
-});
 function contar() {
 
     var checkboxes = form1.alumno; //Array que contiene los checkbox
