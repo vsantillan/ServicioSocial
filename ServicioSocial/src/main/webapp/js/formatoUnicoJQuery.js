@@ -2,8 +2,12 @@ $(document).ready(listo);
 var alumno = {};
 var contacto = {};
 var proyecto = {};
+var tabActual;
+var contentActual;
 function listo()
 {
+    cambiaTab();
+    $(document).on("click", ".tabsFormanotUnico", cambiaTab);
     timePicker();//Inicializa campos JQuery
     $('#frmDatosPersonales').submit(enviarDatosAlumno);
     $('#frmDatosContacto').submit(enviarDatosContactoAlumno);
@@ -172,11 +176,12 @@ function enviarDatosAlumno()
         }
         else
         {
-            alert('Informacion almacenada correctamente');
+            cambioAutomatico();
             $('#listaObservacionesOK').empty();
+            $('#contenidoRespuesta').modal('show');
             $('#observacionesOK').show('slow');
-            $('#listaObservacionesOK').append("<li class= 'observacion'>Datos de alumno guradados correctamente</li>");
-            window.location.hash = '#observacionesOK';
+            $('#listaObservacionesOK').append("<li class= 'observacion'>Los <b>Datos Personales</b> fueron guradados correctamente</li><li>Continue con el llenado de su Formato &Uacute;nico</li>");
+            window.location.hash = '#foco';
         }
     });
 
@@ -210,11 +215,12 @@ function enviarDatosContactoAlumno()
         }
         else
         {
-            alert('Informacion almacenada correctamente');
+            cambioAutomatico();
             $('#listaObservacionesOK').empty();
+            $('#contenidoRespuesta').modal('show');
             $('#observacionesOK').show('slow');
-            $('#listaObservacionesOK').append("<li class= 'observacion'>Datos de contacto guradados correctamente</li>");
-            window.location.hash = '#observacionesOK';
+            $('#listaObservacionesOK').append("<li class= 'observacion'>Los <b>Datos de Contacto</b> fueron guradados correctamente</li><li>Continue con el llenado de su Formato &Uacute;nico</li>");
+            window.location.hash = '#foco';
         }
     });
 
@@ -248,10 +254,12 @@ function enviarHorarios()
         }
         else
         {
+            cambioAutomatico();
             $('#listaObservacionesOK').empty();
+            $('#contenidoRespuesta').modal('show');
             $('#observacionesOK').show('slow');
-            $('#listaObservacionesOK').append("<li class= 'observacion'>Horarios guradados correctamente</li>");
-            window.location.hash = '#observacionesOK';
+            $('#listaObservacionesOK').append("<li class= 'observacion'>Los <b>Horarios</b> fueron guradados correctamente</li><li>Continue con el llenado de su Formato &Uacute;nico</li>");
+            window.location.hash = '#foco';
         }
     });
 
@@ -275,10 +283,12 @@ function enviarDatosOrganizaciones()
     console.log(alumno);
     $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta) {
         if (respuesta !== "") {
+            cambioAutomatico();
             $('#listaObservacionesOK').empty();
+            $('#contenidoRespuesta').modal('show');
             $('#observacionesOK').show('slow');
-            $('#listaObservacionesOK').append("<li class= 'observacion'>Organizacion y proyecto almacenados correctamente</li>");
-            window.location.hash = '#observaciones';
+            $('#listaObservacionesOK').append("<li class= 'observacion'>Los datos de <b>Organizaci&oacute;n y Proyecto</b> fueron almacenados correctamente</li><li>Continue con el llenado de su Formato &Uacute;nico</li>");
+            window.location.hash = '#foco';
         } else {
             $('#listaObservaciones').empty();
             $('#observaciones').show('slow');
@@ -345,6 +355,30 @@ function timePicker()
 function ocultaDiv() {
     $('#observaciones').hide();
     $('#observacionesOK').hide();
+}
+
+function cambiaTab() {
+    var reg = /active/;
+    $(".tabsFormanotUnico").each(function() {
+        if ($(this).attr("class").match(reg)) {
+            tabActual = this;
+        }
+    });
+    $(".contensFormanotUnico").each(function() {
+        if ($(this).attr("class").match(reg)) {
+            contentActual = this;
+        }
+    });
+}
+function cambioAutomatico() {
+    cambiaTab();
+    $(tabActual).removeClass('active');
+    $(contentActual).removeClass('active');
+    var tab = $(tabActual).attr("noTab");
+    tab++;
+    $("#tab" + tab).addClass("active");
+    $("#contensFormanotUnico" + tab).addClass("active");
+
 }
 
 

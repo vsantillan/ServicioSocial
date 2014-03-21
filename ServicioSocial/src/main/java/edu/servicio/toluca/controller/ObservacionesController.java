@@ -39,8 +39,7 @@ public class ObservacionesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/nuevaObservacion.do")
-    public
-            String nuevaObservacion(@Valid CatalogoObservaciones Observacion, BindingResult resultado, Model modelo) {
+    public String nuevaObservacion(@Valid CatalogoObservaciones Observacion, BindingResult resultado, Model modelo) {
         if (!resultado.hasErrors()) {
             Observacion.setId(null);
             MetodosValidacion cleaner = new MetodosValidacion();

@@ -9,7 +9,7 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-        <script type="text/javascript" language="javascript" src="js/lugares.js"></script>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Catálogo de lugares</title>
     </head>
@@ -48,7 +48,7 @@
                             <td><a href="#nuevoL" role="button" data-toggle="modal" id="nuevoLB"><button class="btn btn-primary glyphicon glyphicon-plus" id="nuevoLB" title="Agregar Lugar" > Agregar Lugar</button></a></td>
                         </tr>
                     </table>
-                    </br>
+                    <br/>
                 </div>
                 <%@include file="../General/footer.jsp"%> 
             </div>
@@ -68,8 +68,9 @@
                             <div class="form-group">
                                 <p><label for="lugar">Descripci&oacute;n:</label> </p>
                                 <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> 
+                                <div id="errorVacio1"></div>
                             </div>
-                            <input type ="submit" value = "Guardar " class="btn btn-primary" />
+                            <input type="submit" id="envioB1" value = "Guardar " class="btn btn-primary" />
 
                         </form:form>
                     </div>
@@ -83,15 +84,17 @@
                     <div class="modal-header">
                         <a data-dismiss="modal" class="close"><span class="glyphicon glyphicon-remove"></span></a>
                         <h1>Editar un Lugar</h1>
-                        <p>Escriba la descripcion del lugar.</p>
+                        <p>Escriba la descripci&oacute;n del lugar.</p>
                     </div>
                     <div class="modal-body">
                         <form:form commandName="lugar_i" id="editarLugar" action="editarLugar.do" method="POST">
                             <form:input hidden="hidden" id="id" name="name" path="id" />
                             <div class="form-group">
                                 <p><label for="lugar">Descripci&oacute;n:</label> </p>
-                                <form:input id="lugar_s" class="lugares form-control"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                <form:input id="lugar_e" class="lugares form-control"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                <div id="errorVacio"></div>
                             </div>
+                            
                             <input id="envioB" type ="submit" value = "Guardar " class="btn btn-primary" />
 
                         </form:form>
