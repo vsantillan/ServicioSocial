@@ -17,7 +17,7 @@ import javax.mail.internet.MimeMessage;
  */
 public class EnviarCorreo 
 {
-    private String remitente="sapitotais@gmail.com";
+    private String remitente="luevanoguzman@gmail.com";
     private String destinatario;
     private String mensaje;
     private String asunto;

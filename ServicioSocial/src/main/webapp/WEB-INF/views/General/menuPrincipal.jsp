@@ -31,7 +31,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="ayuda.do">Ayuda</a></li>
                         <li><a href="acercaDe.do">Acerca De</a></li>
-                        <li><a href="preguntasFrecuentes.do">Preguntas Frecuentes</a></li>
                     </ul>
                 </li>
 
