@@ -4,34 +4,18 @@
     Author     : bustedvillain
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ include file="../Template/taglibs.jsp" %>
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
-
-        <jsp:include page="../Template/headsMenuAdministracion.jsp" />
-        <jsp:include page="../Template/metas.jsp" />
-
-        <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/formatoUnico.css" />
-
-
-        <jsp:include page="../Template/headsJQueryUI.jsp" />
-        <jsp:include page="../Template/headsDataTablesConTabs.jsp" />
-        <!--Include para Ventanas Modales-->
-        <jsp:include page="../Template/headsModal.jsp" />
-
-        <title>Administrador</title>
-
+        <%@include file="../General/head.jsp"%>
     </head>
-    <body class="background" >
-        <jsp:include page="../Template/banner.jsp" />
-
-        <%-- inicio del contenido --%>
-        <div id="contenido">
-            <jsp:include page="../PanelAdministrador/menuPanelAdministrador.jsp" />
-            <div style="float:left; width:80%;">
+    <body>
+        <div class="container">
+            <div class="row">
+                <%@include file="../General/banner.jsp"%>  
+                <%@include file="../General/menuAdministrador.jsp"%>
+                <div class="row col-md-12 center-block">
 
                 <h1>P&aacute;gina de Egresado - Administrador</h1>
                 <div id="tabs">
@@ -62,7 +46,7 @@
                                         <td>
                                             <a href="#"> <img class="aceptar" idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}"  title="Aceptar" width="30" height="30"  idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" src="imagenes/paloma.png" /></a>
                                             <a href="#"> <img class="rechazar" idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" title="Rechazar" width="30" height="30"  idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" src="imagenes/tache.png" /></a>
-                                            <a href="#"> <img class="correccion" idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" title="CorrecciÃ³n" width="30" height="30"  idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
+                                            <a href="#"> <img class="correccion" idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" title="Corrección" width="30" height="30"  idCa="${filaNR.idEgresado}" idDP="${filaNR.idDatosPersonales}" src="imagenes/editar.png" /></a>
                                         </td>
 
 <!--                                        <td>${filaNR.periodo}</td>-->
@@ -173,15 +157,11 @@
                         </table>
                     </div>    
                 </div>
-
             </div>
-
-
-            <div style="clear:both;"></div>
-
+                                <%@include file="../General/footer.jsp"%> 
+            </div>
         </div>
-        <%-- fin del contenido --%>
-        <jsp:include page="../Template/footer.jsp" />
+
 
 
         <div id="motivos" style="display: none; ">
@@ -200,14 +180,16 @@
                 </div>
                 <div>
                     <button id="guardarObservaciones">Guardar</button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do')"   style="font-size: 20px"> Agregar ObservaciÃ³n</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do')"   style="font-size: 20px"> Agregar Observación</a>
                 </div>
             </form>    
 
         </div>
 
+        
+   <%@include file="../General/js.jsp"%>
         <script type="text/javascript" src="js/egresadoAdmin.js"></script>
+        <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>
-
 

@@ -59,7 +59,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos Especiales<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="javascript:void(0)" onclick="redirecciona('#');">13.1 Egresados</a></li>
+                        <li><a href="egresadoAdministrador.do">13.1 Egresados</a></li>
                     </ul>
                 </li>
                 <li><a href="catalogoObservaciones.do" onclick="redirecciona('catalogoObservaciones.do');">Observaciones</a></li>
