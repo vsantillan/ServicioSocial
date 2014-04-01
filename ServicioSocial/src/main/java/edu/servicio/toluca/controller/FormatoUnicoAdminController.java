@@ -74,7 +74,7 @@ public class FormatoUnicoAdminController {
     //Pruebas Developer
     //**********************************************
     //Desactivar para Produccion, Activar para Desarrollo
-    final boolean banderaPrueba = true;
+    final boolean banderaPrueba = false;
     final String correoTest="rehoscript@gmail.com";
     //**********************************************
     
