@@ -59,15 +59,28 @@
                                         <form:errors path="responsablePuesto" class="alert alert-danger"/>${puesto}
 
                                     </div>
-                                    <div class="form-group">
+                                    <div class="row col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label for="lugar">Tel&eacute;fono del Responsable:</label>
+                                        <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10" class="form-control"/>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="lugar">Extensi&oacute;n:</label>
+                                        <form:input path="ext" id="ext" size="20" maxlength="7" class="form-control"/><br/>
+                                    </div>
+                                    <div class="row col-md-12">
+                                        ${telefono}
+                                    </div>
+                                </div>
+<!--                                    <div class="form-group">
                                         <label for="lugar">Tel&eacute;fono del Responsable:</label>
 
-                                        <!--input type="text" name="puesto" id="puesto" size="20" require="true"/--> 
+                                        input type="text" name="puesto" id="puesto" size="20" require="true"/ 
                                         <form:input path="telefonoResponsable" id="rfc" size="20" maxlength="10" class="form-control"/>
                                         <form:input path="ext" id="ext" size="20" maxlength="7" class="form-control"/><br/>
                                         ${telefono}
 
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
                                         <label for="lugar">Domicilio del Programa:</label>
 
@@ -212,6 +225,8 @@
         </div>
     </div>
     <%@include file="../General/js.jsp"%>
+    <script src="js/jquery.codigos.postales.js"></script>       
+     <script src="js/jquery.manolo.js">
     <script>var iniciarAltaPropuestaInstancia = true;</script>
     <script>
         $('a#btn-add').click(function() {
