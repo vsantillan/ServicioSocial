@@ -342,6 +342,24 @@ public class OrganizacionesController2 {
 
         //Validacion
         new ValidacionesOrganizaciones().valAltaAdminInst(instancia, result, model, codigo_postal, existeCP, otra_colonia);
+        try{
+            Integer.parseInt(codigo_postal);
+        }catch(Exception e){
+            model.addAttribute("error_codigo_postal", "<div class='alert alert-danger'>Lo codigo postal debe de ser numerico</div>");
+                        //Agregamos atributos al formulario
+            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+            ordenamiento.put("nombre", "asc");
+            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            //Regresar codigo postal
+            model.addAttribute("cp", codigo_postal);
+            model.addAttribute("otra_colonia", otra_colonia);
+            try {
+                model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+            } catch (Exception ex) {
+            }
+            return "/Organizaciones/altaAdminOrganizacion";
+        }
 
         if (result.hasErrors()) {
             System.out.print("hubo errores");

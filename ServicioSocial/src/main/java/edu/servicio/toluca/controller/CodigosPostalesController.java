@@ -60,16 +60,24 @@ public class CodigosPostalesController {
     @RequestMapping(method = RequestMethod.GET, value = "/cargarColonias.do")
     public @ResponseBody
     LocalidadJSON cargarColonias(Model model, String cp) {
-        System.out.println("Controlador, recibe cp:" + cp);
-//        BigDecimal bigDecimal = new BigDecimal(Integer.parseInt(cp));
-
-        System.out.println("Comenzare el query buscando el codigo postal:" + cp);
-        //Consulta codigo postal
-        //model.addAttribute("codigoPostal", );
 
 
         //Fabricacion de objeto
         LocalidadJSON localidadJSON = new LocalidadJSON();
+        System.out.println("Controlador, recibe cp:" + cp);
+//        BigDecimal bigDecimal = new BigDecimal(Integer.parseInt(cp));
+        try {
+            Integer.parseInt(cp);
+        } catch (Exception e) {
+            //Error en consulta
+            System.out.println("No existe este codigo postal");
+            localidadJSON.setStatusJSON(false);
+            return localidadJSON;
+        }
+
+        System.out.println("Comenzare el query buscando el codigo postal:" + cp);
+        //Consulta codigo postal
+        //model.addAttribute("codigoPostal", );
         try {
 //            CodigosPostales codigosPostales = codigosPostalesFacade.find(Integer.parseInt(cp));
             List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", cp, "equal", null, null);
@@ -213,7 +221,5 @@ public class CodigosPostalesController {
 
         }
 
-    } 
-    
-    
+    }
 }

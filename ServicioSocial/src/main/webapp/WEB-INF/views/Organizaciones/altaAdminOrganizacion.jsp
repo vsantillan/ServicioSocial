@@ -80,7 +80,7 @@
                                         <label for="codigo_postal">C&oacute;digo Postal:</label>
                                         <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" class="form-control">
                                         <input type="hidden" id="preCP" value="${cp}"/><br/>
-                                        ${codigo_postal}
+                                        ${error_codigo_postal}
                                     </div>
                                     <div class="form-group">
                                         <label for="estado">Estado:</label>
