@@ -59,7 +59,13 @@
                                                                 Reportes Bimestrales.
                                                             </core:when>
                                                             <core:when test="${current.tipo == 3}">
-                                                                Documentos Finales
+                                                                Documentos Finales.
+                                                            </core:when>
+                                                            <core:when test="${current.tipo == 4}">
+                                                                Organizaciones.
+                                                            </core:when>
+                                                            <core:when test="${current.tipo == 5}">
+                                                                Proyectos.
                                                             </core:when>
                                                             <core:otherwise>
                                                                 Tipo Desconocido.
@@ -81,7 +87,7 @@
                                             <div class="form-group">
                                                 <label for="detalle">Descripci&oacute;n:</label>
                                                 <form:textarea id="detalle"  name="detalle" path="detalle" rows="8" cols="50" maxlength="300" class="form-control"/> 
-                                                ${errorBlanco}
+                                                <div class="aler alert-warning">${errorBlanco}</div>
                                             </div>
 
                                             <div class="form-group">
@@ -90,6 +96,8 @@
                                                     <form:option value="1">Formato &Uacute;nico</form:option>
                                                     <form:option value="2">Reportes Bimestrales</form:option>
                                                     <form:option value="3">Documentos Finales</form:option>
+                                                    <form:option value="4">Organizaciones</form:option>
+                                                    <form:option value="5">Proyectos</form:option>
                                                         <!--tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales-->
                                                 </form:select>
                                             </div>
@@ -123,15 +131,17 @@
                                     <div class="form-group">
                                         <label for="tipo">Descripci&oacute;n:</label>
                                         <form:textarea type="text" id="detalleE" path="detalle" rows="10" cols="70" name="detalleE" maxlength="300" class="form-control" />
-                                        <div class='error' style="display:none;">Error la descripcion esta vacia</div>
+                                        <div class='error alert alert-warning' style="display:none;">Error la descripcion esta vacia</div>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="tipo">Tipo:</label>
-                                        <form:select id="tipo"  name="tipo" path="tipo" class="form-control">
+                                        <form:select id="tipoe"  name="tipo" path="tipo" class="form-control">
                                             <form:option value="1">Formato &Uacute;nico</form:option>
                                             <form:option value="2">Reportes Bimestrales</form:option>
                                             <form:option value="3">Documentos Finales</form:option>
+                                            <form:option value="4">Organizaciones</form:option>
+                                            <form:option value="5">Proyectos</form:option>
                                                 <!--tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales-->
                                         </form:select>
                                     </div>
