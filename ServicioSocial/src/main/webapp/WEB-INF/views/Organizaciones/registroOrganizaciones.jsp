@@ -173,5 +173,8 @@
             <%@include file="../General/footer.jsp"%>           
         </div> <!-- /container -->
     <%@include file="../General/js.jsp"%>
+     <script src="js/jquery.codigos.postales.js"></script>       
+     <script src="js/jquery.manolo.js"></script>
+
 </body>
 </html>
