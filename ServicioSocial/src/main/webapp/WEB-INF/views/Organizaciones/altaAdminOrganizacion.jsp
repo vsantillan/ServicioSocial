@@ -22,11 +22,11 @@
                         <div class="panel-body">
                             <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAdminAltaOrganizacion.do"  method="POST">
                                 <div class="col-md-6">
-                                    ${error_sql}
                                     <div class="form-group">
                                         <label for="nombre">Nombre de la Organizaci&oacute;n:</label>                               
                                         <form:input path="nombre" id="nombre" size="20" class="form-control"/><br/>
                                         <form:errors path="nombre" class="alert alert-danger"/>
+                                        ${error_sql}
                                     </div>
 
                                     <div class="form-group">

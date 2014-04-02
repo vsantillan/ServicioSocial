@@ -51,7 +51,7 @@ public class MetodosValidacion {
     public String tuneaStringParaBD(String s)
     {
         s = pasaMayusculas(s);
-        s = quitaAcentos(s);
+        //s = quitaAcentos(s);
         s = quitaCaracteresEspeciales(s);
         return s;       
     }

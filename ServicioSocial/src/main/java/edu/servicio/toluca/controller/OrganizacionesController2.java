@@ -166,7 +166,7 @@ public class OrganizacionesController2 {
         //Organizacion
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
-        
+
         for (int i = 0; i < listaInstancias.size(); i++) {
             int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
             if (estatus == 1 || estatus == 2) {
@@ -246,6 +246,28 @@ public class OrganizacionesController2 {
             instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
             instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
             instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
+
+            List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
+            if (!Unicos.isEmpty()) {
+                //Inyectamos lo que traia en la colonia
+                model.addAttribute("otra_colonia", otra_colonia);
+                //Agregamos atributos al formulario
+                model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
+//            model.addAttribute("instancia", new Instancia());
+                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("nombre", "asc");
+                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                //Regresar codigo postal
+                model.addAttribute("cp", codigo_postal);
+                try {
+                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+                } catch (Exception e) {
+                }
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Lo sentimos ya existe una organización con el nombre" + instancia.getNombre() + "</div>");
+                return "/Organizaciones/registroOrganizaciones";
+
+            }
 
             try {
                 instanciaFacade.create(instancia);
@@ -351,6 +373,28 @@ public class OrganizacionesController2 {
             instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
             instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
 
+            List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
+            if (!Unicos.isEmpty()) {
+                //Inyectamos lo que traia en la colonia
+                model.addAttribute("otra_colonia", otra_colonia);
+                //Agregamos atributos al formulario
+                model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
+//            model.addAttribute("instancia", new Instancia());
+                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("nombre", "asc");
+                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                //Regresar codigo postal
+                model.addAttribute("cp", codigo_postal);
+                try {
+                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+                } catch (Exception e) {
+                }
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Lo sentimos ya existe una organización con el nombre" + instancia.getNombre() + "</div>");
+                return "/Organizaciones/altaAdminOrganizacion";
+
+            }
+
             instanciaFacade.create(instancia);
             System.out.println("Insercion correcta!");
             return "/Organizaciones/confirmaAdminRegOrganizacion";
@@ -399,7 +443,7 @@ public class OrganizacionesController2 {
                 }
                 //Regresar codigo postal
                 model.addAttribute("otra_colonia", otra_colonia);
-                
+
                 //Regresa las Organizaciones
                 List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
                 ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
@@ -546,7 +590,7 @@ public class OrganizacionesController2 {
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
 
             for (int i = 0; i < listaInstancias.size(); i++) {
-                int validacion= Integer.parseInt(listaInstancias.get(i).getValidacionAdmin().toString());
+                int validacion = Integer.parseInt(listaInstancias.get(i).getValidacionAdmin().toString());
                 if (validacion == 1) {
                     filtroInstancias.add(listaInstancias.get(i));
                 }
@@ -595,14 +639,13 @@ public class OrganizacionesController2 {
             proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
             proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
-            System.out.println("el nombre del proyecto es: "+proyecto.getNombre());
+            System.out.println("el nombre del proyecto es: " + proyecto.getNombre());
             proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
 
-            List<Proyectos> listaProyectos=proyectosFacade.findAll();
-            for(int i=0;i<listaProyectos.size();i++)
-            {
-                System.out.println("el id del proyecto es: "+listaProyectos.get(i).getIdProyecto()+" y el nombre del proyecto es: "+listaProyectos.get(i).getNombre());
+            List<Proyectos> listaProyectos = proyectosFacade.findAll();
+            for (int i = 0; i < listaProyectos.size(); i++) {
+                System.out.println("el id del proyecto es: " + listaProyectos.get(i).getIdProyecto() + " y el nombre del proyecto es: " + listaProyectos.get(i).getNombre());
             }
             //Obtenemos el proyecto creado
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
@@ -1119,7 +1162,7 @@ public class OrganizacionesController2 {
                 //Agregar codigo postal + colonia
                 proyecto.setIdColonia(codigosPostales.agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
             }
-            
+
             proyecto.setValidacionAdmin(BigInteger.ZERO); //No validado
             proyecto.setEstatus(BigInteger.valueOf(2)); //Proyecto propuesto por alumno
             proyecto.setFechaAlta(new Date());
