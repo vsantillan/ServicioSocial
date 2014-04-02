@@ -234,7 +234,7 @@ $(document).ready(function() {
     });
 
     $("#btnPreInstancia").click(function(event) {
-
+        alert("wevos manolo");
         var select = document.getElementById("idInstancia");
 
         if (select.selectedIndex > 0) {
