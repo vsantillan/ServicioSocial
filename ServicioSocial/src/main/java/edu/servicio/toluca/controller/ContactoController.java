@@ -55,7 +55,7 @@ public class ContactoController {
          
         Thread hiloCorreo=new Thread(new HiloCorreo(mensajeContacto));
         hiloCorreo.start();
-        modelo.put("message","<div class='error'>Gracias por tu comentario, lo tomaremos en cuenta. </div>");
+        modelo.put("message","<div class='alert alert-success'>Gracias por tu comentario, lo tomaremos en cuenta. </div>");
         modelo.put("Contacto",new Contacto());
         return "/NavegacionPrincipal/contacto";
     }
