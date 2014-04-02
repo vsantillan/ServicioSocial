@@ -10,7 +10,6 @@ import edu.servicio.toluca.entidades.Platica;
 import edu.servicio.toluca.entidades.LugaresPlatica;
 import edu.servicio.toluca.sesion.PlaticaFacade;
 import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
-import edu.servicio.toluca.beans.ValidacionAsistenciaPlatica;
 import edu.servicio.toluca.entidades.FoliosPlatica;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,22 +28,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import edu.servicio.toluca.beans.PlaticaJson;
 import edu.servicio.toluca.beans.ValidaSesion;
-import edu.servicio.toluca.beans.ValidacionPlatica;
-import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.math.BigInteger;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -52,11 +45,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
-import org.apache.commons.codec.binary.Base64;
 import org.openide.util.Exceptions;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+
 
 /**
  *
@@ -200,16 +190,16 @@ public class PlaticaController {
                 return "/Platicas/altaPlatica";
             } else {
                 //////////////Obtenemos el Periodo y año de la platica apartir de la fecha de la platica//////////////
-                DateFormat formateador = DateFormat.getDateInstance();
-                String[] arrayFecha = formateador.format(platica.getFecha()).split("/");
+//                DateFormat formateador = DateFormat.getDateInstance();
+//                String[] arrayFecha = formateador.format(platica.getFecha().).split("/");
 
-                if (Integer.parseInt(arrayFecha[1]) <= 6) {
+                if (platica.getFecha().getMonth() <= 6) {
                     platica.setPeriodo("ENE-JUN");
                 } else {
                     platica.setPeriodo("AGO-DIC");
                 }
 
-                platica.setAnio(String.valueOf(arrayFecha[2]));
+                platica.setAnio(platica.getFecha().getYear()+"");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
                 System.out.println("sin errores entidad");
                 System.out.println("fecha" + platica.getFechaMxFui().toString());

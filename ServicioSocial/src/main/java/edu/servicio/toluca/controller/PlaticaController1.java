@@ -50,8 +50,8 @@ public class PlaticaController1 {
     //public @ResponseBody
     String nuevoLugar(Model modelo,@ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
         if (!resultado.hasErrors()) {
-            lugar_i.setId(null);
             lugar_i.setStatus(BigInteger.valueOf(1));
+            lugar_i.setLugar(lugar_i.getLugar().toUpperCase());
             LugaresPlaticaFacade.create(lugar_i);
         } else {
             System.out.println("Result"+resultado);
@@ -63,9 +63,9 @@ public class PlaticaController1 {
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugarAltaPlatica.do")
     //public @ResponseBody
     String nuevoLugarAltaPlatica(Model modelo, @ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
-        if (!resultado.hasErrors()) {
-            lugar_i.setId(null);
+        if (!resultado.hasErrors()) {         
             lugar_i.setStatus(BigInteger.valueOf(1));
+            lugar_i.setLugar(lugar_i.getLugar().toUpperCase());
             LugaresPlaticaFacade.create(lugar_i);
         } else {
             System.out.println("Result"+resultado);

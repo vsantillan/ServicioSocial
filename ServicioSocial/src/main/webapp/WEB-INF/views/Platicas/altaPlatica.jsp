@@ -124,8 +124,9 @@
                                     <div class="form-group">
                                         <p><label for="lugar">Descripci&oacute;n:</label> </p>
                                         <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50"/> 
+                                        <div id="errorVacio1"></div>
                                     </div>
-                                    <input type ="submit" value = "Guardar " class="btn btn-primary" />
+                                    <input type ="submit" id="envioB1" value = "Guardar " class="btn btn-primary" />
 
                                 </form:form>
                             </div>

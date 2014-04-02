@@ -45,7 +45,7 @@ public class LugaresPlatica implements Serializable {
     @GeneratedValue(generator = "generator")
     @Id
     @Basic(optional = false)
-    @NotNull
+//    @NotNull
     @Column(name = "ID")
     private BigDecimal id;
     @Basic(optional = false)
