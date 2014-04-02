@@ -192,7 +192,7 @@ public class PlaticaController {
                 //////////////Obtenemos el Periodo y año de la platica apartir de la fecha de la platica//////////////
 //                DateFormat formateador = DateFormat.getDateInstance();
 //                String[] arrayFecha = formateador.format(platica.getFecha().).split("/");
-                //obtener el periodo de la platica 
+
                 if (platica.getFecha().getMonth() <= 6) {
                     platica.setPeriodo("ENE-JUN");
                 } else {
