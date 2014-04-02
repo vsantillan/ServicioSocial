@@ -14,7 +14,7 @@
 Map parameters = new HashMap();
 parameters.put("folio",session.getAttribute("platica").toString()+session.getAttribute("NCONTROL").toString()); 
 /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
+byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectarAux("ges_vin", "gst05a"));
 /*Indicamos que la respuesta va a ser en formato PDF*/ 
 response.setContentType("application/pdf"); 
 response.setContentLength(bytes.length);

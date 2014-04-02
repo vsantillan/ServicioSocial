@@ -316,7 +316,9 @@
                 <%@include file="../General/footer.jsp"%> 
             </div>
         </div>
-        <%@include file="../General/js.jsp"%>     
+        <%@include file="../General/js.jsp"%> 
+        <script src="js/jquery.codigos.postales.js"></script>       
+     <script src="js/jquery.manolo.js">
         <!--<a onclick="$.fancybox.close();">Redireccion</a>-->
 
         <script>

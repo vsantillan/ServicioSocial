@@ -523,7 +523,8 @@
     <script src="js/formatoUnicoJQuery.js"></script>
     <script src="js/bootstrap.fileInput.js"></script> 
     <script src="js/validaFiles.js"></script> 
-    <script src="js/jquery.codigos.postales.js"></script> 
+    <script src="js/jquery.codigos.postales.js"></script>       
+     <script src="js/jquery.manolo.js">
     <script>
         $(document).ready(function() {
             $('input[type=file]').bootstrapFileInput();
