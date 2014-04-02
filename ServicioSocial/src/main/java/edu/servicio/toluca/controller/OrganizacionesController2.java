@@ -399,7 +399,18 @@ public class OrganizacionesController2 {
                 }
                 //Regresar codigo postal
                 model.addAttribute("otra_colonia", otra_colonia);
+                
+                //Regresa las Organizaciones
+                List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+                ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
 
+                for (int i = 0; i < listaInstancias.size(); i++) {
+                    int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
+                    if (estatus == 1 || estatus == 2) {
+                        filtroInstancias.add(listaInstancias.get(i));
+                    }
+                }
+                model.addAttribute("instancias", filtroInstancias);
 
 
                 //Regresar actividades

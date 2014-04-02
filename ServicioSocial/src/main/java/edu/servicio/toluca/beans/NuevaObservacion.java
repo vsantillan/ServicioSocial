@@ -9,6 +9,7 @@ public class NuevaObservacion {
     
     private String detalle;
     private int id;
+    private int tipo;
 
 
     /**
@@ -37,6 +38,20 @@ public class NuevaObservacion {
      */
     public void setDetalle(String detalle) {
         this.detalle = detalle;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public int getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
     }
     
     

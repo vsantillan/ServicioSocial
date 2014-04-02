@@ -46,7 +46,7 @@
                                             <core:forEach items="${Observaciones}" var="current">
                                                 <tr class='gradeX'>
                                                     <th>
-                                                        <a href="#editarOrganizacion" class="fancybox-effects-a  actualizaObservacion" detalle="${current.detalle}" idO="${current.id}"><span class="glyphicon glyphicon-edit sizeIcon"></span></a>
+                                                        <a href="#editarOrganizacion" data-toggle="modal" class="fancybox-effects-a  actualizaObservacion" detalle="${current.detalle}" idO="${current.id}"><span class="glyphicon glyphicon-edit sizeIcon"></span></a>
                                                         <a href="#" class="borrarObservacion"><span class="glyphicon glyphicon-trash sizeIcon" idex="${current.id}"></span></a>
                                                     </th>
                                                     <th><core:out value="${current.id}" /></th>
@@ -114,34 +114,34 @@
                             <div class="modal-header">
                                 <a data-dismiss="modal" class="close"><span class="glyphicon glyphicon-remove"></span></a>
                                 <h1>Editar Observaci&oacute;n</h1>
+                                Edite la Observac&oacute;n.
                             </div>
                             <div class="modal-body">
                                 <form:form commandName="Observacion" action="actualizaObservacion.do" method="POST" onsubmit="return validarForm(this);" >
-                                    <table>
-                                        <form:input hidden="hidden" id="id" name="name" path="id" />
-                                        <tr>
-                                            <td>Descripci&oacute;n:</td>
-                                            <td><form:textarea type="text" id="detalleE" path="detalle" rows="10" cols="70" name="detalleE" maxlength="300"  /></td>
-                                        </tr>
-                                        <div class="form-group">
-                                            <label for="tipo">Tipo:</label>
-                                            <form:select id="tipo"  name="tipo" path="tipo" class="form-control">
-                                                <form:option value="1">Formato &Uacute;nico</form:option>
-                                                <form:option value="2">Reportes Bimestrales</form:option>
-                                                <form:option value="3">Documentos Finales</form:option>
-                                                    <!--tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales-->
-                                            </form:select>
-                                        </div>
-                                        <tr>
-                                            <td>
-                                                <div class='error' style="display:none;">Error la descripcion esta vacia</div>
-                                            </td>
-                                        </tr>
 
-                                        <tr> 
-                                            <td> <input type ="submit" value = "Guardar " /> </td>
-                                        </tr>
-                                    </table>
+                                    <form:input hidden="hidden" id="id" name="name" path="id" />
+                                    <div class="form-group">
+                                        <label for="tipo">Descripci&oacute;n:</label>
+                                        <form:textarea type="text" id="detalleE" path="detalle" rows="10" cols="70" name="detalleE" maxlength="300" class="form-control" />
+                                        <div class='error' style="display:none;">Error la descripcion esta vacia</div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tipo">Tipo:</label>
+                                        <form:select id="tipo"  name="tipo" path="tipo" class="form-control">
+                                            <form:option value="1">Formato &Uacute;nico</form:option>
+                                            <form:option value="2">Reportes Bimestrales</form:option>
+                                            <form:option value="3">Documentos Finales</form:option>
+                                                <!--tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales-->
+                                        </form:select>
+                                    </div>
+
+
+
+                                    <div class="control-group">
+                                        <input type ="submit" class="btn btn-primary" value = "Guardar " />
+                                    </div>
+
                                 </form:form>
                                 <div class="modal-footer">Instituto Tecnologico de Toluca</div>
                             </div>
