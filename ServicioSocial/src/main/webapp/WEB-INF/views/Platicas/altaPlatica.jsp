@@ -22,7 +22,7 @@
                         <br>
                         <div class="panel panel-info">
                             <div class="panel-heading "
-                        <center><h3>Nueva Pl&aacute;tica</h3></center>
+                                 <center><h3>Nueva Pl&aacute;tica de Inducci&oacute;n</h3></center>
                             ${alert}</div>
                         <!-- Formulario Nueva Plática -->  
                         <div class="panel-body">
@@ -51,7 +51,8 @@
                                         <form:option value="${lugares.id}">${lugares.lugar}</form:option>
                                     </core:forEach>
                                 </form:select><br>
-                                <input type ="button" href="#nuevoL" class="btn btn-primary" id="agregaLugar" value = "Agregar lugar" data-toggle="modal" />
+                                <input type ="button" href="#nuevoL" class="btn btn-primary" id="agregaLugar" value = "Agregar lugar" data-toggle="modal" /><br><br>
+                                <form:errors path="idLugar" class="alert alert-danger" /><br>
                             </div>
 <!--                            <div class="form-group">
                                 <label for="periodo">Periodo</label>
@@ -68,16 +69,16 @@
                                     </core:forEach>
                                 </form:select>
                             </div>-->
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label for="tipoPlatica">Tipo de  pl&aacute;tica:</label>
                                 <form:select  class="form-control" id="tipo" path="tipo">
                                     <form:option  value="1">NORMAL</form:option>
                                     <form:option  value="2">BECADOS</form:option>
                                     <form:option  value="3">ESPECIAL</form:option>
                                 </form:select> 
-                            </div>
+                            </div>-->
                             <div class="form-group">
-                                <label for="descripcion">Descripci&oacute;n de la pl&aacute;tica</label> 
+                                <label for="descripcion">Descripci&oacute;n de la pl&aacute;tica de inducci&oacute;n(explica brevemente de que tratar&aacute; la pl&aacute;tica)</label> 
                                 <form:textarea  path="descripcion"  id="descripcion"  class="form-control" rows="10"/><br>
                                 <form:errors path="descripcion" class="alert alert-danger" />
                             </div>

@@ -42,13 +42,13 @@
                                                 <td>${platica.descripcion}</td>
                                                 <td><core:choose>
                                                     <core:when test="${platica.tipo==1}">
-                                                        NORMAL
+                                                        BECADOS
                                                     </core:when>
                                                     <core:when test="${platica.tipo==2}">
-                                                         BECADOS
+                                                        ESPECIAL
                                                     </core:when>
                                                     <core:otherwise>
-                                                         ESPECIAL
+                                                         INDUCCIÓN
                                                     </core:otherwise>
                                                 </core:choose>
                                                 </td>

@@ -92,9 +92,11 @@ public class Platica implements ExpresionesRegulares, CatalogoErrores,Serializab
     @Pattern(regexp = letrasNumerosEspeciales, message = errorLetrasNumeros)
     @Column(name = "DESCRIPCION")
     private String descripcion;
-  
+    
+    @NotNull(message = "El campo lugar no puede estar vacio")
     @JoinColumn(name = "ID_LUGAR", referencedColumnName = "ID")
     @ManyToOne
+    
     private LugaresPlatica idLugar;
     @OneToMany(mappedBy = "platicaId")
     private Collection<FoliosPlatica> foliosPlaticaCollection;
