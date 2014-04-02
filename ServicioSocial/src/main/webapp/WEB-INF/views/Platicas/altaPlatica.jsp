@@ -31,7 +31,7 @@
                             <div class="form-group">
                                 <label for="fecha">Fecha de la pl&aacute;tica:</label>
                                 <div class="input-group date dp3" data-date="" data-date-format="dd-mm-yyyy">
-                                    <form:input class="form-control" path="fecha"/>
+                                    <form:input class="form-control" path="fecha" readonly="true"/>
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 </div><br>
                                 <form:errors path="fecha" class="alert alert-danger" />
@@ -39,7 +39,7 @@
                             <div class="form-group">
                                 <label for="hora" >Hora de la pl&aacute;tica: </label>
                                 <div class="input-group input-append bootstrap-timepicker">
-                                    <form:input id="timepicker1" path="hora" type="text" readonly="" class="form-control"/>
+                                    <form:input id="timepicker1" path="hora" type="text" readonly="true" class="form-control"/>
                                     <span class="input-group-addon add-on"><i class="glyphicon glyphicon-time"></i></span>
                                 </div><br>
                                 <form:errors path="hora" class="alert alert-danger" />
@@ -84,7 +84,7 @@
                             <div class="form-group">
                                 <label for="fecha_max_fui">Fecha m&aacute;xima para subir formato &uacute;nico</label>
                                 <div class="input-group date dp3"  data-date="" data-date-format="dd-mm-yyyy">
-                                    <form:input class="form-control"  path="fechaMxFui" type="text" />
+                                    <form:input class="form-control"  path="fechaMxFui" type="text" readonly="true" />
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                 </div><br>
                                 <form:errors  path="fechaMxFui" class="alert alert-danger" /><br>
