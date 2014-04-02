@@ -51,7 +51,7 @@ public class CatalogoObservaciones implements Serializable {
     @Size(min=1,max = 300,message="El tamaño debe ser menor a 300 caracteres")
     @Column(name = "DETALLE")
     private String detalle;
-    //tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales
+    //tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales 4:Organizacions 5:proyectos
     @Column(name = "TIPO") 
     private BigInteger tipo;
     @OneToMany(mappedBy = "catalogoObservacionId")

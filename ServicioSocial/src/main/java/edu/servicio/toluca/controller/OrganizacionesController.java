@@ -124,7 +124,7 @@ public class OrganizacionesController {
             }
         }
         model.addAttribute("organizaciones", filtroInstancias);
-        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findBySpecificField("tipo", "4", "equal", null, null)); 
         return "/Organizaciones/administrarOrganizaciones";
     }
 
@@ -132,16 +132,19 @@ public class OrganizacionesController {
     public String administradorProyectos(Model model, HttpSession session, HttpServletRequest request) {
         List<Proyectos> listaProyectos = proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
+        System.out.println("la lista encontro que hay "+listaProyectos.size());
         for (int i = 0; i < listaProyectos.size(); i++) {
+            System.out.println("esta recorriendo i: "+listaProyectos.get(i).getNombre());
             int validacionAdmin = Integer.parseInt(listaProyectos.get(i).getValidacionAdmin().toString());
-            int estatus = Integer.parseInt(listaProyectos.get(i).getIdInstancia().getEstatus().toString());
-            if ((validacionAdmin == 1) && (estatus == 1) && ((validacionAdmin == 1) || (validacionAdmin == 2))) {
+            int estatusInstancia = Integer.parseInt(listaProyectos.get(i).getIdInstancia().getEstatus().toString());
+            int estatusProyecto= Integer.parseInt(listaProyectos.get(i).getEstatus().toString());
+            if (((estatusInstancia == 1) || (estatusInstancia == 2)) && (validacionAdmin == 1) && (estatusProyecto==1)) {
                 filtroDeProyectos.add(listaProyectos.get(i));
-
+                System.out.println("se agrego a la lista: "+listaProyectos.get(i).getNombre());
             }
         }
         model.addAttribute("proyectos", filtroDeProyectos);
-        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findBySpecificField("tipo", "5", "equal", null, null)); 
         return "/Organizaciones/administrarProyectos";
     }
 
@@ -149,7 +152,7 @@ public class OrganizacionesController {
     public String panelAdministradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request) {
         model.addAttribute("organizacion", instanciaFacade.findBySpecificField("validacionAdmin", "0", "equal", null, null));
         model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
-        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findBySpecificField("tipo", "4", "equal", null, null)); 
         return "/Organizaciones/validarOrganizaciones";
     }
 
@@ -565,8 +568,8 @@ public class OrganizacionesController {
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusInstancia.do")
     public @ResponseBody
     String cambiaStatusInstancia(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
-                                int id,int status, Model model, HttpSession session, HttpServletRequest request) {
-        System.out.println("Entro a modificar el status del formato unico");
+                                int id,int status,int val_admin, Model model, HttpSession session, HttpServletRequest request) {
+        
         for(String idObservacion:observaciones)
         {
             //Objeto a Registrar
@@ -582,17 +585,18 @@ public class OrganizacionesController {
             System.out.println("las observaciones son: "+idObservacion);
             //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
-        System.out.println("Ya ingreso las observaciones");
-        System.out.println("El estatus que recibio es: "+BigInteger.valueOf(status));
+        
         Instancia instancia;
         instancia = instanciaFacade.find(BigDecimal.valueOf(id));
         Iterator<Proyectos> proyectos = instancia.getProyectosCollection().iterator();
         while (proyectos.hasNext()) {
             Proyectos proyectoEdit = proyectos.next();
             proyectoEdit.setEstatus(BigInteger.valueOf(status));
+            proyectoEdit.setValidacionAdmin(BigInteger.valueOf(val_admin));
             proyectosFacade.edit(proyectoEdit);
         }
         instancia.setEstatus(BigInteger.valueOf(status));
+        instancia.setValidacionAdmin(BigInteger.valueOf(val_admin));
         instanciaFacade.edit(instancia);
         System.out.println("Ya actualizo");
         return "ok";
@@ -601,7 +605,7 @@ public class OrganizacionesController {
     @RequestMapping(method = RequestMethod.POST, value = "/cambiaStatusProyecto.do")
     public @ResponseBody
     String cambiaStatusProyecto(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
-                                int id, Model model, HttpSession session, HttpServletRequest request) {
+                                int id,int estatus,int val_admin, Model model, HttpSession session, HttpServletRequest request) {
         System.out.println("Entro a modificar el status del formato unico");
         for(String idObservacion:observaciones)
         {
@@ -622,7 +626,8 @@ public class OrganizacionesController {
         
         Proyectos proyecto;
         proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
-        proyecto.setEstatus(BigInteger.ZERO);
+        proyecto.setEstatus(BigInteger.valueOf(estatus));
+        proyecto.setValidacionAdmin(BigInteger.valueOf(val_admin));
         proyectosFacade.edit(proyecto);
         System.out.println("Ya actualizo");
         return "ok";
