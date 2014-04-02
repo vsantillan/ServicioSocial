@@ -73,10 +73,10 @@ public class ObservacionesController {
     @RequestMapping(method = RequestMethod.POST, value = "/actualizaObservacion.do")
     public @ResponseBody
     String actualizaObservacion(Model modelo, NuevaObservacion Observacion) {
-
         CatalogoObservaciones catalogo;
         catalogo = catalogoObservacionesFacade.find(BigDecimal.valueOf(Observacion.getId()));
         catalogo.setDetalle(Observacion.getDetalle());
+        catalogo.setTipo(BigInteger.valueOf(Observacion.getTipo()));
         catalogoObservacionesFacade.edit(catalogo);
         return "<script>"
                 + "alert('¡Observacion Actualizada  Correctamente!');"
