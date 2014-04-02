@@ -260,7 +260,9 @@ public class FormatoUnicoController {
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             //----Inserción de todo el bean de formato unico con el facade---
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            System.out.println("Antes de crear");
             formatoUnicoFacade.create(formatoUnico);
+            System.out.println("Despues de crear");
             //fin de inserción
 
             //Setear en vacío los horarios alumno 
