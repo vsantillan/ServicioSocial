@@ -9,7 +9,7 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-        
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Catálogo de lugares</title>
     </head>
@@ -64,13 +64,12 @@
                     </div>
                     <div class="modal-body">
                         <form:form commandName="lugar_i" id="nuevoLugar" action="nuevoLugar.do" method="POST">
-                            <form:hidden path="id" value='-1'/>
                             <div class="form-group">
                                 <p><label for="lugar">Descripci&oacute;n:</label> </p>
-                                <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/> 
+                                <form:input id="lugar" class="lugares form-control" name="lugar" path="lugar" rows="8" cols="50"/> 
                                 <div id="errorVacio1"></div>
                             </div>
-                            <input type="submit" id="envioB1" value = "Guardar " class="btn btn-primary" />
+                            <input type ="submit" id="envioB1" value = "Guardar " class="btn btn-primary" />
 
                         </form:form>
                     </div>
@@ -91,10 +90,10 @@
                             <form:input hidden="hidden" id="id" name="name" path="id" />
                             <div class="form-group">
                                 <p><label for="lugar">Descripci&oacute;n:</label> </p>
-                                <form:input id="lugar_e" class="lugares form-control"  name="lugar" path="lugar" rows="8" cols="50"  onkeyup="javascript:this.value=this.value.toUpperCase();"/>
+                                <form:input id="lugar_e" class="lugares form-control"  name="lugar" path="lugar" rows="8" cols="50"/>
                                 <div id="errorVacio"></div>
                             </div>
-                            
+
                             <input id="envioB" type ="submit" value = "Guardar " class="btn btn-primary" />
 
                         </form:form>
