@@ -23,28 +23,12 @@ import org.openide.util.Exceptions;
  */
 public class GeneraDocumento {
 
-    public GeneraDocumento() {
-    }
-
-    public void generar(String usu, String pass,String nombre_reporte,Map parameters, HttpServletRequest request,HttpServletResponse httpServletResponse) 
-    {
+    public void generar(String usu, String pass, String nombre_reporte, Map parameters, HttpServletRequest request, HttpServletResponse httpServletResponse) {
         try {
             Conexion conn = new Conexion();
             /*Establecemos la ruta del reporte*/
-            File reportFile = new File(request.getRealPath("reportes//"+nombre_reporte+".jasper"));
-            /* No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto ya que solo seguiremos el formato del método runReportToPdf*/
-//            Map parameters = new HashMap();
-//            //parameters.put("noControl", noControl);
-//            //parameters.put("idProyecto", idProyecto);//idProyecto
-//            for(int i=0;i<arr[0].length;i++)
-//            {
-//                //System.out.print("Nombre del parametro: "+arr[0][i]+"\t");
-//                //System.out.print("Valor del parametro: "+arr[1][i]+"\t");
-//                System.out.println("parameters.put(\"Nombre_parametro: "+arr[0][i]+"\", \"Valor_Parametro: "+arr[1][i]+"\");"); 
-//                parameters.put(arr[0][i], arr[1][i]); 
-//            }
-            //parameters.put("Nombre_parametro", "Valor_Parametro"); 
-                /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
+            File reportFile = new File(request.getRealPath("reportes//" + nombre_reporte + ".jasper"));
+            /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
             byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux(usu, pass));
             /*Indicamos que la respuesta va a ser en formato PDF*/
             httpServletResponse.setContentType("application/pdf");
@@ -55,15 +39,4 @@ public class GeneraDocumento {
             Exceptions.printStackTrace(ex);
         }
     }
-    
-//    public static void main(String[] args) {
-//        
-//        GeneraDocumento obj=new GeneraDocumento();
-//        String[][] arr=new String [2][5];
-//        arr[0][0]="no_control";
-//        arr[1][0]="09280525";
-//        arr[0][1]="idProyecto";
-//        arr[1][1]="2";
-//        obj.generar(arr, null, null);
-//    }
 }

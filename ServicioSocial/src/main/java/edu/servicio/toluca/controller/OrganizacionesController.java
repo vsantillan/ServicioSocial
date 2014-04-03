@@ -4,7 +4,6 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
@@ -14,8 +13,6 @@ import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Perfil;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
-import edu.servicio.toluca.entidades.RetroalimentacionInstancia2;
-import edu.servicio.toluca.entidades.RetroalimentacionProyecto2;
 import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
@@ -25,7 +22,6 @@ import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
 import edu.servicio.toluca.entidades.MunicipiosSia;
-import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
@@ -39,8 +35,6 @@ import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
 import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
-import edu.servicio.toluca.sesion.RetroalimentacionInstancia2Facade;
-import edu.servicio.toluca.sesion.RetroalimentacionProyecto2Facade;
 import edu.servicio.toluca.sesion.TipoLocalidadFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
@@ -53,11 +47,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.validation.Valid;
-
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -94,10 +86,6 @@ public class OrganizacionesController {
     private ProgramaFacade programaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
     private ActividadesFacade actividadesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/RetroalimentacionInstancia2Facade")
-    private RetroalimentacionInstancia2Facade retroalimentacionInstanciaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/RetroalimentacionProyecto2Facade")
-    private RetroalimentacionProyecto2Facade retroalimentacionProyectoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     private CodigosPostalesFacade codigosPostalesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
@@ -359,11 +347,12 @@ public class OrganizacionesController {
         Proyectos proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
         model.addAttribute("proyecto", proyecto);
         model.addAttribute("proyectoDireccion", proyecto);
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
+        System.out.println("Instancias");
         for (int i = 0; i < listaInstancias.size(); i++) {
-            int validacionAdmin = Integer.parseInt(listaInstancias.get(i).getValidacionAdmin().toString());
-            if ((validacionAdmin == 1) || (validacionAdmin == 2)) {
+            String estatus = listaInstancias.get(i).getEstatus().toString();
+            if ((estatus.equals("1")) || (estatus.equals("2"))) {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
@@ -402,7 +391,6 @@ public class OrganizacionesController {
         //List<Actividades> dameActividades=actividadesFacade.findBySpecificField("ID_PROYECTO", 12, "equal", null, null);
         model.addAttribute("damePerfilesDelProyecto", perfilesSonDelProyecto);
         return "/Organizaciones/editarProyecto";
-        //pass de mi base Regules123
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarProyecto.do")
@@ -429,11 +417,12 @@ public class OrganizacionesController {
                 model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
             } catch (Exception e) {
             }
-            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
+            System.out.println("Instancias");
             for (int i = 0; i < listaInstancias.size(); i++) {
-                int validacionAmin = Integer.parseInt(listaInstancias.get(i).getValidacionAdmin().toString());
-                if ((validacionAmin == 1) || (validacionAmin == 2)) {
+                String estatus = listaInstancias.get(i).getEstatus().toString();
+                if ((estatus.equals("1")) || (estatus.equals("2"))) {
                     filtroInstancias.add(listaInstancias.get(i));
                 }
             }
