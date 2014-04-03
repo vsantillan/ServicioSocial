@@ -38,6 +38,8 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "CatalogoObservaciones.findByDetalle", query = "SELECT c FROM CatalogoObservaciones c WHERE c.detalle = :detalle"),
     @NamedQuery(name = "CatalogoObservaciones.findByTipo", query = "SELECT c FROM CatalogoObservaciones c WHERE c.tipo = :tipo")})
 public class CatalogoObservaciones implements Serializable {
+    @OneToMany(mappedBy = "catalogoObservacionId")
+    private Collection<RegObservacionGeneral> regObservacionGeneralCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GeneratedValue(generator = "generator")
@@ -122,6 +124,15 @@ public class CatalogoObservaciones implements Serializable {
     @Override
     public String toString() {
         return "edu.servicio.toluca.entidades.CatalogoObservaciones[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<RegObservacionGeneral> getRegObservacionGeneralCollection() {
+        return regObservacionGeneralCollection;
+    }
+
+    public void setRegObservacionGeneralCollection(Collection<RegObservacionGeneral> regObservacionGeneralCollection) {
+        this.regObservacionGeneralCollection = regObservacionGeneralCollection;
     }
     
 }
