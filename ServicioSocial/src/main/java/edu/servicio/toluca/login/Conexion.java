@@ -13,8 +13,6 @@ import java.sql.SQLException;
  * @author oracle
  */
 public class Conexion {
-
-    
     //NO se modifican
     private static final String IP_PUERTO_BD_ITT_CENTRO_COMPUTO ="192.168.2.1:1521:";
     private static final String SID_ORACLE_ITT_CENTRO_COMPUTO   ="sia";
