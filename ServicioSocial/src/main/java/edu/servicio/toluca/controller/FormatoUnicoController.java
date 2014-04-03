@@ -322,12 +322,13 @@ public class FormatoUnicoController {
 //////////////////////////////////////////////////////////////////////////
 ////////Asunto de la foto provisional/////////////////
 //////////////////////////////////////////////////////////////////////////
-        if (alumno.getFoto() == null) {
-            modelo.addAttribute("idUsuario", alumno.getId());
-            return "/FormatoUnico/subirFoto";
-        } else {
-            System.out.println("La foto no estaba nula");
-        }
+        
+//        if (alumno.getFoto() == null) {
+//            modelo.addAttribute("idUsuario", alumno.getId());
+//            return "/FormatoUnico/subirFoto";
+//        } else {
+//            System.out.println("La foto no estaba nula");
+//        }
 
 //////////////////////////////////////////////////////////////////////////
 ////////Preparar información de datos personales y enviar/////////////////
