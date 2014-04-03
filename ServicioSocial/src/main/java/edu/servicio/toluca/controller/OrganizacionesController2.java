@@ -208,17 +208,20 @@ public class OrganizacionesController2 {
             model.addAttribute("otra_colonia", otra_colonia);
             //Agregamos atributos al formulario
             model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
-//            model.addAttribute("instancia", new Instancia());
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
-            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-            ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
             try {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
             } catch (Exception e) {
             }
+            
+            model.addAttribute("estados", estadosFacade.findAll());
+            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("idInstancia", instancia.getIdInstancia().intValue());
+            model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+            
             return "/Organizaciones/registroOrganizaciones";
 
         } else {
@@ -283,10 +286,10 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaPreOrganizacion.do")
-    public String gdaAltaPreOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existe_colonia, String idInstancia) {
+    public String gdaAltaPreOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia,String existeCP,String existe_colonia, String idInstancia) {
         System.out.println("idInstancia:" + idInstancia);
         //Validacion
-        new ValidacionesOrganizaciones().valGdaAltaInst(instancia, result, model, codigo_postal, otra_colonia, existe_colonia, confirma_password);
+        new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existeCP, confirma_password);
 
         if (result.hasErrors()) {
             System.out.print("hubo errores");
@@ -299,7 +302,7 @@ public class OrganizacionesController2 {
             model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
             model.addAttribute("idInstancia", idInstancia);
-            model.addAttribute("instancia", instancia);
+            model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
             model.addAttribute("otra_colonia", otra_colonia);
@@ -730,15 +733,11 @@ public class OrganizacionesController2 {
     @RequestMapping(method = RequestMethod.POST, value = "/confirmaOrganizacionVisitante.do")
     public String confirmaOrganizacionVisitante(Model model, String idInstancia) {
         System.out.println("Id instancia:" + idInstancia);
-
-        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-        ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("estados", estadosFacade.findAll());
         model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
         model.addAttribute("idInstancia", idInstancia);
-        Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
-        model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
-        model.addAttribute("instancia", instancia);
+        model.addAttribute("instanciaDireccion", instanciaFacade.find(BigDecimal.valueOf(Integer.parseInt(idInstancia))));
+        model.addAttribute("instancia", instanciaFacade.find(BigDecimal.valueOf(Integer.parseInt(idInstancia))));
 
         return "/Organizaciones/confirmaOrganizacionVisitante";
     }

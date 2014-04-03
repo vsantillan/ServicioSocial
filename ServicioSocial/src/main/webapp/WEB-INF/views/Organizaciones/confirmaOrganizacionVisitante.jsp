@@ -81,7 +81,7 @@
                                         <div class="form-group">
                                             <label for="codigo_postal">C&oacute;digo Postal:</label>
 
-                                            <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" class="form-control">
+                                            <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" class="form-control" value="${instanciaDireccion.idColonia.idCp.cp}">
                                             <input type="hidden" id="preCP" value="${cp}" class="form-control"/><br>${codigo_postal}
 
                                         </div>
@@ -109,14 +109,14 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="colonia">Colonia:</label>
-
+                                            <input id="nombre_colonia" path="nombre_colonia" value="${instanciaDireccion.idColonia.nombre}" hidden="hidden"/>
                                             <div id="notice"></div>
                                             <!--select name="colonia" id="colonia" disabled="true"></select--> 
-                                            <form:select id="idColonia" path="idColonia.idColonia" name="idColonia" class="form-control"></form:select> 
-                                                <div id="otra_colonia" style="display:none;">
-                                                    <input type="text" name="otra_colonia" value="${otra_colonia}" class="form-control"/>
-                                                <input type="hidden" id="existeCP" name="existeCP" value="true">
-                                                <input type="hidden" id="preColonia" value="${idColonia}"/>
+                                            <form:select  class="form-control" id="idColonia" path="idColonia.idColonia" name="idColonia"></form:select> 
+                                            <div id="otra_colonia" style="display:none;">
+                                                <input type="text" class="form-control" name="otra_colonia" value="${otra_colonia}"/>
+                                                <input type="hidden"  class="form-control" id="existeCP" name="existeCP" value="true">
+                                                <input type="hidden" class="form-control" id="preColonia" value="${idColonia}"/>
                                                 ${error_otra_colonia}
                                             </div>
                                             <br/>
@@ -142,28 +142,21 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label for="lugar">Nombre de Usuario:</label>
-
-                                <form:input path="usuario" id="usuario" size="20" class="form-control"/><br/>
-                                ${usuario}
-
+                                <form:input path="usuario" id="usuario" placeholder="Nombre de Usuario" class="form-control" maxlength="29" /><br/>
+                                <form:errors path="usuario" cssClass="alert alert-danger"/>
                             </div>
                             <div class="form-group">
                                 <label for="lugar">Correo:</label>
-
-                                <form:input path="correo" id="correo" size="20" class="form-control"/><br/>
-                                <form:errors path="correo" class="alert alert-danger"/>${correo}
-
+                                <form:input path="correo" id="correo" size="20" placeholder="Correo" class="form-control" maxlength="50"/><br/>
+                                <form:errors path="correo" cssClass="alert alert-danger" />
                             </div>
                             <div class="form-group">
                                 <label for="lugar">Contrase&ntilde;a:</label>
-
                                 <form:input path="password" id="password" size="20" type="password" class="form-control"/><br/>
                                 ${password}
-
                             </div>
                             <div class="form-group">
                                 <label for="lugar">Confirmar Contrase&ntilde;a:</label>
-
                                 <input type="password" name="confirma_password" id="confirma_password" size="20" class="form-control"/> <br>
                                 ${confirma_password}                           
 
@@ -172,8 +165,7 @@
                     </div>
                     <div class="row col-md-12 col-md-offset-4">
                         <div class="form-group"> 
-                            <input type ="submit" value = "Guardar " class="btn btn-primary" /> 
-                            <input type ="reset" value = "Limpiar" class="btn btn-primary" />
+                            <input type ="submit" value = "Guardar cambios" class="btn btn-primary" /> 
                         </div>
                     </div>
                 </form:form>
@@ -183,7 +175,6 @@
         </div>
     </div>
     <%@include file="../General/js.jsp"%>
-    <script src="js/jquery.codigos.postales.js"></script>
-    <script src="js/jquery.manolo.js"></script>
+    <script src="js/cargaCodigosPostalesParaEditarOP.js"></script>
 </body>
 </html>
