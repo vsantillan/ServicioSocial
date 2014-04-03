@@ -226,7 +226,7 @@
     </div>
     <%@include file="../General/js.jsp"%>
     <script src="js/jquery.codigos.postales.js"></script>       
-     <script src="js/jquery.manolo.js">
+     <script src="js/jquery.manolo.js"></script>
     <script>var iniciarAltaPropuestaInstancia = true;</script>
     <script>
         $('a#btn-add').click(function() {
