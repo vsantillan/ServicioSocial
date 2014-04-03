@@ -14,14 +14,22 @@ import java.sql.SQLException;
  */
 public class Conexion {
 
+    
+    //NO se modifican
+    private static final String IP_PUERTO_BD_ITT_CENTRO_COMPUTO ="192.168.2.1:1521:";
+    private static final String SID_ORACLE_ITT_CENTRO_COMPUTO   ="sia";
+    
+    //Modificar al ambiante a usar (Desarrollo,Calidad,Producción)
+    private static final String IP_PUERTO_BD_ITT_VINCULACION ="192.168.40.120:1521:";
+    private static final String SID_ORACLE_ITT_VINCULACION ="xe";
     public Conexion() {
     }
 
     //conexion a la base de datos
     public Connection conectar(String usu, String cont) throws ClassNotFoundException, SQLException {
-
-        String host = "192.168.2.1:1521:";
-        String sid = "sia";
+        //IP LUGO
+        String host = IP_PUERTO_BD_ITT_CENTRO_COMPUTO;
+        String sid  = SID_ORACLE_ITT_CENTRO_COMPUTO;
 
         String usuario = usu;
 
@@ -40,8 +48,10 @@ public class Conexion {
     }
     
     public Connection conectarAux(String usu, String cont) throws ClassNotFoundException, SQLException {
-        String host = "localhost:1521:";
-        String sid = "orcl";
+        String host = IP_PUERTO_BD_ITT_VINCULACION;
+        String sid  = SID_ORACLE_ITT_VINCULACION;
+        
+        //Servidor BD 
 
 //        String host = "localhost:1521:";
 //        String sid = "xe";
