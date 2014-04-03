@@ -319,9 +319,9 @@ public class OrganizacionesController {
             try {
                 instanciaFacade.edit(instancia);
             } catch (Exception e) {
-                result.addError(new ObjectError("error_sql", "Error de llave unica"));
+                result.addError(new ObjectError("error_sql", "¡Error interno! Imposible editar organización."));
                 System.out.println(result.getGlobalError().toString());
-                model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>¡Error interno! Imposible editar oirganización.</div>");
 
                 return "/Organizaciones/editarOrganizacion";
             }
@@ -532,9 +532,66 @@ public class OrganizacionesController {
             try {
                 proyectosFacade.edit(proyecto);
             } catch (Exception e) {
-                result.addError(new ObjectError("error_sql", "Error de llave unica"));
-                model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
+                result.addError(new ObjectError("error_sql", "¡Error interno! Imposible editar proyecto."));
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>¡Error interno! Imposible editar proyecto.</div>");
+                model.addAttribute("cp", codigo_postal);
+                try {
+                    model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
+                } catch (Exception ex) {
+                }
+                List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+                ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
+                System.out.println("Instancias");
+                for (int i = 0; i < listaInstancias.size(); i++) {
+                    String estatus = listaInstancias.get(i).getEstatus().toString();
+                    if ((estatus.equals("1")) || (estatus.equals("2"))) {
+                        filtroInstancias.add(listaInstancias.get(i));
+                    }
+                }
+                model.addAttribute("instancia", filtroInstancias);
+                model.addAttribute("estados", estadosFacade.findAll());
+                model.addAttribute("perfil", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+                model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+                List<Perfil> perfilesNoSonDelProyecto = new ArrayList<Perfil>();
+                List<Perfil> perfilesSonDelProyecto = new ArrayList<Perfil>();
+                List<Perfil> listaPerfil;
+                Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
+                listaPerfil = perfilFacade.findAll();
+                boolean agregar;
+                String nombrePerfilCollection;
+                for (int i = 0; i < listaPerfil.size(); i++) {
+                    agregar = true;
+                    iteratorProyectosPerfilCollection = proyectosFacade.find(proyecto.getIdProyecto()).getProyectoPerfilCollection().iterator();
+                    while (iteratorProyectosPerfilCollection.hasNext()) {
+                        nombrePerfilCollection = iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre();
+                        if (!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar) {
+                            agregar = true;
+                        } else {
+                            agregar = false;
+                        }
+                    }
+                    if (agregar && listaPerfil.get(i).getEstatus().intValue()==1) 
+                    {
+                        perfilesNoSonDelProyecto.add(listaPerfil.get(i));
+                    } else if(listaPerfil.get(i).getEstatus().intValue()==1)
+                    {
+                        perfilesSonDelProyecto.add(listaPerfil.get(i));
+                    }
+                }
+                model.addAttribute("perfilesProyectoEx", perfilesNoSonDelProyecto);
+                model.addAttribute("perfilesSonProyecto", perfilesSonDelProyecto);
+                //Regresar actividades
+                model.addAttribute("nActividades", nActividades.substring(0, 1));
+                System.out.println("nActividades:" + nActividades.substring(0, 1));
 
+                for (int i = 0; i < actividadesModel.actividades.size(); i++) {
+                    model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
+                    System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
+                }
+                model.addAttribute("actividadAux", actividadesModel.actividades);
+                model.addAttribute("proyectoDireccion", proyectosFacade.find(proyecto.getIdProyecto()));
+                model.addAttribute("proyecto", proyecto);
                 return "/Organizaciones/editarProyecto";
             }
 

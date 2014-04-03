@@ -604,12 +604,11 @@ public class OrganizacionesController2 {
             System.out.println("Error:" + result.toString());
 
             //Organizacion
-            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
-
             for (int i = 0; i < listaInstancias.size(); i++) {
-                int validacion = Integer.parseInt(listaInstancias.get(i).getValidacionAdmin().toString());
-                if (validacion == 1) {
+                int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
+                if ((estatus == 1) || (estatus == 2)) {
                     filtroInstancias.add(listaInstancias.get(i));
                 }
             }
