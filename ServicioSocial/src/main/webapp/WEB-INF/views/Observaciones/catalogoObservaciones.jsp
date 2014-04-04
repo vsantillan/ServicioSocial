@@ -45,13 +45,13 @@
                                         <tbody>
                                             <core:forEach items="${Observaciones}" var="current">
                                                 <tr class='gradeX'>
-                                                    <th>
+                                                    <td>
                                                         <a href="#editarOrganizacion" data-toggle="modal" class="fancybox-effects-a  actualizaObservacion" detalle="${current.detalle}" idO="${current.id}"><span class="glyphicon glyphicon-edit sizeIcon"></span></a>
                                                         <a href="#" class="borrarObservacion"><span class="glyphicon glyphicon-trash sizeIcon" idex="${current.id}"></span></a>
-                                                    </th>
-                                                    <th><core:out value="${current.id}" /></th>
-                                                    <th><core:out value="${current.detalle}" /></th>
-                                                    <th><core:choose>
+                                                    </td>
+                                                    <td><core:out value="${current.id}" /></td>
+                                                    <td><core:out value="${current.detalle}" /></td>
+                                                    <td><core:choose>
                                                             <core:when test="${current.tipo == 1}">
                                                                 Formato Unico.
                                                             </core:when>
@@ -71,7 +71,7 @@
                                                                 Tipo Desconocido.
                                                             </core:otherwise>
                                                         </core:choose></th>
-                                                </tr>
+                                                </td>
                                             </core:forEach>
                                         </tbody>
                                     </table>

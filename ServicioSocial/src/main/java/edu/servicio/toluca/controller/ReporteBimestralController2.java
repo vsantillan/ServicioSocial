@@ -9,17 +9,21 @@ import edu.servicio.toluca.beans.documentosFinales.GeneraDocumento;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
 import edu.servicio.toluca.entidades.BimestralesActividades;
 import edu.servicio.toluca.entidades.CatalogoDocumento;
+import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
+import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
+import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.ReportesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.File;
@@ -28,6 +32,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -54,6 +59,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ReporteBimestralController2 {
 
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
+    private CatalogoObservacionesFacade observacionesCatalogoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
@@ -66,6 +73,8 @@ public class ReporteBimestralController2 {
     private DocumentosFacade documentosFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoDocumentoFacade")
     private CatalogoDocumentoFacade catalogoDocumentoFacade;
+        @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
+    private RegObservacionesFacade regisObservacionesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
     public String reporteBimestralAdministrador(Model modelo, HttpSession session, HttpServletRequest request) {
@@ -126,7 +135,16 @@ public class ReporteBimestralController2 {
         modelo.addAttribute("reportesNoRevisados", reportesNoRevisados);
         modelo.addAttribute("reportesEnCorreccion", reportesEnCorreccion);
         modelo.addAttribute("reportesRechazados", reportesRechazados);
-        modelo.addAttribute("retroalimentacionReporte", new RetroalimentacionReporte());
+//        modelo.addAttribute("retroalimentacionReporte", new RetroalimentacionReporte());
+        //Catalogo Sanciones
+        List<CatalogoObservaciones> observaciones = observacionesCatalogoFacade.findAll();
+        List<CatalogoObservaciones> observacionesBimestrales = new ArrayList();
+        for (CatalogoObservaciones observacionActual : observaciones) {
+            if (observacionActual.getTipo().compareTo(BigInteger.valueOf(2)) == 0) {
+                observacionesBimestrales.add(observacionActual);
+            }
+        }
+        modelo.addAttribute("listadoObservaciones", observacionesBimestrales);
         return "/ReporteBimestral/reporteBimestralAdministrador";
     }
 
@@ -138,22 +156,42 @@ public class ReporteBimestralController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarStatusReporte.do")
-    public String aceptarRactualizarStatusReporteporte(RetroalimentacionReporte retroalimentacionReporte, Model model, HttpSession session, HttpServletRequest request) {
+    public @ResponseBody
+    String aceptarRactualizarStatusReporteporte(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
+            String idDatoPersonales,
+            String idReporte,
+            String idDocumento,
+            String status,
+            String tipo) {
+
+        for (String idObservacion : observaciones) {
+            //Objeto a Registrar
+            RegObservaciones registro = new RegObservaciones();
+            //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
+            registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
+            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            //Asignar Fecha Actual al momento para registro 
+            registro.setFecha(new Date());
+            //Creacion de Registro
+            regisObservacionesFacade.create(registro);
+        }
         Reportes reporte;
-        reporte = reportesFacade.find(BigDecimal.valueOf(retroalimentacionReporte.getIdReporte()));
+        reporte = reportesFacade.find(BigDecimal.valueOf(Integer.parseInt(idReporte)));
         //Checar el estatus del reporte
-        reporte.setStatus(BigInteger.valueOf(retroalimentacionReporte.getStatus()));
+        reporte.setStatus(BigInteger.valueOf(Integer.parseInt(status)));
         reporte.setNumeroRevisiones(BigInteger.valueOf(reporte.getNumeroRevisiones().intValue() + 1));
         reportesFacade.edit(reporte);
         Documentos documento;
-        short nuevoStatus = (short) retroalimentacionReporte.getStatus();
-        documento = documentosFacade.find(BigDecimal.valueOf(retroalimentacionReporte.getIdDoc()));
+        short nuevoStatus = (short) Integer.parseInt(status);
+        System.out.println("idDocumento"+idDocumento);
+        documento = documentosFacade.find(BigDecimal.valueOf(Integer.parseInt(idDocumento)));
         documento.setStatus(nuevoStatus);
-        System.out.println("Reporte Alterado con Status a: " + retroalimentacionReporte.getIdDoc());
+        System.out.println("Reporte Alterado con Status a: " + Integer.parseInt(idDocumento));
         documentosFacade.edit(documento);
-        System.out.println("Reporte Alterado con Status a: " + retroalimentacionReporte.getStatus());
-        System.out.println("El id de reporte es: " + retroalimentacionReporte.getIdReporte());
-        return "redirect:reporteBimestralAdministrador.do";
+        System.out.println("Reporte Alterado con Status a: " + status);
+        System.out.println("El id de reporte es: " + idReporte);
+        return "OK";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/aceptarReporte.do")
@@ -287,7 +325,7 @@ public class ReporteBimestralController2 {
         parameters.put("id_reporte", idReporte);
         try {
             GeneraDocumento obj = new GeneraDocumento();
-            obj.generar("ges_vin", "gst01a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
+            obj.generar("ges_vin", "gst05a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
         } catch (Exception ex) {
             Exceptions.printStackTrace(ex);
         }

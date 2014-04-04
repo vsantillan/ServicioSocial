@@ -196,41 +196,41 @@
                                             <tbody>
                                                 <core:forEach items="${listaReportes}" var="reportes">
                                                     <tr class='gradeX'>
-                                                        <th><core:out value="${reportes.numeroReporte}"/></th>
-                                                        <th><core:out value="${reportes.horas}"/></th>
-                                                        <th><fmt:formatDate value="${reportes.fechaEntregaMax}" pattern="dd-MM-yyyy"></fmt:formatDate></th>
-                                                        <th><core:out value="${reportes.numeroRevisiones}"/></th>
+                                                        <td><core:out value="${reportes.numeroReporte}"/></td>
+                                                        <td><core:out value="${reportes.horas}"/></td>
+                                                        <td><fmt:formatDate value="${reportes.fechaEntregaMax}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
+                                                        <td><core:out value="${reportes.numeroRevisiones}"/></td>
                                                             <core:choose>    
                                                                 <core:when test="${reportes.status==0}">
-                                                                <th>No has subido tu reporte</th>
+                                                                <td>No has subido tu reporte</td>
                                                                 </core:when>
                                                                 <core:when test="${reportes.status==1}">
-                                                                <th>Aceptado</th>
+                                                                <td>Aceptado</td>
                                                                 </core:when>
                                                                 <core:when test="${reportes.status==2}">
-                                                                <th>Rechazado</th>
+                                                                <td>Rechazado</td>
                                                                 </core:when>
                                                                 <core:when test="${reportes.status==3}">
-                                                                <th>En correci&oacute;n</th>
+                                                                <td>En correci&oacute;n</td>
                                                                 </core:when>
                                                                 <core:when test="${reportes.status==4}">
-                                                                <th>En revisi&oacute;n</th>
+                                                                <td>En revisi&oacute;n</td>
                                                                 </core:when>
                                                             </core:choose>
                                                             <core:forEach items="${datosPersonales}" var="current">
                                                                 <core:forEach items="${current.formatoUnicoCollection}" var="formato">
                                                                     <core:choose>
                                                                         <core:when test="${formato.catalogoPlanId.detalle=='S'}" >
-                                                                        <th>${reportes.calificacion}</th>
+                                                                        <td>${reportes.calificacion}</td>
                                                                         </core:when> 
                                                                         <core:otherwise>
-                                                                        <th>No requerida</th>
+                                                                        <td>No requerida</td>
                                                                         </core:otherwise>
                                                                     </core:choose>
                                                                 </core:forEach>
                                                             </core:forEach>
-                                                        <th><a href="muestraReporteBimestral.pdf?idReporte=${reportes.id}&noReporte=${reportes.numeroReporte}" target="_blank"><span class="glyphicon glyphicon-search sizeIcon"></span></a></th>
-                                                    </tr>
+                                                        <td><a href="muestraReporteBimestral.pdf?idReporte=${reportes.id}&noReporte=${reportes.numeroReporte}" target="_blank"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
+                                                    </td>
                                                 </core:forEach>
                                             </tbody>
                                         </table>

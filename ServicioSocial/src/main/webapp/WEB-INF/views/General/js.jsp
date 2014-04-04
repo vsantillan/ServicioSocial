@@ -17,7 +17,6 @@
 <script src="<%=request.getContextPath()%>/js/inicia.session.js"></script>
 <script src="<%=request.getContextPath()%>/js/lugares.js"></script>
 <script src="<%=request.getContextPath()%>/js/observaciones.js"></script>
-<script src="<%=request.getContextPath()%>/js/reporteBimestalActualiza.js"></script>
 <script src="<%=request.getContextPath()%>/js/reportesBimestrales.js"></script>
 <script src="<%=request.getContextPath()%>/js/sanciones.js"></script>
 <script src="<%=request.getContextPath()%>/js/platica.js"></script>
