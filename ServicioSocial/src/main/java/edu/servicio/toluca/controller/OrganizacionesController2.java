@@ -291,6 +291,12 @@ public class OrganizacionesController2 {
         //Validacion
         new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existeCP, confirma_password);
 
+        if (!confirma_password.equals(instancia.getPassword())) 
+        {
+            result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
+            model.addAttribute("confirma_password", "<div class='alert alert-danger'>Las contraseñas no coinciden</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
+        }
+        
         if (result.hasErrors()) {
             System.out.print("hubo errores");
             System.out.println(instancia.toString());

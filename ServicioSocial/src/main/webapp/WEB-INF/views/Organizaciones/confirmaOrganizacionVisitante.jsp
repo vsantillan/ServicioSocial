@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
-                <%@include file="../General/menuAdministrador.jsp"%>
+                <%@include file="../General/menuPrincipal.jsp"%> 
                 <div class="row col-md-12">
                     <div class="row help-block text-center col-md-12"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Completando Pre-Registro</h1></div>
                     <br>
