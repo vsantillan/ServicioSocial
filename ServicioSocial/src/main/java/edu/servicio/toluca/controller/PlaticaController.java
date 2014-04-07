@@ -162,6 +162,7 @@ public class PlaticaController {
          }
          }
         modelo.addAttribute("platicasPeriodo",platicasDisponibles);
+        modelo.addAttribute("espacio"," ");
         return "/Platicas/asistenciaPosteriorEspecial";
     }
 
@@ -396,13 +397,31 @@ public class PlaticaController {
             // List<Va> listaAlumno = vaFacade.findBySpecificField("id", no_control, "equal", null, null); 
             List<VistaAlumno> listaAlumno = VistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
             if (listaAlumno.isEmpty()) {
-                modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
+                ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
+         List<Platica> platicas = platicaFacade.findAll();
+         if (!platicas.isEmpty()){
+         for(int i=0;i<platicas.size();i++){
+             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
+                 platicasDisponibles.add(platicas.get(i));
+             }
+         }
+         }
+                modelo.addAttribute("platicasPeriodo", platicasDisponibles);
                 modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control no encontrado</p>");
                 return "/Platicas/asistenciaPosteriorEspecial";
             } else {
                 VistaAlumno porcentaje = listaAlumno.get(0);
                 if (Float.parseFloat(porcentaje.getPorcentaje()) < 70) {
-                    modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
+                    ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
+         List<Platica> platicas = platicaFacade.findAll();
+         if (!platicas.isEmpty()){
+         for(int i=0;i<platicas.size();i++){
+             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
+                 platicasDisponibles.add(platicas.get(i));
+             }
+         }
+         }
+                    modelo.addAttribute("platicasPeriodo", platicasDisponibles);
                     modelo.addAttribute("error", "<p class='alert alert-danger'>El alumno no cuenta con los creditos suficientes , tiene" + Float.parseFloat(porcentaje.getPorcentaje()) + "% de creditos</p>");
                     return "/Platicas/asistenciaPosteriorEspecial";
                 } else {
@@ -442,7 +461,17 @@ public class PlaticaController {
                         platicaFacade.edit(platica);
                         modelo.addAttribute("folio", idPlatica + no_control);
                         modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
-                        modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
+                         modelo.addAttribute("espacio", " ");
+                         ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
+         List<Platica> platicas = platicaFacade.findAll();
+         if (!platicas.isEmpty()){
+         for(int i=0;i<platicas.size();i++){
+             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
+                 platicasDisponibles.add(platicas.get(i));
+             }
+         }
+         }
+                        modelo.addAttribute("platicasPeriodo", platicasDisponibles);
                         return "/Platicas/asistenciaPosteriorEspecial";
 
                     } else {
@@ -452,13 +481,31 @@ public class PlaticaController {
                         foliosPlaticaFacade.edit(foliosPlatica);
                         modelo.addAttribute("folio", idPlatica + no_control);
                         modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
-                        modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
+                        ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
+         List<Platica> platicas = platicaFacade.findAll();
+         if (!platicas.isEmpty()){
+         for(int i=0;i<platicas.size();i++){
+             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
+                 platicasDisponibles.add(platicas.get(i));
+             }
+         }
+         }
+                        modelo.addAttribute("platicasPeriodo", platicasDisponibles);
                         return "/Platicas/asistenciaPosteriorEspecial";
                     }
                 }
             }
         } else {
-            modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
+            ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
+         List<Platica> platicas = platicaFacade.findAll();
+         if (!platicas.isEmpty()){
+         for(int i=0;i<platicas.size();i++){
+             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
+                 platicasDisponibles.add(platicas.get(i));
+             }
+         }
+         }
+            modelo.addAttribute("platicasPeriodo", platicasDisponibles);
             modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control incorrecto</p>");
             return "/Platicas/asistenciaPosteriorEspecial";
         }
