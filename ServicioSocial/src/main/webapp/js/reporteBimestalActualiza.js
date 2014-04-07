@@ -69,7 +69,6 @@ function cambiarEstadoReporteCorreccion(event)
         idDocumento = $(this).attr('idDoc');
         status = $(this).attr('status');
         tipo = "1";
-        alert("IdDatos: "+idDatosPersonales+"IdReporte: "+idReporte+"IdDocumento: "+idDocumento+"status: "+status);
         mostrarDIVMotivos();
     }
 

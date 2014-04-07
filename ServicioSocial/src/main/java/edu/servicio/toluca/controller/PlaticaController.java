@@ -157,7 +157,7 @@ public class PlaticaController {
          if (!platicas.isEmpty()){
          for(int i=0;i<platicas.size();i++){
              if ((platicas.get(i).getStatus().compareTo((short)1))==0){
-                 platicasDisponibles.add(platicas.get(0));
+                 platicasDisponibles.add(platicas.get(i));
              }
          }
          }
@@ -209,7 +209,7 @@ public class PlaticaController {
                     platica.setPeriodo("AGO-DIC");
                 }
 
-                platica.setAnio(platica.getFecha().getYear()+"");
+                platica.setAnio(((platica.getFecha().getYear())+1900)+"");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
                 System.out.println("sin errores entidad");
                 System.out.println("fecha" + platica.getFechaMxFui().toString());
@@ -235,9 +235,8 @@ public class PlaticaController {
                         for (int i = 0; i < listaPlaticas.size(); i++) {
                             if ((platica.getAnio().toString().compareTo(listaPlaticas.get(i).getAnio().toString()) == 0) && (platica.getFecha().compareTo(listaPlaticas.get(i).getFecha()) == 0)
                                     && (platica.getHora().toString().compareTo(listaPlaticas.get(i).getHora().toString()) == 0) && (platica.getPeriodo().toString().compareTo(listaPlaticas.get(i).getPeriodo().toString()) == 0)
-                                    && (platica.getStatus().compareTo(listaPlaticas.get(i).getStatus()) == 0)
                                     && (platica.getStatus().compareTo(listaPlaticas.get(i).getStatus()) == 0) && (platica.getFechaMxFui().compareTo(listaPlaticas.get(i).getFechaMxFui()) == 0)
-                                    && (platica.getDescripcion().toString().compareTo(limpiar1.quitaCaracteresEspeciales(platica.getDescripcion())) == 0)
+                                    && (platica.getDescripcion().toString().compareTo(platica.getDescripcion()) == 0)
                                     && (platica.getIdLugar().equals(listaPlaticas.get(i).getIdLugar()))) {
                                 System.out.println("si existe");
                                 existe = true;
