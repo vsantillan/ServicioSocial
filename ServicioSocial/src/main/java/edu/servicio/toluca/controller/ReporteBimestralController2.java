@@ -184,13 +184,9 @@ public class ReporteBimestralController2 {
         reportesFacade.edit(reporte);
         Documentos documento;
         short nuevoStatus = (short) Integer.parseInt(status);
-        System.out.println("idDocumento"+idDocumento);
         documento = documentosFacade.find(BigDecimal.valueOf(Integer.parseInt(idDocumento)));
         documento.setStatus(nuevoStatus);
-        System.out.println("Reporte Alterado con Status a: " + Integer.parseInt(idDocumento));
         documentosFacade.edit(documento);
-        System.out.println("Reporte Alterado con Status a: " + status);
-        System.out.println("El id de reporte es: " + idReporte);
         return "OK";
     }
 
@@ -330,5 +326,9 @@ public class ReporteBimestralController2 {
             Exceptions.printStackTrace(ex);
         }
         return "OK";
+    }
+    
+    public void remueveObservaciones(BigDecimal idDatosPersonales){
+        List<RegObservaciones> observacionesAlumno= regisObservacionesFacade.findBySpecificField(null, this, null, null, null);
     }
 }

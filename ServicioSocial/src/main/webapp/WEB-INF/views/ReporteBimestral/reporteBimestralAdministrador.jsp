@@ -103,7 +103,7 @@
                                                                         <core:when test="${documentos.status==4 && documentos.catalogoDocumentosId.id==2}">
                                                                             <a href="#" ><span class="glyphicon glyphicon-ok  sizeIcon aceptarReporte" ide="${reporte.id}" status="${1}" idDoc="${documentos.id}"> </span></a>
                                                                             <a href="#" class="correccion" idDP="${reporte.datosPersonalesId.id}"  status="${3}" idReporte="${reporte.id}" idDoc="${documentos.id}"><span class="glyphicon glyphicon-edit sizeIcon"></span></a>
-                                                                            <a href="#" class="mandaRetro" idDP="${reporte.datosPersonalesId.id}"  status="${2}" idReporte="${reporte.id}" idDoc="${documentos.id}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
+                                                                            <a href="#" class="correccion" idDP="${reporte.datosPersonalesId.id}"  status="${2}" idReporte="${reporte.id}" idDoc="${documentos.id}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
                                                                             </core:when>
                                                                         </core:choose>
                                                                     </core:forEach>
@@ -210,24 +210,24 @@
                                             <tr class='gradeX'>
                                                 <!--<th><a href="mostarPDF.do?id=${2}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a></th>
                                                     <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>-->                                                
-                                                <th>
+                                                <td>
                                                     <core:forEach items="${datosPersonales}" var="datoPersonal">
                                                         <core:choose>
                                                             <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
                                                                 <core:forEach items="${datoPersonal.documentosCollection}" var="documentos">
                                                                     <core:choose>
                                                                         <core:when test="${documentos.status==2 && documentos.catalogoDocumentosId.id==2}">
-                                                                            <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><img width="30" src="imagenes/lupa.png"/></a>
+                                                                            <a href="mostarPDF.do?id=${documentos.id}" class="fancyFU"><span class="glyphicon glyphicon-search"></span></a>
                                                                             </core:when>
                                                                         </core:choose>
                                                                     </core:forEach>
                                                                 </core:when>
                                                             </core:choose>
                                                         </core:forEach>
-                                                </th>
-                                                <th><core:out value="${reporte.datosPersonalesId.nombre}"/></th>
-                                                <th><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></th>
-                                                <th>
+                                                </td>
+                                                <td><core:out value="${reporte.datosPersonalesId.nombre}"/></td>
+                                                <td><core:out value="${reporte.datosPersonalesId.alumnoId.id}"/></td>
+                                                <td>
                                                     <core:forEach items="${datosPersonales}" var="datoPersonal">
                                                         <core:choose>
                                                             <core:when test="${reporte.datosPersonalesId.id==datoPersonal.id}">
@@ -237,8 +237,8 @@
                                                             </core:when>
                                                         </core:choose>
                                                     </core:forEach>
-                                                </th>
-                                                <th><core:out value="${reporte.horas}"/></th>
+                                                </td>
+                                                <td><core:out value="${reporte.horas}"/></td>
                                             </tr>
                                         </core:forEach>
                                     </tbody>
