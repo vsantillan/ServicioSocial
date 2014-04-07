@@ -37,6 +37,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,7 +152,16 @@ public class PlaticaController {
             modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
-        modelo.addAttribute("platicasPeriodo", platicaFacade.findAll());
+         ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
+         List<Platica> platicas = platicaFacade.findAll();
+         if (!platicas.isEmpty()){
+         for(int i=0;i<platicas.size();i++){
+             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
+                 platicasDisponibles.add(platicas.get(0));
+             }
+         }
+         }
+        modelo.addAttribute("platicasPeriodo",platicasDisponibles);
         return "/Platicas/asistenciaPosteriorEspecial";
     }
 
@@ -225,7 +235,7 @@ public class PlaticaController {
                         for (int i = 0; i < listaPlaticas.size(); i++) {
                             if ((platica.getAnio().toString().compareTo(listaPlaticas.get(i).getAnio().toString()) == 0) && (platica.getFecha().compareTo(listaPlaticas.get(i).getFecha()) == 0)
                                     && (platica.getHora().toString().compareTo(listaPlaticas.get(i).getHora().toString()) == 0) && (platica.getPeriodo().toString().compareTo(listaPlaticas.get(i).getPeriodo().toString()) == 0)
-                                    && (platica.getTipo().compareTo(listaPlaticas.get(i).getTipo()) == 0) && (platica.getStatus().compareTo(listaPlaticas.get(i).getTipo()) == 0)
+                                    && (platica.getStatus().compareTo(listaPlaticas.get(i).getStatus()) == 0)
                                     && (platica.getStatus().compareTo(listaPlaticas.get(i).getStatus()) == 0) && (platica.getFechaMxFui().compareTo(listaPlaticas.get(i).getFechaMxFui()) == 0)
                                     && (platica.getDescripcion().toString().compareTo(limpiar1.quitaCaracteresEspeciales(platica.getDescripcion())) == 0)
                                     && (platica.getIdLugar().equals(listaPlaticas.get(i).getIdLugar()))) {
@@ -236,6 +246,7 @@ public class PlaticaController {
 
                         }
                         if (existe) {
+                            
                             modelo.addAttribute("anioInicio", anio.anioActual());
                             modelo.addAttribute("anioFin", anio.anioFin());
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
@@ -266,7 +277,7 @@ public class PlaticaController {
                     modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                     modelo.addAttribute("lugar_i", new LugaresPlatica());
                     modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
-                    modelo.addAttribute("errorFm", "<div class='alert alert-danger'>La fecha de platica debe ser menor a la de Formato unico</div>");
+                    modelo.addAttribute("errorFm", "<div class='alert alert-danger'>La fecha de platica debe ser menor a la de Formato Único</div>");
                     return "/Platicas/altaPlatica";
                 }
             }
