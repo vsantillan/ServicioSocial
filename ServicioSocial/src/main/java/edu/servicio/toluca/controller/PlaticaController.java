@@ -157,7 +157,7 @@ public class PlaticaController {
          if (!platicas.isEmpty()){
          for(int i=0;i<platicas.size();i++){
              if ((platicas.get(i).getStatus().compareTo((short)1))==0){
-                 platicasDisponibles.add(platicas.get(0));
+                 platicasDisponibles.add(platicas.get(i));
              }
          }
          }
