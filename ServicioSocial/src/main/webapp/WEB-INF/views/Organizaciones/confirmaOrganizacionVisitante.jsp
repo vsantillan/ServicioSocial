@@ -143,12 +143,14 @@
                             <div class="form-group">
                                 <label for="lugar">Nombre de Usuario:</label>
                                 <form:input path="usuario" id="usuario" placeholder="Nombre de Usuario" class="form-control" maxlength="29" /><br/>
-                                <form:errors path="usuario" cssClass="alert alert-danger"/>
+                                <form:errors path="usuario" cssClass="alert alert-danger"/><br>
+                                ${error_usuario}
                             </div>
                             <div class="form-group">
                                 <label for="lugar">Correo:</label>
                                 <form:input path="correo" id="correo" size="20" placeholder="Correo" class="form-control" maxlength="50"/><br/>
-                                <form:errors path="correo" cssClass="alert alert-danger" />
+                                <form:errors path="correo" cssClass="alert alert-danger" /><br>
+                                  ${error_correo}
                             </div>
                             <div class="form-group">
                                 <label for="lugar">Contrase&ntilde;a:</label>

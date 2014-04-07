@@ -216,12 +216,12 @@ public class OrganizacionesController2 {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
             } catch (Exception e) {
             }
-            
+
             model.addAttribute("estados", estadosFacade.findAll());
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
             model.addAttribute("idInstancia", instancia.getIdInstancia().intValue());
             model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
-            
+
             return "/Organizaciones/registroOrganizaciones";
 
         } else {
@@ -243,13 +243,12 @@ public class OrganizacionesController2 {
             instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
             System.out.println("Pass encriptado:" + instancia.getPassword());
 
-            ///Limpiando codigo
-            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
-            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
-            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
-            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
-            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
-
+//            ///Limpiando codigo
+//            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
+//            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
+//            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
+//            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
+//            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
             List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
             if (!Unicos.isEmpty()) {
                 //Inyectamos lo que traia en la colonia
@@ -273,7 +272,7 @@ public class OrganizacionesController2 {
             }
 
             try {
-                instanciaFacade.create(instancia);
+                instanciaFacade.edit(instancia);
                 System.out.println("Instancia Creada");
             } catch (Exception e) {
                 result.addError(new ObjectError("error_sql", "Error de llave unica"));
@@ -286,7 +285,7 @@ public class OrganizacionesController2 {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaPreOrganizacion.do")
-    public String gdaAltaPreOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia,String existeCP,String existe_colonia, String idInstancia) {
+    public String gdaAltaPreOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, String codigo_postal, String otra_colonia, String existeCP, String existe_colonia, String idInstancia) {
         System.out.println("idInstancia:" + idInstancia);
         //Validacion
         new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existeCP, confirma_password);
@@ -319,6 +318,44 @@ public class OrganizacionesController2 {
             return "/Organizaciones/confirmaOrganizacionVisitante";
 
         } else {
+            List<Instancia> lista = instanciaFacade.findBySpecificField("usuario", instancia.getUsuario().toString(), "equal", null, null);
+            if (!lista.isEmpty()) {
+                //Agregamos atributos al formulario
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("nombre", "asc");
+                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                model.addAttribute("idInstancia", idInstancia);
+                model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+                //Regresar codigo postal
+                model.addAttribute("cp", codigo_postal);
+                model.addAttribute("otra_colonia", otra_colonia);
+                model.addAttribute("error_usuario", "<div class='alert alert-danger'>Este usuario no esta disponible, introduzca otro nombre de usuraio</div>");
+                try {
+                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+                } catch (Exception e) {
+                }
+                return "/Organizaciones/confirmaOrganizacionVisitante";
+            }
+             List<Instancia> lista2 = instanciaFacade.findBySpecificField("correo", instancia.getCorreo().toString(), "equal", null, null);
+            if (!lista2.isEmpty()) {
+                //Agregamos atributos al formulario
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("nombre", "asc");
+                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                model.addAttribute("idInstancia", idInstancia);
+                model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+                //Regresar codigo postal
+                model.addAttribute("cp", codigo_postal);
+                model.addAttribute("otra_colonia", otra_colonia);
+                model.addAttribute("error_correo", "<div class='alert alert-danger'>Este correo ya ha sido registrado</div>");
+                try {
+                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+                } catch (Exception e) {
+                }
+                return "/Organizaciones/confirmaOrganizacionVisitante";
+            }
             System.out.print("no hubo errores");
             instancia.setIdInstancia(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
             instancia.setValidacionAdmin(BigInteger.ZERO);
@@ -327,17 +364,17 @@ public class OrganizacionesController2 {
             System.out.println("Pass encriptado:" + instancia.getPassword());
 
             ///Limpiando codigo
-            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
-            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
-            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
-            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
-            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
-
+//            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
+//            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
+//            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
+//            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
+//            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
             try {
                 instanciaFacade.edit(instancia);
             } catch (Exception e) {
-                result.addError(new ObjectError("error_sql", "Error de llave unica"));
-                model.addAttribute("error_sql", "<div class='alert alert-danger'>Error de llave unica</div>");
+                System.out.println(e);
+                result.addError(new ObjectError("error_sql", "error de llave unica"));
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Este usuario no esta disponible, introduzca otro nombre de usuraio</div>");
 
                 return "/Organizaciones/registroOrganizaciones";
             }
@@ -351,11 +388,11 @@ public class OrganizacionesController2 {
 
         //Validacion
         new ValidacionesOrganizaciones().valAltaAdminInst(instancia, result, model, codigo_postal, existeCP, otra_colonia);
-        try{
+        try {
             Integer.parseInt(codigo_postal);
-        }catch(Exception e){
+        } catch (Exception e) {
             model.addAttribute("error_codigo_postal", "<div class='alert alert-danger'>Lo codigo postal debe de ser numerico</div>");
-                        //Agregamos atributos al formulario
+            //Agregamos atributos al formulario
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
@@ -482,7 +519,6 @@ public class OrganizacionesController2 {
                     }
                 }
                 model.addAttribute("instancias", filtroInstancias);
-
 
                 //Regresar actividades
                 model.addAttribute("nActividades", nActividades.substring(0, 1));
@@ -915,7 +951,6 @@ public class OrganizacionesController2 {
         //Desglose de Actividades
         ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
 
-
         //Valida Actividades
         if (!actividadesModel.validarInsercionActividades().isSuccess()) {
             result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
@@ -961,12 +996,10 @@ public class OrganizacionesController2 {
             } catch (Exception e) {
             }
 
-
             for (int i = 0; i < actividadesModel.actividades.size(); i++) {
                 model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
                 System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
             }
-
 
             return "/Organizaciones/propAlInstancia";
 
@@ -1106,7 +1139,6 @@ public class OrganizacionesController2 {
             }
 
             //Relacionar proyecto con formato unico
-
             formatoUnico.setIdproyecto(newProyecto);
             formatoUnicoFacade.edit(formatoUnico);
             System.out.println("Relacion a formato unico correcta");
