@@ -9,7 +9,6 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-        <title>Administraci&oacute;n de Organizaciones</title>
     </head>
     <body>
         <div class="container">
@@ -76,7 +75,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
                         <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
-                        <button id="guardarObservacionesProyecto" type="button" class="btn btn-primary">Guardar las observaciones del Proyecto</button>
+                        <button id="guardarObservacionesProyecto" type="button" class="btn btn-primary">Eliminar y guardar las observaciones del Proyecto</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->

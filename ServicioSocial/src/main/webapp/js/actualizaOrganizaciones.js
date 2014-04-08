@@ -82,7 +82,7 @@ function rechazarInstancia(e)
 
 function rechazarProyecto(e)
 {
-    if (confirm('\u00BF'+"Seguro que desea eliminar el Proyecto?"))
+    if (confirm('\u00BF'+"Seguro que desea eliminar el proyecto?"))
     {
         row = $(this).parents('tr')[0];
         idUpdate = $(e.target).attr('ide');
@@ -144,14 +144,14 @@ function obtenerDatosProyecto()
     if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("cambiaStatusProyecto.do", {id: idUpdate,status: estatus,val_admin:tipo2, observaciones: array}, function(respuesta)
+        $.post("cambiaStatusProyecto.do", {id: idUpdate,estatus: estatus,val_admin:tipo2, observaciones: array}, function(respuesta)
         {
             if(respuesta==="ok")
             {
-                alert("Instancia eliminada");
+                alert("Proyecto eliminado.");
                 window.location.reload();
             }else{
-                alert("ERROR: Imposible eliminar Instancia.");
+                alert("ERROR: Imposible eliminar proyecto.");
             }
             $('#guardarObservaciones').attr('disabled', false);
         });

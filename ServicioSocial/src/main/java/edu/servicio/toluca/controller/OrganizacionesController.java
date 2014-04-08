@@ -17,11 +17,13 @@ import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.ValidarProyectos;
+import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.Ciudades;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
 import edu.servicio.toluca.entidades.MunicipiosSia;
+import edu.servicio.toluca.entidades.RegObservacionGeneral;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
@@ -35,6 +37,7 @@ import edu.servicio.toluca.sesion.PerfilFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
 import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
+import edu.servicio.toluca.sesion.RegObservacionGeneralFacade;
 import edu.servicio.toluca.sesion.TipoLocalidadFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
@@ -98,6 +101,8 @@ public class OrganizacionesController {
     private ColoniaFacade coloniaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionGeneralFacade")
+    private RegObservacionGeneralFacade regObservacionGeneralFacade;
     MetodosValidacion limpiar = new MetodosValidacion();
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
@@ -107,7 +112,7 @@ public class OrganizacionesController {
         System.out.println("Instancias");
         for (int i = 0; i < listaInstancias.size(); i++) {
             String estatus = listaInstancias.get(i).getEstatus().toString();
-            if ((estatus.equals("1")) || (estatus.equals("2"))) {
+            if ((estatus.equals("1"))) {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
@@ -120,15 +125,13 @@ public class OrganizacionesController {
     public String administradorProyectos(Model model, HttpSession session, HttpServletRequest request) {
         List<Proyectos> listaProyectos = proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
-        System.out.println("la lista encontro que hay "+listaProyectos.size());
-        for (int i = 0; i < listaProyectos.size(); i++) {
-            System.out.println("esta recorriendo i: "+listaProyectos.get(i).getNombre());
+        for (int i = 0; i < listaProyectos.size(); i++) 
+        {
             int validacionAdmin = Integer.parseInt(listaProyectos.get(i).getValidacionAdmin().toString());
             int estatusInstancia = Integer.parseInt(listaProyectos.get(i).getIdInstancia().getEstatus().toString());
             int estatusProyecto= Integer.parseInt(listaProyectos.get(i).getEstatus().toString());
-            if (((estatusInstancia == 1) || (estatusInstancia == 2)) && (validacionAdmin == 1) && (estatusProyecto==1)) {
+            if (((estatusInstancia == 1)) && (validacionAdmin == 1) && (estatusProyecto==1)) {
                 filtroDeProyectos.add(listaProyectos.get(i));
-                System.out.println("se agrego a la lista: "+listaProyectos.get(i).getNombre());
             }
         }
         model.addAttribute("proyectos", filtroDeProyectos);
@@ -188,7 +191,21 @@ public class OrganizacionesController {
     @RequestMapping(method = RequestMethod.GET, value = "/mensajeOrganizacion.do")
     public String mensajeOrganizacion(Model model, HttpSession session, HttpServletRequest request) {
         //Valida sesion
-        if (new ValidaSesion().validaOrganizacion(session, request)) {
+        if (new ValidaSesion().validaOrganizacion(session, request)) 
+        {
+            List<String> listaObservaciones=new ArrayList<String>();
+            String idInstancia = session.getAttribute("NCONTROL").toString();
+            System.out.println("el id instancia es: "+idInstancia);
+            List<RegObservacionGeneral> list=regObservacionGeneralFacade.findBySpecificField("idLlaveUnica", idInstancia, "equal", null, null);
+            for(int i=0;i<list.size();i++)
+            {
+                if(list.get(i).getCatalogoObservacionId().getTipo()==BigInteger.valueOf(4))
+                {
+                    System.out.println("La observacion es: "+list.get(i).getCatalogoObservacionId().getDetalle());
+                    listaObservaciones.add(list.get(i).getCatalogoObservacionId().getDetalle());
+                }
+            }            
+            model.addAttribute("observaciones", listaObservaciones);
             return "/Organizaciones/mensajeOrganizacion";
         } else {
             model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
@@ -616,24 +633,25 @@ public class OrganizacionesController {
     String cambiaStatusInstancia(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
                                 int id,int status,int val_admin, Model model, HttpSession session, HttpServletRequest request) {
         
+        Instancia instancia;
+        instancia = instanciaFacade.find(BigDecimal.valueOf(id));
+        
         for(String idObservacion:observaciones)
         {
+            CatalogoObservaciones catObser=observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
             //Objeto a Registrar
-            //RegObservaciones registro=new RegObservaciones();
+            RegObservacionGeneral registro=new RegObservacionGeneral();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
-            //registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            registro.setCatalogoObservacionId(catObser);
             //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
-            //registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            registro.setIdLlaveUnica(BigInteger.valueOf(instancia.getIdInstancia().intValue()));
             //Asignar Fecha Actual al momento para registro 
-            //registro.setFecha(new Date());
+            registro.setFecha(new Date());
             //Creacion de Registro
-            //regisObservacionesFacade.create(registro);
-            System.out.println("las observaciones son: "+idObservacion);
+            regObservacionGeneralFacade.create(registro);
             //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
         
-        Instancia instancia;
-        instancia = instanciaFacade.find(BigDecimal.valueOf(id));
         Iterator<Proyectos> proyectos = instancia.getProyectosCollection().iterator();
         while (proyectos.hasNext()) {
             Proyectos proyectoEdit = proyectos.next();
@@ -652,26 +670,28 @@ public class OrganizacionesController {
     public @ResponseBody
     String cambiaStatusProyecto(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
                                 int id,int estatus,int val_admin, Model model, HttpSession session, HttpServletRequest request) {
-        System.out.println("Entro a modificar el status del formato unico");
+        System.out.println("En estatus es: "+estatus);
+        Proyectos proyecto;
+        proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
+        
         for(String idObservacion:observaciones)
         {
+            CatalogoObservaciones catObser=observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
             //Objeto a Registrar
-            //RegObservaciones registro=new RegObservaciones();
+            RegObservacionGeneral registro=new RegObservacionGeneral();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
-            //registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            registro.setCatalogoObservacionId(catObser);
             //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
-            //registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            registro.setIdLlaveUnica(BigInteger.valueOf(proyecto.getIdProyecto().intValue()));
             //Asignar Fecha Actual al momento para registro 
-            //registro.setFecha(new Date());
+            registro.setFecha(new Date());
             //Creacion de Registro
-            //regisObservacionesFacade.create(registro);
+            regObservacionGeneralFacade.create(registro);
             System.out.println("las observaciones son: "+idObservacion);
             //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
         System.out.println("Ya ingreso las observaciones");
         
-        Proyectos proyecto;
-        proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
         proyecto.setEstatus(BigInteger.valueOf(estatus));
         proyecto.setValidacionAdmin(BigInteger.valueOf(val_admin));
         proyectosFacade.edit(proyecto);

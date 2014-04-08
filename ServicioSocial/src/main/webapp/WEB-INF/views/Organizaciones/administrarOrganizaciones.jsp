@@ -75,7 +75,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
                         <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
-                        <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Guardar las observaciones de la Organización</button>
+                        <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Eliminar y guardar las observaciones a la Organización</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->

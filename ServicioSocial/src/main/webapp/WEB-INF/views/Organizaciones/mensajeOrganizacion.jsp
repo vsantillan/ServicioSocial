@@ -22,6 +22,15 @@
                 <div class="alert alert-warning col-md-6 col-md-offset-3">
                     <div class="alert-heading "><h5 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestran mensajes que el administrador le ha enviado:</h5></div>
                 </div>
+                <core:forEach items="${observaciones}" var="observacion">
+                    <div class="alert alert-info col-md-10 col-md-offset-1">
+                        <div class="alert-heading ">
+                            <p class="text-center">
+                                ${observacion}
+                            </p>
+                        </div>
+                    </div>
+                </core:forEach>
                 <%@include file="../General/footer.jsp"%> 
             </div>
         </div>

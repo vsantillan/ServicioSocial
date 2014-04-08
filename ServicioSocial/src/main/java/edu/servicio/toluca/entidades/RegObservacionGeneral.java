@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,13 +22,17 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author rodrigo
  */
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
-@Table(name = "REG_OBSERVACION_GENERAL")
+@Table(name = "REG_OBSERVACION_GENERAL", catalog = "", schema = "GES_VIN")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RegObservacionGeneral.findAll", query = "SELECT r FROM RegObservacionGeneral r"),
@@ -37,7 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class RegObservacionGeneral implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @GenericGenerator(name = "generatorRegObservaciones", strategy = "increment")
     @Id
+    @GeneratedValue(generator = "generatorRegObservaciones")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID", nullable = false, precision = 22, scale = 0)
