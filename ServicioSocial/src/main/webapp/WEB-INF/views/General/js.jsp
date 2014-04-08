@@ -23,5 +23,5 @@
 <script src="<%=request.getContextPath()%>/js/bootstrap-timepicker.js"></script>
 <script src="<%=request.getContextPath()%>/js/bootstrap-timepicker.min.js"></script>
 <script src="<%=request.getContextPath()%>/js/noticia.js"></script>
-<script src="<%=request.getContextPath()%>/js/becados.js"></script>
+
 

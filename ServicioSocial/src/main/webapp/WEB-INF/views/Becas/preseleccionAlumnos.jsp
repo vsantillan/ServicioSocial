@@ -21,13 +21,13 @@
             <div class="row col-md-12">
                 <h2 class="text-info">Preselecci&oacute;n de Alumnos Becados</h2> 
         
-            <form:form id="form1" action="preseleccionadoBD.do" commandName="alumnoP" method="POST" >
+            <form:form id="preseleccionados" action="preseleccionadoBD.do" commandName="alumnoP" method="POST" >
 
-                <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' width='100%'>
+                <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' >
                     <thead>
                         <tr>
                             <th>&nbsp;</th>
-                            <th>&nbsp;Fotograf&iacute;a&nbsp;</th>
+<!--                            <th>&nbsp;Fotograf&iacute;a&nbsp;</th>-->
                             <th>&nbsp;N&uacute;mero de Control&nbsp;</th>
                             <th>&nbsp;Nombre&nbsp;</th>
                             <th>&nbsp;Carrera&nbsp;</th>
@@ -41,7 +41,7 @@
                         <core:forEach items="${alumno}" var="current">
                             <tr class='gradeX'>
                                 <td><form:checkbox path="alumno" value="${current.id}"/></td>
-                                <td><core:out value="${current.datosPersonalesId.id}" /></td>
+<!--                                <td><core:out value="${current.datosPersonalesId.id}" /></td>-->
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.id}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.apellidoP} ${espacio} ${current.datosPersonalesId.apellidoM} ${espacio} ${current.datosPersonalesId.nombre}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></td>
@@ -55,12 +55,13 @@
                 <br>
                 <table>
                     <tr>
-                        <td> <input class="btn btn-primary " id="a" type ="submit" value = "&nbsp;&nbsp;  Aceptar &nbsp;&nbsp;"  /> </td>                                
+                        <td> <input class="btn btn-primary " id="aceptar" type ="submit" value = "&nbsp;&nbsp;  Aceptar &nbsp;&nbsp;"  /> </td>                                
                         <td> <input class="btn btn-warning " type="button" value="Contar Alumnos" onClick="contar();"></td>
                     </tr>
                 </table>
                 <br> <br>
-            </form:form>            
+            </form:form> 
+                <span></span>
         </div>
          </div>
          <%@include file="../General/js.jsp"%>

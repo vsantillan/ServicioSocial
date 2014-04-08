@@ -86,9 +86,10 @@ public class BecasController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/preseleccionadoBD.do")
-    public // @ResponseBody
-    String updateBecados(Becado alumnoP, Model model) {
-
+    public  @ResponseBody
+    void updateBecados(Becado alumnoP, Model model) {
+        System.out.println("llego aqui");
+         System.out.println(alumnoP.getAlumno());
         if (alumnoP.getAlumno() != null) {
             for (String current : alumnoP.getAlumno()) {
                 FormatoUnico form;
@@ -104,7 +105,8 @@ public class BecasController {
 //            return "ERROR no se pudo agregar alumno(s) agregados a la lista de preselelcion de becados";
 //        }
         }
-        return "/Becas/administracionAlumnosBecados";
+        
+//        return "redirect:administracionAlumnosBecados.do";
 
     }
 
