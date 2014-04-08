@@ -37,7 +37,7 @@
                                         <textarea  id="descripcion" rows="4" cols="50" disabled="true" class="form-control alert alert-info" >Descripción:${platicasPeriodo.get(0).descripcion}</textarea>
                                         <input type="checkbox" name="aceptacionleer" value="aceptacionleer" id="aceptacionleer"><a href="muestraPdf.do" style="color:#029bef" class="fancyFU">  Acepto haber leído el manual</a>
                                         donde se describe el uso del sistema via web sobre como dar de alta mi servicio social<p></p>
-                                        <input type="submit" value="Generar Folio" class="btn btn-primary" /> <br>
+                                        <input  type="submit" value="Generar Folio" class="btn btn-primary" /> <br>
                                     </form:form>
                         ${existe}
                     </core:otherwise>

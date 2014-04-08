@@ -26,8 +26,9 @@
                                 <th>Lugar</th>
                                 <th>Periodo</th>
                                 <th>Descripción</th>
-                                <th>Tipo</th>
+<!--                                <th>Tipo</th>-->
                                 <th>Asistentes</th>
+                                <th>Formato &Uacute;nico Fecha m&aacute;xima</th>
                             </tr>
                         </thead>
 
@@ -40,7 +41,7 @@
                                                 <td>${platica.idLugar.lugar}</td>
                                                 <td>${platica.periodo}</td>            
                                                 <td>${platica.descripcion}</td>
-                                                <td><core:choose>
+<!--                                                <td><core:choose>
                                                     <core:when test="${platica.tipo==1}">
                                                         BECADOS
                                                     </core:when>
@@ -51,8 +52,9 @@
                                                          INDUCCIÓN
                                                     </core:otherwise>
                                                 </core:choose>
-                                                </td>
-                                                <td>${platica.numeroAsistentes}</td>            
+                                                </td>-->
+                                                <td>${platica.numeroAsistentes}</td> 
+                                                <td><fmt:formatDate value="${platica.fechaMxFui}" pattern="dd-MM-yyyy"></fmt:formatDate></td> 
                                                 </tr>
                                             </core:forEach>
                                             </tbody>

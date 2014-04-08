@@ -11,6 +11,7 @@ import edu.servicio.toluca.sesion.LugaresPlaticaFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
+import java.util.List;
 import org.springframework.ui.Model;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -48,14 +49,14 @@ public class PlaticaController1 {
 
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugar.do")
     //public @ResponseBody
-    String nuevoLugar(Model modelo,@ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
+    String nuevoLugar(Model modelo, @ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
         if (!resultado.hasErrors()) {
             lugar_i.setStatus(BigInteger.valueOf(1));
             lugar_i.setLugar(lugar_i.getLugar().toUpperCase());
             LugaresPlaticaFacade.create(lugar_i);
         } else {
-            System.out.println("Result"+resultado);
-            modelo.addAttribute("Lugar",lugar_i);
+            System.out.println("Result" + resultado);
+            modelo.addAttribute("Lugar", lugar_i);
         }
         return "redirect:altaLugares.do";
     }
@@ -63,13 +64,13 @@ public class PlaticaController1 {
     @RequestMapping(method = RequestMethod.POST, value = "/nuevoLugarAltaPlatica.do")
     //public @ResponseBody
     String nuevoLugarAltaPlatica(Model modelo, @ModelAttribute("LugaresPlatica") @Valid LugaresPlatica lugar_i, BindingResult resultado) {
-        if (!resultado.hasErrors()) {         
+        if (!resultado.hasErrors()) {
             lugar_i.setStatus(BigInteger.valueOf(1));
             lugar_i.setLugar(lugar_i.getLugar().toUpperCase());
             LugaresPlaticaFacade.create(lugar_i);
         } else {
-            System.out.println("Result"+resultado);
-            modelo.addAttribute("Lugar",lugar_i);
+            System.out.println("Result" + resultado);
+            modelo.addAttribute("Lugar", lugar_i);
         }
         return "redirect:altaPlatica.do";
     }
@@ -89,7 +90,6 @@ public class PlaticaController1 {
         if (!resultado.hasErrors()) {
             MetodosValidacion metodo = new MetodosValidacion();
             LugaresPlatica lugar_r = LugaresPlaticaFacade.find(lugar_i.getId());
-
             lugar_r.setLugar(metodo.tuneaStringParaBD(lugar_i.getLugar()));
             if (lugar_r.getLugar().length() > 0) {
                 LugaresPlaticaFacade.edit(lugar_r);
@@ -114,5 +114,12 @@ public class PlaticaController1 {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/validaLugares.do")
+    public @ResponseBody
+    String validaLugares(String Lugar) {
+        List<LugaresPlatica> lugarPlatica = LugaresPlaticaFacade.findBySpecificField("lugar", Lugar.toUpperCase(), "equal", null, null);
+        return (!lugarPlatica.isEmpty())?"ESTA":"OK";
+            
+        
+    }
 }
-

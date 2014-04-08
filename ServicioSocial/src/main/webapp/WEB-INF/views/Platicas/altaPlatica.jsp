@@ -91,6 +91,7 @@
                                 <form:errors  path="fechaMxFui" class="alert alert-danger" /><br>
                                 ${errorFm}
                             </div>
+                             ${exito}
                             <div class="form-group">
 
                                 <div class=" col-md-offset-2 col-sm-5">
@@ -100,6 +101,7 @@
                                     <input   class="btn btn-primary" type ="submit" value = "Guardar " /> 
                                 </div>
                             </div>
+                           
                         </form:form>
                         </div>
 

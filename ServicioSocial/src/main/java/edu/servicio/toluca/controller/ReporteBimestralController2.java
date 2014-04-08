@@ -5,6 +5,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.bimestrales.RetroalimentacionReporte;
+import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.beans.documentosFinales.GeneraDocumento;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
 import edu.servicio.toluca.entidades.BimestralesActividades;
@@ -73,7 +74,7 @@ public class ReporteBimestralController2 {
     private DocumentosFacade documentosFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoDocumentoFacade")
     private CatalogoDocumentoFacade catalogoDocumentoFacade;
-        @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
+    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     private RegObservacionesFacade regisObservacionesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
@@ -194,6 +195,7 @@ public class ReporteBimestralController2 {
     public @ResponseBody
     String aceptarReporte(int id, int status, int idDoc, Model model, HttpSession session, HttpServletRequest request) {
         Reportes reporte;
+        fechas beanFecha = new fechas();
         reporte = reportesFacade.find(BigDecimal.valueOf(id));
         //Checar el estatus del reporte
         reporte.setStatus(BigInteger.ONE);
@@ -203,8 +205,18 @@ public class ReporteBimestralController2 {
         documento = documentosFacade.find(BigDecimal.valueOf(idDoc));
         documento.setStatus((short) 1);
         documentosFacade.edit(documento);
-        System.out.println("id doc es: " + idDoc);
-        System.out.println("Reporte Alterado con Status a: " + status);
+        //validacion de las horas del servicio
+        FormatoUnico formatoAlumno = formatoUnicoFacade.find(reporte.getDatosPersonalesId());
+        if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal")) {
+            if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 0 ||formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 1) {
+                formatoAlumno.setFechaEntregaFuf(beanFecha.covierteString(beanFecha.dameFechaFUF(reporte.getFechaFin())));
+            }
+        }
+        if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal")) {
+            if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(600)) == 0 || formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(600)) == 1) {
+                formatoAlumno.setFechaEntregaFuf(beanFecha.covierteString(beanFecha.dameFechaFUF(reporte.getFechaFin())));
+            }
+        }
         return "ok";
     }
 
@@ -261,6 +273,7 @@ public class ReporteBimestralController2 {
                     System.out.println("Documento Actualizado Correctamente");
                     try {
                         documentosFacade.edit(ultimoDocumento);
+                        remueveObservaciones(ultimoDocumento.getDatosPersonalesId().getId());
                         System.out.println("Se actualizo el documento con exito!");
                         return "redirect:panelUsuario.do";
                     } catch (Exception ex) {
@@ -283,6 +296,7 @@ public class ReporteBimestralController2 {
 
         try {
             documentosFacade.create(documento);
+            remueveObservaciones(datosPersonales.getId());
             System.out.println("Se subio el Docuemnto con éxito!");
         } catch (Exception ex) {
             modelo.addAttribute("error", "Error al subir el Reporte Bimestral");
@@ -327,8 +341,11 @@ public class ReporteBimestralController2 {
         }
         return "OK";
     }
-    
-    public void remueveObservaciones(BigDecimal idDatosPersonales){
-        List<RegObservaciones> observacionesAlumno= regisObservacionesFacade.findBySpecificField(null, this, null, null, null);
+
+    public void remueveObservaciones(BigDecimal idDatosPersonales) {
+        List<RegObservaciones> observacionesAlumno = regisObservacionesFacade.findBySpecificField("datosPersonalesId", idDatosPersonales, "equal", null, null);
+        for (RegObservaciones observacionActual : observacionesAlumno) {
+            regisObservacionesFacade.remove(observacionActual);
+        }
     }
 }

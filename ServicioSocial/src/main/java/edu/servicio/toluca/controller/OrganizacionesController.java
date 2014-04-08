@@ -521,8 +521,9 @@ public class OrganizacionesController {
                 while (recorreActividades.hasNext()) {
                     Actividades borrarActividadesProyecto;
                     borrarActividadesProyecto = recorreActividades.next();
-                    System.out.println("no las esta borrandoooooooooooooooooooooooooooooooooo"+borrarActividadesProyecto.getDetalle());
-                    actividadesFacade.remove(borrarActividadesProyecto);
+                    borrarActividadesProyecto.setEstatus(BigInteger.ZERO);
+//                    System.out.println("no las esta borrandoooooooooooooooooooooooooooooooooo"+borrarActividadesProyecto.getDetalle());
+                    actividadesFacade.edit(borrarActividadesProyecto);
                 }
                 List<String> listaActividades = new ArrayList<String>();
                 StringTokenizer actividades = new StringTokenizer(cadenaActividades, ";");

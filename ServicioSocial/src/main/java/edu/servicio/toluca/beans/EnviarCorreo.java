@@ -21,7 +21,7 @@ public class EnviarCorreo
     private String destinatario;
     private String mensaje;
     private String asunto;
-    private String pass="sapitotais2";
+    private String pass="Tristan13";
     
     public EnviarCorreo(String asunto,String destinatario,String mensaje)
     {

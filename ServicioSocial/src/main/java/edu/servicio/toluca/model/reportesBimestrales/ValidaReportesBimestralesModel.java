@@ -83,7 +83,7 @@ public class ValidaReportesBimestralesModel {
 
                                     if (nRevisiones <= 5) {
                                         reportesBean.setAccesoFormato(true);
-                                        reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " se encuentra en corrección. Por favor revisa la sección de observaciones para saber que es lo que tienes que corregir en tu Reporte Bimestral " + nReporte + ".");
+                                        reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " se encuentra en corrección. Por favor revisa la sección de observaciones para saber que es lo que tienes que corregir en tu Reporte Bimestral.");
                                         reportesBean.setStatus(3);
                                     } else {
                                         reportesBean.setAccesoFormato(false);
