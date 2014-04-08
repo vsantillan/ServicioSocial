@@ -4,6 +4,8 @@
  */
 package edu.servicio.toluca.beans;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.Session;
@@ -15,25 +17,28 @@ import javax.mail.internet.MimeMessage;
  *
  * @author Regules
  */
-public class EnviarCorreo 
+public class EnviarCorreo implements Runnable 
 {
-    private String remitente="luevanoguzman@gmail.com";
+
+    private String remitente = "luevanoguzman@gmail.com";
     private String destinatario;
     private String mensaje;
     private String asunto;
-    private String pass="Tristan13";
-    
-    public EnviarCorreo(String asunto,String destinatario,String mensaje)
-    {
-        this.destinatario=destinatario;
-        this.mensaje=mensaje;
-        this.asunto=asunto;        
-    }
-        public boolean enviaCorreo()
+    private String pass = "Tristan13";
 
+    public EnviarCorreo(String nombre, String destinatario, String mensaje) 
     {
-        try
-        {
+        this.destinatario = destinatario;
+        this.mensaje = mensaje;
+        
+        SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        String str = fecha.format(new Date());
+        
+        this.asunto = "Notificación  Servicio Social " + str + " " + nombre;
+    }
+
+    public boolean enviaCorreo() {
+        try {
             // Propiedades de la conexión
             Properties props = new Properties();
             props.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -49,10 +54,10 @@ public class EnviarCorreo
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(remitente));
             message.addRecipient(
-                Message.RecipientType.TO,
-                new InternetAddress(destinatario));
+                    Message.RecipientType.TO,
+                    new InternetAddress(destinatario));
             message.setSubject(asunto);
-            message.setText(mensaje,"UTF-8","html");
+            message.setText(mensaje, "UTF-8", "html");
 
             // Lo enviamos.
             Transport t = session.getTransport("smtp");
@@ -62,11 +67,19 @@ public class EnviarCorreo
             // Cierre.
             t.close();
             return true;
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public void run() 
+    {
+        try {
+            enviaCorreo();
+        } catch (Exception e) {
+            System.out.println("Error");
         }
     }
 }

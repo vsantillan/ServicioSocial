@@ -435,7 +435,6 @@ public class FormatoUnicoAdminController {
                     mensaje += "<li>" + detalle + "</li>\n";
                 }
 
-
                 String mns2 =
                         "</ul>\n"
                         + "<p>\n"
@@ -462,40 +461,9 @@ public class FormatoUnicoAdminController {
                 return;
         }
 
-        SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-        String str = fecha.format(new Date());
-
-        Thread hiloCorreo = new Thread(new Hilo(str, nombre, correoDestinatario, mensaje));
+        Thread hiloCorreo = new Thread(new EnviarCorreo(nombre, correoDestinatario, mensaje));
         hiloCorreo.start();
 
-    }
-
-    private class Hilo implements Runnable {
-
-        private String fecha,
-                nombre,
-                correo,
-                mensaje;
-
-        public Hilo(String fecha, String nombre, String correo, String mensaje) {
-            this.fecha = fecha;
-            this.nombre = nombre;
-            this.correo = correo;
-            this.mensaje = mensaje;
-        }
-
-        @Override
-        public void run() {
-
-            try {
-                EnviarCorreo correo2 = new EnviarCorreo("Notificación  Servicio Social " + this.fecha + " " + this.nombre,
-                        this.correo,
-                        this.mensaje);
-                correo2.enviaCorreo();
-            } catch (Exception e) {
-                System.out.println("Error");
-            }
-        }
     }
 
     //No-Visible 

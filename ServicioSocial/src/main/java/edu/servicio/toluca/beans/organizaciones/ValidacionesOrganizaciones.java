@@ -91,17 +91,17 @@ public class ValidacionesOrganizaciones {
 
     public void valGdaEditaInst(Instancia instancia, BindingResult result, Model model, String codigo_postal, String otra_colonia, String existeCP, String confirma_password) {
         //Valida contraseñas que no estpen vacias
-        if (instancia.getPassword().equals("")) 
-        {
-            result.addError(new ObjectError("passowrd", "El campo contraseñas está vacío."));
-            model.addAttribute("password", "<div class='alert alert-danger'>El campo contraseñas está vacío.</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
-        }else{
-            if (confirma_password.equals(""))
-            {
-                result.addError(new ObjectError("passowrd", "El campo contraseñas está vacío."));
-                model.addAttribute("password", "<div class='alert alert-danger'>El campo contraseñas está vacío.</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
-            }
-        }
+//        if (instancia.getPassword().equals("")) 
+//        {
+//            result.addError(new ObjectError("passowrd", "El campo contraseñas está vacío."));
+//            model.addAttribute("password", "<div class='alert alert-danger'>El campo contraseñas está vacío.</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
+//        }else{
+//            if (confirma_password.equals(""))
+//            {
+//                result.addError(new ObjectError("passowrd", "El campo contraseñas está vacío."));
+//                model.addAttribute("password", "<div class='alert alert-danger'>El campo contraseñas está vacío.</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
+//            }
+//        }
         //Valida codigo postal
         if (codigo_postal.equals("")) {
             result.addError(new ObjectError("codigo_postal", "Código postal vacío."));

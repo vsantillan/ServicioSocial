@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
@@ -204,7 +205,20 @@ public class OrganizacionesController {
                     System.out.println("La observacion es: "+list.get(i).getCatalogoObservacionId().getDetalle());
                     listaObservaciones.add(list.get(i).getCatalogoObservacionId().getDetalle());
                 }
-            }            
+            }
+            Instancia instanciaObj=new Instancia(BigDecimal.valueOf(Integer.parseInt(idInstancia)));
+            List<Proyectos> listProyectos=proyectosFacade.findBySpecificField("idInstancia", instanciaObj, "equal", null, null);
+            for(int i=0;i<listProyectos.size();i++)
+            {
+                list=regObservacionGeneralFacade.findBySpecificField("idLlaveUnica", listProyectos.get(i).getIdProyecto().toString(), "equal", null, null);
+                for(int j=0;j<list.size();j++)
+                {
+                    if(list.get(j).getCatalogoObservacionId().getTipo()==BigInteger.valueOf(5))
+                    {
+                        listaObservaciones.add("El Proyecto: "+listProyectos.get(i).getNombre()+" tiene la observación: "+list.get(j).getCatalogoObservacionId().getDetalle());
+                    }
+                }
+            }
             model.addAttribute("observaciones", listaObservaciones);
             return "/Organizaciones/mensajeOrganizacion";
         } else {
@@ -343,19 +357,7 @@ public class OrganizacionesController {
                 return "/Organizaciones/editarOrganizacion";
             }
             System.out.println("Sin errores");
-
-            //Consulta para la administracion de organizaciones
-            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
-            ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
-            for (int i = 0; i < listaInstancias.size(); i++) {
-                int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
-                if ((estatus == 1) || (estatus == 2)) {
-                    filtroInstancias.add(listaInstancias.get(i));
-                }
-            }
-            model.addAttribute("organizaciones", filtroInstancias);
-            model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
-            return "/Organizaciones/administrarOrganizaciones";
+            return "redirect:administrarOrganizaciones.do";
         }
     }
 
@@ -522,7 +524,6 @@ public class OrganizacionesController {
                     Actividades borrarActividadesProyecto;
                     borrarActividadesProyecto = recorreActividades.next();
                     borrarActividadesProyecto.setEstatus(BigInteger.ZERO);
-//                    System.out.println("no las esta borrandoooooooooooooooooooooooooooooooooo"+borrarActividadesProyecto.getDetalle());
                     actividadesFacade.edit(borrarActividadesProyecto);
                 }
                 List<String> listaActividades = new ArrayList<String>();
@@ -663,7 +664,43 @@ public class OrganizacionesController {
         instancia.setEstatus(BigInteger.valueOf(status));
         instancia.setValidacionAdmin(BigInteger.valueOf(val_admin));
         instanciaFacade.edit(instancia);
-        System.out.println("Ya actualizo");
+        
+        String mensaje;
+        switch (status) {
+            case 1://Dada de baja
+                mensaje = "<h1>Notificación Servicio Social</h1>\n"
+                + "<h2>Estimado(a)  <b>" + instancia.getNombre() + "</b>:</h2> \n"
+                + "<p>\n"
+                + "Te informamos que tu  Organización ha sido <b>dada de baja</b> del Sistemade de Servicio Social del Instituto Tecnológico de Toluca.\n"
+                + "</p>\n"
+                + "<p>\n"
+                + "Para mayor información  presentarse en la Oficina de Servicio Social.  \n"
+                + "</p>\n"
+                + "<p>\n"
+                + "Oficina de Servicio Social <br>\n"
+                + "Instituto Tecnológico  de Toluca\n"
+                + "</p>";
+                break;
+            case 2://No aceptados
+                mensaje = "<h1>Notificación Servicio Social</h1>\n"
+                + "<h2>Estimado(a)  <b>" + instancia.getNombre() + "</b>:</h2> \n"
+                + "<p>\n"
+                + "Te informamos que tu  Organización ha sido <b>dada de baja</b> del Sistemade de Servicio Social del Instituto Tecnológico de Toluca.\n"
+                + "</p>\n"
+                + "<p>\n"
+                + "Para mayor información  presentarse en la Oficina de Servicio Social.  \n"
+                + "</p>\n"
+                + "<p>\n"
+                + "Oficina de Servicio Social <br>\n"
+                + "Instituto Tecnológico  de Toluca\n"
+                + "</p>";
+                break;
+            default:
+                return "";
+        }
+        Thread hiloCorreo = new Thread(new EnviarCorreo(instancia.getNombre(), instancia.getCorreo(), mensaje));
+        hiloCorreo.start();
+        
         return "ok";
     }
 
@@ -671,7 +708,6 @@ public class OrganizacionesController {
     public @ResponseBody
     String cambiaStatusProyecto(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
                                 int id,int estatus,int val_admin, Model model, HttpSession session, HttpServletRequest request) {
-        System.out.println("En estatus es: "+estatus);
         Proyectos proyecto;
         proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
         
@@ -691,12 +727,47 @@ public class OrganizacionesController {
             System.out.println("las observaciones son: "+idObservacion);
             //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
-        System.out.println("Ya ingreso las observaciones");
         
         proyecto.setEstatus(BigInteger.valueOf(estatus));
         proyecto.setValidacionAdmin(BigInteger.valueOf(val_admin));
         proyectosFacade.edit(proyecto);
-        System.out.println("Ya actualizo");
+        
+        String mensaje;
+        switch (estatus) {
+            case 1://Dada de baja
+                mensaje = "<h1>Notificación Servicio Social</h1>\n"
+                + "<h2>Estimado(a)  <b>" + proyecto.getNombre() + "</b>:</h2> \n"
+                + "<p>\n"
+                + "Te informamos que tu  Organización ha sido <b>dada de baja</b> del Sistemade de Servicio Social del Instituto Tecnológico de Toluca.\n"
+                + "</p>\n"
+                + "<p>\n"
+                + "Para mayor información  presentarse en la Oficina de Servicio Social.  \n"
+                + "</p>\n"
+                + "<p>\n"
+                + "Oficina de Servicio Social <br>\n"
+                + "Instituto Tecnológico  de Toluca\n"
+                + "</p>";
+                break;
+            case 2://No aceptados
+                mensaje = "<h1>Notificación Servicio Social</h1>\n"
+                + "<h2>Estimado(a)  <b>" + proyecto.getNombre() + "</b>:</h2> \n"
+                + "<p>\n"
+                + "Te informamos que tu  Organización ha sido <b>dada de baja</b> del Sistemade de Servicio Social del Instituto Tecnológico de Toluca.\n"
+                + "</p>\n"
+                + "<p>\n"
+                + "Para mayor información  presentarse en la Oficina de Servicio Social.  \n"
+                + "</p>\n"
+                + "<p>\n"
+                + "Oficina de Servicio Social <br>\n"
+                + "Instituto Tecnológico  de Toluca\n"
+                + "</p>";
+                break;
+            default:
+                return "";
+        }
+        Thread hiloCorreo = new Thread(new EnviarCorreo(proyecto.getNombre(), proyecto.getIdInstancia().getCorreo(), mensaje));
+        hiloCorreo.start();
+        
         return "ok";
     }
 

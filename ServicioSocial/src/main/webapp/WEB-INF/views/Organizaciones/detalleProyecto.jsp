@@ -64,7 +64,11 @@
                                     </core:when>
                                     <core:otherwise>
                                         <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
-                                            <p>${actividades.detalle}</p>
+                                            <core:choose>
+                                                <core:when test="${actividades.estatus==1}">
+                                                    <p>${actividades.detalle}</p>
+                                                </core:when>
+                                            </core:choose>
                                         </core:forEach>
                                     </core:otherwise>
                                 </core:choose>                                                          
