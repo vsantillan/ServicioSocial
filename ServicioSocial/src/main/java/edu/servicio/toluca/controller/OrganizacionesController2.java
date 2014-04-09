@@ -318,6 +318,26 @@ public class OrganizacionesController2 {
             return "/Organizaciones/confirmaOrganizacionVisitante";
 
         } else {
+             List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
+            if (!Unicos.isEmpty()) {
+                //Inyectamos lo que traia en la colonia
+                model.addAttribute("otra_colonia", otra_colonia);
+                //Agregamos atributos al formulario
+                model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
+//            model.addAttribute("instancia", new Instancia());
+                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+                ordenamiento.put("nombre", "asc");
+                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                //Regresar codigo postal
+                model.addAttribute("cp", codigo_postal);
+                try {
+                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+                } catch (Exception e) {
+                }
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Lo sentimos ya existe una organización con el nombre" + instancia.getNombre() + "</div>");
+                return "/Organizaciones/registroOrganizaciones";
+            }
             List<Instancia> lista = instanciaFacade.findBySpecificField("usuario", instancia.getUsuario().toString(), "equal", null, null);
             if (!lista.isEmpty()) {
                 //Agregamos atributos al formulario
