@@ -11,7 +11,10 @@ import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.ProgramaFacade;
 import java.math.BigInteger;
+import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -40,7 +43,8 @@ public class EstadisticasController {
     public @ResponseBody
     String dameProgramas(Model modelo, String ano, String periodo) {
         String arrJSON = "";
-        arrJSON = programaFacade.programasTotales();
+        System.out.println("Año" + ano + "Periodo:" + periodo);
+        arrJSON = programaFacade.programasTotales(ano, periodo);
         return arrJSON;
     }
 
@@ -48,7 +52,7 @@ public class EstadisticasController {
     public @ResponseBody
     String dameProgramasLiberados(Model modelo, String ano, String periodo) {
         String arrJSON = "";
-        arrJSON = programaFacade.programasTotalesLiberaciones();
+        arrJSON = programaFacade.programasTotalesLiberaciones(ano, periodo);
         return arrJSON;
     }
 
@@ -56,7 +60,7 @@ public class EstadisticasController {
     public @ResponseBody
     String dameProgramasLiberadosTabla(Model modelo, String ano, String periodo) {
         String arrJSON = "";
-        arrJSON = programaFacade.programasTotalesTabla();
+        arrJSON = programaFacade.programasTotalesTabla(ano, periodo);
         return arrJSON;
     }
 
@@ -64,13 +68,13 @@ public class EstadisticasController {
     public @ResponseBody
     String dameInstanciasTotales(Model modelo, String ano, String periodo) {
         String arrJSON = "";
-        arrJSON = instanciaFacade.instanciasTotales();
+        arrJSON = instanciaFacade.instanciasTotales(ano, periodo);
         return arrJSON;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/estadisticas.do")
-    public String estadisticasAdmn(Model modelo) {
-
+    public String estadisticasAdmn(Model modelo, String anio, String periodo) {
+        int anioInicioServicio = 2014;
         int sexoIAltas = 0;
         int sexoILiberaciones = 0;
         int sexoMAltas = 0;
@@ -85,8 +89,33 @@ public class EstadisticasController {
         //Ingenieria Electronica
         //Ingenieria en Sistemas Computacionel
         int carreasAltas[] = new int[7];
+        Calendar fecha = Calendar.getInstance();
         int carreasLiberaciones[] = new int[7];
+        List<FormatoUnico> formatoUnicosFiltrados = new ArrayList<FormatoUnico>();
         List<FormatoUnico> formatosUnicos = formatoUnicoFacade.findAll();
+
+        //FIltrando por el año
+        for (FormatoUnico formatoActual : formatosUnicos) {
+            String aniosSplit[] = formatoActual.getFechaInicio().toString().split("-");
+            if (aniosSplit[0].equals(anio)) {
+                if (formatoActual.getPeriodoInicio().equals(periodo)) {
+                    formatoUnicosFiltrados.add(formatoActual);
+                }
+            }
+        }
+
+        ////////Validacion para regresar los años de historial en el sistema//////////////
+        List<Integer> anios = new ArrayList<Integer>();
+        int anioActual = fecha.get(Calendar.YEAR);
+        if (anioActual == anioInicioServicio) {
+            anios.add(anioActual);
+        } else {
+            for (anioInicioServicio = 2014; anioInicioServicio <= anioActual; anioInicioServicio++) {
+                anios.add(anioInicioServicio);
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////
+
         for (FormatoUnico formatoActual : formatosUnicos) {
             if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("QUIMICA")) {
                 carreasAltas[0] = carreasAltas[0] + 1;
@@ -152,7 +181,114 @@ public class EstadisticasController {
         modelo.addAttribute("totalIndefinidoLiberaciones", sexoILiberaciones);
         modelo.addAttribute("carrerasAltas", carreasAltas);
         modelo.addAttribute("carrerasLiberaciones", carreasLiberaciones);
+        modelo.addAttribute("anio", anios);
 
         return "/Estadisticas/estadisticas";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/datosSexoCarreras.do")
+    public @ResponseBody
+    String dameDatosSexoCarreras(Model modelo, String anio, String periodo) {
+        String arrJSON = "";
+        int anioInicioServicio = 2014;
+        int sexoIAltas = 0;
+        int sexoILiberaciones = 0;
+        int sexoMAltas = 0;
+        int sexoMLiberaciones = 0;
+        int sexoFAltas = 0;
+        int sexoFLiberaciones = 0;
+        //Ingenieria Quimica
+        //Ingenieria Industrial
+        //Ingenieria Electromecanica
+        //Ingenieria Mecatronica
+        //Licensiatura en Administración
+        //Ingenieria Electronica
+        //Ingenieria en Sistemas Computacionel
+        int carreasAltas[] = new int[7];
+        Calendar fecha = Calendar.getInstance();
+        int carreasLiberaciones[] = new int[7];
+        List<FormatoUnico> formatoUnicosFiltrados = new ArrayList<FormatoUnico>();
+        List<FormatoUnico> formatosUnicos = formatoUnicoFacade.findAll();
+
+        //FIltrando por el año
+        for (FormatoUnico formatoActual : formatosUnicos) {
+            String aniosSplit[] = formatoActual.getFechaInicio().toString().split("-");
+            if (aniosSplit[0].equals(anio)) {
+                if (formatoActual.getPeriodoInicio().equals(periodo)) {
+                    formatoUnicosFiltrados.add(formatoActual);
+                }
+            }
+        }
+
+        ////////Validacion para regresar los años de historial en el sistema//////////////
+        List<Integer> anios = new ArrayList<Integer>();
+        int anioActual = fecha.get(Calendar.YEAR);
+        if (anioActual == anioInicioServicio) {
+            anios.add(anioActual);
+        } else {
+            for (anioInicioServicio = 2014; anioInicioServicio <= anioActual; anioInicioServicio++) {
+                anios.add(anioInicioServicio);
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////
+
+        for (FormatoUnico formatoActual : formatosUnicos) {
+            if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("QUIMICA")) {
+                carreasAltas[0] = carreasAltas[0] + 1;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    carreasLiberaciones[0] = carreasLiberaciones[0] + 1;
+                }
+            } else if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("INSDUSTRIAL")) {
+                carreasAltas[1] = carreasAltas[1] + 1;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    carreasLiberaciones[1] = carreasLiberaciones[1] + 1;
+                }
+            } else if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("EMECANICA")) {
+                carreasAltas[2] = carreasAltas[2] + 1;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    carreasLiberaciones[2] = carreasLiberaciones[2] + 1;
+                }
+            } else if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("MECATRONICA")) {
+                carreasAltas[3] = carreasAltas[3] + 1;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    carreasLiberaciones[3] = carreasLiberaciones[3] + 1;
+                }
+            } else if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("ADMON")) {
+                carreasAltas[4] = carreasAltas[4] + 1;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    carreasLiberaciones[4] = carreasLiberaciones[4] + 1;
+                }
+            } else if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("ELECTRONICA")) {
+                carreasAltas[5] = carreasAltas[5] + 1;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    carreasLiberaciones[5] = carreasLiberaciones[5] + 1;
+                }
+            } else if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("SIST COMP")) {
+                carreasAltas[6] = carreasAltas[6] + 1;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    carreasLiberaciones[6] = carreasLiberaciones[6] + 1;
+                }
+            }
+
+            if (formatoActual.getDatosPersonalesId().getSexo().equals("MASCULINO") || formatoActual.getDatosPersonalesId().getSexo().equals("M")) {
+                sexoMAltas++;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    sexoMLiberaciones++;
+                }
+
+            } else if (formatoActual.getDatosPersonalesId().getSexo().equals("FEMENINO") || formatoActual.getDatosPersonalesId().getSexo().equals("F")) {
+                sexoFAltas++;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    sexoFLiberaciones++;
+                }
+
+            } else if (formatoActual.getDatosPersonalesId().getSexo().equals("INDEFINIDO") || formatoActual.getDatosPersonalesId().getSexo().equals("I")) {
+                sexoIAltas++;
+                if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
+                    sexoILiberaciones++;
+                }
+            }
+        }
+        return arrJSON;
     }
 }

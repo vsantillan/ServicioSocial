@@ -17,6 +17,21 @@
                 <div class="row col-md-12 center-block">
                     <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-stats"></span>&nbsp; Estadisticas</h1></div>
                     <div class="row">
+                        <div class="col-md-2 col-md-offset-4">
+                            <select id="anio" class="form-control" onchange="actualizaInformacion();">
+                                <core:forEach items="${anio}" var="anioActual">
+                                    <option value="${anioActual}">${anioActual}</option>
+                                </core:forEach>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-control" id="periodo" onchange="actualizaInformacion();">
+                                <option value="ENE">ENE-JUN</option>
+                                <option value="JUN">JUL-DIC</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div id="sexoAltas" class="col-md-4"></div>
                         <div id="sexoLiberaciones" class="col-md-4"></div>
                         <div id="sexoResumen" class="col-md-4">
@@ -150,7 +165,7 @@
             <%@include file="../General/js.jsp"%>
             <script type="text/javascript" src="js/formatoUnicoAdmin.js"></script>
             <script type="text/javascript">
-                $('#formatoUnico-tabla a:first').tab('show');
+                                $('#formatoUnico-tabla a:first').tab('show');
             </script>
             <jsp:include page="../Template/headsModal.jsp" />
             <!--Load the AJAX API-->
@@ -160,16 +175,16 @@
                 $(document).ready(listo);
 
                 function listo() {
-                    $.get("programasEstadisticas.do?&ano=2014&periodo=ENE-AGO", null, function(respuesta) {
+                    $.get("programasEstadisticas.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
                         drawChartProgramas(respuesta);
                     });
-                    $.get("programasEstadisticasLiberados.do?&ano=2014&periodo=ENE-AGO", null, function(respuesta) {
+                    $.get("programasEstadisticasLiberados.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
                         drawChartProgramasLiberaciones(respuesta);
                     });
-                    $.get("programasEstadisticasLiberadosTabla.do?&ano=2014&periodo=ENE-AGO", null, function(respuesta) {
+                    $.get("programasEstadisticasLiberadosTabla.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
                         $('#tablaProgramas').append(construyeTabla(respuesta));
                     });
-                    $.get("instanciasEstadisticas.do?&ano=2014&periodo=ENE-AGO", null, function(respuesta) {
+                    $.get("instanciasEstadisticas.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
                         $('#tablaInstancias').append(drawChartInstancias(respuesta));
                     });
                     drawChartSexAltas(${totalMasculino},${totalFemenino},${totalIndefinido});
@@ -177,7 +192,25 @@
                     drawChartCarrerasAltas(${carrerasAltas[0]},${carrerasAltas[1]},${carrerasAltas[2]},${carrerasAltas[3]},${carrerasAltas[4]},${carrerasAltas[5]},${carrerasAltas[6]});
                     drawChartCarrerasLiberaciones(${carrerasLiberaciones[0]},${carrerasLiberaciones[1]},${carrerasLiberaciones[2]},${carrerasLiberaciones[3]},${carrerasLiberaciones[4]},${carrerasLiberaciones[5]},${carrerasLiberaciones[6]});
                 }
+                function actualizaInformacion() {
+                    var anio = $("#anio option:selected").text();
+                    var periodo = $("#periodo option:selected").text();
+                    $('#tablaProgramas').empty();
+                    $('#tablaInstancias').empty();
 
+                    $.get("programasEstadisticas.do?&ano="+anio+"&periodo="+periodo+"", null, function(respuesta) {
+                        drawChartProgramas(respuesta);
+                    });
+                    $.get("programasEstadisticasLiberados.do?&ano="+anio+"&periodo="+periodo+"", null, function(respuesta) {
+                        drawChartProgramasLiberaciones(respuesta);
+                    });
+                    $.get("programasEstadisticasLiberadosTabla.do?&ano="+anio+"&periodo="+periodo+"", null, function(respuesta) {
+                        $('#tablaProgramas').append(construyeTabla(respuesta));
+                    });
+                    $.get("instanciasEstadisticas.do?&ano="+anio+"&periodo="+periodo+"", null, function(respuesta) {
+                        $('#tablaInstancias').append(drawChartInstancias(respuesta));
+                    });
+                }
             </script>
 
     </body>

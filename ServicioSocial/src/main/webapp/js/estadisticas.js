@@ -44,6 +44,7 @@ function drawChartSexLiberaciones(totalMasculino, totalFemenino, totalIndefinido
 
 function validaInfoSexo(val1, val2, val3, contenedor, mensaje) {
     if (val1 === 0 && val2 === 0 && val3 === 0) {
+        document.getElementById(contenedor).innerHTML = "";
         var node = "<div class='alert alert-warning col-md-9 col-md-offset-1'>\n\
                     <div class='alert-heading '><h4 class='text-center'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;Lo sentimos aun no contamos con informaci&oacuten suficiente para calcular estadisticos para " + mensaje + ".</h4></div>\n\
                 </div>";
@@ -107,6 +108,7 @@ function drawChartCarrerasLiberaciones(carrera1, carrera2, carrera3, carrera4, c
 
 function validaInfoCarreras(val1, val2, val3, val4, val5, val6, val7, contenedor, mensaje) {
     if (val1 === 0 && val2 === 0 && val3 === 0 && val4 === 0 && val5 === 0 && val6 === 0 && val7 === 0) {
+        document.getElementById(contenedor).innerHTML = "";
         var node = "<div class='alert alert-warning col-md-9 col-md-offset-1'>\n\
                     <div class='alert-heading '><h4 class='text-center'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;Lo sentimos aun no contamos con informaci&oacuten suficiente para calcular estadisticos para " + mensaje + ".</h4></div>\n\
                 </div>";
@@ -119,31 +121,33 @@ function validaInfoCarreras(val1, val2, val3, val4, val5, val6, val7, contenedor
 
 function drawChartProgramas(respuesta) {
 
-    var programasNombre = new Array();
-    var totalProgramas = new Array();
+    if (validaInfoProgramas(respuesta, "programasAltas", "Altas por Programa")) {
+        var programasNombre = new Array();
+        var totalProgramas = new Array();
 
-    var programas = respuesta.split('&');
-    for (var i = 0; i < programas.length; i++) {
-        var programasConteo = programas[i].split("|");
-        programasNombre[i] = programasConteo[0];
-        totalProgramas[i] = programasConteo[1];
+        var programas = respuesta.split('&');
+        for (var i = 0; i < programas.length; i++) {
+            var programasConteo = programas[i].split("|");
+            programasNombre[i] = programasConteo[0];
+            totalProgramas[i] = programasConteo[1];
+        }
+        // Create our data table.
+        data = new google.visualization.DataTable();
+        data.addColumn('string', 'Programas');
+        data.addColumn('number', 'Total');
+        data.addRows(programas.length - 1);
+        for (var i = 0; i < programas.length - 1; i++) {
+            data.setValue(i, 0, programasNombre[i]);
+            data.setValue(i, 1, totalProgramas[i]);
+        }
+
+
+        var options = {'title': 'Programas (Altas)',
+            'width': 400,
+            'height': 300};
+        chart = new google.visualization.PieChart(document.getElementById('programasAltas'));
+        chart.draw(data, options);
     }
-    // Create our data table.
-    data = new google.visualization.DataTable();
-    data.addColumn('string', 'Programas');
-    data.addColumn('number', 'Total');
-    data.addRows(programas.length - 1);
-    for (var i = 0; i < programas.length - 1; i++) {
-        data.setValue(i, 0, programasNombre[i]);
-        data.setValue(i, 1, totalProgramas[i]);
-    }
-
-
-    var options = {'title': 'Programas (Altas)',
-        'width': 400,
-        'height': 300};
-    chart = new google.visualization.PieChart(document.getElementById('programasAltas'));
-    chart.draw(data, options);
 }
 
 function drawChartProgramasLiberaciones(respuesta) {
@@ -179,6 +183,7 @@ function drawChartProgramasLiberaciones(respuesta) {
 
 function validaInfoProgramas(cadena, contenedor, mensaje) {
     if (cadena === "") {
+        document.getElementById(contenedor).innerHTML = "";
         var node = "<div class='alert alert-warning col-md-9 col-md-offset-1'>\n\
                     <div class='alert-heading '><h4 class='text-center'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;Lo sentimos aun no contamos con informaci&oacuten suficiente para calcular estadisticos para " + mensaje + ".</h4></div>\n\
                 </div>";
@@ -215,15 +220,18 @@ function drawChartInstancias(respuesta) {
     if (validaInfoProgramas(respuesta, "instanciasAltas", "liberaciones por Instancia")) {
         var tabla = "";
         var totalAltas = 0;
+        var pintarGragifa = false;
 
         var programasNombre = new Array();
         var totalProgramas = new Array();
 
         var programas = respuesta.split('&');
-        for (var i = 0; i < programas.length-1; i++) {
+        for (var i = 0; i < programas.length - 1; i++) {
             var programasConteo = programas[i].split("|");
             programasNombre[i] = programasConteo[0];
             totalProgramas[i] = programasConteo[1];
+            if (programasConteo[1] > 0)
+                pintarGragifa = true;
             tabla += "<tr>";
             tabla += "<td>" + programasConteo[0] + "</td>";
             tabla += "<td>" + programasConteo[1] + "</td>";
@@ -244,8 +252,18 @@ function drawChartInstancias(respuesta) {
         var options = {'title': 'Instancias (Altas)',
             'width': 400,
             'height': 300};
-        chart = new google.visualization.PieChart(document.getElementById('instanciasAltas'));
-        chart.draw(data, options);
+
+        if (pintarGragifa) {
+            chart = new google.visualization.PieChart(document.getElementById('instanciasAltas'));
+            chart.draw(data, options);
+        }
+        else {
+            document.getElementById("instanciasAltas").innerHTML = "";
+            var node = "<div class='alert alert-warning col-md-9 col-md-offset-1'>\n\
+                    <div class='alert-heading '><h4 class='text-center'><span class='glyphicon glyphicon-info-sign'></span>&nbsp;Lo sentimos aun no contamos con informaci&oacuten suficiente para calcular estadisticos para altas por instancia.</h4></div>\n\
+                </div>";
+            document.getElementById("instanciasAltas").innerHTML += "<br>" + node;
+        }
         tabla += "<tr><td>Total</td><td>" + totalAltas + "</td></tr>";
         return tabla;
     }
