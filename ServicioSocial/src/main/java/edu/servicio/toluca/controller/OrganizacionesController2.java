@@ -335,7 +335,7 @@ public class OrganizacionesController2 {
                     model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
                 } catch (Exception e) {
                 }
-                model.addAttribute("error_sql", "<div class='alert alert-danger'>Lo sentimos ya existe una organización con el nombre" + instancia.getNombre() + "</div>");
+                model.addAttribute("error_sql", "<div class='alert alert-danger'>Lo sentimos el nombre " + instancia.getNombre() + " no esta dispobible</div>");
                 return "/Organizaciones/registroOrganizaciones";
             }
             List<Instancia> lista = instanciaFacade.findBySpecificField("usuario", instancia.getUsuario().toString(), "equal", null, null);
