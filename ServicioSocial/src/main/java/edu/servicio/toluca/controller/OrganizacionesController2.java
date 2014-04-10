@@ -10,19 +10,14 @@ import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.PropAluInstProyBean;
 import edu.servicio.toluca.model.organizaciones.prueba;
 import edu.servicio.toluca.entidades.Actividades;
-import edu.servicio.toluca.entidades.Ciudades;
-import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.DatosPersonales;
-import edu.servicio.toluca.entidades.EstadosSia;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Instancia;
-import edu.servicio.toluca.entidades.MunicipiosSia;
 import edu.servicio.toluca.entidades.Perfil;
 import edu.servicio.toluca.entidades.Programa;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
-import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.model.ActividadesModel;
@@ -318,26 +313,30 @@ public class OrganizacionesController2 {
             return "/Organizaciones/confirmaOrganizacionVisitante";
 
         } else {
-             List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
-            if (!Unicos.isEmpty()) {
-                //Inyectamos lo que traia en la colonia
-                model.addAttribute("otra_colonia", otra_colonia);
-                //Agregamos atributos al formulario
-                model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
-//            model.addAttribute("instancia", new Instancia());
-                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
-                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("nombre", "asc");
-                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-                //Regresar codigo postal
-                model.addAttribute("cp", codigo_postal);
-                try {
-                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
-                } catch (Exception e) {
-                }
-                model.addAttribute("error_sql", "<div class='alert alert-danger'>Lo sentimos el nombre " + instancia.getNombre() + " no esta dispobible</div>");
-                return "/Organizaciones/registroOrganizaciones";
-            }
+
+//             List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
+//            if (!Unicos.isEmpty()) {
+//                //Inyectamos lo que traia en la colonia
+//                model.addAttribute("otra_colonia", otra_colonia);
+//                //Agregamos atributos al formulario
+//                model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
+////            model.addAttribute("instancia", new Instancia());
+//                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+//                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+//                ordenamiento.put("nombre", "asc");
+//                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+//                //Regresar codigo postal
+//                model.addAttribute("cp", codigo_postal);
+//                try {
+//                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+//                } catch (Exception e) {
+//                }
+//                model.addAttribute("error_sql", "<div class='alert alert-danger'>Lo sentimos el nombre " + instancia.getNombre() + " no esta dispobible</div>");
+//                return "/Organizaciones/registroOrganizaciones";
+//            }
+
+         
+
             List<Instancia> lista = instanciaFacade.findBySpecificField("usuario", instancia.getUsuario().toString(), "equal", null, null);
             if (!lista.isEmpty()) {
                 //Agregamos atributos al formulario

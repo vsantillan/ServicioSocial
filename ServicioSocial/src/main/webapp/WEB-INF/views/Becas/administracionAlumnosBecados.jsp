@@ -59,7 +59,7 @@
                                 <tr>
                                     <td><a href="preseleccionAlumnos.do" title="Agregar alumno" class="fancyFUI"><span class=" glyphicon glyphicon-plus sizeIcon"></span>&nbsp;&nbsp;&nbsp;</a></td>
                                     <td><a id="quitarAlumno" href="#" title="Quitar alumno" ><span class="glyphicon glyphicon-minus sizeIcon"></span>&nbsp;&nbsp;&nbsp;</a></td>
-                                    <td><a id="enviarcorreo1" href="#"  title="Enviar correo"><span class="glyphicon glyphicon-envelope sizeIcon"></span>&nbsp;&nbsp;&nbsp;</a></td>
+                                    <td><a  href="#correo"  data-toggle="modal"  title="Enviar correo"><span class="glyphicon glyphicon-envelope sizeIcon"></span>&nbsp;&nbsp;&nbsp;</a></td>
                                     <td><a id="aceptarAlumno" href="#" title="Aceptar alumno" ><span class="glyphicon glyphicon-ok sizeIcon"></a>&nbsp;&nbsp;&nbsp;</td>
                                     <td><a href="dbPreseleccionados.xls"  title="Descargar Excel" target="_blank"><span class="glyphicon glyphicon-download sizeIcon "></a></td>
 
@@ -101,7 +101,7 @@
                             <table>
                                 <tr>
 
-                                    <td><a href="correo.do" title="Enviar Correo" ><span class="glyphicon glyphicon-envelope sizeIcon"></span>&nbsp;&nbsp;&nbsp;</a></td>
+                                    <td><a  href="#correo"  data-toggle="modal" title="Enviar Correo" ><span class="glyphicon glyphicon-envelope sizeIcon"></span>&nbsp;&nbsp;&nbsp;</a></td>
                                     <td><a href="becados.pdf" title="Imprimir" target="_blank" ><span class="glyphicon glyphicon-print sizeIcon "></span>&nbsp;&nbsp;&nbsp;</a></td>
                                     <td><a href="becadosExcel.xls"  title="Descargar" target="_blank"><span class="glyphicon glyphicon-download sizeIcon "></span>&nbsp;&nbsp;&nbsp;</a></td>
 
@@ -116,8 +116,38 @@
 
                     <!---------------------------------------------Fin Contenido-------------------------------------------> 
                 </div><!--/row--> 
+                <!-- Modal fechas baja temporal -->
+                <div id="correo" class="modal fade" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Envio de correo</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label >Asunto:</label>
+                                        <input id="asunto" type="email" class="form-control" id="exampleInputEmail1" placeholder="Asunto">
+                                    </div>
+                                    <div class="form-group">
+                                        <label >Descripci&oacute;n:</label>
+                                       <textarea id="descripcion" class="form-control" rows="3"></textarea>
+
+                                    </div>
+                                    <button type="button"  id="enviarcorreo1" class="btn btn-primary">Enviar</button>
+                                </form>
+                                <br>
+                                <span id="respuesta"></span>
+                            </div>
+                            <div class="modal-footer">
+
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
                 <%@include file="../General/footer.jsp"%>    
-                
+
             </div><!--/row-->
         </div> <!-- /container -->
         <%@include file="../General/js.jsp"%>
