@@ -14,50 +14,35 @@ function loadLugar(e)
     $("input#id").attr("value", id_e);
 }
 
-function verificaLugar(e) {
+function verificaLugar(e){
     $("#errorVacio").html("");
     var value = $("#lugar_e").val().trim();
-    if (value.length > 0) {
-        e.preventDefault();
-        $.get("validaLugares.do?Lugar=" + value, null, function(respuesta) {
-            if (respuesta === "OK")
-                $("#editarLugar").submit();
-            else{
-                e.preventDefault();
-                $("#errorVacio").html("<br><div class='alert alert-danger'>Lo sentimos ya existe un edificio con el nombre: '" + value + "'</div>");
-            }
-        });
-    } else {
+    if(value.length > 0){
+        $("#envioB").submit();
+    } else{
         e.preventDefault();
         $("#errorVacio").html("<div class='alert alert-danger'>El campo no puede estar vacio</div>");
     }
 }
 
-function verificaLugar1(e) {
+function verificaLugar1(e){
     $("#errorVacio1").html("");
     var value = $("#lugar").val().trim();
-    if (value.length > 0) {
-        $.get("validaLugares.do?Lugar=" + value, function(respuesta) {
-            if (respuesta === "OK")
-                $("#envioB").submit();
-            else{
-                $("#errorVacio1").html("<br><div class='alert alert-danger'>Lo sentimos ya existe un edificio con el nombre: '" + value + "'</div>");
-                e.preventDefault();
-            }
-        });
-    } else {
+    if(value.length > 0){
+        $("#envioB1").submit();
+    } else{
         e.preventDefault();
-        $("#errorVacio1").html("<br><div class='alert alert-danger'>El campo no puede estar vacio</div>");
+        $("#errorVacio1").html("<div class='alert alert-danger'>El campo no puede estar vacio</div>");
     }
 }
 
 function alterLugar(e)
 {
     var nuevo_val = $("#lugar_s").val();
-    $.post("editarLugar1.do", {id: id_e, lugar_s: nuevo_val}, function(response)
-    {
-
-    });
+    $.post("editarLugar1.do", {id: id_e , lugar_s:nuevo_val},function(response)
+        {
+            
+        });
 }
 
 function updateLugar(e)

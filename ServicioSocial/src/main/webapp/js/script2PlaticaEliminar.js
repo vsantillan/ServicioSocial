@@ -10,12 +10,7 @@
                 $("a.elimina").click(function(){
                     id = $(this).attr("idP");
                     fecha = $(this).parents("tr").find("td").find("div").eq(0).html();
-                    fechaString=fecha.toString();
-                    
-                    
-                    var res = fechaString.replace("<div></div>"," "); 
-
-                    respuesta = confirm("\u00BFEst\u00E1 seguro que desea eliminar la pl\u00E1tica con fecha: " + res+" ?");
+                    respuesta = confirm("\u00BFEst\u00E1 seguro que desea eliminar la pl\u00E1tica con fecha: " + fecha+" ?");
                     if (respuesta){
                         $(this).parents("tr").fadeOut("normal", function(){
                             $(this).remove();

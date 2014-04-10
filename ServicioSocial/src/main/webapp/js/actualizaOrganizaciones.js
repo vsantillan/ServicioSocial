@@ -2,12 +2,10 @@ var row="";
 var idUpdate="";
 var tabla="";
 var tipo2 = "";
-var estatus = "";
 
 $(document).on('click', ".editOrg", updateOrganisation);
 $(document).on('click', ".editProy", updateProyecto);
 $(document).on('click', ".cambiaStatusInstancia", rechazarInstancia);
-$(document).on('click', ".cambiaStatusProyecto", rechazarProyecto);
 $(document).on('click', ".mandaObservacionesInstancia", cambiarEstadoInstancia);
 $(document).ready(listo);
 
@@ -63,7 +61,7 @@ function updateOrganisation(e)
 
 function listo() {
     $(document).on("click", "#guardarObservacionesInstancia", obtenerDatosInstancia);
-    $(document).on("click", "#guardarObservacionesProyecto", obtenerDatosProyecto);
+    $(document).on("click", "#guardarObservacionesProyecto", obtenerDatosPryecto);
 }
 
 function rechazarInstancia(e)
@@ -73,22 +71,7 @@ function rechazarInstancia(e)
         row = $(this).parents('tr')[0];
         idUpdate = $(e.target).attr('ide');
         tabla = $('#example').dataTable();
-        tipo2 = "2"; //el estatus de validacion de administrador para rechazado es 2
-        estatus = "0"; //0:Organizacion eliminada
-        mostrarDIVMotivos();
-    }
-
-}
-
-function rechazarProyecto(e)
-{
-    if (confirm('\u00BF'+"Seguro que desea eliminar el proyecto?"))
-    {
-        row = $(this).parents('tr')[0];
-        idUpdate = $(e.target).attr('ide');
-        tabla = $('#example').dataTable();
-        tipo2 = "2";  //el estatus de validacion de administrador para rechazado es 2
-        estatus = "0"; // 0:Proyecto eliminado
+        tipo2 = "0";
         mostrarDIVMotivos();
     }
 
@@ -115,7 +98,7 @@ function obtenerDatosInstancia()
     if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("cambiaStatusInstancia.do", {id: idUpdate,status: estatus,val_admin:tipo2, observaciones: array}, function(respuesta)
+        $.post("cambiaStatusInstancia.do", {id: idUpdate,status: tipo2, observaciones: array}, function(respuesta)
         {
             if(respuesta==="ok")
             {
@@ -131,7 +114,7 @@ function obtenerDatosInstancia()
     }
 }
 
-function obtenerDatosProyecto()
+function obtenerDatosPryecto()
 {
     var array = [];
     $("form#observacionesCat input").each(function() 
@@ -144,14 +127,14 @@ function obtenerDatosProyecto()
     if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("cambiaStatusProyecto.do", {id: idUpdate,estatus: estatus,val_admin:tipo2, observaciones: array}, function(respuesta)
+        $.post("cambiaStatusProyecto.do", {id: idUpdate, observaciones: array}, function(respuesta)
         {
             if(respuesta==="ok")
             {
-                alert("Proyecto eliminado.");
+                alert("Instancia eliminada");
                 window.location.reload();
             }else{
-                alert("ERROR: Imposible eliminar proyecto.");
+                alert("ERROR: Imposible eliminar Instancia.");
             }
             $('#guardarObservaciones').attr('disabled', false);
         });
