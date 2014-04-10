@@ -56,6 +56,7 @@ $('#enviarcorreo1').click(function() {
     }
     else
     {
+
         $.post("envioCorreoBecados.do", {'alumno': alumno,'asunto':asunto,'descripcion':descripcion}, function(respuesta) {
             $( "#respuesta" ).addClass("alert alert-succes");
             $( "#respuesta" ).text( "Enviado" ).show();
