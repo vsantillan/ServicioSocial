@@ -234,7 +234,6 @@ $(document).ready(function() {
     });
 
     $("#btnPreInstancia").click(function(event) {
-
         var select = document.getElementById("idInstancia");
 
         if (select.selectedIndex > 0) {

@@ -310,7 +310,7 @@
                                                 <div class="form-group">
                                                     <label for="fecha">*Fecha de Inicio (Fecha en que el Prestante del Servicio Social inicia sus actividades)</label>
                                                     <div class="input-group date dp2" data-date="" data-date-format="dd-mm-yyyy">
-                                                        <form:input class="form-control" path ="fecha_inicio" readonly="true" />
+                                                        <form:input type="text" require="true"  size="15" path ="fecha_inicio"  class="form-control"/>
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                                     </div><br>
                                                 </div>
