@@ -5,6 +5,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.Becado;
+import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
@@ -36,7 +37,6 @@ public class BecasController {
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnico;
 
-
     @RequestMapping(method = RequestMethod.GET, value = "/preseleccionAlumnos.do")
     public String preseleccionAlumnos(@ModelAttribute(value = "alumnoP") Becado alumnoP, BindingResult result, Model model) throws ParseException {
         Fecha fecha = new Fecha();
@@ -65,7 +65,6 @@ public class BecasController {
         return "/Becas/administracionAlumnosBecados";
     }
 
-
     @RequestMapping(method = RequestMethod.GET, value = "/sadf.do")
     public String correo(Model model) {
 
@@ -76,20 +75,22 @@ public class BecasController {
     public String generaPreseleccionadosExcel(Model model) {
         return "/Becas/dbPreseleccionadosReporte";
     }
-     @RequestMapping(method = RequestMethod.GET, value = "/becados.pdf")
+
+    @RequestMapping(method = RequestMethod.GET, value = "/becados.pdf")
     public String generaPDFBecados(Model model) {
         return "/Becas/becados";
     }
-      @RequestMapping(method = RequestMethod.GET, value = "/becadosExcel.xls")
+
+    @RequestMapping(method = RequestMethod.GET, value = "/becadosExcel.xls")
     public String generaExcelBecados(Model model) {
         return "/Becas/dbBecadosReporte";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/preseleccionadoBD.do")
-    public  @ResponseBody
+    public @ResponseBody
     void updateBecados(Becado alumnoP, Model model) {
         System.out.println("llego aqui");
-         System.out.println(alumnoP.getAlumno());
+        System.out.println(alumnoP.getAlumno());
         if (alumnoP.getAlumno() != null) {
             for (String current : alumnoP.getAlumno()) {
                 FormatoUnico form;
@@ -105,9 +106,8 @@ public class BecasController {
 //            return "ERROR no se pudo agregar alumno(s) agregados a la lista de preselelcion de becados";
 //        }
         }
-        
-//        return "redirect:administracionAlumnosBecados.do";
 
+//        return "redirect:administracionAlumnosBecados.do";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/quitarAlumno.do")
@@ -161,22 +161,24 @@ public class BecasController {
             return "ERROR no se a podido agregar el alumno a la lista de becados";
         }
     }
-//    @RequestMapping(method = RequestMethod.POST, value = "/envioCorreoBecados.do")
-//    public @ResponseBody
-//    String envioCorreoBecados(@RequestParam(value = "alumno[]", required = false) String[] alumno,String asunto,String descripcion, Model model) {
-//        if (alumno != null) {
-//            for (String current : alumno) {
-//                FormatoUnico form;
-//                BigDecimal id = new BigDecimal(current);
-//                BigInteger tipoServicio = new BigInteger(String.valueOf(3));
-//                form = formatoUnico.find(id);
-//                form.setTipoServicio(tipoServicio);
-//                formatoUnico.edit(form);
-//            }
-//            return "Enviados";
-//
-//        } else {
-//            return "ERROR";
-//        }
-//    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/envioCorreoBecados.do")
+    public @ResponseBody
+    void envioCorreoBecados(@RequestParam(value = "alumno[]", required = false) String[] alumno, String asunto, String descripcion, Model model) {
+        
+        if (alumno != null && asunto != null && descripcion != null) 
+        {            
+            for (String current : alumno) {
+                FormatoUnico form;
+                BigDecimal id = new BigDecimal(current);
+                form = formatoUnico.find(id);
+                if (form.getDatosPersonalesId().getCorreoElectronico()!=null){
+                Thread hiloCorreo = new Thread(new EnviarCorreo(asunto, form.getDatosPersonalesId().getCorreoElectronico(), descripcion));
+                hiloCorreo.start();
+            }
+                
+            }
+
+        }
+    }
 }
