@@ -16,29 +16,12 @@ $('#aceptarAlumno').click(function() {
     {
         $.post("aceptarAlumno.do", {'alumno': alumno}, function(respuesta) {
             location.reload();
-            alert(respuesta);
+          //  alert(respuesta);
 
         });
     }
 });
-$('#enviarCorreo').click(function() {
-    var alumno = [];
-    $("input[name='checkbox']:checked").each(function() {
-        alumno.push($(this).val());
-    });
-    console.log(alumno);
-    if (alumno.length === 0)
-    {
-        alert("No se selecciono ningun alumno");
-    }
-    else
-    {
-        $.post("enviarCorreo.do", {'alumno': alumno}, function(respuesta) {
-            alert(respuesta);
-        });
-    }
 
-});
 $('#quitarAlumno').click(function() {
     var alumno = [];
     $("input[name='checkbox']:checked").each(function() {
@@ -59,10 +42,30 @@ $('#quitarAlumno').click(function() {
     }
 
 });
-//$('#aceptar').click(function() {
-//    $("#preseleccionados").submit();
-//
-//});
+$('#enviarcorreo1').click(function() {
+    var alumno = [];
+    $("input[name='checkbox']:checked").each(function() {
+        alumno.push($(this).val());
+    });
+    var asunto = $( "#asunto" ).val();
+    var descripcion=$( "#descripcion" ).val();
+    if (alumno.length === 0 || asunto.length == 0 || descripcion.length == 0)
+    {
+        $( "#respuesta" ).addClass("alert alert-danger");
+        $( "#respuesta" ).text( "Error todos los campos son requeridos o no se seleccionaron alumnos" ).show();
+    }
+    else
+    {
+        
+    }
+    
+//    console.log(alumno);
+//    console.log(asunto);
+//    console.log(descripcion);
+});
+
+
+
 $("#preseleccionados").submit(function(event) {
     parent.location.reload(true);
 });

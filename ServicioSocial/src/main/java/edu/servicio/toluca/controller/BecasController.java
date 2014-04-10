@@ -161,4 +161,22 @@ public class BecasController {
             return "ERROR no se a podido agregar el alumno a la lista de becados";
         }
     }
+//    @RequestMapping(method = RequestMethod.POST, value = "/envioCorreoBecados.do")
+//    public @ResponseBody
+//    String envioCorreoBecados(@RequestParam(value = "alumno[]", required = false) String[] alumno,String asunto,String descripcion, Model model) {
+//        if (alumno != null) {
+//            for (String current : alumno) {
+//                FormatoUnico form;
+//                BigDecimal id = new BigDecimal(current);
+//                BigInteger tipoServicio = new BigInteger(String.valueOf(3));
+//                form = formatoUnico.find(id);
+//                form.setTipoServicio(tipoServicio);
+//                formatoUnico.edit(form);
+//            }
+//            return "Enviados";
+//
+//        } else {
+//            return "ERROR";
+//        }
+//    }
 }
