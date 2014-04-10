@@ -73,8 +73,10 @@ public class EstadisticasController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/estadisticas.do")
-    public String estadisticasAdmn(Model modelo, String anio, String periodo) {
+    public String estadisticasAdmn(Model modelo) {
+        //Falta hacer el filtrado por año y periodo actual
         int anioInicioServicio = 2014;
+        String periodoActual="";
         int sexoIAltas = 0;
         int sexoILiberaciones = 0;
         int sexoMAltas = 0;
@@ -93,12 +95,15 @@ public class EstadisticasController {
         int carreasLiberaciones[] = new int[7];
         List<FormatoUnico> formatoUnicosFiltrados = new ArrayList<FormatoUnico>();
         List<FormatoUnico> formatosUnicos = formatoUnicoFacade.findAll();
-
+        
+        //Funcion para obtener periodo Actual
+          periodoActual=(fecha.get(Calendar.MONTH)<=6)?"ENE-JUN":"JUL-DIC";
+          
         //FIltrando por el año
         for (FormatoUnico formatoActual : formatosUnicos) {
             String aniosSplit[] = formatoActual.getFechaInicio().toString().split("-");
-            if (aniosSplit[0].equals(anio)) {
-                if (formatoActual.getPeriodoInicio().equals(periodo)) {
+            if (Integer.parseInt(aniosSplit[0])==fecha.get(Calendar.YEAR)) {
+                if (formatoActual.getPeriodoInicio().equals(periodoActual)) {
                     formatoUnicosFiltrados.add(formatoActual);
                 }
             }
@@ -116,7 +121,7 @@ public class EstadisticasController {
         }
         ////////////////////////////////////////////////////////////////////////////////////
 
-        for (FormatoUnico formatoActual : formatosUnicos) {
+        for (FormatoUnico formatoActual : formatoUnicosFiltrados) {
             if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("QUIMICA")) {
                 carreasAltas[0] = carreasAltas[0] + 1;
                 if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
@@ -289,6 +294,24 @@ public class EstadisticasController {
                 }
             }
         }
+        arrJSON = "" + sexoMAltas + "," + sexoFAltas + "," + sexoIAltas + "|" + sexoMLiberaciones + "," + sexoFLiberaciones + "," + sexoILiberaciones + "|";
+        for (int i = 0; i < carreasAltas.length; i++) {
+            arrJSON += carreasAltas[i];
+            if (i == (carreasAltas.length - 1)) {
+                arrJSON += "|";
+            } else {
+                arrJSON += ",";
+            }
+        }
+        for (int i = 0; i < carreasLiberaciones.length; i++) {
+            arrJSON += carreasLiberaciones[i];
+            if (i == (carreasLiberaciones.length - 1)) {
+                arrJSON += "|";
+            } else {
+                arrJSON += ",";
+            }
+        }
+        System.out.println("Json" + arrJSON);
         return arrJSON;
     }
 }

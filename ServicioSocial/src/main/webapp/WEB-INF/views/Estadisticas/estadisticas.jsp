@@ -43,7 +43,7 @@
                                         <th>Liberaciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tablaSexo">
                                     <tr>
                                         <td>Femenino</td>
                                         <td>${totalFemenino}</td>
@@ -60,7 +60,7 @@
                                         <td>${totalIndefinidoLiberaciones}</td>
                                     </tr>
                                     <tr>
-                                        <td>Total</td>
+                                        <th>Total</th>
                                         <td>${totalFemenino + totalMasculino + totalIndefinido}</td>
                                         <td>${totalFemeninoLiberaciones + totalMasculinoLiberaciones + totalIndefinidoLiberaciones}</td>
                                     </tr>
@@ -80,9 +80,9 @@
                                         <th>Liberaciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tablaCarreras">
                                     <tr>
-                                        <td>Ing. Quimica</td>
+                                        <td>Ing. Qu&iacute;mica</td>
                                         <td>${carrerasAltas[0]}</td>
                                         <td>${carrerasLiberaciones[0]}</td>
                                     </tr>
@@ -92,12 +92,12 @@
                                         <td>${carrerasLiberaciones[1]}</td>
                                     </tr>
                                     <tr>
-                                        <td>Ing. Electromecanica</td>
+                                        <td>Ing. Electromec&aacute;nica</td>
                                         <td>${carrerasAltas[2]}</td>
                                         <td>${carrerasLiberaciones[2]}</td>
                                     </tr>
                                     <tr>
-                                        <td>Ing. Mecatronica</td>
+                                        <td>Ing. Mecatr&oacute;nica</td>
                                         <td>${carrerasAltas[3]}</td>
                                         <td>${carrerasLiberaciones[3]}</td>
                                     </tr>
@@ -107,17 +107,17 @@
                                         <td>${carrerasLiberaciones[4]}</td>
                                     </tr>
                                     <tr>
-                                        <td>Ing. Electronica</td>
+                                        <td>Ing. Electr&oacute;nica</td>
                                         <td>${carrerasAltas[5]}</td>
                                         <td>${carrerasLiberaciones[5]}</td>
                                     </tr>
                                     <tr>
-                                        <td>Ing. en Sitemas Computacionales</td>
+                                        <td>Ing. en Sistemas Computacionales</td>
                                         <td>${carrerasAltas[6]}</td>
                                         <td>${carrerasLiberaciones[6]}</td>
                                     </tr>
                                     <tr>
-                                        <td>Total</td>
+                                        <th>Total</th>
                                         <td>${carrerasAltas[0] + carrerasAltas[1] + carrerasAltas[2] + carrerasAltas[3] + carrerasAltas[4] + carrerasAltas[5] + carrerasAltas[6]}</td>
                                         <td>${carrerasLiberaciones[0] + carrerasLiberaciones[1] + carrerasLiberaciones[2]+carrerasLiberaciones[3]+carrerasLiberaciones[4]+carrerasLiberaciones[5]+carrerasLiberaciones[6]}</td>
                                     </tr>
@@ -198,17 +198,32 @@
                     $('#tablaProgramas').empty();
                     $('#tablaInstancias').empty();
 
-                    $.get("programasEstadisticas.do?&ano="+anio+"&periodo="+periodo+"", null, function(respuesta) {
+                    $.get("programasEstadisticas.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         drawChartProgramas(respuesta);
                     });
-                    $.get("programasEstadisticasLiberados.do?&ano="+anio+"&periodo="+periodo+"", null, function(respuesta) {
+                    $.get("programasEstadisticasLiberados.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         drawChartProgramasLiberaciones(respuesta);
                     });
-                    $.get("programasEstadisticasLiberadosTabla.do?&ano="+anio+"&periodo="+periodo+"", null, function(respuesta) {
+                    $.get("programasEstadisticasLiberadosTabla.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         $('#tablaProgramas').append(construyeTabla(respuesta));
                     });
-                    $.get("instanciasEstadisticas.do?&ano="+anio+"&periodo="+periodo+"", null, function(respuesta) {
+                    $.get("instanciasEstadisticas.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         $('#tablaInstancias').append(drawChartInstancias(respuesta));
+                    });
+                    $.get("datosSexoCarreras.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
+                        var contenido=respuesta.split("|");
+                        var sexoAlta=contenido[0].split(",");
+                        var sexoLiberaciones=contenido[1].split(",");
+                        var carrerasAltas=contenido[2].split(",");
+                        var carrerasLiberaciones=contenido[3].split(",");
+                        drawChartSexAltas(parseInt(sexoAlta[0]),parseInt(sexoAlta[1]),parseInt(sexoAlta[2]));
+                        drawChartSexLiberaciones(parseInt(sexoLiberaciones[0]),parseInt(sexoLiberaciones[1]),parseInt(sexoLiberaciones[2]));
+                        contruyeTablaSexo(sexoAlta[0],sexoAlta[1],sexoAlta[2],sexoLiberaciones[0],sexoLiberaciones[1],sexoLiberaciones[2]);
+                        drawChartCarrerasAltas(parseInt(carrerasAltas[0]),parseInt(carrerasAltas[1]),parseInt(carrerasAltas[2]),parseInt(carrerasAltas[3]),parseInt(carrerasAltas[4]),parseInt(carrerasAltas[5]),parseInt(carrerasAltas[6]));
+                        drawChartCarrerasLiberaciones(parseInt(carrerasLiberaciones[0]),parseInt(carrerasLiberaciones[1]),parseInt(carrerasLiberaciones[2]),parseInt(carrerasLiberaciones[3]),parseInt(carrerasLiberaciones[4]),parseInt(carrerasLiberaciones[5]),parseInt(carrerasLiberaciones[6])); 
+                        contruyeTablaCarreras(parseInt(carrerasAltas[0]),parseInt(carrerasAltas[1]),parseInt(carrerasAltas[2]),parseInt(carrerasAltas[3]),parseInt(carrerasAltas[4]),parseInt(carrerasAltas[5]),parseInt(carrerasAltas[6])
+                                             ,parseInt(carrerasLiberaciones[0]),parseInt(carrerasLiberaciones[1]),parseInt(carrerasLiberaciones[2]),parseInt(carrerasLiberaciones[3]),parseInt(carrerasLiberaciones[4]),parseInt(carrerasLiberaciones[5]),parseInt(carrerasLiberaciones[6]) );
+                        
                     });
                 }
             </script>

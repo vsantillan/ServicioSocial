@@ -212,7 +212,7 @@ function construyeTabla(respuesta) {
         totalAltas = totalAltas + parseInt(programasLiberados[1]);
         totalLiberaciones = totalLiberaciones + parseInt(programasLiberados[0]);
     }
-    tabla += "<tr><td>Total</td><td>" + totalAltas + "</td><td>" + totalLiberaciones + "</td></tr>";
+    tabla += "<tr><th>Total:</th><td>" + totalAltas + "</td><td>" + totalLiberaciones + "</td></tr>";
     return tabla;
 }
 
@@ -264,9 +264,82 @@ function drawChartInstancias(respuesta) {
                 </div>";
             document.getElementById("instanciasAltas").innerHTML += "<br>" + node;
         }
-        tabla += "<tr><td>Total</td><td>" + totalAltas + "</td></tr>";
+        tabla += "<tr><th>Total:</th><td>" + totalAltas + "</td></tr>";
         return tabla;
     }
+}
+function contruyeTablaSexo(sexoAltasM, sexoAltasF, sexoAltasI, sexoLiberacionesM, sexoLiberacionesF, sexoLiberacionesI) {
+    var tabla = "";
+    tabla += "<tr>";
+    tabla += "<td>Femenino</td>";
+    tabla += "<td>" + sexoAltasF + "</td>";
+    tabla += "<td>" + sexoLiberacionesF + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<td>Masculino</td>";
+    tabla += "<td>" + sexoAltasM + "</td>";
+    tabla += "<td>" + sexoLiberacionesM + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<td>Indefinido</td>";
+    tabla += "<td>" + sexoAltasI + "</td>";
+    tabla += "<td>" + sexoLiberacionesI + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<th>Total:</th>";
+    tabla += "<td>" + (parseInt(sexoAltasF) + parseInt(sexoAltasM) + parseInt(sexoAltasI)) + "</td>";
+    tabla += "<td>" + (parseInt(sexoLiberacionesF) + parseInt(sexoLiberacionesM) + parseInt(sexoLiberacionesI)) + "</td>";
+    tabla += "</tr>";
+
+    $("#tablaSexo").empty();
+    $("#tablaSexo").append(tabla);
+}
+
+function contruyeTablaCarreras(carrraAlta1, carrraAlta2, carrraAlta3, carrraAlta4, carrraAlta5, carrraAlta6, carrraAlta7, carrraLib1, carrraLib2, carrraLib3, carrraLib4, carrraLib5, carrraLib6, carrraLib7) {
+    var tabla = "";
+    tabla += "<tr>";
+    tabla += "<td>Ing. Qu\u00edmica</td>";
+    tabla += "<td>" + carrraAlta1 + "</td>";
+    tabla += "<td>" + carrraLib1 + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<td>Ing. Industrial</td>";
+    tabla += "<td>" + carrraAlta2 + "</td>";
+    tabla += "<td>" + carrraLib2 + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<td>Ing. Electromec\u00e1nica</td>";
+    tabla += "<td>" + carrraAlta3 + "</td>";
+    tabla += "<td>" + carrraLib3 + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<td>Ing. Mecatr\u00f3nica</td>";
+    tabla += "<td>" + carrraAlta4 + "</td>";
+    tabla += "<td>" + carrraLib4 + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<td>Lic. en Administraci\u00f3n</td>";
+    tabla += "<td>" + carrraAlta5 + "</td>";
+    tabla += "<td>" + carrraLib5 + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<td>Ing. Electr\u00f3nica</td>";
+    tabla += "<td>" + carrraAlta6 + "</td>";
+    tabla += "<td>" + carrraLib6 + "</td>";
+    tabla += "</tr>";
+    tabla += "<td>Ing. en Sistemas Computacionales</td>";
+    tabla += "<td>" + carrraAlta7 + "</td>";
+    tabla += "<td>" + carrraLib7 + "</td>";
+    tabla += "</tr>";
+    tabla += "<tr>";
+    tabla += "<tr>";
+    tabla += "<th>Total:</th>";
+    tabla += "<td>" + (carrraAlta1+carrraAlta2+carrraAlta3+carrraAlta4+carrraAlta5+carrraAlta6+carrraAlta7) + "</td>";
+    tabla += "<td>" + (carrraLib1+carrraLib2+carrraLib3+carrraLib4+carrraLib5+carrraLib6+carrraLib7) + "</td>";
+    tabla += "</tr>";
+
+    $("#tablaCarreras").empty();
+    $("#tablaCarreras").append(tabla);
 }
 
 
