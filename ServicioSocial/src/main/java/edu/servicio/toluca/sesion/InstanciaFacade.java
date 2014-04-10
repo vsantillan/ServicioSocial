@@ -32,20 +32,20 @@ public class InstanciaFacade extends AbstractFacade<Instancia> {
         super(Instancia.class);
     }
 
-    public String instanciasTotales() {
+    public String instanciasTotales(String ano,String periodo) {
         String arrJSON = "";
 
         String sql = "SELECT I.NOMBRE, \n"
-                + "(SELECT COUNT(*) AS total \n"
-                + "FROM FORMATO_UNICO FU,PROYECTOS PR\n"
-                + "WHERE FU.IDPROYECTO=PR.ID_PROYECTO  AND PR.ID_INSTANCIA=I.ID_INSTANCIA) \n"
-                + "AS TOTAL\n"
-                + "FROM INSTANCIA I";
+                + "                (SELECT COUNT(*) AS total \n"
+                + "                FROM FORMATO_UNICO FU,PROYECTOS PR\n"
+                + "                WHERE FU.IDPROYECTO=PR.ID_PROYECTO  AND PR.ID_INSTANCIA=I.ID_INSTANCIA and to_char(FU.FECHA_INICIO,'yyyy')="+ano+" and FU.PERIODO_INICIO='"+periodo+"') \n"
+                + "                AS TOTAL\n"
+                + "                FROM INSTANCIA I";
         Query query = (Query) em.createNativeQuery(sql);
         List<Object[]> registros = query.getResultList();
 
         for (int i = 0; i < registros.size(); i++) {
-            arrJSON = arrJSON + "" + registros.get(i)[0] + "|" + registros.get(i)[1] +"&";
+            arrJSON = arrJSON + "" + registros.get(i)[0] + "|" + registros.get(i)[1] + "&";
         }
         return arrJSON;
     }
