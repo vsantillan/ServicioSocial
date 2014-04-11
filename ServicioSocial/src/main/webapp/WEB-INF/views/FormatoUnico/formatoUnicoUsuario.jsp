@@ -23,11 +23,11 @@
                         <ul class="nav nav-tabs">
                             <li id="tab1" class="active tabsFormanotUnico" noTab="1"><a data-toggle="tab" href="#contensFormanotUnico1" onclick="ocultaDiv();">1.Datos Personales</a></li>
                             <li id="tab2" class="tabsFormanotUnico" noTab="2"><a data-toggle="tab" href="#contensFormanotUnico2" onclick="ocultaDiv();">2.Datos Contacto</a></li>
-                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Acad&eacute;micos</a></li>
-                            <li id="tab4" class="tabsFormanotUnico" noTab="4"><a data-toggle="tab" href="#contensFormanotUnico4" onclick="ocultaDiv();">4.Datos Organizaciones</a></li>
-                            <li id="tab5" class="tabsFormanotUnico" noTab="5"><a data-toggle="tab" href="#contensFormanotUnico5" onclick="ocultaDiv();">5.Horario</a></li>
-                            <li id="tab6" class="tabsFormanotUnico" noTab="6"><a data-toggle="tab" href="#contensFormanotUnico6" onclick="ocultaDiv();">6.Imprimir Formato &Uacute;nico</a></li>
-                            <li id="tab7" class="tabsFormanotUnico" noTab="7"><a data-toggle="tab" href="#contensFormanotUnico7" onclick="ocultaDiv();">7.Subir Formato &Uacute;nico</a></li>
+<!--                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Acad&eacute;micos</a></li>-->
+                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Organizaciones</a></li>
+                            <li id="tab4" class="tabsFormanotUnico" noTab="4"><a data-toggle="tab" href="#contensFormanotUnico4" onclick="ocultaDiv();">4.Horario</a></li>
+                            <li id="tab5" class="tabsFormanotUnico" noTab="5"><a data-toggle="tab" href="#contensFormanotUnico5" onclick="ocultaDiv();">5.Imprimir Formato &Uacute;nico</a></li>
+                            <li id="tab6" class="tabsFormanotUnico" noTab="6"><a data-toggle="tab" href="#contensFormanotUnico6" onclick="ocultaDiv();">6.Subir Formato &Uacute;nico</a></li>
                         </ul>
                         <div class="tab-content">
                             <div id="contensFormanotUnico1" class="contensFormanotUnico tab-pane active col-md-12">
@@ -246,7 +246,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="contensFormanotUnico3" class="contensFormanotUnico tab-pane col-md-6 col-md-offset-3">
+<!--                            <div id="contensFormanotUnico3" class="contensFormanotUnico tab-pane col-md-6 col-md-offset-3">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Datos Academicos</div>
@@ -280,9 +280,9 @@
                                             </table>
                                         </form:form>
                                     </div>
-                                </div>
-                            </div>
-                            <div id="contensFormanotUnico4" class="contensFormanotUnico tab-pane col-md-12">
+                                </div>-->
+<!--                            </div>-->
+                            <div id="contensFormanotUnico3" class="contensFormanotUnico tab-pane col-md-12">
                                 <p>&nbsp;</p>
                                 <div class="row">
                                     <div class="alert alert-warning col-md-6  col-md-offset-3">
@@ -372,7 +372,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="contensFormanotUnico5" class="contensFormanotUnico tab-pane col-md-8 col-md-offset-2">
+                            <div id="contensFormanotUnico4" class="contensFormanotUnico tab-pane col-md-8 col-md-offset-2">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Horarios</div>
@@ -435,7 +435,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="contensFormanotUnico6" class="contensFormanotUnico tab-pane col-md-12">
+                            <div id="contensFormanotUnico5" class="contensFormanotUnico tab-pane col-md-12">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Imprimir Formato &Uacute;nico</div>
@@ -458,7 +458,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="contensFormanotUnico7" class="contensFormanotUnico tab-pane col-md-10 col-md-offset-1">
+                            <div id="contensFormanotUnico6" class="contensFormanotUnico tab-pane col-md-10 col-md-offset-1">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Subir Formato &Uacute;nico</div>
