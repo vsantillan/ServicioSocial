@@ -123,6 +123,7 @@ function obtenerDatosInstancia()
                 window.location.reload();
             }else{
                 alert("ERROR: Imposible eliminar Instancia.");
+                window.location.reload();
             }
             $('#guardarObservaciones').attr('disabled', false);
         });
@@ -151,7 +152,8 @@ function obtenerDatosProyecto()
                 alert("Proyecto eliminado.");
                 window.location.reload();
             }else{
-                alert("ERROR: Imposible eliminar proyecto.");
+                alert("ERROR: Imposible eliminar Proyecto.");
+                window.location.reload();
             }
             $('#guardarObservaciones').attr('disabled', false);
         });
