@@ -21,9 +21,11 @@ function verificaLugar(e) {
         e.preventDefault();
         $.get("validaLugares.do?Lugar=" + value, null, function(respuesta) {
             if (respuesta === "OK")
-                $("#envioB").submit();
-            else
+                $("#editarLugar").submit();
+            else{
+                e.preventDefault();
                 $("#errorVacio").html("<br><div class='alert alert-danger'>Lo sentimos ya existe un edificio con el nombre: '" + value + "'</div>");
+            }
         });
     } else {
         e.preventDefault();
@@ -35,12 +37,13 @@ function verificaLugar1(e) {
     $("#errorVacio1").html("");
     var value = $("#lugar").val().trim();
     if (value.length > 0) {
-         e.preventDefault();
         $.get("validaLugares.do?Lugar=" + value, function(respuesta) {
             if (respuesta === "OK")
                 $("#envioB").submit();
-            else
+            else{
                 $("#errorVacio1").html("<br><div class='alert alert-danger'>Lo sentimos ya existe un edificio con el nombre: '" + value + "'</div>");
+                e.preventDefault();
+            }
         });
     } else {
         e.preventDefault();

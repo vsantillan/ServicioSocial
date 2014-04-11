@@ -22,7 +22,7 @@
 Map parameters = new HashMap();
 //parameters.put("folio",session.getAttribute("platica").toString()+session.getAttribute("NCONTROL").toString()); 
 /*Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)*/
-byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectar("ges_vin", "gst05a"));
+byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath (), parameters, conn.conectarAux("ges_vin", "gst05a"));
 JasperPrint jasperPrint = JasperFillManager.fillReport(reportFile.getPath(), parameters);
 String xlsFilesSource = "/reportes/asprirantes.xls";
 
