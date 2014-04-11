@@ -152,7 +152,7 @@
                                                     <form:input  path ="calle" maxlength="200" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>No. Int.</label>
+                                                    <label>*No. Int.</label>
                                                     <form:input  path ="numeroI" maxlength="5" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
@@ -211,15 +211,15 @@
                                                 </div>
                                                 <div cl class="row">
                                                     <div class="form-group col-md-4">
-                                                        <label>Tel&eacute;fono casa:</label>
+                                                        <label>*Tel&eacute;fono casa:</label>
                                                         <form:input maxlength="50"  path ="telefono_casa" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label>Tel&eacute;fono cel:</label>
+                                                        <label>*Tel&eacute;fono cel:</label>
                                                         <form:input maxlength="30" path ="telefono_cel" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label>Tel&eacute;fono oficina:</label>
+                                                        <label>*Tel&eacute;fono oficina:</label>
                                                         <label><form:input maxlength="30" path ="telefono_oficina" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> </label>
                                                     </div>
                                                 </div>
@@ -228,11 +228,11 @@
                                                     <form:input maxlength="30" path ="correo_electronico" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Twitter:</label>
+                                                    <label>*Twitter:</label>
                                                     <form:input maxlength="25" path ="twitter" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>Facebook:</label>
+                                                    <label>*Facebook:</label>
                                                     <form:input maxlength="30" path ="facebook" class="form-control" />
                                                 </div>
                                             </div>
