@@ -303,10 +303,10 @@
                                                         </core:forEach> 
                                                     </select>
                                                 </div>
-                                                <div class=" form-group">
+<!--                                                <div class=" form-group">
                                                     <label>&nbsp;</label>
                                                     <a id="linkNuevoI" href="propAlInstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancyFU btn btn-primary" >Agregar una Instancia/Proyecto Nuevo</a>
-                                                </div>
+                                                </div>-->
                                                 <div class="form-group">
                                                     <label for="fecha">*Fecha de Inicio (Fecha en que el Prestante del Servicio Social inicia sus actividades)</label>
                                                     <div class="input-group date dp2" data-date="" data-date-format="dd-mm-yyyy">
@@ -318,10 +318,10 @@
                                                     <label>*Proyecto:</label>
                                                     <select id="proyectos" name="proyecto" class="form-control"></select> 
                                                 </div>
-                                                <div class=" form-group">
+<!--                                                <div class=" form-group">
                                                     <label>&nbsp;</label>
                                                     <a id="linkNuevoP" href="propAlProyecto.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}&idInstancia=${idDeInstancia}" class="fancyFU btn btn-primary" >Agregar un proyecto</a>                             
-                                                </div>
+                                                </div>-->
 
                                             </div>
                                             <div class="col-md-6">
