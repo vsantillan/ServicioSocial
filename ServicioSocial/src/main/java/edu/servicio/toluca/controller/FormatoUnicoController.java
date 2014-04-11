@@ -29,6 +29,7 @@ import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.model.SancionesModelo;
@@ -59,6 +60,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -259,7 +261,9 @@ public class FormatoUnicoController {
             Proyectos proyecto = listaProyectos.get(0);
             //**proyecto.setIdProyecto(BigDecimal.ONE);
             formatoUnico.setIdproyecto(proyecto);
-            formatoUnico.setFechaInicio(new java.util.Date());
+            fechas manejoFechas = new fechas();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+            formatoUnico.setFechaInicio(manejoFechas.covierteString(formatoFecha.format(new java.util.Date())));
 
             //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
             //----Inserción de todo el bean de formato unico con el facade---
