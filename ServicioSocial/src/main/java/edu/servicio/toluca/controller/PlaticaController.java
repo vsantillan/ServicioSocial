@@ -48,7 +48,6 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import org.openide.util.Exceptions;
 
-
 /**
  *
  * @author Mary
@@ -62,10 +61,9 @@ public class PlaticaController {
     private LugaresPlaticaFacade lugaresPlaticaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
     private FoliosPlaticaFacade foliosPlaticaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/VaFacade")
-    private VaFacade vaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     private VistaAlumnoFacade VistaAlumnoFacade;
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/altaPlatica.do")
     public String altaPlatica(Model modelo, HttpSession session, HttpServletRequest request) {
@@ -152,17 +150,18 @@ public class PlaticaController {
             modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
-         ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
-         List<Platica> platicas = platicaFacade.findAll();
-         if (!platicas.isEmpty()){
-         for(int i=0;i<platicas.size();i++){
-             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
-                 platicasDisponibles.add(platicas.get(i));
-             }
-         }
-         }
-        modelo.addAttribute("platicasPeriodo",platicasDisponibles);
-        modelo.addAttribute("espacio"," ");
+        ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
+        List<Platica> platicas = platicaFacade.findAll();
+        if (!platicas.isEmpty()) {
+            for (int i = 0; i < platicas.size(); i++) {
+                if ((platicas.get(i).getStatus().compareTo((short) 1)) == 0) {
+                    platicasDisponibles.add(platicas.get(i));
+                    System.out.println("Lugares "+platicas.get(i).getIdLugar().getLugar());
+                }
+            }
+        }
+        modelo.addAttribute("platicasPeriodo", platicasDisponibles);
+        modelo.addAttribute("espacio", " ");
         return "/Platicas/asistenciaPosteriorEspecial";
     }
 
@@ -210,7 +209,7 @@ public class PlaticaController {
                     platica.setPeriodo("AGO-DIC");
                 }
 
-                platica.setAnio(((platica.getFecha().getYear())+1900)+"");
+                platica.setAnio(((platica.getFecha().getYear()) + 1900) + "");
 ///////////////////////////////////////////////////////////////////////////////////////////////////
                 System.out.println("sin errores entidad");
                 System.out.println("fecha" + platica.getFechaMxFui().toString());
@@ -246,7 +245,7 @@ public class PlaticaController {
 
                         }
                         if (existe) {
-                            
+
                             modelo.addAttribute("anioInicio", anio.anioActual());
                             modelo.addAttribute("anioFin", anio.anioFin());
                             modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
@@ -379,11 +378,11 @@ public class PlaticaController {
                 foliosPlatica = foliosPlaticaFacade.find(lista.get(0).getId());
                 foliosPlatica.setAsistencia((short) 1);
                 foliosPlaticaFacade.edit(foliosPlatica);
-                modelo.addAttribute("colocado"," <div ><span class=\"glyphicon glyphicon-ok  alert-succes\" ></span></div>");
+                modelo.addAttribute("colocado", " <div ><span class=\"glyphicon glyphicon-ok  alert-succes\" ></span></div>");
                 return "/Platicas/capturarAsistencia";
             } else {
                 modelo.addAttribute("foliosPlatica", new FoliosPlatica());
-                modelo.addAttribute("colocado"," <div ><span class=\"glyphicon glyphicon-remove alert-danger\" ></span></div>");
+                modelo.addAttribute("colocado", " <div ><span class=\"glyphicon glyphicon-remove alert-danger\" ></span></div>");
                 modelo.addAttribute("existe", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span> No existe numero de folio</div>");
                 return "/Platicas/capturarAsistencia";
             }
@@ -397,30 +396,30 @@ public class PlaticaController {
             // List<Va> listaAlumno = vaFacade.findBySpecificField("id", no_control, "equal", null, null); 
             List<VistaAlumno> listaAlumno = VistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
             if (listaAlumno.isEmpty()) {
-                ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
-         List<Platica> platicas = platicaFacade.findAll();
-         if (!platicas.isEmpty()){
-         for(int i=0;i<platicas.size();i++){
-             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
-                 platicasDisponibles.add(platicas.get(i));
-             }
-         }
-         }
+                ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
+                List<Platica> platicas = platicaFacade.findAll();
+                if (!platicas.isEmpty()) {
+                    for (int i = 0; i < platicas.size(); i++) {
+                        if ((platicas.get(i).getStatus().compareTo((short) 1)) == 0) {
+                            platicasDisponibles.add(platicas.get(i));
+                        }
+                    }
+                }
                 modelo.addAttribute("platicasPeriodo", platicasDisponibles);
                 modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control no encontrado</p>");
                 return "/Platicas/asistenciaPosteriorEspecial";
             } else {
                 VistaAlumno porcentaje = listaAlumno.get(0);
                 if (Float.parseFloat(porcentaje.getPorcentaje()) < 70) {
-                    ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
-         List<Platica> platicas = platicaFacade.findAll();
-         if (!platicas.isEmpty()){
-         for(int i=0;i<platicas.size();i++){
-             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
-                 platicasDisponibles.add(platicas.get(i));
-             }
-         }
-         }
+                    ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
+                    List<Platica> platicas = platicaFacade.findAll();
+                    if (!platicas.isEmpty()) {
+                        for (int i = 0; i < platicas.size(); i++) {
+                            if ((platicas.get(i).getStatus().compareTo((short) 1)) == 0) {
+                                platicasDisponibles.add(platicas.get(i));
+                            }
+                        }
+                    }
                     modelo.addAttribute("platicasPeriodo", platicasDisponibles);
                     modelo.addAttribute("error", "<p class='alert alert-danger'>El alumno no cuenta con los creditos suficientes , tiene" + Float.parseFloat(porcentaje.getPorcentaje()) + "% de creditos</p>");
                     return "/Platicas/asistenciaPosteriorEspecial";
@@ -461,16 +460,16 @@ public class PlaticaController {
                         platicaFacade.edit(platica);
                         modelo.addAttribute("folio", idPlatica + no_control);
                         modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
-                         modelo.addAttribute("espacio", " ");
-                         ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
-         List<Platica> platicas = platicaFacade.findAll();
-         if (!platicas.isEmpty()){
-         for(int i=0;i<platicas.size();i++){
-             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
-                 platicasDisponibles.add(platicas.get(i));
-             }
-         }
-         }
+                        modelo.addAttribute("espacio", " ");
+                        ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
+                        List<Platica> platicas = platicaFacade.findAll();
+                        if (!platicas.isEmpty()) {
+                            for (int i = 0; i < platicas.size(); i++) {
+                                if ((platicas.get(i).getStatus().compareTo((short) 1)) == 0) {
+                                    platicasDisponibles.add(platicas.get(i));
+                                }
+                            }
+                        }
                         modelo.addAttribute("platicasPeriodo", platicasDisponibles);
                         return "/Platicas/asistenciaPosteriorEspecial";
 
@@ -481,30 +480,30 @@ public class PlaticaController {
                         foliosPlaticaFacade.edit(foliosPlatica);
                         modelo.addAttribute("folio", idPlatica + no_control);
                         modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
-                        ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
-         List<Platica> platicas = platicaFacade.findAll();
-         if (!platicas.isEmpty()){
-         for(int i=0;i<platicas.size();i++){
-             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
-                 platicasDisponibles.add(platicas.get(i));
-             }
-         }
-         }
+                        ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
+                        List<Platica> platicas = platicaFacade.findAll();
+                        if (!platicas.isEmpty()) {
+                            for (int i = 0; i < platicas.size(); i++) {
+                                if ((platicas.get(i).getStatus().compareTo((short) 1)) == 0) {
+                                    platicasDisponibles.add(platicas.get(i));
+                                }
+                            }
+                        }
                         modelo.addAttribute("platicasPeriodo", platicasDisponibles);
                         return "/Platicas/asistenciaPosteriorEspecial";
                     }
                 }
             }
         } else {
-            ArrayList <Platica> platicasDisponibles = new ArrayList<Platica> ();
-         List<Platica> platicas = platicaFacade.findAll();
-         if (!platicas.isEmpty()){
-         for(int i=0;i<platicas.size();i++){
-             if ((platicas.get(i).getStatus().compareTo((short)1))==0){
-                 platicasDisponibles.add(platicas.get(i));
-             }
-         }
-         }
+            ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
+            List<Platica> platicas = platicaFacade.findAll();
+            if (!platicas.isEmpty()) {
+                for (int i = 0; i < platicas.size(); i++) {
+                    if ((platicas.get(i).getStatus().compareTo((short) 1)) == 0) {
+                        platicasDisponibles.add(platicas.get(i));
+                    }
+                }
+            }
             modelo.addAttribute("platicasPeriodo", platicasDisponibles);
             modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control incorrecto</p>");
             return "/Platicas/asistenciaPosteriorEspecial";
@@ -603,7 +602,7 @@ public class PlaticaController {
 
         Platica platica = platicaFacade.find(Long.parseLong(fecha));
         platicaJson.setHora("Hora:" + platica.getHora());
-        platicaJson.setLugar("Lugar:"+platica.getIdLugar().getLugar());
+        platicaJson.setLugar("Lugar:" + platica.getIdLugar().getLugar());
         platicaJson.setDescripcion("Descripción:" + platica.getDescripcion());
         return platicaJson;
     }

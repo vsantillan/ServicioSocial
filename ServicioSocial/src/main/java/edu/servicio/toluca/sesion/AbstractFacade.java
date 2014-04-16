@@ -24,8 +24,9 @@ import javax.persistence.criteria.Root;
  * @author Jonny
  */
 public abstract class AbstractFacade<T> {
+
     private Class<T> entityClass;
-    private int MAX_RECORDS_RETURNED=50000;
+    private int MAX_RECORDS_RETURNED = 50000;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -51,11 +52,13 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findAll() {
+        getEntityManager().flush();
+        getEntityManager().clear();
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
     }
-    
+
     public List<T> findAll(LinkedHashMap<String, String> ordering) {
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         Root<T> root = cq.from(entityClass);
@@ -96,7 +99,7 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+
     public List<T> findBySpecificField(String field, Object fieldContent, String predicates, LinkedHashMap<String, String> ordering, LinkedList<String> grouping) {
         getEntityManager().flush();
         getEntityManager().clear();
@@ -146,5 +149,4 @@ public abstract class AbstractFacade<T> {
 
         return query.getResultList();
     }
-    
 }
