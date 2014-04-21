@@ -924,8 +924,10 @@ public class FormatoUnicoController {
         doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
         doc.setArchivo(file.getBytes());
         doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
-        String extension = file.getOriginalFilename();
-        extension = extension.substring(extension.length() - 3, extension.length());
+          int mid=  file.getOriginalFilename().lastIndexOf(".");
+         String extension=file.getOriginalFilename().substring(mid+1,file.getOriginalFilename().length()); 
+        //String extension = file.getOriginalFilename();
+        //extension = extension.substring(extension.length() - 3, extension.length());
         //**doc.setExtension("pdf");
         doc.setExtension(extension);
         doc.setFechaSubida(new java.util.Date());
