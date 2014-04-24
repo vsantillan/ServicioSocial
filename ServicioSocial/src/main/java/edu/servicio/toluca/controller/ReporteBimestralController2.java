@@ -208,7 +208,7 @@ public class ReporteBimestralController2 {
         //validacion de las horas del servicio
         FormatoUnico formatoAlumno = formatoUnicoFacade.find(reporte.getDatosPersonalesId());
         if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal")) {
-            if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 0 ||formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 1) {
+            if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 0 || formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 1) {
                 formatoAlumno.setFechaEntregaFuf(beanFecha.covierteString(beanFecha.dameFechaFUF(reporte.getFechaFin())));
             }
         }
@@ -242,6 +242,16 @@ public class ReporteBimestralController2 {
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         DatosPersonales datosPersonales = listaDatosPersonales.get(0);
 
+        List<Reportes> listReporte = reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+        if (!listReporte.isEmpty()) {
+            Reportes reporte = listReporte.get(0);
+            reporte.setStatus(BigInteger.valueOf(4));
+            reportesFacade.edit(reporte);
+        } else {
+            System.out.println("fail");
+            return "redirect:formatoReporteBimestral.do?OK=false";
+        }
+
         System.out.println("Inicia subida de info la tabla de Egresado");
         System.out.println("Original filename: " + file.getOriginalFilename());
         System.out.println("File:" + file.getName());
@@ -264,6 +274,7 @@ public class ReporteBimestralController2 {
                     ultimoDocumento.setArchivo(file.getBytes());
                     ultimoDocumento.setDatosPersonalesId(datosPersonales);
                     String extension = file.getOriginalFilename();
+                    //extension = getExtension(extension);
                     extension = extension.substring(extension.length() - 3, extension.length());
                     ultimoDocumento.setExtension(extension);
                     ultimoDocumento.setFechaSubida(new java.util.Date());
@@ -288,6 +299,7 @@ public class ReporteBimestralController2 {
         documento.setArchivo(file.getBytes());
         documento.setDatosPersonalesId(datosPersonales);
         String extension = file.getOriginalFilename();
+        //extension = getExtension(extension);
         extension = extension.substring(extension.length() - 3, extension.length());
         documento.setExtension(extension);
         documento.setFechaSubida(new java.util.Date());
@@ -303,10 +315,15 @@ public class ReporteBimestralController2 {
             return "redirect:formatoReporteBimestral.do";
         }
 
-        List<Reportes> listReporte = reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
-        Reportes reporte = listReporte.get(0);
-        reporte.setStatus(BigInteger.valueOf(4));
-        reportesFacade.edit(reporte);
+//        List<Reportes> listReporte = reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+//        if (!listReporte.isEmpty()) {
+//            Reportes reporte = listReporte.get(0);
+//            reporte.setStatus(BigInteger.valueOf(4));
+//            reportesFacade.edit(reporte);
+//        } else {
+//            modelo.addAttribute("errorSubir", "Error, Primero debe generar su reporte en la primera pestaña");
+//            return "redirect:formatoReporteBimestral.do";
+//        }
 
         //reporte.setDatosPersonalesId(datosPersonales);
 
@@ -346,6 +363,15 @@ public class ReporteBimestralController2 {
         List<RegObservaciones> observacionesAlumno = regisObservacionesFacade.findBySpecificField("datosPersonalesId", idDatosPersonales, "equal", null, null);
         for (RegObservaciones observacionActual : observacionesAlumno) {
             regisObservacionesFacade.remove(observacionActual);
+        }
+    }
+
+    public static String getExtension(String filename) {
+        int index = filename.lastIndexOf('.');
+        if (index == -1) {
+            return "";
+        } else {
+            return filename.substring(index + 1);
         }
     }
 }

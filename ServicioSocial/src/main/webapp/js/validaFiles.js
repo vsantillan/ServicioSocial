@@ -25,14 +25,14 @@ function validaFile() {
         var extension = ($("#archivo").val().substring($("#archivo").val().lastIndexOf("."))).toLowerCase();
         switch (extension) {
             case ".jpg":
-            case ".jpeg":
+//            case ".jpeg":
             case ".png":
             case ".pdf":
                 $("#subirArchivo").submit();
                 break;
             default :
                 $('.error').show("slow").delay(2500).hide("slow");
-                $('.error').html("<p>Recuerde agregar un archivo con extensi\u00F3n: '.jpg' ,'.jpeg' ,'.png' ,'.pdf' , </p>");
+                $('.error').html("<p>Recuerde agregar un archivo con extensi\u00F3n: '.jpg','.png' ,'.pdf' , </p>");
                 break;
         }
     }

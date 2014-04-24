@@ -76,6 +76,8 @@ public class ReporteBimestralController {
         if (OK != null) {
             if (OK.equals("true")) {
                 modelo.addAttribute("alertCorrecto", "<script>alert('Informacion guardada correctamente');</script>");
+            }else if(OK.equals("false")){
+                 modelo.addAttribute("alertCorrecto", "<div class='alert alert-danger'>Error, Primero debe generar su reporte</div>");
             }
         }
 

@@ -15,7 +15,6 @@
     </head>
     <body>
         <div class="container">
-            ${alertCorrecto}
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuUsuario.jsp"%>
@@ -31,6 +30,7 @@
                         <div class="tab-content">
                             <div id="Guardar" class="tab-pane active col-md-12">
                                 <p>&nbsp;</p>
+                                ${alertCorrecto}
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Guardar Informaci&oacute;n del Reporte</div>
                                     <div class="panel-body">
@@ -244,13 +244,13 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <div class="alert alert-warning col-md-9  col-md-offset-q">
-                                                <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;En esta secci&oacute;n usted podra anexar su reporte para que sea revisado por el administrador, recuerde subir un archivo con extensi&oacute;n permitida (.jpg,.png,.pdf,.jpeg).</h4></div>
+                                                <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;En esta secci&oacute;n usted podra anexar su reporte para que sea revisado por el administrador, recuerde subir un archivo con extensi&oacute;n permitida (.jpg,.png,.pdf).</h4></div>
                                             </div>
                                         </div>
                                         <form:form name="subirReporte" id="subirArchivo" action="guardarReporteBimestral.do" method="POST" enctype="multipart/form-data">
                                             <div class='form-group'><label>Seleccione su Reporte Bimestral</label><br><input type='file'id="archivo" name ='file' class='btn btn-primary' title='Buscar Reporte'></input></div>
                                             <div class='form-group'><label>&nbsp;</label><input type='button' id="enviarArchivo" value='Subir' class='btn btn-primary' /></div>
-                                            <div class='error alert alert-danger col-md-4' style=display:none;></div>
+                                            <div class='error alert alert-danger col-md-4' style=display:none;>${errorSubir}</div>
                                         </form:form>
                                     </div>
                                 </div>
