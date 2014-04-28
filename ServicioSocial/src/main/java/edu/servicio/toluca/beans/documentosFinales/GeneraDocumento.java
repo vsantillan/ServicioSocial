@@ -4,13 +4,8 @@
  */
 package edu.servicio.toluca.beans.documentosFinales;
 
-import edu.servicio.toluca.entidades.DatosPersonales;
-import edu.servicio.toluca.entidades.FormatoUnico;
-import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Conexion;
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
