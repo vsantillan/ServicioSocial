@@ -206,7 +206,8 @@ public class ReporteBimestralController2 {
         documento.setStatus((short) 1);
         documentosFacade.edit(documento);
         //validacion de las horas del servicio
-        FormatoUnico formatoAlumno = formatoUnicoFacade.find(reporte.getDatosPersonalesId());
+        List<FormatoUnico> formatoUnicoAlumno = formatoUnicoFacade.findBySpecificField("datosPersonalesId", reporte.getDatosPersonalesId().getId(), "equal",null,null);
+        FormatoUnico formatoAlumno=formatoUnicoAlumno.get(0);
         if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal")) {
             if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 0 || formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 1) {
                 formatoAlumno.setFechaEntregaFuf(beanFecha.covierteString(beanFecha.dameFechaFUF(reporte.getFechaFin())));
