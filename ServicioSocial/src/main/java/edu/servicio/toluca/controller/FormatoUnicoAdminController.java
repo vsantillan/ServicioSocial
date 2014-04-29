@@ -327,7 +327,7 @@ public class FormatoUnicoAdminController {
         if (doc != null) {
             if (doc.getExtension().equals("pdf")) {//El Documento es PDF
                 httpServletResponse.setContentType("application/pdf");
-            } else if (doc.getExtension().equals("jpg") || doc.getExtension().equals("png")) {//Es imagen
+            } else if (doc.getExtension().equals("jpg") || doc.getExtension().equals("png") || doc.getExtension().equals("jpeg")) {//Es imagen
                 httpServletResponse.setContentType("image/jpg");
             } else {
                 return;
