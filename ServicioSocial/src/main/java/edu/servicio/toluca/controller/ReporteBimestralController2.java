@@ -190,21 +190,22 @@ public class ReporteBimestralController2 {
         documento.setStatus(nuevoStatus);
         documentosFacade.edit(documento);
         String nombre = "";
+        System.out.println("El estatus es"+status);
         switch (Integer.parseInt(status)) {
-            case 1://Correccion
+            case 2://Correccion
                 //Enviar Correo
                 nombre = reporte.getDatosPersonalesId().getNombre() + " "
                         + reporte.getDatosPersonalesId().getApellidoP() + " "
                         + reporte.getDatosPersonalesId().getApellidoM();
 
-                enviarCorreo(2, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
+                enviarCorreo(3, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
                 break;
-            case 2://Rechazo
+            case 3://Rechazo
 
                 nombre = reporte.getDatosPersonalesId().getNombre() + " "
                         + reporte.getDatosPersonalesId().getApellidoP() + " "
                         + reporte.getDatosPersonalesId().getApellidoM();
-                enviarCorreo(3, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
+                enviarCorreo(2, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
                 break;
         }
         return "OK";
