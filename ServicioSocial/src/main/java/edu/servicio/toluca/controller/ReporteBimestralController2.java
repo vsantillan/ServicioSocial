@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.bimestrales.RetroalimentacionReporte;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.beans.documentosFinales.GeneraDocumento;
@@ -188,6 +189,24 @@ public class ReporteBimestralController2 {
         documento = documentosFacade.find(BigDecimal.valueOf(Integer.parseInt(idDocumento)));
         documento.setStatus(nuevoStatus);
         documentosFacade.edit(documento);
+        String nombre = "";
+        switch (Integer.parseInt(status)) {
+            case 1://Correccion
+                //Enviar Correo
+                nombre = reporte.getDatosPersonalesId().getNombre() + " "
+                        + reporte.getDatosPersonalesId().getApellidoP() + " "
+                        + reporte.getDatosPersonalesId().getApellidoM();
+
+                enviarCorreo(2, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
+                break;
+            case 2://Rechazo
+
+                nombre = reporte.getDatosPersonalesId().getNombre() + " "
+                        + reporte.getDatosPersonalesId().getApellidoP() + " "
+                        + reporte.getDatosPersonalesId().getApellidoM();
+                enviarCorreo(3, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
+                break;
+        }
         return "OK";
     }
 
@@ -206,8 +225,8 @@ public class ReporteBimestralController2 {
         documento.setStatus((short) 1);
         documentosFacade.edit(documento);
         //validacion de las horas del servicio
-        List<FormatoUnico> formatoUnicoAlumno = formatoUnicoFacade.findBySpecificField("datosPersonalesId", reporte.getDatosPersonalesId().getId(), "equal",null,null);
-        FormatoUnico formatoAlumno=formatoUnicoAlumno.get(0);
+        List<FormatoUnico> formatoUnicoAlumno = formatoUnicoFacade.findBySpecificField("datosPersonalesId", reporte.getDatosPersonalesId().getId(), "equal", null, null);
+        FormatoUnico formatoAlumno = formatoUnicoAlumno.get(0);
         if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal")) {
             if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 0 || formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 1) {
                 formatoAlumno.setFechaEntregaFuf(beanFecha.covierteString(beanFecha.dameFechaFUF(reporte.getFechaFin())));
@@ -218,6 +237,10 @@ public class ReporteBimestralController2 {
                 formatoAlumno.setFechaEntregaFuf(beanFecha.covierteString(beanFecha.dameFechaFUF(reporte.getFechaFin())));
             }
         }
+        String nombre = reporte.getDatosPersonalesId().getNombre() + " "
+                + reporte.getDatosPersonalesId().getApellidoP() + " "
+                + reporte.getDatosPersonalesId().getApellidoM();
+        enviarCorreo(1, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
         return "ok";
     }
 
@@ -374,5 +397,88 @@ public class ReporteBimestralController2 {
         } else {
             return filename.substring(index + 1);
         }
+    }
+
+    /**
+     *
+     * Metodo que se encarga de enviar notificacion al alumno en base a su
+     * correo
+     *
+     * @param tipo
+     * @param correoDestinatario
+     * @param nombre
+     * @param dtp
+     */
+    private void enviarCorreo(int tipo, String correoDestinatario, String nombre, DatosPersonales dtp) {
+        //Romper metodo en caso de que correo no se encuentre
+        if (correoDestinatario == null) {
+            return;
+        }
+//        } else if (banderaPrueba) {
+//            correoDestinatario = correoTest;
+//        }
+        //En caso de que BanderaPrueba este activa se envia Correo al correo de Test
+
+        String mensaje = " ";
+        switch (tipo) {
+            case 1://Aceptados
+                mensaje = "<h1>Notificación Servicio Social</h1>\n"
+                        + "<h2>Estimado  <b>" + nombre + "</b>:</h2> \n"
+                        + "<p>\n"
+                        + "Te informamos que  tu Reporte Bimestral que has llenado, fue revisado por la Oficina de Servicio Social  y ha sido <b>Aceptado</b> Satisfactoriamente. \n"
+                        + "</p>\n"
+                        + "<p>Por lo que te recordamos, que puedes proseguir con tu proceso. \n"
+                        + "</p>\n"
+                        + "<p>\n"
+                        + "Oficina de Servicio Social<br> \n"
+                        + "Instituto Tecnológico  de Toluca\n"
+                        + "</p>";
+                break;
+            case 2://Correccion
+                String mns1 = "<h1>Notificación Servicio Social</h1>\n"
+                        + "<h2>Estimado  <b>" + nombre + "</b>:</h2> \n"
+                        + "<p>\n"
+                        + "Te informamos que   tu  Reporte Bimestral que has llenado, ha sido revisado por la Oficina de Servicio Social  y este tiene errores.  Favor de corregirlos lo más pronto posible.\n"
+                        + "</p>\n"
+                        + "<ul>\n";
+                mensaje += mns1;
+
+                for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId",
+                        dtp,
+                        "equal", null, null)) {
+
+                    String detalle = reg.getCatalogoObservacionId().getDetalle();
+                    mensaje += "<li>" + detalle + "</li>\n";
+                }
+
+                String mns2 =
+                        "</ul>\n"
+                        + "<p>\n"
+                        + "Oficina de Servicio Social <br>\n"
+                        + "Instituto Tecnológico  de Toluca\n"
+                        + "</p>";
+                mensaje += mns2;
+                break;
+            case 3://No aceptados
+                mensaje = "<h1>Notificación Servicio Social</h1>\n"
+                        + "<h2>Estimado  <b>" + nombre + "</b>:</h2> \n"
+                        + "<p>\n"
+                        + "Te informamos que   tu  Reporte Bimestral que has llenado, fue revisado por la Oficina de Servicio Social  y este ha sido <b>Rechazado</b>.\n"
+                        + "</p>\n"
+                        + "<p>\n"
+                        + "Si esto ha sucedido, es porque has rebasado el número de intentos  para corregir tu Reporte Bimestral.  Para mayor información  presentarse en la Oficina de Servicio Social o intentar de  nuevo para la siguiente convocatoria.  \n"
+                        + "</p>\n"
+                        + "<p>\n"
+                        + "Oficina de Servicio Social <br>\n"
+                        + "Instituto Tecnológico  de Toluca\n"
+                        + "</p>";
+                break;
+            default:
+                return;
+        }
+
+        Thread hiloCorreo = new Thread(new EnviarCorreo(nombre, correoDestinatario, mensaje));
+        hiloCorreo.start();
+
     }
 }
