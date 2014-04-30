@@ -56,7 +56,7 @@ public class EnviarCorreo implements Runnable
             message.addRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress(destinatario));
-            message.setSubject(asunto);
+            message.setSubject(asunto,"UTF-8");
             message.setText(mensaje, "UTF-8", "html");
 
             // Lo enviamos.
