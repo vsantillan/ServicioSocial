@@ -149,7 +149,7 @@
                                                 <div class="form-group">
                                                     <form:input  type="hidden" path ="id" />
                                                     <label>*Calle:</label>
-                                                    <form:input  path ="calle" maxlength="200" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
+                                                    <form:input  path ="calle" maxlength="25" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>*No. Int.</label>
@@ -203,24 +203,24 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>*Entre Calles:</label>
-                                                    <form:input maxlength="255" path ="entreCalles" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
+                                                    <form:input maxlength="40" path ="entreCalles" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>*Referencias:</label>
-                                                    <form:input maxlength="70" path ="referencias" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
+                                                    <form:input maxlength="40" path ="referencias" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
                                                 </div>
                                                 <div cl class="row">
                                                     <div class="form-group col-md-4">
                                                         <label>*Tel&eacute;fono casa:</label>
-                                                        <form:input maxlength="50"  path ="telefono_casa" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
+                                                        <form:input maxlength="10"  path ="telefono_casa" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <label>*Tel&eacute;fono cel:</label>
-                                                        <form:input maxlength="30" path ="telefono_cel" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
+                                                        <form:input maxlength="10" path ="telefono_cel" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
                                                     </div>
                                                     <div class="form-group col-md-4">
                                                         <label>*Tel&eacute;fono oficina:</label>
-                                                        <label><form:input maxlength="30" path ="telefono_oficina" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> </label>
+                                                        <label><form:input maxlength="10" path ="telefono_oficina" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> </label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
