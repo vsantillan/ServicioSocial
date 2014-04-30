@@ -17,7 +17,7 @@ function loadLugar(e)
 function verificaLugar(e) {
     $("#errorVacio").html("");
     var value = $("#lugar_e").val().trim();
-    if (value.length > 0) {
+    if (value.length > 0 && ValidarCadenaExpReg(value)) {
         e.preventDefault();
         $.get("validaLugares.do?Lugar=" + value, null, function(respuesta) {
             if (respuesta === "OK")
@@ -29,14 +29,14 @@ function verificaLugar(e) {
         });
     } else {
         e.preventDefault();
-        $("#errorVacio").html("<div class='alert alert-danger'>El campo no puede estar vacio</div>");
+        $("#errorVacio").html("<div class='alert alert-danger'>El campo no puede estar vacio o no es valido</div>");
     }
 }
 
 function verificaLugar1(e) {
     $("#errorVacio1").html("");
     var value = $("#lugar").val().trim();
-    if (value.length > 0) {
+    if (value.length > 0 && ValidarCadenaExpReg(value)) {
         $.get("validaLugares.do?Lugar=" + value, function(respuesta) {
             if (respuesta === "OK")
                 $("#envioB").submit();
@@ -47,7 +47,7 @@ function verificaLugar1(e) {
         });
     } else {
         e.preventDefault();
-        $("#errorVacio1").html("<br><div class='alert alert-danger'>El campo no puede estar vacio</div>");
+        $("#errorVacio1").html("<br><div class='alert alert-danger'>El campo no puede estar vacio o no es valido</div>");
     }
 }
 
@@ -73,3 +73,11 @@ function updateLugar(e)
         });
     }
 }
+  function ValidarCadenaExpReg(lugar) {
+ 
+        cadena=/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]*$/;
+        if (lugar.match(cadena))
+            return true; 
+        else 
+            return false; 
+    }
