@@ -155,6 +155,7 @@
                                             <th>N. Control</th>
                                             <th>Periodo</th>
                                             <th>Horas del Reporte</th>
+                                            <th>Ver Observaciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -189,6 +190,7 @@
                                                     </core:forEach>
                                                 </td>
                                                 <td><core:out value="${reporte.horas}"/></td>
+                                                <td><a data-toggle="modal" href="#modalObservaciones" class="pideObservaciones" datosPersonales="${reporte.datosPersonalesId.id}"><span class="glyphicon glyphicon-search"></span></a></td>
                                             </tr>
                                         </core:forEach>
                                     </tbody>
@@ -203,6 +205,7 @@
                                             <th>N. Control</th>
                                             <th>Periodo</th>
                                             <th>Horas del Reporte</th>
+                                            <th>Ver Observaciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -239,6 +242,7 @@
                                                     </core:forEach>
                                                 </td>
                                                 <td><core:out value="${reporte.horas}"/></td>
+                                                <td><a data-toggle="modal" href="#modalObservaciones" class="pideObservaciones" datosPersonales="${reporte.datosPersonalesId.id}"><span class="glyphicon glyphicon-search"></span></a></td>
                                             </tr>
                                         </core:forEach>
                                     </tbody>
@@ -260,16 +264,16 @@
                     <div class="modal-body">
                         <div class="list-group">
 
-                                <core:forEach items="${listadoObservaciones}" var="observacion">
-                                    <a href="#" class="list-group-item">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input name="id[]" value="${observacion.id}" type="checkbox"/>
-                                                <h4 class="list-group-item-heading">${observacion.detalle}</h4>
-                                            </label>
-                                        </div>
-                                    </a>
-                                </core:forEach>
+                            <core:forEach items="${listadoObservaciones}" var="observacion">
+                                <a href="#" class="list-group-item">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="id[]" value="${observacion.id}" type="checkbox"/>
+                                            <h4 class="list-group-item-heading">${observacion.detalle}</h4>
+                                        </label>
+                                    </div>
+                                </a>
+                            </core:forEach>
 
                         </div>
                     </div>
@@ -281,6 +285,24 @@
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalObservaciones">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Observaciones del Reporte</h4>
+                    </div>
+                    <div  id="contenidoObservaciones" class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
         <%@include file="../General/js.jsp"%>
         <script type="text/javascript" language="javascript" src="js/reporteBimestalActualiza.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />

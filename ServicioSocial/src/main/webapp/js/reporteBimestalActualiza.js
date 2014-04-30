@@ -2,7 +2,7 @@ var idDatosPersonales = "";
 var idReporte = "";
 var idDocumento = "";
 var tipo = "";
-var status="";
+var status = "";
 
 $(document).ready(listo);
 function listo()
@@ -10,6 +10,7 @@ function listo()
     $(document).on('click', ".aceptarReporte", aceptarReporteA);
     $(document).on("click", ".correccion", cambiarEstadoReporteCorreccion);
     $(document).on("click", "#guardarObservaciones", obtenerDatos);
+    $(document).on("click", ".pideObservaciones", muestraObservaciones);
 }
 function confirmacionEvento()
 {
@@ -91,7 +92,7 @@ function obtenerDatos()
     {
 
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("actualizarStatusReporte.do", {idDatoPersonales: idDatosPersonales, idReporte: idReporte,idDocumento:idDocumento, status:status,tipo: tipo, observaciones: array}, function(respuesta)
+        $.post("actualizarStatusReporte.do", {idDatoPersonales: idDatosPersonales, idReporte: idReporte, idDocumento: idDocumento, status: status, tipo: tipo, observaciones: array}, function(respuesta)
         {
             if (respuesta === "OK")
             {
@@ -110,4 +111,20 @@ function obtenerDatos()
         alert('No se ha seleccionado ninguna Observaci\u00f3n');
     }
 
+}
+
+function muestraObservaciones() {
+    var datosPersonales = $(this).attr('datosPersonales');
+    $.post("dameObservaciones.do", {idDatoPersonales: datosPersonales}, function(response)
+    {
+        $("#contenidoObservaciones").empty();
+        var cosa = new Array();
+        var lista="<ul>";
+        cosa = response.split('&');
+        for (var i = 0; i < cosa.length-1; i++) {
+            lista+="<li>"+ cosa[i] +"</li>";
+        }
+        lista+="</ul>";
+        $("#contenidoObservaciones").append(lista);
+    });
 }

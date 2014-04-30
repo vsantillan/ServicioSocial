@@ -157,6 +157,18 @@ public class ReporteBimestralController2 {
         return "/ReporteBimestral/detalleReporteBimestral";
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/dameObservaciones.do")
+    public @ResponseBody
+    String dameObservaciones(String idDatoPersonales){
+        System.out.println("Datos personales" +idDatoPersonales);
+        List<RegObservaciones> listaObservaciones = regisObservacionesFacade.findBySpecificField("datosPersonalesId", BigDecimal.valueOf(Long.valueOf(idDatoPersonales)), "equal", null, null);
+        String observaciones="";
+        for (RegObservaciones regObservaciones : listaObservaciones) {
+            observaciones+=regObservaciones.getCatalogoObservacionId().getDetalle()+"&";
+        }
+        return observaciones;
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/actualizarStatusReporte.do")
     public @ResponseBody
     String aceptarRactualizarStatusReporteporte(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
@@ -190,7 +202,7 @@ public class ReporteBimestralController2 {
         documento.setStatus(nuevoStatus);
         documentosFacade.edit(documento);
         String nombre = "";
-        System.out.println("El estatus es"+status);
+        System.out.println("El estatus es" + status);
         switch (Integer.parseInt(status)) {
             case 2://Correccion
                 //Enviar Correo
