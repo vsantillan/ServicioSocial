@@ -7,18 +7,22 @@ package edu.servicio.toluca.model.reportesBimestrales;
 import edu.servicio.toluca.beans.ReportesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.Reportes;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import org.openide.util.Exceptions;
 
 /**
  *
  * @author bustedvillain
  */
 public class ValidaReportesBimestralesModel {
-
-
 
     public ReportesBean validaReportesBimestrales(StatusServicioBean servicioBean) {
         System.out.println("Valida reportes bimestrales");
@@ -46,8 +50,11 @@ public class ValidaReportesBimestralesModel {
                         }
                         System.out.println("tiene " + horasServicio + " horas...");
                         servicioBean.setHorasServicio(horasServicio);
+                        if ((servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal") && horasServicio < 480)
+                                || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 600)
+                                || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 500 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().equals('S'))) {
 
-                        if (horasServicio < 480) {
+                            //if (horasServicio < 480) {
                             System.out.println("Menos 480 horas");
                             //Validar el ultimo reporte bimestral
                             int nReporte = reportes.size() - 1;
@@ -63,9 +70,23 @@ public class ValidaReportesBimestralesModel {
                                     break;
                                 //Aceptado
                                 case 1:
-                                    reportesBean.setAccesoFormato(true);
-                                    reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.");
-                                    reportesBean.setStatus(3);
+                                    Date ahora = new Date();
+                                    SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
+                                    try {
+                                        ahora = formateador.parse(formateador.format(ahora));
+                                    } catch (ParseException ex) {
+                                        Exceptions.printStackTrace(ex);
+                                    }
+                                    System.out.println("fecha sistema" + ahora);
+                                    if (ahora.before(ultimoBimestral.getFechaFin()) && ahora.after(ultimoBimestral.getFechaInicio())) {
+                                        reportesBean.setAccesoFormato(false);
+                                        reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.Espera al siguiente bimestre para continuar con tu proceso");
+                                        reportesBean.setStatus(3);
+                                    } else {
+                                        reportesBean.setAccesoFormato(true);
+                                        reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.");
+                                        reportesBean.setStatus(3);
+                                    }
                                     break;
                                 //Rechazado:
                                 case 2:
@@ -105,7 +126,7 @@ public class ValidaReportesBimestralesModel {
                             }
                         } else {
                             reportesBean.setAccesoFormato(false);
-                            reportesBean.setMensaje("Ya haz completado las 480 horas de servicio social. Subiste " + nReportes + " Reportes Bimestrales");
+                            reportesBean.setMensaje("Ya haz completado las horas de servicio social. Subiste " + nReportes + " Reportes Bimestrales");
                             reportesBean.setStatus(1);
                         }
 
@@ -130,7 +151,6 @@ public class ValidaReportesBimestralesModel {
             reportesBean.setMensaje("No puedes proceder a dar de alta tus Reportes Bimestrales, dado que no asististe a la platica de induccion, favor de comunicarse con el Jefe de la Oficina del Servicio Social");
             reportesBean.setStatus(2);
         }
-
         return reportesBean;
     }
 }
@@ -140,5 +160,4 @@ class OrdenarPersonaPorId implements Comparator<Reportes> {
     public int compare(Reportes o1, Reportes o2) {
         return Integer.valueOf(String.valueOf(o1.getId())) - Integer.valueOf(String.valueOf(o2.getId()));
     }
-
 }
