@@ -78,7 +78,7 @@ public class ValidaReportesBimestralesModel {
                                         Exceptions.printStackTrace(ex);
                                     }
                                     System.out.println("fecha sistema" + ahora);
-                                    if (ahora.after(ultimoBimestral.getFechaFin())) {
+                                    if (ahora.before(ultimoBimestral.getFechaFin())) {
                                     //if (ahora.before(ultimoBimestral.getFechaFin()) && ahora.after(ultimoBimestral.getFechaInicio())) {
                                         reportesBean.setAccesoFormato(false);
                                         reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.Espera al siguiente bimestre para continuar con tu proceso");

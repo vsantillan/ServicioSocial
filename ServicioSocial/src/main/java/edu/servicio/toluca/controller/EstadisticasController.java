@@ -98,12 +98,13 @@ public class EstadisticasController {
         
         //Funcion para obtener periodo Actual
           periodoActual=(fecha.get(Calendar.MONTH)<=6)?"ENE-JUN":"JUL-DIC";
+          System.out.println("El periodo actual "+periodoActual);
           
         //FIltrando por el año
         for (FormatoUnico formatoActual : formatosUnicos) {
             String aniosSplit[] = formatoActual.getFechaInicio().toString().split("-");
             if (Integer.parseInt(aniosSplit[0])==fecha.get(Calendar.YEAR)) {
-                if (formatoActual.getPeriodoInicio().equals(periodoActual)) {
+                if (formatoActual.getPeriodoInicio().trim().equals(periodoActual)) {
                     formatoUnicosFiltrados.add(formatoActual);
                 }
             }
@@ -219,7 +220,9 @@ public class EstadisticasController {
         for (FormatoUnico formatoActual : formatosUnicos) {
             String aniosSplit[] = formatoActual.getFechaInicio().toString().split("-");
             if (aniosSplit[0].equals(anio)) {
-                if (formatoActual.getPeriodoInicio().equals(periodo)) {
+                                System.out.println("periodo formato: "+formatoActual.getPeriodoInicio().trim()+" periodo actual: "+periodo);
+                System.out.println("Prueba espacio: "+formatoActual.getPeriodoInicio()+"-");
+                if (formatoActual.getPeriodoInicio().trim().equals(periodo)) {
                     formatoUnicosFiltrados.add(formatoActual);
                 }
             }
@@ -237,7 +240,7 @@ public class EstadisticasController {
         }
         ////////////////////////////////////////////////////////////////////////////////////
 
-        for (FormatoUnico formatoActual : formatosUnicos) {
+        for (FormatoUnico formatoActual : formatoUnicosFiltrados) {
             if (formatoActual.getDatosPersonalesId().getAlumnoId().getCarrera().equals("QUIMICA")) {
                 carreasAltas[0] = carreasAltas[0] + 1;
                 if (formatoActual.getStatusServicio().compareTo(BigInteger.valueOf(4)) == 0) {
@@ -311,7 +314,6 @@ public class EstadisticasController {
                 arrJSON += ",";
             }
         }
-        System.out.println("Json" + arrJSON);
         return arrJSON;
     }
 }
