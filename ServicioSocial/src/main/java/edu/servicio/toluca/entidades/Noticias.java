@@ -5,7 +5,9 @@
 package edu.servicio.toluca.entidades;
 
 import edu.servicio.toluca.configuracion.CatalogoErrores;
+import static edu.servicio.toluca.configuracion.CatalogoErrores.errorLetrasNumeros;
 import edu.servicio.toluca.configuracion.ExpresionesRegulares;
+import static edu.servicio.toluca.configuracion.ExpresionesRegulares.letrasNumerosPrimeroDespuesEspacios;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -58,7 +60,8 @@ public class Noticias implements Serializable, ExpresionesRegulares, CatalogoErr
     @Column(name = "FECHA")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    //@NotEmpty(message = "Escribe el Detalle de la Noticia")
+    @NotEmpty(message = "Escribe el Detalle de la Noticia")
+    //@Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorNumerosLetrasCaracteresEspeciales)
     @Size(max =1000,message = "El detalle debe de ser mayor a 1 caracter y menor que 1000")
     @Column(name = "DETALLE")
     private String detalle;

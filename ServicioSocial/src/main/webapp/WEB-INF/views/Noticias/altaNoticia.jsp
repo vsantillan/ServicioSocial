@@ -21,7 +21,7 @@
                 <%@include file="../General/menuAdministrador.jsp"%> 
 
                 <div class="row">
-                    <div class="col-md-6 col-md-offset-3">
+                    <div class="col-md-8 col-md-offset-2">
                         <br/>
                         <div class="panel panel-info">
                             <div class="panel-heading"><h3>Alta de Noticia</h3></div>
