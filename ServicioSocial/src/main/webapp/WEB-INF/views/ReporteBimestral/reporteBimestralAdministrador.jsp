@@ -20,14 +20,14 @@
                     <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Administraci&oacute;n de Reportes Bimestrales</h1></div>
                     <div class="tab-content">
                         <ul class="nav nav-tabs" id="formatoUnico-tabla">
-                            <li class="active"><a href="#Revisados" data-toggle="tab">Revisados</a></li>
-                            <li><a href="#noRevisados" data-toggle="tab">No Revisados</a></li>
+                            <li class="active"><a href="#noRevisados" data-toggle="tab">No Revisados</a></li>
                             <li><a href="#enCorreccion" data-toggle="tab">En Correcci&oacute;n</a></li>
                             <li><a href="#Rechazados" data-toggle="tab">Rechazados</a></li>
+                            <li><a href="#Revisados" data-toggle="tab">Revisados</a></li>
                         </ul>
                         &nbsp;
                         <div class="tab-content">
-                            <div id="Revisados" class="tab-pane active col-md-12">
+                            <div id="Revisados" class="tab-pane col-md-12">
                                 <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="Rev" width='100%'>
                                     <thead>
                                         <tr>
@@ -73,7 +73,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div id="noRevisados" class="tab-pane col-md-12">
+                            <div id="noRevisados" class="tab-pane active col-md-12">
                                 <div id="div-aceptar-reporte" style="display:none;">
                                     <center>
                                         <span class="glyphicon glyphicon-ok-circle sizeIconValid"><span/>

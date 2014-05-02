@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -303,10 +304,12 @@ public class ReporteBimestralController2 {
 
 
         ///////////VERIFICAMOS QUE NO EXISTA EL DOCUMENTO//////////////////////
-        List<Documentos> ultimoDoc = documentosFacade.findBySpecificField("datosPersonalesId", datosPersonales.getId(), "equal", null, null);
+                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        ordenamiento.put("id", "desc");
+        List<Documentos> ultimoDoc = documentosFacade.findBySpecificField("datosPersonalesId", datosPersonales.getId(), "equal", ordenamiento, null);
         if (!ultimoDoc.isEmpty()) {
             Documentos ultimoDocumento = ultimoDoc.get(0);
-            if (ultimoDocumento.getCatalogoDocumentosId().getId() == BigDecimal.valueOf(2)) {
+            if (ultimoDocumento.getCatalogoDocumentosId().getId().compareTo(BigDecimal.valueOf(2))==0) {
                 if (ultimoDocumento.getStatus() == 3) {
                     ultimoDocumento.setArchivo(file.getBytes());
                     ultimoDocumento.setDatosPersonalesId(datosPersonales);

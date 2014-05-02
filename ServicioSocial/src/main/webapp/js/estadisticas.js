@@ -269,7 +269,6 @@ function drawChartInstancias(respuesta) {
     }
 }
 function contruyeTablaSexo(sexoAltasM, sexoAltasF, sexoAltasI, sexoLiberacionesM, sexoLiberacionesF, sexoLiberacionesI) {
-    $("#tablaSexo").empty();
     var tabla = "";
     tabla += "<tr>";
     tabla += "<td>Femenino</td>";
@@ -291,6 +290,8 @@ function contruyeTablaSexo(sexoAltasM, sexoAltasF, sexoAltasI, sexoLiberacionesM
     tabla += "<td>" + (parseInt(sexoAltasF) + parseInt(sexoAltasM) + parseInt(sexoAltasI)) + "</td>";
     tabla += "<td>" + (parseInt(sexoLiberacionesF) + parseInt(sexoLiberacionesM) + parseInt(sexoLiberacionesI)) + "</td>";
     tabla += "</tr>";
+
+    $("#tablaSexo").empty();
     $("#tablaSexo").append(tabla);
 }
 
