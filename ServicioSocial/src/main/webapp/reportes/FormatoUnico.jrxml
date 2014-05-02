@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormatoUnico" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ff8df54-78ed-4b02-a7d1-dd231445f55d">
 	<property name="ireport.zoom" value="2.357947691000105"/>
-	<property name="ireport.x" value="169"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="211"/>
+	<property name="ireport.y" value="672"/>
 	<parameter name="idProyecto" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -46,14 +46,14 @@ to_char(fu.FECHA_INICIO, 'dd') as diaActual,
 to_char(fu.FECHA_INICIO, 'yyyy') as anioActual,
 fu.FECHA_FIN as fechaFin,
 codigoDP.CP as CP,
-dp.CALLE || ' ' || NVL2(dp.numero_E,'NE. '||dp.numero_E,' ') || ' '||NVL2(dp.numero_I,'int. '||dp.numero_I,' ') || ', '   || col.NOMBRE||', '|| municipioDP.NOMBRE ||', '||estadoDP.NOMBRE as domicilioDP,
+UPPER(dp.CALLE) || ' ' || NVL2(dp.numero_E,'NE. '||dp.numero_E,' ') || ' '||NVL2(dp.numero_I,'int. '||dp.numero_I,' ') || ', '   || col.NOMBRE||', '|| municipioDP.NOMBRE ||', '||estadoDP.NOMBRE as domicilioDP,
 proy.MODALIDAD as modalidadP,
 prog.SIGLAS as  programaP,
 inst.NOMBRE as nombreInstanciaP,
 codigoInstancia.CP as codigoCPInstancia,
-inst.TITULAR as titularInstancia,
-inst.PUESTO as puestoInstancia,
-inst.TELEFONO||NVL2(inst.ext,' ext. '||inst.ext,' ') as telefonoInstancia,
+UPPER(inst.TITULAR) as titularInstancia,
+UPPER(inst.PUESTO) as puestoInstancia,
+inst.TELEFONO||NVL2(inst.EXT,' ext. '||inst.EXT,' ') as telefonoInstancia,
 inst.DOMICILIO || ', '|| colInstancia.nombre||', '|| municipioInstancia.NOMBRE ||', '||estadoInstancia.NOMBRE  as domicilioIntancia,
 proy.NOMBRE_RESPONSABLE as titularProyecto,
 proy.RESPONSABLE_PUESTO as puestoProyecto,
@@ -998,14 +998,14 @@ electrónico:]]></text>
 				<textFieldExpression><![CDATA[$F{FECHAINICIO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="48dc3c40-1d61-403e-8006-835a6cb6cee5" x="15" y="286" width="138" height="13"/>
+				<reportElement uuid="48dc3c40-1d61-403e-8006-835a6cb6cee5" x="15" y="286" width="164" height="13"/>
 				<textElement>
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[IV. DATOS DEL PROGRAMA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="71578762-887a-40f7-8ed4-e40adad2d254" x="10" y="150" width="241" height="20"/>
+				<reportElement uuid="71578762-887a-40f7-8ed4-e40adad2d254" x="10" y="150" width="291" height="20"/>
 				<textElement>
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
@@ -1019,7 +1019,7 @@ electrónico:]]></text>
 				<text><![CDATA[II. ESCOLARIDAD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="7c558bc5-5daf-4d8a-84b4-f0d7975fc553" x="10" y="49" width="122" height="20"/>
+				<reportElement uuid="7c558bc5-5daf-4d8a-84b4-f0d7975fc553" x="10" y="49" width="133" height="20"/>
 				<textElement>
 					<font isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
