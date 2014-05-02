@@ -77,17 +77,16 @@ public class ValidaReportesBimestralesModel {
                                     } catch (ParseException ex) {
                                         Exceptions.printStackTrace(ex);
                                     }
-                                    System.out.println("fecha sistema" + ahora);
-                                    if (ahora.before(ultimoBimestral.getFechaFin())) {
-                                    //if (ahora.before(ultimoBimestral.getFechaFin()) && ahora.after(ultimoBimestral.getFechaInicio())) {
-                                        reportesBean.setAccesoFormato(false);
-                                        reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.Espera al siguiente bimestre para continuar con tu proceso");
-                                        reportesBean.setStatus(3);
-                                    } else {
+//                                    System.out.println("fecha sistema" + ahora);
+//                                    if (ahora.before(ultimoBimestral.getFechaFin())) {
+//                                        reportesBean.setAccesoFormato(false);
+//                                        reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.Espera al siguiente bimestre para continuar con tu proceso");
+//                                        reportesBean.setStatus(3);
+//                                    } else {
                                         reportesBean.setAccesoFormato(true);
                                         reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.");
                                         reportesBean.setStatus(3);
-                                    }
+//                                    }
                                     break;
                                 //Rechazado:
                                 case 2:
