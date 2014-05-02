@@ -19,7 +19,7 @@ public class Conexion {
     
     //Modificar al ambiante a usar (Desarrollo,Calidad,Producción)
     //salvame
-    private static final String IP_PUERTO_BD_ITT_VINCULACION ="192.168.40.121:1521:";
+    private static final String IP_PUERTO_BD_ITT_VINCULACION ="192.168.40.120:1521:";
     private static final String SID_ORACLE_ITT_VINCULACION ="xe";
     public Conexion() {
     }

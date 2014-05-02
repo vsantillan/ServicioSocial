@@ -33,8 +33,9 @@ function cambiarEstadoFormatoAceptado(event)
         {
             if (respuesta === "OK")
             {
-                window.location.reload();
                 console.log(respuesta);
+                window.location.reload();
+               
             }
             else
             {
@@ -99,6 +100,7 @@ function obtenerDatos()
             if (respuesta === "OK")
             {
                 //$.fancybox.close();
+                console.log(respesta);
                 window.location.reload();
             } else
             {
