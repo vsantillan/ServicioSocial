@@ -28,12 +28,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
  *
  * @author SATELLITE
  */
+@Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
 @Table(name = "FORMATO_UNICO", catalog = "", schema = "GES_VIN")
 @XmlRootElement
