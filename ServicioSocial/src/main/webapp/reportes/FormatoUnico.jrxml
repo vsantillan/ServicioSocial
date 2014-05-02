@@ -49,12 +49,12 @@ codigoDP.CP as CP,
 UPPER(dp.CALLE) || ' ' || NVL2(dp.numero_E,'NE. '||dp.numero_E,' ') || ' '||NVL2(dp.numero_I,'int. '||dp.numero_I,' ') || ', '   || col.NOMBRE||', '|| municipioDP.NOMBRE ||', '||estadoDP.NOMBRE as domicilioDP,
 proy.MODALIDAD as modalidadP,
 prog.SIGLAS as  programaP,
-inst.NOMBRE as nombreInstanciaP,
+UPPER(inst.NOMBRE) as nombreInstanciaP,
 codigoInstancia.CP as codigoCPInstancia,
 UPPER(inst.TITULAR) as titularInstancia,
 UPPER(inst.PUESTO) as puestoInstancia,
 inst.TELEFONO||NVL2(inst.EXT,' ext. '||inst.EXT,' ') as telefonoInstancia,
-inst.DOMICILIO || ', '|| colInstancia.nombre||', '|| municipioInstancia.NOMBRE ||', '||estadoInstancia.NOMBRE  as domicilioIntancia,
+UPPER(inst.DOMICILIO) || ', '|| colInstancia.nombre||', '|| municipioInstancia.NOMBRE ||', '||estadoInstancia.NOMBRE  as domicilioIntancia,
 proy.NOMBRE_RESPONSABLE as titularProyecto,
 proy.RESPONSABLE_PUESTO as puestoProyecto,
 proy.DOMICILIO || ', '|| colProyecto.nombre||', '|| municipioProyecto.Nombre ||', '||estadoProyecto.NOMBRE as domicilioProyecto,
@@ -519,10 +519,10 @@ En la ciudad de Metepec, Estado de México, el día            del mes de       
 				<text><![CDATA[Télefono:]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="6672ade2-5ddf-4c15-b3f6-8671c29810b6" x="472" y="332" width="90" height="1"/>
+				<reportElement uuid="6672ade2-5ddf-4c15-b3f6-8671c29810b6" x="468" y="332" width="90" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="d15400f1-98c8-4021-9ea8-ff84ec0a084c" x="472" y="362" width="90" height="1"/>
+				<reportElement uuid="d15400f1-98c8-4021-9ea8-ff84ec0a084c" x="468" y="362" width="90" height="1"/>
 			</line>
 			<rectangle>
 				<reportElement uuid="87782850-ac9f-4384-930d-e829a1a1bd54" x="213" y="237" width="142" height="45"/>
@@ -907,14 +907,14 @@ electrónico:]]></text>
 				<textFieldExpression><![CDATA[$F{CODIGOCPINSTANCIA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="546ca90f-9f4c-4e05-90f2-74280376dbcc" x="471" y="353" width="91" height="11"/>
+				<reportElement uuid="546ca90f-9f4c-4e05-90f2-74280376dbcc" x="468" y="352" width="104" height="11"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{TELEFONOPROYECTO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="98d2dda9-adc5-4186-a251-2c9d7b7236f7" x="473" y="324" width="90" height="12"/>
+				<reportElement uuid="98d2dda9-adc5-4186-a251-2c9d7b7236f7" x="468" y="323" width="104" height="12"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
