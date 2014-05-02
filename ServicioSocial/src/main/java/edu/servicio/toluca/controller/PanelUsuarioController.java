@@ -113,6 +113,7 @@ public class PanelUsuarioController {
                 model.addAttribute("platica", beanPlatica.isTienePlatica());
                 model.addAttribute("accesoPlatica", beanPlatica.isAccesoPanelPlatica());
                 model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
+                servicioBean = validacionServicio.validaServicio(alumno);
 
                 //Valida Formato Unico
                 try {
