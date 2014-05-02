@@ -14,13 +14,13 @@ import java.sql.SQLException;
  */
 public class Conexion {
     //NO se modifican
-    private static final String IP_PUERTO_BD_ITT_CENTRO_COMPUTO ="localhost:1521:";
-    private static final String SID_ORACLE_ITT_CENTRO_COMPUTO   ="orcl";
+    private static final String IP_PUERTO_BD_ITT_CENTRO_COMPUTO ="192.168.2.1:1521:";
+    private static final String SID_ORACLE_ITT_CENTRO_COMPUTO   ="sia";
     
     //Modificar al ambiante a usar (Desarrollo,Calidad,Producción)
     //salvame
-    private static final String IP_PUERTO_BD_ITT_VINCULACION ="localhost:1521:";
-    private static final String SID_ORACLE_ITT_VINCULACION ="orcl";
+    private static final String IP_PUERTO_BD_ITT_VINCULACION ="192.168.40.121:1521:";
+    private static final String SID_ORACLE_ITT_VINCULACION ="xe";
     public Conexion() {
     }
 
