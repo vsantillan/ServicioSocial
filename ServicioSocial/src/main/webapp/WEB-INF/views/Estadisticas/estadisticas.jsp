@@ -175,16 +175,18 @@
                 $(document).ready(listo);
 
                 function listo() {
-                    $.get("programasEstadisticas.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
+                    var anio = $("#anio option:selected").text();
+                    var periodo = $("#periodo option:selected").text();
+                    $.get("programasEstadisticas.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         drawChartProgramas(respuesta);
                     });
-                    $.get("programasEstadisticasLiberados.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
+                    $.get("programasEstadisticasLiberados.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         drawChartProgramasLiberaciones(respuesta);
                     });
-                    $.get("programasEstadisticasLiberadosTabla.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
+                    $.get("programasEstadisticasLiberadosTabla.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         $('#tablaProgramas').append(construyeTabla(respuesta));
                     });
-                    $.get("instanciasEstadisticas.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
+                    $.get("instanciasEstadisticas.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         $('#tablaInstancias').append(drawChartInstancias(respuesta));
                     });
                     drawChartSexAltas(${totalMasculino},${totalFemenino},${totalIndefinido});
@@ -210,20 +212,20 @@
                     $.get("instanciasEstadisticas.do?&ano=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
                         $('#tablaInstancias').append(drawChartInstancias(respuesta));
                     });
-                    $.get("datosSexoCarreras.do?&ano=2014&periodo=ENE-JUN", null, function(respuesta) {
-                        var contenido=respuesta.split("|");
-                        var sexoAlta=contenido[0].split(",");
-                        var sexoLiberaciones=contenido[1].split(",");
-                        var carrerasAltas=contenido[2].split(",");
-                        var carrerasLiberaciones=contenido[3].split(",");
-                        drawChartSexAltas(parseInt(sexoAlta[0]),parseInt(sexoAlta[1]),parseInt(sexoAlta[2]));
-                        drawChartSexLiberaciones(parseInt(sexoLiberaciones[0]),parseInt(sexoLiberaciones[1]),parseInt(sexoLiberaciones[2]));
-                        contruyeTablaSexo(sexoAlta[0],sexoAlta[1],sexoAlta[2],sexoLiberaciones[0],sexoLiberaciones[1],sexoLiberaciones[2]);
-                        drawChartCarrerasAltas(parseInt(carrerasAltas[0]),parseInt(carrerasAltas[1]),parseInt(carrerasAltas[2]),parseInt(carrerasAltas[3]),parseInt(carrerasAltas[4]),parseInt(carrerasAltas[5]),parseInt(carrerasAltas[6]));
-                        drawChartCarrerasLiberaciones(parseInt(carrerasLiberaciones[0]),parseInt(carrerasLiberaciones[1]),parseInt(carrerasLiberaciones[2]),parseInt(carrerasLiberaciones[3]),parseInt(carrerasLiberaciones[4]),parseInt(carrerasLiberaciones[5]),parseInt(carrerasLiberaciones[6])); 
-                        contruyeTablaCarreras(parseInt(carrerasAltas[0]),parseInt(carrerasAltas[1]),parseInt(carrerasAltas[2]),parseInt(carrerasAltas[3]),parseInt(carrerasAltas[4]),parseInt(carrerasAltas[5]),parseInt(carrerasAltas[6])
-                                             ,parseInt(carrerasLiberaciones[0]),parseInt(carrerasLiberaciones[1]),parseInt(carrerasLiberaciones[2]),parseInt(carrerasLiberaciones[3]),parseInt(carrerasLiberaciones[4]),parseInt(carrerasLiberaciones[5]),parseInt(carrerasLiberaciones[6]) );
-                        
+                    $.get("datosSexoCarreras.do?&anio=" + anio + "&periodo=" + periodo + "", null, function(respuesta) {
+                        var contenido = respuesta.split("|");
+                        var sexoAlta = contenido[0].split(",");
+                        var sexoLiberaciones = contenido[1].split(",");
+                        var carrerasAltas = contenido[2].split(",");
+                        var carrerasLiberaciones = contenido[3].split(",");
+                        drawChartSexAltas(parseInt(sexoAlta[0]), parseInt(sexoAlta[1]), parseInt(sexoAlta[2]));
+                        drawChartSexLiberaciones(parseInt(sexoLiberaciones[0]), parseInt(sexoLiberaciones[1]), parseInt(sexoLiberaciones[2]));
+                        contruyeTablaSexo(sexoAlta[0], sexoAlta[1], sexoAlta[2], sexoLiberaciones[0], sexoLiberaciones[1], sexoLiberaciones[2]);
+                        drawChartCarrerasAltas(parseInt(carrerasAltas[0]), parseInt(carrerasAltas[1]), parseInt(carrerasAltas[2]), parseInt(carrerasAltas[3]), parseInt(carrerasAltas[4]), parseInt(carrerasAltas[5]), parseInt(carrerasAltas[6]));
+                        drawChartCarrerasLiberaciones(parseInt(carrerasLiberaciones[0]), parseInt(carrerasLiberaciones[1]), parseInt(carrerasLiberaciones[2]), parseInt(carrerasLiberaciones[3]), parseInt(carrerasLiberaciones[4]), parseInt(carrerasLiberaciones[5]), parseInt(carrerasLiberaciones[6]));
+                        contruyeTablaCarreras(parseInt(carrerasAltas[0]), parseInt(carrerasAltas[1]), parseInt(carrerasAltas[2]), parseInt(carrerasAltas[3]), parseInt(carrerasAltas[4]), parseInt(carrerasAltas[5]), parseInt(carrerasAltas[6])
+                                , parseInt(carrerasLiberaciones[0]), parseInt(carrerasLiberaciones[1]), parseInt(carrerasLiberaciones[2]), parseInt(carrerasLiberaciones[3]), parseInt(carrerasLiberaciones[4]), parseInt(carrerasLiberaciones[5]), parseInt(carrerasLiberaciones[6]));
+
                     });
                 }
             </script>

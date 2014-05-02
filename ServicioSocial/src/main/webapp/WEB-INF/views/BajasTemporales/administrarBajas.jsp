@@ -108,7 +108,7 @@
                                         <div class="form-group">
                                             <label for="fecha">*Fecha de Baja Temporal:</label>
                                             <div  class="input-group date dpAltaBaja" data-date="" data-date-format="yyyy-mm-dd">
-                                                <form:input type="text" require="true" id="fechaBaja" name="fechaBaja" path="fechaBaja" class="form-control"/>
+                                                <form:input id="fechaBaja" name="fechaBaja" path="fechaBaja" class="form-control" readonly="true" />
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" id="dp2"></i></span>
                                                     <form:errors class="alert alert-danger" path="fechaBaja" />
                                             </div><br>
@@ -116,7 +116,7 @@
                                         <div class="form-group">
                                             <label>*Fecha Limite de Baja:</label>
                                             <div  class="input-group date dpFinBaja" data-date="" data-date-format="yyyy-mm-dd">
-                                                <form:input type="text" require="true" id="fechaLimiteBaja" name="fechaLimiteBaja" path="fechaLimiteBaja" readonly="" class="form-control"/>
+                                                <form:input id="fechaLimiteBaja" name="fechaLimiteBaja" path="fechaLimiteBaja" readonly="true" class="form-control" />
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" id="dp2"></i></span>
                                                     <form:errors class="alert alert-danger" path="fechaLimiteBaja" />
                                             </div><br>

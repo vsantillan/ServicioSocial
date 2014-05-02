@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormatoUnico" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ff8df54-78ed-4b02-a7d1-dd231445f55d">
 	<property name="ireport.zoom" value="2.357947691000105"/>
 	<property name="ireport.x" value="169"/>
-	<property name="ireport.y" value="165"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="idProyecto" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -654,7 +654,7 @@ En la ciudad de Metepec, Estado de México, el día            del mes de       
 				<text><![CDATA[Clave:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6398cfe9-0fb4-425a-9357-ca37891d240d" x="171" y="87" width="46" height="20"/>
+				<reportElement uuid="6398cfe9-0fb4-425a-9357-ca37891d240d" x="143" y="88" width="46" height="20"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
@@ -685,10 +685,10 @@ electrónico:]]></text>
 				<reportElement uuid="4d492f3d-35b0-4419-b91a-6149f06c19e5" x="371" y="84" width="171" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="68f144d4-dacc-42ca-8a86-8d5c198ccde0" x="77" y="97" width="94" height="1"/>
+				<reportElement uuid="68f144d4-dacc-42ca-8a86-8d5c198ccde0" x="77" y="97" width="66" height="1"/>
 			</line>
 			<line>
-				<reportElement uuid="ba6193e5-afba-42a0-ad88-7e4d7766b12c" x="217" y="97" width="325" height="1"/>
+				<reportElement uuid="ba6193e5-afba-42a0-ad88-7e4d7766b12c" x="189" y="97" width="353" height="1"/>
 			</line>
 			<line>
 				<reportElement uuid="bd333a95-1d26-459e-9035-61fe9c7e5dae" x="86" y="114" width="93" height="1"/>
@@ -739,7 +739,7 @@ electrónico:]]></text>
 				<textFieldExpression><![CDATA[$F{CLAVEIFEDP}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="6087a624-4dcf-47c9-9a7a-71b76770911a" x="77" y="88" width="95" height="12"/>
+				<reportElement uuid="6087a624-4dcf-47c9-9a7a-71b76770911a" x="77" y="88" width="66" height="12"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
@@ -893,7 +893,7 @@ electrónico:]]></text>
 				<textFieldExpression><![CDATA[$F{TITULARPROYECTO}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a6b16cb3-6436-465e-a02f-334b4f687681" x="217" y="88" width="345" height="10"/>
+				<reportElement uuid="a6b16cb3-6436-465e-a02f-334b4f687681" x="189" y="88" width="373" height="10"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
