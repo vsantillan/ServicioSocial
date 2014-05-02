@@ -26,12 +26,12 @@
                         <center><h1>Observaciones</h1></center>
                         <div id="tabs">
                             <ul class="nav nav-tabs" id="formatoUnico-tabla">
-                                <li><a href="#nuevaObservacion" data-toggle="tab">Nueva Observaci&oacute;n</a></li>
-                                <li class="active"><a href="#catalogoObservaciones" data-toggle="tab">Cat&aacute;logo de Observaciones</a></li>
+                                <li class="active"><a href="#nuevaObservacion" data-toggle="tab">Nueva Observaci&oacute;n</a></li>
+                                <li><a href="#catalogoObservaciones" data-toggle="tab">Cat&aacute;logo de Observaciones</a></li>
                             </ul>
                             &nbsp;
                             <div class="tab-content">
-                                <div id="catalogoObservaciones" class="tab-pane active">
+                                <div id="catalogoObservaciones" class="tab-pane">
                                     <p>A continuaci&oacute;n se muestra el catalogo de observaciones.</p>
                                     <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="example" width='100%'>
                                         <thead>
@@ -76,7 +76,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div id="nuevaObservacion" class="tab-pane">
+                                <div id="nuevaObservacion" class="tab-pane active">
                                     <div class="col-md-8 col-md-offset-2">
                                         <h2>Nueva Observaci&oacute;n</h2>
                                         <p>Aqui puede agregar un nuevo tipo de observaci&oacute;n.</p>                          
@@ -87,7 +87,8 @@
                                             <div class="form-group">
                                                 <label for="detalle">Descripci&oacute;n:</label>
                                                 <form:textarea id="detalle"  name="detalle" path="detalle" rows="8" cols="50" maxlength="300" class="form-control"/> 
-                                                <div class="aler alert-warning">${errorBlanco}</div>
+                                                <br>
+                                                <div class="alert alert-danger">${errorBlanco}</div>
                                             </div>
 
                                             <div class="form-group">
@@ -131,7 +132,7 @@
                                     <div class="form-group">
                                         <label for="tipo">Descripci&oacute;n:</label>
                                         <form:textarea type="text" id="detalleE" path="detalle" rows="10" cols="70" name="detalleE" maxlength="300" class="form-control" />
-                                        <div class='error alert alert-warning' style="display:none;">Error la descripcion esta vacia</div>
+                                        <div class='error alert alert-danger' style="display:none;">Error la descripcion esta vacia</div>
                                     </div>
 
                                     <div class="form-group">

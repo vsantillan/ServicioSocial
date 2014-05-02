@@ -15,7 +15,6 @@ function borrarObservacion(e) {
     var idDelete = $(e.target).attr('idex');
     var tabla = $('#example').dataTable();
     tabla.fnDeleteRow(row);
-    alert("Este es el delete" + idDelete);
     //ajax(idUpdate);
     $.post("deleteObservacion.do", {id: idDelete}, function(response) {
         //alert("Ya hizo el update");
