@@ -66,8 +66,10 @@ public class PanelUsuarioController {
         System.out.println("NCONTROL:" + session.getAttribute("NCONTROL").toString());
 
         //Obtenemos al alumno
-        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
-        VistaAlumno alumno = consultaVistaAlumno.getAlumnoSesion(session);
+        //ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+       // VistaAlumno alumno = consultaVistaAlumno.getAlumnoSesion(session);
+        VistaAlumno alumno;
+        alumno = vistaAlumnoFacade.find(session.getAttribute("NCONTROL").toString());
 
         System.out.println("Bienvenido al panel de usuario " + alumno.getNombre());
         
@@ -113,7 +115,7 @@ public class PanelUsuarioController {
                 model.addAttribute("platica", beanPlatica.isTienePlatica());
                 model.addAttribute("accesoPlatica", beanPlatica.isAccesoPanelPlatica());
                 model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
-                servicioBean = validacionServicio.validaServicio(alumno);
+               // servicioBean = validacionServicio.validaServicio(alumno);
 
                 //Valida Formato Unico
                 try {
