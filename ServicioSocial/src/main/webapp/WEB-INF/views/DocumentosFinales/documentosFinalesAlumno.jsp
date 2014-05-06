@@ -14,8 +14,8 @@
     <body>
         <div class="container">
             <div class="row">
-                <%@include file="../General/banner.jsp"%>  
-                <%@include file="../General/menuAdministrador.jsp"%>
+                <%@include file="../General/banner.jsp"%>
+                <%@include file="../General/menuUsuario.jsp"%>
                 <div class="row col-md-12 center-block">
                     <h1>Administrar Organizaciones</h1>
                     <h4>Tus documentos debe de tener un formato <code>pdf</code> para que pueda ser validado por el administrador</h4>
@@ -41,7 +41,7 @@
                                     ${error_fe}
                                     <tr>
                                         <td></td>
-                                        <td><input type='submit' value='Subir Archivos' /></td>
+                                        <td><input type='submit' class="btn btn-primary" value='Subir Archivos' /></td>
                                     </tr>
                                 </table>
                             </form>
@@ -63,14 +63,14 @@
                                     ${error_fuf}
                                     <tr>
                                         <td></td>
-                                        <td><input type='submit' value='Subir Archivos' /></td>
+                                        <td><input type='submit' class="btn btn-primary" value='Subir Archivos' /></td>
                                     </tr>
                                 </table>
                             </form>
                         </core:when>
                     </core:choose>
                 </div>
-                <%@include file="../General/footer.jsp"%> 
+                <%@include file="../General/footer.jsp"%>
             </div>
         </div>
     </body>
