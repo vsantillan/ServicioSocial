@@ -107,6 +107,7 @@ public class ConsultasNoticias {
             noticiasFacade.create(noticia);
             return true;
         } catch (Exception e) {
+            System.out.println(e);
             return false;
         }
 
