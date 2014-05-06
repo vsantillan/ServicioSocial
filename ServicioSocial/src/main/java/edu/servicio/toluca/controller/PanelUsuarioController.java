@@ -66,10 +66,8 @@ public class PanelUsuarioController {
         System.out.println("NCONTROL:" + session.getAttribute("NCONTROL").toString());
 
         //Obtenemos al alumno
-        //ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
-       // VistaAlumno alumno = consultaVistaAlumno.getAlumnoSesion(session);
-        VistaAlumno alumno;
-        alumno = vistaAlumnoFacade.find(session.getAttribute("NCONTROL").toString());
+        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+        VistaAlumno alumno = consultaVistaAlumno.getAlumnoSesion(session);
 
         System.out.println("Bienvenido al panel de usuario " + alumno.getNombre());
         
@@ -115,8 +113,7 @@ public class PanelUsuarioController {
                 model.addAttribute("platica", beanPlatica.isTienePlatica());
                 model.addAttribute("accesoPlatica", beanPlatica.isAccesoPanelPlatica());
                 model.addAttribute("mensajePlatica", beanPlatica.getMensajeUsuario());
-               // servicioBean = validacionServicio.validaServicio(alumno);
-
+              
                 //Valida Formato Unico
                 try {
                     if (servicioBean.getDatosPersonales() != null) {
@@ -134,6 +131,7 @@ public class PanelUsuarioController {
                     }
                 } catch (Exception e) {
                     System.out.println("Error en la validacion del formato unico");
+                    System.out.println(e.getCause()+e.getMessage());
                     e.printStackTrace();
                 }
 

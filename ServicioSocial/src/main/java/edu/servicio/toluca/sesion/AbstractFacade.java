@@ -52,6 +52,8 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findAll() {
+         getEntityManager().flush();
+        getEntityManager().clear();
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
@@ -99,6 +101,8 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findBySpecificField(String field, Object fieldContent, String predicates, LinkedHashMap<String, String> ordering, LinkedList<String> grouping) {
+        getEntityManager().flush();
+        getEntityManager().clear();
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery();
         Root<T> root = criteriaQuery.from(entityClass);
