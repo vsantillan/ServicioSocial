@@ -136,9 +136,9 @@ public class PanelUsuarioController {
                 }
 
                 //Mensaje personal
-                if (mensaje != null) {
-                    model.addAttribute("mensajePersonal", "<div class='alert alert-danger'>" + mensaje + "</div>");
-                }
+//                if (mensaje != null) {
+//                    model.addAttribute("mensajePersonal", "<div class='alert alert-danger'>" + mensaje + "</div>");
+//                }
 
                 //Observaciones
                 try {

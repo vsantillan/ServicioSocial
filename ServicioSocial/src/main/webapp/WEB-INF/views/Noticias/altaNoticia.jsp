@@ -66,7 +66,7 @@
                                     <div class="control-group">
                                          <br>
                                         <input class="btn btn-primary" type ="submit" value = "Guardar " />
-                                        <input class="btn btn-primary" type ="reset" value = "Limpiar" />
+                                        <input class="btn btn-primary" type ="reset" onClick="CKEDITOR.instances.detalle.setData( '', function() { this.updateElement(); } )" value = "Limpiar" />
                                     </div>
 
                                 </form:form>

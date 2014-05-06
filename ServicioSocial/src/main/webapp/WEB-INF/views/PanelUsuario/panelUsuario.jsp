@@ -36,12 +36,12 @@
                         <!---------------------------------------Fin Contenido Noticias Generales------------------->
                     </div>          
 
-                    <div class="page-header borde-naranja">
+                    <%--<div class="page-header borde-naranja">
                         <h3 class="titulos-naranja">Mensajes Personales</h3>
                         <!---------------------------------------Contenido Mensajes Personales-------------------> 
                         ${mensajePersonal}
                         <!---------------------------------------Fin Contenido Mensajes Personales------------------->
-                    </div>
+                    </div>--%>
                     <div class="page-header borde-naranja">
                         <h3 class="titulos-naranja">Observaciones</h3>
                         <!---------------------------------------Contenido Observaciones----------------------------->
