@@ -51,7 +51,7 @@ public class ObservacionesController {
         } else {
             modelo.addAttribute("Observaciones", catalogoObservacionesFacade.findAll());
             modelo.addAttribute("Observacion", Observacion);
-            modelo.addAttribute("errorBlanco", "<div cssClass=\"alert alert-danger\">Error la descripcion esta vacia</div>");
+            modelo.addAttribute("errorBlanco", "<div class=\"alert alert-danger\">Error la descripcion esta vacia</div>");
             return "/Observaciones/catalogoObservaciones";
         }
     }

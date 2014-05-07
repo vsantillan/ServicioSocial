@@ -607,6 +607,19 @@ public class FormatoUnicoController {
                 listaErrores.add(resultado.getAllErrors().get(i).getDefaultMessage());
             }
         }
+        //Checa codigo postal
+        if (codigo_postal.equals("")) {
+            listaErrores.add("Ingrese un codigo postal");
+        } else {
+            if (codigo_postal.length() != 5) {
+                listaErrores.add("El codigo posta debe de tener 5 digitos");
+            }
+        }
+        try{
+            Integer.parseInt(codigo_postal);
+        }catch(Exception e){
+            listaErrores.add("El codigo postal debe ser númerico");
+        }
         if (listaErrores.isEmpty()) {
             DatosPersonales datosPersonales = datosPersonalesFacade.find(dt.getId());
             datosPersonales.setCalle(dt.getCalle());
@@ -639,7 +652,6 @@ public class FormatoUnicoController {
 //                //modelo.addAttribute("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
 //            }
 //        }
-            //Checa codigo postal
             if (existeCP.equals("true")) {
                 if (dt.getIdColonia().getIdColonia().toString().equals("0")) {
                     //Agregar colonia                   
@@ -924,8 +936,8 @@ public class FormatoUnicoController {
         doc.setDatosPersonalesId(datosPersonalesFacade.find(id));
         doc.setArchivo(file.getBytes());
         doc.setCatalogoDocumentosId(listaCatalogoDocumento.get(0));
-          int mid=  file.getOriginalFilename().lastIndexOf(".");
-         String extension=file.getOriginalFilename().substring(mid+1,file.getOriginalFilename().length()); 
+        int mid = file.getOriginalFilename().lastIndexOf(".");
+        String extension = file.getOriginalFilename().substring(mid + 1, file.getOriginalFilename().length());
         //String extension = file.getOriginalFilename();
         //extension = extension.substring(extension.length() - 3, extension.length());
         //**doc.setExtension("pdf");

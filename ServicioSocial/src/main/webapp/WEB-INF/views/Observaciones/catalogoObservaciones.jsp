@@ -88,7 +88,7 @@
                                                 <label for="detalle">Descripci&oacute;n:</label>
                                                 <form:textarea id="detalle"  name="detalle" path="detalle" rows="8" cols="50" maxlength="300" class="form-control"/> 
                                                 <br>
-                                                <div class="alert alert-danger">${errorBlanco}</div>
+                                               ${errorBlanco}
                                             </div>
 
                                             <div class="form-group">
