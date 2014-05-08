@@ -60,6 +60,8 @@ public abstract class AbstractFacade<T> {
     }
 
     public List<T> findAll(LinkedHashMap<String, String> ordering) {
+        getEntityManager().flush();
+        getEntityManager().clear();
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         Root<T> root = cq.from(entityClass);
         cq.select(root);
