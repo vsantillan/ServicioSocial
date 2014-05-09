@@ -34,6 +34,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -136,6 +138,7 @@ public class ReporteBimestralController2 {
             }
 
         }
+       // Collections.sort(reportesRevisadosUnicos, new OrdenarPorId());
         modelo.addAttribute("reportesRevisados", reportesRevisadosUnicos);
         modelo.addAttribute("reportesNoRevisados", reportesNoRevisados);
         modelo.addAttribute("reportesEnCorreccion", reportesEnCorreccion);
@@ -505,4 +508,10 @@ public class ReporteBimestralController2 {
         hiloCorreo.start();
 
     }
+//    class OrdenarPorId implements Comparator<Reportes> {
+//
+//    public int compare(Reportes o1, Reportes o2) {
+//        return Integer.valueOf(String.valueOf(o1.getId())) - Integer.valueOf(String.valueOf(o2.getId()));
+//    }
+//}
 }
