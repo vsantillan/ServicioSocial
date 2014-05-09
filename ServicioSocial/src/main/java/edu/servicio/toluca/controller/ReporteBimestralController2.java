@@ -281,13 +281,18 @@ public class ReporteBimestralController2 {
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         DatosPersonales datosPersonales = listaDatosPersonales.get(0);
-                LinkedHashMap ordenarAsc = new LinkedHashMap();
+        LinkedHashMap ordenarAsc = new LinkedHashMap();
         ordenarAsc.put("id", "desc");
         List<Reportes> listReporte = reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenarAsc, null);
         if (!listReporte.isEmpty()) {
             Reportes reporte = listReporte.get(0);
-            reporte.setStatus(BigInteger.valueOf(4));
-            reportesFacade.edit(reporte);
+            if (reporte.getStatus().compareTo(BigInteger.ONE) != 0) {
+                reporte.setStatus(BigInteger.valueOf(4));
+                reportesFacade.edit(reporte);
+            } else {
+                System.out.println("fail interno");
+                return "redirect:formatoReporteBimestral.do?OK=false";
+            }
         } else {
             System.out.println("fail");
             return "redirect:formatoReporteBimestral.do?OK=false";
