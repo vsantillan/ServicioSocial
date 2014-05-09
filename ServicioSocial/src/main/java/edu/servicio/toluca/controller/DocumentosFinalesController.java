@@ -231,7 +231,6 @@ public class DocumentosFinalesController {
 
         List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
         FormatoUnico formatoUnicoAlumno = listaFormatoUnico.get(0);
-        formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(4));
 
         List<CatalogoDocumento> listaCatalogoDocumento;
         CatalogoDocumento catalogoDocumento;
@@ -272,7 +271,8 @@ public class DocumentosFinalesController {
                     return "/DocumentosFinales/documentosFinalesAlumno";
                 }
                 try {
-
+                    formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(3));
+                    formatoUnicoFacade.edit(formatoUnicoAlumno);
                     documentosFacade.edit(documentoFUF);
                 } catch (Exception ex) {
                     modelo.addAttribute("error", "<p>Error al subir el Formato Unico Final</p>");
@@ -311,6 +311,8 @@ public class DocumentosFinalesController {
                     return "/DocumentosFinales/documentosFinalesAlumno";
                 }
                 try {
+                    formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(3));
+                    formatoUnicoFacade.edit(formatoUnicoAlumno);
                     documentosFacade.edit(documentoCP);
                 } catch (Exception ex) {
                     modelo.addAttribute("error", "<p>Error al subir la Constancia de Pago</p>");
@@ -349,6 +351,8 @@ public class DocumentosFinalesController {
                     return "/DocumentosFinales/documentosFinalesAlumno";
                 }
                 try {
+                    formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(3));
+                    formatoUnicoFacade.edit(formatoUnicoAlumno);
                     documentosFacade.edit(documentoRF);
                 } catch (Exception ex) {
                     modelo.addAttribute("error", "<p>Error al subir el Reporte Final</p>");
@@ -387,6 +391,8 @@ public class DocumentosFinalesController {
                         return "/DocumentosFinales/documentosFinalesAlumno";
                     }
                     try {
+                        formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(3));
+                        formatoUnicoFacade.edit(formatoUnicoAlumno);
                         documentosFacade.edit(documentoRE);
                     } catch (Exception ex) {
                         modelo.addAttribute("error", "<p>Error al subir el Reporte de Evaluación</p>");
@@ -396,7 +402,7 @@ public class DocumentosFinalesController {
                 }
             }
         }
-
+        
         return "redirect:panelUsuario.do";
     }
 

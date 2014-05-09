@@ -36,7 +36,6 @@
                                                 <th>No. de Control</th>
                                                 <td>
                                                     <input name ="no_control" id="no_control" value="${no_control}" readonly="true" class="form-control"/>
-                                                    <form:hidden  name ="no_control" path="no_control" value="${no_control}" size="20"/>
                                                 </td>
                                             </tr>
                                             ${muestraRF}
@@ -60,7 +59,7 @@
                                             <tr>
                                                 <th>No. de Control</th>
                                                 <td>
-                                                    <input name ="no_control" id="no_control" value="${no_control}" readonly="true"/>
+                                                    <input name ="no_control" id="no_control" value="${no_control}" readonly="true" class="form-control"/>
                                                 </td>
                                             </tr>
                                             ${muestraRF}
