@@ -30,7 +30,7 @@
                             ${error}
                             <core:choose>
                                 <core:when test="${planAlumno=='S'}">
-                                    <form method="post" id="frmSubirCartaMotivos" action="guardarDocumentosFinales.do"  enctype="multipart/form-data">
+                                    <form method="post" id="frmSubirCartaMotivos" action="guardarDocumentosFinalesAux.do"  enctype="multipart/form-data">
                                         <table class='table table-striped table-bordered example'>
                                             <tr>
                                                 <th>No. de Control</th>
