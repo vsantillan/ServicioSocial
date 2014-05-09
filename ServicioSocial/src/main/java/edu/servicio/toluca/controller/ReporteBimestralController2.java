@@ -81,7 +81,9 @@ public class ReporteBimestralController2 {
 
     @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
     public String reporteBimestralAdministrador(Model modelo, HttpSession session, HttpServletRequest request) {
-        modelo.addAttribute("datosPersonales", datosPersonalesFacade.findAll());
+        LinkedHashMap ordenarAsc = new LinkedHashMap();
+        ordenarAsc.put("id", "asc");
+        modelo.addAttribute("datosPersonales", datosPersonalesFacade.findAll(ordenarAsc));
         List<Reportes> listaBimestrales = reportesFacade.findAll();
         List<Reportes> reportesRevisados = new ArrayList<Reportes>();
         List<Reportes> reportesRevisadosUnicos = new ArrayList<Reportes>();
@@ -160,12 +162,12 @@ public class ReporteBimestralController2 {
 
     @RequestMapping(method = RequestMethod.POST, value = "/dameObservaciones.do")
     public @ResponseBody
-    String dameObservaciones(String idDatoPersonales){
-        System.out.println("Datos personales" +idDatoPersonales);
+    String dameObservaciones(String idDatoPersonales) {
+        System.out.println("Datos personales" + idDatoPersonales);
         List<RegObservaciones> listaObservaciones = regisObservacionesFacade.findBySpecificField("datosPersonalesId", BigDecimal.valueOf(Long.valueOf(idDatoPersonales)), "equal", null, null);
-        String observaciones="";
+        String observaciones = "";
         for (RegObservaciones regObservaciones : listaObservaciones) {
-            observaciones+=regObservaciones.getCatalogoObservacionId().getDetalle()+"&";
+            observaciones += regObservaciones.getCatalogoObservacionId().getDetalle() + "&";
         }
         return observaciones;
     }
@@ -279,8 +281,9 @@ public class ReporteBimestralController2 {
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         DatosPersonales datosPersonales = listaDatosPersonales.get(0);
-
-        List<Reportes> listReporte = reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+                LinkedHashMap ordenarAsc = new LinkedHashMap();
+        ordenarAsc.put("id", "desc");
+        List<Reportes> listReporte = reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenarAsc, null);
         if (!listReporte.isEmpty()) {
             Reportes reporte = listReporte.get(0);
             reporte.setStatus(BigInteger.valueOf(4));
@@ -304,12 +307,12 @@ public class ReporteBimestralController2 {
 
 
         ///////////VERIFICAMOS QUE NO EXISTA EL DOCUMENTO//////////////////////
-                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("id", "desc");
         List<Documentos> ultimoDoc = documentosFacade.findBySpecificField("datosPersonalesId", datosPersonales.getId(), "equal", ordenamiento, null);
         if (!ultimoDoc.isEmpty()) {
             Documentos ultimoDocumento = ultimoDoc.get(0);
-            if (ultimoDocumento.getCatalogoDocumentosId().getId().compareTo(BigDecimal.valueOf(2))==0) {
+            if (ultimoDocumento.getCatalogoDocumentosId().getId().compareTo(BigDecimal.valueOf(2)) == 0) {
                 if (ultimoDocumento.getStatus() == 3) {
                     ultimoDocumento.setArchivo(file.getBytes());
                     ultimoDocumento.setDatosPersonalesId(datosPersonales);

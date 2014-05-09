@@ -7,6 +7,7 @@ package edu.servicio.toluca.model.reportesBimestrales;
 import edu.servicio.toluca.beans.ReportesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.Reportes;
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class ValidaReportesBimestralesModel {
                     servicioBean.setReportesBimestrales(reportes);
                     System.out.println("Size reportes:" + nReportes);
 
+
                     if (!reportes.isEmpty() && reportes != null && nReportes > 0) {
                         System.out.println("Entro a validar bien los reportes bimestrales");
                         for (int i = 0; i < reportes.size(); i++) {
@@ -48,6 +50,9 @@ public class ValidaReportesBimestralesModel {
                             int horas = Integer.parseInt(reportes.get(i).getHoras().toString());
                             horasServicio += horas;
                         }
+                        int nReporte = reportes.size() - 1;
+                        Reportes ultimoBimestral = reportes.get(nReporte);
+                        int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
                         System.out.println("tiene " + horasServicio + " horas...");
                         servicioBean.setHorasServicio(horasServicio);
                         if ((servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal") && horasServicio < 480)
@@ -57,9 +62,9 @@ public class ValidaReportesBimestralesModel {
                             //if (horasServicio < 480) {
                             System.out.println("Menos 480 horas");
                             //Validar el ultimo reporte bimestral
-                            int nReporte = reportes.size() - 1;
-                            Reportes ultimoBimestral = reportes.get(nReporte);
-                            int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
+//                            int nReporte = reportes.size() - 1;
+//                            Reportes ultimoBimestral = reportes.get(nReporte);
+//                            int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
                             System.out.println("Checando status del ultimo reporte:" + status);
                             switch (status) {
                                 //Descargado
@@ -83,9 +88,9 @@ public class ValidaReportesBimestralesModel {
 //                                        reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.Espera al siguiente bimestre para continuar con tu proceso");
 //                                        reportesBean.setStatus(3);
 //                                    } else {
-                                        reportesBean.setAccesoFormato(true);
-                                        reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.");
-                                        reportesBean.setStatus(3);
+                                    reportesBean.setAccesoFormato(true);
+                                    reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " fue aceptado. Tienes un total de " + horasServicio + " horas de servicio.");
+                                    reportesBean.setStatus(3);
 //                                    }
                                     break;
                                 //Rechazado:
@@ -125,9 +130,15 @@ public class ValidaReportesBimestralesModel {
                                     break;
                             }
                         } else {
-                            reportesBean.setAccesoFormato(false);
-                            reportesBean.setMensaje("Ya haz completado las horas de servicio social. Subiste " + nReportes + " Reportes Bimestrales");
-                            reportesBean.setStatus(1);
+                            if (ultimoBimestral.getStatus().compareTo(BigInteger.ONE) == 0) {
+                                reportesBean.setAccesoFormato(false);
+                                reportesBean.setMensaje("Ya haz completado las horas de servicio social. Subiste " + nReportes + " Reportes Bimestrales");
+                                reportesBean.setStatus(1);
+                            } else {
+                                    reportesBean.setAccesoFormato(false);
+                                    reportesBean.setMensaje("Tu Reporte Bimestral se encuentra en revisión.");
+                                    reportesBean.setStatus(3);
+                            }
                         }
 
                     } else {

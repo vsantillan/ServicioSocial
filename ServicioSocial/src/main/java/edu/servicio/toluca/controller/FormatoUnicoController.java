@@ -247,6 +247,7 @@ public class FormatoUnicoController {
             formatoUnico.setTipoServicio(BigInteger.ONE);
             formatoUnico.setStatusServicio(BigInteger.ONE);
             formatoUnico.setHorasAcumuladas(BigInteger.ZERO);
+            formatoUnico.setStatusFuf(BigInteger.ZERO);
 
 
 

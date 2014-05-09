@@ -80,7 +80,7 @@
                     <li class="filas borde" data-toggle="popover" data-placement="right" data-content="${mensajeDocumentosFinales}" title="Documentos Finales">
                         <core:choose>
                             <core:when test="${accesoDocumentosFinales}">
-                                <a class="b" href="#">Documentos Finales
+                                <a class="b" href="documentosFinalesAlumno.do">Documentos Finales
                             </core:when>
                             <core:otherwise>
                                  <a class="b" href="#">Documentos Finales
