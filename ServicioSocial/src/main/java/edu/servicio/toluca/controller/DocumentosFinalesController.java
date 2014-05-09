@@ -231,6 +231,7 @@ public class DocumentosFinalesController {
 
         List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
         FormatoUnico formatoUnicoAlumno = listaFormatoUnico.get(0);
+        formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(4));
 
         List<CatalogoDocumento> listaCatalogoDocumento;
         CatalogoDocumento catalogoDocumento;
