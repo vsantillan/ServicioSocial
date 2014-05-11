@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
+import edu.servicio.toluca.entidades.BajaTemporal;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.LogServicio;
 import edu.servicio.toluca.entidades.VistaAlumno;
@@ -27,6 +28,7 @@ import edu.servicio.toluca.model.platica.ConsultasPlatica;
 import edu.servicio.toluca.model.reportesBimestrales.ValidaReportesBimestralesModel;
 import edu.servicio.toluca.model.sanciones.ConsultasPanelUsuarioSanciones;
 import edu.servicio.toluca.model.vistaalumno.ConsultasVistaAlumno;
+import edu.servicio.toluca.sesion.BajaTemporalFacade;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.LogServicioFacade;
 import edu.servicio.toluca.sesion.NoticiasFacade;
@@ -66,6 +68,8 @@ public class HistorialServicioController {
     public SancionesFacade sancionesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/LogServicioFacade")
     public LogServicioFacade logServicioFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/BajaTemporalFacade")
+    private BajaTemporalFacade bajaTemporal;
 
     @RequestMapping(method = RequestMethod.GET, value = "/historialServicio.do")
     public String historialServicio(Model model, HttpSession session, HttpServletRequest request) {
@@ -84,7 +88,9 @@ public class HistorialServicioController {
             }
 
             //Inyectando alumnos
+            List<BajaTemporal> bajasTemporales = bajaTemporal.findAll();
             model.addAttribute("alumnos", alumnos);
+            model.addAttribute("bajasTemporales", bajasTemporales);
 
             return "/HistorialServicio/historialServicio";
         } else {

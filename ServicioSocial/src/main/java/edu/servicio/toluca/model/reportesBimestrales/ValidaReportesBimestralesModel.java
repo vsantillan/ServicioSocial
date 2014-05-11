@@ -56,7 +56,7 @@ public class ValidaReportesBimestralesModel {
                         System.out.println("tiene " + horasServicio + " horas...");
                         servicioBean.setHorasServicio(horasServicio);
                         if ((servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal") && horasServicio < 480)
-                                || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 600)
+                                || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 600 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().equals('N'))
                                 || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 500 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().equals('S'))) {
 
                             //if (horasServicio < 480) {
