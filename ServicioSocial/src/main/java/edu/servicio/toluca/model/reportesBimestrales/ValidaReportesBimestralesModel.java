@@ -53,11 +53,11 @@ public class ValidaReportesBimestralesModel {
                         int nReporte = reportes.size() - 1;
                         Reportes ultimoBimestral = reportes.get(nReporte);
                         int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
-                        System.out.println("tiene " + horasServicio + " horas...");
+                        System.out.println("tiene " + horasServicio + " horas..."+" plan "+String.valueOf(servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle()));
                         servicioBean.setHorasServicio(horasServicio);
                         if ((servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal") && horasServicio < 480)
-                                || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 600 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().equals('N'))
-                                || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 500 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().equals('S'))) {
+                                || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 600 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("N"))
+                                || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 500 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("S"))) {
 
                             //if (horasServicio < 480) {
                             System.out.println("Menos 480 horas");
