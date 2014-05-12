@@ -40,7 +40,7 @@
                     <tbody>
                         <core:forEach items="${alumno}" var="current">
                             <tr class='gradeX'>
-                                <td><form:checkbox path="alumno" value="${current.id}"/></td>
+                                <td><form:checkbox path="alumno" value="${current.id}" class ="checks"/></td>
 <!--                                <td><core:out value="${current.datosPersonalesId.id}" /></td>-->
                                 <td><core:out value="${current.datosPersonalesId.alumnoId.id}" /></td>
                                 <td><core:out value="${current.datosPersonalesId.apellidoP} ${espacio} ${current.datosPersonalesId.apellidoM} ${espacio} ${current.datosPersonalesId.nombre}" /></td>

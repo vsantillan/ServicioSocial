@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="db aspriantes al programa ssc " language="groovy" pageWidth="1200" pageHeight="8000" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="09307a50-6af0-44db-b20f-f73cb6c95cd5">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Table Dataset 1" uuid="37b19e26-53e6-4633-8f8d-6e11626d40c8"/>
+	<queryString>
+		<![CDATA[select va.APELLIDO_PAT,va.APELLIDO_MAT,va.NOMBRE, dp.SEXO, va.PROMEDIO, va.CARRERA, dp.CORREO_ELECTRONICO, NVL(TO_CHAR(dp.FACEBOOK),' ') as FACEBOOK, NVL(TO_CHAR(dp.TWITTER),' ') as TWITTER
+from formato_unico fu, datos_personales dp, vista_alumno va
+where fu.tipo_servicio=3 and fu.status_servicio=1 and fu.datos_personales_id=dp.id and va.id=dp.alumno_id
+
+]]>
+	</queryString>
+	<field name="APELLIDO_PAT" class="java.lang.String"/>
+	<field name="APELLIDO_MAT" class="java.lang.String"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="SEXO" class="java.lang.String"/>
+	<field name="PROMEDIO" class="java.math.BigDecimal"/>
+	<field name="CARRERA" class="java.lang.String"/>
+	<field name="CORREO_ELECTRONICO" class="java.lang.String"/>
+	<field name="FACEBOOK" class="java.lang.String"/>
+	<field name="TWITTER" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="21">
+			<staticText>
+				<reportElement x="0" y="0" width="181" height="20" uuid="ddce218c-2bf2-48b0-ab42-ff61d298eba0"/>
+				<text><![CDATA[DATOS DEL ALUMNO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="18">
+			<staticText>
+				<reportElement x="724" y="5" width="143" height="13" uuid="81b1ea13-a893-4d7c-a142-f4a04f730ca4"/>
+				<text><![CDATA[CORREO ELECTRÓNICO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="116" height="17" uuid="f906b966-457e-484f-a50b-633520651578"/>
+				<text><![CDATA[APELLIDO PATERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="116" y="0" width="112" height="17" uuid="a3cb967b-f477-4f0d-af6f-424cd4b4d4fb"/>
+				<text><![CDATA[APELLIDO MATERNO]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="228" y="0" width="161" height="17" uuid="48c06c6b-1709-402e-b9a4-174e3dee8305"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="389" y="3" width="100" height="15" uuid="63c8f586-c087-497d-9566-30994bd8a582"/>
+				<text><![CDATA[SEXO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="489" y="1" width="100" height="15" uuid="9e8360e1-0305-436c-a5a3-21b2aa807473"/>
+				<text><![CDATA[PROMEDIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="589" y="0" width="135" height="15" uuid="4a477db5-3390-4468-9e73-aa58185a570f"/>
+				<text><![CDATA[PERFIL PROFESIONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="867" y="2" width="142" height="13" uuid="10568c5f-4972-432a-935c-f7dd5e647bb8"/>
+				<text><![CDATA[FACEBOOK]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1009" y="2" width="132" height="14" uuid="855abad1-9538-4bbb-9315-b350ef0cc397"/>
+				<text><![CDATA[TWITTER]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField>
+				<reportElement x="116" y="0" width="112" height="15" uuid="7816342d-dfa5-41c7-b95e-bf3919dbe3a5"/>
+				<textFieldExpression><![CDATA[$F{APELLIDO_MAT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="1" width="100" height="14" uuid="5b116c79-0edb-43f8-97f7-fe772a8b30f3"/>
+				<textFieldExpression><![CDATA[$F{SEXO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="489" y="2" width="100" height="13" uuid="77ed2436-0ac4-4cae-9ff1-35bf15b1e6a4"/>
+				<textFieldExpression><![CDATA[$F{PROMEDIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="116" height="15" uuid="88c35514-b09e-4956-8b2e-3f6b0849afd6"/>
+				<textFieldExpression><![CDATA[$F{APELLIDO_PAT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="228" y="1" width="161" height="14" uuid="9c89673f-9e7c-447f-ae24-cc6ecdcac9bc"/>
+				<text><![CDATA[NOMBRE (S)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="589" y="0" width="135" height="14" uuid="0ffd7139-3531-42dd-945d-c484b352f541"/>
+				<textFieldExpression><![CDATA[$F{CARRERA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="724" y="1" width="143" height="13" uuid="de2f69ac-7087-4483-8966-1f5104257e85"/>
+				<textFieldExpression><![CDATA[$F{CORREO_ELECTRONICO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="867" y="2" width="142" height="13" uuid="fb93edd8-aabd-4cee-9492-17c92e4a7121"/>
+				<textFieldExpression><![CDATA[$F{FACEBOOK}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1009" y="1" width="132" height="13" uuid="7c4a5ba6-c9d6-47eb-ad59-af2743e56ea7"/>
+				<textFieldExpression><![CDATA[$F{TWITTER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
