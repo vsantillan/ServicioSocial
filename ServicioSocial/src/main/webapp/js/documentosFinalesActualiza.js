@@ -2,6 +2,7 @@ var row="";
 var idUpdate="";
 var tabla="";
 var tipo2 = "";
+var no_control="";
 
 $(document).ready(listo);
 
@@ -38,12 +39,13 @@ function listo() {
 
 function enviaObservaciones(e)
 {
-    if (confirm('\u00BF'+"Seguro que desea rechazar el Reporte?"))
+    if (confirm('\u00BF'+"Seguro que desea rechazar el Documento?"))
     {
         row = $(this).parents('tr')[0];
         idUpdate = $(e.target).attr('ide');
         tabla = $('#example').dataTable();
         tipo2 = "2";
+        no_control=$(e.target).attr('no_control');
         mostrarDIVMotivos();
     }
 }
@@ -69,14 +71,14 @@ function obtenerObservacionesDocumentos()
     if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("rechazaDocumentos.do", {id: idUpdate,status: tipo2, observaciones: array}, function(respuesta)
+        $.post("rechazaDocumentos.do", {id: idUpdate,status: tipo2, observaciones: array,no_control:no_control}, function(respuesta)
         {
             if(respuesta==="ok")
             {
                 alert("Reporte Rechazado");
                 window.location.reload();
             }else{
-                alert("ERROR: Imposible rechazar reporte.");
+                alert("ERROR: Imposible rechazar documento.");
             }
             $('#guardarObservaciones').attr('disabled', false);
         });

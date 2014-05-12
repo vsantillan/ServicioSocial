@@ -46,7 +46,7 @@
                                             <core:when test="${alumno.statusFUF==4}">
                                                 <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
                                                 <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idFormatoUnicoFinal}" status="${1}"></span></a>
-                                                <a href="#" class="mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
+                                                <a href="#" class="mandaRetro"><span class="glyphicon glyphicon-remove sizeIcon" ide="${alumno.idFormatoUnicoFinal}" no_control="${alumno.noControl}"></span></a>
                                                 </core:when>
                                                 <core:when test="${alumno.statusFUF==1}">
                                                 <a href="mostarPDF.do?id=${alumno.idFormatoUnicoFinal}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
@@ -64,7 +64,7 @@
                                             <core:when test="${alumno.statusRF==4}">
                                                 <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
                                                 <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idReporteFinal}" status="${1}" ></span></a>
-                                                <a href="#" class="mandaRetro" ide="${alumno.idReporteFinal}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
+                                                <a href="#" class="mandaRetro"><span class="glyphicon glyphicon-remove sizeIcon" ide="${alumno.idReporteFinal}" no_control="${alumno.noControl}"></span></a>
                                                 </core:when>
                                                 <core:when test="${alumno.statusRF==1}">
                                                 <a href="mostarPDF.do?id=${alumno.idReporteFinal}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
@@ -82,7 +82,7 @@
                                             <core:when test="${alumno.statusCP==4}">
                                                 <a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
                                                 <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idConstanciaPago}" status="${1}"></span></a>
-                                                <a href="#" class="mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
+                                                <a href="#" class="mandaRetro"><span class="glyphicon glyphicon-remove sizeIcon" ide="${alumno.idReporteFinal}" no_control="${alumno.noControl}"></span></a>
                                                 </core:when>
                                                 <core:when test="${alumno.statusCP==1}">
                                                 <a href="mostarPDF.do?id=${alumno.idConstanciaPago}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
@@ -105,20 +105,20 @@
                                                     <core:when test="${alumno.statusRC==4}">
                                                         <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
                                                         <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idReporteCalificacion}" status="${1}"></span></a>
-                                                        <a href="#" class="mandaRetro" nombre="${alumno.nombreCompleto}" correo="${alumno.correo}" status="${2}" idAlumno="${alumno.noControl}" idFUF="${alumno.idFormatoUnicoFinal}" idRF="${alumno.idReporteFinal}" idCP="${alumno.idConstanciaPago}" idRC="${alumno.idReporteCalificacion}"><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
-                                                        </core:when>
-                                                        <core:when test="${alumno.statusRC==1}">
-                                                        <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
-                                                        </core:when>
-                                                        <core:when test="${alumno.statusRC==2}">
-                                                            <core:out value="Se encuentra en corrección por parte del alumno"/>
-                                                        </core:when>
-                                                        <core:otherwise>
-                                                            <core:out value="Sin documento"/>
-                                                        </core:otherwise>
-                                                    </core:choose>
-                                                </core:otherwise>
-                                            </core:choose>
+                                                        <a href="#" class="mandaRetro"><span class="glyphicon glyphicon-remove sizeIcon" ide="${alumno.idReporteFinal}" no_control="${alumno.noControl}"></span></a>
+                                                    </core:when>
+                                                    <core:when test="${alumno.statusRC==1}">
+                                                    <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                    </core:when>
+                                                    <core:when test="${alumno.statusRC==2}">
+                                                        <core:out value="Se encuentra en corrección por parte del alumno"/>
+                                                    </core:when>
+                                                    <core:otherwise>
+                                                        <core:out value="Sin documento"/>
+                                                    </core:otherwise>
+                                                </core:choose>
+                                            </core:otherwise>
+                                        </core:choose>
                                     </td>
                                 </tr>
                             </core:forEach>

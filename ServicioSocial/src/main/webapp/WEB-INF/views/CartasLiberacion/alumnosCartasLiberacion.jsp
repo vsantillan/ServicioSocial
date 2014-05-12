@@ -34,7 +34,10 @@
                             <tbody>
                                 <core:forEach items="${listaCartasLiberacion}" var="carta">
                                     <tr class='gradeX'>
-                                        <td><input type="checkbox" name="checkbox" value="${carta.noControl}">&nbsp;Generar Carta de Liberación</td>
+                                        <td>
+                                            <%--<input type="checkbox" name="checkbox" value="${carta.noControl}"/>&nbsp;Generar Carta de Liberación--%>
+                                            <a href="generarCartasLiberacionAux.pdf?no_control=${carta.noControl}" target="_blank"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                        </td>
                                         <td><core:out value="${carta.nombreCompleto}"/></td>
                                         <td><core:out value="${carta.noControl}"/></td>
                                         <td><core:out value="No"/></td>

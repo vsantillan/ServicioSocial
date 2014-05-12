@@ -19,7 +19,7 @@ function generaCartasLiberacion()
     }
     else
     {
-        $.post("generarCartasLiberacion.do", {'arrayAlumnos': alumno}, function(respuesta) {
+        $.post("generarCartasLiberacion.pdf", {'arrayAlumnos': alumno}, function(respuesta) {
             //location.reload();
             alert(respuesta);
 

@@ -13,17 +13,20 @@ import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
+import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -57,6 +60,8 @@ public class DocumentosFinalesController {
     private FormatoUnicoFacade formatoUnicoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
+    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
+    private RegObservacionesFacade regObservacionesFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/documentosFinales.do")
     public String administradorDocumentosFinales(Model model) {
@@ -141,29 +146,33 @@ public class DocumentosFinalesController {
     @RequestMapping(method = RequestMethod.POST, value = "/rechazaDocumentos.do")
     public @ResponseBody
     String rechazaReporte(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
-                                int id,int status, Model model, HttpSession session, HttpServletRequest request) 
-    {
-        for(String idObservacion:observaciones)
-        {
+                                int id,int status,String no_control, Model model, HttpSession session, HttpServletRequest request) 
+    {        
+        System.out.println("El numero de control es: "+no_control);
+        
+        List<DatosPersonales> listaAlumnos = datosPersonalesFacade.findBySpecificField("alumnoId", no_control, "equal", null, null);
+        if (listaAlumnos.isEmpty()) {
+            return "okkk";
+        }
+        
+        for (String idObservacion : observaciones) {
             //Objeto a Registrar
-            //RegObservaciones registro=new RegObservaciones();
+            RegObservaciones registro = new RegObservaciones();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
-            //registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
             //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
-            //registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            registro.setDatosPersonalesId(datosPersonalesFacade.find(listaAlumnos.get(0).getId()));
             //Asignar Fecha Actual al momento para registro 
-            //registro.setFecha(new Date());
+            registro.setFecha(new Date());
             //Creacion de Registro
-            //regisObservacionesFacade.create(registro);
-            System.out.println("las observaciones son: "+idObservacion);
-            //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            regObservacionesFacade.create(registro);
         }
         System.out.println("Ya ingreso las observaciones");
         System.out.println("El estatus que recibio es: "+BigInteger.valueOf(status));
         Documentos documentos;
         documentos = documentosFacade.find(BigDecimal.valueOf(id));
         documentos.setStatus((short)status);
-        documentosFacade.edit(documentos);
+        //documentosFacade.edit(documentos);
         System.out.println("Ya actualizo");
         return "ok";
     }

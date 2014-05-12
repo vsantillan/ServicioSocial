@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.openide.util.Exceptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -91,23 +93,37 @@ public class CartasLiberacionController
         return "/CartasLiberacion/alumnosCartasLiberacion";
     }
     
-    @RequestMapping(method = RequestMethod.POST, value = "/generarCartasLiberacion.do")
-    public @ResponseBody String generarCartasLiberacion(@RequestParam(value = "arrayAlumnos[]", required = false) String [] arrayAlumnos, Model modelo)
+    @RequestMapping(method = RequestMethod.POST, value = "/generarCartasLiberacion.pdf")
+    public @ResponseBody String generarCartasLiberacion(@RequestParam(value = "arrayAlumnos[]", required = false) String [] arrayAlumnos, Model modelo,HttpServletRequest request, HttpServletResponse httpServletResponse)
     {
         for(int i=0;i<arrayAlumnos.length;i++)
         {
             System.out.println("control alumno: "+arrayAlumnos[i]);
+            Map parameters = new HashMap();
+            parameters.put("no_control", arrayAlumnos[i]);
+            try {
+                GeneraDocumento obj = new GeneraDocumento();
+                obj.generar("ges_vin", "gst05a", "cartaLiberacion", parameters, request, httpServletResponse);
+            } catch (Exception ex) {
+                Exceptions.printStackTrace(ex);
+            }
         }
-//        Map parameters = new HashMap();
-//        parameters.put("no_control", session.getAttribute("NCONTROL").toString());
-//        parameters.put("no_reporte", noReporte);
-//        parameters.put("id_reporte", idReporte);
-//        try {
-//            GeneraDocumento obj = new GeneraDocumento();
-//            obj.generar("ges_vin", "gst01a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
-//        } catch (Exception ex) {
-//            Exceptions.printStackTrace(ex);
-//        }
+        
+        return "ok";
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/generarCartasLiberacionAux.pdf")
+    public @ResponseBody String generarCartasLiberacionAux(String no_control, Model modelo,HttpServletRequest request, HttpServletResponse httpServletResponse)
+    {
+        Map parameters = new HashMap();
+        parameters.put("no_control", no_control);
+        try {
+            GeneraDocumento obj = new GeneraDocumento();
+            obj.generar("ges_vin", "gst05a", "cartaLiberacion", parameters, request, httpServletResponse);
+        } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        
         return "ok";
     }
     
