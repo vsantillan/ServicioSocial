@@ -150,18 +150,20 @@ public class DocumentosFinalesController {
     {        
         System.out.println("El numero de control es: "+no_control);
         
-        List<DatosPersonales> listaAlumnos = datosPersonalesFacade.findBySpecificField("alumnoId", no_control, "equal", null, null);
+        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
         if (listaAlumnos.isEmpty()) {
             return "okkk";
         }
         
+        System.out.println("hehahahahahahaha "+listaAlumnos.get(0).getId());
         for (String idObservacion : observaciones) {
             //Objeto a Registrar
             RegObservaciones registro = new RegObservaciones();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
             registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
             //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
-            registro.setDatosPersonalesId(datosPersonalesFacade.find(listaAlumnos.get(0).getId()));
+            List<DatosPersonales> lista_datosPersonales=datosPersonalesFacade.findBySpecificField("alumnoId",listaAlumnos.get(0),"equal",null,null);
+            registro.setDatosPersonalesId(lista_datosPersonales.get(0));
             //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
             //Creacion de Registro
