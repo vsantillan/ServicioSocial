@@ -47,7 +47,7 @@
                             </tbody>
                         </table>
                         <br/>
-                        <button type="button" class="btn btn-primary generaCartas">Genera Cartas de Liberación</button>
+                        <!--<button type="button" class="btn btn-primary generaCartas">Genera Cartas de Liberación</button>-->
                         <hr>
                     </div>
                 </div>  
