@@ -17,8 +17,10 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <h1>Administraci&oacute;n Documentos Finales</h1>
-                    <p>A continuaci&oacute;n se muestra una vista de los documentos originales de cada alumno.</p>
+                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Administraci&oacute;n Documentos Finales</h1></div>
+                    <div class="alert alert-warning col-md-9 col-md-offset-1">
+                        <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestra una vista de los documentos originales de cada alumno.</h4></div>
+                    </div>
                     <div id="div-validar-organizacion" style="display:none;">
                         <center>
                             <span class="glyphicon glyphicon-ok-circle sizeIconValid"></span>
@@ -106,19 +108,19 @@
                                                         <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
                                                         <a href="#"><span class="aceptarDocumentos glyphicon glyphicon-ok sizeIcon" ide="${alumno.idReporteCalificacion}" status="${1}"></span></a>
                                                         <a href="#" class="mandaRetro"><span class="glyphicon glyphicon-remove sizeIcon" ide="${alumno.idReporteFinal}" no_control="${alumno.noControl}"></span></a>
-                                                    </core:when>
-                                                    <core:when test="${alumno.statusRC==1}">
-                                                    <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
-                                                    </core:when>
-                                                    <core:when test="${alumno.statusRC==2}">
-                                                        <core:out value="Se encuentra en corrección por parte del alumno"/>
-                                                    </core:when>
-                                                    <core:otherwise>
-                                                        <core:out value="Sin documento"/>
-                                                    </core:otherwise>
-                                                </core:choose>
-                                            </core:otherwise>
-                                        </core:choose>
+                                                        </core:when>
+                                                        <core:when test="${alumno.statusRC==1}">
+                                                        <a href="mostarPDF.do?id=${alumno.idReporteCalificacion}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
+                                                        </core:when>
+                                                        <core:when test="${alumno.statusRC==2}">
+                                                            <core:out value="Se encuentra en corrección por parte del alumno"/>
+                                                        </core:when>
+                                                        <core:otherwise>
+                                                            <core:out value="Sin documento"/>
+                                                        </core:otherwise>
+                                                    </core:choose>
+                                                </core:otherwise>
+                                            </core:choose>
                                     </td>
                                 </tr>
                             </core:forEach>
