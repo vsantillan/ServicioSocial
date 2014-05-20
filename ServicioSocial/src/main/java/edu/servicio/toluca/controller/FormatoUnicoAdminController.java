@@ -304,6 +304,7 @@ public class FormatoUnicoAdminController {
                 FormatoUnico fuR = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
                 //Cambiar Status
                 fuR.setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
+                fuR.setStatusServicio(BigInteger.valueOf(VALOR_RECHAZADOS));
                 formatoUnicoFacade.edit(fuR);
                 //Enviar Correo
                 nombre = fuR.getDatosPersonalesId().getNombre() + " "
