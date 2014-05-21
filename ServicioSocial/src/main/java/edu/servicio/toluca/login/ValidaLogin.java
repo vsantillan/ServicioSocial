@@ -28,7 +28,8 @@ public class ValidaLogin {
 
         System.out.println("Usuario:" + usuario);
         System.out.println("Pass:" + pass);
-
+        usuario=usuario.trim();
+        pass=pass.trim();
         if (usuario.equals("") || pass.equals("")) {
             //Verifica que el campo usuario y contraseña no esten vacios de lo contrario retorna a loginPrincipal
             sesionBean.setMensaje("<div class=\"alert alert-danger\">Datos de acceso inválidos</div>");
