@@ -54,8 +54,8 @@
                         <li><a href="validarProyectos.do" onclick="redirecciona('validarProyectos.do');">8.6 Validar Proyectos</a></li>  
                     </ul>
                 </li>
-                <li><a href="#" onclick="redirecciona('#');">Convocatorias</a></li>
-                <li><a href="historialServicio.do" onclick="redirecciona('#');">Historial Servicio Social</a></li>
+<!--                <li><a href="#" onclick="redirecciona('#');">Convocatorias</a></li>-->
+                <li><a href="historialServicio.do" >Historial Servicio Social</a></li>
                 <li><a href="estadisticas.do" onclick="redirecciona('estadisticas.do');">Estadisticas</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos Especiales<b class="caret"></b></a>
@@ -71,12 +71,12 @@
                         <li><a href="consultaNoticias.do">Bajas | Consultas</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
+<!--                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Acerca De<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="javascript:void(0)" onclick="redirecciona('#');">15.1 Ayuda</a></li>
-                        <li><a href="acercaDeAdmin.do" >15.2 Acerca De</a></li>
-                    </ul>
+                       
+                    </ul>-->
                 </li>
                 <li><a href="cerrarSesion.do" onclick="redirecciona('cerrarSesion.do');">Cerrar Sesi&oacute;n</a></li>
             </ul>
