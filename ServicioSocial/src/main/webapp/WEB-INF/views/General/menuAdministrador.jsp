@@ -31,8 +31,9 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sanciones<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="sancionesAlumno.do" onclick="redirecciona('sancionesAlumno.do');">6.1 Administrar Sanciones</a></li>
-                        <li><a href="catalogoSanciones.do" onclick="redirecciona('catalogoSanciones.do');">6.2 Cat&aacute;logo de Sanciones</a></li>
+                         <li><a href="asignarSancion.do">6.1 Asignar Sanciones</a></li>
+                        <li><a href="sancionesAlumno.do" onclick="redirecciona('sancionesAlumno.do');">6.2 Administrar Sanciones</a></li>
+                        <li><a href="catalogoSanciones.do">6.3 Cat&aacute;logo de Sanciones</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

@@ -61,17 +61,14 @@ public class ConsultasPanelUsuarioSanciones {
 //        System.out.println("Observaciones");
         if (!sanciones.isEmpty()) {
             for (int i = 0; i < sanciones.size(); i++) {
-//                System.out.println("--------------------------------");
-//                System.out.println("Fecha:" + fecha.fechaAPalabras(sanciones.get(i).getFecha()));
-//                System.out.println("Detalle:" + sanciones.get(i).getCatalogoSancionesId().getDetalle());
 
                 SancionBean sancion = new SancionBean();
-                sancion.setFecha(fecha.fechaAPalabras(sanciones.get(i).getFecha()));
+                //sancion.setFecha(sanciones.get(i).getFecha());
 
                 int horasSancion = Integer.parseInt(sanciones.get(i).getHorasSancion().toString());
                 if (horasSancion > 0) {
                     sancion.setConcepto(0);
-                    sancion.setDetalle("SANCION: " + sanciones.get(i).getCatalogoSancionesId().getDetalle()+ " HORAS:"+sanciones.get(i).getHorasSancion());
+                    sancion.setDetalle("<b>Motivo de la sanción:</b> " + sanciones.get(i).getCatalogoSancionesId().getDetalle()+ "&nbsp;&nbsp;<b> Horas Restantes:</b>"+sanciones.get(i).getHorasSancion());
                 } else {
                     sancion.setConcepto(1);
                     sancion.setDetalle("PAGO DE SANCION: " + sanciones.get(i).getCatalogoSancionesId().getDetalle()+ " HORAS:"+sanciones.get(i).getHorasSancion());

@@ -13,21 +13,17 @@
                     <center><h2>Editar Sanci&oacute;n</h2></center>
                         <form:form name="nuevaSancion"  onsubmit="window.parent.Shadowbox.close();">
                         <div class="row col-md-8 col-md-offset-2">
-                            <div class="col-md-4">
+                            
                                 <label for="hora">Horas: </label><input type="number" name="horas" id="eHoras" size="15" value="${horas}" class="form-control" />
-                                <br/>
-                                <label for="tolerancia">D&iacute;as de tolerancia: </label><input type="number" id="eTolerancia" class="form-control" name="tolerancia" size="2" value="${tolerancia}" pagoSanciones/>
-                            </div>
-                            <div class="col-md-8">
                                 <br/>
                                 <input type="hidden" value="${idSancion}" name ="id" id="idSancion"/>
                                 <label for="descripcion">Descripci&oacute;n:</label><br/>
                                 <textarea class="form-control" name="descripcion" rows="4" cols="50" id="eDescripion">${descripcion}</textarea>
-                                <div class="col-md-4 col-md-offset-1"><br/>
-                                    <input class="form-control btn btn-primary btn-sm" type ="button" onclick="editarSancion2();" value = "Guardar " />
-                                </div>
+                                <br/><br/>
+                                    <input class=" btn btn-primary " type ="button" onclick="editarSancion2();" value = "Guardar " />
+                                
                                 <br/><br/><br/>
-                            </div>
+                           
                         </div>
 <!--                        <table>
                             <tr>

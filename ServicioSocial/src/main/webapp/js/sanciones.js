@@ -20,7 +20,7 @@ function enviaSancionParaGuardado()
         prepararJSON($(this));
     });
     sancion['tipo'] = 'nuevo';
-    console.log(sancion.valueOf());
+//    console.log(sancion.valueOf());
     $.post("nuevaSancion.do", sancion, function(respuesta) {
         var respJ = {};
         if (respuesta !== "noInfo")
@@ -46,13 +46,14 @@ function enviaSancionParaGuardado()
 }
 function editarSancion2()
 {
-    console.log('aqui');
+   
     $('#observaciones').hide("fast");
     var idSancion = $("#idSancion").val();
     var horas = $("#eHoras").val();
-    var tolerancia = $("#eTolerancia").val();
+//    var tolerancia = $("#eTolerancia").val();
     var descripcion = $("#eDescripion").val();
-    $.post("nuevaSancion.do", {tipo: 'editar', idSancion: idSancion, horas: horas, tolerancia: tolerancia, descripcion: descripcion}, function(respuesta)
+     console.log('aqui');
+    $.post("nuevaSancion.do", {tipo: 'editar', idSancion: idSancion, horas: horas, tolerancia:0, descripcion: descripcion}, function(respuesta)
     {
         var respJ = {};
         if (respuesta !== "noInfo")
@@ -167,10 +168,16 @@ function nuevaSancion(tipo) {
         location.reload();
     });
 }
-function quitaSancionAlumno(idSancion)
-{
-    $.post("quitaSancion.do", {idSancion: idSancion}, function(respuesta) {
-        alert(respuesta);
-        location.reload();
-    });
-}
+$('#pagoSancion').click(function() {
+    var horas=$('#horas').val();
+    var id=$('#id').val();
+     $.post("pagoSancionAlumno.do", {'horas': horas,'id':id}, function(respuesta) {
+         console.log(respuesta);
+         if (respuesta==='ok')
+         parent.location.reload();
+     else{
+         $('#mensaje').addClass('alert alert-danger');
+         $('#mensaje').text(respuesta);
+     }
+        });
+});

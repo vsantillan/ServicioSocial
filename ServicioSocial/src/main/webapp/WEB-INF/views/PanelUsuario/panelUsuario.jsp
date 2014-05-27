@@ -53,16 +53,15 @@
                     <div class="page-header  borde-naranja">
                         <h3 class="titulos-naranja">Sanciones</h3>
                         <!---------------------------------------Contenido Sanciones----------------------------->
+                        <p>
                         <core:forEach items="${sanciones}" var="sancion">
                             <core:choose>
                                 <core:when  test="${sancion.concepto==0}">
-                                    <li ><b><fmt:formatDate pattern="dd-MM-yyyy" value="${sancion.fecha}"/></b>: ${sancion.detalle}</li>
-                                        </core:when>    
-                                        <core:when  test="${sancion.concepto==1}">
-                                    <li ><b><fmt:formatDate pattern="dd-MM-yyyy" value="${sancion.fecha}"/></b>: ${sancion.detalle}</li>
-                                        </core:when> 
+                                    <li ><b><fmt:formatDate pattern="dd-MM-yyyy" value="${sancion.fecha}"/></b>${sancion.detalle}</li>
+                                        </core:when>   
                                     </core:choose> 
                                 </core:forEach>
+                         </p>
                         <!---------------------------------------Fin Contenido Sanciones------------------->
                     </div>
                 </div>

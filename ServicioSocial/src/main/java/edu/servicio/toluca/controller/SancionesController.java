@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class SancionesController {
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoSancionesFacade")
     private CatalogoSancionesFacade catalogoSancionesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
@@ -46,75 +46,49 @@ public class SancionesController {
     private DatosPersonalesFacade datosPersonalesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     private VistaAlumnoFacade vistaAlumnoFacade;
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/sancionesAlumno.do")
     public String sancionesAlumno(Model modelo, HttpSession session, HttpServletRequest request) {
-        List<sancionesBean> listaSancionesVista = new ArrayList();
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("datosPersonalesId", "asc");
         List<Sanciones> listaTodasSanciones = sancionesFacade.findAll(ordenamiento);
-        if(listaTodasSanciones.isEmpty()){
+        List<Sanciones> sanciones = new ArrayList<Sanciones>();
+        if (listaTodasSanciones.isEmpty()) {
             modelo.addAttribute("listaSanciones", null);
-            return "/Sanciones/sancionesAlumno";
-        }
-        //List<String> listaSancionesVista = new ArrayList();
-        int horas = 0;
-        String noControl = listaTodasSanciones.get(0).getDatosPersonalesId().getAlumnoId().getId().toString();
-        Sanciones s2 = new Sanciones();
-        sancionesBean sancionBean = new sancionesBean();
-        for (Sanciones sancion : listaTodasSanciones) {
-            s2 = sancion;
-            System.out.println("Obteniendo datos de sanciones");
-            if (sancion.getDatosPersonalesId().getAlumnoId().getId().toString().equals(noControl)) {
-                System.out.println("haciendo suma de horas, inicialmente se tiene" + horas);
-                horas = horas + sancion.getHorasSancion().intValue();
-                System.out.println("Las nuevas horas son " + horas);
-            } else {
-                sancionBean.setAlumno(sancion.getDatosPersonalesId().getAlumnoId());
-                sancionBean.setDatosPersonales(sancion.getDatosPersonalesId());
-                sancionBean.setHoras(horas);
-                sancionBean.setIdAlumno(noControl);
-                sancionBean.setIdCatalogoSanciones(sancion.getCatalogoSancionesId().getId());
-                sancionBean.setIdSancion(sancion.getId());
-                listaSancionesVista.add(sancionBean);
-                horas = 0;
-                noControl = sancion.getDatosPersonalesId().getAlumnoId().getId().toString();
+            modelo.addAttribute("espacio", " ");
+        } else {
+            for (Sanciones sancion : listaTodasSanciones) {
+                if (sancion.getHorasSancion().intValue() > 0) {
+                    sanciones.add(sancion);
+                }
             }
         }
-        sancionBean.setAlumno(s2.getDatosPersonalesId().getAlumnoId());
-        sancionBean.setDatosPersonales(s2.getDatosPersonalesId());
-        sancionBean.setHoras(horas);
-        sancionBean.setIdAlumno(noControl);
-        sancionBean.setIdCatalogoSanciones(s2.getCatalogoSancionesId().getId());
-        sancionBean.setIdSancion(s2.getId());
-        listaSancionesVista.add(sancionBean);
-        //listaSancionesVista.
-
-        modelo.addAttribute("listaSanciones", listaSancionesVista);
+        modelo.addAttribute("listaSanciones", sanciones);
+        modelo.addAttribute("espacio", " ");
         return "/Sanciones/sancionesAlumno";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/pagoSancionAlumno.do")
     public String pagoSancionAlumno(String nombre, String noControl, Model modelo) {
         modelo.addAttribute("nombre", nombre);
         modelo.addAttribute("noControl", noControl);
         return "/Sanciones/pagoSancionAlumno";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/detalleSancionAlumno.do")
-    public String detalleSancionAlumno(String nombre, String noControl, String ins, Model modelo) {
-        System.out.println("Recibí"+noControl);
+    public String detalleSancionAlumno(String nombre, String noControl, Model modelo) {
+        System.out.println("Recibí" + noControl);
         VistaAlumno alumno = vistaAlumnoFacade.findBySpecificField("id", noControl, "equal", null, null).get(0);
-        System.out.println("//Nocontrol"+alumno.getId());
-        
+        System.out.println("//Nocontrol" + alumno.getId());
+
         DatosPersonales dpAlumno = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null).get(0);
-        System.out.println("//Nomnre"+dpAlumno.getNombre());
+        System.out.println("//Nomnre" + dpAlumno.getNombre());
         List<Sanciones> listaTodasSanciones = sancionesFacade.findBySpecificField("datosPersonalesId", dpAlumno, "equal", null, null);
         List<Sanciones> listaSanciones = new ArrayList<Sanciones>();
         List<Sanciones> listaPagoSanciones = new ArrayList<Sanciones>();
-        
+
         for (Sanciones sancion : listaTodasSanciones) {
-            System.out.println("La sancion a agregar es"+sancion.getCatalogoSancionesId().getDetalle());
+            System.out.println("La sancion a agregar es" + sancion.getCatalogoSancionesId().getDetalle());
             if (sancion.getHorasSancion().intValue() > 0) {
 //            if (sancion.getHorasSancion().compareTo(BigInteger.ZERO) > 1) {
                 listaSanciones.add(sancion);
@@ -122,50 +96,36 @@ public class SancionesController {
                 listaPagoSanciones.add(sancion);
             }
         }
-        if (ins.equals("sancion")) {
-            modelo.addAttribute("tipo", "sancion");
-            modelo.addAttribute("titulo", "Sanciones");
-            modelo.addAttribute("listaSanciones",listaSanciones);
-        } else if (ins.equals("pago")) {
-            modelo.addAttribute("tipo", "pago");
-            modelo.addAttribute("titulo", "Pago de Sanciones");
-            modelo.addAttribute("listaSanciones",listaPagoSanciones);
-        }
-        modelo.addAttribute("datosPersonalesId",dpAlumno);
+
+        modelo.addAttribute("tipo", "sancion");
+        modelo.addAttribute("titulo", "Sanciones");
+        modelo.addAttribute("listaSanciones", listaSanciones);
+
+        modelo.addAttribute("datosPersonalesId", dpAlumno);
         modelo.addAttribute("catalogoSanciones", catalogoSancionesFacade.findAll());
         modelo.addAttribute("nombre", dpAlumno.getNombre());
         modelo.addAttribute("noControl", alumno.getId());
         return "/Sanciones/detalleSancionAlumno";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/catalogoSanciones.do")
     public String catalogoSanciones(Model model, HttpSession session, HttpServletRequest request) {
         if (new ValidaSesion().validaAdmin(session, request) || new ValidaSesion().validaOperador(session, request)) {
-            //return "/PanelUsuario/panelUsuario";
+           System.out.println("Conteo de registros Catalogo Sanciones:" + catalogoSancionesFacade.count());
+            List<CatalogoSanciones> listaSanciones = new ArrayList<CatalogoSanciones>();
+            List<CatalogoSanciones> listaPagoSanciones = new ArrayList<CatalogoSanciones>();
+            if (catalogoSancionesFacade.findAll().isEmpty()) {
+            return "/Sanciones/catalogoSanciones";
+        }
+        model.addAttribute("sanciones", catalogoSancionesFacade.findAll());
+        return "/Sanciones/catalogoSanciones";
         } else {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
-        System.out.println("Conteo de registros Catalogo Sanciones:" + catalogoSancionesFacade.count());
-        List<CatalogoSanciones> listaSanciones = new ArrayList<CatalogoSanciones>();
-        List<CatalogoSanciones> listaPagoSanciones = new ArrayList<CatalogoSanciones>();
-        if(catalogoSancionesFacade.findAll().isEmpty()){
-            return "redirect:panelAdministrador.do";
-        }
-        for (CatalogoSanciones sancion : catalogoSancionesFacade.findAll()) {
-            
-            if (sancion.getHorasSancion().compareTo(BigInteger.ZERO) > 0) {
-                listaSanciones.add(sancion);
-            } else {
-                listaPagoSanciones.add(sancion);
-            }
-        }
         
-        model.addAttribute("sanciones", listaSanciones);
-        model.addAttribute("pagoSanciones", listaPagoSanciones);
-        return "/Sanciones/catalogoSanciones";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/editaSancion.do")
     public String editaSancion(String descripcion, String horas, Model modelo, BigDecimal id, HttpSession session, HttpServletRequest request) {
         if (new ValidaSesion().validaAdmin(session, request) || new ValidaSesion().validaOperador(session, request)) {
@@ -181,7 +141,7 @@ public class SancionesController {
         modelo.addAttribute("tolerancia", sancion.getTolerancia());
         return "/Sanciones/editaSancion";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/editaPagoSancion.do")
     public String editaPagoSancion(String descripcion, String horas, Model modelo, BigDecimal id, HttpSession session, HttpServletRequest request) {
         if (new ValidaSesion().validaAdmin(session, request) || new ValidaSesion().validaOperador(session, request)) {
@@ -195,7 +155,7 @@ public class SancionesController {
         modelo.addAttribute("descripcion", sancion.getDetalle());
         return "/Sanciones/editaPagoSancion";
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, value = "/nuevaSancion.do")
     public @ResponseBody
     String nuevaSancion(Model model, BigDecimal idSancion, String descripcion, BigInteger horas, BigInteger tolerancia, Model modelo, String tipo) {
@@ -219,11 +179,11 @@ public class SancionesController {
                 } else {
                     catalogoSancionesFacade.edit(sancion);
                 }
-                
+
             } catch (Exception e) {
                 arrJSON = arrJSON + "{\"observacion\":\"" + e.getMessage() + "\"},";
             }
-            
+
         } else {
             int i = 1;
             for (String s : listaErrores) {
@@ -237,101 +197,174 @@ public class SancionesController {
         } else {
             arrJSON = arrJSON.substring(0, arrJSON.length() - 1) + "]";
         }
-        
-        
+
         System.out.println("Arrjson" + arrJSON);
         return arrJSON;
     }
+
     @RequestMapping(method = RequestMethod.POST, value = "/asignaSancion.do")
     public @ResponseBody
-    String asignaSancion(Model model, BigDecimal idSancion, BigDecimal idDatosPersonales, BigInteger horas, Model modelo) {
+    void asignaSancion(Model model, BigDecimal idSancion, BigDecimal idDatosPersonales, BigInteger horas) {
         Sanciones sancion = new Sanciones();
         DatosPersonales datosPersonales = datosPersonalesFacade.find(idDatosPersonales);
         System.out.println("--->Asignando sancion");
-        System.out.println("Datos Personales--id="+datosPersonales.getId()+", Nombre:"+datosPersonales.getNombre());
+        System.out.println("Datos Personales--id=" + datosPersonales.getId() + ", Nombre:" + datosPersonales.getNombre());
         CatalogoSanciones catalogoSancion = catalogoSancionesFacade.find(idSancion);
-        System.out.println("Sancion id="+catalogoSancion.getId()+", detalle="+catalogoSancion.getDetalle());
+        System.out.println("Sancion id=" + catalogoSancion.getId() + ", detalle=" + catalogoSancion.getDetalle());
         sancion.setCatalogoSancionesId(catalogoSancion);
         sancion.setDatosPersonalesId(datosPersonales);
         sancion.setFecha(new java.util.Date());
         sancion.setHorasSancion(horas);
-        try
-        {
+        try {
             sancionesFacade.create(sancion);
+        } catch (Exception e) {
+            System.out.println("Hubo un problema: " + e.getMessage());
         }
-        catch(Exception e)
-        {
-            return "Hubo un problema: "+e.getMessage();
-        }
-        
-        
-        return "Sancion asignada correctamente";
     }
-    @RequestMapping(method = RequestMethod.POST, value = "/quitaSancion.do")
-    public @ResponseBody
-    String quitaSancion(Model model, BigDecimal idSancion, Model modelo) {
-        
-        Sanciones sancion = sancionesFacade.find(idSancion);
-        try
-        {
-            sancionesFacade.remove(sancion);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/quitarSancion.do")
+    public String quitarSancion(String idSancion, Model model, HttpSession session, HttpServletRequest request) {
+        if (new ValidaSesion().validaAdmin(session, request) || new ValidaSesion().validaOperador(session, request)) {
+            //return "/PanelUsuario/panelUsuario";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
         }
-        catch(Exception e)
-        {
-            return "Hubo un problema: "+e.getMessage();
-        }
-        
-        
-        return "Sancion Elminada correctamente";
-    }
-    
-    @RequestMapping(method = RequestMethod.POST, value = "/nuevoPagoSancion.do")
-    public @ResponseBody
-    String nuevoPagoSancion(Model model, BigDecimal idSancion, String descripcion, Model modelo, String tipo) {
-        CatalogoSancionesModel csm = new CatalogoSancionesModel(descripcion, BigInteger.ZERO, BigInteger.ZERO);
-        String arrJSON = "[";
-        csm.arregla();
-        ArrayList<String> listaErrores = csm.valida2();
-        
-        if (listaErrores.isEmpty()) {
-            CatalogoSanciones sancion = null;
-            if (tipo.equals("nuevo")) {
-                sancion = new CatalogoSanciones();
-            } else {
-                sancion = catalogoSancionesFacade.find(idSancion);
+        try {
+            BigDecimal id = new BigDecimal(idSancion);
+            List<Sanciones> sancion = sancionesFacade.findBySpecificField("id", id, "equal", null, null);
+            if (!sancion.isEmpty()) {
+                sancionesFacade.remove(sancion.get(0));
             }
-            sancion.setDetalle(descripcion);
-            sancion.setHorasSancion(BigInteger.ZERO);
-            sancion.setTolerancia(BigInteger.ZERO);
-            try {
-                if (tipo.equals("nuevo")) {
-                    catalogoSancionesFacade.create(sancion);
+        } catch (Exception e) {
+            System.out.println("Hubo un problema: " + e.toString());
+        }
+        return "redirect:sancionesAlumno.do";
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/pagoSancion.do")
+    public
+            String pagoSancion(Model model, String idSancion, HttpSession session, HttpServletRequest request) {
+        if (new ValidaSesion().validaAdmin(session, request) || new ValidaSesion().validaOperador(session, request)) {
+            //return "/PanelUsuario/panelUsuario";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+        try {
+            BigDecimal id = new BigDecimal(idSancion);
+            List<Sanciones> sancion = sancionesFacade.findBySpecificField("id", id, "equal", null, null);
+            if (!sancion.isEmpty()) {
+                model.addAttribute("sancion", sancion.get(0));
+                model.addAttribute("espacio", " ");
+            }
+        } catch (Exception e) {
+            System.out.println("Hubo un problema: " + e.toString());
+        }
+
+        return "/Sanciones/detalleSancionAlumno";
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/pagoSancionAlumno.do")
+    @ResponseBody
+    public
+            String pagoSancionAlumno(Model model, String id, String horas, HttpSession session, HttpServletRequest request) {
+        System.out.println("entro");
+        if (new ValidaSesion().validaAdmin(session, request) || new ValidaSesion().validaOperador(session, request)) {
+            //return "/PanelUsuario/panelUsuario";
+        } else {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+        try {
+            BigDecimal idSancion = new BigDecimal(id);
+            List<Sanciones> sancion = sancionesFacade.findBySpecificField("id", idSancion, "equal", null, null);
+            if (!sancion.isEmpty()) {
+                if (sancion.get(0).getHorasSancion().intValue() < new BigInteger(horas).intValue()) {
+                    model.addAttribute("sancion", sancion.get(0));
+                    model.addAttribute("espacio", " ");
+                    return "Numero de horas es mayor  las hora restantes";
                 } else {
-                    catalogoSancionesFacade.edit(sancion);
+                   
+                    sancion.get(0).setHorasSancion(sancion.get(0).getHorasSancion().subtract(new BigInteger(horas)));
+                    sancionesFacade.edit(sancion.get(0));
+                     model.addAttribute("sancion", sancion.get(0));
+                    model.addAttribute("espacio", " ");
+                    return "ok";
                 }
-            } catch (Exception e) {
-                arrJSON = arrJSON + "{\"observacion\":\"" + e.getMessage() + "\"},";
             }
-            
-        } else {
-            int i = 1;
-            for (String s : listaErrores) {
-                arrJSON = arrJSON + "{\"observacion\":\"" + s + "\"},";
-                System.out.println("Error " + i + " " + s);
-                i++;
-            }
+        } catch (Exception e) {
+            System.out.println("Hubo un problema: " + e.toString());
+            return "'Ocurrio un error";
         }
-        if (arrJSON.equals("[")) {
-            arrJSON = "noInfo";
-        } else {
-            arrJSON = arrJSON.substring(0, arrJSON.length() - 1) + "]";
-        }
-        
-        
-        System.out.println("Arrjson" + arrJSON);
-        return arrJSON;
-        
-        
+
+        return "ok";
+
     }
-    
+
+    @RequestMapping(method = RequestMethod.GET, value = "/asignarSancion.do")
+    String asignarSancion(Model model) {
+        model.addAttribute("catalogoSancion", catalogoSancionesFacade.findAll());
+        return "/Sanciones/asignarSancion";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/asignaSancionAlumno.do")
+    String asignarSancionAlumno(Model model, String idSancion, String numeroControl) {
+        String errorSancion = null;
+        String errorAlumno = null;
+        List<CatalogoSanciones> catSanciones = null;
+        List<VistaAlumno> alumno = null;
+        List<DatosPersonales> alumnoDP = null;
+
+        model.addAttribute("catalogoSancion", catalogoSancionesFacade.findAll());
+
+        if (idSancion == "" || numeroControl == "") {
+            errorSancion = (idSancion == "") ? "<div class='alert alert-danger'>No se a seleccionado una Sancion </div>" : "";
+            errorAlumno = (numeroControl == "") ? "<div class='alert alert-danger'>Numero de Control no encontrado </div>" : "";
+            model.addAttribute("errorSancion", errorSancion);
+            model.addAttribute("errorAlumno", errorAlumno);
+            return "/Sanciones/asignarSancion";
+        }
+        try {
+            catSanciones = catalogoSancionesFacade.findBySpecificField("id", idSancion, "equal", null, null);
+            alumno = vistaAlumnoFacade.findBySpecificField("id", numeroControl, "equal", null, null);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            model.addAttribute("errorAlumno", "error del sistema");
+            return "/Sanciones/asignarSancion";
+        }
+
+        if (catSanciones.isEmpty() || alumno.isEmpty()) {
+            errorSancion = (catSanciones.isEmpty()) ? "<div class='alert alert-danger'>Sanciion no encontrada </div>" : "";
+            errorAlumno = (alumno.isEmpty()) ? "<div class='alert alert-danger'>Numero de Control no encontrado </div>" : "";
+            model.addAttribute("errorSancion", errorSancion);
+            model.addAttribute("errorAlumno", errorAlumno);
+            return "/Sanciones/asignarSancion";
+        }
+        try {
+
+            alumnoDP = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            model.addAttribute("errorAlumno", "error del sistema");
+            return "/Sanciones/asignarSancion";
+        }
+        Sanciones sancion = new Sanciones();
+        sancion.setDatosPersonalesId(alumnoDP.get(0));
+        sancion.setFecha(new java.util.Date());
+        sancion.setHorasSancion(catSanciones.get(0).getHorasSancion());
+        sancion.setCatalogoSancionesId(catSanciones.get(0));
+
+        try {
+            sancionesFacade.create(sancion);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            model.addAttribute("errorAlumno", "error del sistema");
+            return "/Sanciones/asignarSancion";
+        }
+        model.addAttribute("errorAlumno", "<div class='alert alert-success'>Sancion asignada</div>");
+        return "/Sanciones/asignarSancion";
+    }
+
 }

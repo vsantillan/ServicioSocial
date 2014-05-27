@@ -4,12 +4,14 @@
  */
 package edu.servicio.toluca.beans;
 
+import java.util.Date;
+
 /**
  * Bean para desplegar correctamente el detalle de sanciones y pagos de sancion en el panel de usuario
  * @author bustedvillain
  */
 public class SancionBean {
-    private String fecha;
+    private  Date fecha;
     //deuda=0 o pago=1
     private int concepto;
     private String detalle;
@@ -18,7 +20,7 @@ public class SancionBean {
      * Devuelve la fecha de la sancion o pago de sancion
      * @return the fecha
      */
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -26,7 +28,7 @@ public class SancionBean {
      * Asigna la fecha de la sancion o pago de la sancion
      * @param fecha the fecha to set
      */
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
