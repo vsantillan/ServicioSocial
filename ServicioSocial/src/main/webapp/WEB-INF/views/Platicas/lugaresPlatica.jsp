@@ -45,7 +45,7 @@
                     </table>
                     <table>
                         <tr>
-                            <td><a href="#nuevoL" role="button" data-toggle="modal" id="nuevoLB"><button class="btn btn-primary glyphicon glyphicon-plus" id="nuevoLB" title="Agregar Lugar" > Agregar Lugar</button></a></td>
+                            <td><a href="#nuevoL" role="button" data-toggle="modal" id="nuevoLB"><button class="btn btn-primary" id="nuevoLB" title="Agregar Lugar" ><span class="glyphicon glyphicon-plus"></span> Agregar Lugar</button></a></td>
                         </tr>
                     </table>
                     <br/>

@@ -79,7 +79,7 @@
                             </div>-->
                             <div class="form-group">
                                 <label for="descripcion">Descripci&oacute;n de la pl&aacute;tica de inducci&oacute;n(explica brevemente de que tratar&aacute; la pl&aacute;tica)</label> 
-                                <form:textarea  path="descripcion"  id="descripcion"  class="form-control" rows="10"/><br>
+                                <form:textarea  path="descripcion"  id="descripcion"  class="form-control" rows="10" maxlength="400"/><br>
                                 <form:errors path="descripcion" class="alert alert-danger" />
                             </div>
                             <div class="form-group">

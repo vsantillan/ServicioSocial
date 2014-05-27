@@ -22,7 +22,7 @@ function verificaLugar(e) {
         $.get("validaLugares.do?Lugar=" + value, null, function(respuesta) {
             if (respuesta === "OK")
                 $("#editarLugar").submit();
-            else{
+            else {
                 e.preventDefault();
                 $("#errorVacio").html("<br><div class='alert alert-danger'>Lo sentimos ya existe un edificio con el nombre: '" + value + "'</div>");
             }
@@ -40,14 +40,14 @@ function verificaLugar1(e) {
         $.get("validaLugares.do?Lugar=" + value, function(respuesta) {
             if (respuesta === "OK")
                 $("#envioB").submit();
-            else{
+            else {
                 $("#errorVacio1").html("<br><div class='alert alert-danger'>Lo sentimos ya existe un edificio con el nombre: '" + value + "'</div>");
                 e.preventDefault();
             }
         });
     } else {
         e.preventDefault();
-        $("#errorVacio1").html("<br><div class='alert alert-danger'>El campo no puede estar vacio o no es valido</div>");
+        $("#errorVacio1").html("<br><div class='alert alert-danger'>El campo no puede estar vacio o no es v\u00E1lido</div>");
     }
 }
 
@@ -73,11 +73,11 @@ function updateLugar(e)
         });
     }
 }
-  function ValidarCadenaExpReg(lugar) {
- 
-        cadena=/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]*$/;
-        if (lugar.match(cadena))
-            return true; 
-        else 
-            return false; 
-    }
+function ValidarCadenaExpReg(lugar) {
+
+    cadena = /^[A-Za-z\u00E1\u00E9\u00ED\u00F3\u00FA\u00C1\u00C9\u00CD\u00D3\u00DA0-9-\s]*$/;
+    if (lugar.match(cadena))
+        return true;
+    else
+        return false;
+}
