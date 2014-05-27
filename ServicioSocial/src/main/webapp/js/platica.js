@@ -20,7 +20,7 @@ $(document).ready(function() {
                     //alert("Esta seguro de registrarse a la plática de inducción:\nFecha \t "+platica)
                 }
                 else {  //botón no seleccionado
-                    alert("El formulario no ha podido enviarse. \n Debe aceptar haber leido el manual para poder enviar el formulario");
+                    alert("Marque la casilla que indique que ley\u00f3 el manual de procedimiento");
                     return false; //el formulario no se envia
                 }
 }

@@ -138,7 +138,7 @@ public class ReporteBimestralController2 {
             }
 
         }
-       // Collections.sort(reportesRevisadosUnicos, new OrdenarPorId());
+        // Collections.sort(reportesRevisadosUnicos, new OrdenarPorId());
         modelo.addAttribute("reportesRevisados", reportesRevisadosUnicos);
         modelo.addAttribute("reportesNoRevisados", reportesNoRevisados);
         modelo.addAttribute("reportesEnCorreccion", reportesEnCorreccion);
@@ -210,19 +210,23 @@ public class ReporteBimestralController2 {
         String nombre = "";
         System.out.println("El estatus es" + status);
         switch (Integer.parseInt(status)) {
-            case 2://Correccion
+            case 2://Rechazo
                 //Enviar Correo
+                List<FormatoUnico> formatoCancelado = formatoUnicoFacade.findBySpecificField("datosPersonalesId", reporte.getDatosPersonalesId().getId(), "equal", null, null);
+                FormatoUnico fuc = formatoCancelado.get(0);
+                fuc.setStatusServicio(BigInteger.valueOf(2));
+                formatoUnicoFacade.edit(fuc);
                 nombre = reporte.getDatosPersonalesId().getNombre() + " "
                         + reporte.getDatosPersonalesId().getApellidoP() + " "
                         + reporte.getDatosPersonalesId().getApellidoM();
 
                 enviarCorreo(3, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
                 break;
-            case 3://Rechazo
-
+            case 3://Correccion
                 nombre = reporte.getDatosPersonalesId().getNombre() + " "
                         + reporte.getDatosPersonalesId().getApellidoP() + " "
                         + reporte.getDatosPersonalesId().getApellidoM();
+
                 enviarCorreo(2, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
                 break;
         }

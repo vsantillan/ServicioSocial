@@ -102,7 +102,7 @@ public class DocumentosFinalesController {
         }
 
         model.addAttribute("documentosAlumno", alumnosDocumentos);
-        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll()); 
+        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findAll());
         return "/DocumentosFinales/administrarDocumentosFinales";
     }
 
@@ -146,23 +146,22 @@ public class DocumentosFinalesController {
     @RequestMapping(method = RequestMethod.POST, value = "/rechazaDocumentos.do")
     public @ResponseBody
     String rechazaReporte(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
-                                int id,int status,String no_control, Model model, HttpSession session, HttpServletRequest request) 
-    {        
-        System.out.println("El numero de control es: "+no_control);
-        
+            int id, int status, String no_control, Model model, HttpSession session, HttpServletRequest request) {
+        System.out.println("El numero de control es: " + no_control);
+
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
         if (listaAlumnos.isEmpty()) {
             return "okkk";
         }
-        
-        System.out.println("hehahahahahahaha "+listaAlumnos.get(0).getId());
+
+        System.out.println("hehahahahahahaha " + listaAlumnos.get(0).getId());
         for (String idObservacion : observaciones) {
             //Objeto a Registrar
             RegObservaciones registro = new RegObservaciones();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
             registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
             //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
-            List<DatosPersonales> lista_datosPersonales=datosPersonalesFacade.findBySpecificField("alumnoId",listaAlumnos.get(0),"equal",null,null);
+            List<DatosPersonales> lista_datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", listaAlumnos.get(0), "equal", null, null);
             registro.setDatosPersonalesId(lista_datosPersonales.get(0));
             //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
@@ -170,10 +169,10 @@ public class DocumentosFinalesController {
             regObservacionesFacade.create(registro);
         }
         System.out.println("Ya ingreso las observaciones");
-        System.out.println("El estatus que recibio es: "+BigInteger.valueOf(status));
+        System.out.println("El estatus que recibio es: " + BigInteger.valueOf(status));
         Documentos documentos;
         documentos = documentosFacade.find(BigDecimal.valueOf(id));
-        documentos.setStatus((short)status);
+        documentos.setStatus((short) status);
         //documentosFacade.edit(documentos);
         System.out.println("Ya actualizo");
         return "ok";
@@ -282,8 +281,8 @@ public class DocumentosFinalesController {
                     return "/DocumentosFinales/documentosFinalesAlumno";
                 }
                 try {
-                    formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(3));
-                    formatoUnicoFacade.edit(formatoUnicoAlumno);
+//                    formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(3));
+//                    formatoUnicoFacade.edit(formatoUnicoAlumno);
                     documentosFacade.edit(documentoFUF);
                 } catch (Exception ex) {
                     modelo.addAttribute("error", "<p>Error al subir el Formato Unico Final</p>");
@@ -413,7 +412,9 @@ public class DocumentosFinalesController {
                 }
             }
         }
-        
+
+        formatoUnicoAlumno.setStatusFuf(BigInteger.valueOf(4));
+        formatoUnicoFacade.edit(formatoUnicoAlumno);
         return "redirect:panelUsuario.do";
     }
 
