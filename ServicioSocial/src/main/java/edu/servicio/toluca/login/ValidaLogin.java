@@ -78,7 +78,7 @@ public class ValidaLogin {
                             sesionBean.setPagReturn("redirect:panelUsuario.do");
                         }
                     } else {
-                        sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos no cumples con el minimo de 70% de créditos para tramitar tu servicio social</div>");
+                        sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos no cumples con el mínimo de 70% de créditos para tramitar tu servicio social</div>");
                         sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                     }
                 }
