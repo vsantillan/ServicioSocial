@@ -282,7 +282,8 @@ function enviarDatosOrganizaciones()
     }
     console.log(alumno);
     $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta) {
-        if (respuesta !== "") {
+        if (respuesta !== "" && respuesta!=="fallo fecha") {
+            alert(respuesta);
             cambioAutomatico();
             $('#listaObservacionesOK').empty();
             $('#contenidoRespuesta').modal('show');
@@ -292,7 +293,7 @@ function enviarDatosOrganizaciones()
         } else {
             $('#listaObservaciones').empty();
             $('#observaciones').show('slow');
-            $('#listaObservaciones').append("<li class= 'observacion'>" + respuesta + "</li>");
+            $('#listaObservaciones').append("<li class= 'observacion'>El campo Fecha de Inicio sobrepasa la fecha m\u00e1xima permitida con respecto a la Pl\u00e1tica del Servicio Social. Verificalo</li>");
             window.location.hash = '#observacionesOK';
         }
     });

@@ -760,10 +760,12 @@ public class FormatoUnicoController {
         FoliosPlatica fp = listaF.get(0);
         Date fechaMax = new java.sql.Date(fp.getPlaticaId().getFechaMxFui().getTime());
         if (fecha_inicio == null) {
+            System.out.println("fallo el vacio");
             return "El campo Fecha de Inicio está vacío. Verificalo";
         }
         if (fecha_inicio.after(fechaMax)) {
-            return "El campo Fecha de Inicio sobrepasa la fecha máxima permitida con respecto a la Plática del Servicio Social. Verificalo";
+            System.out.println("Fallo la fecha");
+            return "fallo fecha";
         }
 
         List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
