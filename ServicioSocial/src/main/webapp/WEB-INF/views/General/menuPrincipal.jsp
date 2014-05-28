@@ -30,7 +30,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ayuda <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="ayuda.do">Ayuda</a></li>
-                        <li><a href="acercaDe.do">Acerca De</a></li>
+                        
                     </ul>
                 </li>
 

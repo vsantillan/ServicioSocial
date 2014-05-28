@@ -33,6 +33,8 @@ public class PlaticaFacade extends AbstractFacade<Platica> {
         super(Platica.class);
     }
      public List<Platica> platicasPeriodo() {
+         getEntityManager().flush();
+        getEntityManager().clear();
         Fecha fecha = new Fecha();
         String periodo = fecha.CalculaPeriodoPrueba();
         System.out.println("periodo platica actual_" + periodo);
