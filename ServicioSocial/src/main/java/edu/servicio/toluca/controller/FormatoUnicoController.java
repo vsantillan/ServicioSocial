@@ -608,6 +608,16 @@ public class FormatoUnicoController {
                 listaErrores.add(resultado.getAllErrors().get(i).getDefaultMessage());
             }
         }
+        //Checa Numero Interior
+        
+        if(!dt.getNumeroI().equals("")){
+            System.out.println(dt.getNumeroI()+"el numero interio");
+            try{
+                int numeroInterior=Integer.parseInt(dt.getNumeroI());
+            }catch(Exception e){
+                listaErrores.add("El Número interior debe ser númerico");
+            }
+        }
         //Checa codigo postal
         if (codigo_postal.equals("")) {
             listaErrores.add("Ingrese un codigo postal");
