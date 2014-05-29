@@ -34,6 +34,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -288,6 +289,22 @@ public class ReporteBimestralController2 {
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         DatosPersonales datosPersonales = listaDatosPersonales.get(0);
+       
+        //Validacion para verificar los 2 años de servicio////
+        List<FormatoUnico> formatosUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales.getId(),"equal" , null, null);
+        FormatoUnico formatoActual=formatosUnico.get(0);
+        Calendar fecha= Calendar.getInstance();
+        fecha.setTime(formatoActual.getFechaInicio());
+        fecha.add(Calendar.YEAR, 2);
+        Date fechaMaxima= fecha.getTime();
+        Calendar fechaActual=Calendar.getInstance();
+        Date fechaActualDate=fechaActual.getTime();
+        if(fechaActualDate.before(fechaMaxima)){
+            formatoActual.setStatusServicio(BigInteger.valueOf(2));
+            formatoUnicoFacade.edit(formatoActual);
+            return "redirect:panelUsuario.do";
+        }
+        ////////////////////////////////////
         LinkedHashMap ordenarAsc = new LinkedHashMap();
         ordenarAsc.put("id", "desc");
         List<Reportes> listReporte = reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenarAsc, null);
