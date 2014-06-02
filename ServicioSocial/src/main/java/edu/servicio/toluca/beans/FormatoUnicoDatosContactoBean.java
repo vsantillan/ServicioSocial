@@ -11,6 +11,7 @@ import edu.servicio.toluca.entidades.Colonia;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -24,8 +25,8 @@ public class FormatoUnicoDatosContactoBean implements ExpresionesRegulares, Cata
     @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Calle")
     @Pattern(regexp = letrasNumerosCaractesEspeciales, message = errorNumerosLetrasCaracteresEspeciales+" en el campo Calle")
     private String calle;
-    @Size(min = 1, max = 5, message = errorBetween+" 1 y 5 para el campo Numero Interior")
-    @Pattern(regexp = numeros, message = errorNumeros+" en el campo Numero Interior")
+    @Size(min = 0, max = 5, message = "El tamaño debe de ser menor 5 digitos para el campo Numero Interior")
+//    @Pattern(regexp = numeros, message = errorNumeros+" en el campo Numero Interior")
     private String numeroI;
     @Size(min = 1, max = 5, message = errorBetween+" 1 y 5 para el campo Numero exterior")
     @Pattern(regexp = numeros, message = errorNumeros+" en el campo Numero Exterior")
@@ -45,11 +46,12 @@ public class FormatoUnicoDatosContactoBean implements ExpresionesRegulares, Cata
     @Size(min = 10, max = 10, message = "El campo Telefono de Oficina debe ser a 10 digitos")
     @Pattern(regexp = numeros, message = errorNumeros+ "en el campo Telefono de Oficina")
     private String telefono_oficina;
+    @Size(min = 1, max = 30, message = "El campo Correo electronico debe tener entre 1 y 30 caracteres")
     @Email(message = errorEmail)
     private String correo_electronico;
-    @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Twitter")
+    //@Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Twitter")
     private String twitter;
-    @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Facebook")
+    //@Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Facebook")
     private String facebook;
     private Colonia idColonia;
     private ArrayList<String> listaErrores = new ArrayList<String>();
@@ -69,13 +71,13 @@ public class FormatoUnicoDatosContactoBean implements ExpresionesRegulares, Cata
         if(!mv.minimoString(entreCalles, 1) && !mv.maximoString(entreCalles, 255)){listaErrores.add("El campo entre calles debe tener entre 1 y 255 letras");} 
         if(!mv.minimoString(referencias, 1) && !mv.maximoString(referencias, 70)){listaErrores.add("El campo referencias debe tener entre 1 y 70 letras");}
         
-        if(!mv.maximoString(numeroI, 5)){listaErrores.add("El campo numero interior no puede ser mayor a 5 digitos");} 
+//        if(!mv.maximoString(numeroI, 5)){listaErrores.add("El campo numero interior no puede ser mayor a 5 digitos");} 
         if(!mv.maximoString(telefono_casa, 50)){listaErrores.add("El campo Telefono de casa no puede ser mayor a 50 digitos");} 
         if(!mv.maximoString(telefono_cel, 30)){listaErrores.add("El campo Telefono celular no puede ser mayor a 30 digitos");} 
         if(!mv.maximoString(telefono_oficina, 30)){listaErrores.add("El campo Telefono oficina no puede ser mayor a 30 digitos");} 
         if(!mv.maximoString(correo_electronico, 30)){listaErrores.add("El campo Correo electronico no puede ser mayor a 30 digitos");} 
-        if(!mv.maximoString(twitter, 25)){listaErrores.add("El campo Twitter no puede ser mayor a 25 letras");} 
-        if(!mv.maximoString(facebook, 30)){listaErrores.add("El campo Facebook no puede ser mayor a 30 letras");} 
+//        if(!mv.maximoString(twitter, 25)){listaErrores.add("El campo Twitter no puede ser mayor a 25 letras");} 
+//        if(!mv.maximoString(facebook, 30)){listaErrores.add("El campo Facebook no puede ser mayor a 30 letras");} 
         
         return listaErrores;
     }
@@ -83,7 +85,7 @@ public class FormatoUnicoDatosContactoBean implements ExpresionesRegulares, Cata
     public void arregla()
     {
         calle = mv.tuneaStringParaBD(calle);
-        numeroI = mv.dejarSoloNumeros(numeroI);
+//        numeroI = mv.dejarSoloNumeros(numeroI);
         numeroE = mv.dejarSoloNumeros(numeroE);
         entreCalles = mv.tuneaStringParaBD(entreCalles);
         referencias = mv.tuneaStringParaBD(referencias);

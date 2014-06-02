@@ -152,7 +152,7 @@
                                                     <form:input  path ="calle" maxlength="25" require="true" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>*No. Int.</label>
+                                                    <label>No. Int.</label>
                                                     <form:input  path ="numeroI" maxlength="5" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
@@ -228,11 +228,11 @@
                                                     <form:input maxlength="30" path ="correo_electronico" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>*Twitter:</label>
+                                                    <label>Twitter:</label>
                                                     <form:input maxlength="25" path ="twitter" class="form-control"/>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label>*Facebook:</label>
+                                                    <label>Facebook:</label>
                                                     <form:input maxlength="30" path ="facebook" class="form-control" />
                                                 </div>
                                             </div>
