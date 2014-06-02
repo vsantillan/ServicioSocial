@@ -49,7 +49,7 @@ public class FormatoUnicoDatosPersonalesBean implements ExpresionesRegulares, Ca
     private String folioDocIdentificacion;
     private boolean acuerdoC;
     @Size(min = 1, max = 100, message = errorBetween+" 1 y 100 para el campo Lugar de Nacimiento")
-    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorletras+" en el campo Lugar de Nacimiento")
+    @Pattern(regexp = letrasPrimeroDespuesEspaciosLugar, message = errorletras+" en el campo Lugar de Nacimiento")
     private String lugar_nacimiento;
     private ArrayList<String> listaErrores = new ArrayList<String>();
     MetodosValidacion mv = new MetodosValidacion();
