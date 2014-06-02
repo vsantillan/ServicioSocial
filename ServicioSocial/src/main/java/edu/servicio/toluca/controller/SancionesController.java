@@ -366,5 +366,38 @@ public class SancionesController {
         model.addAttribute("errorAlumno", "<div class='alert alert-success'>Sancion asignada</div>");
         return "/Sanciones/asignarSancion";
     }
+    public void sancionAutomatica (String idSancion, String numeroControl){
+        String errorSancion = null;
+        String errorAlumno = null;
+        List<CatalogoSanciones> catSanciones = null;
+        List<VistaAlumno> alumno = null;
+        List<DatosPersonales> alumnoDP = null;
+        try {
+            catSanciones = catalogoSancionesFacade.findBySpecificField("id", idSancion, "equal", null, null);
+            alumno = vistaAlumnoFacade.findBySpecificField("id", numeroControl, "equal", null, null);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
+        try {
+
+            alumnoDP = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        Sanciones sancion = new Sanciones();
+        sancion.setDatosPersonalesId(alumnoDP.get(0));
+        sancion.setFecha(new java.util.Date());
+        sancion.setHorasSancion(catSanciones.get(0).getHorasSancion());
+        sancion.setCatalogoSancionesId(catSanciones.get(0));
+
+        try {
+            sancionesFacade.create(sancion);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+
+        }
+       
+        
+    }
 }
