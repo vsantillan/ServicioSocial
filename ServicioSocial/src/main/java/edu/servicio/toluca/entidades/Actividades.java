@@ -39,8 +39,6 @@ import org.hibernate.annotations.GenericGenerator;
     @NamedQuery(name = "Actividades.findByDetalle", query = "SELECT a FROM Actividades a WHERE a.detalle = :detalle"),
     @NamedQuery(name = "Actividades.findByEstatus", query = "SELECT a FROM Actividades a WHERE a.estatus = :estatus")})
 public class Actividades implements Serializable {
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idActividad")
-    private Collection<BimestralesActividades> bimestralesActividadesCollection;
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "actividades", strategy = "increment")
@@ -133,13 +131,13 @@ public class Actividades implements Serializable {
         return "edu.servicio.toluca.entidades.Actividades[ idActividad=" + idActividad + " ]";
     }
 
-    @XmlTransient
-    public Collection<BimestralesActividades> getBimestralesActividadesCollection() {
-        return bimestralesActividadesCollection;
-    }
-
-    public void setBimestralesActividadesCollection(Collection<BimestralesActividades> bimestralesActividadesCollection) {
-        this.bimestralesActividadesCollection = bimestralesActividadesCollection;
-    }
+//    @XmlTransient
+//    public Collection<BimestralesActividades> getBimestralesActividadesCollection() {
+//        return bimestralesActividadesCollection;
+//    }
+//
+//    public void setBimestralesActividadesCollection(Collection<BimestralesActividades> bimestralesActividadesCollection) {
+//        this.bimestralesActividadesCollection = bimestralesActividadesCollection;
+//    }
     
 }

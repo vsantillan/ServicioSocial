@@ -52,20 +52,6 @@ public class Becado implements Serializable {
     @Size(max = 1)
     @Column(name = "STATUS")
     private String status;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "becadoId")
-    private Collection<ReporteGeneral> reporteGeneralCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "becadoId")
-    private Collection<InformeGlobal> informeGlobalCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "becadoId")
-    private Collection<ReporteMensual> reporteMensualCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "becadoId")
-    private Collection<Revision> revisionCollection;
-    /*@JoinColumn(name = "NUMERO_CONTROL", referencedColumnName = "ID")
-    @ManyToOne
-    private VistaAlumno numeroControl;*/
-    @JoinColumn(name = "PROGRAMA_GENERAL_ID", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private ProgramaGeneral programaGeneralId;
     @JoinColumn(name = "ID_FORMATO_UNICO", referencedColumnName = "ID")
     @ManyToOne
     private FormatoUnico idFormatoUnico;
@@ -99,58 +85,6 @@ public class Becado implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    @XmlTransient
-    public Collection<ReporteGeneral> getReporteGeneralCollection() {
-        return reporteGeneralCollection;
-    }
-
-    public void setReporteGeneralCollection(Collection<ReporteGeneral> reporteGeneralCollection) {
-        this.reporteGeneralCollection = reporteGeneralCollection;
-    }
-
-    @XmlTransient
-    public Collection<InformeGlobal> getInformeGlobalCollection() {
-        return informeGlobalCollection;
-    }
-
-    public void setInformeGlobalCollection(Collection<InformeGlobal> informeGlobalCollection) {
-        this.informeGlobalCollection = informeGlobalCollection;
-    }
-
-    @XmlTransient
-    public Collection<ReporteMensual> getReporteMensualCollection() {
-        return reporteMensualCollection;
-    }
-
-    public void setReporteMensualCollection(Collection<ReporteMensual> reporteMensualCollection) {
-        this.reporteMensualCollection = reporteMensualCollection;
-    }
-
-    @XmlTransient
-    public Collection<Revision> getRevisionCollection() {
-        return revisionCollection;
-    }
-
-    public void setRevisionCollection(Collection<Revision> revisionCollection) {
-        this.revisionCollection = revisionCollection;
-    }
-
-    /*public VistaAlumno getNumeroControl() {
-        return numeroControl;
-    }
-
-    public void setNumeroControl(VistaAlumno numeroControl) {
-        this.numeroControl = numeroControl;
-    }*/
-
-    public ProgramaGeneral getProgramaGeneralId() {
-        return programaGeneralId;
-    }
-
-    public void setProgramaGeneralId(ProgramaGeneral programaGeneralId) {
-        this.programaGeneralId = programaGeneralId;
     }
 
     public FormatoUnico getIdFormatoUnico() {

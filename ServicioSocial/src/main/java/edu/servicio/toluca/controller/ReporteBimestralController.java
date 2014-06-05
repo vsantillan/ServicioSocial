@@ -8,7 +8,6 @@ import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.beans.bimestrales.reporteBimestral;
-import edu.servicio.toluca.entidades.Actividad;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.BimestralesActividades;
 import edu.servicio.toluca.entidades.DatosPersonales;

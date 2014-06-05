@@ -31,7 +31,6 @@ import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
-import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.File;
 import java.io.IOException;
