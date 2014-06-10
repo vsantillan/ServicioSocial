@@ -6,6 +6,7 @@ package edu.servicio.toluca.model.reportesBimestrales;
 
 import edu.servicio.toluca.beans.ReportesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
+import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.entidades.Reportes;
 import java.math.BigInteger;
 import java.text.ParseException;
@@ -30,13 +31,15 @@ public class ValidaReportesBimestralesModel {
 
         if (servicioBean.getPlaticaBean().isTienePlatica()) {
             if (servicioBean.getFormatoUnico() != null && servicioBean.getFormatoUnico().getStatusFui() != null) {
+                //VALIDACION 2 años de servicio//
+                fechas manejadorFechas= new fechas();
                 Calendar fecha = Calendar.getInstance();
                 fecha.setTime(servicioBean.getFormatoUnico().getFechaInicio());
                 fecha.add(Calendar.YEAR, 2);
-                Date fechaMaxima = fecha.getTime();
+                Date fechaMaxima =manejadorFechas.covierteString(manejadorFechas.convierteDate(fecha.getTime()));
                 Calendar fechaActual = Calendar.getInstance();
-                Date fechaActualDate = fechaActual.getTime();
-                if (!servicioBean.getFormatoUnico().getStatusFui().toString().equals("2") && fechaActualDate.after(fechaMaxima)) {
+                Date fechaActualDate =manejadorFechas.covierteString(manejadorFechas.convierteDate(fechaActual.getTime()));
+                if (!servicioBean.getFormatoUnico().getStatusFui().toString().equals("2") && !fechaActualDate.after(fechaMaxima)) {
                     if (servicioBean.getFormatoUnico().getStatusFui().toString().equals("1")) {
                         ArrayList<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
                         Collections.sort(reportes, new OrdenarPersonaPorId());
