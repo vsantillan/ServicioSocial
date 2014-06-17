@@ -29,9 +29,9 @@
                         <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario o alu_00289999" required autofocus>
                         <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
                         <button class="btn btn-lg btn-primary btn-block" input type ="button"  id="btnLogin">Entrar</button>
-                         <h5>Recuerda que para acceder tienes que contar con los cr&eacute;ditos suficientes.</h5>
+                         <h5>Recuerda que para acceder debes de contar con los cr&eacute;ditos suficientes especificados en el manual del proceso del Servicio Social.</h5>
                         <div id="respLoginOrg" style="display:none;">
-                            <center><img src='img/loading.gif' width="10px"><br/>Cargando...</center> 
+                            <center><img src='img/loading.gif' width="10px"><br/>Iniciando sesión, espere un momento...</center> 
                             </div>
                             ${error}
                             <%=error%>
