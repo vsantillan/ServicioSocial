@@ -16,5 +16,6 @@
 <link href="<%=request.getContextPath()%>/css/bootstrap-timepicker.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/bootstrap-timepicker.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/customize.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/spippet_menu.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 <title>Servicio Social</title>
