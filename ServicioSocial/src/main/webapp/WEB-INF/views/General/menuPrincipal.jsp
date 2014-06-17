@@ -20,12 +20,12 @@
             <ul class="nav navbar-nav " role="navigation">
                 <li class="active"><a href="index.do" >Inicio</a></li>
                 <li><a href="manualProcedimiento.do">Manual de Procedimiento</a></li>
-                <li class="dropdown">
+<!--                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizaciones <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="registroOrganizaciones.do">Registro</a></li>
                     </ul>
-                </li>
+                </li>-->
 <!--                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ayuda <b class="caret"></b></a>
                     <ul class="dropdown-menu">
