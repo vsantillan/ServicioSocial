@@ -26,13 +26,13 @@
                         <li><a href="registroOrganizaciones.do">Registro</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
+<!--                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ayuda <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="ayuda.do">Ayuda</a></li>
                         
                     </ul>
-                </li>
+                </li>-->
 
                 <li><a href="contacto.do">Contacto</a></li>
                     <% if (sesion.haySesion()) {
@@ -41,7 +41,7 @@
                 <li><a href="panelUsuario.do">Mi Perfil</a></li>
                     <%}%>
                     <% if (sesion.validaOrganizacion()) {%>
-                <li><a href="panelOrganizacion.do">Organizacion <%=nombre%></a>
+<!--                <li><a href="panelOrganizacion.do">Organizacion <%=nombre%></a>
                     <ul>
                         <li><a href="panelOrganizacion.do">Ver Perfil</a></li>
                         <li><a href="mensajeOrganizacion.do">Mensajes</a></li>
@@ -52,7 +52,7 @@
                             </ul>
                         </li>                        
                     </ul>
-                </li>
+                </li>-->
                 <%}%>
                 <% if (sesion.accesaPanelAdministrador()) {%>
                 <li><a href="panelAdministrador.do">Panel Administrador</a></li>
