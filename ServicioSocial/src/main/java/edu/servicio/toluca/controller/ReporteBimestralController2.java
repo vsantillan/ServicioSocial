@@ -278,7 +278,7 @@ public class ReporteBimestralController2 {
 
     @RequestMapping(value = "/guardarReporteBimestral.do", method = RequestMethod.POST)
     public String subirReporteBi(@RequestParam("file") MultipartFile file, Model modelo, HttpSession session, HttpServletRequest request) throws IOException {
-
+        fechas manejadorFechas= new fechas();
         String no_control = session.getAttribute("NCONTROL").toString();
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
         if (vistaAlumnoFacade.count() < 1 || listaAlumnos.isEmpty()) {
@@ -296,13 +296,13 @@ public class ReporteBimestralController2 {
         Calendar fecha= Calendar.getInstance();
         fecha.setTime(formatoActual.getFechaInicio());
         fecha.add(Calendar.YEAR, 2);
-        Date fechaMaxima= fecha.getTime();
+        Date fechaMaxima= manejadorFechas.covierteString(manejadorFechas.convierteDate(fecha.getTime()));
         Calendar fechaActual=Calendar.getInstance();
-        Date fechaActualDate=fechaActual.getTime();
-        if(fechaActualDate.before(fechaMaxima)){
+        Date fechaActualDate=manejadorFechas.covierteString(manejadorFechas.convierteDate(fechaActual.getTime()));
+        if(!fechaActualDate.before(fechaMaxima)){
             formatoActual.setStatusServicio(BigInteger.valueOf(2));
             formatoUnicoFacade.edit(formatoActual);
-            return "redirect:panelUsuario.do";
+            return "redirect:login.do";
         }
         ////////////////////////////////////
         LinkedHashMap ordenarAsc = new LinkedHashMap();

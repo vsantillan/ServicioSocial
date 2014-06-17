@@ -3,7 +3,10 @@ package edu.servicio.toluca.model.documentosFinales;
 import edu.servicio.toluca.beans.ReportesFinalesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
 import edu.servicio.toluca.entidades.DocumentosFinales;
+import edu.servicio.toluca.entidades.Reportes;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Realiza validaciones para decidir si el alumno puede acceder a los reportes
@@ -21,7 +24,11 @@ public class ValidaDocumentosFinalesModel {
             //Valida las horas del servicio
             if (servicioBean.getHorasServicio() >= 480) {
                 int statusDocFinales = Integer.parseInt(servicioBean.getFormatoUnico().getStatusFuf().toString());
-                if (statusDocFinales != 0) {
+                ArrayList<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
+                Collections.sort(reportes, new OrdenarPersonaPorId());
+                                            int nReporte = reportes.size() - 1;
+                            Reportes ultimoBimestral = reportes.get(nReporte);
+                if (statusDocFinales != 0 && ultimoBimestral.getStatus().toString().equals("1")) {
 
 
 
@@ -95,7 +102,7 @@ public class ValidaDocumentosFinalesModel {
                 }
 
             } else {
-                reportesFinales.setMensaje("No has completado el total de 480 horas de servicio. Aun te restan " + (480 - servicioBean.getHorasServicio() + " horas. Al completarlas podrás dar de alta tus documentos finales"));
+                reportesFinales.setMensaje("No has completado el total de horas de servicio. Al completarlas podrás dar de alta tus documentos finales");
                 reportesFinales.setPuedeAccesar(false);
                 reportesFinales.setStatus(2);
             }
@@ -123,5 +130,12 @@ public class ValidaDocumentosFinalesModel {
         bean.setPuedeAccesar(false);
         return bean;
 
+    }
+
+    class OrdenarPersonaPorId implements Comparator<Reportes> {
+
+        public int compare(Reportes o1, Reportes o2) {
+            return Integer.valueOf(String.valueOf(o1.getId())) - Integer.valueOf(String.valueOf(o2.getId()));
+        }
     }
 }

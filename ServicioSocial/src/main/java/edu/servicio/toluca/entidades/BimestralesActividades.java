@@ -51,9 +51,9 @@ public class BimestralesActividades implements Serializable {
     @JoinColumn(name = "ID_REPORTE", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private Reportes idReporte;
-    @JoinColumn(name = "ID_ACTIVIDAD", referencedColumnName = "ID")
-    @ManyToOne(optional = false)
-    private Actividad idActividad;
+//    @JoinColumn(name = "ID_ACTIVIDAD", referencedColumnName = "ID")
+//    @ManyToOne(optional = false)
+//    private Actividad idActividad;
 
     public BimestralesActividades() {
     }
@@ -78,13 +78,13 @@ public class BimestralesActividades implements Serializable {
         this.idReporte = idReporte;
     }
 
-    public Actividad getIdActividad() {
-        return idActividad;
-    }
-
-    public void setIdActividad(Actividad idActividad) {
-        this.idActividad = idActividad;
-    }
+//    public Actividad getIdActividad() {
+//        return idActividad;
+//    }
+//
+//    public void setIdActividad(Actividad idActividad) {
+//        this.idActividad = idActividad;
+//    }
 
     @Override
     public int hashCode() {

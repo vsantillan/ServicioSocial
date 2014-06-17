@@ -52,7 +52,6 @@ import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import edu.servicio.toluca.sesion.SancionesFacade;
 import edu.servicio.toluca.sesion.TipoLocalidadFacade;
-import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.File;
 import java.io.IOException;
@@ -114,8 +113,6 @@ public class FormatoUnicoController {
     private CatalogoPlanFacade catalogoPlanFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
     private FoliosPlaticaFacade foliosPlaticaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/VaFacade")
-    private VaFacade vaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     private CodigosPostalesFacade codigosPostalesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")

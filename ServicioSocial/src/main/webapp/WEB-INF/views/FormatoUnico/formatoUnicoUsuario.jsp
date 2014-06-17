@@ -23,7 +23,7 @@
                         <ul class="nav nav-tabs">
                             <li id="tab1" class="active tabsFormanotUnico" noTab="1"><a data-toggle="tab" href="#contensFormanotUnico1" onclick="ocultaDiv();">1.Datos Personales</a></li>
                             <li id="tab2" class="tabsFormanotUnico" noTab="2"><a data-toggle="tab" href="#contensFormanotUnico2" onclick="ocultaDiv();">2.Datos Contacto</a></li>
-<!--                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Acad&eacute;micos</a></li>-->
+                            <!--                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Acad&eacute;micos</a></li>-->
                             <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Organizaciones</a></li>
                             <li id="tab4" class="tabsFormanotUnico" noTab="4"><a data-toggle="tab" href="#contensFormanotUnico4" onclick="ocultaDiv();">4.Horario</a></li>
                             <li id="tab5" class="tabsFormanotUnico" noTab="5"><a data-toggle="tab" href="#contensFormanotUnico5" onclick="ocultaDiv();">5.Imprimir Formato &Uacute;nico</a></li>
@@ -175,15 +175,15 @@
                                                             <option value="${estados.idEstado}">${estados.nombre}</option>
                                                         </core:forEach> 
                                                     </select>
-                                                </div>                        
-                                                <div class="form-group">
-                                                    <label for="municipio">Municipio:</label>
-                                                    <select name="municipio" id="municipio" disabled="true" class="form-control"></select>
-
-                                                </div>
+                                                </div>   
                                                 <div class="form-group">
                                                     <label for="ciudad">Ciudad</label>
                                                     <select name="ciudad" id="ciudad" disabled="true" class="form-control"></select>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="municipio">Municipio:</label>
+                                                    <select name="municipio" id="municipio" disabled="true" class="form-control"></select>
 
                                                 </div>
                                                 <div class="form-group">
@@ -246,42 +246,42 @@
                                     </div>
                                 </div>
                             </div>
-<!--                            <div id="contensFormanotUnico3" class="contensFormanotUnico tab-pane col-md-6 col-md-offset-3">
-                                <p>&nbsp;</p>
-                                <div class="panel panel-info">
-                                    <div class="panel-heading">Datos Academicos</div>
-                                    <div class="panel-body">
-                                        <form:form modelAttribute="academicos" >
-                                            <table class="tablaInput300">
-                                                <div class="form-group"> 
-                                                    <label>Numero de control</label>
-                                                    <form:input path="ncontrol" readonly="true" class="form-control" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Carrera</label>
-                                                    <form:input path  ="carrera" readonly="true" class="form-control"/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Periodo</label>
-                                                    <form:input path ="periodo" readonly="true" class="form-control"/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Semestre</label>
-                                                    <form:input path ="semestre" readonly="true" class="form-control"/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Total de cr&eacute;ditos cubiertos</label>
-                                                    <form:input path ="cc" readonly="true" class="form-control"/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Porcentaje del total de cr&eacute;ditos cubiertos</label>
-                                                    <form:input path ="pcc" readonly="true" class="form-control"/>
-                                                </div>
-                                            </table>
-                                        </form:form>
-                                    </div>
-                                </div>-->
-<!--                            </div>-->
+                            <!--                            <div id="contensFormanotUnico3" class="contensFormanotUnico tab-pane col-md-6 col-md-offset-3">
+                                                            <p>&nbsp;</p>
+                                                            <div class="panel panel-info">
+                                                                <div class="panel-heading">Datos Academicos</div>
+                                                                <div class="panel-body">
+                            <form:form modelAttribute="academicos" >
+                                <table class="tablaInput300">
+                                    <div class="form-group"> 
+                                        <label>Numero de control</label>
+                                <form:input path="ncontrol" readonly="true" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Carrera</label>
+                                <form:input path  ="carrera" readonly="true" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Periodo</label>
+                                <form:input path ="periodo" readonly="true" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Semestre</label>
+                                <form:input path ="semestre" readonly="true" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Total de cr&eacute;ditos cubiertos</label>
+                                <form:input path ="cc" readonly="true" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Porcentaje del total de cr&eacute;ditos cubiertos</label>
+                                <form:input path ="pcc" readonly="true" class="form-control"/>
+                            </div>
+                        </table>
+                            </form:form>
+                        </div>
+                    </div>-->
+                            <!--                            </div>-->
                             <div id="contensFormanotUnico3" class="contensFormanotUnico tab-pane col-md-12">
                                 <p>&nbsp;</p>
                                 <div class="row">
@@ -303,10 +303,10 @@
                                                         </core:forEach> 
                                                     </select>
                                                 </div>
-<!--                                                <div class=" form-group">
-                                                    <label>&nbsp;</label>
-                                                    <a id="linkNuevoI" href="propAlInstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancyFU btn btn-primary" >Agregar una Instancia/Proyecto Nuevo</a>
-                                                </div>-->
+                                                <!--                                                <div class=" form-group">
+                                                                                                    <label>&nbsp;</label>
+                                                                                                    <a id="linkNuevoI" href="propAlInstancia.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}" class="fancyFU btn btn-primary" >Agregar una Instancia/Proyecto Nuevo</a>
+                                                                                                </div>-->
                                                 <div class="form-group">
                                                     <label for="fecha">*Fecha de Inicio (Fecha en que el Prestante del Servicio Social inicia sus actividades)</label>
                                                     <div class="input-group date dp2" data-date="" data-date-format="yyyy-mm-dd">
@@ -318,10 +318,10 @@
                                                     <label>*Proyecto:</label>
                                                     <select id="proyectos" name="proyecto" class="form-control"></select> 
                                                 </div>
-<!--                                                <div class=" form-group">
-                                                    <label>&nbsp;</label>
-                                                    <a id="linkNuevoP" href="propAlProyecto.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}&idInstancia=${idDeInstancia}" class="fancyFU btn btn-primary" >Agregar un proyecto</a>                             
-                                                </div>-->
+                                                <!--                                                <div class=" form-group">
+                                                                                                    <label>&nbsp;</label>
+                                                                                                    <a id="linkNuevoP" href="propAlProyecto.do?datos_personales=${formatoUnicoDatosOrganizaciones.id}&idInstancia=${idDeInstancia}" class="fancyFU btn btn-primary" >Agregar un proyecto</a>                             
+                                                                                                </div>-->
 
                                             </div>
                                             <div class="col-md-6">
@@ -524,7 +524,7 @@
     <script src="js/bootstrap.fileInput.js"></script> 
     <script src="js/validaFiles.js"></script> 
     <script src="js/jquery.codigos.postales.js"></script>       
-     <script src="js/jquery.manolo.js"></script>
+    <script src="js/jquery.manolo.js"></script>
     <script>
         $(document).ready(function() {
             $('input[type=file]').bootstrapFileInput();

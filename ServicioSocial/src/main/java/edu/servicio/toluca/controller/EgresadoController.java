@@ -31,7 +31,6 @@ import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.entidades.TipoLocalidad;
-import edu.servicio.toluca.entidades.Va;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.entidades.Egresado;
@@ -55,7 +54,6 @@ import edu.servicio.toluca.sesion.MunicipiosSiaFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.SancionesFacade;
 import edu.servicio.toluca.sesion.TipoLocalidadFacade;
-import edu.servicio.toluca.sesion.VaFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -114,8 +112,6 @@ public class EgresadoController {
     private CatalogoPlanFacade catalogoPlanFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
     private FoliosPlaticaFacade foliosPlaticaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/VaFacade")
-    private VaFacade vaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     private CodigosPostalesFacade codigosPostalesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
