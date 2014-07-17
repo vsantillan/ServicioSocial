@@ -45,7 +45,7 @@
                                 <form:errors path="hora" class="alert alert-danger" />
                             </div>
                             <div class="form-group">
-                                <label for="lugar" >Lugar de la plática: </label>                              
+                                <label for="lugar" >Lugar de la plática: </label>
                                 <form:select class="form-control" path="idLugar.id">
                                     <core:forEach items="${lugares}" var="lugares" >
                                         <form:option value="${lugares.id}">${lugares.lugar}</form:option>

@@ -30,7 +30,7 @@ public class NoticiasController {
     
     @RequestMapping(method = RequestMethod.GET, value = "/noticia.do")
     public String obtenerNoticiaGeneral(Model modelo, int id)
-    { 
+    {
         ConsultasNoticias noticias=new ConsultasNoticias(noticiasFacade);
         Noticias not= noticias.consultaNoticiaPrincipal(id);
         if(not != null)
