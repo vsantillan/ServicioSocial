@@ -74,7 +74,7 @@ public class ValidaSesion {
      */
     public boolean accesaPanelAdministraodr(HttpSession session, HttpServletRequest request){
         if(validaAdmin(session, request) || validaConsultas(session, request) || validaRegistro(session, request) || validaOperador(session, request)){
-           return true;
+           return true; 
         }else{
             return false;
         }

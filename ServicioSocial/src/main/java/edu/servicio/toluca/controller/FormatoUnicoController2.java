@@ -212,7 +212,6 @@ public class FormatoUnicoController2 {
             //Consultas de los objetos necesarios para el despliegue de la vista alumno
             List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp2, "equal", null, null);
             System.out.println("Tu alumno ya está, su id de datos es " + listaDatosPersonales.get(0).getId());// + idDatosPersonales);
-//            System.out.println(listaFormatoUnico);
 
 
             //Asignación a objetos para posteriormente preparar

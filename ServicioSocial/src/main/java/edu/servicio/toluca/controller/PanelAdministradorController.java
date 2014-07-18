@@ -21,22 +21,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @author ekt
  */
 @Controller
-public class PanelAdministradorController
+public class PanelAdministradorController 
 {
-
+    
     @RequestMapping(method = RequestMethod.GET, value = "/panelAdministrador.do")
-    public String panelAdministrador(Model model, HttpSession session, HttpServletRequest request)
+    public String panelAdministrador(Model model, HttpSession session, HttpServletRequest request) 
     {
         //Valida sesion
         ValidaSesion valSession = new ValidaSesion(session, request);
-        if (valSession.accesaPanelAdministrador())
-        {
+        if (valSession.accesaPanelAdministrador()) {
             return "/PanelAdministrador/panelAdministrador";
-        } else
-        {
+        }else{
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
-        }
-    }
-
+        }      
+        
+        
+        
+    }    
+    
 }

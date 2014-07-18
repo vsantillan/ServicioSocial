@@ -57,7 +57,7 @@ public class CodigosPostalesModel {
     public Colonia agregaColonia(String codigo_postal, String otra_colonia) {
         try {
             System.out.println("AgregarColonia");
-            System.out.println("codigo postal:" + codigo_postal);
+            System.out.println("codigo postal:" + codigo_postal.toString());
             List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
             CodigosPostales codigoPostal = codigosPostales.get(0);
             Colonia nvaColonia = new Colonia();

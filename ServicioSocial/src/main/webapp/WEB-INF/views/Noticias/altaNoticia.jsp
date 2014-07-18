@@ -61,7 +61,7 @@
                                         
                                     </div>
 
-                                        <br><form:errors path="detalle" cssClass="alert alert-danger"/>
+                                        <br><form:errors path="detalle" cssClass="alert alert-danger"/> 
 
                                     <div class="control-group">
                                          <br>
