@@ -54,6 +54,8 @@ import javax.validation.Valid;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -105,6 +107,8 @@ public class OrganizacionesController {
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionGeneralFacade")
     private RegObservacionGeneralFacade regObservacionGeneralFacade;
     MetodosValidacion limpiar = new MetodosValidacion();
+    
+    private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request) {

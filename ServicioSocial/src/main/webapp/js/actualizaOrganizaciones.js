@@ -1,6 +1,6 @@
-var row="";
-var idUpdate="";
-var tabla="";
+var row = "";
+var idUpdate = "";
+var tabla = "";
 var tipo2 = "";
 var estatus = "";
 
@@ -13,7 +13,7 @@ $(document).ready(listo);
 
 function cambiarEstadoInstancia(e)
 {
-    if (confirm('\u00BF'+'Seguro que desea eliminar instancia?'))
+    if (confirm('\u00BF' + 'Seguro que desea eliminar instancia?'))
     {
         idUpdate = $(this).attr('idO');
         tipo2 = "0";
@@ -41,20 +41,20 @@ function updateProyecto(e)
 //
 function updateOrganisation(e)
 {
-    if (confirm('\u00BFSeguro que desea aprobar esta organizacion?'))
+    if (confirm('\u00BFSeguro que desea aprobar esta organización?'))
     {
         var row = $(this).parents('tr')[0];
         var idUpdate = $(e.target).attr('ide');
         var tabla = $('.example').dataTable();
         $.post("updateStatus.do", {id: idUpdate}, function(response) {
-             if(response==="ok")
+            if (response === "ok")
             {
                 tabla.fnDeleteRow(row);
                 $("#div-validar-organizacion").show('slow');
                 setTimeout(function() {
                     $("#div-validar-organizacion").hide('slow');
                 }, 3000);
-            }else{
+            } else {
                 alert("Imposible aceptar Instancia. ERROR Interno");
             }
         });
@@ -68,7 +68,7 @@ function listo() {
 
 function rechazarInstancia(e)
 {
-    if (confirm('\u00BF'+"Seguro que desea eliminar la Instancia?"))
+    if (confirm('\u00BF' + "Seguro que desea eliminar la Instancia?"))
     {
         row = $(this).parents('tr')[0];
         idUpdate = $(e.target).attr('ide');
@@ -82,14 +82,15 @@ function rechazarInstancia(e)
 
 function rechazarProyecto(e)
 {
-    if (confirm('\u00BF'+"Seguro que desea eliminar el proyecto?"))
+    if (confirm('\u00BF' + "Seguro que desea eliminar el proyecto?"))
     {
         row = $(this).parents('tr')[0];
         idUpdate = $(e.target).attr('ide');
         tabla = $('#example').dataTable();
-        tipo2 = "2";  //el estatus de validacion de administrador para rechazado es 2
-        estatus = "0"; // 0:Proyecto eliminado
+        tipo2 = "2"; //el estatus de validacion de administrador para rechazado es 2
+        estatus = "0"; //0:Organizacion eliminada
         mostrarDIVMotivos();
+
     }
 
 }
@@ -105,7 +106,7 @@ function  mostrarDIVMotivos()
 function obtenerDatosInstancia()
 {
     var array = [];
-    $("form#observacionesCat input").each(function() 
+    $("form#observacionesCat input").each(function()
     {
         if ($(this).is(":checked"))
         {
@@ -115,19 +116,19 @@ function obtenerDatosInstancia()
     if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("cambiaStatusInstancia.do", {id: idUpdate,status: estatus,val_admin:tipo2, observaciones: array}, function(respuesta)
+        $.post("cambiaStatusInstancia.do", {id: idUpdate, status: estatus, val_admin: tipo2, observaciones: array}, function(respuesta)
         {
-            if(respuesta==="ok")
+            if (respuesta === "ok")
             {
                 alert("Instancia eliminada");
                 window.location.reload();
-            }else{
+            } else {
                 alert("ERROR: Imposible eliminar Instancia.");
                 window.location.reload();
             }
             $('#guardarObservaciones').attr('disabled', false);
         });
-    }else{
+    } else {
         alert('No se ha seleccionado Observación');
     }
 }
@@ -135,29 +136,29 @@ function obtenerDatosInstancia()
 function obtenerDatosProyecto()
 {
     var array = [];
-    $("form#observacionesCat input").each(function() 
+    $("form#observacionesCat input").each(function()
     {
         if ($(this).is(":checked"))
         {
             array.push($(this).attr("value")); // id de Obserbacion
         }
     });
-    if (array.length > 0)
+    if (array.length === 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("cambiaStatusProyecto.do", {id: idUpdate,estatus: estatus,val_admin:tipo2, observaciones: array}, function(respuesta)
+        $.post("cambiaStatusProyecto.do", {id: idUpdate, estatus: estatus, val_admin: tipo2, observaciones: array}, function(respuesta)
         {
-            if(respuesta==="ok")
+            if (respuesta === "ok")
             {
                 alert("Proyecto eliminado.");
                 window.location.reload();
-            }else{
+            } else {
                 alert("ERROR: Imposible eliminar Proyecto.");
                 window.location.reload();
             }
             $('#guardarObservaciones').attr('disabled', false);
         });
-    }else{
+    } else {
         alert('No se ha seleccionado Observación');
     }
 }

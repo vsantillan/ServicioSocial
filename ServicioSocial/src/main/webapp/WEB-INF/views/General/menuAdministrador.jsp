@@ -14,11 +14,11 @@
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Pl&aacute;ticas</a>
                             <ul class="dropdown-menu">
-                                <li><a href="altaPlatica.do" onclick="redirecciona('altaPlatica.do');">1.1 Nueva Pl&aacute;tica</a></li>
-                                <li><a href="consultasBajas.do" onclick="redirecciona('consultasBajas.do');">1.2 Eliminar y Consultar Pl&aacute;tica</a></li>
-                                <li><a href="capturarAsistencia.do" onclick="redirecciona('capturarAsistencia.do');">1.3 Capturar Asistencia</a></li>
-                                <li><a href="asistenciaPosteriorEspecial.do" onclick="redirecciona('asistenciaPosteriorEspecial.do');">1.4 Alta Posterior</a></li>
-                                <li><a href="altaLugares.do" onclick="redirecciona('altaLugares.do');">1.4 Catálogo lugares</a></li>
+                                <li><a href="altaPlatica.do" onclick="redirecciona('altaPlatica.do');">Nueva Pl&aacute;tica</a></li>
+                                <li><a href="consultasBajas.do" onclick="redirecciona('consultasBajas.do');">Eliminar y Consultar Pl&aacute;tica</a></li>
+                                <li><a href="capturarAsistencia.do" onclick="redirecciona('capturarAsistencia.do');">Capturar Asistencia</a></li>
+                                <li><a href="asistenciaPosteriorEspecial.do" onclick="redirecciona('asistenciaPosteriorEspecial.do');">Alta Posterior</a></li>
+                                <li><a href="altaLugares.do" onclick="redirecciona('altaLugares.do');">Catálogo lugares</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
@@ -48,22 +48,22 @@
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Bajas Temporales</a>
                             <ul class="dropdown-menu">
-                                <li><a href="administrarBajas.do" onclick="redirecciona('administrarBajas.do');">7.1 Administrar</a></li>
-                                <li><a href="cambioDependencia.do" onclick="redirecciona('cambioDependencia.do');">7.2 Cambio de Instancia</a></li>
+                                <li><a href="administrarBajas.do" onclick="redirecciona('administrarBajas.do');">Administrar</a></li>
+                                <li><a href="cambioDependencia.do" onclick="redirecciona('cambioDependencia.do');">Cambio de Instancia</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Casos Especiales</a>
                             <ul class="dropdown-menu">
-                                <li><a href="egresadoAdministrador.do">13.1 Egresados</a></li>
+                                <li><a href="egresadoAdministrador.do">Egresados</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sanciones</a>
                             <ul class="dropdown-menu">
-                                <li><a href="asignarSancion.do">6.1 Asignar Sanciones</a></li>
-                                <li><a href="sancionesAlumno.do" onclick="redirecciona('sancionesAlumno.do');">6.2 Administrar Sanciones</a></li>
-                                <li><a href="catalogoSanciones.do">6.3 Cat&aacute;logo de Sanciones</a></li>
+                                <li><a href="asignarSancion.do">Asignar Sanciones</a></li>
+                                <li><a href="sancionesAlumno.do" onclick="redirecciona('sancionesAlumno.do');">Administrar Sanciones</a></li>
+                                <li><a href="catalogoSanciones.do">Cat&aacute;logo de Sanciones</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu"></li>
@@ -75,12 +75,17 @@
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizaciones</a>
                             <ul class="dropdown-menu">
-                                <li><a href="altaAdminOrganizacion.do" onclick="redirecciona('altaAdminOrganizacion.do');">8.1 Alta Organizaciones</a></li>
-                                <li><a href="altaAdminProyectos.do" onclick="redirecciona('altaAdminProyectos.do');">8.2 Alta de Proyectos</a></li>
-                                <li><a href="administrarOrganizaciones.do" onclick="redirecciona('administrarOrganizaciones.do');">8.3 Administrar Organizaciones</a></li>
-                                <li><a href="administrarProyectos.do" onclick="redirecciona('administrarProyectos.do');">8.4 Administrar Proyectos</a></li>
-                                <li><a href="validarOrganizaciones.do" onclick="redirecciona('validarOrganizaciones.do');">8.5 Validar Organizaciones</a></li>
-                                <li><a href="validarProyectos.do" onclick="redirecciona('validarProyectos.do');">8.6 Validar Proyectos</a></li>  
+                                <li><a href="altaAdminOrganizacion.do">Alta Organizaciones</a></li>
+                                <li><a href="administrarOrganizaciones.do">Administrar Organizaciones</a></li>
+                                <li><a href="validarOrganizaciones.do">Validar Organizaciones</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proyectos</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="altaAdminProyectos.do">Alta de Proyectos</a></li>
+                                <li><a href="administrarProyectos.do">Administrar Proyectos</a></li>
+                                <li><a href="validarProyectos.do">Validar Proyectos</a></li>  
                             </ul>
                         </li>
                     </ul>
@@ -89,7 +94,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="historialServicio.do" >Historial Servicio Social</a></li>
-                        <li><a href="estadisticas.do" onclick="redirecciona('estadisticas.do');">Estadisticas</a></li>
+                        <li><a href="estadisticas.do">Estadisticas</a></li>
                     </ul>
                 </li>
                 </li>

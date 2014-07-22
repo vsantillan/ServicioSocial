@@ -20,7 +20,7 @@
                     <div class="alert alert-warning col-md-9  col-md-offset-1">
                         <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestran los proyectos activos.</h4></div>
                     </div>
-                    <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="example">
+                    <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'>
                         <thead>
                             <tr>
                                 <th>Acci&oacute;n</th>
@@ -36,7 +36,7 @@
                             <core:forEach items="${proyectos}" var="current">
                                 <tr class='gradeX' id="${current.idProyecto}">
                                     <td><a href="editarProyecto.do?id=${current.idProyecto}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Proyecto"></span></a>&nbsp;&nbsp;
-                                        <a href="#" class="btn-validar-proyecto"><span class="cambiaStatusProyecto glyphicon glyphicon-remove sizeIcon" ide="${current.idProyecto}" title="Borrar Proyecto"></span></a></td>
+                                        <a href="#" class="btn-validar-proyecto"><span class=" cambiaStatusProyecto glyphicon glyphicon-remove sizeIcon" ide="${current.idProyecto}" title="Borrar Proyecto"></span></a></td>
                                     <td><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                     <td><a href="verAlumnosProyecto.do?id=${current.idProyecto}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                     <td><core:out value="${current.idInstancia.nombre}" /></td>
@@ -74,7 +74,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
-                        <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
+                        <a href="catalogoObservaciones.do" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
                         <button id="guardarObservacionesProyecto" type="button" class="btn btn-primary">Eliminar y guardar las observaciones del Proyecto</button>
                     </div>
                 </form>
