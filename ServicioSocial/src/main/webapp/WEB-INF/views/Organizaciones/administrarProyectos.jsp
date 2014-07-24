@@ -36,7 +36,7 @@
                             <core:forEach items="${proyectos}" var="current">
                                 <tr class='gradeX' id="${current.idProyecto}">
                                     <td><a href="editarProyecto.do?id=${current.idProyecto}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Proyecto"></span></a>&nbsp;&nbsp;
-                                        <a href="#" class="btn-validar-proyecto"><span class=" cambiaStatusProyecto glyphicon glyphicon-remove sizeIcon" ide="${current.idProyecto}" title="Borrar Proyecto"></span></a></td>
+                                        <a href="#" class="btn-validar-proyecto"><span class=" cambiaStatusProyecto glyphicon glyphicon-trash sizeIcon" ide="${current.idProyecto}" title="Borrar Proyecto"></span></a></td>
                                     <td><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                     <td><a href="verAlumnosProyecto.do?id=${current.idProyecto}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                     <td><core:out value="${current.idInstancia.nombre}" /></td>
@@ -55,7 +55,7 @@
         <div class="modal-dialog" id="motivos" style="display: none;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title titulos-naranja">Motivos de Rechazo del Proyecto</h3>
+                    <h3 class="modal-title titulos-naranja">Motivos de Eliminación del Proyecto</h3>
                 </div>
                 <form id="observacionesCat" action="#"  onsubmit="return  false;">
                     <div class="modal-body">
@@ -73,9 +73,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
-                        <a href="catalogoObservaciones.do" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
                         <button id="guardarObservacionesProyecto" type="button" class="btn btn-primary">Eliminar y guardar las observaciones del Proyecto</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
+                        <!--<a href="catalogoObservaciones.do" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>-->
                     </div>
                 </form>
             </div><!-- /.modal-content -->

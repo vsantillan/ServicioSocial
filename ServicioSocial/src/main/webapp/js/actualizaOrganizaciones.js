@@ -90,9 +90,7 @@ function rechazarProyecto(e)
         tipo2 = "2"; //el estatus de validacion de administrador para rechazado es 2
         estatus = "0"; //0:Organizacion eliminada
         mostrarDIVMotivos();
-
     }
-
 }
 
 function  mostrarDIVMotivos()
@@ -143,7 +141,7 @@ function obtenerDatosProyecto()
             array.push($(this).attr("value")); // id de Obserbacion
         }
     });
-    if (array.length === 0)
+    if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
         $.post("cambiaStatusProyecto.do", {id: idUpdate, estatus: estatus, val_admin: tipo2, observaciones: array}, function(respuesta)

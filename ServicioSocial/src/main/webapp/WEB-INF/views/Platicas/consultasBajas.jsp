@@ -26,7 +26,7 @@
                                 <th>Lugar</th>
                                 <th>Periodo</th>
                                 <th>Descripción</th>
-<!--                                <th>Tipo</th>-->
+                                <!--                                <th>Tipo</th>-->
                                 <th>Asistentes</th>
                                 <th>Formato &Uacute;nico Fecha m&aacute;xima</th>
                             </tr>
@@ -36,12 +36,12 @@
                             <core:forEach items="${platica}" var="platica">
                                 <tr>
                                     <td><a class="elimina" href="#" idP="${platica.id}" fecha="${platica.fecha}"> <span class="glyphicon glyphicon-trash center-block sizeIcon" ></span></a></td>
-                                    <td ><div><fmt:formatDate value="${platica.fecha}" pattern="dd-MM-yyyy"></fmt:formatDate><div></td>
+                                    <td ><div><fmt:formatDate value="${platica.fecha}"  pattern="dd-MM-yyyy"></fmt:formatDate><div></td>
                                                 <td>${platica.hora}</td>
                                                 <td>${platica.idLugar.lugar}</td>
                                                 <td>${platica.periodo}</td>            
                                                 <td>${platica.descripcion}</td>
-<!--                                                <td><core:choose>
+                                                <!--                                                <td><core:choose>
                                                     <core:when test="${platica.tipo==1}">
                                                         BECADOS
                                                     </core:when>
@@ -55,7 +55,7 @@
                                                 </td>-->
                                                 <td>${platica.numeroAsistentes}</td> 
                                                 <td><fmt:formatDate value="${platica.fechaMxFui}" pattern="dd-MM-yyyy"></fmt:formatDate></td> 
-                                                </tr>
+                                                    </tr>
                                             </core:forEach>
                                             </tbody>
                                             </table>
@@ -68,5 +68,4 @@
                                     <%@include file="../General/js.jsp"%>
                                     <script type="text/javascript" src="js/script2PlaticaEliminar.js"></script>
                                     </body>
-
                                     </html>

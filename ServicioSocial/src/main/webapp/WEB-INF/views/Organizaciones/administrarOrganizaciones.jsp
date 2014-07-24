@@ -37,7 +37,7 @@
                                 <tr class='gradeX'>
                                     <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
                                     <td><a href="editarOrganizacion.do?id=${current.idInstancia}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Organizaci&oacute;n"></span></a>&nbsp;&nbsp;
-                                        <a href="#" class="btn-validar-org"><span class="cambiaStatusInstancia glyphicon glyphicon-remove sizeIcon" ide="${current.idInstancia}" title="Borrar Organización"></span></a></td>
+                                        <a href="#" class="btn-validar-org"><span class="cambiaStatusInstancia glyphicon glyphicon-trash sizeIcon" ide="${current.idInstancia}" title="Borrar Organización"></span></a></td>
                                     <td><a href="detalleOrganizacion.do?id=${current.idInstancia}" data-modal="modal" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                     <td><core:out value="${current.nombre}" /></td>
                                     <td><core:out value="${current.titular}" /></td>
@@ -73,9 +73,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
-                        <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
                         <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Eliminar y guardar las observaciones a la Organización</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
