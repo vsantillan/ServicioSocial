@@ -11,10 +11,13 @@ import java.util.ArrayList;
  *
  * @author bustedvillain
  */
-public class LocalidadJSON {
+public class LocalidadJSON
+{
+
     private ArrayList<String> nombreColonia = new ArrayList<String>();
     private ArrayList<String> idColonia = new ArrayList<String>();
-    private String idEstado;    
+    private String idEstado;
+    private String estado;
     private String idMunicipio;
     private String municipio;
     private String idCiudad;
@@ -24,113 +27,145 @@ public class LocalidadJSON {
     /**
      * @return the nombreColonia
      */
-    public ArrayList<String> getNombreColonia() {
+    public ArrayList<String> getNombreColonia()
+    {
         return nombreColonia;
     }
 
     /**
      * @param nombreColonia the nombreColonia to set
      */
-    public void setNombreColonia(ArrayList<String> nombreColonia) {
+    public void setNombreColonia(ArrayList<String> nombreColonia)
+    {
         this.nombreColonia = nombreColonia;
     }
 
     /**
      * @return the idColonia
      */
-    public ArrayList<String> getIdColonia() {
+    public ArrayList<String> getIdColonia()
+    {
         return idColonia;
     }
 
     /**
      * @param idColonia the idColonia to set
      */
-    public void setIdColonia(ArrayList<String> idColonia) {
+    public void setIdColonia(ArrayList<String> idColonia)
+    {
         this.idColonia = idColonia;
     }
 
     /**
      * @return the idEstado
      */
-    public String getIdEstado() {
+    public String getIdEstado()
+    {
         return idEstado;
     }
 
     /**
      * @param idEstado the idEstado to set
      */
-    public void setIdEstado(String idEstado) {
+    public void setIdEstado(String idEstado)
+    {
         this.idEstado = idEstado;
     }
 
     /**
      * @return the idMunicipio
      */
-    public String getIdMunicipio() {
+    public String getIdMunicipio()
+    {
         return idMunicipio;
     }
 
     /**
      * @param idMunicipio the idMunicipio to set
      */
-    public void setIdMunicipio(String idMunicipio) {
+    public void setIdMunicipio(String idMunicipio)
+    {
         this.idMunicipio = idMunicipio;
     }
 
     /**
      * @return the municipio
      */
-    public String getMunicipio() {
+    public String getMunicipio()
+    {
         return municipio;
     }
 
     /**
      * @param municipio the municipio to set
      */
-    public void setMunicipio(String municipio) {
+    public void setMunicipio(String municipio)
+    {
         this.municipio = municipio;
     }
 
     /**
      * @return the idCiudad
      */
-    public String getIdCiudad() {
+    public String getIdCiudad()
+    {
         return idCiudad;
     }
 
     /**
      * @param idCiudad the idCiudad to set
      */
-    public void setIdCiudad(String idCiudad) {
+    public void setIdCiudad(String idCiudad)
+    {
         this.idCiudad = idCiudad;
     }
 
     /**
      * @return the ciudad
      */
-    public String getCiudad() {
+    public String getCiudad()
+    {
         return ciudad;
     }
 
     /**
      * @param ciudad the ciudad to set
      */
-    public void setCiudad(String ciudad) {
+    public void setCiudad(String ciudad)
+    {
         this.ciudad = ciudad;
     }
 
     /**
      * @return the statusJSON
      */
-    public boolean isStatusJSON() {
+    public boolean isStatusJSON()
+    {
         return statusJSON;
     }
 
     /**
      * @param statusJSON the statusJSON to set
      */
-    public void setStatusJSON(boolean statusJSON) {
+    public void setStatusJSON(boolean statusJSON)
+    {
         this.statusJSON = statusJSON;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado()
+    {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado)
+    {
+        this.estado = estado;
     }
 
 }

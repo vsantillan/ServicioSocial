@@ -18,4 +18,5 @@
 <link href="<%=request.getContextPath()%>/css/customize.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/spippet_menu.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+<link href="<%=request.getContextPath()%>/css/instancias.css" rel="stylesheet">
 <title>Servicio Social</title>

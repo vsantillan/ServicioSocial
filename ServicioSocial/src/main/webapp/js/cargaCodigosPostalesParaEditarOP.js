@@ -122,7 +122,7 @@ $(document).ready(function() {
         var cp = document.getElementById("codigo_postal").value
         if (cp.length == 5)
             cargarColonias(cp);
-    });
+    }); 
     $("codigo_postal").on(cargarColonias(document.getElementById("codigo_postal").value));
     function ubicarEstado(value) {
         console.log("value:" + value)

@@ -22,11 +22,12 @@ import javax.persistence.criteria.Root;
 /**
  *
  * @author Jonny
+ * @param <T>
  */
 public abstract class AbstractFacade<T> {
 
     private Class<T> entityClass;
-    private int MAX_RECORDS_RETURNED = 50000;
+    private final int MAX_RECORDS_RETURNED = 50000;
 
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;

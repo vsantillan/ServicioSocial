@@ -10,23 +10,17 @@ import edu.servicio.toluca.beans.LocalidadJSON;
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.organizaciones.CiudadesJSON;
 import edu.servicio.toluca.beans.organizaciones.MunicipiosJSON;
-import edu.servicio.toluca.entidades.Ciudades;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
-import edu.servicio.toluca.entidades.MunicipiosSia;
-import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.sesion.CiudadesFacade;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.MunicipiosSiaFacade;
 import edu.servicio.toluca.sesion.TipoLocalidadFacade;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
@@ -41,34 +35,42 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author bustedvillain
  */
 @Controller
-public class CodigosPostalesController {
+public class CodigosPostalesController
+{
 
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     private CodigosPostalesFacade codigosPostalesFacade;
+
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
+
     @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
     private MunicipiosSiaFacade municipiosFacade;
+
     @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
     private ColoniaFacade coloniaFacade;
+
     @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
     private CiudadesFacade ciudadesFacade;
+
     @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
     private TipoLocalidadFacade tipoLocalidadFacade;
+
     MetodosValidacion limpiar = new MetodosValidacion();
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarColonias.do")
     public @ResponseBody
-    LocalidadJSON cargarColonias(Model model, String cp) {
-
-
+    LocalidadJSON cargarColonias(Model model, String cp)
+    {
         //Fabricacion de objeto
         LocalidadJSON localidadJSON = new LocalidadJSON();
         System.out.println("Controlador, recibe cp:" + cp);
 //        BigDecimal bigDecimal = new BigDecimal(Integer.parseInt(cp));
-        try {
+        try
+        {
             Integer.parseInt(cp);
-        } catch (Exception e) {
+        } catch(Exception e)
+        {
             //Error en consulta
             System.out.println("No existe este codigo postal");
             localidadJSON.setStatusJSON(false);
@@ -78,30 +80,35 @@ public class CodigosPostalesController {
         System.out.println("Comenzare el query buscando el codigo postal:" + cp);
         //Consulta codigo postal
         //model.addAttribute("codigoPostal", );
-        try {
+        try
+        {
 //            CodigosPostales codigosPostales = codigosPostalesFacade.find(Integer.parseInt(cp));
             List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", cp, "equal", null, null);
 
             ArrayList<Colonia> colonias = new ArrayList(codigosPostales.get(0).getColoniaCollection());
-            for (int i = 0; i < colonias.size(); i++) {
+            for(int i = 0; i < colonias.size(); i++)
+            {
                 System.out.println("Colonia:" + colonias.get(i).getNombre() + " id:" + colonias.get(i).getIdColonia());
                 localidadJSON.getIdColonia().add(colonias.get(i).getIdColonia() + "");
                 localidadJSON.getNombreColonia().add(colonias.get(i).getNombre());
             }
             //localidadJSON.setColonias(coloniasTmp);
-            try {
+            try
+            {
                 localidadJSON.setCiudad(codigosPostales.get(0).getIdCiudad().getNombre());
-            } catch (Exception e) {
+            } catch(Exception e)
+            {
                 localidadJSON.setCiudad("No hay ciudades");
             }
             localidadJSON.setIdEstado(codigosPostales.get(0).getIdEstado().getIdEstado() + "");
+            localidadJSON.setEstado(codigosPostales.get(0).getIdEstado().getNombre());
             localidadJSON.setMunicipio(codigosPostales.get(0).getIdMunicipio().getNombre());
             localidadJSON.setIdMunicipio(codigosPostales.get(0).getIdMunicipio().getIdMunicipio() + "");
             //Operacion realizada con exito
             localidadJSON.setStatusJSON(true);
-            System.out.println("Operacion con exito");
             return localidadJSON;
-        } catch (Exception e) {
+        } catch(Exception e)
+        {
             //Error en consulta
             System.out.println("No existe este codigo postal");
             localidadJSON.setStatusJSON(false);
@@ -111,16 +118,19 @@ public class CodigosPostalesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarEstados.do")
     public @ResponseBody
-    EstadosJSON cargarEstados(Model model) {
+    EstadosJSON cargarEstados(Model model)
+    {
         System.out.println("Cargar Estados controller");
         //Fabricacion de objeto
         EstadosJSON estadosJSON = new EstadosJSON();
-        try {
+        try
+        {
             LinkedHashMap<String, String> ordering = new LinkedHashMap<String, String>();
             ordering.put("asc", "nombre");
             //List<EstadosSia> estados = estadosFacade.findBySpecificField(null, null, null, null, null);
             List<EstadosSia> estados = estadosFacade.findAll();
-            for (int i = 0; i < estados.size(); i++) {
+            for(int i = 0; i < estados.size(); i++)
+            {
                 estadosJSON.getIdEstados().add(estados.get(i).getIdEstado() + "");
                 estadosJSON.getNombreEstados().add(estados.get(i).getNombre());
                 System.out.println("Estado:" + estadosJSON.getNombreEstados().get(i));
@@ -128,7 +138,8 @@ public class CodigosPostalesController {
             System.out.println("Consulta exitosa");
             estadosJSON.setStatusJSON(true);
             return estadosJSON;
-        } catch (Exception e) {
+        } catch(Exception e)
+        {
             estadosJSON.setStatusJSON(false);
             e.printStackTrace();
             //Error en consulta           
@@ -138,11 +149,13 @@ public class CodigosPostalesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarMunicipios.do")
     public @ResponseBody
-    MunicipiosJSON cargarMunicipios(Model model, String idEstado) {
+    MunicipiosJSON cargarMunicipios(Model model, String idEstado)
+    {
         System.out.println("Cargar Estados controller, idEstado:" + idEstado);
         //Fabricacion de objeto
         MunicipiosJSON municipiosJSON = new MunicipiosJSON();
-        try {
+        try
+        {
             //Track tiempo
             Calendar ahora1 = Calendar.getInstance();
             long tiempo1 = ahora1.getTimeInMillis();
@@ -157,7 +170,8 @@ public class CodigosPostalesController {
             long total = tiempo2 - tiempo1;
             System.out.println("Operacion con exito en " + total + "ms");
             return municipiosJSON;
-        } catch (Exception e) {
+        } catch(Exception e)
+        {
             e.printStackTrace();
             //Error en consulta
             municipiosJSON.setStatusJSON(false);
@@ -167,11 +181,13 @@ public class CodigosPostalesController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/cargarCiudades.do")
     public @ResponseBody
-    CiudadesJSON cargarCiudades(Model model, String idMunicipio) {
+    CiudadesJSON cargarCiudades(Model model, String idMunicipio)
+    {
         System.out.println("Cargar Municipios controller, idMunicipio:" + idMunicipio);
         //Fabricacion de objeto
         CiudadesJSON ciudadesJSON = new CiudadesJSON();
-        try {
+        try
+        {
             //Track tiempo
             Calendar ahora1 = Calendar.getInstance();
             long tiempo1 = ahora1.getTimeInMillis();
@@ -186,7 +202,8 @@ public class CodigosPostalesController {
             long total = tiempo2 - tiempo1;
             System.out.println("Operacion con exito en " + total + "ms");
             return ciudadesJSON;
-        } catch (Exception e) {
+        } catch(Exception e)
+        {
             e.printStackTrace();
             //Error en consulta
             ciudadesJSON.setStatusJSON(false);
@@ -197,11 +214,13 @@ public class CodigosPostalesController {
     //Alta de organizacion por pre-registro
     @RequestMapping(method = RequestMethod.GET, value = "/pruebaConsulta.do")
     public @ResponseBody
-    void pruebaConsulta(Model model) {
+    void pruebaConsulta(Model model)
+    {
         String idEstado = "15";
 //        //Fabricacion de objeto
         MunicipiosJSON municipiosJSON = new MunicipiosJSON();
-        try {
+        try
+        {
             //Track tiempo
             Calendar ahora1 = Calendar.getInstance();
             long tiempo1 = ahora1.getTimeInMillis();
@@ -214,7 +233,8 @@ public class CodigosPostalesController {
             long total = tiempo2 - tiempo1;
             System.out.println("Operacion con exito en " + total + "ms");
 
-        } catch (Exception e) {
+        } catch(Exception e)
+        {
             e.printStackTrace();
             //Error en consulta
             municipiosJSON.setStatusJSON(false);
