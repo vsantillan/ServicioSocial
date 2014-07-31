@@ -83,11 +83,23 @@
                                     <form:input class="form-control" placeholder="RFC" path="rfc" id="rfc" maxlength="12"/><br/>
                                     <form:errors path="rfc" cssClass="alert alert-danger"/>
                                 </div>
-                                <div class="form-group">
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label for="telefono">Tel&eacute;fono:</label>
+                                        <form:input path="telefono" id="telefono" size="20" maxlength="10" class="form-control" /><br/>
+                                        ${telefono}
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="telefono">Extensi&oacute;n:</label>
+                                        <form:input path="ext" id="ext" size="20" maxlength="7" class="form-control"/><br/>
+                                        ${ext}
+                                    </div>
+                                </div>
+<!--                                <div class="form-group">
                                     <label for="telefono">Tel&eacute;fono:</label> 
                                     <form:input path="telefono" id="telefono" placeholder="Telefono" class="form-control" maxlength="13"/><br/>
                                     ${telefono}
-                                </div>
+                                </div>-->
                                 <div class="form-group">
                                     <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label>
                                     <form:select id="tipoOrganizacion" path="tipoOrganizacion.idTipoOrganizacion" name="tipoOrganizacion" class="combobox-autocomplete form-control">
@@ -160,19 +172,19 @@
         <%@include file="../General/js.jsp"%>
         <script src="js/cargaCodigosPostalesParaEditarOP.js"></script>
         <script>
-            function pass(elemento)
-            {
-                if (elemento.value === "no")
-                {
-                    document.getElementById("cambiaPass").style.display = "none";
-                    document.getElementById("valid_pass").value = 0;
-                    document.getElementById("confirmPass").removeAttribute("required");
-                } else {
-                    document.getElementById("cambiaPass").style.display = "block";
-                    document.getElementById("valid_pass").value = 1;
-                    document.getElementById("confirmPass").required = "true";
-                }
-            }
+                                                function pass(elemento)
+                                                {
+                                                    if (elemento.value === "no")
+                                                    {
+                                                        document.getElementById("cambiaPass").style.display = "none";
+                                                        document.getElementById("valid_pass").value = 0;
+                                                        document.getElementById("confirmPass").removeAttribute("required");
+                                                    } else {
+                                                        document.getElementById("cambiaPass").style.display = "block";
+                                                        document.getElementById("valid_pass").value = 1;
+                                                        document.getElementById("confirmPass").required = "true";
+                                                    }
+                                                }
         </script>
     </body>
 </html>

@@ -156,7 +156,7 @@ public class ValidacionesOrganizaciones {
 
     }
 
-    public void valAltaAdminInst(Instancia instancia, BindingResult result, Model model, String codigo_postal, String existeCP, String otra_colonia) {
+     public void valAltaAdminInst(Instancia instancia, BindingResult result, Model model, String codigo_postal, String existeCP, String otra_colonia) {
         if (codigo_postal.equals("")) {
             result.addError(new ObjectError("codigo_postal", "Código postal vacío."));
             model.addAttribute("error_codigo_postal", error("Código postal vacío."));

@@ -31,7 +31,7 @@
 
                                     <div class="form-group">
                                         <label for="rfc">RFC:</label> 
-                                        <form:input path="rfc" id="rfc" size="20" maxlength="12" class="form-control" /><br/>
+                                        <form:input path="rfc" id="rfc" size="20" maxlength="13" class="form-control" /><br/>
                                         <form:errors path="rfc" class="alert alert-danger"/>
                                     </div>
 
@@ -67,15 +67,16 @@
                                         <form:errors path="tipoOrganizacion" class="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type ="submit" value = "Guardar Nueva Organización" class="btn btn-primary" /> 
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
                                         <label for="calle">Calle:</label>
                                         <form:input path="domicilio" id="domicilio" size="20" class="form-control" /><br/>
                                         <form:errors path="domicilio" class="alert alert-danger"/>
                                     </div>
+                                      <div class="form-group">
+                                        <input type ="submit" value = "Guardar Nueva Organización" class="btn btn-primary" /> 
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
                                     <div class="form-group">
                                         <label for="codigo_postal">C&oacute;digo Postal:</label>
                                         <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" class="form-control">
@@ -114,6 +115,26 @@
                                         <input type="hidden" id="preColonia" value="${idColonia}"/>
                                         ${error_otra_colonia}
                                     </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <form:input path="correo" name="puesto" class="form-control" type="text" placeholder="Correo electronico de la instancia" />
+                                        <form:errors path="correo" class="alert alert-danger" />
+                                        <br/>
+                                        <br/>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label for="contraseña">Cree una contraseña</label>
+                                                <form:input path="password" id="password" required="true" class="form-control" type="password" placeholder="Cree una contraseña" />
+                                                <form:errors path="password" class="alert alert-danger" />
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="password-confirm">Confirme su contraseña</label>
+                                                <input type="password" id="password-confirm" required="true" class="form-control" placeholder="Confirme su contraseña"/>
+                                                <br><span id="alert-password" class="alert alert-danger" style="display: none">Las contraseñas no coinciden</span>
+                                            </div>
+                                        </div>
+                                    </div>   
                                 </div>
                             </form:form>
                         </div>
@@ -123,7 +144,10 @@
             </div>
         </div>
         <%@include file="../General/js.jsp"%>
+          <!-- Javascript -->
         <script src="js/jquery.codigos.postales.js"></script>       
         <script src="js/jquery.manolo.js"></script>
+<!--        <script src="js/instancias.js"></script>
+        <script src="js/jquery-1.9.1.js"></script>-->
     </body>
 </html>

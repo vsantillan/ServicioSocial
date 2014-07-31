@@ -286,6 +286,7 @@ public class OrganizacionesController
             model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
+            model.addAttribute("ext", instancia.getExt());
             try
             {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());

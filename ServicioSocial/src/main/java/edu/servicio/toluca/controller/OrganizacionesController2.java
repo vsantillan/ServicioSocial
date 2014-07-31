@@ -258,11 +258,11 @@ public class OrganizacionesController2
                 instancia.setIdColonia(codigosPostales.agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
             }
 
-            System.out.print("no hubo errores");
+            System.out.print("no hubo errores .......  preparando actualizacion de DB");
             instancia.setValidacionAdmin(BigInteger.ZERO);
             instancia.setEstatus(BigInteger.ONE);
             instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
-            System.out.println("Pass encriptado:" + instancia.getPassword());
+            System.out.println("Pass encriptado de la nueva instancia:" + instancia.getPassword());
 
 //            ///Limpiando codigo
 //            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
@@ -474,7 +474,7 @@ public class OrganizacionesController2
 
         if (result.hasErrors())
         {
-            System.out.print("hubo errores");
+            System.out.print("hubo errores .... preparando actualizacion BD(Instancia)");
             System.out.println(instancia.toString());
             System.out.println(result.toString());
 
@@ -495,7 +495,7 @@ public class OrganizacionesController2
             return "/Organizaciones/altaAdminOrganizacion";
         } else
         {
-            System.out.print("no hubo errores");
+            System.out.print("No hubo errores....se procede a insertar en Instancia");
             instancia.setValidacionAdmin(BigInteger.ONE);
             instancia.setEstatus(BigInteger.ONE);
             ///Limpiando codigo
@@ -504,6 +504,7 @@ public class OrganizacionesController2
             instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
             instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
             instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
+            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
 
             List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
             if (!Unicos.isEmpty())
