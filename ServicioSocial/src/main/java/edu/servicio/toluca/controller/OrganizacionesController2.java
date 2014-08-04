@@ -943,6 +943,7 @@ public class OrganizacionesController2
                 model.addAttribute("mensaje1", session.getAttribute("MENSAJE").toString());
             }
             return "/PanelOrganizacion/panelOrganizacion";
+            //return "/General/menuOrganizacion";
         } else
         {
             model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");

@@ -26,8 +26,8 @@
                     <br>
                     <form:form name="formLogin" class="form-signin EnviarEnter" role="form" action="validaLogin.do" method="POST"  >
                         <h3 class="form-signin-heading">Iniciar Sesión</h3>
-                        <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario o alu_00289999" required autofocus>
-                        <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required>
+                        <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario o alu_00289999" required="required" autofocus>
+                        <input type="password" name="pass" id="pass" class="form-control" placeholder="Contraseña" required="required" />
                         <button class="btn btn-lg btn-primary btn-block" input type ="button"  id="btnLogin">Entrar</button>
                          <h5>Recuerda que para acceder debes de contar con los cr&eacute;ditos suficientes especificados en el manual del proceso del Servicio Social.</h5>
                         <div id="respLoginOrg" style="display:none;">
