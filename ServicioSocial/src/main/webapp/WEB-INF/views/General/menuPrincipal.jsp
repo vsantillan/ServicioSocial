@@ -19,7 +19,7 @@
         <div class="navbar-inner">
             <ul class="nav navbar-nav " role="navigation">
                 <li class="active"><a href="index.do" >Inicio</a></li>
-                <li><a href="preregistrarinstancia.do">Preregistro de instancias</a></li>
+                <li><a href="verificarinstancia.do">Preregistro de instancias</a></li>
                 <li><a href="manualProcedimiento.do">Manual de Procedimiento</a></li>
 <!--                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizaciones <b class="caret"></b></a>

@@ -19,7 +19,7 @@
             </div>
             <div class="row">
                 <br>
-                <form:form class="formprereg-cont" commandName="instancia" action="preregistrarinstancia.do" method="POST">
+                <form:form id="formulario-prereg" class="formprereg-cont" commandName="instancia" action="preregistrarinstancia.do" method="POST">
                     <div class="formprereg-cont-header">
                         <h2>Preregistro de instancia</h2>
                     </div>
@@ -32,6 +32,7 @@
                         <br/> <label for="rfc">RFC</label>
                         <form:input path="rfc" name="rfc" class="form-control" maxlength="13" type="text" placeholder="RFC de la organización" />
                         <form:errors path="rfc" class="alert alert-danger" />
+                        ${rfcError}
                         
                         <br /> <label for="tipo_organizacion">Tipo de Organización:</label> 
                         <core:forEach items="${tiposOrganizacion}" var="tipoOrganizacion">
@@ -49,7 +50,7 @@
                         <form:errors path="titular" class="alert alert-danger" />
                         
                         <br /> <label for="puesto">Puesto</label>
-                        <form:input path="puesto" name="puesto" class="form-control" type="text" placeholder="Puesto del titular dentro de la instancias" />
+                        <form:input path="puesto" name="puesto" class="form-control" type="text" placeholder="Puesto del titular dentro de la instancia" />
                         <form:errors path="puesto" class="alert alert-danger" />
                         
                         <br />
@@ -67,13 +68,13 @@
                         </div>
                             
                         <label for="email">Email</label>
-                        <form:input path="correo" name="puesto" class="form-control" type="text" placeholder="Correo electronico del estudiante" />
+                        <form:input path="correo" name="puesto" class="form-control" type="text" placeholder="Correo electrónico del estudiante" />
                         <form:errors path="correo" class="alert alert-danger" />
                         
                         <br />
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="telefono">Cree una contraseña</label>
+                                <label for="password">Cree una contraseña</label>
                                 <form:input path="password" id="password" required="true" class="form-control" type="password" placeholder="Cree una contraseña" />
                                 <form:errors path="password" class="alert alert-danger" />
                             </div>

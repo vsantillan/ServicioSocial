@@ -19,7 +19,7 @@
         <div class="navbar-inner">
             <ul class="nav navbar-nav " role="navigation">
                 <li><a href="index.do" >Inicio</a></li>
-                <li class="active"><a href="preregistrarinstancia.do">Preregistro de instancias</a></li>
+                <li class="active"><a href="verificarinstancia.do">Preregistro de instancias</a></li>
                 <li><a href="contacto.do">Contacto</a></li>
                     <% if (sesion.haySesion()) {
                             if (sesion.validaAlumno()) {

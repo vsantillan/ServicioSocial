@@ -78,3 +78,56 @@ $(document).ready(function()
     });
     
 });
+
+function buscarInstancia()
+{
+    var toSearch = $('#buscar-instanciaf').val();
+    var searchIn = $('#campoabuscar-combo').val();
+    
+    // Buscar instancias
+    var url = 'buscarinstancias.do?field=' + searchIn + '&value=' + toSearch;
+    $.get(url, function(response)
+    {
+        var container = $('#lista-instancias');
+        $('.instancia-encontrada').remove();
+        
+        if (response.length > 0) 
+        {
+            for(var i=0; i<response.length; i++)
+            {
+                var instanciaElement = '<div class="instancia-encontrada">'
+                                   + '<div class="instancia-encontrada-title">'
+                                   + response[i].nombre
+                                   + '</div> <div class="col-md-4">'
+                                   + '<span class="instancia-encontrada-subtitle">Email de la instancia</span><br/>'
+                                   + '<span class="instancia-encontrada-info">'
+                                   + response[i].email
+                                   + '</span> </div> <div class="col-md-4">'
+                                   + '<span class="instancia-encontrada-subtitle">Titular de la instancia</span><br/>'
+                                   + '<span class="instancia-encontrada-info">'
+                                   + response[i].titular
+                                   + '</span> </div> <div class="col-md-4">'
+                                   + '<span class="instancia-encontrada-subtitle">RFC de la instancia</span><br/>'
+                                   + '<span class="instancia-encontrada-info">'
+                                   + response[i].rfc
+                                   + '</span> </div> <div class="space-helper"> &nbsp; </div> </div>';
+                 container.append(instanciaElement);
+            }
+        }
+        else
+        {
+            var instanciaElement2 = '<div class="instancia-encontrada">'
+                                   + '<div class="instancia-encontrada-title">'
+                                   + 'No se ha encontrada ninguna instancia'
+                                   + '<div class="space-helper"> &nbsp; </div> </div>';
+            container.append(instanciaElement2);
+        }
+    });
+    
+    $('#instancias-result').css('display', 'block');
+}
+
+function showFormPreregistro()
+{
+    location.href="preregistrarinstancia.do";
+}

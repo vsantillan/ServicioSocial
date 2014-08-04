@@ -14,6 +14,18 @@
     color: red;
 }
 
+.aviso-instancia {
+    border: 1px solid #E5E5E5;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .05);
+    margin: auto;
+    width: 90%;
+}
+
+.aviso-instancia-content {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
 .inst-centered {
     text-align: center;
 }
@@ -46,6 +58,54 @@
     padding: 5px;
 }
 
+.instancia-encontrada {
+    border-left: 5px solid #2980B9;
+    box-shadow: 1px 0 3px 1px #888;
+    margin-bottom: 20px;
+    padding: 5px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
+
+.instancia-encontrada-title {
+    color: #2c3e50;
+    font-size: 1.25em;
+    font-weight: bold;
+    padding-left: 15px;
+}
+
+.instancia-encontrada-subtitle {
+    color: #34495e;
+    font-size: 1.13em;
+}
+
+.instancias-list {
+    margin-bottom: 30px;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.instancias-list-footer {
+    margin-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 2%;
+}
+
 .alert {
     display: block;
+}
+
+.space-helper {
+    line-height: 0.5;
+}
+
+
+/** IDs */
+
+#buscar-instancia-btn {
+    margin-left: 15px;
+}
+
+#instancias-result {
+    display: none;
 }
