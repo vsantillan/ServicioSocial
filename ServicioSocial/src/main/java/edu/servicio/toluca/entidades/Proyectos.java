@@ -38,13 +38,14 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * 
+ *
  * @author SATELLITE
  */
 @Entity
 @Table(name = "PROYECTOS", catalog = "", schema = "GES_VIN")
 @XmlRootElement
-@NamedQueries({
+@NamedQueries(
+{
     @NamedQuery(name = "Proyectos.findAll", query = "SELECT p FROM Proyectos p"),
     @NamedQuery(name = "Proyectos.findByIdProyecto", query = "SELECT p FROM Proyectos p WHERE p.idProyecto = :idProyecto"),
     @NamedQuery(name = "Proyectos.findByDomicilio", query = "SELECT p FROM Proyectos p WHERE p.domicilio = :domicilio"),
@@ -57,8 +58,11 @@ import org.hibernate.validator.constraints.NotBlank;
     @NamedQuery(name = "Proyectos.findByFechaAlta", query = "SELECT p FROM Proyectos p WHERE p.fechaAlta = :fechaAlta"),
     @NamedQuery(name = "Proyectos.findByVacantes", query = "SELECT p FROM Proyectos p WHERE p.vacantes = :vacantes"),
     @NamedQuery(name = "Proyectos.findByVacantesDisponibles", query = "SELECT p FROM Proyectos p WHERE p.vacantesDisponibles = :vacantesDisponibles"),
-    @NamedQuery(name = "Proyectos.findByNombre", query = "SELECT p FROM Proyectos p WHERE p.nombre = :nombre")})
-public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErrores {
+    @NamedQuery(name = "Proyectos.findByNombre", query = "SELECT p FROM Proyectos p WHERE p.nombre = :nombre")
+})
+public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoErrores
+{
+
     @Size(max = 7)
     @Column(name = "EXT")
     private String ext;
@@ -73,21 +77,21 @@ public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErr
     @Column(name = "ID_PROYECTO")
     private BigDecimal idProyecto;
     @Basic(optional = false)
-    @Size(max = 100,message = "El campo Domicilio sólo puede tener hasta 100 caracteres.")
-    @Pattern(regexp =letrasNumerosEspeciales, message = errorCampoVacio)
+    @Size(max = 100, message = "El campo Domicilio sólo puede tener hasta 100 caracteres.")
+    @Pattern(regexp = letrasNumerosEspeciales, message = errorCampoVacio)
     @Column(name = "DOMICILIO")
     private String domicilio;
     @Basic(optional = false)
     @NotNull
     @Size(max = 45, message = "El campo Nombre del Responsable sólo puede tener hasta 45 caracteres.")
-    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE_RESPONSABLE")
     @NotBlank
     private String nombreResponsable;
     @Basic(optional = false)
     @NotNull
     @Size(max = 45, message = "El campo Puesto del Responsable sólo puede tener hasta 45 caracteres.")
-    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "RESPONSABLE_PUESTO")
     private String responsablePuesto;
     @Basic(optional = false)
@@ -120,15 +124,15 @@ public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErr
     @Basic(optional = false)
     @NotNull
     @Size(max = 60, message = "El Campo Nombre del Proyecto sólo puede tener hasta 60 caracteres.")
-    @Pattern(regexp =letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
+    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
-   
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<ProyectoPerfil> proyectoPerfilCollection;
-    
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "idProyecto")
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Actividades> actividadesCollection;
     @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
     @ManyToOne(optional = false)
@@ -138,25 +142,29 @@ public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErr
     private Programa idPrograma;
     @JoinColumn(name = "ID_INSTANCIA", referencedColumnName = "ID_INSTANCIA")
     @ManyToOne(optional = false)
-   
+
     private Instancia idInstancia;
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
     @OneToMany(mappedBy = "idproyecto")
- 
+
     private Collection<FormatoUnico> formatoUnicoCollection;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
 //    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;
 //    
-    public Proyectos() {
+
+    public Proyectos()
+    {
     }
 
-    public Proyectos(BigDecimal idProyecto) {
+    public Proyectos(BigDecimal idProyecto)
+    {
         this.idProyecto = idProyecto;
     }
 
-    public Proyectos(BigDecimal idProyecto, String domicilio, String nombreResponsable, String responsablePuesto, long telefonoResponsable, BigInteger validacionAdmin, BigInteger estatus, String modalidad, Date fechaAlta, BigInteger vacantes, BigInteger vacantesDisponibles) {
+    public Proyectos(BigDecimal idProyecto, String domicilio, String nombreResponsable, String responsablePuesto, long telefonoResponsable, BigInteger validacionAdmin, BigInteger estatus, String modalidad, Date fechaAlta, BigInteger vacantes, BigInteger vacantesDisponibles)
+    {
         this.idProyecto = idProyecto;
         this.domicilio = domicilio;
         this.nombreResponsable = nombreResponsable;
@@ -170,234 +178,289 @@ public class Proyectos implements Serializable, ExpresionesRegulares,CatalogoErr
         this.vacantesDisponibles = vacantesDisponibles;
     }
 
-    public BigDecimal getIdProyecto() {
+    public BigDecimal getIdProyecto()
+    {
         return idProyecto;
     }
 
-    public void setIdProyecto(BigDecimal idProyecto) {
+    public void setIdProyecto(BigDecimal idProyecto)
+    {
         this.idProyecto = idProyecto;
     }
 
-    public String getDomicilio() {
+    public String getDomicilio()
+    {
         return domicilio;
     }
 
-    public void setDomicilio(String domicilio) {
+    public void setDomicilio(String domicilio)
+    {
         this.domicilio = domicilio;
     }
 
-    public String getNombreResponsable() {
+    public String getNombreResponsable()
+    {
         return nombreResponsable;
     }
 
-    public void setNombreResponsable(String nombreResponsable) {
+    public void setNombreResponsable(String nombreResponsable)
+    {
         this.nombreResponsable = nombreResponsable;
     }
 
-    public String getResponsablePuesto() {
+    public String getResponsablePuesto()
+    {
         return responsablePuesto;
     }
 
-    public void setResponsablePuesto(String responsablePuesto) {
+    public void setResponsablePuesto(String responsablePuesto)
+    {
         this.responsablePuesto = responsablePuesto;
     }
 
-    public long getTelefonoResponsable() {
+    public long getTelefonoResponsable()
+    {
         return telefonoResponsable;
     }
 
-    public void setTelefonoResponsable(long telefonoResponsable) {
+    public void setTelefonoResponsable(long telefonoResponsable)
+    {
         this.telefonoResponsable = telefonoResponsable;
     }
 
-    public BigInteger getValidacionAdmin() {
+    public BigInteger getValidacionAdmin()
+    {
         return validacionAdmin;
     }
+
     @Cache(usage = CacheConcurrencyStrategy.NONE)
-    public void setValidacionAdmin(BigInteger validacionAdmin) {
+    public void setValidacionAdmin(BigInteger validacionAdmin)
+    {
         this.validacionAdmin = validacionAdmin;
     }
+
     @Cache(usage = CacheConcurrencyStrategy.NONE)
-    public BigInteger getEstatus() {
+    public BigInteger getEstatus()
+    {
         return estatus;
     }
+
     @Cache(usage = CacheConcurrencyStrategy.NONE)
-    public void setEstatus(BigInteger estatus) {
+    public void setEstatus(BigInteger estatus)
+    {
         this.estatus = estatus;
     }
 
-    public String getModalidad() {
+    public String getModalidad()
+    {
         return modalidad;
     }
 
-    public void setModalidad(String modalidad) {
+    public void setModalidad(String modalidad)
+    {
         this.modalidad = modalidad;
     }
 
-    public Date getFechaAlta() {
+    public Date getFechaAlta()
+    {
         return fechaAlta;
     }
 
-    public void setFechaAlta(Date fechaAlta) {
+    public void setFechaAlta(Date fechaAlta)
+    {
         this.fechaAlta = fechaAlta;
     }
 
-    public BigInteger getVacantes() {
+    public BigInteger getVacantes()
+    {
         return vacantes;
     }
 
-    public void setVacantes(BigInteger vacantes) {
+    public void setVacantes(BigInteger vacantes)
+    {
         this.vacantes = vacantes;
     }
 
-    public BigInteger getVacantesDisponibles() {
+    public BigInteger getVacantesDisponibles()
+    {
         return vacantesDisponibles;
     }
 
-    public void setVacantesDisponibles(BigInteger vacantesDisponibles) {
+    public void setVacantesDisponibles(BigInteger vacantesDisponibles)
+    {
         this.vacantesDisponibles = vacantesDisponibles;
     }
 
-    public String getNombre() {
+    public String getNombre()
+    {
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre)
+    {
         this.nombre = nombre;
     }
 
     @XmlTransient
     @Cache(usage = CacheConcurrencyStrategy.NONE)
-    public Collection<ProyectoPerfil> getProyectoPerfilCollection() {
+    public Collection<ProyectoPerfil> getProyectoPerfilCollection()
+    {
         return proyectoPerfilCollection;
     }
 
-    public void setProyectoPerfilCollection(Collection<ProyectoPerfil> proyectoPerfilCollection) {
+    public void setProyectoPerfilCollection(Collection<ProyectoPerfil> proyectoPerfilCollection)
+    {
         this.proyectoPerfilCollection = proyectoPerfilCollection;
     }
-    
+
     @XmlTransient
     @Cache(usage = CacheConcurrencyStrategy.NONE)
-    public Collection<Actividades> getActividadesCollection() {
+    public Collection<Actividades> getActividadesCollection()
+    {
         return actividadesCollection;
     }
 
-    public void setActividadesCollection(Collection<Actividades> actividadesCollection) {
+    public void setActividadesCollection(Collection<Actividades> actividadesCollection)
+    {
         this.actividadesCollection = actividadesCollection;
     }
 
-    public TipoProyecto getIdTipoProyecto() {
+    public TipoProyecto getIdTipoProyecto()
+    {
         return idTipoProyecto;
     }
 
-    public void setIdTipoProyecto(TipoProyecto idTipoProyecto) {
+    public void setIdTipoProyecto(TipoProyecto idTipoProyecto)
+    {
         this.idTipoProyecto = idTipoProyecto;
     }
 
-    public Programa getIdPrograma() {
+    public Programa getIdPrograma()
+    {
         return idPrograma;
     }
 
-    public void setIdPrograma(Programa idPrograma) {
+    public void setIdPrograma(Programa idPrograma)
+    {
         this.idPrograma = idPrograma;
     }
+
     @Cache(usage = CacheConcurrencyStrategy.NONE)
-    public Instancia getIdInstancia() {
+    public Instancia getIdInstancia()
+    {
         return idInstancia;
     }
 
-    public void setIdInstancia(Instancia idInstancia) {
+    public void setIdInstancia(Instancia idInstancia)
+    {
         this.idInstancia = idInstancia;
     }
 
-    public Colonia getIdColonia() {
+    public Colonia getIdColonia()
+    {
         return idColonia;
     }
 
-    public void setIdColonia(Colonia idColonia) {
+    public void setIdColonia(Colonia idColonia)
+    {
         this.idColonia = idColonia;
     }
 
     @XmlTransient
     @Cache(usage = CacheConcurrencyStrategy.NONE)
-    public Collection<FormatoUnico> getFormatoUnicoCollection() {
+    public Collection<FormatoUnico> getFormatoUnicoCollection()
+    {
         return formatoUnicoCollection;
     }
 
-    public void setFormatoUnicoCollection(Collection<FormatoUnico> formatoUnicoCollection) {
+    public void setFormatoUnicoCollection(Collection<FormatoUnico> formatoUnicoCollection)
+    {
         this.formatoUnicoCollection = formatoUnicoCollection;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 0;
         hash += (idProyecto != null ? idProyecto.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(Object object)
+    {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Proyectos)) {
+        if (!(object instanceof Proyectos))
+        {
             return false;
         }
         Proyectos other = (Proyectos) object;
-        if ((this.idProyecto == null && other.idProyecto != null) || (this.idProyecto != null && !this.idProyecto.equals(other.idProyecto))) {
+        if ((this.idProyecto == null && other.idProyecto != null) || (this.idProyecto != null && !this.idProyecto.equals(other.idProyecto)))
+        {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "edu.servicio.toluca.entidades.Proyectos[ idProyecto=" + idProyecto + " ]";
     }
 
     @XmlTransient
     @Cache(usage = CacheConcurrencyStrategy.NONE)
-    public Collection<RetroalimentacionProyecto2> getRetroalimentacionProyecto2Collection() {
+    public Collection<RetroalimentacionProyecto2> getRetroalimentacionProyecto2Collection()
+    {
         return retroalimentacionProyecto2Collection;
     }
 
-    public void setRetroalimentacionProyecto2Collection(Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection) {
+    public void setRetroalimentacionProyecto2Collection(Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection)
+    {
         this.retroalimentacionProyecto2Collection = retroalimentacionProyecto2Collection;
     }
-    
-    public void getInfToBd(){
+
+    public void getInfToBd()
+    {
         System.out.println("Proyecto");
-        try{
-            System.out.println("idProyecto:"+getIdProyecto());
-        }catch(Exception e){
+        try
+        {
+            System.out.println("idProyecto:" + getIdProyecto());
+        } catch (Exception e)
+        {
             System.out.println("Aun no tiene idProyecto");
-        }        
-        System.out.println("idInstancia:"+getIdInstancia().getIdInstancia());
-        System.out.println("Nombre proyecto:"+getNombre());
-        System.out.println("Vacantes:"+getVacantes());
-        System.out.println("Vacantes disponibles:"+getVacantesDisponibles());
-        System.out.println("Responsable:"+getNombreResponsable());
-        System.out.println("Puesto responsable:"+getResponsablePuesto());
-        System.out.println("Telefono:"+getTelefonoResponsable());
-        System.out.println("Domicilio:"+getDomicilio());
-        System.out.println("idColonia:"+getIdColonia().getIdColonia());
-        System.out.println("ValidacionAdmin:"+getValidacionAdmin());
-        System.out.println("Estatus:"+getEstatus());
-        System.out.println("idPrograma:"+getIdPrograma().getIdPrograma());
-        System.out.println("Modalidad:"+getModalidad());
-        System.out.println("Fecha alta:"+getFechaAlta());
-        System.out.println("Tipo Poryecto:"+getIdTipoProyecto().getIdTipoProyecto());
-        
-    }
-    
-    public void getEverythingDebugged(){
-        
+        }
+        System.out.println("idInstancia:" + getIdInstancia().getIdInstancia());
+        System.out.println("Nombre proyecto:" + getNombre());
+        System.out.println("Vacantes:" + getVacantes());
+        System.out.println("Vacantes disponibles:" + getVacantesDisponibles());
+        System.out.println("Responsable:" + getNombreResponsable());
+        System.out.println("Puesto responsable:" + getResponsablePuesto());
+        System.out.println("Telefono:" + getTelefonoResponsable());
+        System.out.println("Domicilio:" + getDomicilio());
+        System.out.println("idColonia:" + getIdColonia().getIdColonia());
+        System.out.println("ValidacionAdmin:" + getValidacionAdmin());
+        System.out.println("Estatus:" + getEstatus());
+        System.out.println("idPrograma:" + getIdPrograma().getIdPrograma());
+        System.out.println("Modalidad:" + getModalidad());
+        System.out.println("Fecha alta:" + getFechaAlta());
+        System.out.println("Tipo Poryecto:" + getIdTipoProyecto().getIdTipoProyecto());
+
     }
 
-    public String getExt() {
+    public void getEverythingDebugged()
+    {
+
+    }
+
+    public String getExt()
+    {
         return ext;
     }
 
-    public void setExt(String ext) {
+    public void setExt(String ext)
+    {
         this.ext = ext;
     }
-    
+
 }

@@ -17,109 +17,109 @@
                         </tr>
                         <tr>
                             <th><p>Nombre del Proyecto:</p></th>
-                            <td><p>${proyectoDetalle.nombre}</p></td>
+                        <td><p>${proyectoDetalle.nombre}</p></td>
                         </tr>
                         <tr>
                             <th><p>N&uacute;mero de vacantes:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.vacantes}" /></p></td>
+                        <td><p><core:out value="${proyectoDetalle.vacantes}" /></p></td>
                         </tr> 
                         <tr>
                             <th><p>N&uacute;mero de vacantes disponibles:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.vacantesDisponibles}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.vacantesDisponibles}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Instancia:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idInstancia.nombre}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idInstancia.nombre}"/></p></td>
                         </tr>                
                         <tr>
                             <th><p>Titular:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idInstancia.titular}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idInstancia.titular}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Puesto del Titular:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idInstancia.puesto}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idInstancia.puesto}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Tel&eacute;fono:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idInstancia.telefono}"/> EXT:<core:out value="${proyectoDetalle.idInstancia.ext}"/> </p></td>
+                        <td><p><core:out value="${proyectoDetalle.idInstancia.telefono}"/> EXT:<core:out value="${proyectoDetalle.idInstancia.ext}"/> </p></td>
                         </tr>
                         <tr>
                             <th><p>Domicilio de la Instancia:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idInstancia.domicilio}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idInstancia.domicilio}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>C&oacute;digo Postal de la Instancia:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.idCp.cp}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.idCp.cp}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Colonia de la Instancia:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.nombre}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idInstancia.idColonia.nombre}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Actividades:</p></th>
-                            <td><p>                        
-                                    <core:choose>
-                                        <core:when test="${empty proyectoDetalle.actividadesCollection}">
-                                        <p>No hay actividades</p>
-                                    </core:when>
-                                    <core:otherwise>
-                                        <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
-                                            <core:choose>
-                                                <core:when test="${actividades.estatus==1}">
-                                                    <p>${actividades.detalle}</p>
-                                                </core:when>
-                                            </core:choose>
-                                        </core:forEach>
-                                    </core:otherwise>
-                                </core:choose>                                                          
-                                </p>
-                            </td>
+                        <td><p>                        
+                                <core:choose>
+                                    <core:when test="${empty proyectoDetalle.actividadesCollection}">
+                                    <p>No hay actividades</p>
+                                </core:when>
+                                <core:otherwise>
+                                    <core:forEach items="${proyectoDetalle.actividadesCollection}" var="actividades">
+                                        <core:choose>
+                                            <core:when test="${actividades.estatus==1}">
+                                                <p>${actividades.detalle}</p>
+                                            </core:when>
+                                        </core:choose>
+                                    </core:forEach>
+                                </core:otherwise>
+                            </core:choose>                                                          
+                            </p>
+                        </td>
                         </tr>
                         <tr>
                             <th><p>Responsable del Programa:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.nombreResponsable}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.nombreResponsable}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Puesto del Responsable:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.responsablePuesto}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.responsablePuesto}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Tel&eacute;fono del Responsable:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.telefonoResponsable}"/> EXT:<core:out value="${proyectoDetalle.ext}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.telefonoResponsable}"/> EXT:<core:out value="${proyectoDetalle.ext}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Domicilio del programa:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.domicilio}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.domicilio}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>C&oacute;digo Postal del programa:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idColonia.idCp.cp}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idColonia.idCp.cp}"/></p></td>
                         </tr>
                         <tr>
                             <th><p>Colonia del programa:</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idColonia.nombre}"/></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idColonia.nombre}"/></p></td>
                         </tr>                
                         <tr>
                             <th><p>Tipo de Proyecto</p></th>
-                            <td><p><core:out value="${proyectoDetalle.idTipoProyecto.descripcion}" /></p></td>
+                        <td><p><core:out value="${proyectoDetalle.idTipoProyecto.descripcion}" /></p></td>
                         </tr>
                         <tr>
                             <th><p>Perfil buscado:</p></th>
-                            <td><p>
-                                    <core:choose>
-                                        <core:when test="${empty proyectoDetalle.proyectoPerfilCollection}">
-                                        <p>Ninguno</p>
-                                    </core:when>
-                                    <core:otherwise>
-                                        <core:forEach items="${proyectoDetalle.proyectoPerfilCollection}" var="perfiles">
-                                            <ul>
-                                                <li>  <p>Perfil: ${perfiles.idPerfil.nombre}</p></li>
-                                            </ul>
-                                        </core:forEach>
-                                    </core:otherwise>
-                                </core:choose>
-                                </p>
-                            </td>
+                        <td><p>
+                                <core:choose>
+                                    <core:when test="${empty proyectoDetalle.proyectoPerfilCollection}">
+                                    <p>Ninguno</p>
+                                </core:when>
+                                <core:otherwise>
+                                    <core:forEach items="${proyectoDetalle.proyectoPerfilCollection}" var="perfiles">
+                                        <ul>
+                                            <li>  <p>Perfil: ${perfiles.idPerfil.nombre}</p></li>
+                                        </ul>
+                                    </core:forEach>
+                                </core:otherwise>
+                            </core:choose>
+                            </p>
+                        </td>
                         </tr>
                     </table>
                 </div>

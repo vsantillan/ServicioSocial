@@ -7,6 +7,7 @@ package edu.servicio.toluca.login;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -25,7 +26,7 @@ public class Conexion {
     }
 
     //conexion a la base de datos
-    public Connection conectar(String usu, String cont) throws ClassNotFoundException, SQLException {
+    public Connection conectar(String usu, String cont) {
         //IP LUGO
         String host = IP_PUERTO_BD_ITT_CENTRO_COMPUTO;
         String sid  = SID_ORACLE_ITT_CENTRO_COMPUTO;
@@ -39,8 +40,18 @@ public class Conexion {
 //        String cadenaconexion ="jdbc:oracle:thin:@localhost:1521:XE";
         System.out.println("Creando conexion...");
         Connection connx = null;
-        Class.forName("oracle.jdbc.driver.OracleDriver");
-        connx = DriverManager.getConnection(cadenaconexion, usuario, contrasena);
+        
+        try
+        {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            connx = DriverManager.getConnection(cadenaconexion, usuario, contrasena);
+        } catch (ClassNotFoundException ex)
+        {
+            Exceptions.printStackTrace(ex);
+        } catch (SQLException ex)
+        {
+            Exceptions.printStackTrace(ex);
+        }
         System.out.println("Conexion exitosa!");
         return connx;
 
@@ -56,7 +67,6 @@ public class Conexion {
 //        String sid = "xe";
 
         String usuario = usu;
-
         String contrasena = cont;
         String cadenaconexion;
         cadenaconexion = "jdbc:oracle:thin:@" + host + sid;

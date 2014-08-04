@@ -4,7 +4,6 @@
  */
 package edu.servicio.toluca.beans;
 
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,30 +15,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.openide.util.Exceptions;
 
-
 /**
  *
  * @author SATELLITE
  */
-public class MetodosValidacion {
+public class MetodosValidacion
+{
 
     public boolean r = true;
 
-    public boolean minimoString(String s, int tamanyo) {
+    public boolean minimoString(String s, int tamanyo)
+    {
         r = true;
-        System.out.println("Tamaño:" + tamanyo + " Longitud:"+s.length());
-        if (s.length() < tamanyo) {
+        System.out.println("Tamaño:" + tamanyo + " Longitud:" + s.length());
+        if (s.length() < tamanyo)
+        {
             r = false;
         }
         return r;
     }
 
-    public boolean maximoString(String s, int tamanyo) {
+    public boolean maximoString(String s, int tamanyo)
+    {
         r = true;
-        System.out.println("Tamaño:" + tamanyo + " Longitud:"+s.length());
-        if (s.length() > tamanyo) {
-
-            
+        System.out.println("Tamaño:" + tamanyo + " Longitud:" + s.length());
+        if (s.length() > tamanyo)
+        {
 
             System.out.println("Tamaño:" + tamanyo + " Longitud:" + s.length());
 
@@ -53,19 +54,21 @@ public class MetodosValidacion {
         s = pasaMayusculas(s);
         //s = quitaAcentos(s);
         s = quitaCaracteresEspeciales(s);
-        return s;       
+        return s;
     }
+
     public String pasaMayusculas(String s)
     {
         return s.toUpperCase();
     }
+
     public String pasaMinusculas(String s)
     {
         return s.toLowerCase();
     }
 
-
-    public String quitaAcentos(String input) {
+    public String quitaAcentos(String input)
+    {
 
         // Cadena de caracteres original a sustituir.
         // ya no usadoString original = "ÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑÇ";
@@ -74,15 +77,16 @@ public class MetodosValidacion {
         //ya no usado String ascii = "AAAEEEIIIOOOUUUNC";
         String ascii = "AAEEIIOOUUC";
         String output = input;
-        for (int i = 0; i < original.length(); i++) {
+        for (int i = 0; i < original.length(); i++)
+        {
             // Reemplazamos los caracteres especiales.
             output = output.replace(original.charAt(i), ascii.charAt(i));
         }//for i
         return output;
     }//remove1
 
-
-    public String quitaCaracteresEspeciales(String s) {
+    public String quitaCaracteresEspeciales(String s)
+    {
 
         Pattern patron = Pattern.compile("[^A-Za-z 0-9]");
         Matcher encaja = patron.matcher(s);
@@ -90,15 +94,16 @@ public class MetodosValidacion {
         return s;
     }
 
-    public String dejarSoloNumeros(String s) {
+    public String dejarSoloNumeros(String s)
+    {
         Pattern patron = Pattern.compile("[^0-9]");
         Matcher encaja = patron.matcher(s);
         s = encaja.replaceAll("");
         return s;
     }
 
-
-    public boolean esHora(String s) {
+    public boolean esHora(String s)
+    {
         //Pattern patron = Pattern.compile("[0-9][0-9]:[0-9][0-9]");
 //        Pattern patron = Pattern.compile("\\|([0-9]|([0-1][0-9])|(2[0-3]))\\:[0-5][0-9]\\|");
 //        Matcher encaja = patron.matcher(s);
@@ -109,14 +114,16 @@ public class MetodosValidacion {
 //        }
         boolean r = true;
         DateFormat formato = new SimpleDateFormat("HH:mm");
-        try {
-            Date h1 = (Date)formato.parse(s);
-            System.out.println("Sin problema al parsear queda"+h1);
+        try
+        {
+            Date h1 = (Date) formato.parse(s);
+            System.out.println("Sin problema al parsear queda" + h1);
             return true;
-        } catch (Exception ex) {
-            r= false;
+        } catch (Exception ex)
+        {
+            r = false;
             Exceptions.printStackTrace(ex);
-            System.out.println("excepcion"+ex.getMessage());
+            System.out.println("excepcion" + ex.getMessage());
             return false;
         }
         //return r;

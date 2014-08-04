@@ -219,7 +219,7 @@
                                                         <form:input maxlength="10" path ="telefono_cel" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
                                                     </div>
                                                     <div class="form-group col-md-4">
-                                                        <label>*Tel&eacute;fono oficina:</label>
+                                                        <label>Tel&eacute;fono oficina:</label>
                                                         <label><form:input maxlength="10" path ="telefono_oficina" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> </label>
                                                     </div>
                                                 </div>
@@ -229,11 +229,17 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Twitter:</label>
-                                                    <form:input maxlength="25" path ="twitter" class="form-control"/>
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">@</div>
+                                                        <form:input maxlength="25" path ="twitter" class="form-control"/>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Facebook:</label>
-                                                    <form:input maxlength="30" path ="facebook" class="form-control" />
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">/</div>
+                                                        <form:input maxlength="30" path ="facebook" class="form-control" />
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-md-offset-4">
@@ -526,9 +532,9 @@
     <script src="js/jquery.codigos.postales.js"></script>       
     <script src="js/jquery.manolo.js"></script>
     <script>
-        $(document).ready(function() {
-            $('input[type=file]').bootstrapFileInput();
-        });
+                                                    $(document).ready(function() {
+                                                        $('input[type=file]').bootstrapFileInput();
+                                                    });
     </script>
     <jsp:include page="../Template/headsModal.jsp" />
 

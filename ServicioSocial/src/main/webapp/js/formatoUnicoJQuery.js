@@ -45,7 +45,7 @@ function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
 {
     console.log('--IdProyactual:' + idProyActual);
     for (i = 0; i < proyecto.nombre_responsable.length; i++) {
-        if (idProyActual == proyecto.id_proyecto[i])
+        if (idProyActual === proyecto.id_proyecto[i])
         {
             console.log('--soniguales');
             //$('#idProyecto').val(proyecto.id_proyecto[i]);
@@ -91,7 +91,7 @@ function recargaProyectos(idInstancia, idProyecto)
             console.log('Respuesda.id_proyecto es:' + respuesta.id_proyecto[i]);
             console.log('Respuesda.nombre es:' + respuesta.nombre[i]);
             //$('#idProyecto').val(proyecto.id_proyecto[i]);
-            $('#linkMasInfoProyecto').attr("href", "detalleProyecto.do?id=" + proyecto.id_proyecto[i]);
+//            $('#linkMasInfoProyecto').attr("href", "detalleProyecto.do?id=" + proyecto.id_proyecto[i]);
             $('<option value=' + respuesta.id_proyecto[i] + '>' + respuesta.nombre[i] + '</option>').appendTo("#proyectos");
             $('#domicilioOrg').val('');
             $('#nombre_responsable').val('');
@@ -103,6 +103,12 @@ function recargaProyectos(idInstancia, idProyecto)
             $('#telefono_responsable').val(respuesta.telefono_responsable[i]);
             $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDP + "&idInstancia=" + idInstancia + "");
         }
+        
+        $("#linkMasInfoProyecto").click(function() {
+            var idProyectoCombo = $("#proyectos option:selected").val();
+            $('#linkMasInfoProyecto').attr("href", "detalleProyecto.do?id=" + idProyectoCombo);
+        });
+        
         console.log('Pasando a proyectos');
         console.log('tamanio de proyec es' + $("#proyectos option").size());
         $("#proyectos option").each(function() {
@@ -282,7 +288,7 @@ function enviarDatosOrganizaciones()
     }
     console.log(alumno);
     $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta) {
-        if (respuesta !== "" && respuesta!=="fallo fecha") {
+        if (respuesta !== "" && respuesta !== "fallo fecha") {
             alert(respuesta);
             cambioAutomatico();
             $('#listaObservacionesOK').empty();
