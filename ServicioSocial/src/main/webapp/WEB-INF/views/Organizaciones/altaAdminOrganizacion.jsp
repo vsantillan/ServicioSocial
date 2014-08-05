@@ -24,32 +24,32 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombre de la Organizaci&oacute;n:</label>                               
-                                        <form:input path="nombre" id="nombre" size="20" class="form-control"/><br/>
-                                        <form:errors path="nombre" class="alert alert-danger"/>
+                                        <form:input path="nombre" id="nombre" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/><br/>
+                                        <form:errors path="nombre" class="alert alert-danger" />
                                         ${error_sql}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="rfc">RFC:</label> 
-                                        <form:input path="rfc" id="rfc" size="20" maxlength="13" class="form-control" /><br/>
+                                        <form:input path="rfc" id="rfc" size="20" maxlength="13" class="form-control" placeholder="RFC debe tener entre 12 y 13 caraceres" /><br/>
                                         <form:errors path="rfc" class="alert alert-danger"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="titular">Titular:</label>
-                                        <form:input path="titular" id="titular" size="20" class="form-control" /><br/>
+                                        <form:input path="titular" id="titular" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/><br/>
                                         <form:errors path="titular" class="alert alert-danger"/>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="puesto">Puesto:</label>
-                                        <form:input path="puesto" id="puesto" size="20" class="form-control" /><br/>
+                                        <form:input path="puesto" id="puesto" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/><br/>
                                         <form:errors path="puesto" class="alert alert-danger"/>
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
                                             <label for="telefono">Tel&eacute;fono:</label>
-                                            <form:input path="telefono" id="telefono" size="20" maxlength="10" class="form-control" /><br/>
+                                            <form:input path="telefono" id="telefono" size="20" maxlength="10" class="form-control" placeholder="Ingrese su telefono a 10 digitos" /><br/>
                                             ${telefono}
                                         </div>
                                         <div class="form-group col-md-6">
@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="calle">Calle:</label>
-                                        <form:input path="domicilio" id="domicilio" size="20" class="form-control" /><br/>
+                                        <form:input path="domicilio" id="domicilio" size="20" class="form-control" placeholder="Ingrese su calle"/><br/>
                                         <form:errors path="domicilio" class="alert alert-danger"/>
                                     </div>
                                       <div class="form-group">
@@ -79,7 +79,7 @@
 
                                     <div class="form-group">
                                         <label for="codigo_postal">C&oacute;digo Postal:</label>
-                                        <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" class="form-control">
+                                        <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" class="form-control" placeholder="Solo numeros">
                                         <input type="hidden" id="preCP" value="${cp}"/><br/>
                                         ${error_codigo_postal}
                                     </div>
@@ -118,7 +118,7 @@
                                     <br>
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <form:input path="correo" name="puesto" class="form-control" type="text" placeholder="Correo electronico de la instancia" />
+                                        <form:input path="correo" name="puesto" class="form-control" type="text" placeholder="email@example.com" />
                                         <form:errors path="correo" class="alert alert-danger" />
                                         <br/>
                                         <br/>

@@ -719,7 +719,9 @@ public class OrganizacionesController2
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaAdminProyecto.do")
-    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, String nActividades, String nPerfiles, String cadenaActividades, String selectfrom, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad, HttpSession session, HttpServletRequest request)
+    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, 
+            String nActividades, String cadenaActividades,String cadenaPerfiles, String codigo_postal, 
+            String otra_colonia, String existeCP, String estado, String municipio, String ciudad, HttpSession session, HttpServletRequest request)
     {
         System.out.println("hola admin gda alta organizacion");
 
@@ -827,15 +829,13 @@ public class OrganizacionesController2
                 System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
             }
             //Insercion de Perfiles
-            //ProyectoPerfilModel proyectoPerfilModel;
-            if (selectfrom != null)
-            {
-                //proyectoPerfilModel = new ProyectoPerfilModel(selectto);                
+            if ( cadenaPerfiles != null)
+            {     
                 //Analisis de la cadena
-                StringTokenizer token = new StringTokenizer(selectfrom, ",");
+                StringTokenizer token = new StringTokenizer(cadenaPerfiles, ",");
                 ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
 
-                System.out.println("Analizar cadena:" + selectfrom);
+                System.out.println("Analizar cadena:" + cadenaPerfiles);
                 System.out.println("No de tokens:" + token.countTokens());
                 while (token.hasMoreTokens())
                 {

@@ -22,7 +22,7 @@ $(document).ready(function() {
 //    });
 
     //Formulario alta admin proyectos
-    if (typeof(iniciarAltaAdminProyecto) !== 'undefined' || typeof(iniciarAltaPropuestaInstancia) !== 'undefined' || typeof (iniciarAltaProyecto) !== 'undefined') {
+    if (typeof (iniciarAltaAdminProyecto) !== 'undefined' || typeof (iniciarAltaPropuestaInstancia) !== 'undefined' || typeof (iniciarAltaProyecto) !== 'undefined') {
         console.log("Iniciando alta admin proyecto");
         //iniciarPerfiles();
         var nActHidden = document.getElementById("PrenActividades");
@@ -56,7 +56,7 @@ $(document).ready(function() {
         console.log("Pretendiendo agregar actividad, nActividades:" + nActividades);
         console.log("actividad:" + actividad);
         if (nActividades < 5) {
-            if (typeof(actividad) === 'undefined') {
+            if (typeof (actividad) === 'undefined') {
                 $("#actividades").append("<li style='float:left;'><input type='text' size='100' maxlength='90' name='actividades[" + nActividades + "]' class='actividad form-control' id='" + nActividades + "' /><input type ='button' class='borrar btn btn-primary' value = 'Quitar'  /></li>");
             }
             else {
@@ -200,7 +200,7 @@ $(document).ready(function() {
 
     function preparaActividadesPerfiles() {
         console.log("Guardar");
-        //var cadenaPerfiles = "";
+        var cadenaPerfiles = "";
         var cadenaActividades = "";
 
         $(".actividad").each(function() {
@@ -209,13 +209,13 @@ $(document).ready(function() {
         });
         console.log("Cadena actividades:" + cadenaActividades);
         document.getElementById("cadenaActividades").value = cadenaActividades;
-
-        //Preparar perfiles seleccionados
-        var perfiles = document.getElementById("select-to");
-        for (i = 0; i < perfiles.length; i++) {
-            console.log("Seleccionando:" + perfiles.options[i].text);
-            perfiles.options[i].selected = true;
-        }
+        
+        $("select#select-from option").each(function()
+        {
+            console.log("Perfil:" + $(this).attr("value"));
+            cadenaPerfiles += ($(this).attr("value") + ",");
+        });
+        document.getElementById("cadenaPerfiles").value = cadenaPerfiles;
     }
 
     $("#btnGdaAdminProyecto").click(function(event) {
@@ -254,12 +254,12 @@ $(document).ready(function() {
             document.forms["formLogin"].submit();
         }
     });
-     $("#casistenciaespecial").keyup(function(event) {
+    $("#casistenciaespecial").keyup(function(event) {
         if (event.keyCode === 13) {
             document.forms["casistenciaespecial"].submit();
         }
     });
-     $("#casistencia").keyup(function(event) {
+    $("#casistencia").keyup(function(event) {
         if (event.keyCode === 13) {
             document.forms["casistencia"].submit();
         }
