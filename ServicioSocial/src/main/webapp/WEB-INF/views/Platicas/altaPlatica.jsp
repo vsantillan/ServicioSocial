@@ -117,7 +117,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <%-- Formulario Nueva lugar para platica de inducción --%>
+                                <%-- Formulario Nueva        lugar para platica de inducción --%>
                                 <a data-dismiss="modal" class="close"><span class="glyphicon glyphicon-remove"></span></a>
                                 <h1>Agregar un Lugar</h1>
                                 <p>Escriba la descripcion del lugar.</p>
