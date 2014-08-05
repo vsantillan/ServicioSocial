@@ -56,24 +56,11 @@
                 <tbody>
                     <core:forEach items="${alumnos}" var="current">
                         <tr class='gradeX' id="${current.id}">
-                            <th><core:out value="${current.datosPersonalesId.numeroControl}" /></th>
+                            <th><core:out value="${current.datosPersonalesId.alumnoId.id}" /></th>
                             <th><core:out value="${current.datosPersonalesId.nombre} ${current.datosPersonalesId.apellidoP} ${current.datosPersonalesId.apellidoM}" /></th>
-                            <th><core:out value="${current.datosPersonalesId}" /></th>  
+                            <th><core:out value="${current.datosPersonalesId.alumnoId.carrera}" /></th>  
                             <th><core:out value="${current.datosPersonalesId.correoElectronico}" /></th>
                             <th><core:out value="${current.datosPersonalesId.telefonoCel}" /></th>                  
-                            <th>
-                                <core:choose>
-                                    <core:when test="${current.validacionAdmin == 0}">
-                                        No Validado
-                                    </core:when>
-                                    <core:when test="${current.validacionAdmin == 1}">
-                                        Validado
-                                    </core:when>
-                                    <core:when test="${current.validacionAdmin == 2}">
-                                        Rechazado
-                                    </core:when>
-                                </core:choose>
-                            </th>
                         </tr>
                     </core:forEach>
                 </tbody>

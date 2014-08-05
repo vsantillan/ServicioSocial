@@ -95,11 +95,11 @@
                                         ${ext}
                                     </div>
                                 </div>
-<!--                                <div class="form-group">
-                                    <label for="telefono">Tel&eacute;fono:</label> 
-                                    <form:input path="telefono" id="telefono" placeholder="Telefono" class="form-control" maxlength="13"/><br/>
-                                    ${telefono}
-                                </div>-->
+                                <!--                                <div class="form-group">
+                                                                    <label for="telefono">Tel&eacute;fono:</label> 
+                                <form:input path="telefono" id="telefono" placeholder="Telefono" class="form-control" maxlength="13"/><br/>
+                                ${telefono}
+                            </div>-->
                                 <div class="form-group">
                                     <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label>
                                     <form:select id="tipoOrganizacion" path="tipoOrganizacion.idTipoOrganizacion" name="tipoOrganizacion" class="combobox-autocomplete form-control">
@@ -172,6 +172,7 @@
         <%@include file="../General/js.jsp"%>
         <script src="js/cargaCodigosPostalesParaEditarOP.js"></script>
         <script>
+                                                $("#password").removeAttr("value");
                                                 function pass(elemento)
                                                 {
                                                     if (elemento.value === "no")

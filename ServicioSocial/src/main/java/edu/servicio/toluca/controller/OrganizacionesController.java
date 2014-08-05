@@ -194,6 +194,7 @@ public class OrganizacionesController
     @RequestMapping(method = RequestMethod.GET, value = "/detalleProyecto.do")
     public String detalleProyecto(BigDecimal id, Model model, HttpSession session, HttpServletRequest request)
     {
+        logger.info("ID Proyecto " + id);
         model.addAttribute("proyectoDetalle", proyectosFacade.find(id));
         return "/Organizaciones/detalleProyecto";
     }
@@ -257,7 +258,9 @@ public class OrganizacionesController
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarOrganizacion.do")
-    public String modificarOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, String confirma_password, int valid_pass, HttpSession session, HttpServletRequest request, String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad)
+    public String modificarOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, 
+            String confirma_password, int valid_pass, HttpSession session, HttpServletRequest request, 
+            String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad)
     {
         System.out.println("nombre: " + instancia.getNombre());
         System.out.println("con id: " + instancia.getIdInstancia());

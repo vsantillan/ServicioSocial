@@ -181,7 +181,7 @@ public class OrganizacionesController2
         for (int i = 0; i < listaInstancias.size(); i++)
         {
             int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
-            if (estatus == 1 || estatus == 2)
+            if (estatus == 1)
             {
                 filtroInstancias.add(listaInstancias.get(i));
             }
@@ -1496,16 +1496,16 @@ public class OrganizacionesController2
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/verAlumnosProyecto.do")
-    public String verAlumnosProyecto(Model model, HttpSession session, HttpServletRequest request, String idProyecto)
+    public String verAlumnosProyecto(BigDecimal id, Model model, HttpSession session, HttpServletRequest request)
     {
+        logger.info("ID Proyecto " + id);
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.validaOrganizacion() || valSession.validaAdmin() || valSession.validaConsultas() || valSession.validaOperador() || valSession.validaRegistro())
         {
-            System.out.println("idProyecto" + idProyecto);
             List<FormatoUnico> alumnos = new ArrayList<FormatoUnico>();
             try
             {
-                alumnos = new ArrayList<FormatoUnico>(proyectosFacade.find(BigDecimal.valueOf(Double.parseDouble(idProyecto))).getFormatoUnicoCollection());
+                alumnos = new ArrayList<FormatoUnico>(proyectosFacade.find(id).getFormatoUnicoCollection());
             } catch (Exception e)
             {
                 System.out.println("Error cargando la lista");
