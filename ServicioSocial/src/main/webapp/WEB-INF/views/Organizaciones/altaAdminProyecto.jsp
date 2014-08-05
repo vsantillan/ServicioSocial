@@ -107,6 +107,7 @@
                                 <input type="hidden" name="nActividades" id="nActividades" value="0">
                                 <input type="hidden" name="PrenActividades" id="PrenActividades" value="${nActividades}">
                                 <input type="hidden" name="cadenaActividades" id="cadenaActividades">
+                                <input type="hidden" name="cadenaPerfiles" id="cadenaPerfiles">
 
                                 <input type="hidden" id="actividad0" value="${actividad0}" >
                                 <input type="hidden" id="actividad1" value="${actividad1}">
@@ -210,7 +211,7 @@
                                 </div>            
                             </div>
                             <div class="col-sm-5">
-                                <input id="btnGdaAdminProyecto" class="btn btn-primary" type = "submit" value = "Guardar Nuevo Proyecto" /> 
+                                <input id="btnGdaAdminProyecto" class="btn btn-primary guardar" type = "submit" value = "Guardar Nuevo Proyecto" /> 
                             </div>
                         </form:form> 
                     </div>
@@ -235,6 +236,4 @@
                 });
             });
         </script>   
-
-    </body>
 </html>
