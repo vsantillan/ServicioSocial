@@ -16,11 +16,15 @@ import org.openide.util.Exceptions;
 public class Conexion {
     //NO se modifican
     private static final String IP_PUERTO_BD_ITT_CENTRO_COMPUTO ="192.168.2.1:1521:";
-    private static final String SID_ORACLE_ITT_CENTRO_COMPUTO   ="sia";
+    private static final String SID_ORACLE_ITT_CENTRO_COMPUTO = "sia";
+
+//    private static final String IP_PUERTO_BD_ITT_CENTRO_COMPUTO = "localhost:1520:";
+//    private static final String SID_ORACLE_ITT_CENTRO_COMPUTO = "xe";
     
     //Modificar al ambiante a usar (Desarrollo,Calidad,Producción)
     //salvamex
     private static final String IP_PUERTO_BD_ITT_VINCULACION ="192.168.40.122:1521:";
+//    private static final String IP_PUERTO_BD_ITT_VINCULACION = "localhost:1520:";
     private static final String SID_ORACLE_ITT_VINCULACION ="xe";
     public Conexion() {
     }

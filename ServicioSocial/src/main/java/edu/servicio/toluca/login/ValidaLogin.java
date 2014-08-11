@@ -94,46 +94,40 @@ public class ValidaLogin
                     sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos no cumples con el mínimo de 70% de créditos para tramitar tu servicio social</div>");
                     sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                 }
-            }
-            //JOELITO
-            if (rol.equals("ROLE_GESVIN_OPERACION"))
+            } //JOELITO
+            else if (rol.equals("ROLE_GESVIN_OPERACION"))
             {
                 session.setAttribute("ROL", "OPERACION");
                 session.setAttribute("NOMBRE", "OPERADOR");
                 sesionBean.setPagReturn("redirect:panelAdministrador.do");
-            }
-            //DIRECTIVOS
-            if (rol.equals("ROLE_GESVIN_CONSULTAS"))
+            } //DIRECTIVOS
+            else if (rol.equals("ROLE_GESVIN_CONSULTAS"))
             {
                 session.setAttribute("ROL", "CONSULTAS");
                 session.setAttribute("NOMBRE", "ADMINISTRATIVO");
                 sesionBean.setPagReturn("redirect:panelAdministrador.do");
-            }
-            //BACKDOOR
-            if (rol.equals("ROLE_GESVIN_ADMIN"))
+            } //BACKDOOR
+            else if (rol.equals("ROLE_GESVIN_ADMIN"))
             {
                 session.setAttribute("ROL", "ADMIN");
                 session.setAttribute("NOMBRE", "SUPER ADMIN");
                 sesionBean.setPagReturn("redirect:panelAdministrador.do");
-            }
-            //ASISTENTE
-            if (rol.equals("ROLE_GESVIN_REGISTRO"))
+            } //ASISTENTE
+            else if (rol.equals("ROLE_GESVIN_REGISTRO"))
             {
                 session.setAttribute("ROL", "REGISTRO");
                 session.setAttribute("NOMBRE", "ASISTENTE");
                 sesionBean.setPagReturn("redirect:panelAdministrador.do");
-            }
-            //OTRO
-            if (rol.equals("OTRO"))
+            } //OTRO
+            else if (rol.equals("OTRO"))
             {
                 sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos no tiene los permisos necesarios para accesar al sistema.</div>");
                 sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
-            } else
+            } //Ultima opcion para intentar con instancias
+            else
             {
-                //Ultima opcion para intentar con instancias
-                System.out.println("Error al conectar!");
-                System.out.println("Verificando si es una organizacion");
-                boolean inicioSesion = true;
+                System.out.println("Verificando si es una organizacion ahora..");
+                boolean inicioSesion = false;
                 //Verifica si es una instancia por medio de su correo
                 List<Instancia> instancia = instanciaFacade.findBySpecificField("correo", usuario, "equal", null, null);
                 System.out.println(instancia.size());
@@ -155,7 +149,7 @@ public class ValidaLogin
                 {
                     System.out.println("No se ha encontrado conicidencia de ese correo...");
                 }
-
+                System.out.println("eres una porqueria " + inicioSesion);
                 if (inicioSesion)
                 {
                     //Verificando si este usuario tiene permisos de entrar
@@ -192,65 +186,7 @@ public class ValidaLogin
             System.out.println("finish.. if");
         } catch (Exception e)
         {
-//            System.out.println("enter to catch");
-//            System.out.println(e.toString());
-//            System.out.println("Error al conectar!");
-//            System.out.println("Verificando si es una organizacion");
-//            boolean inicioSesion = false;
-//            //Verificar si es una instancia por medio de su correo
-//            List<Instancia> instancia = instanciaFacade.findBySpecificField("correo", usuario, "equal", null, null);
-//            System.out.println(instancia.size());
-//            if (instancia.size() > 0)
-//            {
-//                System.out.println("SA86");
-//                System.out.println("pass: " + StringMD.getStringMessageDigest(pass, StringMD.SHA1));
-//                try
-//                {
-//                    if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1)))
-//                    {
-//                        inicioSesion = true;
-//                    }
-//                } catch (Exception ex)
-//                {
-//                    System.out.println("No hay password");
-//                }
-//            } else
-//            {
-//                System.out.println("No se ha encontrado conicidencia de ese correo...");
-//            }
-//
-//            if (inicioSesion)
-//            {
-//                //Verificando si este usuario tiene permisos de entrar
-//                System.out.println("Validacion Admin: " + instancia.get(0).getValidacionAdmin());
-//                System.out.println("Estatus: " + instancia.get(0).getEstatus());
-//                int validacionAdmin = Integer.parseInt(instancia.get(0).getValidacionAdmin().toString());
-//                int estatus = Integer.parseInt(instancia.get(0).getEstatus().toString());
-//
-//                if ((validacionAdmin == 1 || validacionAdmin == 2) && estatus == 1)
-//                {
-//                    System.out.println("Iniciando sesion con organizacion " + instancia.get(0).getNombre());
-//                    session.setAttribute("ROL", "ORGANIZACION");
-//                    session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
-//                    session.setAttribute("NOMBRE", instancia.get(0).getNombre());
-//                    System.out.println("Asignando rol...");
-//                    if (validacionAdmin == 2)
-//                    {
-//                        session.setAttribute("MENSAJE", "<div class=\"alert alert-danger\">Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
-//                    }
-//                    sesionBean.setPagReturn("redirect:panelOrganizacion.do");
-//                } else //si el status es 0
-//                {
-//                    System.out.println("La organizacion no puede ingresar, estatus inactivo");
-//                    sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
-//                    sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
-//                }
-//
-//            } else
-//            {
-//                sesionBean.setMensaje("<div class=\"alert alert-danger\">Usuario o contraseña incorrecta</div>");
-//                sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
-//            }
+            System.out.println(e.getMessage());
         }
         return sesionBean;
     }
