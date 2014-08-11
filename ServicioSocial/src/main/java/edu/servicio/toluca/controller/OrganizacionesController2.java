@@ -1503,6 +1503,7 @@ public class OrganizacionesController2
         if (valSession.validaOrganizacion() || valSession.validaAdmin() || valSession.validaConsultas() || valSession.validaOperador() || valSession.validaRegistro())
         {
             List<FormatoUnico> alumnos = new ArrayList<FormatoUnico>();
+            Proyectos proyecto = proyectosFacade.find(id);
             try
             {
                 alumnos = new ArrayList<FormatoUnico>(proyectosFacade.find(id).getFormatoUnicoCollection());
@@ -1511,6 +1512,7 @@ public class OrganizacionesController2
                 System.out.println("Error cargando la lista");
             }
             model.addAttribute("alumnos", alumnos);
+            model.addAttribute("proyecto", proyecto);
 
             return "/Organizaciones/verAlumnosProyecto";
         } else

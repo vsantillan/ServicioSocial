@@ -30,26 +30,36 @@
             'height': 450,
             'type': 'iframe'
         });
-        
+
         //FACY Alumnos Proyecto
         $(".fancyProy").fancybox({
             'autoScale': true,
             'transitionIn': 'none',
             'transitionOut': 'none',
             'width': 800,
-            'height': 700,            
+            'height': 700,
             'type': 'iframe'
         });
 
+
+//        $(".fancyFU").fancybox({
+//            'autoScale': false,
+//            'transitionIn': 'none',
+//            'transitionOut': 'none',
+//            'width': '800',
+//            'height': '700',
+//            'type': 'iframe'
+//        });
 
         $(".fancyFU").fancybox({
-            'autoScale': false,
-            'transitionIn': 'none',
-            'transitionOut': 'none',
-            'width': '90%',
-            'height': '90%',
-            'type': 'iframe'
+            autoScale: false,
+            width: 1000, // set the width
+            height: 250, // set the height
+            fitToView: true,
+            autoSize: false,
+            type: 'iframe'
         });
+
         $(".fancyFUI").fancybox({
             'autoScale': false,
             'transitionIn': 'none',
@@ -58,7 +68,6 @@
             'height': '90%',
             'type': 'iframe',
             'autoDimensions': false,
-            
         });
 
 
