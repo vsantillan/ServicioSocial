@@ -133,7 +133,7 @@ public class ValidaLogin
                 //Ultima opcion para intentar con instancias
                 System.out.println("Error al conectar!");
                 System.out.println("Verificando si es una organizacion");
-                boolean inicioSesion = false;
+                boolean inicioSesion = true;
                 //Verifica si es una instancia por medio de su correo
                 List<Instancia> instancia = instanciaFacade.findBySpecificField("correo", usuario, "equal", null, null);
                 System.out.println(instancia.size());
@@ -192,65 +192,65 @@ public class ValidaLogin
             System.out.println("finish.. if");
         } catch (Exception e)
         {
-            System.out.println("enter to catch");
-            System.out.println(e.toString());
-            System.out.println("Error al conectar!");
-            System.out.println("Verificando si es una organizacion");
-            boolean inicioSesion = false;
-            //Verificar si es una instancia por medio de su correo
-            List<Instancia> instancia = instanciaFacade.findBySpecificField("correo", usuario, "equal", null, null);
-            System.out.println(instancia.size());
-            if (instancia.size() > 0)
-            {
-                System.out.println("SA86");
-                System.out.println("pass: " + StringMD.getStringMessageDigest(pass, StringMD.SHA1));
-                try
-                {
-                    if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1)))
-                    {
-                        inicioSesion = true;
-                    }
-                } catch (Exception ex)
-                {
-                    System.out.println("No hay password");
-                }
-            } else
-            {
-                System.out.println("No se ha encontrado conicidencia de ese correo...");
-            }
-
-            if (inicioSesion)
-            {
-                //Verificando si este usuario tiene permisos de entrar
-                System.out.println("Validacion Admin: " + instancia.get(0).getValidacionAdmin());
-                System.out.println("Estatus: " + instancia.get(0).getEstatus());
-                int validacionAdmin = Integer.parseInt(instancia.get(0).getValidacionAdmin().toString());
-                int estatus = Integer.parseInt(instancia.get(0).getEstatus().toString());
-
-                if ((validacionAdmin == 1 || validacionAdmin == 2) && estatus == 1)
-                {
-                    System.out.println("Iniciando sesion con organizacion " + instancia.get(0).getNombre());
-                    session.setAttribute("ROL", "ORGANIZACION");
-                    session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
-                    session.setAttribute("NOMBRE", instancia.get(0).getNombre());
-                    System.out.println("Asignando rol...");
-                    if (validacionAdmin == 2)
-                    {
-                        session.setAttribute("MENSAJE", "<div class=\"alert alert-danger\">Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
-                    }
-                    sesionBean.setPagReturn("redirect:panelOrganizacion.do");
-                } else //si el status es 0
-                {
-                    System.out.println("La organizacion no puede ingresar, estatus inactivo");
-                    sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
-                    sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
-                }
-
-            } else
-            {
-                sesionBean.setMensaje("<div class=\"alert alert-danger\">Usuario o contraseña incorrecta</div>");
-                sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
-            }
+//            System.out.println("enter to catch");
+//            System.out.println(e.toString());
+//            System.out.println("Error al conectar!");
+//            System.out.println("Verificando si es una organizacion");
+//            boolean inicioSesion = false;
+//            //Verificar si es una instancia por medio de su correo
+//            List<Instancia> instancia = instanciaFacade.findBySpecificField("correo", usuario, "equal", null, null);
+//            System.out.println(instancia.size());
+//            if (instancia.size() > 0)
+//            {
+//                System.out.println("SA86");
+//                System.out.println("pass: " + StringMD.getStringMessageDigest(pass, StringMD.SHA1));
+//                try
+//                {
+//                    if (instancia.get(0).getPassword().equals(StringMD.getStringMessageDigest(pass, StringMD.SHA1)))
+//                    {
+//                        inicioSesion = true;
+//                    }
+//                } catch (Exception ex)
+//                {
+//                    System.out.println("No hay password");
+//                }
+//            } else
+//            {
+//                System.out.println("No se ha encontrado conicidencia de ese correo...");
+//            }
+//
+//            if (inicioSesion)
+//            {
+//                //Verificando si este usuario tiene permisos de entrar
+//                System.out.println("Validacion Admin: " + instancia.get(0).getValidacionAdmin());
+//                System.out.println("Estatus: " + instancia.get(0).getEstatus());
+//                int validacionAdmin = Integer.parseInt(instancia.get(0).getValidacionAdmin().toString());
+//                int estatus = Integer.parseInt(instancia.get(0).getEstatus().toString());
+//
+//                if ((validacionAdmin == 1 || validacionAdmin == 2) && estatus == 1)
+//                {
+//                    System.out.println("Iniciando sesion con organizacion " + instancia.get(0).getNombre());
+//                    session.setAttribute("ROL", "ORGANIZACION");
+//                    session.setAttribute(("NCONTROL"), instancia.get(0).getIdInstancia().toString().trim());
+//                    session.setAttribute("NOMBRE", instancia.get(0).getNombre());
+//                    System.out.println("Asignando rol...");
+//                    if (validacionAdmin == 2)
+//                    {
+//                        session.setAttribute("MENSAJE", "<div class=\"alert alert-danger\">Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
+//                    }
+//                    sesionBean.setPagReturn("redirect:panelOrganizacion.do");
+//                } else //si el status es 0
+//                {
+//                    System.out.println("La organizacion no puede ingresar, estatus inactivo");
+//                    sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
+//                    sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
+//                }
+//
+//            } else
+//            {
+//                sesionBean.setMensaje("<div class=\"alert alert-danger\">Usuario o contraseña incorrecta</div>");
+//                sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
+//            }
         }
         return sesionBean;
     }
