@@ -15,7 +15,6 @@ import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
 import edu.servicio.toluca.model.documentosFinales.ValidaDocumentosFinalesModel;
 import edu.servicio.toluca.model.vistaalumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
-import edu.servicio.toluca.model.historialservicio.HistorialServicioModel;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
 import edu.servicio.toluca.model.observaciones.ObservacionesModel;
 import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
