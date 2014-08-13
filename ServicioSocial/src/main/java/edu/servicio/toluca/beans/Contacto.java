@@ -18,7 +18,7 @@ public class Contacto implements Serializable{
     private static final long serialVersionUID = 1L;
     
     
-    @NotEmpty(message = "Escribe tu comentario") 
+    @NotEmpty(message = "Escribe tu mensaje")
     private String detalle;
     
    
@@ -27,7 +27,7 @@ public class Contacto implements Serializable{
     
     
     @NotEmpty(message = "Escribe un Correo") 
-    @Email(message = "No es correo valido")
+    @Email(message = "Formato de un correo: usuario@compañia.com")
     private String correo;
     
     

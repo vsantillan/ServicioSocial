@@ -19,12 +19,13 @@ import javax.mail.internet.MimeMessage;
  */
 public class EnviarCorreo implements Runnable 
 {
-
-    private String remitente = "luevanoguzman@gmail.com";
+    //luevanoguzman@gmail.com
+    //      Tristan13
+    private String remitente = "noreply.ittoluca@hotmail.com";
     private String destinatario;
     private String mensaje;
     private String asunto;
-    private String pass = "Tristan13";
+    private String pass = "halc0nSS/";
 
     public EnviarCorreo(String nombre, String destinatario, String mensaje) 
     {
@@ -42,8 +43,8 @@ public class EnviarCorreo implements Runnable
             // Propiedades de la conexión
             Properties props = new Properties();
             props.setProperty("mail.smtp.host", "smtp.gmail.com");
-            props.setProperty("mail.smtp.starttls.enable", "true");
-            props.setProperty("mail.smtp.port", "587");//587,465
+            //props.setProperty("mail.smtp.starttls.enable", "true");
+            props.setProperty("mail.smtp.port", "465");//587,465,
             props.setProperty("mail.smtp.user", remitente);
             props.setProperty("mail.smtp.auth", "true");
 
