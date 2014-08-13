@@ -42,9 +42,14 @@ body {
     background: #fff;
     border-color: #428bca;
 }
+.active-menu
+{
+    background: #5BC0DE;
+    border-color: #5BC0DE;
+}
 .lateral-menu
 {
-    background:#f7f5f4;
+    background:#fff;
     color:#333;
 
 }
