@@ -19,7 +19,7 @@
                 <!---------------------------------------------Contenido------------------------------------------->                
                 <br>
                 <div class="col-md-8 col-md-offset-2">
-                    
+
                     <div class="panel panel-info ">
                         <div class="panel-heading"><h3>Contacto</h3></div>
                         <div class="panel-body">
