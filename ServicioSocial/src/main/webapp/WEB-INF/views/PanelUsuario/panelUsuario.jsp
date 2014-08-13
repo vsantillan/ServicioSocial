@@ -28,18 +28,18 @@
                         <!---------------------------------------Fin Bienvenido Nombre Usuario-->                                     
                     </div>
 
-                    <!---------------------------------------Contenido Noticias Generales------------------->
                     <div class="panel-group" id="accordion">
+                        <!---------------------------------------Contenido Noticias Generales------------------->
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                        <h4 class="text-center">Noticias Generales <span class="badge pull-right">42</span></h4>
+                                        <h4 class="text-center">Noticias Generales<span class="badge alert-info pull-right noticiasBadge"></span></h4>
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse">
-                                <div class="panel-body">
+                                <div id="noticias" class="panel-body">
                                     <core:forEach items="${noticiasAlumnos}" var="noticia">
                                         <div class="bs-callout bs-callout-info">
                                             <h4>${noticia.titulo}</h4>
@@ -63,16 +63,16 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#panelObservaciones">
-                                        <h4 class="text-center">Observaciones<span class="badge pull-right">42</span</h4>
+                                        <h4 class="text-center">Observaciones<span class="badge alert-warning pull-right observacionesBadge"></span</h4>
                                     </a>
                                 </h4>
                             </div>
                             <div id="panelObservaciones" class="panel-collapse collapse">
-                                <div class="panel-body">
+                                <div id="observaciones" class="panel-body">
                                     <core:forEach items="${observaciones}" var="observacion">
-                                        <div class="bs-callout bs-callout-info">
+                                        <div class="bs-callout bs-callout-warning">
                                             <h4>${noticia.titulo}</h4>
-                                            <small>Fecha de publicación: <fmt:formatDate pattern="dd-MM-yyyy" value="${observacion.fecha}"/></small>
+                                            <small>Fecha de revisión: <fmt:formatDate pattern="dd-MM-yyyy" value="${observacion.fecha}"/></small>
                                             <p>${observacion.catalogoObservacionId.detalle}</p>
                                         </div>
                                     </core:forEach>
@@ -85,16 +85,16 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#panelSanciones">
-                                        <h4 class="text-center">Sanciones<span class="badge pull-right">42</span</h4>
+                                        <h4 class="text-center">Sanciones<span class="badge alert-warning pull-right sancionesBadge"></span</h4>
                                     </a>
                                 </h4>
                             </div>
                             <div id="panelSanciones" class="panel-collapse collapse">
-                                <div class="panel-body">
+                                <div id="sanciones" class="panel-body">
                                     <core:forEach items="${sanciones}" var="sancion">
                                         <core:choose>
                                             <core:when  test="${sancion.concepto==0}">
-                                                <div class="bs-callout bs-callout-info">
+                                                <div class="bs-callout bs-callout-danger">
                                                     <p>${sancion.detalle}</p>
                                                 </div>
                                             </core:when>
@@ -112,5 +112,6 @@
     </div><!--/row-->
 </div> <!-- /container -->
 <%@include file="../General/js.jsp"%>
+<script type="text/javascript" src="js/panelusuario.js"></script>
 </body>
 </html>

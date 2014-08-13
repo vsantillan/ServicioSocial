@@ -54,7 +54,7 @@ public class ValidacionPanelUsuarioFU {
                         int revisionesFui = 0;
                         try {
                             revisionesFui = Integer.parseInt(servicioBean.getFormatoUnico().getRevisionesFui().toString());
-                        } catch (Exception ex) {
+                        } catch (NumberFormatException ex) {
                         }
 
                         if (revisionesFui <= 5) {
