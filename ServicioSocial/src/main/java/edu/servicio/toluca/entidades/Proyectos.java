@@ -62,13 +62,15 @@ import org.hibernate.validator.constraints.NotBlank;
 })
 public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoErrores
 {
+    private static final long serialVersionUID = 1L;
 
-    @Size(max = 7)
+    @Size(max = 7, message = "La extensión no puede tener mas de 7 digitos")
     @Column(name = "EXT")
     private String ext;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<RetroalimentacionProyecto2> retroalimentacionProyecto2Collection;
-    private static final long serialVersionUID = 1L;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "generator", strategy = "increment")
     @Id
@@ -76,54 +78,65 @@ public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoEr
     @Basic(optional = false)
     @Column(name = "ID_PROYECTO")
     private BigDecimal idProyecto;
+    
     @Basic(optional = false)
-    @Size(max = 100, message = "El campo Domicilio sólo puede tener hasta 100 caracteres.")
+    @Size(max = 100, message = "El campo Domicilio debe tener un máximo de 100 caracteres.")
     @Pattern(regexp = letrasNumerosEspeciales, message = errorCampoVacio)
     @Column(name = "DOMICILIO")
     private String domicilio;
+    
     @Basic(optional = false)
     @NotNull
-    @Size(max = 45, message = "El campo Nombre del Responsable sólo puede tener hasta 45 caracteres.")
+    @Size(max = 45, message = "El Nombre del Responsable debe tener máximo de 45 caracteres.")
     @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE_RESPONSABLE")
     @NotBlank
     private String nombreResponsable;
+    
     @Basic(optional = false)
     @NotNull
-    @Size(max = 45, message = "El campo Puesto del Responsable sólo puede tener hasta 45 caracteres.")
+    @Size(max = 45, message = "El campo Puesto del Responsable admite un máximo de 45 caracteres.")
     @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "RESPONSABLE_PUESTO")
     private String responsablePuesto;
+    
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "Debe indicar un telefono para el responsable")
     @Column(name = "TELEFONO_RESPONSABLE")
     private long telefonoResponsable;
+    
     @Basic(optional = false)
     @Column(name = "VALIDACION_ADMIN")
     private BigInteger validacionAdmin;
+    
     @Basic(optional = false)
     @Column(name = "ESTATUS")
     private BigInteger estatus;
+    
     @Basic(optional = false)
     @Column(name = "MODALIDAD")
     private String modalidad;
+    
     @Basic(optional = false)
     //@NotNull
     @Column(name = "FECHA_ALTA")
     @Temporal(TemporalType.DATE)
     private Date fechaAlta;
+    
     @Basic(optional = false)
-    @NotNull(message = "No puede estar vacio")
+    @NotNull(message = "Debe indicar al menos una vacante")
     @Column(name = "VACANTES")
     @Min(1)
-    private BigInteger vacantes;
+    private BigInteger vacantes = BigInteger.ONE;
+    
     @Basic(optional = false)
     @Column(name = "VACANTES_DISPONIBLES")
     @Min(1)
     private BigInteger vacantesDisponibles;
+    
     @Basic(optional = false)
-    @NotNull
-    @Size(max = 60, message = "El Campo Nombre del Proyecto sólo puede tener hasta 60 caracteres.")
+    @NotNull(message = "Indique un nombre para el proyecto")
+    @Size(max = 60, message = "El Campo Nombre del Proyecto admite un máximo de 60 caracteres.")
     @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
@@ -134,21 +147,24 @@ public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoEr
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "idProyecto")
     private Collection<Actividades> actividadesCollection;
+    
     @JoinColumn(name = "ID_TIPO_PROYECTO", referencedColumnName = "ID_TIPO_PROYECTO")
     @ManyToOne(optional = false)
     private TipoProyecto idTipoProyecto;
+    
     @JoinColumn(name = "ID_PROGRAMA", referencedColumnName = "ID_PROGRAMA")
     @ManyToOne(optional = false)
     private Programa idPrograma;
+    
     @JoinColumn(name = "ID_INSTANCIA", referencedColumnName = "ID_INSTANCIA")
     @ManyToOne(optional = false)
-
     private Instancia idInstancia;
+    
     @JoinColumn(name = "ID_COLONIA", referencedColumnName = "ID_COLONIA")
     @ManyToOne
     private Colonia idColonia;
+    
     @OneToMany(mappedBy = "idproyecto")
-
     private Collection<FormatoUnico> formatoUnicoCollection;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInstancia")
 //    private Collection<RetroalimentacionProyecto> retroalimentacionProyectoCollection;

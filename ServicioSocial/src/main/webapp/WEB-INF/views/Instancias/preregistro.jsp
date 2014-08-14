@@ -98,7 +98,7 @@
                                     <input name="municipio" id="municipio-f" class="form-control" placeholder="Municipio" disabled="true" />
                                 </div>
                                 <div class="col-md-6">
-                                    <br/>   <label for="ciudad">Ciudad</label>
+                                    <br/><label for="ciudad">Ciudad</label>
                                     <input name="ciudad" id="ciudad-f" class="form-control" placeholder="Ciudad" disabled="true" />
                                 </div>
                             </div>

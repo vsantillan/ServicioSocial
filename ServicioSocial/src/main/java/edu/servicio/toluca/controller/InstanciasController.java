@@ -9,10 +9,18 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.Perfil;
+import edu.servicio.toluca.entidades.Programa;
+import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
+import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
+import edu.servicio.toluca.sesion.PerfilFacade;
+import edu.servicio.toluca.sesion.ProgramaFacade;
+import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
+import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +30,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,6 +50,18 @@ public class InstanciasController
     
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     private InstanciaFacade instanciaFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
+    private ProyectosFacade proyectosFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/TipoProyectoFacade")
+    private TipoProyectoFacade tiposPFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/PerfilFacade")
+    private PerfilFacade perfilFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/ProgramaFacade")
+    private ProgramaFacade programaFacade;
     
     @RequestMapping( value="verificarinstancia.do", method=RequestMethod.GET )
     public String verificarInstancia(Model model)
@@ -137,6 +158,97 @@ public class InstanciasController
         }
         
         return instancias;
+    }
+    
+    /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+    /* --- --- --- --- --- --- PROYECTOS   --- --- --- --- --- --- --- --- --- */
+    
+    @RequestMapping( value="registrarproyecto.do", method=RequestMethod.GET )
+    public String registrarProyecto(Model model)
+    {
+        Proyectos proyecto = new Proyectos();
+        List<TipoProyecto> tiposP = tiposPFacade.findAll();
+        List<String> modalidades = new ArrayList<String>();
+        modalidades.add("Interno");
+        modalidades.add("Externo");
+        
+        List<Perfil> perfiles = perfilFacade.findAll();
+        List<Programa> programas = programaFacade.findAll();
+        
+        model.addAttribute("proyecto", proyecto);
+        model.addAttribute("tiposP", tiposP);
+        model.addAttribute("modalidades", modalidades);
+        model.addAttribute("perfiles", perfiles);
+        model.addAttribute("programas", programas);
+        model.addAttribute("codigop", "");
+        
+        return "/Instancias/regproyecto";
+    }
+    
+    @RequestMapping( value="registrarproyecto.do", method=RequestMethod.POST )
+    public String insertarProyecto(String actividad1, String actividad2, String actividad3,
+            String actividad4, String actividad5, String cp, String perfilesproyecto,
+            Model model,@ModelAttribute("proyecto") @Valid Proyectos proyecto, BindingResult bindingResult)
+    {
+        
+        if(bindingResult.hasErrors())
+        {
+//            System.out.println("**** **** ****");
+//            System.out.println("*** *** *** **");
+//            System.out.println(proyecto.getDomicilio());
+//            System.out.println(proyecto.getModalidad());
+//            System.out.println(actividad1);
+//            System.out.println(actividad2);
+//            System.out.println(actividad3);
+//            System.out.println(actividad4);
+//            System.out.println(actividad5);
+//            System.out.println(cp);
+//            System.out.println(perfilesproyecto);
+            
+            List<TipoProyecto> tiposP = tiposPFacade.findAll();
+            List<String> modalidades = new ArrayList<String>();
+            modalidades.add("Interno");
+            modalidades.add("Externo");
+
+            List<Perfil> perfiles = perfilFacade.findAll();
+            List<Programa> programas = programaFacade.findAll();
+
+            //model.addAttribute("proyecto", proyecto);
+            model.addAttribute("tiposP", tiposP);
+            model.addAttribute("modalidades", modalidades);
+            model.addAttribute("perfiles", perfiles);
+            model.addAttribute("programas", programas);
+            model.addAttribute("codigop", "40290");
+
+            return "/Instancias/regproyecto";
+        }
+        else
+        {
+            System.out.println("**** **** **** --- ---");
+            System.out.println("*** *** *** ** --- ---");
+            System.out.println(proyecto.getDomicilio());
+            System.out.println(proyecto.getModalidad());
+//            System.out.println(actividad1);
+//            System.out.println(actividad2);
+//            System.out.println(actividad3);
+//            System.out.println(actividad4);
+//            System.out.println(actividad5);
+//            System.out.println(cp);
+//            System.out.println(perfilesproyecto);
+            
+            
+            // Configurar Entity Y Persistir
+            List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
+            Instancia nvaInstancia = new Instancia();
+            nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
+
+            model.addAttribute("tiposOrganizacion", tiposOrg);
+            model.addAttribute("instancia", nvaInstancia);
+            model.addAttribute("rfcError", "");
+
+            return "/Instancias/preregistro";
+        }
+        
     }
     
 }
