@@ -21,7 +21,7 @@
                     <li class="filas" data-toggle="popover" data-placement="right" data-content="${mensajePlatica}" title="Plática">
                         <core:choose>
                             <core:when test="${accesoPlatica}">
-                                <a data-toggle="popover" href="seleccionarPlatica.do">Pl&aacute;tica
+                                <a class="b list-group-item" data-toggle="popover" href="seleccionarPlatica.do">Pl&aacute;tica
                                 </core:when>
                                 <core:otherwise>
                                     <a class="b list-group-item" href="#">Pl&aacute;tica
