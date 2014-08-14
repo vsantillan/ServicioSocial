@@ -23,7 +23,7 @@ public class Conexion {
     
     //Modificar al ambiante a usar (Desarrollo,Calidad,Producción)
     //salvamex
-    private static final String IP_PUERTO_BD_ITT_VINCULACION ="192.168.40.122:1521:";
+    private static final String IP_PUERTO_BD_ITT_VINCULACION ="192.168.40.121:1521:";
 //    private static final String IP_PUERTO_BD_ITT_VINCULACION = "localhost:1520:";
     private static final String SID_ORACLE_ITT_VINCULACION ="xe";
     public Conexion() {
