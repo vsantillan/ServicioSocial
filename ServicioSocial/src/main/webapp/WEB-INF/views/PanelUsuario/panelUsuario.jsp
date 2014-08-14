@@ -33,12 +33,14 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                        <h4 class="text-center">Noticias Generales<span class="badge alert-info pull-right noticiasBadge"></span></h4>
-                                    </a>
+                                    <h4 class="text-center">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#panelNoticias">
+                                            Noticias Generales<span class="badge alert-info pull-right noticiasBadge"></span>
+                                        </a>
+                                    </h4>
                                 </h4>
                             </div>
-                            <div id="collapseOne" class="panel-collapse collapse">
+                            <div id="panelNoticias" class="panel-collapse collapse">
                                 <div id="noticias" class="panel-body">
                                     <core:forEach items="${noticiasAlumnos}" var="noticia">
                                         <div class="bs-callout bs-callout-info">
@@ -62,9 +64,12 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#panelObservaciones">
-                                        <h4 class="text-center">Observaciones<span class="badge alert-warning pull-right observacionesBadge"></span</h4>
-                                    </a>
+                                    <h4 class="text-center">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#panelObservaciones">
+                                            Observaciones<span class="badge alert-warning pull-right observacionesBadge"></span>
+                                        </a>
+
+                                    </h4>
                                 </h4>
                             </div>
                             <div id="panelObservaciones" class="panel-collapse collapse">
@@ -84,9 +89,11 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#panelSanciones">
-                                        <h4 class="text-center">Sanciones<span class="badge alert-warning pull-right sancionesBadge"></span</h4>
-                                    </a>
+                                    <h4 class="text-center">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#panelSanciones">
+                                            Sanciones<span class="badge alert-warning pull-right sancionesBadge"></span>
+                                        </a>
+                                    </h4>
                                 </h4>
                             </div>
                             <div id="panelSanciones" class="panel-collapse collapse">
