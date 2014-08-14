@@ -55,7 +55,7 @@
                                             <div class="form-group">
                                                 <label for="name">
                                                     Mensaje</label>
-                                                <form:textarea class="form-control" path="detalle" rows="9" cols="25" maxlength="300" />
+                                                <form:textarea class="form-control" path="detalle" rows="9" cols="25" maxlength="300" resize="none" />
                                                 <form:errors path="detalle" cssClass="alert alert-danger"/>
                                             </div>
                                         </div>

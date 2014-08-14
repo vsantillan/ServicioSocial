@@ -7,6 +7,7 @@ package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.Contacto;
 import edu.servicio.toluca.beans.EnviarCorreo;
+import edu.servicio.toluca.beans.SSLEmail;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 import javax.validation.Valid;
@@ -25,14 +26,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/contacto.do")
 public class ContactoController {
-    
-        final private String correosDevelopers[]={"rehoscript@gmail.com",
-                                              "wind.saber@hotmail.com",
-                                              "roy_006@hotmail.com",
-                                              "manolo7221@gmail.com",
-                                              "m.jonatan.diaz@gmail.com",
-                                              "regulesteban@gmail.com",
-                                                "oima_91@hotmail.com"};
+    boolean enviado = false;
+    final private String correosAdmins[] =
+    {
+        "viktor.santillan@gmail.com",
+        "zizou.tol@gmail.com",
+        "giovanni.fi05@gmail.com"
+    };
     
     @RequestMapping(method = RequestMethod.GET)
     public String contacto(Model modelo) {
@@ -46,26 +46,34 @@ public class ContactoController {
             return "/NavegacionPrincipal/contacto";
         }
         
-        String mensajeContacto="<h1>"+contacto.getNombre()+"</h1>" +
-                                "<h1>"+contacto.getAsunto()+"</h1>" +
-                                "<h1>"+contacto.getCorreo()+"</h1>" +
-                                "<p>"+contacto.getDetalle()+"</p>";
+        String mensajeContacto = "Mensaje <br>"
+                + "<p>" + contacto.getNombre() + "</p>"
+                + "<h3>" + contacto.getAsunto() + "</h3>"
+                + "<p>" + contacto.getCorreo() + "</p>"
+                + "<h4>" + contacto.getDetalle() + "</h4>";
         System.out.println("á");
         System.out.println(mensajeContacto);
-         
-        Thread hiloCorreo=new Thread(new HiloCorreo(mensajeContacto));
-        hiloCorreo.start();
-        modelo.put("message","<div class='alert alert-success'>Gracias por tu comentario, lo tomaremos en cuenta. </div>");
-        modelo.put("Contacto",new Contacto());
+        try
+        {
+            Thread hiloCorreo = new Thread(new HiloCorreo(mensajeContacto));
+            hiloCorreo.start();
+            enviado = true;
+        } catch (Exception e)
+        {
+            System.out.println("error: " + e);
+        }
+        if (enviado)
+        {
+            modelo.put("message", "<div class='alert alert-success'>Gracias por tu comentario, lo tomaremos en cuenta. </div>");
+            modelo.put("Contacto", new Contacto());
+        } else
+        {
+            modelo.put("message", "<div class='alert alert-danger'>No se pudo enviar tu comentario, hubo un problema </div>");
+            modelo.put("Contacto", new Contacto());
+        }
         return "/NavegacionPrincipal/contacto";
     }
-    
-    
-    ///----------------------------------------------------------------------------
-   
-    
-   
-    
+     
     private class HiloCorreo implements Runnable
     {
         private String mensaje;
@@ -73,22 +81,18 @@ public class ContactoController {
             this.mensaje=mensaje;
         }
         
-        
         @Override
-        public void run() {
-            
+        public void run()
+        {
             try
             {
-                
-                for(String correoDev: correosDevelopers)
+                for (String emailsAdmins : correosAdmins)
+//                for (int i = 0; i < 3; i++)
                 {
-                    EnviarCorreo correoContacto = new EnviarCorreo("Contacto Servicio Social",
-                                               correoDev,
-                                               this.mensaje
-                                               );
-                    correoContacto.enviaCorreo();
+                    //EnviarCorreo correoContacto = new EnviarCorreo("Contacto Servicio Social", correoDev,this.mensaje);
+                    //correoContacto.enviaCorreo();
+                        SSLEmail.send("zizou.tol@gmail.com", this.mensaje);
                 }
-                
             }
             catch(Exception e)
             {
