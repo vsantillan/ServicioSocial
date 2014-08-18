@@ -8,7 +8,7 @@ package edu.servicio.toluca.beans.bajasTemporales;
  *
  * @author rodrigo
  */
-public class CambioDependencia {
+public class cambioDependencia {
     private int idFormatoUnico;
 
     /**

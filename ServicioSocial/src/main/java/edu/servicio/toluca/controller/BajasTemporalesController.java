@@ -5,7 +5,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.bajasTemporales.bajasTemporales;
-import edu.servicio.toluca.beans.bajasTemporales.CambioDependencia;
+import edu.servicio.toluca.beans.bajasTemporales.cambioDependencia;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.entidades.BajaTemporal;
 import edu.servicio.toluca.entidades.DatosPersonales;
@@ -107,7 +107,7 @@ public class BajasTemporalesController
             }
 
         }
-        modelo.addAttribute("cambioDependencia", new CambioDependencia());
+        modelo.addAttribute("cambioDependencia", new cambioDependencia());
         modelo.addAttribute("instancias", filtroInstancias);
         modelo.addAttribute("alumnos", formatosSinBaja);
         return "/BajasTemporales/cambioDependencia";
