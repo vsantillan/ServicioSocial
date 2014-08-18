@@ -179,7 +179,6 @@ public class PlaticaController
         List<Platica> platicas = platicaFacade.findAll();
 
         Date fechaActual = new Date();
-//        boolean fechaPlatica = platicas.get(0).getFecha().after(fechaActual);
 
         if (!platicas.isEmpty())
         {
@@ -328,7 +327,7 @@ public class PlaticaController
                     modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                     modelo.addAttribute("lugar_i", new LugaresPlatica());
                     modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
-                    modelo.addAttribute("errorFm", "<div class='alert alert-danger'>La fecha de la plática debe ser menor a la de Formato Único</div>");
+                    modelo.addAttribute("errorFm", "<div class='alert alert-danger'>La fecha de la plática debe ser menor a la fecha de Formato Único</div>");
                     return "/Platicas/altaPlatica";
                 }
             }
@@ -387,7 +386,7 @@ public class PlaticaController
             modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
             modelo.addAttribute("platica", new Platica());
 
-            modelo.addAttribute("existe", "<div class='alert alert-danger'>Ya te has registrado a esta platica anteriormente</div>");
+            modelo.addAttribute("existe", "<div class='alert alert-danger'>Ya te has registrado a ésta plática</div>");
             return "/Platicas/seleccionarPlatica";
         }
     }
@@ -419,7 +418,7 @@ public class PlaticaController
             } else
             {
                 modelo.addAttribute("foliosPlatica", new FoliosPlatica());
-                modelo.addAttribute("existe", "<div class='alert alert-danger'>No existe numero de folio</div>");
+                modelo.addAttribute("existe", "<div class='alert alert-danger'>No existe número de folio</div>");
                 return "/Platicas/capturarAsistencia";
             }
         }
@@ -451,7 +450,7 @@ public class PlaticaController
             {
                 modelo.addAttribute("foliosPlatica", new FoliosPlatica());
                 modelo.addAttribute("colocado", " <div ><span class=\"glyphicon glyphicon-remove alert-danger\" ></span></div>");
-                modelo.addAttribute("existe", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span> No existe numero de folio</div>");
+                modelo.addAttribute("existe", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span> No existe número de folio</div>");
                 return "/Platicas/capturarAsistencia";
             }
         }
@@ -480,7 +479,7 @@ public class PlaticaController
                     }
                 }
                 modelo.addAttribute("platicasPeriodo", platicasDisponibles);
-                modelo.addAttribute("error", "<p class='alert alert-danger'>Numero de control no encontrado</p>");
+                modelo.addAttribute("error", "<p class='alert alert-danger'>Número de control no ha sido encontrado</p>");
                 return "/Platicas/asistenciaPosteriorEspecial";
             } else
             {
@@ -500,7 +499,7 @@ public class PlaticaController
                         }
                     }
                     modelo.addAttribute("platicasPeriodo", platicasDisponibles);
-                    modelo.addAttribute("error", "<p class='alert alert-danger'>El alumno no cuenta con los creditos suficientes , tiene" + Float.parseFloat(porcentaje.getPorcentaje()) + "% de creditos</p>");
+                    modelo.addAttribute("error", "<p class='alert alert-danger'>El alumno no cuenta con los créditos suficientes , tiene " + Float.parseFloat(porcentaje.getPorcentaje()) + "% de créditos</p>");
                     return "/Platicas/asistenciaPosteriorEspecial";
                 } else
                 {

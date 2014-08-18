@@ -23,7 +23,7 @@
                             <th>Cambiar Dependencia</th>
                             <th>Nombre</th>
                             <th>Proyecto Actual</th>
-                            <th>Dependencia Actual</th>
+                            <th>Instancia Actual</th>
                             <th>N. Control</th>
                             <th>Periodo</th>
                         </div>

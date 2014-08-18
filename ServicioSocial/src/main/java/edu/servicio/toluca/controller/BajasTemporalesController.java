@@ -7,7 +7,7 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.beans.bajasTemporales.bajasTemporales;
-import edu.servicio.toluca.beans.bajasTemporales.cambioDependencia;
+import edu.servicio.toluca.beans.bajasTemporales.CambioDependencia;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.entidades.BajaTemporal;
 import edu.servicio.toluca.entidades.DatosPersonales;
@@ -40,7 +40,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author roy
  */
 @Controller
-public class BajasTemporalesController {
+public class BajasTemporalesController
+{
 
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnicoFacade;
@@ -54,7 +55,8 @@ public class BajasTemporalesController {
     private ProyectosFacade proyectoFacade;
 
     @RequestMapping(method = RequestMethod.POST, value = "/actualizaInstancia.do")
-    public String actualizaInstancia(Model modelo, String idFormatoUnico, String proyectosInstancia) {
+    public String actualizaInstancia(Model modelo, String idFormatoUnico, String proyectosInstancia)
+    {
         System.out.println("idDatos: " + idFormatoUnico + "Proyectos: " + proyectosInstancia);
         List<FormatoUnico> formatoUnico = formatoUnicoFacade.findBySpecificField("id", idFormatoUnico, "equal", null, null);
         List<Proyectos> proyectos = proyectoFacade.findBySpecificField("idProyecto", proyectosInstancia, "equal", null, null);
@@ -66,12 +68,14 @@ public class BajasTemporalesController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/dameProyectos.do")
     public @ResponseBody
-    String dameProyctos(Model modelo, int idInstancia) {
+    String dameProyctos(Model modelo, int idInstancia)
+    {
         String arrJSON = "";
         List<Proyectos> listProyectos = proyectoFacade.findBySpecificField("idInstancia", idInstancia, "equal", null, null);
         Iterator<Proyectos> recorreProyectos = listProyectos.iterator();
 
-        while (recorreProyectos.hasNext()) {
+        while (recorreProyectos.hasNext())
+        {
             Proyectos proyectoAcual = recorreProyectos.next();
             arrJSON += "<option value='" + proyectoAcual.getIdProyecto() + "'>" + proyectoAcual.getNombre() + "</option>";
 
@@ -80,48 +84,55 @@ public class BajasTemporalesController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/cambioDependencia.do")
-    public String cambioDependencia(Model modelo) {
+    public String cambioDependencia(Model modelo)
+    {
 
         List<FormatoUnico> formatos = formatoUnicoFacade.findAll();
-        List<BajaTemporal> bajasTemporales = bajaTemporal.findAll();
         Iterator listaFormatos = formatos.iterator();
         List<FormatoUnico> formatosSinBaja = new ArrayList<FormatoUnico>();
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
 
-
-        for (int i = 0; i < listaInstancias.size(); i++) {
-            String estatus = listaInstancias.get(i).getEstatus().toString();
-            if ((estatus.equals("1")) || (estatus.equals("2"))) {
+        for (int i = 0; i < listaInstancias.size(); i++)
+        {
+            if (listaInstancias.get(i).getEstatus() == BigInteger.ONE)
+            {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
-        while (listaFormatos.hasNext()) {
+        while (listaFormatos.hasNext())
+        {
             FormatoUnico FU = (FormatoUnico) listaFormatos.next();
-            if (FU.getStatusServicio() == BigInteger.ONE) {
+            if (FU.getStatusServicio() == BigInteger.ONE 
+                    && FU.getIdproyecto().getIdInstancia().getEstatus() == BigInteger.ONE)
+            {
                 formatosSinBaja.add(FU);
             }
 
         }
-        modelo.addAttribute("cambioDependencia", new cambioDependencia());
+        modelo.addAttribute("cambioDependencia", new CambioDependencia());
         modelo.addAttribute("instancias", filtroInstancias);
         modelo.addAttribute("alumnos", formatosSinBaja);
         return "/BajasTemporales/cambioDependencia";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarBajas.do")
-    public String administrarBajas(Model modelo) {
+    public String administrarBajas(Model modelo)
+    {
 
         List<FormatoUnico> formatos = formatoUnicoFacade.findAll();
         List<BajaTemporal> bajasTemporales = bajaTemporal.findAll();
         Iterator listaFormatos = formatos.iterator();
         List<FormatoUnico> formatosBaja = new ArrayList<FormatoUnico>();
         List<FormatoUnico> formatosSinBaja = new ArrayList<FormatoUnico>();
-        while (listaFormatos.hasNext()) {
+        while (listaFormatos.hasNext())
+        {
             FormatoUnico FU = (FormatoUnico) listaFormatos.next();
-            if (FU.getStatusServicio() == BigInteger.ONE) {
+            if (FU.getStatusServicio() == BigInteger.ONE)
+            {
                 formatosBaja.add(FU);
-            } else {
+            } else
+            {
                 formatosSinBaja.add(FU);
             }
 
@@ -136,19 +147,22 @@ public class BajasTemporalesController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/guardaBaja.do")
-    public String insertaBaja(@ModelAttribute("bajas") bajasTemporales baja, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request) {
+    public String insertaBaja(@ModelAttribute("bajas") bajasTemporales baja, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request)
+    {
         BajaTemporal bt = new BajaTemporal();
         fechas fechas = new fechas();
         List<BajaTemporal> listaBajas = bajaTemporal.findBySpecificField("datosPersonalesId", baja.getIdDatosPer(), "equal", null, null);
         List<DatosPersonales> DP = datosPersonalesFacade.findBySpecificField("id", baja.getIdDatosPer(), "equal", null, null);
-        if (listaBajas.isEmpty()) {
+        if (listaBajas.isEmpty())
+        {
             //Insertamos el registro 
             bt.setFechaBaja(fechas.covierteString(baja.getFechaBaja()));
             bt.setFechaLimiteBaja(fechas.covierteString(baja.getFechaLimiteBaja()));
             bt.setDatosPersonalesId(DP.get(0));
             bajaTemporal.create(bt);
             System.out.println("Se inserto la baja temporal");
-        } else {
+        } else
+        {
             BajaTemporal bajaAntigua = listaBajas.get(0);
             bajaAntigua.setFechaBaja(fechas.covierteString(baja.getFechaBaja()));
             bajaAntigua.setFechaLimiteBaja(fechas.covierteString(baja.getFechaLimiteBaja()));
@@ -161,24 +175,19 @@ public class BajasTemporalesController {
         formatoUnicoFacade.edit(editarFU.get(0));
         System.out.println("Se actualizo el status de baja");
 
-
-
         return "redirect:administrarBajas.do";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/quitaBaja.do")
     public @ResponseBody
-    String quitaBaja(int id, HttpSession session, HttpServletRequest request) {
-
-
+    String quitaBaja(int id, HttpSession session, HttpServletRequest request)
+    {
 
         //Cambiamos el Status de Servicio a 3
         List<FormatoUnico> editarFU = formatoUnicoFacade.findBySpecificField("datosPersonalesId", id, "equal", null, null);
         editarFU.get(0).setStatusServicio(BigInteger.valueOf(1));
         formatoUnicoFacade.edit(editarFU.get(0));
         System.out.println("Se actualizo el status de baja");
-
-
 
         return "ok";
     }
