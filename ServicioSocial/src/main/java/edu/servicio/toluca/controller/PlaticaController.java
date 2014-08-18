@@ -445,6 +445,7 @@ public class PlaticaController
                 foliosPlatica.setAsistencia((short) 1);
                 foliosPlaticaFacade.edit(foliosPlatica);
                 modelo.addAttribute("colocado", " <div ><span class=\"glyphicon glyphicon-ok  alert-succes\" ></span></div>");
+                modelo.addAttribute("foliosPlatica", new FoliosPlatica());
                 return "/Platicas/capturarAsistencia";
             } else
             {

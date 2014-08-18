@@ -58,9 +58,9 @@ public class SancionesController {
             modelo.addAttribute("espacio", " ");
         } else {
             for (Sanciones sancion : listaTodasSanciones) {
-                if (sancion.getHorasSancion().intValue() > 0) {
+//                if (sancion.getHorasSancion().intValue() >= 0) {
                     sanciones.add(sancion);
-                }
+//                }
             }
         }
         modelo.addAttribute("listaSanciones", sanciones);
@@ -358,7 +358,7 @@ public class SancionesController {
 
         try {
             sancionesFacade.create(sancion);
-        } catch (Exception e) {
+        } catch (Exception e){
             System.out.println("Error: " + e.getMessage());
             model.addAttribute("errorAlumno", "error del sistema");
             return "/Sanciones/asignarSancion";

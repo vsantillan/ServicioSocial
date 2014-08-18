@@ -24,59 +24,71 @@ import javax.persistence.criteria.Root;
  * @author Jonny
  * @param <T>
  */
-public abstract class AbstractFacade<T> {
+public abstract class AbstractFacade<T>
+{
 
     private Class<T> entityClass;
     private final int MAX_RECORDS_RETURNED = 50000;
 
-    public AbstractFacade(Class<T> entityClass) {
+    public AbstractFacade(Class<T> entityClass)
+    {
         this.entityClass = entityClass;
     }
 
     protected abstract EntityManager getEntityManager();
 
-    public void create(T entity) {
+    public void create(T entity)
+    {
         getEntityManager().persist(entity);
     }
 
-    public void edit(T entity) {
+    public void edit(T entity)
+    {
         getEntityManager().merge(entity);
 
     }
 
-    public void remove(T entity) {
+    public void remove(T entity)
+    {
         getEntityManager().remove(getEntityManager().merge(entity));
     }
 
-    public T find(Object id) {
+    public T find(Object id)
+    {
         return getEntityManager().find(entityClass, id);
     }
 
-    public List<T> findAll() {
-         getEntityManager().flush();
+    public List<T> findAll()
+    {
+        getEntityManager().flush();
         getEntityManager().clear();
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return getEntityManager().createQuery(cq).getResultList();
     }
 
-    public List<T> findAll(LinkedHashMap<String, String> ordering) {
+    public List<T> findAll(LinkedHashMap<String, String> ordering)
+    {
         getEntityManager().flush();
         getEntityManager().clear();
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         Root<T> root = cq.from(entityClass);
         cq.select(root);
         //cq.select(cq.from(entityClass));
-        if (ordering != null) {
+        if (ordering != null)
+        {
             CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
             //Root<T> root = cq.from(entityClass);
             Set<String> set = ordering.keySet();
             List<Order> orders = new ArrayList<Order>();
-            for (String orderingField : set) {
+            for (String orderingField : set)
+            {
                 Order order;
-                if (ordering.get(orderingField).equals("asc")) {
+                if (ordering.get(orderingField).equals("asc"))
+                {
                     order = criteriaBuilder.asc(root.get(orderingField));
-                } else {
+                } else
+                {
                     order = criteriaBuilder.desc(root.get(orderingField));
                 }
                 orders.add(order);
@@ -86,7 +98,8 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createQuery(cq).setMaxResults(MAX_RECORDS_RETURNED).getResultList();
     }
 
-    public List<T> findRange(int[] range) {
+    public List<T> findRange(int[] range)
+    {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         javax.persistence.Query q = getEntityManager().createQuery(cq);
@@ -95,7 +108,8 @@ public abstract class AbstractFacade<T> {
         return q.getResultList();
     }
 
-    public int count() {
+    public int count()
+    {
         javax.persistence.criteria.CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
@@ -103,7 +117,8 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
-    public List<T> findBySpecificField(String field, Object fieldContent, String predicates, LinkedHashMap<String, String> ordering, LinkedList<String> grouping) {
+    public List<T> findBySpecificField(String field, Object fieldContent, String predicates, LinkedHashMap<String, String> ordering, LinkedList<String> grouping)
+    {
         getEntityManager().flush();
         getEntityManager().clear();
         CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
@@ -112,25 +127,32 @@ public abstract class AbstractFacade<T> {
 
         Predicate predicate = null;
 
-        if (predicates.equals("equal")) {
+        if (predicates.equals("equal"))
+        {
             predicate = criteriaBuilder.equal(root.get(field), fieldContent);
-        } else if (predicates.equals("likelower")) {
+        } else if (predicates.equals("likelower"))
+        {
             predicate = criteriaBuilder.like(criteriaBuilder.lower(root.<String>get(field)), fieldContent.toString());
-        } else if (predicates.equals("like")) {
+        } else if (predicates.equals("like"))
+        {
             predicate = criteriaBuilder.like(root.<String>get(field), "%" + fieldContent.toString() + "%");
         }
 
         criteriaQuery.select(root);
         criteriaQuery.where(predicate);
 
-        if (ordering != null) {
+        if (ordering != null)
+        {
             Set<String> set = ordering.keySet();
             List<Order> orders = new ArrayList<Order>();
-            for (String orderingField : set) {
+            for (String orderingField : set)
+            {
                 Order order;
-                if (ordering.get(orderingField).equals("asc")) {
+                if (ordering.get(orderingField).equals("asc"))
+                {
                     order = criteriaBuilder.asc(root.get(orderingField));
-                } else {
+                } else
+                {
                     order = criteriaBuilder.desc(root.get(orderingField));
                 }
                 orders.add(order);
@@ -138,10 +160,12 @@ public abstract class AbstractFacade<T> {
             criteriaQuery.orderBy(orders);
         }
 
-        if (grouping != null) {
+        if (grouping != null)
+        {
             Iterator iterator = grouping.iterator();
             List<Expression> groups = new LinkedList<Expression>();
-            while (iterator.hasNext()) {
+            while (iterator.hasNext())
+            {
                 groups.add(root.get(iterator.next().toString()));
             }
             criteriaQuery.groupBy(groups);

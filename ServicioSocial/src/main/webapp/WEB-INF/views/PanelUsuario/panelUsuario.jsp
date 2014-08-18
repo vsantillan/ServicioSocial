@@ -99,13 +99,13 @@
                             <div id="panelSanciones" class="panel-collapse collapse">
                                 <div id="sanciones" class="panel-body">
                                     <core:forEach items="${sanciones}" var="sancion">
-                                        <core:choose>
-                                            <core:when  test="${sancion.concepto==0}">
+                                        <%--<core:choose>--%>
+                                            <%--<core:when  test="${sancion.concepto==0}">--%>
                                                 <div class="bs-callout bs-callout-danger">
                                                     <p>${sancion.detalle}</p>
                                                 </div>
-                                            </core:when>
-                                        </core:choose>
+                                            <%--</core:when>--%>
+                                        <%--</core:choose>--%>
                                     </core:forEach>
                                 </div>
                             </div>

@@ -82,7 +82,7 @@ public class ConsultasPanelUsuarioSanciones
                 } else
                 {
                     sancion.setConcepto(1);
-                    sancion.setDetalle("PAGO DE SANCION: " + sanciones.get(i).getCatalogoSancionesId().getDetalle() + " HORAS:" + sanciones.get(i).getHorasSancion());
+                      sancion.setDetalle("<b>Sanción:</b> " + sanciones.get(i).getCatalogoSancionesId().getDetalle() + "<br/><br/><b> Horas Restantes:</b> " + sanciones.get(i).getHorasSancion());
                 }
                 sancionesBean.add(sancion);
             }
