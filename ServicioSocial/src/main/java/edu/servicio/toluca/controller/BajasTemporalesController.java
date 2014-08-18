@@ -4,8 +4,6 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.EnviarCorreo;
-import edu.servicio.toluca.beans.Fecha;
 import edu.servicio.toluca.beans.bajasTemporales.bajasTemporales;
 import edu.servicio.toluca.beans.bajasTemporales.CambioDependencia;
 import edu.servicio.toluca.beans.bimestrales.fechas;
@@ -26,7 +24,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
