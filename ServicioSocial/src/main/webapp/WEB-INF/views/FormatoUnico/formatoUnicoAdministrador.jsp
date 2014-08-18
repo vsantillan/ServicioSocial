@@ -134,7 +134,7 @@
                                             <td>${filaA.periodo}</td>
                                             <td> <core:out value="${filaA.noControl}"/>  </td>
                                             <td><core:out value="${filaA.nombre}"/></td>
-                                            <td><a href="mostarPDF.do?id=${filaA.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
+                                            <td><a href="mostarPDF.do?id=${filaA.idDocumentoFormatoUnico}" class="fancyFormUnic"><i class="glyphicon glyphicon-search"></i></a></td>
                                             <td><core:out value="${filaA.fechaSubida}"/></td>
 
                                         </tr>

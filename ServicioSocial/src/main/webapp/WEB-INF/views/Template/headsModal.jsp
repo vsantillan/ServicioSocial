@@ -42,7 +42,7 @@
         });
 
 
-//        $(".fancyFU").fancybox({
+//        $(".fancyFormUnic").fancybox({
 //            'autoScale': false,
 //            'transitionIn': 'none',
 //            'transitionOut': 'none',
@@ -55,6 +55,14 @@
             autoScale: false,
             width: 1000, // set the width
             height: 250, // set the height
+            fitToView: true,
+            autoSize: false,
+            type: 'iframe'
+        });
+        $(".fancyFormUnic").fancybox({
+            autoScale: false,
+            width: 1000, // set the width
+            height: 550, // set the height
             fitToView: true,
             autoSize: false,
             type: 'iframe'

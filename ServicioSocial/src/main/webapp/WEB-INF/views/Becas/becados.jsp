@@ -9,7 +9,7 @@
 /*importamos las librerías de JasperReports*/ 
 <%@ page import="net.sf.jasperreports.engine.*" %> 
 <%@ page import="java.util.*" %> 
-<%@ page import="java.io.*" %> 
+<%@ page import="java.io.*" %>
 <%@ page import="java.sql.*" %> 
 <%@ page import="edu.servicio.toluca.login.Conexion"%>
 <% /*Parametros para realizar la conexión*/ 
