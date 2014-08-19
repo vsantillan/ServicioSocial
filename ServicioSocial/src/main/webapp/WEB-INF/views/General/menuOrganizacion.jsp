@@ -6,6 +6,7 @@
 <%
     HttpSession sesionOk = request.getSession();
     String nombre = sesionOk.getAttribute("NOMBRE").toString();
+    
 %>
 <div class="nav navbar-inverse " role="navigation">
     <div class="container">
@@ -15,8 +16,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proyectos<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="altaProyecto.do">Alta Proyecto</a></li>
-                        <li><a href="verProyectos.do">Ver Proyectos</a></li>
+                        <li><a href="registrarproyecto.do">Alta Proyecto</a></li>
+                        <li><a href="verProyectos.do">Administrar Proyectos</a></li>
                     </ul>
                 </li>
             </ul>
@@ -24,10 +25,10 @@
                 <li class="dropdown">
                     <a href="panelOrganizacion.do" class="dropdown-toggle" data-toggle="dropdown">Organizacion <%=nombre%> <b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="panelOrganizacion.do">Ver Perfil</a></li>
-                        <li><a href="mensajeOrganizacion.do">Mensajes</a></li>
+                        <li><a href="perfilOrganizacion.do"><span class="glyphicon glyphicon-user"></span> Ver Perfil</a></li>
+                        <li><a href="mensajeOrganizacion.do"><span class="glyphicon glyphicon-envelope"></span> Mensajes</a></li>
                         <li role="presentation" class="divider"></li>
-                        <li><a href="cerrarSesion.do">Cerrar Sesión</a></li>
+                        <li><a href="cerrarSesion.do"><span class="glyphicon glyphicon-log-out"></span> Cerrar Sesión</a></li>
                     </ul>
                 </li>
             </ul>

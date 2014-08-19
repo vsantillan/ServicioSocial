@@ -86,13 +86,16 @@ public class ContactoController {
         {
             try
             {
-                for (String emailsAdmins : correosAdmins)
-//                for (int i = 0; i < 3; i++)
-                {
-                    //EnviarCorreo correoContacto = new EnviarCorreo("Contacto Servicio Social", correoDev,this.mensaje);
-                    //correoContacto.enviaCorreo();
-                        SSLEmail.send("zizou.tol@gmail.com", this.mensaje);
-                }
+//                for (String emailsAdmins : correosAdmins)
+////                for (int i = 0; i < 3; i++)
+//                {
+//                    //EnviarCorreo correoContacto = new EnviarCorreo("Contacto Servicio Social", correoDev,this.mensaje);
+//                    //correoContacto.enviaCorreo();
+//                        SSLEmail.send("zizou.tol@gmail.com", this.mensaje);
+//
+//                }
+                SSLEmail.send("zizou.tol@gmail.com", this.mensaje);
+                
             }
             catch(Exception e)
             {

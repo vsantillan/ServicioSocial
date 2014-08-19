@@ -919,6 +919,12 @@ public class OrganizacionesController2
         return "/paginaPrueba";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/perfilOrganizacion.do")
+    public String perfilOrganizacion(Model model, HttpSession session, HttpServletRequest request, String mensaje)
+    {
+        return "/Organizaciones/perfilOrganizaciones";
+    }
+
     //Panel de organizaciones (usuarios)
     @RequestMapping(method = RequestMethod.GET, value = "/panelOrganizacion.do")
     public String panelOrganizacion(Model model, HttpSession session, HttpServletRequest request, String mensaje)
