@@ -301,4 +301,10 @@ public class PanelUsuarioController
     {
         return "/PanelUsuario/pruebaPopover";
     }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/ayuda.do")
+    public String Ayuda(Model model, HttpSession session, HttpServletRequest request, String mensaje)
+    {
+        return "/PanelUsuario/ayuda";
+    }
 }
