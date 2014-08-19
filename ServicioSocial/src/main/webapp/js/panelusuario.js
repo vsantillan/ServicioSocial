@@ -1,9 +1,8 @@
 $(document).ready(function() {
-    var observaciones = $("#noticias").find("div").length;
-    $(".noticiasBadge").text(observaciones);
+    var noticias = $("#noticias").find("div").length;
+    $(".noticiasBadge").text(noticias);
     var observaciones = $("#observaciones").find("div").length;
     $(".observacionesBadge").text(observaciones);
-    var observaciones = $("#sanciones").find("div").length;
-    $(".sancionesBadge").text(observaciones);
-
+    var sanciones = $("#sanciones").find("div").length;
+    $(".sancionesBadge").text(sanciones);
 });

@@ -118,10 +118,10 @@ function obtenerDatos()
 
 function obtieneObservacionesReporteBimestral()
 {
-    var idAlumno = $('#idAlumno').val();
+    var idAlu = $(this).attr('datospersonales');
     var observacionesDiv = $('#contenidoObservaciones');
-
-    var urlObtieneReportes = 'dameObservaciones.do?id=' + idAlumno;
+    observacionesDiv.empty();
+    var urlObtieneReportes = 'dameObservaciones.do?id=' + idAlu;
 
     $.get(urlObtieneReportes, function(response)
     {

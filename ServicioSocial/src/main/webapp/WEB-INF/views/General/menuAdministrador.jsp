@@ -37,7 +37,7 @@
                     <ul class="dropdown-menu">
                         <li><a href="administracionAlumnosBecados.do" onclick="redirecciona('administracionAlumnosBecados.do');">Alumnos Becados</a></li>
                         <li><a href="formatoUnicoAdministrador.do" onclick="redirecciona('formatoUnicoAdministrador.do');">Formato &Uacute;nico</a></li>
-                        <li><a href="reporteBimestralAdministrador.do" onclick="redirecciona('reporteBimestralAdministrador.do');">Formato Bimestral</a></li>
+                        <li><a href="reporteBimestralAdministrador.do" onclick="redirecciona('reporteBimestralAdministrador.do');">Reportes Bimestrales</a></li>
                         <li class="dropdown-submenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentos Finales</a>
                             <ul class="dropdown-menu">

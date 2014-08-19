@@ -122,6 +122,11 @@ public class ReporteBimestralController2
             }
         }
 
+        logger.debug("Reportes Revisados: " + reportesRevisados.size());
+        logger.debug("Reportes No Revisados: " + reportesNoRevisados.size());
+        logger.debug("Reportes en Correción: " + reportesEnCorreccion.size());
+        logger.debug("Reportes Rechazados: " + reportesRechazados.size());
+
         boolean existe = false;
         Iterator<Reportes> recorreListaRevisados = reportesRevisados.iterator();
 
@@ -252,6 +257,7 @@ public class ReporteBimestralController2
                 enviarCorreo(3, reporte.getDatosPersonalesId().getCorreoElectronico(), nombre, reporte.getDatosPersonalesId());
                 break;
             case 3://Correccion
+                logger.debug("EL FORMATO TIENE ESTATUS 3 EN CORRECCIÓN.");
                 nombre = reporte.getDatosPersonalesId().getNombre() + " "
                         + reporte.getDatosPersonalesId().getApellidoP() + " "
                         + reporte.getDatosPersonalesId().getApellidoM();
