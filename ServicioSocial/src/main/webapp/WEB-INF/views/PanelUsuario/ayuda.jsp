@@ -4,10 +4,6 @@
     Author     : Jorge Muñoz
 --%>
 
-<%
-    HttpSession sesionOk = request.getSession();
-    String nombre = sesionOk.getAttribute("NOMBRE").toString();
-%>
 <%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>

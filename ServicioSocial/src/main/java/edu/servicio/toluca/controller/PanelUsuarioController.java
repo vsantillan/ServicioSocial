@@ -57,7 +57,7 @@ public class PanelUsuarioController
     public SancionesFacade sancionesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/LogServicioFacade")
     public LogServicioFacade logServicioFacade;
-    
+
     private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelUsuario.do")
@@ -69,7 +69,7 @@ public class PanelUsuarioController
             model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
-        
+
         logger.info("Número de Control: ", session.getAttribute("NCONTROL"));
 
         //Obtenemos al alumno
@@ -301,10 +301,18 @@ public class PanelUsuarioController
     {
         return "/PanelUsuario/pruebaPopover";
     }
-    
+
     @RequestMapping(method = RequestMethod.GET, value = "/ayuda.do")
     public String Ayuda(Model model, HttpSession session, HttpServletRequest request, String mensaje)
     {
-        return "/PanelUsuario/ayuda";
+        ValidaSesion valSession = new ValidaSesion(session, request);
+        if (valSession.validaAlumno())
+        {
+            return "/PanelUsuario/ayuda";
+        } else
+        {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
     }
 }
