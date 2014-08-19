@@ -24,23 +24,29 @@ import org.openide.util.Exceptions;
  *
  * @author bustedvillain
  */
-public class ValidaReportesBimestralesModel {
+public class ValidaReportesBimestralesModel
+{
 
-    public ReportesBean validaReportesBimestrales(StatusServicioBean servicioBean) {
+    public ReportesBean validaReportesBimestrales(StatusServicioBean servicioBean)
+    {
         ReportesBean reportesBean = new ReportesBean();
 
-        if (servicioBean.getPlaticaBean().isTienePlatica()) {
-            if (servicioBean.getFormatoUnico() != null && servicioBean.getFormatoUnico().getStatusFui() != null) {
+        if (servicioBean.getPlaticaBean().isTienePlatica())
+        {
+            if (servicioBean.getFormatoUnico() != null && servicioBean.getFormatoUnico().getStatusFui() != null)
+            {
                 //VALIDACION 2 años de servicio//
-                fechas manejadorFechas= new fechas();
+                fechas manejadorFechas = new fechas();
                 Calendar fecha = Calendar.getInstance();
                 fecha.setTime(servicioBean.getFormatoUnico().getFechaInicio());
                 fecha.add(Calendar.YEAR, 2);
-                Date fechaMaxima =manejadorFechas.covierteString(manejadorFechas.convierteDate(fecha.getTime()));
+                Date fechaMaxima = manejadorFechas.covierteString(manejadorFechas.convierteDate(fecha.getTime()));
                 Calendar fechaActual = Calendar.getInstance();
-                Date fechaActualDate =manejadorFechas.covierteString(manejadorFechas.convierteDate(fechaActual.getTime()));
-                if (!servicioBean.getFormatoUnico().getStatusFui().toString().equals("2") && !fechaActualDate.after(fechaMaxima)) {
-                    if (servicioBean.getFormatoUnico().getStatusFui().toString().equals("1")) {
+                Date fechaActualDate = manejadorFechas.covierteString(manejadorFechas.convierteDate(fechaActual.getTime()));
+                if (!servicioBean.getFormatoUnico().getStatusFui().toString().equals("2") && !fechaActualDate.after(fechaMaxima))
+                {
+                    if (servicioBean.getFormatoUnico().getStatusFui().toString().equals("1"))
+                    {
                         ArrayList<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
                         Collections.sort(reportes, new OrdenarPersonaPorId());
                         int horasServicio = 0;
@@ -49,10 +55,11 @@ public class ValidaReportesBimestralesModel {
                         servicioBean.setReportesBimestrales(reportes);
                         System.out.println("Size reportes:" + nReportes);
 
-
-                        if (!reportes.isEmpty() && reportes != null && nReportes > 0) {
+                        if (!reportes.isEmpty() && reportes != null && nReportes > 0)
+                        {
                             System.out.println("Entro a validar bien los reportes bimestrales");
-                            for (int i = 0; i < reportes.size(); i++) {
+                            for (int i = 0; i < reportes.size(); i++)
+                            {
                                 System.out.println("calculando horas...");
                                 int horas = Integer.parseInt(reportes.get(i).getHoras().toString());
                                 horasServicio += horas;
@@ -64,7 +71,8 @@ public class ValidaReportesBimestralesModel {
                             servicioBean.setHorasServicio(horasServicio);
                             if ((servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal") && horasServicio < 480)
                                     || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 600 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("N"))
-                                    || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 500 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("S"))) {
+                                    || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 500 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("S")))
+                            {
 
                                 //if (horasServicio < 480) {
                                 System.out.println("Menos 480 horas");
@@ -73,7 +81,8 @@ public class ValidaReportesBimestralesModel {
 //                            Reportes ultimoBimestral = reportes.get(nReporte);
 //                            int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
                                 System.out.println("Checando status del ultimo reporte:" + status);
-                                switch (status) {
+                                switch (status)
+                                {
                                     //Descargado
                                     case 0:
                                         reportesBean.setAccesoFormato(true);
@@ -84,9 +93,11 @@ public class ValidaReportesBimestralesModel {
                                     case 1:
                                         Date ahora = new Date();
                                         SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd");
-                                        try {
+                                        try
+                                        {
                                             ahora = formateador.parse(formateador.format(ahora));
-                                        } catch (ParseException ex) {
+                                        } catch (ParseException ex)
+                                        {
                                             Exceptions.printStackTrace(ex);
                                         }
 //                                    System.out.println("fecha sistema" + ahora);
@@ -109,16 +120,20 @@ public class ValidaReportesBimestralesModel {
                                     //Correccion
                                     case 3:
                                         int nRevisiones = 0;
-                                        try {
+                                        try
+                                        {
                                             nRevisiones = Integer.parseInt(ultimoBimestral.getNumeroRevisiones().toString());
-                                        } catch (Exception e) {
+                                        } catch (Exception e)
+                                        {
                                         }
 
-                                        if (nRevisiones <= 5) {
+                                        if (nRevisiones <= 5)
+                                        {
                                             reportesBean.setAccesoFormato(true);
                                             reportesBean.setMensaje("Tu Reporte Bimestral número " + ultimoBimestral.getNumeroReporte() + " se encuentra en corrección. Por favor revisa la sección de observaciones para saber que es lo que tienes que corregir en tu Reporte Bimestral.");
                                             reportesBean.setStatus(3);
-                                        } else {
+                                        } else
+                                        {
                                             reportesBean.setAccesoFormato(false);
                                             reportesBean.setMensaje("Lo sentimos, has sobrepasado el número máximo de correcciones en tu Reporte Bimestral " + ultimoBimestral.getNumeroReporte());
                                             reportesBean.setStatus(2);
@@ -136,40 +151,48 @@ public class ValidaReportesBimestralesModel {
                                         reportesBean.setStatus(2);
                                         break;
                                 }
-                            } else {
-                                if (ultimoBimestral.getStatus().compareTo(BigInteger.ONE) == 0) {
+                            } else
+                            {
+                                if (ultimoBimestral.getStatus().compareTo(BigInteger.ONE) == 0)
+                                {
                                     reportesBean.setAccesoFormato(false);
                                     reportesBean.setMensaje("Ya haz completado las horas de servicio social. Subiste " + nReportes + " Reportes Bimestrales");
                                     reportesBean.setStatus(1);
-                                } else {
+                                } else
+                                {
                                     reportesBean.setAccesoFormato(false);
                                     reportesBean.setMensaje("Tu Reporte Bimestral se encuentra en revisión.");
                                     reportesBean.setStatus(3);
                                 }
                             }
 
-                        } else {
+                        } else
+                        {
                             //Si no tiene ningun reporte
                             reportesBean.setAccesoFormato(true);
                             reportesBean.setMensaje("No haz dado de alta ningun Reporte Bimestral");
                             reportesBean.setStatus(2);
                         }
-                    } else {
+                    } else
+                    {
                         reportesBean.setAccesoFormato(false);
                         reportesBean.setMensaje("No puedes proceder a dar de alta tus Reportes Bimestrales, dado que no has completado el proceso de formato unico.");
                         reportesBean.setStatus(2);
                     }
-                } else {
+                } else
+                {
                     reportesBean.setAccesoFormato(false);
                     reportesBean.setMensaje("No puedes continuar con tu proceso debido a que excediste los 2 años de tiempo para concluir.");
                     reportesBean.setStatus(2);
                 }
-            } else {
+            } else
+            {
                 reportesBean.setAccesoFormato(false);
                 reportesBean.setMensaje("No puedes proceder a dar de alta tus Reportes Bimestrales, dado que no has completado el proceso de formato unico.");
                 reportesBean.setStatus(2);
             }
-        } else {
+        } else
+        {
             reportesBean.setAccesoFormato(false);
             reportesBean.setMensaje("No puedes proceder a dar de alta tus Reportes Bimestrales, dado que no asististe a la platica de induccion, favor de comunicarse con el Jefe de la Oficina del Servicio Social");
             reportesBean.setStatus(2);
@@ -178,9 +201,11 @@ public class ValidaReportesBimestralesModel {
     }
 }
 
-class OrdenarPersonaPorId implements Comparator<Reportes> {
+class OrdenarPersonaPorId implements Comparator<Reportes>
+{
 
-    public int compare(Reportes o1, Reportes o2) {
+    public int compare(Reportes o1, Reportes o2)
+    {
         return Integer.valueOf(String.valueOf(o1.getId())) - Integer.valueOf(String.valueOf(o2.getId()));
     }
 }

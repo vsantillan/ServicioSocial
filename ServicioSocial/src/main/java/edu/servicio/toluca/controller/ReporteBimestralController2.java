@@ -50,6 +50,8 @@ import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import org.openide.util.Exceptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,7 +65,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author ekt
  */
 @Controller
-public class ReporteBimestralController2 {
+public class ReporteBimestralController2
+{
 
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
@@ -82,8 +85,11 @@ public class ReporteBimestralController2 {
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     private RegObservacionesFacade regisObservacionesFacade;
 
+    private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
+
     @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
-    public String reporteBimestralAdministrador(Model modelo, HttpSession session, HttpServletRequest request) {
+    public String reporteBimestralAdministrador(Model modelo, HttpSession session, HttpServletRequest request)
+    {
         LinkedHashMap ordenarAsc = new LinkedHashMap();
         ordenarAsc.put("id", "asc");
         modelo.addAttribute("datosPersonales", datosPersonalesFacade.findAll(ordenarAsc));
@@ -95,18 +101,23 @@ public class ReporteBimestralController2 {
         List<Reportes> reportesRechazados = new ArrayList<Reportes>();
         Iterator<Reportes> recorreListaBimestrales = listaBimestrales.iterator();
 
-        while (recorreListaBimestrales.hasNext()) {
+        while (recorreListaBimestrales.hasNext())
+        {
             Reportes reporteActual = recorreListaBimestrales.next();
-            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(1)) == 0) {
+            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(1)) == 0)
+            {
                 reportesRevisados.add(reporteActual);
             }
-            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(4)) == 0) {
+            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(4)) == 0)
+            {
                 reportesNoRevisados.add(reporteActual);
             }
-            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(3)) == 0) {
+            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(3)) == 0)
+            {
                 reportesEnCorreccion.add(reporteActual);
             }
-            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(2)) == 0) {
+            if (reporteActual.getStatus().compareTo(BigInteger.valueOf(2)) == 0)
+            {
                 reportesRechazados.add(reporteActual);
             }
         }
@@ -114,27 +125,34 @@ public class ReporteBimestralController2 {
         boolean existe = false;
         Iterator<Reportes> recorreListaRevisados = reportesRevisados.iterator();
 
-        while (recorreListaRevisados.hasNext()) {
+        while (recorreListaRevisados.hasNext())
+        {
             Reportes reporte = recorreListaRevisados.next();
             System.out.println("Tamaño de los Unicos" + reportesRevisadosUnicos.size());
-            if (!reportesRevisadosUnicos.isEmpty()) {
-                for (int i = 0; i <= reportesRevisadosUnicos.size() - 1; i++) {
+            if (!reportesRevisadosUnicos.isEmpty())
+            {
+                for (int i = 0; i <= reportesRevisadosUnicos.size() - 1; i++)
+                {
                     BigDecimal id = reportesRevisadosUnicos.get(i).getDatosPersonalesId().getId();
                     System.out.println("i for:" + (i + 1) + "Size" + (reportesRevisadosUnicos.size() - 1));
 
-                    if (reporte.getDatosPersonalesId().getId().compareTo(id) == 0) {
+                    if (reporte.getDatosPersonalesId().getId().compareTo(id) == 0)
+                    {
                         existe = true;
                         System.out.println("Existe y corto el while interno");
                         break;
-                    } else {
-                        if ((i) == reportesRevisadosUnicos.size() - 1) {
+                    } else
+                    {
+                        if ((i) == reportesRevisadosUnicos.size() - 1)
+                        {
                             existe = false;
                             System.out.println("Debo agregar" + reporte.getDatosPersonalesId().getId());
                             reportesRevisadosUnicos.add(reporte);
                         }
                     }
                 }
-            } else {
+            } else
+            {
                 reportesRevisadosUnicos.add(reporte);
             }
 
@@ -148,8 +166,10 @@ public class ReporteBimestralController2 {
         //Catalogo Sanciones
         List<CatalogoObservaciones> observaciones = observacionesCatalogoFacade.findAll();
         List<CatalogoObservaciones> observacionesBimestrales = new ArrayList();
-        for (CatalogoObservaciones observacionActual : observaciones) {
-            if (observacionActual.getTipo().compareTo(BigInteger.valueOf(2)) == 0) {
+        for (CatalogoObservaciones observacionActual : observaciones)
+        {
+            if (observacionActual.getTipo().compareTo(BigInteger.valueOf(2)) == 0)
+            {
                 observacionesBimestrales.add(observacionActual);
             }
         }
@@ -158,20 +178,25 @@ public class ReporteBimestralController2 {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/detalleReporteBimestral.do")
-    public String detalleReporteBimestral(int id, Model modelo, HttpSession session, HttpServletRequest request) {
+    public String detalleReporteBimestral(int id, Model modelo, HttpSession session, HttpServletRequest request)
+    {
         Reportes reporte = reportesFacade.find(BigDecimal.valueOf(id));
         modelo.addAttribute("reportes", reporte);
         return "/ReporteBimestral/detalleReporteBimestral";
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/dameObservaciones.do")
+    @RequestMapping(method = RequestMethod.GET, value = "/dameObservaciones.do")
     public @ResponseBody
-    String dameObservaciones(String idDatoPersonales) {
-        System.out.println("Datos personales" + idDatoPersonales);
-        List<RegObservaciones> listaObservaciones = regisObservacionesFacade.findBySpecificField("datosPersonalesId", BigDecimal.valueOf(Long.valueOf(idDatoPersonales)), "equal", null, null);
-        String observaciones = "";
-        for (RegObservaciones regObservaciones : listaObservaciones) {
-            observaciones += regObservaciones.getCatalogoObservacionId().getDetalle() + "&";
+    List<String> dameObservaciones(@RequestParam(value = "id", required = true) String idAlumno)
+    {
+        System.out.println("Datos personales" + idAlumno);
+        List<RegObservaciones> listaObservaciones
+                = regisObservacionesFacade.findBySpecificField("datosPersonalesId", BigDecimal.valueOf(Long.valueOf(idAlumno)), "equal", null, null);
+        List<String> observaciones = new ArrayList<String>();
+
+        for (RegObservaciones regObservaciones : listaObservaciones)
+        {
+            observaciones.add(regObservaciones.getCatalogoObservacionId().getDetalle());
         }
         return observaciones;
     }
@@ -183,9 +208,11 @@ public class ReporteBimestralController2 {
             String idReporte,
             String idDocumento,
             String status,
-            String tipo) {
+            String tipo)
+    {
 
-        for (String idObservacion : observaciones) {
+        for (String idObservacion : observaciones)
+        {
             //Objeto a Registrar
             RegObservaciones registro = new RegObservaciones();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
@@ -210,7 +237,8 @@ public class ReporteBimestralController2 {
         documentosFacade.edit(documento);
         String nombre = "";
         System.out.println("El estatus es" + status);
-        switch (Integer.parseInt(status)) {
+        switch (Integer.parseInt(status))
+        {
             case 2://Rechazo
                 //Enviar Correo
                 List<FormatoUnico> formatoCancelado = formatoUnicoFacade.findBySpecificField("datosPersonalesId", reporte.getDatosPersonalesId().getId(), "equal", null, null);
@@ -236,7 +264,8 @@ public class ReporteBimestralController2 {
 
     @RequestMapping(method = RequestMethod.POST, value = "/aceptarReporte.do")
     public @ResponseBody
-    String aceptarReporte(int id, int status, int idDoc, Model model, HttpSession session, HttpServletRequest request) {
+    String aceptarReporte(int id, int status, int idDoc, Model model, HttpSession session, HttpServletRequest request)
+    {
         Reportes reporte;
         fechas beanFecha = new fechas();
         reporte = reportesFacade.find(BigDecimal.valueOf(id));
@@ -251,13 +280,17 @@ public class ReporteBimestralController2 {
         //validacion de las horas del servicio
         List<FormatoUnico> formatoUnicoAlumno = formatoUnicoFacade.findBySpecificField("datosPersonalesId", reporte.getDatosPersonalesId().getId(), "equal", null, null);
         FormatoUnico formatoAlumno = formatoUnicoAlumno.get(0);
-        if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal")) {
-            if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 0 || formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 1) {
+        if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal"))
+        {
+            if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 0 || formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(480)) == 1)
+            {
                 formatoAlumno.setFechaEntregaFuf(beanFecha.covierteString(beanFecha.dameFechaFUF(reporte.getFechaFin())));
             }
         }
-        if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal")) {
-            if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(600)) == 0 || formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(600)) == 1) {
+        if (formatoAlumno.getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal"))
+        {
+            if (formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(600)) == 0 || formatoAlumno.getHorasAcumuladas().compareTo(BigInteger.valueOf(600)) == 1)
+            {
                 formatoAlumno.setFechaEntregaFuf(beanFecha.covierteString(beanFecha.dameFechaFUF(reporte.getFechaFin())));
             }
         }
@@ -269,7 +302,8 @@ public class ReporteBimestralController2 {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestralDoc.do")
-    String muestraReporte(Model modelo, HttpSession session, HttpServletRequest request) {
+    String muestraReporte(Model modelo, HttpSession session, HttpServletRequest request)
+    {
         session.setAttribute("no_reporte", 2);
         session.setAttribute("id_reporte", 2);
         System.out.println("Agui genera el reporte");
@@ -277,11 +311,13 @@ public class ReporteBimestralController2 {
     }
 
     @RequestMapping(value = "/guardarReporteBimestral.do", method = RequestMethod.POST)
-    public String subirReporteBi(@RequestParam("file") MultipartFile file, Model modelo, HttpSession session, HttpServletRequest request) throws IOException {
-        fechas manejadorFechas= new fechas();
+    public String subirReporteBi(@RequestParam("file") MultipartFile file, Model modelo, HttpSession session, HttpServletRequest request) throws IOException
+    {
+        fechas manejadorFechas = new fechas();
         String no_control = session.getAttribute("NCONTROL").toString();
         List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
-        if (vistaAlumnoFacade.count() < 1 || listaAlumnos.isEmpty()) {
+        if (vistaAlumnoFacade.count() < 1 || listaAlumnos.isEmpty())
+        {
             System.out.println("O no hay registros en la tabla o no existe tal alumno en la base de datos de Vista LAumno");
             modelo.addAttribute("error", "Error al subir el Reporte Bimestral");
         }
@@ -289,17 +325,18 @@ public class ReporteBimestralController2 {
         VistaAlumno alumno = listaAlumnos.get(0);
         List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
         DatosPersonales datosPersonales = listaDatosPersonales.get(0);
-       
+
         //Validacion para verificar los 2 años de servicio////
-        List<FormatoUnico> formatosUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales.getId(),"equal" , null, null);
-        FormatoUnico formatoActual=formatosUnico.get(0);
-        Calendar fecha= Calendar.getInstance();
+        List<FormatoUnico> formatosUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales.getId(), "equal", null, null);
+        FormatoUnico formatoActual = formatosUnico.get(0);
+        Calendar fecha = Calendar.getInstance();
         fecha.setTime(formatoActual.getFechaInicio());
         fecha.add(Calendar.YEAR, 2);
-        Date fechaMaxima= manejadorFechas.covierteString(manejadorFechas.convierteDate(fecha.getTime()));
-        Calendar fechaActual=Calendar.getInstance();
-        Date fechaActualDate=manejadorFechas.covierteString(manejadorFechas.convierteDate(fechaActual.getTime()));
-        if(!fechaActualDate.before(fechaMaxima)){
+        Date fechaMaxima = manejadorFechas.covierteString(manejadorFechas.convierteDate(fecha.getTime()));
+        Calendar fechaActual = Calendar.getInstance();
+        Date fechaActualDate = manejadorFechas.covierteString(manejadorFechas.convierteDate(fechaActual.getTime()));
+        if (!fechaActualDate.before(fechaMaxima))
+        {
             formatoActual.setStatusServicio(BigInteger.valueOf(2));
             formatoUnicoFacade.edit(formatoActual);
             return "redirect:login.do";
@@ -308,16 +345,20 @@ public class ReporteBimestralController2 {
         LinkedHashMap ordenarAsc = new LinkedHashMap();
         ordenarAsc.put("id", "desc");
         List<Reportes> listReporte = reportesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenarAsc, null);
-        if (!listReporte.isEmpty()) {
+        if (!listReporte.isEmpty())
+        {
             Reportes reporte = listReporte.get(0);
-            if (reporte.getStatus().compareTo(BigInteger.ONE) != 0) {
+            if (reporte.getStatus().compareTo(BigInteger.ONE) != 0)
+            {
                 reporte.setStatus(BigInteger.valueOf(4));
                 reportesFacade.edit(reporte);
-            } else {
+            } else
+            {
                 System.out.println("fail interno");
                 return "redirect:formatoReporteBimestral.do?OK=false";
             }
-        } else {
+        } else
+        {
             System.out.println("fail");
             return "redirect:formatoReporteBimestral.do?OK=false";
         }
@@ -333,16 +374,17 @@ public class ReporteBimestralController2 {
         //List<CatalogoDocumento> listaCatalogoDocumento = catalogoDocumentoFacade.findBySpecificField("tipo", "Formato_Bimestral", "equal", null, null); 
         CatalogoDocumento catalogoDocumento = catalogoDocumentoFacade.find(BigDecimal.valueOf(2));
 
-
-
         ///////////VERIFICAMOS QUE NO EXISTA EL DOCUMENTO//////////////////////
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("id", "desc");
         List<Documentos> ultimoDoc = documentosFacade.findBySpecificField("datosPersonalesId", datosPersonales.getId(), "equal", ordenamiento, null);
-        if (!ultimoDoc.isEmpty()) {
+        if (!ultimoDoc.isEmpty())
+        {
             Documentos ultimoDocumento = ultimoDoc.get(0);
-            if (ultimoDocumento.getCatalogoDocumentosId().getId().compareTo(BigDecimal.valueOf(2)) == 0) {
-                if (ultimoDocumento.getStatus() == 3) {
+            if (ultimoDocumento.getCatalogoDocumentosId().getId().compareTo(BigDecimal.valueOf(2)) == 0)
+            {
+                if (ultimoDocumento.getStatus() == 3)
+                {
                     ultimoDocumento.setArchivo(file.getBytes());
                     ultimoDocumento.setDatosPersonalesId(datosPersonales);
                     String extension = file.getOriginalFilename();
@@ -354,12 +396,14 @@ public class ReporteBimestralController2 {
                     ultimoDocumento.setStatus((short) 4);
                     documentosFacade.edit(ultimoDocumento);
                     System.out.println("Documento Actualizado Correctamente");
-                    try {
+                    try
+                    {
                         documentosFacade.edit(ultimoDocumento);
                         remueveObservaciones(ultimoDocumento.getDatosPersonalesId().getId());
                         System.out.println("Se actualizo el documento con exito!");
                         return "redirect:panelUsuario.do";
-                    } catch (Exception ex) {
+                    } catch (Exception ex)
+                    {
                         modelo.addAttribute("error", "Error al subir el Reporte Bimestral");
                         return "redirect:formatoReporteBimestral.do";
                     }
@@ -378,11 +422,13 @@ public class ReporteBimestralController2 {
         documento.setCatalogoDocumentosId(catalogoDocumento);
         documento.setStatus((short) 4);
 
-        try {
+        try
+        {
             documentosFacade.create(documento);
             remueveObservaciones(datosPersonales.getId());
             System.out.println("Se subio el Docuemnto con éxito!");
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             modelo.addAttribute("error", "Error al subir el Reporte Bimestral");
             return "redirect:formatoReporteBimestral.do";
         }
@@ -396,70 +442,75 @@ public class ReporteBimestralController2 {
 //            modelo.addAttribute("errorSubir", "Error, Primero debe generar su reporte en la primera pestaña");
 //            return "redirect:formatoReporteBimestral.do";
 //        }
-
         //reporte.setDatosPersonalesId(datosPersonales);
-
-
-
         //##############   CAMBIA REPORTE A ESTATUS 4 
         //##############   REEDIRECCIONA  A PANEL USUARIO
         //##############   MANDAR MENSAJE DE ERROR
-
         return "redirect:panelUsuario.do";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/subirAlumnoReporteBimestral.do")
-    String subirAlumnoReporteBimestral(@RequestParam String no_control, Model modelo) {
+    String subirAlumnoReporteBimestral(@RequestParam String no_control, Model modelo)
+    {
         modelo.addAttribute("no_control", no_control);
         return "/ReporteBimestral/subirAlumnoReporteBimestral";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/muestraReporteBimestral.pdf")
     public @ResponseBody
-    String muestraReporteBimestral(Model modelo, String noReporte, String idReporte, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException {
+    String muestraReporteBimestral(Model modelo, String noReporte, String idReporte, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException
+    {
 
         Map parameters = new HashMap();
         parameters.put("no_control", session.getAttribute("NCONTROL").toString());
         parameters.put("no_reporte", noReporte);
         parameters.put("id_reporte", idReporte);
-        try {
+        try
+        {
             GeneraDocumento obj = new GeneraDocumento();
             obj.generar("ges_vin", "gst05a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
             Exceptions.printStackTrace(ex);
         }
         return "OK";
     }
 
-    public void remueveObservaciones(BigDecimal idDatosPersonales) {
+    public void remueveObservaciones(BigDecimal idDatosPersonales)
+    {
         List<RegObservaciones> observacionesAlumno = regisObservacionesFacade.findBySpecificField("datosPersonalesId", idDatosPersonales, "equal", null, null);
-        for (RegObservaciones observacionActual : observacionesAlumno) {
+        for (RegObservaciones observacionActual : observacionesAlumno)
+        {
             regisObservacionesFacade.remove(observacionActual);
         }
     }
 
-    public static String getExtension(String filename) {
+    public static String getExtension(String filename)
+    {
         int index = filename.lastIndexOf('.');
-        if (index == -1) {
+        if (index == -1)
+        {
             return "";
-        } else {
+        } else
+        {
             return filename.substring(index + 1);
         }
     }
 
     /**
      *
-     * Metodo que se encarga de enviar notificacion al alumno en base a su
-     * correo
+     * Metodo que se encarga de enviar notificacion al alumno en base a su correo
      *
      * @param tipo
      * @param correoDestinatario
      * @param nombre
      * @param dtp
      */
-    private void enviarCorreo(int tipo, String correoDestinatario, String nombre, DatosPersonales dtp) {
+    private void enviarCorreo(int tipo, String correoDestinatario, String nombre, DatosPersonales dtp)
+    {
         //Romper metodo en caso de que correo no se encuentre
-        if (correoDestinatario == null) {
+        if (correoDestinatario == null)
+        {
             return;
         }
 //        } else if (banderaPrueba) {
@@ -468,7 +519,8 @@ public class ReporteBimestralController2 {
         //En caso de que BanderaPrueba este activa se envia Correo al correo de Test
 
         String mensaje = " ";
-        switch (tipo) {
+        switch (tipo)
+        {
             case 1://Aceptados
                 mensaje = "<h1>Notificación Servicio Social</h1>\n"
                         + "<h2>Estimado  <b>" + nombre + "</b>:</h2> \n"
@@ -493,14 +545,15 @@ public class ReporteBimestralController2 {
 
                 for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId",
                         dtp,
-                        "equal", null, null)) {
+                        "equal", null, null))
+                {
 
                     String detalle = reg.getCatalogoObservacionId().getDetalle();
                     mensaje += "<li>" + detalle + "</li>\n";
                 }
 
-                String mns2 =
-                        "</ul>\n"
+                String mns2
+                        = "</ul>\n"
                         + "<p>\n"
                         + "Oficina de Servicio Social <br>\n"
                         + "Instituto Tecnológico  de Toluca\n"

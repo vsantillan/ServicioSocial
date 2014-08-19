@@ -2,15 +2,18 @@ var idDatosPersonales = "";
 var idReporte = "";
 var idDocumento = "";
 var tipo = "";
-var status="";
+var status = "";
 
+$(document).on("click", ".pideObservaciones", obtieneObservacionesReporteBimestral);
 $(document).ready(listo);
+
 function listo()
 {
     $(document).on('click', ".aceptarReporte", aceptarReporteA);
     $(document).on("click", ".correccion", cambiarEstadoReporteCorreccion);
     $(document).on("click", "#guardarObservaciones", obtenerDatos);
 }
+
 function confirmacionEvento()
 {
     if (!confirm('\u00BF' + "Desea realizar esta acci" + '\u00f3' + "n?"))
@@ -55,7 +58,7 @@ function aceptarReporteA(e)
             {
                 $("#div-aceptar-reporte").hide('slow');
             }, 3000);
-                            window.location.reload();
+            window.location.reload();
         });
     }
 
@@ -92,7 +95,7 @@ function obtenerDatos()
     {
 
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("actualizarStatusReporte.do", {idDatoPersonales: idDatosPersonales, idReporte: idReporte,idDocumento:idDocumento, status:status,tipo: tipo, observaciones: array}, function(respuesta)
+        $.post("actualizarStatusReporte.do", {idDatoPersonales: idDatosPersonales, idReporte: idReporte, idDocumento: idDocumento, status: status, tipo: tipo, observaciones: array}, function(respuesta)
         {
             if (respuesta === "OK")
             {
@@ -111,4 +114,26 @@ function obtenerDatos()
         alert('No se ha seleccionado ninguna Observaci\u00f3n');
     }
 
+}
+
+function obtieneObservacionesReporteBimestral()
+{
+    var idAlumno = $('#idAlumno').val();
+    var observacionesDiv = $('#contenidoObservaciones');
+
+    var urlObtieneReportes = 'dameObservaciones.do?id=' + idAlumno;
+
+    $.get(urlObtieneReportes, function(response)
+    {
+        if (response.length > 0)
+        {
+            for (var i = 0; i < response.length; i++)
+            {
+                var observacionElem = '<li class="list-group-item text-center">'
+                        + response[i]
+                        + '</li>';
+                observacionesDiv.append(observacionElem);
+            }
+        }
+    });
 }

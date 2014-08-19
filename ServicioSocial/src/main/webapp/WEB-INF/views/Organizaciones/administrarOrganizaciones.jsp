@@ -29,7 +29,7 @@
                                 <th>Organizaci&oacute;n</th>
                                 <th>Titular</th>
                                 <th>RFC</th>
-                                <th>Tipo de Organizaci&oacute;n</th>                                            
+                                <th>Tipo de Instancia</th>                                            
                             </tr>
                         </thead>
                         <tbody>

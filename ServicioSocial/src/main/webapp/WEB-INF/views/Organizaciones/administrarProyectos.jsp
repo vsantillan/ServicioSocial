@@ -26,7 +26,7 @@
                                 <th>Acci&oacute;n</th>
                                 <th>Ver proyecto</th>
                                 <th>Ver Alumnos en Proyecto</th>
-                                <th>Organizaci&oacute;n</th>
+                                <th>Instancia</th>
                                 <th>Nombre del proyecto</th>
                                 <th>Titular</th>
                                 <th>Numero de vacantes</th>           

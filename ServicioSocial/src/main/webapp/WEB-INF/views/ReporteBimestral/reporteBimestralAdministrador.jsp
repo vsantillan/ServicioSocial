@@ -191,6 +191,7 @@
                                                 </td>
                                                 <td><core:out value="${reporte.horas}"/></td>
                                                 <td><a data-toggle="modal" href="#modalObservaciones" class="pideObservaciones" datosPersonales="${reporte.datosPersonalesId.id}"><span class="glyphicon glyphicon-search"></span></a></td>
+                                                <form:hidden id="idAlumno" path="reportesEnCorreccion" value="${reporte.datosPersonalesId.id}" />
                                             </tr>
                                         </core:forEach>
                                     </tbody>
@@ -278,9 +279,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
-                        <a href="javascript:void(0)" onclick="redirecciona('catalogoObservaciones.do');" class="btn btn-danger" role="button">Agregar Observación</a>
                         <button id="guardarObservaciones" type="button" class="btn btn-primary">Guardar las observaciones de el Formato Bimestral</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
                     </div>
                 </form>
             </div><!-- /.modal-content -->
