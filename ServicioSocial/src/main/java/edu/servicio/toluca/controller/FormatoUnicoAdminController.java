@@ -12,12 +12,14 @@ import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.RegObservaciones;
+import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.FormatoUnicoAdminModel;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
-import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
+import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -26,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,7 +45,8 @@ import org.springframework.web.multipart.MultipartFile;
  * @author WindSaber
  */
 @Controller
-public class FormatoUnicoAdminController {
+public class FormatoUnicoAdminController
+{
 
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
@@ -74,10 +78,12 @@ public class FormatoUnicoAdminController {
             regisObservacionesFacade);
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
-    public String formatoUnicoAdministrador(Model model, HttpSession session, HttpServletRequest request) {
+    public String formatoUnicoAdministrador(Model model, HttpSession session, HttpServletRequest request)
+    {
 
         ValidaSesion valSession = new ValidaSesion(session, request);
-        if (valSession.accesaPanelAdministrador()) {
+        if (valSession.accesaPanelAdministrador())
+        {
             System.out.println("entro");
             long time_start,
                     time_end;
@@ -88,12 +94,13 @@ public class FormatoUnicoAdminController {
             List<FormatoUnicoBean> listadoFormatosRechazados = new ArrayList<FormatoUnicoBean>();
             List<FormatoUnicoBean> listadoFormatosCorreccion = new ArrayList<FormatoUnicoBean>();
 
-
-            for (FormatoUnico formato : formatoUnicoFacade.findAll()) {
+            for (FormatoUnico formato : formatoUnicoFacade.findAll())
+            {
 
                 //------------------Formatos No Revisados------------------------
                 if (formato.getStatusFui() != null
-                        && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS))) {
+                        && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS)))
+                {
                     //Asignando Datos A Formato Unico en estado NO_REVISADO
                     FormatoUnicoBean formatoNR = new FormatoUnicoBean();
                     formatoNR.setIdFormatoUnico(formato.getId().toString());
@@ -111,14 +118,16 @@ public class FormatoUnicoAdminController {
                             "equal", null, null);
                     //Filtrar Resultado 
                     String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos);
-                    if (fechaSubida != null) {
+                    if (fechaSubida != null)
+                    {
                         /*
-                         Si es diferente de null, el documento de FormatoUnico se encuentra en la tabla de Documentos
+                         * Si es diferente de null, el documento de FormatoUnico se encuentra en la tabla de Documentos
                          */
                         formatoNR.setFechaSubida(fechaSubida);
                         String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos);
 
-                        if (idDocumento != null) {
+                        if (idDocumento != null)
+                        {
                             formatoNR.setIdDocumentoFormatoUnico(idDocumento);
                             //Se Agrega El Objeto FormatoUnico a la lista de FomatoUnicos en estado NO_REVISADOS
                             listadoFormatosNoRevisados.add(formatoNR);
@@ -141,10 +150,12 @@ public class FormatoUnicoAdminController {
                             "equal", null, null);
 
                     String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos2);
-                    if (fechaSubida != null) {
+                    if (fechaSubida != null)
+                    {
                         String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos2);
                         formatoAceptados.setFechaSubida(fechaSubida);
-                        if (idDocumento != null) {
+                        if (idDocumento != null)
+                        {
                             formatoAceptados.setIdDocumentoFormatoUnico(idDocumento);
                             listadoFormatosAceptados.add(formatoAceptados);
                         }
@@ -165,17 +176,20 @@ public class FormatoUnicoAdminController {
                             "equal", null, null);
 
                     String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos3);
-                    if (fechaSubida != null) {
+                    if (fechaSubida != null)
+                    {
                         String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos3);
                         formatoRechazados.setFechaSubida(fechaSubida);
-                        if (idDocumento != null) {
+                        if (idDocumento != null)
+                        {
                             formatoRechazados.setIdDocumentoFormatoUnico(idDocumento);
                             listadoFormatosRechazados.add(formatoRechazados);
                         }
                     }
                 }
                 //------------------//Formatos Correccion-----------------------   
-                if (formato.getStatusFui() != null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION))) {
+                if (formato.getStatusFui() != null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION)))
+                {
                     FormatoUnicoBean formatoCorreccion = new FormatoUnicoBean();
                     formatoCorreccion.setNoControl(formato.getDatosPersonalesId().getAlumnoId().getId());
                     formatoCorreccion.setNombre(formato.getDatosPersonalesId().getNombre()
@@ -187,13 +201,14 @@ public class FormatoUnicoAdminController {
                             formato.getDatosPersonalesId(),
                             "equal", null, null);
 
-
                     String fechaSubida = obtenerFechaSubidaFormatoU(listaDocumentos4);
 
-                    if (fechaSubida != null) {
+                    if (fechaSubida != null)
+                    {
                         String idDocumento = obtenerIDDocumentoFormatoU(listaDocumentos4);
                         formatoCorreccion.setFechaSubida(fechaSubida);
-                        if (idDocumento != null) {
+                        if (idDocumento != null)
+                        {
                             formatoCorreccion.setIdDocumentoFormatoUnico(idDocumento);
                             listadoFormatosCorreccion.add(formatoCorreccion);
                         }
@@ -213,8 +228,10 @@ public class FormatoUnicoAdminController {
             //Catalogo Sanciones
             List<CatalogoObservaciones> observaciones = observacionesCatalogoFacade.findAll();
             List<CatalogoObservaciones> observacionesBimestrales = new ArrayList();
-            for (CatalogoObservaciones observacionActual : observaciones) {
-                if (observacionActual.getTipo().compareTo(BigInteger.valueOf(1)) == 0) {
+            for (CatalogoObservaciones observacionActual : observaciones)
+            {
+                if (observacionActual.getTipo().compareTo(BigInteger.valueOf(1)) == 0)
+                {
                     observacionesBimestrales.add(observacionActual);
                 }
             }
@@ -223,7 +240,8 @@ public class FormatoUnicoAdminController {
             time_end = System.currentTimeMillis();
             System.out.println("Tiempo: " + (time_end - time_start));
             return "/FormatoUnico/formatoUnicoAdministrador";
-        } else {
+        } else
+        {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
@@ -232,12 +250,14 @@ public class FormatoUnicoAdminController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarFormatoUnicoNR_Aceptado.do")
     public @ResponseBody
-    String modificarFU_NR_Aceptados(String id) {
+    String modificarFU_NR_Aceptados(String id)
+    {
         //Obtener FormatoUnico en especifico 
 
         FormatoUnico fA = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
         //Se encontro el Objeto
-        if (fA != null) {
+        if (fA != null)
+        {
             //Cambiar Estado de NO_ACEPTADO A ACEPTADO
             fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
             formatoUnicoFacade.edit(fA);
@@ -252,10 +272,9 @@ public class FormatoUnicoAdminController {
     }
 
     /**
-     * @see variable tipo indica que tipo de cambio de status realizara si es 1
-     * cambiara de NO_REVISADO a CORRECCION si es 2 cambiara de NO_REVISADO a
-     * RECHAZO variable observaciones es un array de id's de Observaciones en
-     * Base al Catalogo Observaciones
+     * @see variable tipo indica que tipo de cambio de status realizara si es 1 cambiara de NO_REVISADO a CORRECCION si
+     * es 2 cambiara de NO_REVISADO a RECHAZO variable observaciones es un array de id's de Observaciones en Base al
+     * Catalogo Observaciones
      *
      * @param observaciones
      * @param idDatoPersonales
@@ -268,9 +287,11 @@ public class FormatoUnicoAdminController {
     String modificarFormatoUnico(@RequestParam(value = "observaciones[]", required = false) String[] observaciones,
             String idDatoPersonales,
             String idFormatoUnico,
-            String tipo) {
+            String tipo)
+    {
         System.out.println("Entro a modificar el status del formato unico");
-        for (String idObservacion : observaciones) {
+        for (String idObservacion : observaciones)
+        {
             //Objeto a Registrar
             RegObservaciones registro = new RegObservaciones();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
@@ -285,7 +306,8 @@ public class FormatoUnicoAdminController {
         System.out.println("Ya ingreso las observaciones");
         System.out.println("Inicia la modificación... tipo: " + tipo + " idDatosPersonales: " + idDatoPersonales + " idFormatoUnico: " + idFormatoUnico);
         String nombre = " ";
-        switch (Integer.parseInt(tipo)) {
+        switch (Integer.parseInt(tipo))
+        {
             case 1://Correccion
                 //Buscar Formato Unico
                 FormatoUnico fu = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
@@ -320,34 +342,37 @@ public class FormatoUnicoAdminController {
 
     @RequestMapping(value = "/mostarPDF.do", method = RequestMethod.GET)
     @ResponseBody
-    public void showPDF(String id, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException {
-
+    public void showPDF(String id, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException
+    {
         //Buscar el Documento en base al ID
         Documentos doc = documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
 
-        if (doc != null) {
-            if (doc.getExtension().equals("pdf")) {//El Documento es PDF
+        if (doc != null)
+        {
+            if (doc.getExtension().equals("pdf"))
+            {//El Documento es PDF
                 httpServletResponse.setContentType("application/pdf");
-            } else if (doc.getExtension().equals("jpg") || doc.getExtension().equals("png") || doc.getExtension().equals("jpeg")) {//Es imagen
+            } else if (doc.getExtension().equals("jpg") || doc.getExtension().equals("png") || doc.getExtension().equals("jpeg"))
+            {//Es imagen
                 httpServletResponse.setContentType("image/jpg");
-            } else {
+            } else
+            {
                 return;
             }
             byte[] documentoBLOB = doc.getArchivo();
             httpServletResponse.getOutputStream().write(documentoBLOB);
-
         }
     }
 
     @RequestMapping(value = "/mostarObservacion.do", method = RequestMethod.GET)
-    public String mostrarObservacion(String idDatosPersonales, Model modelo) {
+    public String mostrarObservacion(String idDatosPersonales, Model modelo)
+    {
         modelo.addAttribute("listadoObservaciones",
                 regisObservacionesFacade.findBySpecificField("datosPersonalesId",
-                datosPersonalesFacade.find(BigDecimal.valueOf(Long.parseLong(idDatosPersonales))),
-                "equal", null, null));
+                        datosPersonalesFacade.find(BigDecimal.valueOf(Long.parseLong(idDatosPersonales))),
+                        "equal", null, null));
 
         return "/FormatoUnico/detalleObservacion";
-
 
     }
 
@@ -355,12 +380,13 @@ public class FormatoUnicoAdminController {
     /**
      *
      * @param listaDocumentos
-     * @return Fecha de Subida de Formato Unico De todos los documentos, se
-     * obtiene solo los documentos con CATALOGO_ID= 1 En caso de no encontrar
-     * nada devuelve null, en caso contrario la Fecha de Subida
+     * @return Fecha de Subida de Formato Unico De todos los documentos, se obtiene solo los documentos con CATALOGO_ID=
+     * 1 En caso de no encontrar nada devuelve null, en caso contrario la Fecha de Subida
      */
-    private String obtenerFechaSubidaFormatoU(List<Documentos> listaDocumentos) {
-        for (Documentos docu : listaDocumentos) {
+    private String obtenerFechaSubidaFormatoU(List<Documentos> listaDocumentos)
+    {
+        for (Documentos docu : listaDocumentos)
+        {
             if (docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(DOC_CAT_FU)))//Es igual a formato Unico
             {
                 return docu.getFechaSubida().toString();
@@ -372,11 +398,12 @@ public class FormatoUnicoAdminController {
     /**
      *
      * @param listaDocumentos
-     * @return ID_DOCUMENTO del FormatoUnico, en caso de no encontrarse retorna
-     * null
+     * @return ID_DOCUMENTO del FormatoUnico, en caso de no encontrarse retorna null
      */
-    private String obtenerIDDocumentoFormatoU(List<Documentos> listaDocumentos) {
-        for (Documentos docu : listaDocumentos) {
+    private String obtenerIDDocumentoFormatoU(List<Documentos> listaDocumentos)
+    {
+        for (Documentos docu : listaDocumentos)
+        {
             if (docu.getCatalogoDocumentosId().getId().equals(BigDecimal.valueOf(DOC_CAT_FU)))//Es igual a formato Unico
             {
                 return docu.getId().toString();
@@ -387,25 +414,28 @@ public class FormatoUnicoAdminController {
 
     /**
      *
-     * Metodo que se encarga de enviar notificacion al alumno en base a su
-     * correo
+     * Metodo que se encarga de enviar notificacion al alumno en base a su correo
      *
      * @param tipo
      * @param correoDestinatario
      * @param nombre
      * @param dtp
      */
-    private void enviarCorreo(int tipo, String correoDestinatario, String nombre, DatosPersonales dtp) {
+    private void enviarCorreo(int tipo, String correoDestinatario, String nombre, DatosPersonales dtp)
+    {
         //Romper metodo en caso de que correo no se encuentre
-        if (correoDestinatario == null) {
+        if (correoDestinatario == null)
+        {
             return;
-        } else if (banderaPrueba) {
+        } else if (banderaPrueba)
+        {
             correoDestinatario = correoTest;
         }
         //En caso de que BanderaPrueba este activa se envia Correo al correo de Test
 
         String mensaje = " ";
-        switch (tipo) {
+        switch (tipo)
+        {
             case 1://Aceptados
                 mensaje = "<h1>Notificación Servicio Social</h1>\n"
                         + "<h2>Estimado  <b>" + nombre + "</b>:</h2> \n"
@@ -430,14 +460,15 @@ public class FormatoUnicoAdminController {
 
                 for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId",
                         dtp,
-                        "equal", null, null)) {
+                        "equal", null, null))
+                {
 
                     String detalle = reg.getCatalogoObservacionId().getDetalle();
                     mensaje += "<li>" + detalle + "</li>\n";
                 }
 
-                String mns2 =
-                        "</ul>\n"
+                String mns2
+                        = "</ul>\n"
                         + "<p>\n"
                         + "Oficina de Servicio Social <br>\n"
                         + "Instituto Tecnológico  de Toluca\n"
@@ -471,7 +502,8 @@ public class FormatoUnicoAdminController {
     ////PRUEBA DE FOTO!!!!!!!!!!!!!!!!!!!!!!!
     @RequestMapping(value = "/guardarPDF2.do", method = RequestMethod.POST)
     public String save(
-            @RequestParam("file") MultipartFile file, String id) throws IOException {
+            @RequestParam("file") MultipartFile file, String id) throws IOException
+    {
 
         Documentos doc = documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
         doc.setArchivo(file.getBytes());
@@ -481,7 +513,8 @@ public class FormatoUnicoAdminController {
     }
 
     @RequestMapping(value = "/subirpdf2.do", method = RequestMethod.GET)
-    public String guardaFotoPrueba(Model modelo) {
+    public String guardaFotoPrueba(Model modelo)
+    {
         return "/FormatoUnico/guardarFoto";
     }
 }

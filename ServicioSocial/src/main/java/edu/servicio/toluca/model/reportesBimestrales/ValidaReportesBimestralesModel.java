@@ -69,9 +69,10 @@ public class ValidaReportesBimestralesModel
                             int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
                             System.out.println("tiene " + horasServicio + " horas..." + " plan " + String.valueOf(servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle()));
                             servicioBean.setHorasServicio(horasServicio);
-                            if ((servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Federal") && horasServicio < 480)
-                                    || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 600 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("N"))
-                                    || (servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle().equals("Gobierno Municipal") && horasServicio < 500 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("S")))
+                            String detalleTipoOrganizacion = servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle();
+                            if ((detalleTipoOrganizacion.equals("Gobierno Federal") && horasServicio < 480)
+                                    || (detalleTipoOrganizacion.equals("Gobierno Municipal") && horasServicio < 600 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("N"))
+                                    || (detalleTipoOrganizacion.equals("Organizacion Civil") && horasServicio < 480 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("N")))
                             {
 
                                 //if (horasServicio < 480) {

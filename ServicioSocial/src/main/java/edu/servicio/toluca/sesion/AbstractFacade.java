@@ -55,6 +55,8 @@ public abstract class AbstractFacade<T>
 
     public T find(Object id)
     {
+        getEntityManager().flush();
+        getEntityManager().clear();
         return getEntityManager().find(entityClass, id);
     }
 
