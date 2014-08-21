@@ -19,5 +19,6 @@
 <link href="<%=request.getContextPath()%>/css/spippet_menu.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/img/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 <link href="<%=request.getContextPath()%>/css/instancias.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/timeline.help.css" rel="stylesheet">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700' rel='stylesheet' type='text/css'>
 <title>Servicio Social</title>

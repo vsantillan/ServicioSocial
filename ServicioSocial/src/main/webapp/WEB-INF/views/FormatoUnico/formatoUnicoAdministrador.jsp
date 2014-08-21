@@ -53,7 +53,7 @@
                                             <td>
                                                 <core:out value="${filaNR.nombre}"/>
                                             </td>
-                                            <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
+                                            <td><a href="mostarPDF.do?id=${filaNR.idDocumentoFormatoUnico}" class="fancyFormUnic"><i class="glyphicon glyphicon-search"></i></a></td>
                                             <td><core:out value="${filaNR.fechaSubida}"/></td>
 
                                         </tr>
@@ -79,7 +79,7 @@
                                             <td>${filaRech.periodo}</td>
                                             <td> <core:out value="${filaRech.noControl}"/>  </td>
                                             <td><core:out value="${filaRech.nombre}"/></td>
-                                            <td><a href="mostarPDF.do?id=${filaRech.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
+                                            <td><a href="mostarPDF.do?id=${filaRech.idDocumentoFormatoUnico}" class="fancyFormUnic"><i class="glyphicon glyphicon-search"></i></a></td>
                                             <td><core:out value="${filaRech.fechaSubida}"/></td>
                                             <td>
                                                 <a href="mostarObservacion.do?idDatosPersonales=${filaRech.idDatosPersonales}" class="fancy"><i class="glyphicon glyphicon-list"></i>  Detalles</a>
@@ -107,7 +107,7 @@
                                             <td>${filaCorrec.periodo}</td>
                                             <td> <core:out value="${filaCorrec.noControl}"/>  </td>
                                             <td><core:out value="${filaCorrec.nombre}"/></td>
-                                            <td><a href="mostarPDF.do?id=${filaCorrec.idDocumentoFormatoUnico}" class="fancyFU"><i class="glyphicon glyphicon-search"></i></a></td>
+                                            <td><a href="mostarPDF.do?id=${filaCorrec.idDocumentoFormatoUnico}" class="fancyFormUnic"><i class="glyphicon glyphicon-search"></i></a></td>
                                             <td><core:out value="${filaCorrec.fechaSubida}"/></td>
                                             <td>
                                                 <a href="mostarObservacion.do?idDatosPersonales=${filaCorrec.idDatosPersonales}" class="fancyFUI"><i class="glyphicon glyphicon-list"></i>  Detalles</a>

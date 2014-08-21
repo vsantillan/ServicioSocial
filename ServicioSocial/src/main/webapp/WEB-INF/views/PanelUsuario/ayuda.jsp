@@ -11,6 +11,7 @@
         <%@include file="../General/head.jsp"%>
     </head>
     <body>
+          <%@include file="modelHelp.jsp"%>
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
@@ -27,7 +28,7 @@
                                 <img src="img/formUnic.png" width="760" height="400">
                             </div>
                             <div class="carousel-caption">
-                                <h4><a class="label label-primaryhelp" href="#">Proceso de formato único</a></h4>
+                                <h4><a data-toggle="modal" href="#myModalFormUnic" class="label label-primaryhelp" href="#">Proceso de formato único</a></h4>
                             </div>
                         </div>
 
@@ -36,7 +37,7 @@
                                 <img src="img/repBim.png" width="760" height="400">
                             </div>
                             <div class="carousel-caption">
-                                <h4><a class="label label-primaryhelp" href="#">Proceso de Reporte Bimestral</a></h4>
+                                <h4><a data-toggle="modal" href="#myModalRepBim" class="label label-primaryhelp" href="#">Proceso de Reporte Bimestral</a></h4>
                             </div>
                         </div>
 

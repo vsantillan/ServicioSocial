@@ -380,14 +380,14 @@ public class PlaticaController
             platicaFacade.edit(platica);
             session.setAttribute("platica", fecha + "");
             return "/Platicas/folio";
-
+             
         } else
         {
             modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
             modelo.addAttribute("platica", new Platica());
-
+            
             modelo.addAttribute("existe", "<div class='alert alert-danger'>Ya te has registrado a ésta plática</div>");
-            return "/Platicas/seleccionarPlatica";
+            return "redirect:panelUsuairo.do";
         }
     }
 
