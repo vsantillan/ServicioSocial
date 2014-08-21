@@ -87,15 +87,14 @@
                 <li><a href="panelAdministrador.do">Panel Administrador</a></li>
 
                 <%}%>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="cerrarSesion.do">Cerrar Sesión</a></li>
-            </ul>
-            <%} else
+                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="cerrarSesion.do">Cerrar Sesión</a></li>
+                </ul>
+                <%} else
                 {%>
-            <ul class="nav navbar-nav navbar-right">
                 <li ><a href="login.do">Iniciar Sesión</a></li>
-            </ul>
+           
             <%}%> 
 
         </div><!--/.nav-collapse -->
