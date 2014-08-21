@@ -6,6 +6,12 @@ var tabActual;
 var contentActual;
 function listo()
 {
+    var foliodociden = $(".foliodociden");
+    if (foliodociden.val() === '0')
+    {
+        foliodociden.val("");
+    }
+
     cambiaTab();
     $(document).on("click", ".tabsFormanotUnico", cambiaTab);
     timePicker();//Inicializa campos JQuery
@@ -103,12 +109,12 @@ function recargaProyectos(idInstancia, idProyecto)
             $('#telefono_responsable').val(respuesta.telefono_responsable[i]);
             $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDP + "&idInstancia=" + idInstancia + "");
         }
-        
+
         $("#linkMasInfoProyecto").click(function() {
             var idProyectoCombo = $("#proyectos option:selected").val();
             $('#linkMasInfoProyecto').attr("href", "detalleProyecto.do?id=" + idProyectoCombo);
         });
-        
+
         console.log('Pasando a proyectos');
         console.log('tamanio de proyec es' + $("#proyectos option").size());
         $("#proyectos option").each(function() {

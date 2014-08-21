@@ -108,7 +108,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label>*Folio de Documento de Identificaci&oacute;n:</label>
-                                                    <form:input maxlength="13" path ="folioDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/> 
+                                                    <form:input maxlength="13" path ="folioDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control foliodociden"/> 
                                                 </div>
                                                 <div class="form-group">
                                                     <label>*Clave de Documento de Identificaci&oacute;n:</label>

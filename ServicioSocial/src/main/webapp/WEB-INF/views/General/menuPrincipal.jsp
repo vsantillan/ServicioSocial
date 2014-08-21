@@ -20,11 +20,9 @@
         <div class="navbar-inner">
             <ul class="nav navbar-nav " role="navigation">
                 <li class="active"><a href="index.do" >Inicio</a></li>
-
-
-                <%if (sesion.validaAlumno())
-                    {
-                %>
+                    <%if (sesion.validaAlumno())
+                        {
+                    %>
                 <li><a href="manualProcedimiento.do">Manual de Procedimiento</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizaciones<b class="caret"></b></a>
@@ -40,7 +38,7 @@
                     </ul>
                 </li>
                 <%  } else
-                {%>%>
+                {%>
                 <li><a href="verificarinstancia.do">Preregistro de instancias</a></li>
                 <li><a href="manualProcedimiento.do">Manual de Procedimiento</a></li>
                     <%}%> 
@@ -92,7 +90,7 @@
                 <li><a href="cerrarSesion.do">Cerrar Sesión</a></li>
             </ul>
             <%} else
-                {%>
+            {%>
             <ul class="nav navbar-nav navbar-right">
                 <li ><a href="login.do">Iniciar Sesión</a></li>
             </ul>

@@ -53,7 +53,7 @@ public class MetodosValidacion
     {
         s = pasaMayusculas(s);
         //s = quitaAcentos(s);
-        s = quitaCaracteresEspeciales(s);
+//        s = quitaCaracteresEspeciales(s);
         return s;
     }
 

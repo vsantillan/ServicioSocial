@@ -8,6 +8,8 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosAcademicosBean;
 import edu.servicio.toluca.beans.FormatoUnicoDatosContactoBean;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.MetodosValidacion;
+import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoHorariosBean;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoProyectosJSON;
 import edu.servicio.toluca.entidades.CatalogoDocumento;
@@ -26,11 +28,9 @@ import edu.servicio.toluca.entidades.MunicipiosSia;
 import edu.servicio.toluca.entidades.Platica;
 import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
+import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.VistaAlumno;
-import edu.servicio.toluca.beans.ValidaSesion;
-import edu.servicio.toluca.beans.bimestrales.fechas;
-import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.model.SancionesModelo;
 import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
@@ -44,7 +44,6 @@ import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.EstadosSiaFacade;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
-//import edu.servicio.toluca.sesion.HorarioFacade;
 import edu.servicio.toluca.sesion.HorariosAlumnoFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
 import edu.servicio.toluca.sesion.MunicipiosSiaFacade;
@@ -73,6 +72,8 @@ import javax.validation.Valid;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import org.openide.util.Exceptions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -129,6 +130,8 @@ public class FormatoUnicoController
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     private RegObservacionesFacade regisObservacionesFacade;
 
+    private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
+
     @RequestMapping(method = RequestMethod.GET, value = "/showpdf.do")
     public String showpdf(Model modelo, String alumno_id)
     {
@@ -170,8 +173,9 @@ public class FormatoUnicoController
         }
         VistaAlumno alumno = listaAlumnos.get(0);
         System.out.println("Que traigo? Nombre:" + alumno.getNombre() + " id:" + alumno.getId());
-        //---Va alumno = listaAlumnos.get(0);
+        logger.debug("ALUMNO CURP " + alumno.getCurp() + " tamaño " + alumno.getCurp().length());
 
+        //---Va alumno = listaAlumnos.get(0);
         if (Float.parseFloat(alumno.getPorcentaje()) < 70)
         {
             System.out.println("El alumno no tiene los créditos necesarios");
@@ -196,7 +200,7 @@ public class FormatoUnicoController
             datosPersonales.setNombre(alumno.getNombre());
             datosPersonales.setApellidoP(alumno.getApellidoPat());
             datosPersonales.setApellidoM(alumno.getApellidoMat());
-            datosPersonales.setCurp(alumno.getCurp());
+            datosPersonales.setCurp(alumno.getCurp().trim());
             datosPersonales.setSexo(alumno.getSexo());
             datosPersonales.setTelefonoCasa(alumno.getTelefono());
             datosPersonales.setCorreoElectronico(alumno.getEMail());
@@ -350,7 +354,7 @@ public class FormatoUnicoController
         formatoUnicoDatosPersonalesbean.setApellidoP(datosPersonales.getApellidoP());
         formatoUnicoDatosPersonalesbean.setApellidoM(datosPersonales.getApellidoM());
         formatoUnicoDatosPersonalesbean.setSexo(datosPersonales.getSexo());
-        formatoUnicoDatosPersonalesbean.setCurp(datosPersonales.getCurp());
+        formatoUnicoDatosPersonalesbean.setCurp(datosPersonales.getCurp().trim());
         formatoUnicoDatosPersonalesbean.setEstado_civil(datosPersonales.getEstadoCivil());
         formatoUnicoDatosPersonalesbean.setOcupacion(datosPersonales.getOcupacion());
         formatoUnicoDatosPersonalesbean.setClaveDocIdentificacion(datosPersonales.getClaveDocIdentificacion());
@@ -601,7 +605,7 @@ public class FormatoUnicoController
             datosPersonales.setSexo(dt.getSexo());
             datosPersonales.setEstadoCivil(dt.getEstado_civil());
             datosPersonales.setOcupacion(dt.getOcupacion());
-            datosPersonales.setCurp(dt.getCurp());
+            datosPersonales.setCurp(dt.getCurp().trim());
             datosPersonales.setLugarNacimiento(dt.getLugar_nacimiento());
             datosPersonales.setFolioDocIdentificaciin(new BigInteger(dt.getFolioDocIdentificacion()));
             datosPersonales.setClaveDocIdentificacion(dt.getClaveDocIdentificacion());
