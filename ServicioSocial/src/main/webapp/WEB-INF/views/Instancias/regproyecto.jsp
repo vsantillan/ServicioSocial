@@ -15,7 +15,7 @@ f<%--
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp" %>
-                <%@include file="menuPreregistroInstancia.jsp" %>
+                <%@include file="../General/menuOrganizacion.jsp" %>
             </div>
             <div class="row"> <br />
                 
@@ -50,9 +50,10 @@ f<%--
                         
                         <div class="row">
                             <br/> <h3>&nbsp;&nbsp;Perfiles para el proyecto</h3>
+                            ${errorperfiles}
                             <div class="col-md-6">
                                 <label for="perfilesp">Perfiles elegidos</label>
-                                <input id="perfiles-proyf" name="perfilesproyecto" class="form-control" type="text" required="true" style="display: none"/>
+                                <input id="perfiles-proyf" name="perfilesproyecto" class="form-control" type="text" value="${perfilesproyecto}" style="display: none"/>
                                 <select name="perfilesp" id="perfilesp" size="5" class="combobox-autocomplete form-control">
                                     
                                 </select>
@@ -73,25 +74,25 @@ f<%--
                             <br /> <h3>&nbsp;&nbsp;Actividades del proyecto</h3>
                             <div class="col-md-6">
                                 <label for="act1">Actividad 1</label>
-                                <input name="actividad1" class="form-control" type="text" placeholder="Actividad para el proyecto" required="true" />
+                                <input id="act1" name="actividad1" class="form-control" type="text" placeholder="Actividad para el proyecto" required="true" value="${actividad1}" />
                                 
                                 <div id="actividad3"  style="display: none">
                                     <br /><label for="act3">Actividad 3</label>
-                                    <input name="actividad3" class="form-control" type="text" placeholder="Actividad para el proyecto" />
+                                    <input id="act3" name="actividad3" class="form-control" type="text" placeholder="Actividad para el proyecto" value="${actividad3}" />
                                 </div>
                                 
                                 <div id="actividad5"  style="display: none">
                                     <br /><label for="act5">Actividad 5</label>
-                                    <input name="actividad5" class="form-control" type="text" placeholder="Actividad para el proyecto"/>
+                                    <input id="act5" name="actividad5" class="form-control" type="text" placeholder="Actividad para el proyecto" value="${actividad5}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <label for="act2">Actividad 2</label>
-                                <input name="actividad2" class="form-control" type="text" placeholder="Actividad para el proyecto"  required="true" />
+                                <input id="act2" name="actividad2" class="form-control" type="text" placeholder="Actividad para el proyecto"  required="true" value="${actividad2}" />
 
                                 <div id="actividad4"  style="display: none">
                                     <br /><label for="act4">Actividad 4</label>
-                                    <input name="actividad4" class="form-control" type="text" placeholder="Actividad para el proyecto"/>
+                                    <input id="act4" name="actividad4" class="form-control" type="text" placeholder="Actividad para el proyecto" value="${actividad4}" />
                                 </div>
                             </div>
                         </div>
@@ -175,7 +176,7 @@ f<%--
                         </div>
                             
                         <div class="row" style="padding-top: 30px; padding-right: 17px; text-align: right" >
-                            <button class="btn btn-primary">Registrar proyecto</button>
+                            <button type="submit" class="btn btn-primary">Registrar proyecto</button>
                         </div>
                     </div>
                 </form:form>

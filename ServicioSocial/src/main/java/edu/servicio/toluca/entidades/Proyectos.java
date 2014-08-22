@@ -36,6 +36,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
@@ -65,6 +66,7 @@ public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoEr
     private static final long serialVersionUID = 1L;
 
     @Size(max = 7, message = "La extensión no puede tener mas de 7 digitos")
+    @Pattern(regexp = numeros, message = "La extensión solo puede incluir números")
     @Column(name = "EXT")
     private String ext;
     
@@ -101,6 +103,7 @@ public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoEr
     private String responsablePuesto;
     
     @Basic(optional = false)
+    //@NumberFormat(style = NumberFormat.Style.NUMBER)
     @NotNull(message = "Debe indicar un telefono para el responsable")
     @Column(name = "TELEFONO_RESPONSABLE")
     private long telefonoResponsable;
@@ -126,7 +129,7 @@ public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoEr
     @Basic(optional = false)
     @NotNull(message = "Debe indicar al menos una vacante")
     @Column(name = "VACANTES")
-    @Min(1)
+    @Min(value=1, message = "Al menos debe haber una vacante disponible")
     private BigInteger vacantes = BigInteger.ONE;
     
     @Basic(optional = false)
@@ -137,7 +140,7 @@ public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoEr
     @Basic(optional = false)
     @NotNull(message = "Indique un nombre para el proyecto")
     @Size(max = 60, message = "El Campo Nombre del Proyecto admite un máximo de 60 caracteres.")
-    @Pattern(regexp = letrasPrimeroDespuesEspacios, message = errorLetrasNumeros)
+    @Pattern(regexp = letrasNumerosPrimeroDespuesEspacios, message = errorLetrasNumeros)
     @Column(name = "NOMBRE")
     private String nombre;
 
