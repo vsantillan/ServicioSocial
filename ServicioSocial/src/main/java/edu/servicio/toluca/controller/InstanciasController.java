@@ -318,16 +318,7 @@ public class InstanciasController
                 actividadesFacade.create(actividad05);
             }
             
-            // Configurar Entity Y Persistir
-            List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
-            Instancia nvaInstancia = new Instancia();
-            nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
-
-            model.addAttribute("tiposOrganizacion", tiposOrg);
-            model.addAttribute("instancia", nvaInstancia);
-            model.addAttribute("rfcError", "");
-
-            return "/Instancias/preregistro";
+            return "/Instancias/proyectoregistrado";
         }
         
     }
