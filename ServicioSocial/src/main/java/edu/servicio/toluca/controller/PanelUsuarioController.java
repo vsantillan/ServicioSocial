@@ -134,11 +134,16 @@ public class PanelUsuarioController
                         model.addAttribute("accesoFormatoUnico", beanFU.isAccesoFormatoUnico());
                         model.addAttribute("statusFui", beanFU.getStatusFui());
                         model.addAttribute("mensajeFormatoUnico", beanFU.getMensaje());
+                    } else if (!servicioBean.getPlaticaBean().isTienePlatica())
+                    {
+                        model.addAttribute("accesoFormatoUnico", false);
+                        model.addAttribute("statusFui", 2);
+                        model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Único");
                     } else
                     {
                         model.addAttribute("accesoFormatoUnico", true);
                         model.addAttribute("statusFui", 2);
-                        model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
+                        model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Único");
                     }
                 } catch (Exception e)
                 {

@@ -153,7 +153,7 @@ public class HistorialServicioController {
                             } else {
                                 model.addAttribute("accesoFormatoUnico", true);
                                 model.addAttribute("statusFui", 2);
-                                model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Unico");
+                                model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Único");
                             }
                         } catch (Exception e) {
                             System.out.println("Error en la validacion del formato unico");
