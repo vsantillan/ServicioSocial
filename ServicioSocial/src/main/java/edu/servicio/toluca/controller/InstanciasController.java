@@ -28,7 +28,6 @@ import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -323,4 +322,23 @@ public class InstanciasController
         
     }
     
+    @RequestMapping( value="instanciaproyectos.do", method=RequestMethod.GET)
+    public String administrarProyectos(HttpSession session, Model model)
+    {
+        if(session.getAttribute("NOMBRE") != null)
+        {
+            Instancia instancia;
+            String instanciaNom = session.getAttribute("NOMBRE").toString();
+            
+            instancia = instanciaFacade.findBySpecificField("nombre", 
+                    instanciaNom, "equal", null, null).get(0);
+            
+            if(instancia != null)
+            {
+                return "/Instancias/administrarproyectos";
+            }
+        }
+        
+        return "/NavegacionPrincipal/index";
+    }
 }
