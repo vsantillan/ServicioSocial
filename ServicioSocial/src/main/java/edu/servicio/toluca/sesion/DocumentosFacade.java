@@ -28,5 +28,15 @@ public class DocumentosFacade extends AbstractFacade<Documentos> {
     public DocumentosFacade() {
         super(Documentos.class);
     }
+
+    @Override
+    public Documentos find(Object id)
+    {
+        getEntityManager().flush();
+        getEntityManager().clear();
+        return super.find(id); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     
 }
