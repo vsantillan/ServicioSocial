@@ -910,8 +910,10 @@ public class FormatoUnicoController
                     for (ProyectoPerfil per : proy.getProyectoPerfilCollection())
                     {
                         System.out.println("xxxCarrera id:" + alumno.getCarreraId());
-                        System.out.println("xxxPerfil p/proy" + per.getIdPerfil().getIdPerfil());
-                        System.out.println("xxxNombre" + per.getIdPerfil().getNombre());
+                        System.out.println("xxxPerfil p/proy" + per.getIdPerfil());
+                        System.out.println("xxxProyecto id ..... p/proy" + per.getIdProyecto());
+                        System.out.println("xxxNombre" + per.getIdProyecto().getNombre());
+                        System.out.println("id persona "+per.getIdPerfil().getIdPerfil().toString()+"   id carrera "+(new BigDecimal(alumno.getCarreraId()).toString()));
                         if (per.getIdPerfil().getIdPerfil().toString().equals(new BigDecimal(alumno.getCarreraId()).toString()))
                         {
                             System.out.println("oxxAgregando uno de perfil");
