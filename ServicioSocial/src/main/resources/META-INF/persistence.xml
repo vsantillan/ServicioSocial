@@ -5,5 +5,8 @@
     <jta-data-source>jdbc/serviciosocial</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>NONE</shared-cache-mode>
+    <properties>
+        <property name="hibernate.hbm2ddl.auto" value="update" />
+    </properties>
   </persistence-unit>
 </persistence>

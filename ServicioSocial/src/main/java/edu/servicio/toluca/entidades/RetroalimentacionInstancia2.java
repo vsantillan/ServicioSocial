@@ -64,7 +64,7 @@ public class RetroalimentacionInstancia2 implements Serializable {
     private BigInteger estatus;
     @JoinColumn(name = "ID_INSTANCIA", referencedColumnName = "ID_INSTANCIA")
     @ManyToOne(optional = false)
-    private Instancia idInstancia;
+    private InstanciaOLD idInstancia;
 
     public RetroalimentacionInstancia2() {
     }
@@ -112,11 +112,11 @@ public class RetroalimentacionInstancia2 implements Serializable {
         this.estatus = estatus;
     }
 
-    public Instancia getIdInstancia() {
+    public InstanciaOLD getIdInstancia() {
         return idInstancia;
     }
 
-    public void setIdInstancia(Instancia idInstancia) {
+    public void setIdInstancia(InstanciaOLD idInstancia) {
         this.idInstancia = idInstancia;
     }
 

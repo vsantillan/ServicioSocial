@@ -131,18 +131,18 @@ public class InstanciasController
                         instancia.getTipoOrganizacion().getIdTipoOrganizacion());
                 instancia.setTipoOrganizacion(tipoOrg);
 
-                instancia.setPassword(StringMD.getStringMessageDigest(
-                        instancia.getPassword(), "SHA-1"));
+//                instancia.setPassword(StringMD.getStringMessageDigest(
+//                        instancia.getPassword(), "SHA-1"));
 
-                instancia.setEstatus(BigInteger.ZERO);
-                instancia.setValidacionAdmin(BigInteger.ZERO);
-                instancia.setUsuario(instancia.getCorreo());
+//                instancia.setEstatus(BigInteger.ZERO);
+//                instancia.setValidacionAdmin(BigInteger.ZERO);
+//                instancia.setUsuario(instancia.getCorreo());
 
                 // To UpperCase
                 instancia.setNombre(instancia.getNombre().toUpperCase());
                 instancia.setRfc(instancia.getRfc().toUpperCase());
-                instancia.setTitular(instancia.getTitular().toUpperCase());
-                instancia.setPuesto(instancia.getPuesto().toUpperCase());
+//                instancia.setTitular(instancia.getTitular().toUpperCase());
+//                instancia.setPuesto(instancia.getPuesto().toUpperCase());
 
                 instanciaFacade.create(instancia);
 
@@ -163,8 +163,8 @@ public class InstanciasController
         {
             HashMap mapa = new HashMap();
             mapa.put("nombre", instancia.getNombre());
-            mapa.put("email", instancia.getCorreo());
-            mapa.put("titular", instancia.getTitular());
+//            mapa.put("email", instancia.getCorreo());
+//            mapa.put("titular", instancia.getTitular());
             mapa.put("rfc", instancia.getRfc());
             
             instancias.add(mapa);
