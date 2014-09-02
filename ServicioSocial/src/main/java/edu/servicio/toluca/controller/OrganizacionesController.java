@@ -156,7 +156,7 @@ public class OrganizacionesController
     @RequestMapping(method = RequestMethod.GET, value = "/validarOrganizaciones.do")
     public String panelAdministradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request)
     {
-        model.addAttribute("organizacion", instanciaFacade.findBySpecificField("validacionAdmin", "0", "equal", null, null));
+        model.addAttribute("organizacion", instanciaFacade.findBySpecificField("status", "0", "equal", null, null));
         model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
         model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findBySpecificField("tipo", "4", "equal", null, null));
         return "/Organizaciones/validarOrganizaciones";
@@ -168,7 +168,7 @@ public class OrganizacionesController
     {
         Instancia instancia;
         instancia = instanciaFacade.find(BigDecimal.valueOf(id));
-//        instancia.setValidacionAdmin(BigInteger.valueOf(1));...................................................Pendiente por checar ................................
+        instancia.setStatus((short) 1);
         System.out.println("Ya actualizo");
         instanciaFacade.edit(instancia);
 

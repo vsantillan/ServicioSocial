@@ -175,7 +175,7 @@ public class OrganizacionesController2
     {
 
         //Organizacion
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
 
         for (int i = 0; i < listaInstancias.size(); i++)
