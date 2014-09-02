@@ -39,18 +39,18 @@ public class ValidacionesOrganizaciones {
                 model.addAttribute("codigo_postal", error("Código postal incorrecto."));
             }
         }
-        if (instancia.getUsuario().equals("")) {
-            result.addError(new ObjectError("usuario", "Campo de usuario vacío."));
-            model.addAttribute("usuario", error("Campo de usuario vacío."));
-        }
-        if (instancia.getCorreo().equals("")) {
-            result.addError(new ObjectError("correo", "Campo de correo vacío."));
-            model.addAttribute("correo", error("Campo de correo vacío."));
-        }
-        if (instancia.getPassword().equals("")) {
-            result.addError(new ObjectError("password", "Contraseña vacía."));
-            model.addAttribute("password", error("Contraseña vacía."));
-        }
+//        if (instancia.getUsuario().equals("")) {
+//            result.addError(new ObjectError("usuario", "Campo de usuario vacío."));
+//            model.addAttribute("usuario", error("Campo de usuario vacío."));
+//        }
+//        if (instancia.getCorreo().equals("")) {
+//            result.addError(new ObjectError("correo", "Campo de correo vacío."));
+//            model.addAttribute("correo", error("Campo de correo vacío."));
+//        }
+//        if (instancia.getPassword().equals("")) {
+//            result.addError(new ObjectError("password", "Contraseña vacía."));
+//            model.addAttribute("password", error("Contraseña vacía."));
+//        }
         try {
             String strTelefono = instancia.getTelefono() + "";
             Double telefono = Double.parseDouble(strTelefono);

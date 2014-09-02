@@ -32,13 +32,17 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "RETROALIMENTACION_INSTANCIA2", catalog = "", schema = "GES_VIN")
 @XmlRootElement
-@NamedQueries({
+@NamedQueries(
+{
     @NamedQuery(name = "RetroalimentacionInstancia2.findAll", query = "SELECT r FROM RetroalimentacionInstancia2 r"),
     @NamedQuery(name = "RetroalimentacionInstancia2.findByIdRetroalimentacion", query = "SELECT r FROM RetroalimentacionInstancia2 r WHERE r.idRetroalimentacion = :idRetroalimentacion"),
     @NamedQuery(name = "RetroalimentacionInstancia2.findByFecha", query = "SELECT r FROM RetroalimentacionInstancia2 r WHERE r.fecha = :fecha"),
     @NamedQuery(name = "RetroalimentacionInstancia2.findByDetalle", query = "SELECT r FROM RetroalimentacionInstancia2 r WHERE r.detalle = :detalle"),
-    @NamedQuery(name = "RetroalimentacionInstancia2.findByEstatus", query = "SELECT r FROM RetroalimentacionInstancia2 r WHERE r.estatus = :estatus")})
-public class RetroalimentacionInstancia2 implements Serializable {
+    @NamedQuery(name = "RetroalimentacionInstancia2.findByEstatus", query = "SELECT r FROM RetroalimentacionInstancia2 r WHERE r.estatus = :estatus")
+})
+public class RetroalimentacionInstancia2 implements Serializable
+{
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @GenericGenerator(name = "generator", strategy = "increment")
@@ -64,85 +68,103 @@ public class RetroalimentacionInstancia2 implements Serializable {
     private BigInteger estatus;
     @JoinColumn(name = "ID_INSTANCIA", referencedColumnName = "ID_INSTANCIA")
     @ManyToOne(optional = false)
-    private InstanciaOLD idInstancia;
+    private Instancia idInstancia;
 
-    public RetroalimentacionInstancia2() {
+    public RetroalimentacionInstancia2()
+    {
     }
 
-    public RetroalimentacionInstancia2(BigDecimal idRetroalimentacion) {
+    public RetroalimentacionInstancia2(BigDecimal idRetroalimentacion)
+    {
         this.idRetroalimentacion = idRetroalimentacion;
     }
 
-    public RetroalimentacionInstancia2(BigDecimal idRetroalimentacion, Date fecha, String detalle, BigInteger estatus) {
+    public RetroalimentacionInstancia2(BigDecimal idRetroalimentacion, Date fecha, String detalle, BigInteger estatus)
+    {
         this.idRetroalimentacion = idRetroalimentacion;
         this.fecha = fecha;
         this.detalle = detalle;
         this.estatus = estatus;
     }
 
-    public BigDecimal getIdRetroalimentacion() {
+    public BigDecimal getIdRetroalimentacion()
+    {
         return idRetroalimentacion;
     }
 
-    public void setIdRetroalimentacion(BigDecimal idRetroalimentacion) {
+    public void setIdRetroalimentacion(BigDecimal idRetroalimentacion)
+    {
         this.idRetroalimentacion = idRetroalimentacion;
     }
 
-    public Date getFecha() {
+    public Date getFecha()
+    {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(Date fecha)
+    {
         this.fecha = fecha;
     }
 
-    public String getDetalle() {
+    public String getDetalle()
+    {
         return detalle;
     }
 
-    public void setDetalle(String detalle) {
+    public void setDetalle(String detalle)
+    {
         this.detalle = detalle;
     }
 
-    public BigInteger getEstatus() {
+    public BigInteger getEstatus()
+    {
         return estatus;
     }
 
-    public void setEstatus(BigInteger estatus) {
+    public void setEstatus(BigInteger estatus)
+    {
         this.estatus = estatus;
     }
 
-    public InstanciaOLD getIdInstancia() {
+    public Instancia getIdInstancia()
+    {
         return idInstancia;
     }
 
-    public void setIdInstancia(InstanciaOLD idInstancia) {
+    public void setIdInstancia(Instancia idInstancia)
+    {
         this.idInstancia = idInstancia;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 0;
         hash += (idRetroalimentacion != null ? idRetroalimentacion.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(Object object)
+    {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof RetroalimentacionInstancia2)) {
+        if (!(object instanceof RetroalimentacionInstancia2))
+        {
             return false;
         }
         RetroalimentacionInstancia2 other = (RetroalimentacionInstancia2) object;
-        if ((this.idRetroalimentacion == null && other.idRetroalimentacion != null) || (this.idRetroalimentacion != null && !this.idRetroalimentacion.equals(other.idRetroalimentacion))) {
+        if ((this.idRetroalimentacion == null && other.idRetroalimentacion != null) || (this.idRetroalimentacion != null && !this.idRetroalimentacion.equals(other.idRetroalimentacion)))
+        {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "edu.servicio.toluca.entidades.RetroalimentacionInstancia2[ idRetroalimentacion=" + idRetroalimentacion + " ]";
     }
-    
+
 }

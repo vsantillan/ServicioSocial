@@ -122,18 +122,6 @@
                                         <form:errors path="correo" class="alert alert-danger" />
                                         <br/>
                                         <br/>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="contraseña">Cree una contraseña</label>
-                                                <form:input path="password" id="password" required="true" class="form-control" type="password" placeholder="Cree una contraseña" />
-                                                <form:errors path="password" class="alert alert-danger" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="password-confirm">Confirme su contraseña</label>
-                                                <input type="password" id="password-confirm" required="true" class="form-control" placeholder="Confirme su contraseña"/>
-                                                <br><span id="alert-password" class="alert alert-danger" style="display: none">Las contraseñas no coinciden</span>
-                                            </div>
-                                        </div>
                                     </div>   
                                 </div>
                             </form:form>

@@ -410,7 +410,8 @@ public class FormatoUnicoController
         for (int i = 0; i < listaInstancias.size(); i++)
         {
 //            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
-            if (listaInstancias.get(i).getValidacionAdmin().toString().equals("1"))
+//            if (listaInstancias.get(i).getValidacionAdmin.toString().equals("1")).....................................................................Corrección de if comparando status del proyecto...........................................................................
+            if (listaInstancias.get(i).getStatus() == 1)
             {
                 filtroInstancias.add(listaInstancias.get(i));
             }

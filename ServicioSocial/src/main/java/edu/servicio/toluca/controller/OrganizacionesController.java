@@ -114,12 +114,14 @@ public class OrganizacionesController
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request)
     {
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         System.out.println("Instancias");
         for (int i = 0; i < listaInstancias.size(); i++)
         {
-            String estatus = listaInstancias.get(i).getEstatus().toString();
+//            String estatus = listaInstancias.get(i).getEstatus().toString();-..........Correccion de error...................................................
+            short listStatus = listaInstancias.get(i).getStatus();
+            String estatus = Short.toString(listStatus);
             if ((estatus.equals("1")))
             {
                 filtroInstancias.add(listaInstancias.get(i));
@@ -138,7 +140,8 @@ public class OrganizacionesController
         for (int i = 0; i < listaProyectos.size(); i++)
         {
             int validacionAdmin = Integer.parseInt(listaProyectos.get(i).getValidacionAdmin().toString());
-            int estatusInstancia = Integer.parseInt(listaProyectos.get(i).getIdInstancia().getEstatus().toString());
+//            int estatusInstancia = Integer.parseInt(listaProyectos.get(i).getIdInstancia().getEstatus().toString); -..........Correccion de error.............................
+            int estatusInstancia = (int) listaProyectos.get(i).getIdInstancia().getStatus();
             int estatusProyecto = Integer.parseInt(listaProyectos.get(i).getEstatus().toString());
             if (((estatusInstancia == 1)) && (validacionAdmin == 1) && (estatusProyecto == 1))
             {
@@ -165,7 +168,7 @@ public class OrganizacionesController
     {
         Instancia instancia;
         instancia = instanciaFacade.find(BigDecimal.valueOf(id));
-        instancia.setValidacionAdmin(BigInteger.valueOf(1));
+//        instancia.setValidacionAdmin(BigInteger.valueOf(1));...................................................Pendiente por checar ................................
         System.out.println("Ya actualizo");
         instanciaFacade.edit(instancia);
 
@@ -258,25 +261,25 @@ public class OrganizacionesController
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/modificarOrganizacion.do")
-    public String modificarOrganizacion(@Valid Instancia instancia, BindingResult result, Model model, 
-            String confirma_password, int valid_pass, HttpSession session, HttpServletRequest request, 
+    public String modificarOrganizacion(@Valid Instancia instancia, BindingResult result, Model model,
+            String confirma_password, int valid_pass, HttpSession session, HttpServletRequest request,
             String codigo_postal, String otra_colonia, String existeCP, String estado, String municipio, String ciudad)
     {
         System.out.println("nombre: " + instancia.getNombre());
         System.out.println("con id: " + instancia.getIdInstancia());
-        System.out.println("contraseña:" + instancia.getPassword());
+//        System.out.println("contraseña:" + instancia.getPassword());-..........Comentario de line password.....................................................
         System.out.println("confirma_contraseña:" + confirma_password);
 
         new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existeCP, confirma_password);
-
-        if (valid_pass == 1)
-        {
-            if (!confirma_password.equals(instancia.getPassword()))
-            {
-                result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
-                model.addAttribute("confirma_password", "<div class='alert alert-danger'>Las contraseñas no coinciden</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
-            }
-        }
+//
+//        if (valid_pass == 1)
+//        {
+//            if (!confirma_password.equals(instancia.getPassword()))
+//            {
+//                result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
+//                model.addAttribute("confirma_password", "<div class='alert alert-danger'>Las contraseñas no coinciden</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
+//            }
+//        }
 
         if (result.hasErrors())
         {
@@ -289,7 +292,7 @@ public class OrganizacionesController
             model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
-            model.addAttribute("ext", instancia.getExt());
+//            model.addAttribute("ext", instancia.getExt()); ******************************************** REVISAR POR QUE HACE FALTA PARA LOS ENTITIES *************
             try
             {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
@@ -300,7 +303,7 @@ public class OrganizacionesController
             return "/Organizaciones/editarOrganizacion";
         } else
         {
-            //---------------------------A continuación código para agregar nueva colonia****************************************
+            //---------------------------A continuación código para agregar nueva colonia
             if (existeCP.equals("true"))
             {
                 if (instancia.getIdColonia().getIdColonia().toString().equals("0"))
@@ -372,16 +375,16 @@ public class OrganizacionesController
                 instancia.setIdColonia(coloniaNew);
                 System.out.println("Nuevo codigo postal + colonia agregado!");
             }
-            //---------------------------Fin código para agregar nueva colonia****************************************
+            //---------------------------Fin código para agregar nueva colonia
 
             //Encriptar contraseña de la instancia
-            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
+//            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));.................................................Coreccion de password...........................
             //Convirtiendo a mayusculas
             instancia.setDomicilio(instancia.getDomicilio().toUpperCase());
             instancia.setNombre(instancia.getNombre().toUpperCase());
-            instancia.setPuesto(instancia.getPuesto().toUpperCase());
+//            instancia.setPuesto(instancia.getPuesto().toUpperCase());.................................................Comentario de line puesto........................
             instancia.setRfc(instancia.getRfc().toUpperCase());
-            instancia.setTitular(instancia.getTitular().toUpperCase());
+//            instancia.setTitular(instancia.getTitular().toUpperCase());.................................................Comentario de line titulas...........................
             //try-catch edita instancia
             try
             {
@@ -410,7 +413,9 @@ public class OrganizacionesController
         System.out.println("Instancias");
         for (int i = 0; i < listaInstancias.size(); i++)
         {
-            String estatus = listaInstancias.get(i).getEstatus().toString();
+//            String estatus = listaInstancias.get(i).getEstatus().toString();
+            short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
+            String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
             if ((estatus.equals("1")) || (estatus.equals("2")))
             {
                 filtroInstancias.add(listaInstancias.get(i));
@@ -488,7 +493,9 @@ public class OrganizacionesController
             System.out.println("Instancias");
             for (int i = 0; i < listaInstancias.size(); i++)
             {
-                String estatus = listaInstancias.get(i).getEstatus().toString();
+//                String estatus = listaInstancias.get(i).getEstatus().toString();
+                short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
+                String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
                 if ((estatus.equals("1")) || (estatus.equals("2")))
                 {
                     filtroInstancias.add(listaInstancias.get(i));
@@ -630,7 +637,9 @@ public class OrganizacionesController
                 System.out.println("Instancias");
                 for (int i = 0; i < listaInstancias.size(); i++)
                 {
-                    String estatus = listaInstancias.get(i).getEstatus().toString();
+//                    String estatus = listaInstancias.get(i).getEstatus().toString();
+                    short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
+                    String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
                     if ((estatus.equals("1")) || (estatus.equals("2")))
                     {
                         filtroInstancias.add(listaInstancias.get(i));
@@ -740,8 +749,9 @@ public class OrganizacionesController
             proyectoEdit.setValidacionAdmin(BigInteger.valueOf(val_admin));
             proyectosFacade.edit(proyectoEdit);
         }
-        instancia.setEstatus(BigInteger.valueOf(status));
-        instancia.setValidacionAdmin(BigInteger.valueOf(val_admin));
+//        instancia.setStatus(BigInteger.valueOf(status));
+        instancia.setStatus( (short) status);//.......................................correccion  de error..........................................
+//        instancia.setValidacionAdmin(BigInteger.valueOf(val_admin));:::::::::::::::::::::::::::::::::::::::::::::::::: REVISION DE VALIDACION DEL ADMINISTRADOR PARA INSTANCIAS ::::::::::::::::::::::::::::::::::
         instanciaFacade.edit(instancia);
 
         String mensaje;
@@ -784,8 +794,8 @@ public class OrganizacionesController
             default:
                 return "";
         }
-        Thread hiloCorreo = new Thread(new EnviarCorreo(instancia.getNombre(), instancia.getCorreo(), mensaje));
-        hiloCorreo.start();
+//        Thread hiloCorreo = new Thread(new EnviarCorreo(instancia.getNombre(), instancia.getCorreo(), mensaje));
+//        hiloCorreo.start(); ..................................................................... CAMBIAR EL CORREO PARA QUE LO MANDE EL USUARIO Y NO LA INSTANCIA..................................................................
 
         return "ok";
     }
@@ -870,8 +880,8 @@ public class OrganizacionesController
                 return "";
         }
 
-        Thread hiloCorreo = new Thread(new EnviarCorreo(proyecto.getNombre(), proyecto.getIdInstancia().getCorreo(), mensaje));
-        hiloCorreo.start();
+//        Thread hiloCorreo = new Thread(new EnviarCorreo(proyecto.getNombre(), proyecto.getIdInstancia().getCorreo(), mensaje));
+//        hiloCorreo.start();..................................................................... CAMBIAR EL CORREO PARA QUE LO MANDE EL USUARIO Y NO LA INSTANCIA..................................................................
 
         return "ok";
     }
