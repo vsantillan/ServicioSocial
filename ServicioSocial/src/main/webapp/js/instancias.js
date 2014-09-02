@@ -49,10 +49,10 @@ $(document).ready(function()
                     }
                     
                     // Append option para "Otra colonia"
-                    var optionOtra   = document.createElement('option');
-                    optionOtra.text  = "OTRA (Especifique)";
-                    optionOtra.value = 0;
-                    comboCol.appendChild(optionOtra);
+//                    var optionOtra   = document.createElement('option');
+//                    optionOtra.text  = "OTRA (Especifique)";
+//                    optionOtra.value = 0;
+//                    comboCol.appendChild(optionOtra);
                 }
                 else
                 {
@@ -63,19 +63,19 @@ $(document).ready(function()
         }
     });
     
-    $('#password-confirm').keyup(function(event)
-    {
-        if ($('#password-confirm').val() === $('#password').val()) 
-        {
-            $('#alert-password').css('display', 'none');
-            document.getElementById('send-b').type = 'submit';
-        }
-        else
-        {
-            $('#alert-password').css('display', 'inline');
-            document.getElementById('send-b').type = 'button';
-        }
-    });
+//    $('#password-confirm').keyup(function(event)
+//    {
+//        if ($('#password-confirm').val() === $('#password').val()) 
+//        {
+//            $('#alert-password').css('display', 'none');
+//            document.getElementById('send-b').type = 'submit';
+//        }
+//        else
+//        {
+//            $('#alert-password').css('display', 'inline');
+//            document.getElementById('send-b').type = 'button';
+//        }
+//    });
     
 });
 

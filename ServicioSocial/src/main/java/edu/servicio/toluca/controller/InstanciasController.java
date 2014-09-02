@@ -6,7 +6,6 @@
 
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.Instancia;
@@ -16,6 +15,7 @@ import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
+import edu.servicio.toluca.entidades.UsuarioInstancia;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
@@ -25,6 +25,7 @@ import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
+import edu.servicio.toluca.sesion.UsuarioInstanciaFacade;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -75,6 +76,9 @@ public class InstanciasController
     
     @EJB(mappedName = "java:global/ServicioSocial/ProyectoPerfilFacade")
     private ProyectoPerfilFacade pPerfilFacade;
+    
+    @EJB(mappedName = "java:global/ServicioSocial/UsuarioInstanciaFacade")
+    private UsuarioInstanciaFacade usuarioInstanciaFacade;
     
     @RequestMapping( value="verificarinstancia.do", method=RequestMethod.GET )
     public String verificarInstancia(Model model)
@@ -131,18 +135,14 @@ public class InstanciasController
                         instancia.getTipoOrganizacion().getIdTipoOrganizacion());
                 instancia.setTipoOrganizacion(tipoOrg);
 
-//                instancia.setPassword(StringMD.getStringMessageDigest(
-//                        instancia.getPassword(), "SHA-1"));
-
-//                instancia.setEstatus(BigInteger.ZERO);
-//                instancia.setValidacionAdmin(BigInteger.ZERO);
-//                instancia.setUsuario(instancia.getCorreo());
-
                 // To UpperCase
                 instancia.setNombre(instancia.getNombre().toUpperCase());
                 instancia.setRfc(instancia.getRfc().toUpperCase());
-//                instancia.setTitular(instancia.getTitular().toUpperCase());
-//                instancia.setPuesto(instancia.getPuesto().toUpperCase());
+                instancia.setStatus((short) 0);
+                
+                // Asignar usuario a instancia
+                UsuarioInstancia uInstancia = usuarioInstanciaFacade.findAll().get(0);
+                instancia.setUsuarioInstancia(uInstancia);
 
                 instanciaFacade.create(instancia);
 
@@ -163,8 +163,8 @@ public class InstanciasController
         {
             HashMap mapa = new HashMap();
             mapa.put("nombre", instancia.getNombre());
-//            mapa.put("email", instancia.getCorreo());
-//            mapa.put("titular", instancia.getTitular());
+            mapa.put("email", instancia.getUsuarioInstancia().getEmail());
+            mapa.put("titular", instancia.getUsuarioInstancia().getNombre() + " " + instancia.getUsuarioInstancia().getApellidoPat());
             mapa.put("rfc", instancia.getRfc());
             
             instancias.add(mapa);
