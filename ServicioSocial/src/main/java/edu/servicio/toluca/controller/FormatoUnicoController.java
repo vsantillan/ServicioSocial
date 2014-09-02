@@ -405,7 +405,7 @@ public class FormatoUnicoController
 ////////Preparar información de las organizaciones y enviar/////////////////
 //////////////////////////////////////////////////////////////////////////
         //toma toda la info que se tiene en la bd de las organizaciones
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         for (int i = 0; i < listaInstancias.size(); i++)
         {
