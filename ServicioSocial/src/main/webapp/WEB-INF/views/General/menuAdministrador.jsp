@@ -70,6 +70,14 @@
                     </ul>
                 </li>
                 <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Usuarios<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Alta Usuario</a></li>
+                        <li><a href="administrarUsuarios.do">Administrar Usuario</a></li>
+                        <li><a href="#">Validar Usuario</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instancias<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
