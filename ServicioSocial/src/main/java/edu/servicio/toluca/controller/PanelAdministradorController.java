@@ -54,13 +54,13 @@ public class PanelAdministradorController
             List<UsuarioInstancia> listaUsuarios = usuarioInstanciaFacade.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
 
-            for (int i = 0; i < listaUsuarios.size(); i++)
+            for (UsuarioInstancia listaUsuario : listaUsuarios)
             {
-                short listStatus = listaUsuarios.get(i).getStatus();
+                short listStatus = listaUsuario.getStatus();
                 String estatus = Short.toString(listStatus);
-                if ((estatus.equals("1")))
+                if (estatus.equals("1"))
                 {
-                    usuarioList.add(listaUsuarios.get(i));
+                    usuarioList.add(listaUsuario);
                 }
             }
 
@@ -75,4 +75,51 @@ public class PanelAdministradorController
 
     }
 
-}
+    @RequestMapping(method = RequestMethod.GET, value = "/altaUsuarios.do")
+    public String altaUsuarios(Model model, HttpSession session, HttpServletRequest request, UsuarioInstancia usuarioInstancia)
+    {
+
+        //Valida sesion
+        ValidaSesion valSession = new ValidaSesion(session, request);
+        if (valSession.accesaPanelAdministrador())
+        {
+            model.addAttribute("usuarios",usuarioInstancia);
+            return "/Usuarios/altaUsuarios";
+        } else
+        {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/validarUsuarios.do")
+    public String validarUsuarios(Model model, HttpSession session, HttpServletRequest request, UsuarioInstancia usuarioInstancia)
+    {
+        //Valida sesion
+        ValidaSesion valSession = new ValidaSesion(session, request);
+        if (valSession.accesaPanelAdministrador())
+        {
+              List<UsuarioInstancia> listaUsuarios = usuarioInstanciaFacade.findBySpecificField("status", "0", "equal", null, null);
+            ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
+
+            for (UsuarioInstancia listaUsuario : listaUsuarios)
+            {
+                short listStatus = listaUsuario.getStatus();
+                String estatus = Short.toString(listStatus);
+                if (estatus.equals("0"))
+                {
+                    usuarioList.add(listaUsuario);
+                }
+            }
+
+            model.addAttribute("usuarios", usuarioList);
+            return "/Usuarios/validarUsuarios";
+            
+        } else
+        {
+            model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+        
+    }
+}   

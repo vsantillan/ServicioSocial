@@ -1,22 +1,13 @@
 <%-- 
-    Document   : administrarUsuarios
-    Created on : 3/09/2014, 11:55:07 AM
-    Author     : Jorge MuÃ±oz    
+    Document   : validarUsuarios
+    Created on : 5/09/2014, 02:36:57 PM
+    Author     : Jorge Muñoz
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="tags" uri="http://www.springframework.org/tags" %>
-<%@taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<%@include file="../General/jstl.jsp"%>
 <!DOCTYPE html>
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-        <title>Administraci&oacute;n de Usuarios</title>
     </head>
     <body>
         <div class="container">
@@ -42,7 +33,7 @@
                         <tbody>
                             <core:forEach items="${usuarios}" var="current">
                                 <tr class='gradeX'>
-                                    <!--onclick="if(!confirm('Â¿EstÃ¡ seguro?'))history.go(0);return' ' ;" -->
+                                    <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
                                     <td><a href="editarOrganizacion.do?id=${current.idUsuarioInstancia}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Usuario"></span></a>&nbsp;&nbsp;
                                     <td><a href="#" class="btn-validar-org"><span class="cambiaStatusInstancia glyphicon glyphicon-trash sizeIcon" ide="${current.idUsuarioInstancia}" title="Borrar Usuario"></span></a></td>
                                     <td><a href="detalleOrganizacion.do?id=${current.idUsuarioInstancia}" data-modal="modal" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
@@ -62,7 +53,7 @@
         <div class="modal-dialog" id="motivos" style="display: none;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title titulos-naranja">Motivos de Rechazo de la OrganizaciÃ³n</h3>
+                    <h3 class="modal-title titulos-naranja">Motivos de Rechazo de la Organización</h3>
                 </div>
                 <form id="observacionesCat" action="#"  onsubmit="return  false;">
                     <div class="modal-body">
@@ -80,7 +71,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Eliminar y guardar las observaciones a la OrganizaciÃ³n</button>
+                        <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Eliminar y guardar las observaciones a la Organización</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
                     </div>
                 </form>
