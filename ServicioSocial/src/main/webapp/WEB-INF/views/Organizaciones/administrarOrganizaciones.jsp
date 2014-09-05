@@ -77,9 +77,9 @@
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-
+        
         <%@include file="../General/js.jsp"%>
-        <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
+            <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>

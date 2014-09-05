@@ -19,7 +19,7 @@
                     <div class="alert alert-warning col-md-9  col-md-offset-1">
                         <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestran los usuarios dados de alta en el sistema.</h4></div>
                     </div>
-                    <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'>
+                    <table cellpadding='0' cellspacing='0' border='0' class="table table-striped table-bordered example">
                         <thead>
                             <tr>
                                 <th>Acci&oacute;n</th>
@@ -34,9 +34,9 @@
                             <core:forEach items="${usuarios}" var="current">
                                 <tr class='gradeX'>
                                     <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
-                                    <td><a href="editarOrganizacion.do?id=${current.idUsuarioInstancia}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Usuario"></span></a>&nbsp;&nbsp;
-                                    <td><a href="#" class="btn-validar-org"><span class="cambiaStatusInstancia glyphicon glyphicon-trash sizeIcon" ide="${current.idUsuarioInstancia}" title="Borrar Usuario"></span></a></td>
-                                    <td><a href="detalleOrganizacion.do?id=${current.idUsuarioInstancia}" data-modal="modal" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
+                                    <td><a href="#" ><span class="editOrg glyphicon glyphicon-ok sizeIcon" ></span></a>&nbsp;&nbsp;
+                                    </td>
+                                    <td><a href="#" class="fancy" ><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                     <td><core:out value="${current.nombre}" /></td>
                                     <td><core:out value="${current.puesto}" /></td>
                                     <td><core:out value="${current.email}" /></td>
