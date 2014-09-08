@@ -20,7 +20,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-primary">Alta Usuario</div> 
                         <div class="panel-body">
-                            <form:form name="#" commandName="usuarios" class="MyForm" action="#"  method="POST">
+                            <form:form name="#" commandName="usuarios" class="MyForm" action="upUserAdmin.do"  method="POST">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombre</label>                               

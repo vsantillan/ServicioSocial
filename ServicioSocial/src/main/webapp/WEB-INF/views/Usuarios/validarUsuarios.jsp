@@ -34,9 +34,9 @@
                             <core:forEach items="${usuarios}" var="current">
                                 <tr class='gradeX'>
                                     <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
-                                    <td><a href="#" ><span class="editOrg glyphicon glyphicon-ok sizeIcon" ></span></a>&nbsp;&nbsp;
+                                    <td><a href="#" ><span class="editUser glyphicon glyphicon-ok sizeIcon" ide="${current.idUsuarioInstancia}"></span></a>&nbsp;&nbsp;
                                     </td>
-                                    <td><a href="#" class="fancy" ><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
+                                    <td><a href="#" class="fancy" ><span class="glyphicon glyphicon-search sizeIcon" ide=""></span></a></td>
                                     <td><core:out value="${current.nombre}" /></td>
                                     <td><core:out value="${current.puesto}" /></td>
                                     <td><core:out value="${current.email}" /></td>
@@ -79,7 +79,7 @@
         </div><!-- /.modal-dialog -->
 
         <%@include file="../General/js.jsp"%>
-        <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
+        <script type="text/javascript" src="js/usuariosAdmin.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>
