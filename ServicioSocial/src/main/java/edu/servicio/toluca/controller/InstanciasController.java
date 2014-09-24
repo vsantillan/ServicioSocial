@@ -87,17 +87,31 @@ public class InstanciasController
     }
     
     @RequestMapping( value="preregistrarinstancia.do", method=RequestMethod.GET)
-    public String preregistro(Model model)
+    public String preregistro(HttpSession session, Model model)
     {
-        List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
-        Instancia nvaInstancia = new Instancia();
-        nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
+        String rol = null;
+        if(session.getAttribute("ROL") != null)
+        {
+            rol = session.getAttribute("ROL").toString();
+        }
         
-        model.addAttribute("tiposOrganizacion", tiposOrg);
-        model.addAttribute("instancia", nvaInstancia);
-        model.addAttribute("rfcError", "");
+        if(rol != null && rol.equals("ORGANIZACION"))
+        {
+            List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
+            Instancia nvaInstancia = new Instancia();
+            nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
+
+            model.addAttribute("tiposOrganizacion", tiposOrg);
+            model.addAttribute("instancia", nvaInstancia);
+            model.addAttribute("rfcError", "");
+
+            return "/Instancias/preregistro";
+        }
+        else
+        {
+            return preregUsuarioInstancia(model);
+        }
         
-        return "/Instancias/preregistro";
     }
     
     @RequestMapping( value="preregistrarinstancia.do", method=RequestMethod.POST)
@@ -172,6 +186,16 @@ public class InstanciasController
         
         return instancias;
     }
+    
+    /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+    /* --- --- --- --- --- --- USUARIOS -- --- --- --- --- --- --- --- --- --- */
+    
+    @RequestMapping( value="preregistrarusuario.do", method=RequestMethod.GET)
+    public String preregUsuarioInstancia(Model model)
+    {
+        return "/UsuarioInstancia/preregusuario";
+    }
+    
     
     /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
     /* --- --- --- --- --- --- PROYECTOS   --- --- --- --- --- --- --- --- --- */

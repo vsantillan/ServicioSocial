@@ -37,7 +37,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
-@Table(name = "INSTANCIA2", catalog = "", schema = "GES_VIN")
+@Table(name = "INSTANCIA2")
 @XmlRootElement
 public class Instancia implements Serializable, ExpresionesRegulares, CatalogoErrores
 {

@@ -24,7 +24,7 @@ public class ValidacionesOrganizaciones {
             result.addError(new ObjectError("confirma_passowrd", "Confirmación de contraseña vacía."));
             model.addAttribute("confirma_password", error("Confirmación de contraseña vacía"));
         } else {
-            if (!confirma_password.equals(instancia.getPassword())) {
+            if (!confirma_password.equals(instancia.getDomicilio())) {
                 result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
                 model.addAttribute("confirma_password", error("Las contraseñas no coinciden"));
             }
@@ -52,7 +52,7 @@ public class ValidacionesOrganizaciones {
 //            model.addAttribute("password", error("Contraseña vacía."));
 //        }
         try {
-            String strTelefono = instancia.getTelefono() + "";
+            String strTelefono = /*instancia.getTelefono() +*/ "";
             Double telefono = Double.parseDouble(strTelefono);
             //Validacion si esta fuera del rango permitido
             if (strTelefono.length() > 13 || strTelefono.length() < 7) {
@@ -137,7 +137,7 @@ public class ValidacionesOrganizaciones {
 //            model.addAttribute("correo", error("Campo de correo vacío."));
 //        }
         try {
-            String strTelefono = instancia.getTelefono() + "";
+            String strTelefono = /*instancia.getTelefono() + */"";
             Double telefono = Double.parseDouble(strTelefono);
             //Validacion si esta fuera del rango permitido
             if (strTelefono.length() > 13 || strTelefono.length() < 7) {
@@ -185,7 +185,7 @@ public class ValidacionesOrganizaciones {
         }
 
         try {
-            String strTelefono = instancia.getTelefono() + "";
+            String strTelefono = /*instancia.getTelefono() + */"";
             Double telefono = Double.parseDouble(strTelefono);
             //Validacion si esta fuera del rango permitido
             if (strTelefono.length() > 13 || strTelefono.length() < 7) {

@@ -49,14 +49,18 @@ public class Conexion {
         {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             connx = DriverManager.getConnection(cadenaconexion, usuario, contrasena);
-        } catch (ClassNotFoundException ex)
+            System.out.println("Conexion exitosa!");
+        } 
+        catch (ClassNotFoundException ex)
         {
             Exceptions.printStackTrace(ex);
-        } catch (SQLException ex)
+        } 
+        catch (SQLException ex)
         {
-            Exceptions.printStackTrace(ex);
+            // Exceptions.printStackTrace(ex);
+            System.err.println("No se logro ninguna conexión con los datos dados");
         }
-        System.out.println("Conexion exitosa!");
+        
         return connx;
 
     }
