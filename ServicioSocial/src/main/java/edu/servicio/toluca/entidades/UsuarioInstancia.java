@@ -49,21 +49,21 @@ public class UsuarioInstancia implements Serializable, ExpresionesRegulares
     @Basic(optional = false)
     @Column( name = "NOMBRE")
     @NotNull
-    @Pattern(regexp =  letras, message = "Ingrese solo letras por favor")
+    @Pattern(regexp =  letrasPrimeroDespuesEspacios, message = "Solo se admiten letras y espacios")
     @Size(max = 100, message = "No se admiten nombres de mas de 100 caracteres")
     private String nombre;
     
     @Basic(optional = false)
     @Column( name = "APELLIDO_PAT")
     @NotNull
-    @Pattern(regexp =  letras, message = "Ingrese solo letras por favor")
+    @Pattern(regexp =  letrasPrimeroDespuesEspacios, message = "Solo se admiten letras y espacios")
     @Size(max = 100, message = "No se admiten apellidos de mas de 100 caracteres")
     private String apellidoPat;
     
     @Basic(optional = false)
     @Column( name = "APELLIDO_MAT")
     @NotNull
-    @Pattern(regexp =  letras, message = "Ingrese solo letras por favor")
+    @Pattern(regexp =  letrasPrimeroDespuesEspacios, message = "Solo se admiten letras y espacios")
     @Size(max = 100, message = "No se admiten apellidos de mas de 100 caracteres")
     private String apellidoMat;
     
@@ -309,5 +309,21 @@ public class UsuarioInstancia implements Serializable, ExpresionesRegulares
             return false;
         }
         return true;
+    }
+
+    /**
+     * @return the instancias
+     */
+    public Collection<Instancia> getInstancias()
+    {
+        return instancias;
+    }
+
+    /**
+     * @param instancias the instancias to set
+     */
+    public void setInstancias(Collection<Instancia> instancias)
+    {
+        this.instancias = instancias;
     }
 }

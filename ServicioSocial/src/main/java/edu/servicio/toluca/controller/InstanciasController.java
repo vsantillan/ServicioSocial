@@ -6,6 +6,7 @@
 
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.Instancia;
@@ -202,6 +203,20 @@ public class InstanciasController
     public String registrarUsuario(HttpSession session, @Valid UsuarioInstancia usuarioInstancia,
             BindingResult bindingResult)
     {
+        if(bindingResult.hasErrors())
+        {
+            return "/UsuarioInstancia/preregusuario";
+        }
+        
+        // Formatear datos a UPPERCASE y registrar usuario
+        usuarioInstancia.setNombre(usuarioInstancia.getNombre().toUpperCase());
+        usuarioInstancia.setApellidoPat(usuarioInstancia.getApellidoPat().toUpperCase());
+        usuarioInstancia.setApellidoMat(usuarioInstancia.getApellidoMat().toUpperCase());
+        usuarioInstancia.setEmail(usuarioInstancia.getEmail().toLowerCase());
+        usuarioInstancia.setPassword(StringMD.getStringMessageDigest(usuarioInstancia.getPassword(), StringMD.SHA1));
+        usuarioInstancia.setStatus(Short.valueOf("0"));
+        
+        usuarioInstanciaFacade.create(usuarioInstancia);
         
         return "/NavegacionPrincipal/index";
     }

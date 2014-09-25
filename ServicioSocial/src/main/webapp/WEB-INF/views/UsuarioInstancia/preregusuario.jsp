@@ -34,55 +34,62 @@
                 </div>
                 
                 <div class="form-group formprereg-fieldset">
-                    <div class="col-md-4">
-                        <label for="unombre">Nombre (s)</label>
-                        <form:input  id="unombre" path="nombre" class="form-control" required="true" type="text" placeholder="Nombre del usuario" />
-                        <br/><form:errors path="nombre" class="alert alert-danger" />
-                    </div>
-                    <div class="col-md-4">
-                        <label for="uapat">Apellido paterno</label>
-                        <form:input  id="uapat" path="apellidoPat" class="form-control" required="true" type="text" placeholder="Apellido paterno" />
-                        <br/><form:errors path="apellidoPat" class="alert alert-danger" />
-                    </div>
-                    <div class="col-md-4">
-                        <label for="uamat">Apellido materno</label>
-                        <form:input  id="uamat" path="apellidoMat" class="form-control" required="true" type="text" placeholder="Apellido materno" />
-                        <br/><form:errors path="apellidoMat" class="alert alert-danger" />
-                    </div>
-                    
-                    &nbsp;<br/>
-                    <div class="col-md-4">
-                        <label for="utel">Teléfono</label>
-                        <form:input  id="utel" path="telefono" class="form-control" required="true" type="text" placeholder="Teléfono" />
-                        <br/><form:errors path="telefono" class="alert alert-danger" />
-                    </div>
-                    <div class="col-md-4">
-                        <label for="uext">Extensión</label>
-                        <form:input  id="uext" path="extension" class="form-control" type="text" placeholder="Extensión telefonica" />
-                        <br/><form:errors path="extension" class="alert alert-danger" />
-                    </div>
-                    <div class="col-md-4">
-                        <label for="upuesto">Puesto del usuario</label>
-                        <form:input  id="upuesto" path="puesto" class="form-control" type="text" placeholder="Puesto dentro de la instancia" />
-                        <br/><form:errors path="puesto" class="alert alert-danger" />
+                        
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="unombre">Nombre (s)</label>
+                            <form:input  id="unombre" path="nombre" class="form-control" required="true" type="text" placeholder="Nombre del usuario" />
+                            <form:errors path="nombre" class="alert alert-danger" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="uapat">Apellido paterno</label>
+                            <form:input  id="uapat" path="apellidoPat" class="form-control" required="true" type="text" placeholder="Apellido paterno" />
+                            <form:errors path="apellidoPat" class="alert alert-danger" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="uamat">Apellido materno</label>
+                            <form:input  id="uamat" path="apellidoMat" class="form-control" required="true" type="text" placeholder="Apellido materno" />
+                            <form:errors path="apellidoMat" class="alert alert-danger" />
+                        </div>
                     </div>
                     
                     &nbsp;<br/>
-                    <div class="col-md-4">
-                        <label for="utel">Email</label>
-                        <form:input  id="utel" path="email" class="form-control" required="true" type="email" placeholder="Email del usuario" />
-                        <br/><form:errors path="email" class="alert alert-danger" />
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="utel">Teléfono</label>
+                            <form:input  id="utel" path="telefono" class="form-control" required="true" type="text" placeholder="Teléfono" />
+                            <form:errors path="telefono" class="alert alert-danger" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="uext">Extensión</label>
+                            <form:input  id="uext" path="extension" class="form-control" type="text" placeholder="Extensión telefonica" />
+                            <form:errors path="extension" class="alert alert-danger" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="upuesto">Puesto del usuario</label>
+                            <form:input  id="upuesto" path="puesto" class="form-control" type="text" placeholder="Puesto dentro de la instancia" />
+                            <form:errors path="puesto" class="alert alert-danger" />
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <label for="upass">Cree una contraseña</label>
-                        <form:input  id="upass" path="password" class="form-control" required="true" type="password" placeholder="Password" />
-                        <br/><form:errors path="password" class="alert alert-danger" />
-                    </div>
-                    <div class="col-md-4">
-                        <label for="ucpass">Confirme su contraseña</label>
-                        <input id="ucpass" class="form-control" type="password" required="true" placeholder="Confirme su contraseña" />
-                        <br/><div id="alert-pass" class="alert alert-danger" style="display: none">
-                            Las contraseñas no coinciden
+                    
+                    &nbsp;
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="utel">Email</label>
+                            <form:input  id="utel" path="email" class="form-control" required="true" type="email" placeholder="Email del usuario" />
+                            <form:errors path="email" class="alert alert-danger" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="upass">Cree una contraseña</label>
+                            <form:input  id="upass" path="password" class="form-control" required="true" type="password" placeholder="Password" />
+                            <form:errors path="password" class="alert alert-danger" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="ucpass">Confirme su contraseña</label>
+                            <input id="ucpass" class="form-control" type="password" required="true" placeholder="Confirme su contraseña" />
+                            <br/><div id="alert-pass" class="alert alert-danger" style="display: none">
+                                Las contraseñas no coinciden
+                            </div>
                         </div>
                     </div>
                     
