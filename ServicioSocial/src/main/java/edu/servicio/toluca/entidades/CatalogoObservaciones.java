@@ -30,7 +30,8 @@ import org.hibernate.annotations.GenericGenerator;
  * @author Jesus
  */
 @Entity
-@Table(name = "CATALOGO_OBSERVACIONES", catalog = "", schema = "GES_VIN")
+
+@Table(name = "CATALOGO_OBSERVACIONES", catalog = "", schema = "GES_VIN2")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "CatalogoObservaciones.findAll", query = "SELECT c FROM CatalogoObservaciones c"),

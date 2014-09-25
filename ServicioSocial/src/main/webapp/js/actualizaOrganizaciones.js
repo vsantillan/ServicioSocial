@@ -6,7 +6,7 @@ var estatus = "";
 
 $(document).on('click', ".editOrg", updateOrganisation);
 $(document).on('click', ".editProy", updateProyecto);
-$(document).on('click', ".cambiaStatusInstancia", rechazarInstancia);
+$(document).on('click', ".cambiaStatusInstancia6", rechazarInstancia);
 $(document).on('click', ".cambiaStatusProyecto", rechazarProyecto);
 $(document).on('click', ".mandaObservacionesInstancia", cambiarEstadoInstancia);
 $(document).ready(listo);

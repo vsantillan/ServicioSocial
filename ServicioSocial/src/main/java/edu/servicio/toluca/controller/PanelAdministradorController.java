@@ -4,10 +4,13 @@
  */
 package edu.servicio.toluca.controller;
 
+import edu.servicio.toluca.beans.ObservacionesBean;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.UsuarioInstancia;
+import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.UsuarioInstanciaFacade;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -28,6 +31,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PanelAdministradorController
 {
+
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
+    private CatalogoObservacionesFacade catalogoObservacionesFacade;
 
     @EJB(mappedName = "java:global/ServicioSocial/UsuarioInstanciaFacade")
     private UsuarioInstanciaFacade usuarioInstanciaFacade;
@@ -55,6 +61,8 @@ public class PanelAdministradorController
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador())
         {
+            
+            List<CatalogoObservaciones> catalogo = catalogoObservacionesFacade.findBySpecificField("tipo", "6", "equal", null, null);
             List<UsuarioInstancia> listaUsuarios = usuarioInstanciaFacade.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
 
@@ -68,6 +76,7 @@ public class PanelAdministradorController
                 }
             }
 
+            model.addAttribute("listadoObservaciones", catalogo);
             model.addAttribute("usuarios", usuarioList);
 
             return "/Usuarios/administrarUsuarios";
@@ -135,15 +144,16 @@ public class PanelAdministradorController
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador())
         {
-            try{
-            usuarioInstancia.setStatus((short) 1);
-            usuarioInstancia.setPassword(StringMD.getStringMessageDigest(usuarioInstancia.getPassword(), StringMD.SHA1));
-            usuarioInstanciaFacade.create(usuarioInstancia);
-            }
-            catch(Exception e){
+            try
+            {
+                usuarioInstancia.setStatus((short) 1);
+                usuarioInstancia.setPassword(StringMD.getStringMessageDigest(usuarioInstancia.getPassword(), StringMD.SHA1));
+                usuarioInstanciaFacade.create(usuarioInstancia);
+            } catch (Exception e)
+            {
                 System.out.println("Match");
             }
-            return "Usuarios/administrarUsuarios";
+            return "redirect:administrarUsuarios.do";
         } else
         {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
@@ -151,8 +161,8 @@ public class PanelAdministradorController
         }
 
     }
-    
-          @RequestMapping(method = RequestMethod.POST, value = "/addUsuariosAdmin.do")
+
+    @RequestMapping(method = RequestMethod.POST, value = "/addUsuariosAdmin.do")
     public @ResponseBody
     String actualizarStatusOrganizaciones(UsuarioInstancia usuario, int id, Model model, HttpSession session, HttpServletRequest request)
     {

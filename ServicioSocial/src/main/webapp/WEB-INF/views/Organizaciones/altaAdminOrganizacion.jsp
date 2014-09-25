@@ -10,7 +10,7 @@
         <%@include file="../General/head.jsp"%>
         <title>Administrador</title>
     </head>
-    <body>
+    <body>  
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
@@ -76,7 +76,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ciudad">Ciudad</label>
+                                        <label for="ciudad">Ciudad:</label>
                                         <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
                                         <select name="ciudad" id="ciudad" disabled="true" class="form-control"></select><br/>
                                     </div>
