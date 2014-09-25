@@ -193,9 +193,18 @@ public class InstanciasController
     @RequestMapping( value="preregistrarusuario.do", method=RequestMethod.GET)
     public String preregUsuarioInstancia(Model model)
     {
+        model.addAttribute("usuarioInstancia", new UsuarioInstancia());
+        
         return "/UsuarioInstancia/preregusuario";
     }
     
+    @RequestMapping( value="registrarUsuario.do", method=RequestMethod.POST)
+    public String registrarUsuario(HttpSession session, @Valid UsuarioInstancia usuarioInstancia,
+            BindingResult bindingResult)
+    {
+        
+        return "/NavegacionPrincipal/index";
+    }
     
     /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
     /* --- --- --- --- --- --- PROYECTOS   --- --- --- --- --- --- --- --- --- */

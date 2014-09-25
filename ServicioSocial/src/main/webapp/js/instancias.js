@@ -63,19 +63,19 @@ $(document).ready(function()
         }
     });
     
-//    $('#password-confirm').keyup(function(event)
-//    {
-//        if ($('#password-confirm').val() === $('#password').val()) 
-//        {
-//            $('#alert-password').css('display', 'none');
-//            document.getElementById('send-b').type = 'submit';
-//        }
-//        else
-//        {
-//            $('#alert-password').css('display', 'inline');
-//            document.getElementById('send-b').type = 'button';
-//        }
-//    });
+    $('#ucpass').keyup(function(event)
+    {
+        if ($('#ucpass').val() === $('#upass').val()) 
+        {
+            $('#alert-pass').css('display', 'none');
+            document.getElementById('send-b').type = 'submit';
+        }
+        else
+        {
+            $('#alert-pass').css('display', 'inline');
+            document.getElementById('send-b').type = 'button';
+        }
+    });
     
 });
 
