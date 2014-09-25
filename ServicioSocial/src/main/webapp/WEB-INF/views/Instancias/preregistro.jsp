@@ -15,11 +15,13 @@
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>
-                <%@include file="menuPreregistroInstancia.jsp" %>
+                <%@include file="../General/menuOrganizacion.jsp" %>
             </div>
             <div class="">
                 <br>
-                <form:form id="formulario-prereg" class="formprereg-cont" commandName="instancia" action="preregistrarinstancia.do" method="POST">
+                <form:form id="formulario-prereg" class="formprereg-con" 
+                           commandName="instancia" action="preregistrarinstancia.do" 
+                           method="POST" style="box-shadow: 0 0 2px 0 #555" >
                     <div class="formprereg-cont-header">
                         <h2>Preregistro de instancia</h2>
                     </div>

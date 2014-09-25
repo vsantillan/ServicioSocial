@@ -20,6 +20,7 @@
                         <li><a href="instanciaproyectos.do">Administrar Proyectos</a></li>
                     </ul>
                 </li>
+                <li><a href="preregistrarinstancia.do">Registrar instancia</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

@@ -18,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -33,7 +34,8 @@ import org.hibernate.validator.constraints.Email;
  */
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
-@Table( name = "USUARIO_INSTANCIA")
+@Table( name = "USUARIO_INSTANCIA", 
+        uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 @XmlRootElement
 public class UsuarioInstancia implements Serializable, ExpresionesRegulares
 {
@@ -81,9 +83,9 @@ public class UsuarioInstancia implements Serializable, ExpresionesRegulares
     @Size(min = 5, message = "Ingrese al menos 5 digitos.")
     private String telefono;
     
-    @Basic(optional = false)
+    //@Basic(optional = false)
     @Column(name = "EXT")
-    @Pattern(regexp = numeros, message = "Ingrese solo numeros por favor.")
+    //@Pattern(regexp = numeros, message = "Ingrese solo numeros por favor.")
     private String extension;
     
     @Column(name = "STATUS")

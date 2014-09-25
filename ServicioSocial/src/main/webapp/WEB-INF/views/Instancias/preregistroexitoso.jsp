@@ -17,11 +17,12 @@
                 <%@include file="../General/banner.jsp"%>
                 <%@include file="menuPreregistroInstancia.jsp" %>
             </div>
-            <div class="row">
+            <br/><br/>
+            <div class="panel panel-danger" style="text-align: center">
                 <h2>
                     El preregistro se ha realizado satisfactoriamente. Ahora
                     debes esperar a que el administrador valide tu instancia.
-                    El sistema te notificar&aacute; via correo electr&oacute;nico cuando tu
+                    El sistema te notificará via correo electrónico cuando tu
                     instancia este aprobada.
                 </h2>
             </div>

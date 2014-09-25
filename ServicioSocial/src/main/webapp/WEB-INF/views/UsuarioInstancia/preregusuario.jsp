@@ -63,11 +63,11 @@
                         <div class="col-md-4">
                             <label for="uext">Extensión</label>
                             <form:input  id="uext" path="extension" class="form-control" type="text" placeholder="Extensión telefonica" />
-                            <form:errors path="extension" class="alert alert-danger" />
+                            ${errorExt}
                         </div>
                         <div class="col-md-4">
                             <label for="upuesto">Puesto del usuario</label>
-                            <form:input  id="upuesto" path="puesto" class="form-control" type="text" placeholder="Puesto dentro de la instancia" />
+                            <form:input  id="upuesto" path="puesto" class="form-control" required="true" type="text" placeholder="Puesto dentro de la instancia" />
                             <form:errors path="puesto" class="alert alert-danger" />
                         </div>
                     </div>
@@ -78,10 +78,11 @@
                             <label for="utel">Email</label>
                             <form:input  id="utel" path="email" class="form-control" required="true" type="email" placeholder="Email del usuario" />
                             <form:errors path="email" class="alert alert-danger" />
+                            ${useryetexist}
                         </div>
                         <div class="col-md-4">
                             <label for="upass">Cree una contraseña</label>
-                            <form:input  id="upass" path="password" class="form-control" required="true" type="password" placeholder="Password" />
+                            <form:input  id="upass" path="password" class="form-control" required="true" type="password" placeholder="Cree una contrseña" />
                             <form:errors path="password" class="alert alert-danger" />
                         </div>
                         <div class="col-md-4">
@@ -95,7 +96,7 @@
                     
                     &nbsp;<br/>
                     <div class="col-md-12" style="text-align: right">
-                        <input id="send-b" type ="button" value="Crear usuario" class="btn btn-primary" />
+                        <input id="send-b" type ="submit" value="Crear usuario" class="btn btn-primary" />
                     </div>
                     
                     &nbsp;

@@ -63,6 +63,12 @@ $(document).ready(function()
         }
     });
     
+    $('#upass').keyup(function(e) 
+    {
+        $('#alert-pass').css('display', 'inline');
+        document.getElementById('send-b').type = 'button';
+    });
+    
     $('#ucpass').keyup(function(event)
     {
         if ($('#ucpass').val() === $('#upass').val()) 

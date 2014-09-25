@@ -116,8 +116,8 @@ public class InstanciasController
     }
     
     @RequestMapping( value="preregistrarinstancia.do", method=RequestMethod.POST)
-    public String preregistrar(Model model, @Valid Instancia instancia, 
-            BindingResult bindingResult)
+    public String preregistrar(HttpSession session, Model model, 
+            @Valid Instancia instancia, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors()) // Showing error in form
         {
@@ -155,10 +155,15 @@ public class InstanciasController
                 instancia.setRfc(instancia.getRfc().toUpperCase());
                 instancia.setStatus((short) 0);
                 
-                // Asignar usuario a instancia
-                UsuarioInstancia uInstancia = usuarioInstanciaFacade.findAll().get(0);
-                instancia.setUsuarioInstancia(uInstancia);
-
+                // Obtener usuario al que pertenecera la instancia
+                String email = session.getAttribute("EMAIL").toString();
+                List<UsuarioInstancia> usuarios =  usuarioInstanciaFacade
+                        .findBySpecificField("email", email, "equal", null, null);
+                if(usuarios.size() > 0)
+                {
+                    instancia.setUsuarioInstancia(usuarios.get(0));
+                }
+                
                 instanciaFacade.create(instancia);
 
                 return "/Instancias/preregistroexitoso";
@@ -201,10 +206,50 @@ public class InstanciasController
     
     @RequestMapping( value="registrarUsuario.do", method=RequestMethod.POST)
     public String registrarUsuario(HttpSession session, @Valid UsuarioInstancia usuarioInstancia,
-            BindingResult bindingResult)
+            BindingResult bindingResult, Model model)
     {
         if(bindingResult.hasErrors())
         {
+            if(usuarioInstancia.getExtension().length() > 0)
+            {
+                for(char c : usuarioInstancia.getExtension().toCharArray())
+                {
+                    try 
+                    {
+                        Integer.parseInt(c + "");
+                    }
+                    catch(NumberFormatException err)
+                    {
+                        model.addAttribute("errorExt", "<div class='alert alert-danger'>Ingrese solo números o deje vacio el campo</div>");
+                    }
+                }
+            }
+            return "/UsuarioInstancia/preregusuario";
+        }
+        
+        if(usuarioInstancia.getExtension().length() > 0)
+        {
+            for(char c : usuarioInstancia.getExtension().toCharArray())
+            {
+                try 
+                {
+                    Integer.parseInt(c + "");
+                }
+                catch(NumberFormatException err)
+                {
+                    model.addAttribute("errorExt", "<div class='alert alert-danger'>Ingrese solo números o deje vacio el campo</div>");
+                    return "/UsuarioInstancia/preregusuario";
+                }
+            }
+        }
+        
+        
+        // Verificar si el email ya ha sido registrado con otro usuario
+        List<UsuarioInstancia> usuarios = usuarioInstanciaFacade
+                .findBySpecificField("email", usuarioInstancia.getEmail().toLowerCase(), "equal", null, null);
+        if(usuarios.size() > 0)
+        {
+            model.addAttribute("useryetexist", "<div class='alert alert-danger'>Este correo electrónico ya ha sido registrado.</div>");
             return "/UsuarioInstancia/preregusuario";
         }
         
@@ -218,7 +263,7 @@ public class InstanciasController
         
         usuarioInstanciaFacade.create(usuarioInstancia);
         
-        return "/NavegacionPrincipal/index";
+        return "/UsuarioInstancia/preregusuexitoso";
     }
     
     /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */

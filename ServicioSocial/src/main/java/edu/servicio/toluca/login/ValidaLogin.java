@@ -172,16 +172,23 @@ public class ValidaLogin
                         session.setAttribute("ROL", "ORGANIZACION");
                         session.setAttribute(("NCONTROL"), usuarioInstancia.get(0).getIdUsuarioInstancia().toString());
                         session.setAttribute("NOMBRE", usuarioInstancia.get(0).getNombre());
+                        session.setAttribute("EMAIL", usuarioInstancia.get(0).getEmail());
 //                        if (validacionAdmin == 2)
 //                        {
 //                            session.setAttribute("MENSAJE", "<div class=\"alert alert-danger\">Tu instancia aún no ha sido validada por el administrador, por favor corrija tus datos como se te ha indicado en la retroalimentación.</div>");
 //                        }
                         sesionBean.setPagReturn("redirect:panelOrganizacion.do");
                     } 
-                    else //si el status es 0
+                    else if(status == 0)
+                    {
+                        System.err.println("El usuario no ha sido aprobado por el Administrador");
+                        sesionBean.setMensaje("<div class=\"alert alert-danger\">Su cuenta no ha sido aceptada por el administrador de Servicio Social.</div>");
+                        sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
+                    }
+                    else //si el status es 2
                     {
                         System.out.println("La organizacion no puede ingresar, status: inactivo");
-                        sesionBean.setMensaje("<div class=\"alert alert-danger\">Lo sentimos, su cuenta no puede ingresar al sistema, contacte al adminsitrador para informar sobre el problema.</div>");
+                        sesionBean.setMensaje("<div class=\"alert alert-danger\">Esta cuenta ha sido dada de baja y no puede ingresar al sistema, contacte al administrador.</div>");
                         sesionBean.setPagReturn("/NavegacionPrincipal/loginPrincipal");
                     }
 
