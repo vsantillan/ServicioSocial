@@ -36,14 +36,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
  * @author SATELLITE
  */
 @Entity
-@Table(name = "PROYECTOS", catalog = "", schema = "GES_VIN")
+@Table(name = "PROYECTOS")
 @XmlRootElement
 @NamedQueries(
 {

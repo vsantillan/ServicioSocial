@@ -30,7 +30,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author SATELLITE
  */
 @Entity
-@Table(name = "RETROALIMENTACION_INSTANCIA2", catalog = "", schema = "GES_VIN")
+@Table(name = "RETROALIMENTACION_INSTANCIA2")
 @XmlRootElement
 @NamedQueries(
 {

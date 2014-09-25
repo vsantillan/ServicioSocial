@@ -32,7 +32,11 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
+<<<<<<< HEAD
 @Table(name = "REG_OBSERVACION_GENERAL", catalog = "", schema = "GES_VIN2")
+=======
+@Table(name = "REG_OBSERVACION_GENERAL")
+>>>>>>> 264380952429938f351c66a61572ab95c2f66ead
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RegObservacionGeneral.findAll", query = "SELECT r FROM RegObservacionGeneral r"),
