@@ -748,7 +748,7 @@ public class OrganizacionesController
             proyectoEdit.setEstatus(BigInteger.valueOf(status));
             proyectoEdit.setValidacionAdmin(BigInteger.valueOf(val_admin));
             proyectosFacade.edit(proyectoEdit);
-        }
+        }   
 //        instancia.setStatus(BigInteger.valueOf(status));
         instancia.setStatus( (short) status);//.......................................correccion  de error..........................................
 //        instancia.setValidacionAdmin(BigInteger.valueOf(val_admin));:::::::::::::::::::::::::::::::::::::::::::::::::: REVISION DE VALIDACION DEL ADMINISTRADOR PARA INSTANCIAS ::::::::::::::::::::::::::::::::::

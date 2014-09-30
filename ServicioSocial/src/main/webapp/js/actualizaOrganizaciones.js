@@ -144,7 +144,8 @@ function obtenerDatosProyecto()
     if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("cambiaStatusProyecto.do", {id: idUpdate, estatus: estatus, val_admin: tipo2, observaciones: array}, function(respuesta)
+        estatus = 2;
+        $.post("cambiaStatusProyecto.do", {id: idUpdate, estatus: estatus, observaciones: array}, function(respuesta)
         {
             if (respuesta === "ok")
             {

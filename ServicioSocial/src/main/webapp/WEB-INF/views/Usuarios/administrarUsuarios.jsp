@@ -43,9 +43,9 @@
                             <core:forEach items="${usuarios}" var="current">
                                 <tr class='gradeX'>
                                     <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
-                                    <td><a href="#" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Usuario"></span></a>&nbsp;&nbsp;
-                                        <a href="#" class="btn-validar-org"><span class="cambiaStatusInstancia glyphicon glyphicon-trash sizeIcon" ide="${current.idUsuarioInstancia}" title="Borrar Usuario"></span></a></td>
-                                    <td><a href="#" data-modal="modal" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
+                                    <td><a href="editUser.do?id=${current.idUsuarioInstancia}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Usuario"></span></a>&nbsp;&nbsp;
+                                        <a href="#" class="btn-validar-org"><span class="cambiaStatusUsuario glyphicon glyphicon-trash sizeIcon" ide="${current.idUsuarioInstancia}" title="Borrar Usuario"></span></a></td>
+                                    <td><a href="#" data-EditUsmodal="modal" class="fancy"><span class=" glyphicon glyphicon-search sizeIcon" title="Editar Usuario"></span></a></td>
                                     <td><core:out value="${current.nombre}" /></td>
                                     <td><core:out value="${current.puesto}" /></td>
                                     <td><core:out value="${current.email}" /></td>
@@ -59,19 +59,19 @@
             </div>
         </div>
 
-        <div class="modal-dialog" id="motivos" style="display: none;">
+        <div class="modal-dialog" id="motivosUsuario" style="display: none;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title titulos-naranja">Motivos de Rechazo de la Organización</h3>
                 </div>
-                <form id="observacionesCat" action="#"  onsubmit="return  false;">
+                <form id="observacionesUsuario" action="#"  onsubmit="return  false;">
                     <div class="modal-body">
                         <div class="list-group">
                             <core:forEach items="${listadoObservaciones}" var="observacion">
                                 <a href="#" class="list-group-item">
                                     <div class="checkbox">
                                         <label>
-                                            <input name="id[]" value="${observacion.id}" type="checkbox"/>
+                                            <input class="imputUsuario" name="id[]" value="${observacion.id}" type="checkbox"/>
                                             <h4 class="list-group-item-heading">${observacion.detalle}</h4>
                                         </label>
                                     </div>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Eliminar y guardar las observaciones a la Organización</button>
+                        <button type="button" class="guardarObservacionesUsuario btn btn-primary ">Eliminar y guardar las observaciones</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
                     </div>
                 </form>
@@ -88,7 +88,7 @@
         </div><!-- /.modal-dialog -->
 
         <%@include file="../General/js.jsp"%>
-        <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
+        <script type="text/javascript" src="js/usuariosAdmin.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>

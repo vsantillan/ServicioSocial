@@ -9,11 +9,16 @@ import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.RegObservacionGeneral;
 import edu.servicio.toluca.entidades.UsuarioInstancia;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
+import edu.servicio.toluca.sesion.RegObservacionGeneralFacade;
 import edu.servicio.toluca.sesion.UsuarioInstanciaFacade;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +27,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -37,6 +43,12 @@ public class PanelAdministradorController
 
     @EJB(mappedName = "java:global/ServicioSocial/UsuarioInstanciaFacade")
     private UsuarioInstanciaFacade usuarioInstanciaFacade;
+
+    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
+    private CatalogoObservacionesFacade observacionesCatalogoFacade;
+
+    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionGeneralFacade")
+    private RegObservacionGeneralFacade regObservacionGeneralFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelAdministrador.do")
     public String panelAdministrador(Model model, HttpSession session, HttpServletRequest request)
@@ -61,7 +73,7 @@ public class PanelAdministradorController
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador())
         {
-            
+
             List<CatalogoObservaciones> catalogo = catalogoObservacionesFacade.findBySpecificField("tipo", "6", "equal", null, null);
             List<UsuarioInstancia> listaUsuarios = usuarioInstanciaFacade.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
@@ -169,6 +181,48 @@ public class PanelAdministradorController
         usuario = usuarioInstanciaFacade.find(BigDecimal.valueOf(id));
         usuario.setStatus((short) 1);
         usuarioInstanciaFacade.edit(usuario);
+
+        return "ok";
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/editUser.do")
+    public String editUser(UsuarioInstancia usuarios, int id, Model model, HttpSession session, HttpServletRequest request)
+    {
+        model.addAttribute("usuarios",usuarioInstanciaFacade.find(BigDecimal.valueOf(id)));
+        
+        return "/Usuarios/editarUsuario";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/downUser.do")
+    public @ResponseBody
+    String downUser(@RequestParam(value = "observaciones[]", required = false) String[] observaciones, int id, int status, Model model, HttpSession session, HttpServletRequest request)
+    {
+
+        System.out.println("ENTRANDO......................................");
+
+        UsuarioInstancia usuario = usuarioInstanciaFacade.find(BigDecimal.valueOf(id));
+        System.out.println(usuario.getIdUsuarioInstancia());
+        System.out.println(usuario.getNombre());
+        System.out.println(usuario.getApellidoMat());
+        System.out.println(usuario.getNombre());
+        System.out.println(usuario.getPassword());
+      
+        for (String Observacion : observaciones)
+        {
+
+            CatalogoObservaciones catObser = observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(Observacion)));
+            //Objeto a Registrar
+            RegObservacionGeneral registro = new RegObservacionGeneral();
+            //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
+            registro.setCatalogoObservacionId(catObser);
+            //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
+            registro.setIdLlaveUnica(usuario.getIdUsuarioInstancia().toBigInteger());
+            //Asignar Fecha Actual al momento para registro 
+            registro.setFecha(new Date());
+            //Creacion de Registro
+            regObservacionGeneralFacade.create(registro);
+            System.out.println("las observaciones son: " + Observacion);
+        }
+        usuario.setStatus((short) status);
 
         return "ok";
     }
