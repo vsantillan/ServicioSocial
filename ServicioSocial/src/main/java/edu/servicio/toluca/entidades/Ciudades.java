@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author SATELLITE
  */
 @Entity
-@Table(name = "CIUDADES", catalog = "", schema = "GES_VIN")
+@Table(name = "CIUDADES")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Ciudades.findAll", query = "SELECT c FROM Ciudades c"),

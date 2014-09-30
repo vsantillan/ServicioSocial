@@ -34,7 +34,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  * @author SATELLITE
  */
 @Entity
-@Table(name = "NOTICIAS", catalog = "", schema = "GES_VIN")
+@Table(name = "NOTICIAS")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Noticias.findAll", query = "SELECT n FROM Noticias n"),

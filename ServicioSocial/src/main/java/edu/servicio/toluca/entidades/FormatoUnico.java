@@ -36,7 +36,7 @@ import org.hibernate.annotations.GenericGenerator;
  */
 
 @Entity
-@Table(name = "FORMATO_UNICO", catalog = "", schema = "GES_VIN")
+@Table(name = "FORMATO_UNICO")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "FormatoUnico.findAll", query = "SELECT f FROM FormatoUnico f"),

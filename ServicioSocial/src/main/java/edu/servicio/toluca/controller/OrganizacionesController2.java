@@ -176,29 +176,23 @@ public class OrganizacionesController2
 
         //Organizacion
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
-        ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
-
-        for (int i = 0; i < listaInstancias.size(); i++)
-        {
-//            int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString()); ............................................CORRECCION DE ERROR...................................................................
-            short listStatus = listaInstancias.get(i).getStatus();
-            int estatus = (int) listStatus;
-            if (estatus == 1)
-            {
-                filtroInstancias.add(listaInstancias.get(i));
-            }
-        }
-        model.addAttribute("instancias", filtroInstancias);
+       
+        model.addAttribute("instancias", listaInstancias);
+        
         //Objeto proyecto para el commandAttribute
         model.addAttribute("proyecto", new Proyectos());
+        
         //Estados
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
         model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        
         //TipoProyecto
         model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+        
         //Perfil
         model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        
         //Programa
         model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
 
@@ -733,10 +727,10 @@ public class OrganizacionesController2
             String nActividades, String cadenaActividades, String cadenaPerfiles, String codigo_postal,
             String otra_colonia, String existeCP, String estado, String municipio, String ciudad, HttpSession session, HttpServletRequest request)
     {
-        System.out.println("hola admin gda alta organizacion");
+        System.err.println("Preparando para insertar nuevo proyecto");
 
         //Validaciones
-        System.out.println("Validar");
+        System.err.println("Validando");
         new ValidacionesOrganizaciones().valAltaAdminProy(proyecto, result, model, codigo_postal, existeCP, otra_colonia);
 
         //Desglose de Actividades
@@ -801,7 +795,8 @@ public class OrganizacionesController2
             model.addAttribute("proyecto", proyecto);
 
             return "/Organizaciones/altaAdminProyecto";
-        } else
+        } 
+        else
         {
 
             System.out.print("no hubo errores");
@@ -815,6 +810,9 @@ public class OrganizacionesController2
             proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
             proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
+            proyecto.setIdInstancia(instanciaFacade.find(proyecto.getIdInstancia().getIdInstancia()));
+            
+            
             System.out.println("el nombre del proyecto es: " + proyecto.getNombre());
             proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
@@ -839,6 +837,7 @@ public class OrganizacionesController2
                 actividadesFacade.create(actividad);
                 System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
             }
+            
             //Insercion de Perfiles
             if (cadenaPerfiles != null)
             {
@@ -865,7 +864,8 @@ public class OrganizacionesController2
                     proyectoPerfilFacade.create(proyectoPerfil);
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
-            } else
+            } 
+            else
             {
                 System.out.println("No se agregaran perfiles");
             }
