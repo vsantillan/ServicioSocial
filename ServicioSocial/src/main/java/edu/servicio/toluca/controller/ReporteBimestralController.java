@@ -91,7 +91,7 @@ public class ReporteBimestralController {
 
 
         if (!new ValidaSesion().validaAlumno(session, request)) {
-            modelo.addAttribute("error", "<div class='alert alert-danger''>Debes iniciar sesión para acceder a esta sección.</div>");
+            modelo.addAttribute("error", "<div class='alert alert-danger''>Debes iniciar sesiÃ³n para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
         ///////////MUESTRA REPORTES/////////////
@@ -222,7 +222,7 @@ public class ReporteBimestralController {
             while (palabra.hasMoreTokens()) {
                 listaIds.add(palabra.nextToken());
             }
-            System.out.println("tamaño de la lista:" + listaIds.size());
+            System.out.println("tamaÃ±o de la lista:" + listaIds.size());
             if (listaIds.size() <= 1 || listaIds.isEmpty()) {
                 modelo.addAttribute("errorActividades", "<div class='alert alert-danger'>Seleccione como minimo 2 Actividades</div>");
                 //---------------------------------------------------------//
@@ -289,6 +289,7 @@ public class ReporteBimestralController {
                     actualizaHoras.setHorasAcumuladas(actualizaHoras.getHorasAcumuladas().subtract(bimestralU.getHoras()));
                     actualizaHoras.setHorasAcumuladas(BigInteger.valueOf(reporte.getHoras()).add(actualizaHoras.getHorasAcumuladas()));
                     formatoUnicoFacade.edit(actualizaHoras);
+                    
 
                     //Actualizamos La informacion del Reporte
                     bimestralU.setHoras(BigInteger.valueOf(reporte.getHoras()));

@@ -1187,7 +1187,6 @@ public class FormatoUnicoController
     public @ResponseBody
     void muestraReporteFUI(Model modelo, String nControl, String idProyecto, HttpSession session, HttpServletRequest request, HttpServletResponse httpServletResponse) throws ParseException, JRException
     {
-
         try
         {
             String noControl = session.getAttribute("NCONTROL").toString();

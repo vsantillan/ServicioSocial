@@ -200,38 +200,38 @@
                                                         <td><core:out value="${reportes.horas}"/></td>
                                                         <td><fmt:formatDate value="${reportes.fechaEntregaMax}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
                                                         <td><core:out value="${reportes.numeroRevisiones}"/></td>
-                                                            <core:choose>    
-                                                                <core:when test="${reportes.status==0}">
+                                                        <core:choose>    
+                                                            <core:when test="${reportes.status==0}">
                                                                 <td>No has subido tu reporte</td>
-                                                                </core:when>
-                                                                <core:when test="${reportes.status==1}">
+                                                            </core:when>
+                                                            <core:when test="${reportes.status==1}">
                                                                 <td>Aceptado</td>
-                                                                </core:when>
-                                                                <core:when test="${reportes.status==2}">
+                                                            </core:when>
+                                                            <core:when test="${reportes.status==2}">
                                                                 <td>Rechazado</td>
-                                                                </core:when>
-                                                                <core:when test="${reportes.status==3}">
+                                                            </core:when>
+                                                            <core:when test="${reportes.status==3}">
                                                                 <td>En correci&oacute;n</td>
-                                                                </core:when>
-                                                                <core:when test="${reportes.status==4}">
+                                                            </core:when>
+                                                            <core:when test="${reportes.status==4}">
                                                                 <td>En revisi&oacute;n</td>
-                                                                </core:when>
-                                                            </core:choose>
-                                                            <core:forEach items="${datosPersonales}" var="current">
-                                                                <core:forEach items="${current.formatoUnicoCollection}" var="formato">
-                                                                    <core:choose>
-                                                                        <core:when test="${formato.catalogoPlanId.detalle=='S'}" >
+                                                            </core:when>
+                                                        </core:choose>
+                                                        <core:forEach items="${datosPersonales}" var="current">
+                                                            <core:forEach items="${current.formatoUnicoCollection}" var="formato">
+                                                                <core:choose>
+                                                                    <core:when test="${formato.catalogoPlanId.detalle=='S'}" >
                                                                         <td>${reportes.calificacion}</td>
-                                                                        </core:when> 
-                                                                        <core:otherwise>
+                                                                    </core:when> 
+                                                                    <core:otherwise>
                                                                         <td>No requerida</td>
-                                                                        </core:otherwise>
-                                                                    </core:choose>
-                                                                </core:forEach>
+                                                                    </core:otherwise>
+                                                                </core:choose>
                                                             </core:forEach>
+                                                        </core:forEach>
                                                         <td><a href="muestraReporteBimestral.pdf?idReporte=${reportes.id}&noReporte=${reportes.numeroReporte}" target="_blank"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
-                                                    </td>
-                                                </core:forEach>
+                                                        </td>
+                                                    </core:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -265,21 +265,21 @@
         <script type="text/javascript" language="javascript" src="js/reportesBimestrales.js"></script>
         <script type="text/javascript" language="javascript" src="js/validaFiles.js"></script>
         <script>
-                                $('a#btn-add').click(function() {
-                                    $('#select-from option:selected').each(function() {
+                                $('a#btn-add').click(function () {
+                                    $('#select-from option:selected').each(function () {
                                         $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
                                         $(this).remove();
                                     });
                                 });
-                                $('a#btn-remove').click(function() {
-                                    $('#select-to option:selected').each(function() {
+                                $('a#btn-remove').click(function () {
+                                    $('#select-to option:selected').each(function () {
                                         $('#select-from').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
                                         $(this).remove();
                                     });
                                 });
 
-                                $('input#envia').click(function() {
-                                    $('#select-from option').each(function()
+                                $('input#envia').click(function () {
+                                    $('#select-from option').each(function ()
                                     {
                                         $(this).attr("selected", "selected");
                                     });
@@ -290,7 +290,7 @@
         </script>
         <script src="js/bootstrap.fileInput.js"></script> 
         <script>
-                                $(document).ready(function() {
+                                $(document).ready(function () {
                                     $('input[type=file]').bootstrapFileInput();
                                 });
         </script>

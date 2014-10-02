@@ -35,12 +35,14 @@ import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -341,7 +343,8 @@ public class PlaticaController
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.pdf")
-    public String folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request)
+    public @ResponseBody
+    void folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request, HttpServletResponse response)
     {
 
         List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
@@ -379,15 +382,40 @@ public class PlaticaController
             platica.setNumeroAsistentes(numero);
             platicaFacade.edit(platica);
             session.setAttribute("platica", fecha + "");
-            return "/Platicas/folio";
-             
+            
+            System.out.println("ACEPTO LOS CAMBIOS");
+            
+            try
+            {
+                Conexion conn = new Conexion();
+                File reportFile = new File(request.getRealPath("reportes//folioPlatica.jasper"));
+                Map parameters = new HashMap();
+                System.out.println(session.getAttribute("platica"));
+                System.out.println(session.getAttribute("NCONTROL"));
+                parameters.put("folio", session.getAttribute("platica").toString() + session.getAttribute("NCONTROL").toString());
+                byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin", "gst05a"));
+                response.setContentType("application/pdf");
+                response.setContentLength(bytes.length);
+                response.getOutputStream().write(bytes);
+            } catch (JRException ex)
+            {
+                Exceptions.printStackTrace(ex);
+            } catch (ClassNotFoundException ex)
+            {
+                Exceptions.printStackTrace(ex);
+            } catch (SQLException ex)
+            {
+                Exceptions.printStackTrace(ex);
+            } catch (IOException ex)
+            {
+                Exceptions.printStackTrace(ex);
+            }
         } else
         {
             modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
             modelo.addAttribute("platica", new Platica());
-            
+
             modelo.addAttribute("existe", "<div class='alert alert-danger'>Ya te has registrado a ésta plática</div>");
-            return "redirect:panelUsuairo.do";
         }
     }
 

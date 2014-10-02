@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.servicio.toluca.model.reportesBimestrales;
 
 import edu.servicio.toluca.beans.ReportesBean;
@@ -31,11 +27,13 @@ public class ValidaReportesBimestralesModel
     {
         ReportesBean reportesBean = new ReportesBean();
 
+        //Condición que valída si el alumno se ha registrado a alguna plática.
         if (servicioBean.getPlaticaBean().isTienePlatica())
         {
+            //Condición que valida si ya cumplió el proceso del formato único.
             if (servicioBean.getFormatoUnico() != null && servicioBean.getFormatoUnico().getStatusFui() != null)
             {
-                //VALIDACION 2 años de servicio//
+                //Valida que el alumno no haya excedido el tiempo de dos años.
                 fechas manejadorFechas = new fechas();
                 Calendar fecha = Calendar.getInstance();
                 fecha.setTime(servicioBean.getFormatoUnico().getFechaInicio());
@@ -43,8 +41,10 @@ public class ValidaReportesBimestralesModel
                 Date fechaMaxima = manejadorFechas.covierteString(manejadorFechas.convierteDate(fecha.getTime()));
                 Calendar fechaActual = Calendar.getInstance();
                 Date fechaActualDate = manejadorFechas.covierteString(manejadorFechas.convierteDate(fechaActual.getTime()));
+                //If de las líneas de arriba
                 if (!servicioBean.getFormatoUnico().getStatusFui().toString().equals("2") && !fechaActualDate.after(fechaMaxima))
                 {
+                    //Condidición que valida el proceso del formato único (¿Otra vez?)
                     if (servicioBean.getFormatoUnico().getStatusFui().toString().equals("1"))
                     {
                         ArrayList<Reportes> reportes = new ArrayList<Reportes>(servicioBean.getDatosPersonales().getReportesCollection());
@@ -54,7 +54,7 @@ public class ValidaReportesBimestralesModel
                         nReportes = reportes.size();
                         servicioBean.setReportesBimestrales(reportes);
                         System.out.println("Size reportes:" + nReportes);
-
+                        //Valida si ha dado de alta reportes bimestrales
                         if (!reportes.isEmpty() && reportes != null && nReportes > 0)
                         {
                             System.out.println("Entro a validar bien los reportes bimestrales");
@@ -69,12 +69,9 @@ public class ValidaReportesBimestralesModel
                             int status = Integer.parseInt(ultimoBimestral.getStatus().toString());
                             System.out.println("tiene " + horasServicio + " horas..." + " plan " + String.valueOf(servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle()));
                             servicioBean.setHorasServicio(horasServicio);
-                            String detalleTipoOrganizacion = servicioBean.getFormatoUnico().getIdproyecto().getIdInstancia().getTipoOrganizacion().getDetalle();
-                            if ((detalleTipoOrganizacion.equals("Gobierno Federal") && horasServicio < 480)
-                                    || (detalleTipoOrganizacion.equals("Gobierno Municipal") && horasServicio < 600 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("N"))
-                                    || (detalleTipoOrganizacion.equals("Organizacion Civil") && horasServicio < 480 && servicioBean.getFormatoUnico().getCatalogoPlanId().getDetalle().toString().equals("N")))
+                            //Valida si tiene menos de 480 horas, más que obvio esto
+                            if (horasServicio < 480)
                             {
-
                                 //if (horasServicio < 480) {
                                 System.out.println("Menos 480 horas");
                                 //Validar el ultimo reporte bimestral
@@ -154,6 +151,7 @@ public class ValidaReportesBimestralesModel
                                 }
                             } else
                             {
+                                //Valida si el reporte bimestral tiene status 0, si es así al parecer ya completó las horas en el servicio
                                 if (ultimoBimestral.getStatus().compareTo(BigInteger.ONE) == 0)
                                 {
                                     reportesBean.setAccesoFormato(false);
@@ -205,6 +203,7 @@ public class ValidaReportesBimestralesModel
 class OrdenarPersonaPorId implements Comparator<Reportes>
 {
 
+    @Override
     public int compare(Reportes o1, Reportes o2)
     {
         return Integer.valueOf(String.valueOf(o1.getId())) - Integer.valueOf(String.valueOf(o2.getId()));

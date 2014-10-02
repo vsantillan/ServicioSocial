@@ -23,7 +23,7 @@
                         </core:when>
                         <core:otherwise>
                             <center><h1>Selecciona Plática</h1></center>
-                            <form:form action="folioPlatica.pdf" method="post" target="_blank" class="form-horizontal" id="formSelecciona" commandName="platica" onsubmit="return marcado();" name="seleccionaPlatica">
+                                <form:form action="folioPlatica.pdf" method="post" target="_blank" class="form-horizontal" id="formSelecciona" commandName="platica" onsubmit="return marcado();" name="seleccionaPlatica">
                                 <h1>Fechas Disponibles</h1>
                                 <form:select path="fecha" class="form-control" >
                                     <core:forEach  items="${platicasPeriodo}" var="platicasPeriodo" >
