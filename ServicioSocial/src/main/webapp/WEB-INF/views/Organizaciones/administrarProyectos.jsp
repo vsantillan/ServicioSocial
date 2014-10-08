@@ -23,7 +23,7 @@
                     <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'>
                         <thead>
                             <tr>
-                                <th>Acci&oacute;n</th>
+                                <th>Acción</th>
                                 <th>Ver proyecto</th>
                                 <th>Ver Alumnos en Proyecto</th>
                                 <th>Instancia</th>
@@ -35,13 +35,27 @@
                         <tbody>
                             <core:forEach items="${proyectos}" var="current">
                                 <tr class='gradeX' id="${current.idProyecto}">
-                                    <td><a href="editarProyecto.do?id=${current.idProyecto}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Proyecto"></span></a>&nbsp;&nbsp;
-                                        <a href="#" class="btn-validar-proyecto"><span class=" cambiaStatusProyecto glyphicon glyphicon-trash sizeIcon" ide="${current.idProyecto}" title="Borrar Proyecto"></span></a></td>
-                                    <td><a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
-                                    <td><a href="verAlumnosProyecto.do?id=${current.idProyecto}" class="fancyFU"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
+                                    <td>
+                                        <a href="editarProyecto.do?id=${current.idProyecto}" >
+                                            <span class="glyphicon glyphicon-edit sizeIcon" title="Editar Proyecto"></span>
+                                        </a>&nbsp;&nbsp;
+                                        <a href="#" class="btn-validar-proyecto">
+                                            <span class=" cambiaStatusProyecto glyphicon glyphicon-trash sizeIcon" ide="${current.idProyecto}" title="Borrar Proyecto"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="detalleProyecto.do?id=${current.idProyecto}" class="fancy">
+                                            <span class="glyphicon glyphicon-search sizeIcon"></span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="verAlumnosProyecto.do?id=${current.idProyecto}" class="fancyFU">
+                                            <span class="glyphicon glyphicon-search sizeIcon"></span>
+                                        </a>
+                                    </td>
                                     <td><core:out value="${current.idInstancia.nombre}" /></td>
                                     <td><core:out value="${current.nombre}" /></td>
-                                    <td><core:out value="${current.idInstancia.titular}" /></td>
+                                    <td><core:out value="${current.nombreResponsable}" /></td>
                                     <td><core:out value="${current.vacantes}" /></td>
                                 </tr>
                             </core:forEach>

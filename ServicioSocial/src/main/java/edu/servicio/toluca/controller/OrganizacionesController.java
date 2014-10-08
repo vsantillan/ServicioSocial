@@ -4,9 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.MetodosValidacion;
-import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
 import edu.servicio.toluca.entidades.Actividades;
@@ -117,12 +115,12 @@ public class OrganizacionesController
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         System.out.println("Instancias");
-        for (int i = 0; i < listaInstancias.size(); i++)
+        for(int i = 0; i < listaInstancias.size(); i++)
         {
 //            String estatus = listaInstancias.get(i).getEstatus().toString();-..........Correccion de error...................................................
             short listStatus = listaInstancias.get(i).getStatus();
             String estatus = Short.toString(listStatus);
-            if ((estatus.equals("1")))
+            if((estatus.equals("1")))
             {
                 filtroInstancias.add(listaInstancias.get(i));
             }
@@ -137,17 +135,16 @@ public class OrganizacionesController
     {
         List<Proyectos> listaProyectos = proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
-        for (int i = 0; i < listaProyectos.size(); i++)
+        for(Proyectos proyecto : listaProyectos)
         {
-            int validacionAdmin = Integer.parseInt(listaProyectos.get(i).getValidacionAdmin().toString());
-//            int estatusInstancia = Integer.parseInt(listaProyectos.get(i).getIdInstancia().getEstatus().toString); -..........Correccion de error.............................
-            int estatusInstancia = (int) listaProyectos.get(i).getIdInstancia().getStatus();
-            int estatusProyecto = Integer.parseInt(listaProyectos.get(i).getEstatus().toString());
-            if (((estatusInstancia == 1)) && (validacionAdmin == 1) && (estatusProyecto == 1))
+            if(proyecto.getEstatus() == BigInteger.ONE && 
+               proyecto.getValidacionAdmin() == BigInteger.ONE &&
+               proyecto.getIdInstancia().getStatus() == 1)
             {
-                filtroDeProyectos.add(listaProyectos.get(i));
+                filtroDeProyectos.add(proyecto);
             }
         }
+        
         model.addAttribute("proyectos", filtroDeProyectos);
         model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findBySpecificField("tipo", "5", "equal", null, null));
         return "/Organizaciones/administrarProyectos";
@@ -213,15 +210,15 @@ public class OrganizacionesController
     public String mensajeOrganizacion(Model model, HttpSession session, HttpServletRequest request)
     {
         //Valida sesion
-        if (new ValidaSesion().validaOrganizacion(session, request))
+        if(new ValidaSesion().validaOrganizacion(session, request))
         {
             List<String> listaObservaciones = new ArrayList<String>();
             String idInstancia = session.getAttribute("NCONTROL").toString();
             System.out.println("el id instancia es: " + idInstancia);
             List<RegObservacionGeneral> list = regObservacionGeneralFacade.findBySpecificField("idLlaveUnica", idInstancia, "equal", null, null);
-            for (int i = 0; i < list.size(); i++)
+            for(int i = 0; i < list.size(); i++)
             {
-                if (list.get(i).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(4))
+                if(list.get(i).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(4))
                 {
                     System.out.println("La observacion es: " + list.get(i).getCatalogoObservacionId().getDetalle());
                     listaObservaciones.add(list.get(i).getCatalogoObservacionId().getDetalle());
@@ -229,12 +226,12 @@ public class OrganizacionesController
             }
             Instancia instanciaObj = new Instancia(BigDecimal.valueOf(Integer.parseInt(idInstancia)));
             List<Proyectos> listProyectos = proyectosFacade.findBySpecificField("idInstancia", instanciaObj, "equal", null, null);
-            for (int i = 0; i < listProyectos.size(); i++)
+            for(int i = 0; i < listProyectos.size(); i++)
             {
                 list = regObservacionGeneralFacade.findBySpecificField("idLlaveUnica", listProyectos.get(i).getIdProyecto().toString(), "equal", null, null);
-                for (int j = 0; j < list.size(); j++)
+                for(int j = 0; j < list.size(); j++)
                 {
-                    if (list.get(j).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(5))
+                    if(list.get(j).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(5))
                     {
                         listaObservaciones.add("El Proyecto: " + listProyectos.get(i).getNombre() + " tiene la observación: " + list.get(j).getCatalogoObservacionId().getDetalle());
                     }
@@ -281,7 +278,7 @@ public class OrganizacionesController
 //            }
 //        }
 
-        if (result.hasErrors())
+        if(result.hasErrors())
         {
             System.out.println("Con errores");
             System.out.println("Los errores son: " + result.toString());
@@ -296,7 +293,7 @@ public class OrganizacionesController
             try
             {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
-            } catch (Exception e)
+            } catch(Exception e)
             {
             }
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
@@ -304,9 +301,9 @@ public class OrganizacionesController
         } else
         {
             //---------------------------A continuación código para agregar nueva colonia
-            if (existeCP.equals("true"))
+            if(existeCP.equals("true"))
             {
-                if (instancia.getIdColonia().getIdColonia().toString().equals("0"))
+                if(instancia.getIdColonia().getIdColonia().toString().equals("0"))
                 {
                     //Agregar colonia                   
 //                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
@@ -339,7 +336,7 @@ public class OrganizacionesController
                 try
                 {
                     ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
-                } catch (Exception e)
+                } catch(Exception e)
                 {
                     System.out.println("No tiene ciudad");
                 }
@@ -349,7 +346,7 @@ public class OrganizacionesController
                 codigoPostal.setIdMunicipio(municipioP);
                 codigoPostal.setIdEstado(estadoP);
                 codigoPostal.setIdTipoLocalidad(localidad);
-                if (ciudad != null)
+                if(ciudad != null)
                 {
                     codigoPostal.setIdCiudad(ciudadP);
                 }
@@ -389,7 +386,7 @@ public class OrganizacionesController
             try
             {
                 instanciaFacade.edit(instancia);
-            } catch (Exception e)
+            } catch(Exception e)
             {
                 result.addError(new ObjectError("error_sql", "¡Error interno! Imposible editar organización."));
                 System.out.println(result.getGlobalError().toString());
@@ -411,12 +408,12 @@ public class OrganizacionesController
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         System.out.println("Instancias");
-        for (int i = 0; i < listaInstancias.size(); i++)
+        for(int i = 0; i < listaInstancias.size(); i++)
         {
 //            String estatus = listaInstancias.get(i).getEstatus().toString();
             short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
             String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
-            if ((estatus.equals("1")) || (estatus.equals("2")))
+            if((estatus.equals("1")) || (estatus.equals("2")))
             {
                 filtroInstancias.add(listaInstancias.get(i));
             }
@@ -431,13 +428,13 @@ public class OrganizacionesController
         List<Perfil> listaPerfil = perfilFacade.findAll();
         Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
         boolean agregar;
-        for (int i = 0; i < listaPerfil.size(); i++)
+        for(int i = 0; i < listaPerfil.size(); i++)
         {
             agregar = true;
             iteratorProyectosPerfilCollection = proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().iterator();
-            while (iteratorProyectosPerfilCollection.hasNext())
+            while(iteratorProyectosPerfilCollection.hasNext())
             {
-                if (!listaPerfil.get(i).getNombre().equals(iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre()) && agregar)
+                if(!listaPerfil.get(i).getNombre().equals(iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre()) && agregar)
                 {
                     agregar = true;
                 } else
@@ -445,10 +442,10 @@ public class OrganizacionesController
                     agregar = false;
                 }
             }
-            if (agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
+            if(agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
             {
                 perfilesNoSonDelProyecto.add(listaPerfil.get(i));
-            } else if (listaPerfil.get(i).getEstatus().intValue() == 1)
+            } else if(listaPerfil.get(i).getEstatus().intValue() == 1)
             {
                 perfilesSonDelProyecto.add(listaPerfil.get(i));
             }
@@ -471,13 +468,13 @@ public class OrganizacionesController
         ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
 
         //Valida Actividades
-        if (!actividadesModel.validarInsercionActividades().isSuccess())
+        if(!actividadesModel.validarInsercionActividades().isSuccess())
         {
             result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
         }
         model.addAttribute("validacion_actividades", actividadesModel.validarInsercionActividades().getMensaje());
         //++++++++++++++++++++++++++++++++Si hubo un error+++++++++++++++++++++++++++++++++++
-        if (result.hasErrors())
+        if(result.hasErrors())
         {
             System.out.println("Entroooooooooo aquiiiiiiiiiiiiiiiiiiiiiiiiiiii");
             //Regresar codigo postal
@@ -485,18 +482,18 @@ public class OrganizacionesController
             try
             {
                 model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
-            } catch (Exception e)
+            } catch(Exception e)
             {
             }
             List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             System.out.println("Instancias");
-            for (int i = 0; i < listaInstancias.size(); i++)
+            for(int i = 0; i < listaInstancias.size(); i++)
             {
 //                String estatus = listaInstancias.get(i).getEstatus().toString();
                 short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
                 String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
-                if ((estatus.equals("1")) || (estatus.equals("2")))
+                if((estatus.equals("1")) || (estatus.equals("2")))
                 {
                     filtroInstancias.add(listaInstancias.get(i));
                 }
@@ -513,14 +510,14 @@ public class OrganizacionesController
             listaPerfil = perfilFacade.findAll();
             boolean agregar;
             String nombrePerfilCollection;
-            for (int i = 0; i < listaPerfil.size(); i++)
+            for(int i = 0; i < listaPerfil.size(); i++)
             {
                 agregar = true;
                 iteratorProyectosPerfilCollection = proyectosFacade.find(proyecto.getIdProyecto()).getProyectoPerfilCollection().iterator();
-                while (iteratorProyectosPerfilCollection.hasNext())
+                while(iteratorProyectosPerfilCollection.hasNext())
                 {
                     nombrePerfilCollection = iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre();
-                    if (!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
+                    if(!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
                     {
                         agregar = true;
                     } else
@@ -528,10 +525,10 @@ public class OrganizacionesController
                         agregar = false;
                     }
                 }
-                if (agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
+                if(agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
                 {
                     perfilesNoSonDelProyecto.add(listaPerfil.get(i));
-                } else if (listaPerfil.get(i).getEstatus().intValue() == 1)
+                } else if(listaPerfil.get(i).getEstatus().intValue() == 1)
                 {
                     perfilesSonDelProyecto.add(listaPerfil.get(i));
                 }
@@ -542,7 +539,7 @@ public class OrganizacionesController
             model.addAttribute("nActividades", nActividades.substring(0, 1));
             System.out.println("nActividades:" + nActividades.substring(0, 1));
 
-            for (int i = 0; i < actividadesModel.actividades.size(); i++)
+            for(int i = 0; i < actividadesModel.actividades.size(); i++)
             {
                 model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
                 System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
@@ -557,23 +554,23 @@ public class OrganizacionesController
             List<ProyectoPerfil> listaProyectosPerfil = proyectoPerfilFacade.findBySpecificField("idProyecto", proyecto, "equal", null, null);
             Iterator<ProyectoPerfil> recorreProyectosPerfil = listaProyectosPerfil.iterator();
             //while para borrar los perfiles que tiene el proyecto
-            while (recorreProyectosPerfil.hasNext())
+            while(recorreProyectosPerfil.hasNext())
             {
                 ProyectoPerfil borrarPerfilDeProyecto;
                 borrarPerfilDeProyecto = recorreProyectosPerfil.next();
                 proyectoPerfilFacade.remove(borrarPerfilDeProyecto);
             }
-            if (selectfrom != null)
+            if(selectfrom != null)
             {
                 List<String> listaIds = new ArrayList<String>();
                 StringTokenizer palabra = new StringTokenizer(selectfrom, ",");
-                while (palabra.hasMoreTokens())
+                while(palabra.hasMoreTokens())
                 {
                     listaIds.add(palabra.nextToken());
                 }
                 Iterator inserta = listaIds.iterator();
                 //while que inserta la lista de los perfiles para el proyecto
-                while (inserta.hasNext())
+                while(inserta.hasNext())
                 {
                     ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
                     proyectoPerfil.setIdPerfil(perfilFacade.find(BigDecimal.valueOf(Integer.parseInt(inserta.next().toString())))); //Perfil
@@ -582,12 +579,12 @@ public class OrganizacionesController
                 }
             }
             //****************************Insertar las Actividades**************************
-            if (Integer.parseInt(nActividades) > 2 || nActividades != null)
+            if(Integer.parseInt(nActividades) > 2 || nActividades != null)
             {
                 List<Actividades> listaActividadesProyecto = actividadesFacade.findBySpecificField("idProyecto", proyecto, "equal", null, null);
                 Iterator<Actividades> recorreActividades = listaActividadesProyecto.iterator();
                 //while para borrar las actividades del proyecto
-                while (recorreActividades.hasNext())
+                while(recorreActividades.hasNext())
                 {
                     Actividades borrarActividadesProyecto;
                     borrarActividadesProyecto = recorreActividades.next();
@@ -596,13 +593,13 @@ public class OrganizacionesController
                 }
                 List<String> listaActividades = new ArrayList<String>();
                 StringTokenizer actividades = new StringTokenizer(cadenaActividades, ";");
-                while (actividades.hasMoreTokens())
+                while(actividades.hasMoreTokens())
                 {
                     listaActividades.add(actividades.nextToken());
                 }
                 Iterator insertaActividades = listaActividades.iterator();
                 //while que inserta la lista de actividades para el proyecto
-                while (insertaActividades.hasNext())
+                while(insertaActividades.hasNext())
                 {
                     Actividades actividadesObj = new Actividades();
                     actividadesObj.setDetalle(insertaActividades.next().toString());//String
@@ -621,7 +618,7 @@ public class OrganizacionesController
             try
             {
                 proyectosFacade.edit(proyecto);
-            } catch (Exception e)
+            } catch(Exception e)
             {
                 result.addError(new ObjectError("error_sql", "¡Error interno! Imposible editar proyecto."));
                 model.addAttribute("error_sql", "<div class='alert alert-danger'>¡Error interno! Imposible editar proyecto.</div>");
@@ -629,18 +626,18 @@ public class OrganizacionesController
                 try
                 {
                     model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
-                } catch (Exception ex)
+                } catch(Exception ex)
                 {
                 }
                 List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
                 ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
                 System.out.println("Instancias");
-                for (int i = 0; i < listaInstancias.size(); i++)
+                for(int i = 0; i < listaInstancias.size(); i++)
                 {
 //                    String estatus = listaInstancias.get(i).getEstatus().toString();
                     short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
                     String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
-                    if ((estatus.equals("1")) || (estatus.equals("2")))
+                    if((estatus.equals("1")) || (estatus.equals("2")))
                     {
                         filtroInstancias.add(listaInstancias.get(i));
                     }
@@ -657,14 +654,14 @@ public class OrganizacionesController
                 listaPerfil = perfilFacade.findAll();
                 boolean agregar;
                 String nombrePerfilCollection;
-                for (int i = 0; i < listaPerfil.size(); i++)
+                for(int i = 0; i < listaPerfil.size(); i++)
                 {
                     agregar = true;
                     iteratorProyectosPerfilCollection = proyectosFacade.find(proyecto.getIdProyecto()).getProyectoPerfilCollection().iterator();
-                    while (iteratorProyectosPerfilCollection.hasNext())
+                    while(iteratorProyectosPerfilCollection.hasNext())
                     {
                         nombrePerfilCollection = iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre();
-                        if (!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
+                        if(!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
                         {
                             agregar = true;
                         } else
@@ -672,10 +669,10 @@ public class OrganizacionesController
                             agregar = false;
                         }
                     }
-                    if (agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
+                    if(agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
                     {
                         perfilesNoSonDelProyecto.add(listaPerfil.get(i));
-                    } else if (listaPerfil.get(i).getEstatus().intValue() == 1)
+                    } else if(listaPerfil.get(i).getEstatus().intValue() == 1)
                     {
                         perfilesSonDelProyecto.add(listaPerfil.get(i));
                     }
@@ -686,7 +683,7 @@ public class OrganizacionesController
                 model.addAttribute("nActividades", nActividades.substring(0, 1));
                 System.out.println("nActividades:" + nActividades.substring(0, 1));
 
-                for (int i = 0; i < actividadesModel.actividades.size(); i++)
+                for(int i = 0; i < actividadesModel.actividades.size(); i++)
                 {
                     model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
                     System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
@@ -700,10 +697,10 @@ public class OrganizacionesController
             System.out.println("Sin errores");
             List<Proyectos> listaProyectos = proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null);
             ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
-            for (int i = 0; i < listaProyectos.size(); i++)
+            for(int i = 0; i < listaProyectos.size(); i++)
             {
                 int validacionAdmin = Integer.parseInt(listaProyectos.get(i).getValidacionAdmin().toString());
-                if (validacionAdmin == 1)
+                if(validacionAdmin == 1)
                 {
                     filtroDeProyectos.add(listaProyectos.get(i));
                 }
@@ -724,7 +721,7 @@ public class OrganizacionesController
         Instancia instancia;
         instancia = instanciaFacade.find(BigDecimal.valueOf(id));
         List<String> listaOb = new ArrayList<String>();
-        for (String idObservacion : observaciones)
+        for(String idObservacion : observaciones)
         {
             CatalogoObservaciones catObser = observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
             //Objeto a Registrar
@@ -742,20 +739,20 @@ public class OrganizacionesController
         }
 
         Iterator<Proyectos> proyectos = instancia.getProyectosCollection().iterator();
-        while (proyectos.hasNext())
+        while(proyectos.hasNext())
         {
             Proyectos proyectoEdit = proyectos.next();
             proyectoEdit.setEstatus(BigInteger.valueOf(status));
             proyectoEdit.setValidacionAdmin(BigInteger.valueOf(val_admin));
             proyectosFacade.edit(proyectoEdit);
-        }   
+        }
 //        instancia.setStatus(BigInteger.valueOf(status));
-        instancia.setStatus( (short) status);//.......................................correccion  de error..........................................
+        instancia.setStatus((short) status);//.......................................correccion  de error..........................................
 //        instancia.setValidacionAdmin(BigInteger.valueOf(val_admin));:::::::::::::::::::::::::::::::::::::::::::::::::: REVISION DE VALIDACION DEL ADMINISTRADOR PARA INSTANCIAS ::::::::::::::::::::::::::::::::::
         instanciaFacade.edit(instancia);
 
         String mensaje;
-        switch (status)
+        switch(status)
         {
             case 0://Dada de baja
                 mensaje = "<h1>Notificación Servicio Social</h1>\n"
@@ -803,7 +800,7 @@ public class OrganizacionesController
     public String dameObservaciones(List<String> lista)
     {
         String observaciones = "";
-        for (int i = 0; i < lista.size(); i++)
+        for(int i = 0; i < lista.size(); i++)
         {
             observaciones += " * " + lista.get(i) + "\n";
         }
@@ -818,7 +815,7 @@ public class OrganizacionesController
         Proyectos proyecto;
         proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
         List<String> listaOb = new ArrayList<String>();
-        for (String idObservacion : observaciones)
+        for(String idObservacion : observaciones)
         {
             CatalogoObservaciones catObser = observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
             //Objeto a Registrar
@@ -840,7 +837,7 @@ public class OrganizacionesController
         proyecto.setValidacionAdmin(BigInteger.valueOf(val_admin));
         proyectosFacade.edit(proyecto);
         String mensaje;
-        switch (estatus)
+        switch(estatus)
         {
             case 0://Dada de baja
                 mensaje = "<h1>Notificación Servicio Social</h1>\n"
@@ -882,7 +879,6 @@ public class OrganizacionesController
 
 //        Thread hiloCorreo = new Thread(new EnviarCorreo(proyecto.getNombre(), proyecto.getIdInstancia().getCorreo(), mensaje));
 //        hiloCorreo.start();..................................................................... CAMBIAR EL CORREO PARA QUE LO MANDE EL USUARIO Y NO LA INSTANCIA..................................................................
-
         return "ok";
     }
 

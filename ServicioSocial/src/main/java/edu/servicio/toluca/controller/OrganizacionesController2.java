@@ -72,38 +72,55 @@ public class OrganizacionesController2
 
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     private InstanciaFacade instanciaFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
     private ProyectosFacade proyectosFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/TipoOrganizacionFacade")
     private TipoOrganizacionFacade tipoOrganizacionFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/PerfilFacade")
     private PerfilFacade perfilFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
     private ColoniaFacade coloniaFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/TipoProyectoFacade")
     private TipoProyectoFacade tipoProyectoFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ProgramaFacade")
     private ProgramaFacade programaFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ProyectoPerfilFacade")
     private ProyectoPerfilFacade proyectoPerfilFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
     private ActividadesFacade actividadesFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnicoFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     private CodigosPostalesFacade codigosPostalesFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
     private MunicipiosSiaFacade municipiosFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
     private CiudadesFacade ciudadesFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
     private TipoLocalidadFacade tipoLocalidadFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     private VistaAlumnoFacade vistaAlumnoFacade;
+    
     MetodosValidacion limpiar = new MetodosValidacion();
     //Alta de Organizacion
 
@@ -145,7 +162,8 @@ public class OrganizacionesController2
             model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
 
             return "/Organizaciones/altaProyecto";
-        } else
+        } 
+        else
         {
             model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesió para acceder a esta sección.</div>");
             return "redirect:login.do";
@@ -226,9 +244,8 @@ public class OrganizacionesController2
             try
             {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
-            } catch (Exception e)
-            {
-            }
+            } 
+            catch (Exception e) { }
 
             model.addAttribute("estados", estadosFacade.findAll());
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
@@ -237,7 +254,8 @@ public class OrganizacionesController2
 
             return "/Organizaciones/registroOrganizaciones";
 
-        } else
+        } 
+        else
         {
             //Checa codigo postal
             CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
