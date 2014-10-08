@@ -4,52 +4,55 @@
  */
 package edu.servicio.toluca.beans.bajasTemporales;
 
+import edu.servicio.toluca.entidades.DatosPersonales;
+import java.util.Date;
 
-public class bajasTemporales {
-    private String  fechaBaja;
-    private String fechaLimiteBaja;
-    private int idDatosPer;
+public class BajasTemporales
+{
 
-    /**
-     * @return the fechaBaja
-     */
-    public String getFechaBaja() {
+    private String periodo;
+    private Date fechaBaja;
+    private Date fechaLimiteBaja;
+    private DatosPersonales datosPersonales;
+
+    public String getPeriodo()
+    {
+        return periodo;
+    }
+
+    public void setPeriodo(String periodo)
+    {
+        this.periodo = periodo;
+    }
+
+    public Date getFechaBaja()
+    {
         return fechaBaja;
     }
 
-    /**
-     * @param fechaBaja the fechaBaja to set
-     */
-    public void setFechaBaja(String fechaBaja) {
+    public void setFechaBaja(Date fechaBaja)
+    {
         this.fechaBaja = fechaBaja;
     }
 
-    /**
-     * @return the fechaLimiteBaja
-     */
-    public String getFechaLimiteBaja() {
+    public Date getFechaLimiteBaja()
+    {
         return fechaLimiteBaja;
     }
 
-    /**
-     * @param fechaLimiteBaja the fechaLimiteBaja to set
-     */
-    public void setFechaLimiteBaja(String fechaLimiteBaja) {
+    public void setFechaLimiteBaja(Date fechaLimiteBaja)
+    {
         this.fechaLimiteBaja = fechaLimiteBaja;
     }
 
-    /**
-     * @return the idDatosPer
-     */
-    public int getIdDatosPer() {
-        return idDatosPer;
+    public DatosPersonales getDatosPersonales()
+    {
+        return datosPersonales;
     }
 
-    /**
-     * @param idDatosPer the idDatosPer to set
-     */
-    public void setIdDatosPer(int idDatosPer) {
-        this.idDatosPer = idDatosPer;
+    public void setDatosPersonales(DatosPersonales datosPersonales)
+    {
+        this.datosPersonales = datosPersonales;
     }
-    
+
 }

@@ -344,7 +344,7 @@ public class PlaticaController
 
     @RequestMapping(method = RequestMethod.POST, value = "/folioPlatica.pdf")
     public @ResponseBody
-    void folioPlatica(Model modelo, String fecha, HttpSession session, HttpServletRequest request, HttpServletResponse response)
+    void folioPlatica(String fecha, HttpSession session, HttpServletRequest request, HttpServletResponse response)
     {
 
         List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
@@ -382,9 +382,9 @@ public class PlaticaController
             platica.setNumeroAsistentes(numero);
             platicaFacade.edit(platica);
             session.setAttribute("platica", fecha + "");
-            
+
             System.out.println("ACEPTO LOS CAMBIOS");
-            
+
             try
             {
                 Conexion conn = new Conexion();
@@ -393,6 +393,7 @@ public class PlaticaController
                 System.out.println(session.getAttribute("platica"));
                 System.out.println(session.getAttribute("NCONTROL"));
                 parameters.put("folio", session.getAttribute("platica").toString() + session.getAttribute("NCONTROL").toString());
+                //Esta línea es la que está haciendos sus desmadres
                 byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin", "gst05a"));
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
@@ -410,13 +411,13 @@ public class PlaticaController
             {
                 Exceptions.printStackTrace(ex);
             }
-        } else
-        {
-            modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
-            modelo.addAttribute("platica", new Platica());
-
-            modelo.addAttribute("existe", "<div class='alert alert-danger'>Ya te has registrado a ésta plática</div>");
-        }
+        } //else
+//        {
+//            modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+//            modelo.addAttribute("platica", new Platica());
+//
+//            modelo.addAttribute("existe", "<div class='alert alert-danger'>Ya te has registrado a ésta plática</div>");
+//        }
     }
 
 /////////ASISTENCIA.DO////////////////////

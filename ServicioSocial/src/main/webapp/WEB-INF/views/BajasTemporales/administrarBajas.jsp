@@ -31,12 +31,12 @@
                                 </div>
                                 <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' width='100%'>
                                     <thead>
-                                    <div class="form-group">
-                                        <th>Acci&oacute;n</th>
-                                        <th>Nombre</th>
-                                        <th>N. Control</th>
-                                        <th>Periodo</th>
-                                    </div>
+                                        <tr>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Nombre</th>
+                                            <th>N. Control</th>
+                                            <th>Periodo</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         <core:forEach items="${alumnos}" var="current">
@@ -45,8 +45,8 @@
                                                 <td>${current.datosPersonalesId.nombre} ${current.datosPersonalesId.apellidoP}  ${current.datosPersonalesId.apellidoM}</td>
                                                 <td>${current.datosPersonalesId.alumnoId.id}</td>
                                                 <td>${current.periodoInicio}</td>
-                                                </div>
-                                            </core:forEach>
+                                            </tr>
+                                        </core:forEach>
                                     </tbody>
                                 </table>
 
@@ -57,30 +57,26 @@
                                 </div>
                                 <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' width='100%'>
                                     <thead>
-                                    <div class="form-group">
-                                        <th>Acci&oacute;n</th>
-                                        <th>Nombre</th>
-                                        <th>Fecha de Inicio de la Baja Temporal</th>
-                                        <th>Fecha M&aacute;xima de Baja Temporal</th>
-                                        <th>N. Control</th>
-                                        <th>Periodo</th>
-                                    </div>
+                                        <tr>
+                                            <th>Acci&oacute;n</th>
+                                            <th>Nombre</th>
+                                            <th>Fecha de Inicio de la Baja Temporal</th>
+                                            <th>Fecha M&aacute;xima de Baja Temporal</th>
+                                            <th>N. Control</th>
+                                            <th>Periodo</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         <core:forEach items="${alumnosBaja}" var="current">
                                             <tr class='gradeX'>
-                                                <td><a href="#" class="quitaBaja" idPer="${current.id}" ><span class="glyphicon glyphicon-circle-arrow-up sizeIcon"></span></a></td>
-                                                <td>${current.datosPersonalesId.nombre} ${current.datosPersonalesId.apellidoP}  ${current.datosPersonalesId.apellidoM}</td>
-                                                <core:forEach items="${bajasTemporales}" var="bajaActual">
-                                                    <core:if test="${current.id==bajaActual.datosPersonalesId.id}">
-                                                        <td><fmt:formatDate value="${bajaActual.fechaBaja}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
-                                                        <td><fmt:formatDate value="${bajaActual.fechaLimiteBaja}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
-                                                    </core:if>                                                   
-                                               </core:forEach>
-                                                <td>${current.datosPersonalesId.alumnoId.id}</td>
-                                                <td>${current.periodoInicio}</td>
-                                                </div>
-                                            </core:forEach>
+                                                <td><a href="#" class="quitaBaja" idPer="${current.datosPersonales.numeroControl}" ><span class="glyphicon glyphicon-circle-arrow-up sizeIcon"></span></a></td>
+                                                <td>${current.datosPersonales.nombre} ${current.datosPersonales.apellidoP}  ${current.datosPersonales.apellidoM}</td>
+                                                <td><fmt:formatDate value="${current.fechaBaja}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
+                                                <td><fmt:formatDate value="${current.fechaLimiteBaja}" pattern="dd-MM-yyyy"></fmt:formatDate></td>
+                                                <td>${current.datosPersonales.alumnoId.id}</td>
+                                                <td>${current.periodo}</td>
+                                            </tr>
+                                        </core:forEach>
                                     </tbody>
                                 </table>
                             </div>
@@ -103,7 +99,7 @@
                                 <div class="panel-body">
                                     <form:form commandName="bajas" action="guardaBaja.do" method="POST" onsubmit="return validarForm(this);" >
                                         <div class="form-group">
-                                            <form:input id="idDatosPer" name="idDatosPer" path="idDatosPer" type="hidden" class="form-control" />
+                                            <form:input id="idDatosPer" name="idDatosPer" path="datosPersonales" type="hidden" class="form-control" />
                                         </div>
                                         <div class="form-group">
                                             <label for="fecha">*Fecha de Baja Temporal:</label>

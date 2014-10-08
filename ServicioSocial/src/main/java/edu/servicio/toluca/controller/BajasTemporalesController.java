@@ -4,7 +4,7 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.bajasTemporales.bajasTemporales;
+import edu.servicio.toluca.beans.bajasTemporales.BajasTemporales;
 import edu.servicio.toluca.beans.bajasTemporales.cambioDependencia;
 import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.entidades.BajaTemporal;
@@ -100,7 +100,7 @@ public class BajasTemporalesController
         while (listaFormatos.hasNext())
         {
             FormatoUnico FU = (FormatoUnico) listaFormatos.next();
-            if (FU.getStatusServicio() == BigInteger.ONE 
+            if (FU.getStatusServicio() == BigInteger.ONE
                     && FU.getIdproyecto().getIdInstancia().getEstatus() == BigInteger.ONE)
             {
                 formatosSinBaja.add(FU);
@@ -116,12 +116,13 @@ public class BajasTemporalesController
     @RequestMapping(method = RequestMethod.GET, value = "/administrarBajas.do")
     public String administrarBajas(Model modelo)
     {
-
+        BajasTemporales bt = new BajasTemporales();
         List<FormatoUnico> formatos = formatoUnicoFacade.findAll();
         List<BajaTemporal> bajasTemporales = bajaTemporal.findAll();
         Iterator listaFormatos = formatos.iterator();
+
         List<FormatoUnico> formatosBaja = new ArrayList<FormatoUnico>();
-        List<FormatoUnico> formatosSinBaja = new ArrayList<FormatoUnico>();
+        List<BajasTemporales> formatosSinBaja = new ArrayList<BajasTemporales>();
         while (listaFormatos.hasNext())
         {
             FormatoUnico FU = (FormatoUnico) listaFormatos.next();
@@ -130,39 +131,49 @@ public class BajasTemporalesController
                 formatosBaja.add(FU);
             } else
             {
-                formatosSinBaja.add(FU);
+                for (BajaTemporal temporal : bajasTemporales)
+                {
+                    if (temporal.getDatosPersonalesId().getId().compareTo(FU.getDatosPersonalesId().getId()) == 0)
+                    {
+                        bt.setDatosPersonales(FU.getDatosPersonalesId());
+                        bt.setFechaBaja(temporal.getFechaBaja());
+                        bt.setFechaLimiteBaja(temporal.getFechaLimiteBaja());
+                        bt.setPeriodo(FU.getPeriodoInicio());
+                        formatosSinBaja.add(bt);
+                    }
+                }
             }
-
         }
+
         modelo.addAttribute("alumnos", formatosBaja);
         modelo.addAttribute("alumnosBaja", formatosSinBaja);
 //        modelo.addAttribute("alumnos", formatoUnicoFacade.findBySpecificField("statusServicio", "1", "equal", null, null));
 //        modelo.addAttribute("alumnosBaja", formatoUnicoFacade.findBySpecificField("statusServicio", "3", "equal", null, null));
-        modelo.addAttribute("bajas", new bajasTemporales());
+        modelo.addAttribute("bajas", new BajasTemporales());
         modelo.addAttribute("bajasTemporales", bajasTemporales);
         return "/BajasTemporales/administrarBajas";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/guardaBaja.do")
-    public String insertaBaja(@ModelAttribute("bajas") bajasTemporales baja, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request)
+    public String insertaBaja(@ModelAttribute("bajas") BajasTemporales baja, BindingResult resultado, Model modelo, String selectfrom, HttpSession session, HttpServletRequest request)
     {
         BajaTemporal bt = new BajaTemporal();
         fechas fechas = new fechas();
-        List<BajaTemporal> listaBajas = bajaTemporal.findBySpecificField("datosPersonalesId", baja.getIdDatosPer(), "equal", null, null);
-        List<DatosPersonales> DP = datosPersonalesFacade.findBySpecificField("id", baja.getIdDatosPer(), "equal", null, null);
+        List<BajaTemporal> listaBajas = bajaTemporal.findBySpecificField("datosPersonalesId", baja.getDatosPersonales().getId(), "equal", null, null);
+        List<DatosPersonales> DP = datosPersonalesFacade.findBySpecificField("id", baja.getDatosPersonales().getId(), "equal", null, null);
         if (listaBajas.isEmpty())
         {
             //Insertamos el registro 
-            bt.setFechaBaja(fechas.covierteString(baja.getFechaBaja()));
-            bt.setFechaLimiteBaja(fechas.covierteString(baja.getFechaLimiteBaja()));
+            bt.setFechaBaja(baja.getFechaBaja());
+            bt.setFechaLimiteBaja(baja.getFechaLimiteBaja());
             bt.setDatosPersonalesId(DP.get(0));
             bajaTemporal.create(bt);
             System.out.println("Se inserto la baja temporal");
         } else
         {
             BajaTemporal bajaAntigua = listaBajas.get(0);
-            bajaAntigua.setFechaBaja(fechas.covierteString(baja.getFechaBaja()));
-            bajaAntigua.setFechaLimiteBaja(fechas.covierteString(baja.getFechaLimiteBaja()));
+            bajaAntigua.setFechaBaja(baja.getFechaBaja());
+            bajaAntigua.setFechaLimiteBaja(baja.getFechaLimiteBaja());
             bajaTemporal.edit(bajaAntigua);
         }
 
