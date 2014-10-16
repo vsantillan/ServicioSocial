@@ -20,7 +20,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-primary">Editar Usuario</div> 
                         <div class="panel-body">
-                            <form:form name="#" commandName="usuarios" class="MyForm" action="upUserAdmin.do"  method="POST">
+                            <form:form name="form" commandName="usuarios" action="#">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombre</label>                               
@@ -42,24 +42,56 @@
                                         <label for="calle">Email</label>
                                         <form:input path="email" id="email" size="20" class="form-control" placeholder="ejemplo@email.com"/><br/>
                                         <form:errors path="email" class="alert alert-danger" />
-                                    </div>
-                                    <div class="form-group" id="cambiaPass">
-                                        <div class="form-group col-md-6">
-                                            <label for="lugar">Contrase&ntilde;a:</label>
-                                            <form:input path="password" id="password" class="form-control" type="password" maxlength="50" placeholder="Minimo 6 caracteres"/><br/>
-                                            <form:errors path="password" cssClass="alert alert-danger"/>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="lugar">Confirmar Contrase&ntilde;a:</label>
-                                            <form:input path="password" id="password" class="form-control" type="password" maxlength="50" placeholder="Confirme su contraseña"/><br/>
-                                            <form:errors path="password" cssClass="alert alert-danger"/>
+                                    </div>   
+                                    <div class="row clearfix panel-primary">
+                                        <div class="col-md-12 column">
+                                            <div class="tabbable " id="tabs-155708">
+                                                <ul class="nav nav-tabs panel-danger">
+                                                    <li id="mantenerPassword" class="active">
+                                                        <a  href="#panel-701803" data-toggle="tab">Mantener Contraseña</a>
+                                                    </li>
+                                                    <li id="nuevoPassword">
+                                                        <a n  href="#panel-600468" data-toggle="tab">Cambiar Contraseña</a>   
+
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active" id="panel-701803">
+                                                        <p> 
+                                                        <div class="col-md-8 column">
+                                                            <div class="input-group">
+
+                                                                <span class="input-group-addon">
+                                                                    <i class="glyphicon glyphicon-lock"></i>
+                                                                </span>
+
+                                                                <input placeholder="********************" type="password" path="password"class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        </p>
+                                                    </div>
+                                                    <div class="tab-pane" id="panel-600468">
+                                                        <p>
+                                                        <div class="col-md-8 column">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">
+                                                                    <i class="glyphicon glyphicon-lock"></i>
+                                                                </span>
+                                                                <form:input path="password" id="pass" class="form-control"   maxlength="10" placeholder="Introduzca sólo numeros"/>
+                                                                <form:errors path="password" cssClass="alert alert-danger"/>
+                                                            </div>
+                                                        </div>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">       
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Teléfono</label> 
-                                        <form:input path="telefono" id="telefono" class="form-control"  maxlength="10" placeholder="Introduzca sólo numeros"/><br/>
+                                        <form:input path="telefono" id="telefono" class="form-control"   maxlength="10" placeholder="Introduzca sólo numeros"/><br/>
                                         <form:errors path="telefono" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
@@ -73,7 +105,7 @@
                                         <form:errors path="puesto" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type ="submit" value = "Editar Usuario" class="btn btn-primary" /> 
+                                        <input type ="submit" class="GuardarDatosUsuarios btn btn-primary" value = "Editar Usuario" /> 
                                     </div>
                                 </div>
                             </form:form>
@@ -82,10 +114,16 @@
                 </div>
                 <%@include file="../General/footer.jsp"%> 
             </div>
-        </div>
+        </div>   
         <%@include file="../General/js.jsp"%>
-        <!-- Javascript -->   
-        <script src="js/instancias.js"></script>
-        <script src="js/jquery-1.9.1.js"></script>
     </body>
+    <script src="js/instancias.js"></script>
+    <script src="js/usuariosAdmin.js"></script>
+    <script src="js/jquery-1.9.1.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+        $('#pass').removeAttr('value');
+        });
+    </script>
 </html>
