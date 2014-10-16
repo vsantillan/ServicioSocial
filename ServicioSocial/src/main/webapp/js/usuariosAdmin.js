@@ -7,13 +7,11 @@ var row = "";
 var idUpdate = "";
 var tabla = "";
 var status = "";
-var statusPass = "";
 
 
 $(document).on("click", ".guardarObservacionesUsuario", observacionesUsuario);
 $(document).on("click", ".cambiaStatusUsuario", cambiarEstadoUsuario);
 $(document).on('click', ".editUser", updateUser);
-$(document).on('click', ".GuardarDatosUsuarios", ActualizarUsuario);
 
 function updateUser(e)
 {
@@ -57,7 +55,7 @@ function  Observaciones()
 function observacionesUsuario(event)
 {
     var array = [];
-    $("form#observacionesUsuario input").each(function()
+    $("form#observacionesUsuario input").each( function()
     {
 
         if ($(this).is(":checked"))
@@ -72,7 +70,7 @@ function observacionesUsuario(event)
         $('#guardarObservaciones').attr('disabled', true);
         status = 2;
 
-        $.post("downUser.do", {id: idUpdate, status: status, observaciones: array}, function(respuesta)
+        $.post("downUser.do", {id: idUpdate, status: status,observaciones: array}, function(respuesta)
         {
             if (respuesta === "ok")
             {
@@ -84,41 +82,9 @@ function observacionesUsuario(event)
 
             $('#guardarObservaciones').attr('disabled', false);
         });
-    }
-    else
+    } 
+    else 
     {
         alert('No se ha seleccionado observación');
     }
-}
-function ActualizarUsuario() {
-   
-    var tabActivo = $('#mantenerPassword').attr('class');
-    if (tabActivo === 'active') {
-        statusPass = 1;
-    } else {
-        statusPass = 2;
-    }
-
-    var nombre = $('#nombre').val();
-    var apellidopat = $("#apellidopat").val();
-    var apellidomat = $('#apellidomat').val();
-    var email = $('#email').val();
-    var telefono = $('#telefono').val();
-    var extension = $('#extension').val();
-    var puesto = $('#puesto').val();
-    var password = $('#pass').val();
-
-
-    $.post("updateUserData.do", {id: idUpdate, nombre: nombre, apellidopat: apellidopat, apellidomat: apellidomat,puesto: puesto , telefono: telefono, extension: extension, email: email, password: password, statusPass: statusPass}, function(respuesta)
-    {   
-        alert('manda algo');
-        if ('ok' === respuesta) {
-//                        $.get("administrarUsuarios.do");      
-            alert("usuario modificado");
-        } else {
-            window.location.reload();
-        }
-
-
-    });
 }
