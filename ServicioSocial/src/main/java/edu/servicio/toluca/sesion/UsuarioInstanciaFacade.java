@@ -20,7 +20,7 @@ import javax.persistence.PersistenceContextType;
 public class UsuarioInstanciaFacade extends AbstractFacade<UsuarioInstancia>
 {
     
-    @PersistenceContext(unitName = "servicioPU", type = PersistenceContextType.EXTENDED)
+    @PersistenceContext(unitName = "servicioPU", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
 
     @Override

@@ -184,11 +184,13 @@ public class PanelAdministradorController
 
         return "ok";
     }
+
     @RequestMapping(method = RequestMethod.GET, value = "/editUser.do")
-    public String editUser(UsuarioInstancia usuarios, int id, Model model, HttpSession session, HttpServletRequest request)
+    public String editUser(int id, Model model, HttpSession session, HttpServletRequest request)
     {
-        model.addAttribute("usuarios",usuarioInstanciaFacade.find(BigDecimal.valueOf(id)));
-        
+        model.addAttribute("usuarios", usuarioInstanciaFacade.find(BigDecimal.valueOf(id)));
+
+        System.out.println("ENTRO A EDIT USER");
         return "/Usuarios/editarUsuario";
     }
 
@@ -205,7 +207,7 @@ public class PanelAdministradorController
         System.out.println(usuario.getApellidoMat());
         System.out.println(usuario.getNombre());
         System.out.println(usuario.getPassword());
-      
+
         for (String Observacion : observaciones)
         {
 
@@ -224,6 +226,36 @@ public class PanelAdministradorController
         }
         usuario.setStatus((short) status);
 
+        usuarioInstanciaFacade.edit(usuario);
+
         return "ok";
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/updateUserData.do")
+    public @ResponseBody
+    String updateUser(int id, String nombre, String apellidopat, String apellidomat,String puesto, String telefono, String extension,
+            String email, String password, int statusPass)
+    {
+        System.out.println("..............\n\n\n Entrando a controlador para modificar usuarios");
+        UsuarioInstancia usuario = usuarioInstanciaFacade.find(BigDecimal.valueOf(id));
+        usuario.setApellidoMat(apellidomat);
+        usuario.setApellidoPat(apellidopat);
+        usuario.setEmail(email);
+        usuario.setExtension(extension);
+        usuario.setTelefono(telefono);
+        usuario.setNombre(nombre);
+        usuario.setPuesto(puesto);
+        if(statusPass == 1){
+            
+        }
+        try
+        {
+            usuarioInstanciaFacade.edit(usuario);
+
+            return "ok";
+        } catch (Exception s)
+        {
+            return "bad";
+        }
     }
 }

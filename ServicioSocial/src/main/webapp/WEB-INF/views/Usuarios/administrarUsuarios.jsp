@@ -88,7 +88,8 @@
         </div><!-- /.modal-dialog -->
 
         <%@include file="../General/js.jsp"%>
-        <script type="text/javascript" src="js/usuariosAdmin.js"></script>
+        
         <jsp:include page="../Template/headsModal.jsp" />
     </body>
+    <script type="text/javascript" src="js/usuariosAdmin.js"></script>
 </html>
