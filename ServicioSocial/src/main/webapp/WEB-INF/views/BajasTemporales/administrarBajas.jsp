@@ -41,7 +41,7 @@
                                     <tbody>
                                         <core:forEach items="${alumnos}" var="current">
                                             <tr class='gradeX'>
-                                                <td><a href="#bajaTemp"  data-toggle="modal" class="generarBaja" idP="${current.id}" ><span class="glyphicon glyphicon-circle-arrow-down sizeIcon"></span></a></td>
+                                                <td><a href="#bajaTemp"  data-toggle="modal" class="generarBaja" idP="${current.datosPersonalesId.alumnoId.id}" ><span class="glyphicon glyphicon-circle-arrow-down sizeIcon"></span></a></td>
                                                 <td>${current.datosPersonalesId.nombre} ${current.datosPersonalesId.apellidoP}  ${current.datosPersonalesId.apellidoM}</td>
                                                 <td>${current.datosPersonalesId.alumnoId.id}</td>
                                                 <td>${current.periodoInicio}</td>
@@ -97,14 +97,11 @@
                             <div class="panel panel-info">
                                 <div class="panel-heading">Establecer Baja Temporal</div>
                                 <div class="panel-body">
-                                    <form:form commandName="bajas" action="guardaBaja.do" method="POST" onsubmit="return validarForm(this);" >
-                                        <div class="form-group">
-                                            <form:input id="idDatosPer" name="idDatosPer" path="datosPersonales" type="hidden" class="form-control" />
-                                        </div>
+                                    <form action="#" onsubmit="return validarForm(this);" >
                                         <div class="form-group">
                                             <label for="fecha">*Fecha de Baja Temporal:</label>
                                             <div  class="input-group date dpAltaBaja" data-date="" data-date-format="yyyy-mm-dd">
-                                                <form:input id="fechaBaja" name="fechaBaja" path="fechaBaja" class="form-control" readonly="true" />
+                                                <input id="fechaBaja" name="fechaBaja" class="form-control" readonly="true" />
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" id="dp2"></i></span>
                                                     <form:errors class="alert alert-danger" path="fechaBaja" />
                                             </div><br>
@@ -112,19 +109,18 @@
                                         <div class="form-group">
                                             <label>*Fecha Limite de Baja:</label>
                                             <div  class="input-group date dpFinBaja" data-date="" data-date-format="yyyy-mm-dd">
-                                                <form:input id="fechaLimiteBaja" name="fechaLimiteBaja" path="fechaLimiteBaja" readonly="true" class="form-control" />
+                                                <input id="fechaLimiteBaja" name="fechaLimiteBaja" path="fechaLimiteBaja" readonly="true" class="form-control" />
                                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" id="dp2"></i></span>
                                                     <form:errors class="alert alert-danger" path="fechaLimiteBaja" />
                                             </div><br>
                                         </div>
                                         <div class="row">
                                             <div class='error alert alert-danger col-md-7 col-md-offset-2' id="erroresFechas" style="display:none;"></div>
-
                                         </div>
                                         <div class="row col-md-offset-4"> 
-                                            <input type="submit" value = "Asignar Baja" class="btn btn-primary" /> 
+                                            <input type="submit" value="Asignar Baja" class="btn btn-primary guardarBaja" /> 
                                         </div>
-                                    </form:form>
+                                    </form>
                                 </div>
                             </div>
                         </div>

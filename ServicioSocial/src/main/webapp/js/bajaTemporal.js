@@ -2,6 +2,7 @@ $(document).on('click', ".generarBaja", generarBaja);
 $(document).on('click', ".quitaBaja", quitarBaja);
 $(document).on('click', ".actualizaInstancia", actualizaInstancia);
 $(document).on('click', ".actualizaInput", actualizaInput);
+$(document).on('click', ".guardarBaja", guardaBaja());
 
 function generarBaja() {
     $(".error").hide('hide');
@@ -15,7 +16,6 @@ function validarForm(formulario) {
     var fechaBajas = formulario.fechaBaja.value;
     var arrayFechaInicioBaja = fechaBajas.split('-');
     var fechaInicioBaja = new Date(arrayFechaInicioBaja[2], arrayFechaInicioBaja[1] - 1, arrayFechaInicioBaja[0]);
-
     var fechaLimiteBajas = formulario.fechaLimiteBaja.value;
     var arrayFechaBajaMax = fechaLimiteBajas.split('-');
     var fechaBajaMax = new Date(arrayFechaBajaMax[2], arrayFechaBajaMax[1] - 1, arrayFechaBajaMax[0]);
@@ -38,7 +38,7 @@ function validarForm(formulario) {
         return false;
 
     }
-    alert("La baja fue asignada exitosamente");
+    alert("La baja fue asignada exitosamente (al parecer)");
     return true;
 }
 
@@ -59,7 +59,7 @@ function dameProyectos() {
     var id = $("#nuevaInstancia option:Selected").val();
     var str = str + "&idInstancia=" + id;
     if (id !== "NA")
-        $.post("dameProyectos.do", str, function(respuesta) {
+        $.post("dameProyectos.do", str, function (respuesta) {
             $("#proyectosInstancia").empty();
             if (respuesta !== "")
                 $("#proyectosInstancia").append(respuesta);
@@ -69,7 +69,7 @@ function dameProyectos() {
 }
 
 function actualizaInstancia() {
-    var OK=true;
+    var OK = true;
     if ($("#nuevaInstancia option:Selected").val() === "NA") {
         $('.error').show("slow").delay(2500).hide("slow");
         $('.error').html("<p>Seleccione una nueva Instancia para el alumno</p>");
@@ -80,13 +80,20 @@ function actualizaInstancia() {
         $('.error').html("<p>Seleccione un nuevo proyecto para el alumno </p>");
         OK = false;
     }
-    if (OK){
+    if (OK) {
         alert("Se actualizo correctamente la informaci\u00f3n");
         $("#actulizaInstancia").submit();
     }
 }
 
-function actualizaInput(){
-    
+function actualizaInput() {
     $("#idFormatoUnico").val($(this).attr("idP"));
+}
+
+function guardaBaja()
+{
+    var fechaBaja = $("#fechaBaja").val();
+    var fechalimiteBaja = $("#fechaLimiteBaja").val();
+    alert(fechaBaja);
+    alert(fechalimiteBaja);
 }
