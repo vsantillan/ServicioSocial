@@ -10,7 +10,7 @@
         <%@include file="../General/head.jsp"%>
         <title>Administrador</title>
     </head>
-    <body>
+    <body>  
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
@@ -33,29 +33,6 @@
                                         <label for="rfc">RFC:</label> 
                                         <form:input path="rfc" id="rfc" size="20" maxlength="13" class="form-control" placeholder="RFC debe tener entre 12 y 13 caraceres" /><br/>
                                         <form:errors path="rfc" class="alert alert-danger"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="titular">Titular:</label>
-                                        <form:input path="titular" id="titular" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/><br/>
-                                        <form:errors path="titular" class="alert alert-danger"/>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="puesto">Puesto:</label>
-                                        <form:input path="puesto" id="puesto" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/><br/>
-                                        <form:errors path="puesto" class="alert alert-danger"/>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="telefono">Tel&eacute;fono:</label>
-                                            <form:input path="telefono" id="telefono" size="20" maxlength="10" class="form-control" placeholder="Ingrese su telefono a 10 digitos" /><br/>
-                                            ${telefono}
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="telefono">Extensi&oacute;n:</label>
-                                            <form:input path="ext" id="ext" size="20" maxlength="7" class="form-control"/><br/>
-                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> 
@@ -99,7 +76,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="ciudad">Ciudad</label>
+                                        <label for="ciudad">Ciudad:</label>
                                         <!--input type="text" name="lugar" id="ciudad" size="20" require="true" disabled="true"/--> 
                                         <select name="ciudad" id="ciudad" disabled="true" class="form-control"></select><br/>
                                     </div>
@@ -116,25 +93,6 @@
                                         ${error_otra_colonia}
                                     </div>
                                     <br>
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <form:input path="correo" name="puesto" class="form-control" type="text" placeholder="email@example.com" />
-                                        <form:errors path="correo" class="alert alert-danger" />
-                                        <br/>
-                                        <br/>
-                                        <div class="row">
-                                            <div class="form-group col-md-6">
-                                                <label for="contraseña">Cree una contraseña</label>
-                                                <form:input path="password" id="password" required="true" class="form-control" type="password" placeholder="Cree una contraseña" />
-                                                <form:errors path="password" class="alert alert-danger" />
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="password-confirm">Confirme su contraseña</label>
-                                                <input type="password" id="password-confirm" required="true" class="form-control" placeholder="Confirme su contraseña"/>
-                                                <br><span id="alert-password" class="alert alert-danger" style="display: none">Las contraseñas no coinciden</span>
-                                            </div>
-                                        </div>
-                                    </div>   
                                 </div>
                             </form:form>
                         </div>

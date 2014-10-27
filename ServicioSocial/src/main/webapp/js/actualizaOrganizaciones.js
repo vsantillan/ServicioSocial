@@ -6,7 +6,7 @@ var estatus = "";
 
 $(document).on('click', ".editOrg", updateOrganisation);
 $(document).on('click', ".editProy", updateProyecto);
-$(document).on('click', ".cambiaStatusInstancia", rechazarInstancia);
+$(document).on('click', ".cambiaStatusInstancia6", rechazarInstancia);
 $(document).on('click', ".cambiaStatusProyecto", rechazarProyecto);
 $(document).on('click', ".mandaObservacionesInstancia", cambiarEstadoInstancia);
 $(document).ready(listo);
@@ -144,7 +144,8 @@ function obtenerDatosProyecto()
     if (array.length > 0)
     {
         $('#guardarObservaciones').attr('disabled', true);
-        $.post("cambiaStatusProyecto.do", {id: idUpdate, estatus: estatus, val_admin: tipo2, observaciones: array}, function(respuesta)
+        estatus = 2;
+        $.post("cambiaStatusProyecto.do", {id: idUpdate, estatus: estatus, observaciones: array}, function(respuesta)
         {
             if (respuesta === "ok")
             {

@@ -23,7 +23,7 @@
                 <%@include file="../General/menuAdministrador.jsp"%>                    
 
                 <div class="row col-md-14">
-                    <div class="panel-heading"> <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Nueva Proyecto</h1></div></div> 
+                    <div class="panel-heading"> <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Nuevo Proyecto</h1></div></div> 
                     <div class="panel-body">
                         <form:form  name="altaOrganizacion" modelAttribute="proyecto" class="MyForm" action="gdaAltaAdminProyecto.do" method="POST">
                             <p>${error_sql}</p>
@@ -41,14 +41,14 @@
 
                                         </div>
                                         <div class="form-group">
-                                            <label for="vacantes">N&uacute;mero de Vacantes:</label>
+                                            <label for="vacantes">Número de Vacantes:</label>
                                             <form:input path="vacantes" id="vacantes" class="form-control"/><br/>
                                             <form:errors path="vacantes" cssClass="alert alert-danger"/>${vacantes}
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="semestre">Instancia/Organizaci&oacute;n:</label>
+                                            <label for="semestre">Instancia/Organización:</label>
                                             <form:select id="idInstancia" path="idInstancia.idInstancia" name="idInstancia" class="form-control">
                                                 <core:forEach items="${instancias}" var="instancia">
                                                     <form:option  value="${instancia.idInstancia}">${instancia.nombre}</form:option>
@@ -77,7 +77,7 @@
                                                 <p>Perfiles Seleccionados:</p>
                                                 <select name="selectfrom" id="select-from" multiple size="5" class="combobox-autocomplete form-control">
                                                 </select>
-                                                <a href="JavaScript:void(0);" id="btn-add" class="btn btn-primary">Quitar &raquo;</a>
+                                                <br/><a href="JavaScript:void(0);" id="btn-add" class="btn btn-primary">Quitar &raquo;</a>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -88,7 +88,7 @@
                                                         <option value="${current.idPerfil}">${current.nombre}</option>
                                                     </core:forEach>
                                                 </select>
-                                                <a href="JavaScript:void(0);" id="btn-remove" class="btn btn-primary">&laquo; Agregar</a>
+                                                <br/><a href="JavaScript:void(0);" id="btn-remove" class="btn btn-primary">&laquo; Agregar</a>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -137,12 +137,12 @@
                                             </form:select><br/>
                                         </div>
                                         <div class="form-group">
-                                            <label for="lugar">Domicilio del Programa:</label>
+                                            <label for="lugar">Domicilio del Programa (Solo la calle):</label>
                                             <form:input path="domicilio" id="domicilio" class="form-control"/><br/>
                                             <form:errors path="domicilio" cssClass="alert alert-danger"/>${domicilio}
                                         </div>
                                         <div class="form-group">
-                                            <label for="codigo_postal">C&oacute;digo Postal:</label>
+                                            <label for="codigo_postal">Código Postal:</label>
                                             <input type="text" name="codigo_postal" id="codigo_postal" size="20" maxlength="5" autocomplete="off" class="form-control">
                                             <input type="hidden" id="preCP" value="${cp}"/><br>${codigo_postal}
                                         </div>
@@ -198,11 +198,11 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="form-group col-md-6">
-                                                <label for="lugar">Tel&eacute;fono del Responsable:</label>                         
+                                                <label for="lugar">Teléono del Responsable:</label>                         
                                                 <form:input path="telefonoResponsable" id="telefono" size="20" maxlength="10" class="form-control"/>                       
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="lugar">Ext:</label>                         
+                                                <label for="lugar">Extensión:</label>                         
                                                 <form:input path="ext" id="ext" size="7" maxlength="7" class="form-control"/><br/>                         
                                             </div>
                                         </div>

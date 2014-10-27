@@ -32,13 +32,14 @@ import org.hibernate.annotations.GenericGenerator;
  */
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 @Entity
-@Table(name = "REG_OBSERVACION_GENERAL", catalog = "", schema = "GES_VIN")
+@Table(name = "REG_OBSERVACION_GENERAL")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "RegObservacionGeneral.findAll", query = "SELECT r FROM RegObservacionGeneral r"),
-    @NamedQuery(name = "RegObservacionGeneral.findById", query = "SELECT r FROM RegObservacionGeneral r WHERE r.id = :id"),
-    @NamedQuery(name = "RegObservacionGeneral.findByFecha", query = "SELECT r FROM RegObservacionGeneral r WHERE r.fecha = :fecha"),
-    @NamedQuery(name = "RegObservacionGeneral.findByIdLlaveUnica", query = "SELECT r FROM RegObservacionGeneral r WHERE r.idLlaveUnica = :idLlaveUnica")})
+//@NamedQueries({
+//    @NamedQuery(name = "RegObservacionGeneral.findAll", query = "SELECT r FROM RegObservacionGeneral r"),
+//    @NamedQuery(name = "RegObservacionGeneral.findById", query = "SELECT r FROM RegObservacionGeneral r WHERE r.id = :id"),
+//    @NamedQuery(name = "RegObservacionGeneral.findByFecha", query = "SELECT r FROM RegObservacionGeneral r WHERE r.fecha = :fecha"),
+//    @NamedQuery(name = "RegObservacionGeneral.findByIdLlaveUnica", query = "SELECT r FROM RegObservacionGeneral r WHERE r.idLlaveUnica = :idLlaveUnica")
+//})
 public class RegObservacionGeneral implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation

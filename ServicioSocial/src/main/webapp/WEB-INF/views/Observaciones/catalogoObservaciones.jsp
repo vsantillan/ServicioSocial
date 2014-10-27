@@ -67,6 +67,9 @@
                                                             <core:when test="${current.tipo == 5}">
                                                                 Proyectos.
                                                             </core:when>
+                                                            <core:when test="${current.tipo == 6}">
+                                                                Usuarios.
+                                                            </core:when>
                                                             <core:otherwise>
                                                                 Tipo Desconocido.
                                                             </core:otherwise>
@@ -99,7 +102,8 @@
                                                     <form:option value="3">Documentos Finales</form:option>
                                                     <form:option value="4">Organizaciones</form:option>
                                                     <form:option value="5">Proyectos</form:option>
-                                                        <!--tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales-->
+                                                    <form:option value="6">Usuarios</form:option>
+                                 <!--tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales-->
                                                 </form:select>
                                             </div>
 

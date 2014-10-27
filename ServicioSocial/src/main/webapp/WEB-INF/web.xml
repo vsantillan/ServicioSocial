@@ -10,13 +10,10 @@
         <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>/WEB-INF/config/SocialServlet.xml</param-value>
-            
         </init-param>
         <!-- es para la prioridad -->
         <load-on-startup>1</load-on-startup>
-        
     </servlet>
-        
     <servlet-mapping>
         <servlet-name>SocialServlet</servlet-name>
         <url-pattern>*.do</url-pattern>
@@ -24,12 +21,11 @@
     <servlet-mapping>
         <servlet-name>SocialServlet</servlet-name>
         <url-pattern>*.pdf</url-pattern>
-    </servlet-mapping>   
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SocialServlet</servlet-name>
         <url-pattern>*.xls</url-pattern>
     </servlet-mapping>
-    
     <session-config>
         <session-timeout>30</session-timeout>
         <tracking-mode>COOKIE</tracking-mode>
@@ -55,7 +51,6 @@
     <welcome-file-list>
         <welcome-file>/WEB-INF/views/NavegacionPrincipal/redirect.jsp</welcome-file>
     </welcome-file-list>
-    
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/views/Errors/error404.jsp</location>

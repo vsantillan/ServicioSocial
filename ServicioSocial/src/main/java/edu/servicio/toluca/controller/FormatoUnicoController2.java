@@ -286,7 +286,8 @@ public class FormatoUnicoController2 {
         List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         for (int i = 0; i < listaInstancias.size(); i++) {
-            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) {
+//            if (listaInstancias.get(i).getValidacionAdmin() == BigInteger.ONE) { .....................................................................Correccion de la sentencia if en status del proyecto .........................................
+            if (listaInstancias.get(i).getStatus()== (short) BigInteger.ONE.intValue()) {
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }

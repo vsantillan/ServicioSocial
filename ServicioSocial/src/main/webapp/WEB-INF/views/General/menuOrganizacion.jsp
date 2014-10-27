@@ -17,9 +17,10 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Proyectos<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="registrarproyecto.do">Alta Proyecto</a></li>
-                        <li><a href="verProyectos.do">Administrar Proyectos</a></li>
+                        <li><a href="instanciaproyectos.do">Administrar Proyectos</a></li>
                     </ul>
                 </li>
+                <li><a href="preregistrarinstancia.do">Registrar instancia</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

@@ -92,7 +92,8 @@ public class BajasTemporalesController
 
         for (int i = 0; i < listaInstancias.size(); i++)
         {
-            if (listaInstancias.get(i).getEstatus() == BigInteger.ONE)
+//            if (listaInstancias.get(i).getEstatus() == BigInteger.ONE)//.....................................correcion de la sentencia if al comparar status.................................................
+            if (listaInstancias.get(i).getStatus() == (short) BigInteger.ONE.intValue())
             {
                 filtroInstancias.add(listaInstancias.get(i));
             }
@@ -100,8 +101,9 @@ public class BajasTemporalesController
         while (listaFormatos.hasNext())
         {
             FormatoUnico FU = (FormatoUnico) listaFormatos.next();
-            if (FU.getStatusServicio() == BigInteger.ONE
-                    && FU.getIdproyecto().getIdInstancia().getEstatus() == BigInteger.ONE)
+            if (FU.getStatusServicio() == BigInteger.ONE 
+//                    && FU.getIdproyecto().getIdInstancia().getEstatus() == BigInteger.ONE)//.....................................correcion de la sentencia if al comparar status.................................................
+                    && FU.getIdproyecto().getIdInstancia().getStatus() ==(short) BigInteger.ONE.intValue())
             {
                 formatosSinBaja.add(FU);
             }

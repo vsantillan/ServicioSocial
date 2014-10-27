@@ -24,7 +24,7 @@ public class ValidacionesOrganizaciones {
             result.addError(new ObjectError("confirma_passowrd", "Confirmación de contraseña vacía."));
             model.addAttribute("confirma_password", error("Confirmación de contraseña vacía"));
         } else {
-            if (!confirma_password.equals(instancia.getPassword())) {
+            if (!confirma_password.equals(instancia.getDomicilio())) {
                 result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
                 model.addAttribute("confirma_password", error("Las contraseñas no coinciden"));
             }
@@ -39,20 +39,20 @@ public class ValidacionesOrganizaciones {
                 model.addAttribute("codigo_postal", error("Código postal incorrecto."));
             }
         }
-        if (instancia.getUsuario().equals("")) {
-            result.addError(new ObjectError("usuario", "Campo de usuario vacío."));
-            model.addAttribute("usuario", error("Campo de usuario vacío."));
-        }
-        if (instancia.getCorreo().equals("")) {
-            result.addError(new ObjectError("correo", "Campo de correo vacío."));
-            model.addAttribute("correo", error("Campo de correo vacío."));
-        }
-        if (instancia.getPassword().equals("")) {
-            result.addError(new ObjectError("password", "Contraseña vacía."));
-            model.addAttribute("password", error("Contraseña vacía."));
-        }
+//        if (instancia.getUsuario().equals("")) {
+//            result.addError(new ObjectError("usuario", "Campo de usuario vacío."));
+//            model.addAttribute("usuario", error("Campo de usuario vacío."));
+//        }
+//        if (instancia.getCorreo().equals("")) {
+//            result.addError(new ObjectError("correo", "Campo de correo vacío."));
+//            model.addAttribute("correo", error("Campo de correo vacío."));
+//        }
+//        if (instancia.getPassword().equals("")) {
+//            result.addError(new ObjectError("password", "Contraseña vacía."));
+//            model.addAttribute("password", error("Contraseña vacía."));
+//        }
         try {
-            String strTelefono = instancia.getTelefono() + "";
+            String strTelefono = /*instancia.getTelefono() +*/ "";
             Double telefono = Double.parseDouble(strTelefono);
             //Validacion si esta fuera del rango permitido
             if (strTelefono.length() > 13 || strTelefono.length() < 7) {
@@ -137,7 +137,7 @@ public class ValidacionesOrganizaciones {
 //            model.addAttribute("correo", error("Campo de correo vacío."));
 //        }
         try {
-            String strTelefono = instancia.getTelefono() + "";
+            String strTelefono = /*instancia.getTelefono() + */"";
             Double telefono = Double.parseDouble(strTelefono);
             //Validacion si esta fuera del rango permitido
             if (strTelefono.length() > 13 || strTelefono.length() < 7) {
@@ -185,7 +185,7 @@ public class ValidacionesOrganizaciones {
         }
 
         try {
-            String strTelefono = instancia.getTelefono() + "";
+            String strTelefono = /*instancia.getTelefono() + */"";
             Double telefono = Double.parseDouble(strTelefono);
             //Validacion si esta fuera del rango permitido
             if (strTelefono.length() > 13 || strTelefono.length() < 7) {

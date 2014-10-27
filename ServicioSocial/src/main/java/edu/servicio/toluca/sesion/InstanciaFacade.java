@@ -7,7 +7,6 @@ package edu.servicio.toluca.sesion;
 import edu.servicio.toluca.entidades.Instancia;
 import java.util.List;
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;

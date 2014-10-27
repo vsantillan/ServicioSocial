@@ -31,7 +31,6 @@
                                 <th>Acci&oacute;n</th>
                                 <th>Detalle</th>
                                 <th>Organizaci&oacute;n</th>
-                                <th>Titular</th>
                                 <th>RFC</th>
                                 <th>Tipo de Organizaci&oacute;n</th>                        
                             </tr>
@@ -39,14 +38,12 @@
                         <tbody>
                             <core:forEach items="${organizacion}" var="current">
                                 <core:choose>
-                                    <core:when test="${current.estatus==1}">
+                                    <core:when test="${current.status==0}">
                                         <tr class='gradeX'>
                                             <td><a href="#" ><span class="editOrg glyphicon glyphicon-ok sizeIcon" ide="${current.idInstancia}" ></span></a>&nbsp;&nbsp;
-                                                <a href="#" class="mandaObservacionesInstancia" nombre="${current.nombre}" correo="${current.correo}" idO="${current.idInstancia}" ><span class="glyphicon glyphicon-remove sizeIcon"></span></a>
                                             </td>
                                             <td><a href="detalleOrganizacion.do?id=${current.idInstancia}" class="fancy" ><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                             <td><core:out value="${current.nombre}" /></td>
-                                            <td><core:out value="${current.titular}" /></td>
                                             <td><core:out value="${current.rfc}" /></td>
                                             <td><core:out value="${current.tipoOrganizacion.detalle}" /></td>
                                         </tr>

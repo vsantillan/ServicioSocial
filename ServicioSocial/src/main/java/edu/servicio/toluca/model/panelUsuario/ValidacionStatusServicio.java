@@ -17,13 +17,16 @@ import java.util.List;
  *
  * @author bustedvillain
  */
-public class ValidacionStatusServicio {
+public class ValidacionStatusServicio
+{
 
-    public StatusServicioBean validaServicio(VistaAlumno vistaAlumno) {
+    public StatusServicioBean validaServicio(VistaAlumno vistaAlumno)
+    {
 
         StatusServicioBean servicioBean = new StatusServicioBean();
         EgresadoPanelUsuarioBean egresadoBean = new EgresadoPanelUsuarioBean();
-        try {
+        try
+        {
             List<DatosPersonales> datosPersonales = new ArrayList<DatosPersonales>(vistaAlumno.getDatosPersonalesCollection());
             List<FormatoUnico> formatoUnicoColl = new ArrayList<FormatoUnico>(datosPersonales.get(0).getFormatoUnicoCollection());
             FormatoUnico formatoUnico = formatoUnicoColl.get(0);
@@ -34,13 +37,16 @@ public class ValidacionStatusServicio {
             servicioBean.setFormatoUnico(formatoUnico);
             servicioBean.setVistaAlumno(vistaAlumno);
 
-            if (vistaAlumno.getStaActual().equals("EG")) {
-                if (vistaAlumno.getEgresadoCollection() != null) {
+            if(vistaAlumno.getStaActual().equals("EG"))
+            {
+                if(vistaAlumno.getEgresadoCollection() != null)
+                {
                     List<Egresado> egresados = new ArrayList<Egresado>(vistaAlumno.getEgresadoCollection());
                     Egresado egresado = egresados.get(0);
                     int tipoPrograma = Integer.parseInt(egresado.getTipoPrograma());
 
-                    switch (tipoPrograma) {
+                    switch(tipoPrograma)
+                    {
                         //Aceptado
                         case 1:
                             //Panel para alumno egresado + interno
@@ -83,27 +89,33 @@ public class ValidacionStatusServicio {
                 }
             }
 
-            if (vistaAlumno.getStaActual().equals("IN")) {
+            if(vistaAlumno.getStaActual().equals("IN"))
+            {
                 //Panel para aluno interno
                 servicioBean.setTipoPanel(0);
+
                 //Checa el status del servicio
                 switchStatus(servicioBean, statusServicio);
             }
 
-        } catch (Exception e) {
-            System.out.println("Newbie en el sistema sin datos personales");
+        } 
+        catch(Exception e)
+        {
+            System.err.println("Newbie en el sistema sin datos personales");
             servicioBean.setMensaje("Servicio Social Activo");
             servicioBean.setStatusServicio(1);
             servicioBean.setDatosPersonales(null);
             servicioBean.setVistaAlumno(vistaAlumno);
 
             //Ver si es egresado o interno
-            if (vistaAlumno.getStaActual().equals("IN")) {
+            if(vistaAlumno.getStaActual().equals("IN"))
+            {
                 System.out.println("Ingresado alumno interno: IN");
                 //Panel para interno;
                 servicioBean.setTipoPanel(0);
             }
-            if (vistaAlumno.getStaActual().equals("EG")) {
+            if(vistaAlumno.getStaActual().equals("EG"))
+            {
                 System.out.println("Ingresando alumno egresado: EG");
                 //Panel para egresado
                 servicioBean.setTipoPanel(1);
@@ -113,6 +125,7 @@ public class ValidacionStatusServicio {
                 servicioBean.setEgresado(egresadoBean);
             }
         }
+
         return servicioBean;
     }
 
@@ -122,8 +135,10 @@ public class ValidacionStatusServicio {
      * @param servicioBean
      * @param statusServicio
      */
-    public void switchStatus(StatusServicioBean servicioBean, int statusServicio) {
-        switch (statusServicio) {
+    public void switchStatus(StatusServicioBean servicioBean, int statusServicio)
+    {
+        switch(statusServicio)
+        {
             //Activo
             case 1:
                 servicioBean.setMensaje("Servicio Social Activo");

@@ -27,7 +27,6 @@
                                 <th>Acci&oacute;n</th>
                                 <th>Detalle</th> 
                                 <th>Organizaci&oacute;n</th>
-                                <th>Titular</th>
                                 <th>RFC</th>
                                 <th>Tipo de Instancia</th>                                            
                             </tr>
@@ -40,7 +39,6 @@
                                         <a href="#" class="btn-validar-org"><span class="cambiaStatusInstancia glyphicon glyphicon-trash sizeIcon" ide="${current.idInstancia}" title="Borrar Organización"></span></a></td>
                                     <td><a href="detalleOrganizacion.do?id=${current.idInstancia}" data-modal="modal" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>
                                     <td><core:out value="${current.nombre}" /></td>
-                                    <td><core:out value="${current.titular}" /></td>
                                     <td><core:out value="${current.rfc}" /></td>
                                     <td><core:out value="${current.tipoOrganizacion.detalle}" /></td>
                                 </tr>
@@ -79,9 +77,9 @@
                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-
+        
         <%@include file="../General/js.jsp"%>
-        <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
+            <script type="text/javascript" src="js/actualizaOrganizaciones.js"></script>
         <jsp:include page="../Template/headsModal.jsp" />
     </body>
 </html>

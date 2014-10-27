@@ -49,6 +49,17 @@ public class ObservacionesBean {
         return catalogoObservacionesFacade.findBySpecificField("tipo", "1", "equal", ordenamiento , null);
     }
     
+    public List<CatalogoObservaciones> ConsultaObservacionesUsuario(String orden){
+        LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+        if (orden.equals("desc")) {
+            ordenamiento.put("fecha", "desc");
+        }
+        if (orden.equals("asc")) {
+            ordenamiento.put("fecha", "asc");
+        }
+        return catalogoObservacionesFacade.findBySpecificField("tipo", "6", "equal", ordenamiento , null);
+    }
+    
     /**
      * Consulta las observaciones para reportes bimestrales
      * @param orden desc o asc

@@ -4817,6 +4817,10 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-primary {
     border-color: #cccccc;
 }
+.panel-users {
+    border-color: #F09F43;
+    background-color: #F09F43;
+}
 .panel-primary > .panel-heading {
     color: #ffffff;
     background-color: #cccccc;

@@ -19,32 +19,8 @@
                         <td><p><core:out value="${instancia.nombre}" /></p></td>
                     </tr>
                     <tr>
-                        <th><p>Usuario:</p></th>
-                        <td><p><core:out value="${instancia.usuario}" /></p></td>
-                    </tr>
-                    <tr>
-                        <th><p>Correo:</p></th>
-                        <td><p><core:out value="${instancia.correo}" /></p></td>
-                    </tr>
-                    <tr>
                         <th><p>RCF:</p></th>
                         <td><p><core:out value="${instancia.rfc}" /></p></td>
-                    </tr>
-                    <tr>
-                        <th><p>Titular:</p></th>
-                        <td><p><core:out value="${instancia.titular}" /></p></td>
-                    </tr>
-                    <tr>
-                        <th><p>Puesto del Titular:</p></th>
-                        <td><p><core:out value="${instancia.puesto}" /></p></td>
-                    </tr>
-                    <tr>
-                        <th><p>Tel&eacute;fono:</p></th>
-                        <td><p><core:out value="${instancia.telefono}" /></p></td>
-                    </tr>
-                    <tr>
-                        <th><p>Ext:</p></th>
-                        <td><p><core:out value="${instancia.ext}" /></p></td>
                     </tr>
                     <tr>
                         <th><p>Domicilio:</p></th>

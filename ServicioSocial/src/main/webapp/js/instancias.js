@@ -49,10 +49,10 @@ $(document).ready(function()
                     }
                     
                     // Append option para "Otra colonia"
-                    var optionOtra   = document.createElement('option');
-                    optionOtra.text  = "OTRA (Especifique)";
-                    optionOtra.value = 0;
-                    comboCol.appendChild(optionOtra);
+//                    var optionOtra   = document.createElement('option');
+//                    optionOtra.text  = "OTRA (Especifique)";
+//                    optionOtra.value = 0;
+//                    comboCol.appendChild(optionOtra);
                 }
                 else
                 {
@@ -63,16 +63,22 @@ $(document).ready(function()
         }
     });
     
-    $('#password-confirm').keyup(function(event)
+    $('#upass').keyup(function(e) 
     {
-        if ($('#password-confirm').val() === $('#password').val()) 
+        $('#alert-pass').css('display', 'inline');
+        document.getElementById('send-b').type = 'button';
+    });
+    
+    $('#ucpass').keyup(function(event)
+    {
+        if ($('#ucpass').val() === $('#upass').val()) 
         {
-            $('#alert-password').css('display', 'none');
+            $('#alert-pass').css('display', 'none');
             document.getElementById('send-b').type = 'submit';
         }
         else
         {
-            $('#alert-password').css('display', 'inline');
+            $('#alert-pass').css('display', 'inline');
             document.getElementById('send-b').type = 'button';
         }
     });
@@ -84,47 +90,50 @@ function buscarInstancia()
     var toSearch = $('#buscar-instanciaf').val();
     var searchIn = $('#campoabuscar-combo').val();
     
-    // Buscar instancias
-    var url = 'buscarinstancias.do?field=' + searchIn + '&value=' + toSearch;
-    $.get(url, function(response)
+    if (toSearch.trim().length > 0) 
     {
-        var container = $('#lista-instancias');
-        $('.instancia-encontrada').remove();
-        
-        if (response.length > 0) 
+        // Buscar instancias
+        var url = 'buscarinstancias.do?field=' + searchIn + '&value=' + toSearch;
+        $.get(url, function(response)
         {
-            for(var i=0; i<response.length; i++)
+            var container = $('#lista-instancias');
+            $('.instancia-encontrada').remove();
+
+            if (response.length > 0) 
             {
-                var instanciaElement = '<div class="instancia-encontrada">'
-                                   + '<div class="instancia-encontrada-title">'
-                                   + response[i].nombre
-                                   + '</div> <div class="col-md-4">'
-                                   + '<span class="instancia-encontrada-subtitle">Email de la instancia</span><br/>'
-                                   + '<span class="instancia-encontrada-info">'
-                                   + response[i].email
-                                   + '</span> </div> <div class="col-md-4">'
-                                   + '<span class="instancia-encontrada-subtitle">Titular de la instancia</span><br/>'
-                                   + '<span class="instancia-encontrada-info">'
-                                   + response[i].titular
-                                   + '</span> </div> <div class="col-md-4">'
-                                   + '<span class="instancia-encontrada-subtitle">RFC de la instancia</span><br/>'
-                                   + '<span class="instancia-encontrada-info">'
-                                   + response[i].rfc
-                                   + '</span> </div> <div class="space-helper"> &nbsp; </div> </div>';
-                 container.append(instanciaElement);
+                for(var i=0; i<response.length; i++)
+                {
+                    var instanciaElement = '<div class="instancia-encontrada">'
+                                       + '<div class="instancia-encontrada-title">'
+                                       + response[i].nombre
+                                       + '</div> <div class="col-md-4">'
+                                       + '<span class="instancia-encontrada-subtitle">Email de la instancia</span><br/>'
+                                       + '<span class="instancia-encontrada-info">'
+                                       + response[i].email
+                                       + '</span> </div> <div class="col-md-4">'
+                                       + '<span class="instancia-encontrada-subtitle">Titular de la instancia</span><br/>'
+                                       + '<span class="instancia-encontrada-info">'
+                                       + response[i].titular
+                                       + '</span> </div> <div class="col-md-4">'
+                                       + '<span class="instancia-encontrada-subtitle">RFC de la instancia</span><br/>'
+                                       + '<span class="instancia-encontrada-info">'
+                                       + response[i].rfc
+                                       + '</span> </div> <div class="space-helper"> &nbsp; </div> </div>';
+                     container.append(instanciaElement);
+                }
             }
-        }
-        else
-        {
-            var instanciaElement2 = '<div class="instancia-encontrada">'
-                                   + '<div class="instancia-encontrada-title">'
-                                   + 'No se ha encontrada ninguna instancia'
-                                   + '<div class="space-helper"> &nbsp; </div> </div>';
-            container.append(instanciaElement2);
-        }
-    });
-    
-    $('#instancias-result').css('display', 'block');
+            else
+            {
+                var instanciaElement2 = '<div class="instancia-encontrada">'
+                                       + '<div class="instancia-encontrada-title">'
+                                       + 'No se ha encontrada ninguna instancia'
+                                       + '<div class="space-helper"> &nbsp; </div> </div>';
+                container.append(instanciaElement2);
+            }
+        });
+
+        $('#instancias-result').css('display', 'block');
+    }
 }
 
 function showFormPreregistro()

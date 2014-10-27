@@ -23,9 +23,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.GenericGenerator;
@@ -35,7 +32,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author SATELLITE
  */
 @Entity
-@Table(name = "REPORTES", catalog = "", schema = "GES_VIN")
+@Table(name = "REPORTES")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Reportes.findAll", query = "SELECT r FROM Reportes r"),

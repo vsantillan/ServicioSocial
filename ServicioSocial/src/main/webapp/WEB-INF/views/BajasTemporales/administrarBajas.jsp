@@ -16,7 +16,7 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
-                <div class="row col-md-12 center-block">
+                <div class="row col-md-12 center-block">||
                     <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Bajas Temporales</h1></div>
                     <div class="tab-content">
                         <ul class="nav nav-tabs">

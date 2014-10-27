@@ -29,7 +29,7 @@ import org.hibernate.annotations.GenericGenerator;
  * @author SATELLITE
  */
 @Entity
-@Table(name = "SANCIONES", catalog = "", schema = "GES_VIN")
+@Table(name = "SANCIONES")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Sanciones.findAll", query = "SELECT s FROM Sanciones s"),

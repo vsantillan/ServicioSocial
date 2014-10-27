@@ -16,6 +16,7 @@ import edu.servicio.toluca.entidades.ProyectoPerfil;
 import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
+import edu.servicio.toluca.entidades.UsuarioInstancia;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
 import edu.servicio.toluca.sesion.InstanciaFacade;
@@ -25,10 +26,10 @@ import edu.servicio.toluca.sesion.ProyectoPerfilFacade;
 import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
+import edu.servicio.toluca.sesion.UsuarioInstanciaFacade;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -77,6 +78,9 @@ public class InstanciasController
     @EJB(mappedName = "java:global/ServicioSocial/ProyectoPerfilFacade")
     private ProyectoPerfilFacade pPerfilFacade;
     
+    @EJB(mappedName = "java:global/ServicioSocial/UsuarioInstanciaFacade")
+    private UsuarioInstanciaFacade usuarioInstanciaFacade;
+    
     @RequestMapping( value="verificarinstancia.do", method=RequestMethod.GET )
     public String verificarInstancia(Model model)
     {
@@ -84,22 +88,36 @@ public class InstanciasController
     }
     
     @RequestMapping( value="preregistrarinstancia.do", method=RequestMethod.GET)
-    public String preregistro(Model model)
+    public String preregistro(HttpSession session, Model model)
     {
-        List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
-        Instancia nvaInstancia = new Instancia();
-        nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
+        String rol = null;
+        if(session.getAttribute("ROL") != null)
+        {
+            rol = session.getAttribute("ROL").toString();
+        }
         
-        model.addAttribute("tiposOrganizacion", tiposOrg);
-        model.addAttribute("instancia", nvaInstancia);
-        model.addAttribute("rfcError", "");
+        if(rol != null && rol.equals("ORGANIZACION"))
+        {
+            List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
+            Instancia nvaInstancia = new Instancia();
+            nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
+
+            model.addAttribute("tiposOrganizacion", tiposOrg);
+            model.addAttribute("instancia", nvaInstancia);
+            model.addAttribute("rfcError", "");
+
+            return "/Instancias/preregistro";
+        }
+        else
+        {
+            return preregUsuarioInstancia(model);
+        }
         
-        return "/Instancias/preregistro";
     }
     
     @RequestMapping( value="preregistrarinstancia.do", method=RequestMethod.POST)
-    public String preregistrar(Model model, @Valid Instancia instancia, 
-            BindingResult bindingResult)
+    public String preregistrar(HttpSession session, Model model, 
+            @Valid Instancia instancia, BindingResult bindingResult)
     {
         if(bindingResult.hasErrors()) // Showing error in form
         {
@@ -132,19 +150,20 @@ public class InstanciasController
                         instancia.getTipoOrganizacion().getIdTipoOrganizacion());
                 instancia.setTipoOrganizacion(tipoOrg);
 
-                instancia.setPassword(StringMD.getStringMessageDigest(
-                        instancia.getPassword(), "SHA-1"));
-
-                instancia.setEstatus(BigInteger.ZERO);
-                instancia.setValidacionAdmin(BigInteger.ZERO);
-                instancia.setUsuario(instancia.getCorreo());
-
                 // To UpperCase
                 instancia.setNombre(instancia.getNombre().toUpperCase());
                 instancia.setRfc(instancia.getRfc().toUpperCase());
-                instancia.setTitular(instancia.getTitular().toUpperCase());
-                instancia.setPuesto(instancia.getPuesto().toUpperCase());
-
+                instancia.setStatus((short) 0);
+                
+                // Obtener usuario al que pertenecera la instancia
+                String email = session.getAttribute("EMAIL").toString();
+                List<UsuarioInstancia> usuarios =  usuarioInstanciaFacade
+                        .findBySpecificField("email", email, "equal", null, null);
+                if(usuarios.size() > 0)
+                {
+                    instancia.setUsuarioInstancia(usuarios.get(0));
+                }
+                
                 instanciaFacade.create(instancia);
 
                 return "/Instancias/preregistroexitoso";
@@ -164,14 +183,87 @@ public class InstanciasController
         {
             HashMap mapa = new HashMap();
             mapa.put("nombre", instancia.getNombre());
-            mapa.put("email", instancia.getCorreo());
-            mapa.put("titular", instancia.getTitular());
+            mapa.put("email", instancia.getUsuarioInstancia().getEmail());
+            mapa.put("titular", instancia.getUsuarioInstancia().getNombre() + " " + instancia.getUsuarioInstancia().getApellidoPat());
             mapa.put("rfc", instancia.getRfc());
             
             instancias.add(mapa);
         }
         
         return instancias;
+    }
+    
+    /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+    /* --- --- --- --- --- --- USUARIOS -- --- --- --- --- --- --- --- --- --- */
+    
+    @RequestMapping( value="preregistrarusuario.do", method=RequestMethod.GET)
+    public String preregUsuarioInstancia(Model model)
+    {
+        model.addAttribute("usuarioInstancia", new UsuarioInstancia());
+        
+        return "/UsuarioInstancia/preregusuario";
+    }
+    
+    @RequestMapping( value="registrarUsuario.do", method=RequestMethod.POST)
+    public String registrarUsuario(HttpSession session, @Valid UsuarioInstancia usuarioInstancia,
+            BindingResult bindingResult, Model model)
+    {
+        if(bindingResult.hasErrors())
+        {
+            if(usuarioInstancia.getExtension().length() > 0)
+            {
+                for(char c : usuarioInstancia.getExtension().toCharArray())
+                {
+                    try 
+                    {
+                        Integer.parseInt(c + "");
+                    }
+                    catch(NumberFormatException err)
+                    {
+                        model.addAttribute("errorExt", "<div class='alert alert-danger'>Ingrese solo números o deje vacio el campo</div>");
+                    }
+                }
+            }
+            return "/UsuarioInstancia/preregusuario";
+        }
+        
+        if(usuarioInstancia.getExtension().length() > 0)
+        {
+            for(char c : usuarioInstancia.getExtension().toCharArray())
+            {
+                try 
+                {
+                    Integer.parseInt(c + "");
+                }
+                catch(NumberFormatException err)
+                {
+                    model.addAttribute("errorExt", "<div class='alert alert-danger'>Ingrese solo números o deje vacio el campo</div>");
+                    return "/UsuarioInstancia/preregusuario";
+                }
+            }
+        }
+        
+        
+        // Verificar si el email ya ha sido registrado con otro usuario
+        List<UsuarioInstancia> usuarios = usuarioInstanciaFacade
+                .findBySpecificField("email", usuarioInstancia.getEmail().toLowerCase(), "equal", null, null);
+        if(usuarios.size() > 0)
+        {
+            model.addAttribute("useryetexist", "<div class='alert alert-danger'>Este correo electrónico ya ha sido registrado.</div>");
+            return "/UsuarioInstancia/preregusuario";
+        }
+        
+        // Formatear datos a UPPERCASE y registrar usuario
+        usuarioInstancia.setNombre(usuarioInstancia.getNombre().toUpperCase());
+        usuarioInstancia.setApellidoPat(usuarioInstancia.getApellidoPat().toUpperCase());
+        usuarioInstancia.setApellidoMat(usuarioInstancia.getApellidoMat().toUpperCase());
+        usuarioInstancia.setEmail(usuarioInstancia.getEmail().toLowerCase());
+        usuarioInstancia.setPassword(StringMD.getStringMessageDigest(usuarioInstancia.getPassword(), StringMD.SHA1));
+        usuarioInstancia.setStatus(Short.valueOf("0"));
+        
+        usuarioInstanciaFacade.create(usuarioInstancia);
+        
+        return "/UsuarioInstancia/preregusuexitoso";
     }
     
     /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
@@ -323,4 +415,23 @@ public class InstanciasController
         
     }
     
+    @RequestMapping( value="instanciaproyectos.do", method=RequestMethod.GET)
+    public String administrarProyectos(HttpSession session, Model model)
+    {
+        if(session.getAttribute("NOMBRE") != null)
+        {
+            Instancia instancia;
+            String instanciaNom = session.getAttribute("NOMBRE").toString();
+            
+            instancia = instanciaFacade.findBySpecificField("nombre", 
+                    instanciaNom, "equal", null, null).get(0);
+            
+            if(instancia != null)
+            {
+                return "/Instancias/administrarproyectos";
+            }
+        }
+        
+        return "/NavegacionPrincipal/index";
+    }
 }

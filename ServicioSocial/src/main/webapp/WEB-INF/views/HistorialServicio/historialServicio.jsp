@@ -61,21 +61,21 @@
                             <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'  width='100%'>
                                 <thead>
                                     <tr>
-                                        <th>Ver Informaci&oacute;n</th>
+                                        <th>Ver Información</th>
                                         <th>Periodo</th>
                                         <th>N. Control</th>
                                         <th>Nombre</th>
                                         <th>Horas Acumuladas</th>
                                         <th>Fecha de Inicio de la Baja Temporal</th>
-                                        <th>Fecha M&aacute;xima de Baja Temporal</th>
+                                        <th>Fecha Máxima de Baja Temporal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <core:forEach items="${alumnos}" var="alumno">  
                                         <core:choose> 
                                             <core:when test="${alumno.statusServicio ==3}">
-                                                <tr class='gradeX'>
-                                                    <td><a href="verInfoAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" target="_blank title="Ver Informacion del Alumno" alt="Ver Informacion del Alumno"><span class="glyphicon glyphicon-search"></span></a></td>
+                                                <tr class="gradeX">
+                                                    <td><a href="verInfoAlumno.do?id=${alumno.datosPersonales.alumnoId.id}" target="_blank" title="Ver Informacion del Alumno" alt="Ver Informacion del Alumno"><span class="glyphicon glyphicon-search"></span></a></td>
                                                     <td>${alumno.formatoUnico.periodoInicio}</td>
                                                     <td>${alumno.datosPersonales.alumnoId.id}</td>
                                                     <td>${alumno.datosPersonales.nombre} ${alumno.datosPersonales.apellidoP} ${alumno.datosPersonales.apellidoM}</td>
@@ -98,7 +98,7 @@
                             <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'  width='100%'>
                                 <thead>
                                     <tr>
-                                        <th>Ver Informaci&oacute;n</th>
+                                        <th>Ver Información</th>
                                         <th>Periodo</th>
                                         <th>N. Control</th>
                                         <th>Nombre</th>
@@ -129,7 +129,7 @@
                             <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example'  width='100%'>
                                 <thead>
                                     <tr>
-                                        <th>Ver Informaci&oacute;n</th>
+                                        <th>Ver Información</th>
                                         <th>Periodo</th>
                                         <th>N. Control</th>
                                         <th>Nombre</th>

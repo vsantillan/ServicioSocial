@@ -1,0 +1,22 @@
+/* 
+ *  Estilos para la sección de administración de proyectos
+ *  de las instancias.
+ * 
+ *  Created on : 26/08/2014, 02:19:48 PM
+ *  Author     : giovanni
+ */
+
+
+.admnp-lista-proyectos {
+    border: 1px solid red;
+    padding: 30px;
+}
+
+.admnp-lista-proyectos-list {
+    border: 1px solid blue;
+}
+
+.admnp-lista-proyectotitle {
+    
+    padding: 10px;
+}

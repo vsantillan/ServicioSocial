@@ -72,38 +72,55 @@ public class OrganizacionesController2
 
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     private InstanciaFacade instanciaFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
     private ProyectosFacade proyectosFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/TipoOrganizacionFacade")
     private TipoOrganizacionFacade tipoOrganizacionFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/PerfilFacade")
     private PerfilFacade perfilFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
     private ColoniaFacade coloniaFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/TipoProyectoFacade")
     private TipoProyectoFacade tipoProyectoFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ProgramaFacade")
     private ProgramaFacade programaFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ProyectoPerfilFacade")
     private ProyectoPerfilFacade proyectoPerfilFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
     private ActividadesFacade actividadesFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnicoFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     private CodigosPostalesFacade codigosPostalesFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
     private MunicipiosSiaFacade municipiosFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
     private CiudadesFacade ciudadesFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
     private TipoLocalidadFacade tipoLocalidadFacade;
+    
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     private VistaAlumnoFacade vistaAlumnoFacade;
+    
     MetodosValidacion limpiar = new MetodosValidacion();
     //Alta de Organizacion
 
@@ -145,7 +162,8 @@ public class OrganizacionesController2
             model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
 
             return "/Organizaciones/altaProyecto";
-        } else
+        } 
+        else
         {
             model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesió para acceder a esta sección.</div>");
             return "redirect:login.do";
@@ -175,28 +193,24 @@ public class OrganizacionesController2
     {
 
         //Organizacion
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
-        ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
-
-        for (int i = 0; i < listaInstancias.size(); i++)
-        {
-            int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
-            if (estatus == 1)
-            {
-                filtroInstancias.add(listaInstancias.get(i));
-            }
-        }
-        model.addAttribute("instancias", filtroInstancias);
+        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
+       
+        model.addAttribute("instancias", listaInstancias);
+        
         //Objeto proyecto para el commandAttribute
         model.addAttribute("proyecto", new Proyectos());
+        
         //Estados
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
         model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        
         //TipoProyecto
         model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+        
         //Perfil
         model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        
         //Programa
         model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
 
@@ -230,9 +244,8 @@ public class OrganizacionesController2
             try
             {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
-            } catch (Exception e)
-            {
-            }
+            } 
+            catch (Exception e) { }
 
             model.addAttribute("estados", estadosFacade.findAll());
             model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
@@ -241,7 +254,8 @@ public class OrganizacionesController2
 
             return "/Organizaciones/registroOrganizaciones";
 
-        } else
+        } 
+        else
         {
             //Checa codigo postal
             CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
@@ -259,10 +273,12 @@ public class OrganizacionesController2
             }
 
             System.out.print("no hubo errores .......  preparando actualizacion de DB");
-            instancia.setValidacionAdmin(BigInteger.ZERO);
-            instancia.setEstatus(BigInteger.ONE);
-            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
-            System.out.println("Pass encriptado de la nueva instancia:" + instancia.getPassword());
+//            instancia.setValidacionAdmin(BigInteger.ZERO);   ................................................. Comentario a la validacion de admiistrador.............................................................
+//            instancia.setEstatus(BigInteger.ONE);
+//              instancia.setEstatus(BigInteger.ONE);// .......................................................................................................Correción de convarsion de staus..............................................
+            instancia.setStatus((short) BigInteger.ONE.intValue());
+//            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));  ................................................. Comentario a la validacion de password.........................................................
+//            System.out.println("Pass encriptado de la nueva instancia:" + instancia.getPassword());  ................................................. Comentario a la validacion de password.............................................................
 
 //            ///Limpiando codigo
 //            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
@@ -317,12 +333,11 @@ public class OrganizacionesController2
         //Validacion
         new ValidacionesOrganizaciones().valGdaEditaInst(instancia, result, model, codigo_postal, otra_colonia, existeCP, confirma_password);
 
-        if (!confirma_password.equals(instancia.getPassword()))
-        {
-            result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
-            model.addAttribute("confirma_password", "<div class='alert alert-danger'>Las contraseñas no coinciden</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
-        }
-
+//        if (!confirma_password.equals(instancia.getPassword()))
+//        {
+//            result.addError(new ObjectError("confirma_passowrd", "Las contraseñas no coinciden"));
+//            model.addAttribute("confirma_password", "<div class='alert alert-danger'>Las contraseñas no coinciden</div><script>document.getElementById('cambiaPass').style.display = 'block';</script>");
+//        }                      ......................................................................................................................... Comentario a la validacion de password.............................................................
         if (result.hasErrors())
         {
             System.out.print("hubo errores");
@@ -370,59 +385,64 @@ public class OrganizacionesController2
 //                model.addAttribute("error_sql", "<div class='alert alert-danger'>Lo sentimos el nombre " + instancia.getNombre() + " no esta dispobible</div>");
 //                return "/Organizaciones/registroOrganizaciones";
 //            }
-            List<Instancia> lista = instanciaFacade.findBySpecificField("usuario", instancia.getUsuario().toString(), "equal", null, null);
-            if (!lista.isEmpty())
-            {
-                //Agregamos atributos al formulario
-                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("nombre", "asc");
-                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
-                model.addAttribute("idInstancia", idInstancia);
-                model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
-                //Regresar codigo postal
-                model.addAttribute("cp", codigo_postal);
-                model.addAttribute("otra_colonia", otra_colonia);
-                model.addAttribute("error_usuario", "<div class='alert alert-danger'>Este usuario no esta disponible, introduzca otro nombre de usuraio</div>");
-                try
-                {
-                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
-                } catch (Exception e)
-                {
-                }
-                return "/Organizaciones/confirmaOrganizacionVisitante";
-            }
-            List<Instancia> lista2 = instanciaFacade.findBySpecificField("correo", instancia.getCorreo().toString(), "equal", null, null);
-            if (!lista2.isEmpty())
-            {
-                //Agregamos atributos al formulario
-                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-                ordenamiento.put("nombre", "asc");
-                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
-                model.addAttribute("idInstancia", idInstancia);
-                model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
-                //Regresar codigo postal
-                model.addAttribute("cp", codigo_postal);
-                model.addAttribute("otra_colonia", otra_colonia);
-                model.addAttribute("error_correo", "<div class='alert alert-danger'>Este correo ya ha sido registrado</div>");
-                try
-                {
-                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
-                } catch (Exception e)
-                {
-                }
-                return "/Organizaciones/confirmaOrganizacionVisitante";
-            }
+//            .....................................................................................................REVISION DE SI DEBE DE TENER UN USUARIO LA INSTANCIA.DE.............................................................................................
+//            List<Instancia> lista = instanciaFacade.findBySpecificField("usuario", instancia.getUsuario().toString(), "equal", null, null);
+//            if (!lista.isEmpty())
+//            {
+//                //Agregamos atributos al formulario
+//                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+//                ordenamiento.put("nombre", "asc");
+//                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+//                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+//                model.addAttribute("idInstancia", idInstancia);
+//                model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+//                //Regresar codigo postal
+//                model.addAttribute("cp", codigo_postal);
+//                model.addAttribute("otra_colonia", otra_colonia);
+//                model.addAttribute("error_usuario", "<div class='alert alert-danger'>Este usuario no esta disponible, introduzca otro nombre de usuraio</div>");
+//                try
+//                {
+//                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+//                } catch (Exception e)
+//                {
+//                }
+//                return "/Organizaciones/confirmaOrganizacionVisitante";
+//            }
+//               .....................................................................................................REVISION DE SI DEBE DE TENER UN USUARIO LA INSTANCIA.DE.............................................................................................
+//             .....................................................................................................REVISION DE SI DEBE DE TENER UN CORREO LA INSTANCIA.DE.............................................................................................
+//            List<Instancia> lista2 = instanciaFacade.findBySpecificField("correo", instancia.getCorreo().toString(), "equal", null, null);
+//            if (!lista2.isEmpty())
+//            {
+//                //Agregamos atributos al formulario
+//                LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
+//                ordenamiento.put("nombre", "asc");
+//                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+//                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+//                model.addAttribute("idInstancia", idInstancia);
+//                model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+//                //Regresar codigo postal
+//                model.addAttribute("cp", codigo_postal);
+//                model.addAttribute("otra_colonia", otra_colonia);
+//                model.addAttribute("error_correo", "<div class='alert alert-danger'>Este correo ya ha sido registrado</div>");
+//                try
+//                {
+//                    model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
+//                } catch (Exception e)
+//                {
+//                }
+//                return "/Organizaciones/confirmaOrganizacionVisitante";
+//            }
+//             .....................................................................................................REVISION DE SI DEBE DE TENER UN CORREO LA INSTANCIA.DE.............................................................................................
             System.out.print("no hubo errores");
             instancia.setIdInstancia(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
-            instancia.setValidacionAdmin(BigInteger.ZERO);
-            instancia.setEstatus(BigInteger.ONE);
-            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
-            System.out.println("Pass encriptado:" + instancia.getPassword());
+//            instancia.setValidacionAdmin(BigInteger.ZERO);    .....................................................................................................COMENTARIO A LA LINEA DE VALIDACION ADMINISTRADOR  .............................................................................................
+//              instancia.setEstatus(BigInteger.ONE);// .......................................................................................................Correción de convarsion de staus..............................................
+            instancia.setStatus((short) BigInteger.ONE.intValue());
+//            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));// .....................................................................................................COMENTARIO A LA LINEA DE VALIDACION PASSWORD .............................................................................................
 
             ///Limpiando codigo
 //            instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
+//            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION PASSWORD .............................................................................................
 //            instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
 //            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
 //            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
@@ -496,15 +516,16 @@ public class OrganizacionesController2
         } else
         {
             System.out.print("No hubo errores....se procede a insertar en Instancia");
-            instancia.setValidacionAdmin(BigInteger.ONE);
-            instancia.setEstatus(BigInteger.ONE);
+//            instancia.setValidacionAdmin(BigInteger.ONE);//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION ADMINISTRADOR  .............................................................................................
+//              instancia.setEstatus(BigInteger.ONE);// .......................................................................................................Correción de convarsion de staus..............................................
+            instancia.setStatus((short) BigInteger.ONE.intValue());
             ///Limpiando codigo
             instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
             instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
-            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
+//            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION PUESTO  .............................................................................................
             instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
-            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
-            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
+//            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION TITULAR  .............................................................................................
+//            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION  PASSWORD  .............................................................................................
 
             List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
             if (!Unicos.isEmpty())
@@ -592,7 +613,8 @@ public class OrganizacionesController2
 
                 for (int i = 0; i < listaInstancias.size(); i++)
                 {
-                    int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
+//                    int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());//.....................................................................................................Corrección Status conversión  .............................................................................................
+                    int estatus = (int) listaInstancias.get(i).getStatus();
                     if (estatus == 1 || estatus == 2)
                     {
                         filtroInstancias.add(listaInstancias.get(i));
@@ -719,14 +741,14 @@ public class OrganizacionesController2
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaAltaAdminProyecto.do")
-    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model, 
-            String nActividades, String cadenaActividades,String cadenaPerfiles, String codigo_postal, 
+    public String gdaAdminAltaProyecto(@Valid Proyectos proyecto, BindingResult result, Model model,
+            String nActividades, String cadenaActividades, String cadenaPerfiles, String codigo_postal,
             String otra_colonia, String existeCP, String estado, String municipio, String ciudad, HttpSession session, HttpServletRequest request)
     {
-        System.out.println("hola admin gda alta organizacion");
+        System.err.println("Preparando para insertar nuevo proyecto");
 
         //Validaciones
-        System.out.println("Validar");
+        System.err.println("Validando");
         new ValidacionesOrganizaciones().valAltaAdminProy(proyecto, result, model, codigo_postal, existeCP, otra_colonia);
 
         //Desglose de Actividades
@@ -750,7 +772,8 @@ public class OrganizacionesController2
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             for (int i = 0; i < listaInstancias.size(); i++)
             {
-                int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());
+//                 int estatus = Integer.parseInt(listaInstancias.get(i).getEstatus().toString());//.....................................................................................................Corrección Status conversión  .............................................................................................
+                int estatus = (int) listaInstancias.get(i).getStatus();
                 if ((estatus == 1) || (estatus == 2))
                 {
                     filtroInstancias.add(listaInstancias.get(i));
@@ -790,7 +813,8 @@ public class OrganizacionesController2
             model.addAttribute("proyecto", proyecto);
 
             return "/Organizaciones/altaAdminProyecto";
-        } else
+        } 
+        else
         {
 
             System.out.print("no hubo errores");
@@ -804,6 +828,9 @@ public class OrganizacionesController2
             proyecto.setNombre(limpiar.tuneaStringParaBD(proyecto.getNombre()));
             proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
+            proyecto.setIdInstancia(instanciaFacade.find(proyecto.getIdInstancia().getIdInstancia()));
+            
+            
             System.out.println("el nombre del proyecto es: " + proyecto.getNombre());
             proyectosFacade.create(proyecto);
             System.out.println("Insercion correcta!");
@@ -828,9 +855,10 @@ public class OrganizacionesController2
                 actividadesFacade.create(actividad);
                 System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
             }
+            
             //Insercion de Perfiles
-            if ( cadenaPerfiles != null)
-            {     
+            if (cadenaPerfiles != null)
+            {
                 //Analisis de la cadena
                 StringTokenizer token = new StringTokenizer(cadenaPerfiles, ",");
                 ArrayList<Perfil> perfiles = new ArrayList<Perfil>();
@@ -854,7 +882,8 @@ public class OrganizacionesController2
                     proyectoPerfilFacade.create(proyectoPerfil);
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
-            } else
+            } 
+            else
             {
                 System.out.println("No se agregaran perfiles");
             }
@@ -986,24 +1015,23 @@ public class OrganizacionesController2
         {
             System.out.print("no hubo errores");
             instancia.setIdInstancia(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
-            instancia.setValidacionAdmin(BigInteger.ZERO);
-            instancia.setEstatus(BigInteger.ONE);
-            if (!instancia.getPassword().equals(""))
-            {
-                instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
-            } else
-            {
-                instancia.setPassword(antiguoPass);
-            }
-
-            System.out.println("Pass encriptado:" + instancia.getPassword());
+//            instancia.setValidacionAdmin(BigInteger.ZERO);()));//.........................................................................................comentario a validación de administrador...................................................
+//            instancia.setEstatus(BigInteger.ONE);// .......................................................................................................Correción de convarsion de staus..............................................
+            instancia.setStatus((short) BigInteger.ONE.intValue());
+//            if (!instancia.getPassword().equals(""))
+//            {
+//                instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));
+//            } else
+//            {
+//                instancia.setPassword(antiguoPass);
+//            }.....................................................................................................................comentario a validación de password.......................................................................
 
             ///Limpiando codigo
             instancia.setDomicilio(limpiar.tuneaStringParaBD(instancia.getDomicilio()));
             instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
-            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
+//            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));//.........................................................................................comentario a validación de puesto...................................................
             instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
-            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
+//            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));//.........................................................................................comentario a validación de TITULAr...................................................
 
             try
             {
@@ -1180,17 +1208,18 @@ public class OrganizacionesController2
             Instancia instancia = new Instancia();
             instancia.setNombre(limpiar.tuneaStringParaBD(propuesta.getNombre_instancia()));
             instancia.setRfc(limpiar.tuneaStringParaBD(propuesta.getRfc()));
-            instancia.setTitular(limpiar.tuneaStringParaBD(propuesta.getTitular()));
-            instancia.setPuesto(limpiar.tuneaStringParaBD(propuesta.getPuesto_titular()));
-            instancia.setTelefono(propuesta.getTelefono_titular());
+//            instancia.setTitular(limpiar.tuneaStringParaBD(propuesta.getTitular()));//.........................................................................................comentario a validación titular...................................................
+//            instancia.setPuesto(limpiar.tuneaStringParaBD(propuesta.getPuesto_titular()));//.........................................................................................comentario a validación puesto...................................................
+//            instancia.setTelefono(propuesta.getTelefono_titular());//.........................................................................................comentario a validación telefono...................................................
             instancia.setDomicilio(limpiar.tuneaStringParaBD(propuesta.getDomicilio_instancia()));
-            instancia.setValidacionAdmin(BigInteger.valueOf(0)); //No validado
-            instancia.setEstatus(BigInteger.valueOf(3)); //Propuesta de alumno
+//            instancia.setValidacionAdmin(BigInteger.valueOf(0)); //No validado//.........................................................................................comentario a validación de puesto...................................................
+//            instancia.setEstatus(BigInteger.valueOf(3)); //Propuesta de alumno//..........................................................................................correción de error de conversión.......................................................
+            instancia.setStatus((short) BigInteger.valueOf(3).intValue());
             instancia.setTipoOrganizacion(new TipoOrganizacion());
             instancia.getTipoOrganizacion().setIdTipoOrganizacion(propuesta.getTipoOrganizacion().getIdTipoOrganizacion());
             instancia.setIdColonia(new Colonia());
             instancia.getIdColonia().setIdColonia(propuesta.getIdColonia_instancia().getIdColonia());
-            instancia.setExt(propuesta.getExt());
+//            instancia.setExt(propuesta.getExt());//.........................................................................................comentario a validación de extension...................................................
 
             instanciaFacade.create(instancia);
             System.out.println("Insercion  de intancia correcta!");
