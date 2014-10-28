@@ -360,14 +360,15 @@ public class HistorialServicioController
                 List<DatosPersonales> datosPersonales = new ArrayList<DatosPersonales>(alumno.getDatosPersonalesCollection());
                 model.addAttribute("alumno", datosPersonales.get(0));
                 return "/HistorialServicio/verInfoAlumno";
-            } catch(Exception e)
+            } 
+            catch(Exception e)
             {
-                System.out.println("Error al cargar datos personales");
-                e.printStackTrace();
+                System.err.println("Error al cargar datos personales");
                 return "error";
             }
 
-        } else
+        } 
+        else
         {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
