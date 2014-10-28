@@ -109,8 +109,8 @@ function ActualizarUsuario() {
     var password = $('#pass').val();
 
 
-    $.post("updateUserData.do", {id: idUpdate, nombre: nombre, apellidopat: apellidopat, apellidomat: apellidomat,puesto: puesto , telefono: telefono, extension: extension, email: email, password: password, statusPass: statusPass}, function(respuesta)
-    {   
+    $.post("updateUserData.do", {id: idUpdate, nombre: nombre, apellidopat: apellidopat, apellidomat: apellidomat, puesto: puesto, telefono: telefono, extension: extension, email: email, password: password, statusPass: statusPass}, function(respuesta)
+    {
         alert('manda algo');
         if ('ok' === respuesta) {
 //                        $.get("administrarUsuarios.do");      
@@ -121,4 +121,39 @@ function ActualizarUsuario() {
 
 
     });
+}
+
+function soloNumeros(e) {
+    tecla = e.keyCode || e.which;
+    if ((tecla > 64 && tecla < 91) || tecla === 192) {
+        document.getElementById(e.target.id).value = "";
+        $("#alertNumber").remove('div');
+        $(document.getElementById(e.target.id)).after('<div class="row-fluid" id="alertNumber"><br><div class="alert alert-danger">Ingrese solo Numeros</div></div>');
+
+
+    } else {
+        $("#alertNumber").remove('div');
+    }
+}
+
+function tamanoPass(e){
+    var lenght = $(document.getElementById(e.target.id)).val().length;
+
+    if (lenght >= 6) {        
+        $("#alertPassword").remove('div');      
+    }else{
+         $("#alertPassword").remove('div');     
+         $(document.getElementById(e.target.id)).after('<div class="row-fluid" id="alertPassword"><br><div class="alert alert-danger">La contrase&ntildea debe ser mayor a 6 caracteres</div></div>');
+    }   
+}   
+
+function verificarPassword(e) {
+    var passPrincipal=$("#passPrincipal").val();   
+    var passSecundario = $(document.getElementById(e.target.id)).val();
+    if(passPrincipal === passSecundario){
+        $("#alertPasswordConfirm").remove('div'); 
+    }else{
+        $("#alertPasswordConfirm").remove('div'); 
+       $(document.getElementById(e.target.id)).after('<div class="row-fluid" id="alertPasswordConfirm"><br><div class="alert alert-danger">La contrase&ntildea no coincide</div></div>');
+    }   
 }
