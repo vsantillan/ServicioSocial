@@ -10,6 +10,11 @@ var status = "";
 var statusPass = "";
 
 
+
+$( document ).ready(function() {
+   
+});
+
 $(document).on("click", ".guardarObservacionesUsuario", observacionesUsuario);
 $(document).on("click", ".cambiaStatusUsuario", cambiarEstadoUsuario);
 $(document).on('click', ".editUser", updateUser);
@@ -31,7 +36,7 @@ function updateUser(e)
                     $("#div-user").hide('slow');
                 }, 3000);
             } else {
-                alert("Imposible aceptar Instancia. ERROR Interno");
+                alert("Imposible aceptar Usuario. ERROR Interno");
             }
         });
     }
@@ -78,7 +83,7 @@ function observacionesUsuario(event)
             {
                 window.location.reload();
             } else {
-                alert("ERROR: Imposible eliminar Instancia.");
+                alert("ERROR: Imposible eliminar Usuario.");
                 window.location.reload();
             }
 

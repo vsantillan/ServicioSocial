@@ -10,29 +10,87 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuPrincipal.jsp"%> 
             </div><!--/row-->
-            <div class="row col-md-12">
+            <div class="row col-md-12" id="noticiasPanelIndex">
                 <br/>
                 <!---------------------------------------------Contenido------------------------------------------->                
 
-                <core:forEach items="${Noticias}" var="noticia" >
+                <core:forEach items="${Noticias}" var="noticia">
 
-                    <div class="col-md-4 col-md-offset-0">
-                        <div class="panel panel-primary panelNoticia  ">
-                            <div class="panel-heading"><h4>${noticia.titulo}</h4></div>
-                            <div class="panel-body">
-                                <p><strong>Fecha de publicaci&oacute;n:<fmt:formatDate pattern="dd-MM-yyyy"  value="${noticia.fecha}"/></strong></p>
-                                <br/>
-                                <div>
-                                    <p>${fn:substring(noticia.detalle, 0, 150)}<b><core:if test="${fn:length(noticia.detalle) > 150}">...&nbsp;</core:if></b><a class="mustraNoticiaCompleta btn btn-warning btn-xs"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Leer M&aacutes.</a></p>
-                                </div>
-                                
-                                <!--<p><a class="btn btn-warning mustraNoticiaCompleta"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Ver Detalles &raquo;</a></p>-->
+                    <div class="col-md-6 col-md-offset-0">
+                        <ul class="event-list">
+                            <li>
 
-                            </div><!--/span-->
+                                <time datetime="2014-07-20">
+                                    <span id="dayId" class="day"><fmt:formatDate pattern="dd" value="${noticia.fecha}"/></span>
+<!--                                    <span id="monthId" class="month"></span>-->
+                                    <script type="text/javascript">
+                                        var mes = <fmt:formatDate pattern="MM" value="${noticia.fecha}"/>
+                                        
+                                        if (mes === 1) {
+                                        
+                                           document.write("<span class='month'>ENE</span>");  
+                                        }
+                                        if (mes === 2) {
+                                            
+                                           document.write("<span class='month'>FEB</span>");  
+                                        }
+                                        if (mes === 3) {
+                                            
+                                           document.write("<span class='month'>MAR</span>");  
+                                        }
+                                        if (mes === 4) {
+                                            
+                                           document.write("<span class='month'>ABR</span>");  
+                                        }
+                                        if (mes === 5) {
+                                           
+                                           document.write("<span class='month'>MAY</span>");  
+                                        }
+                                        if (mes === 6) {
+                                           
+                                           document.write("<span class='month'>JUN</span>");  
+                                        }
+                                        if (mes === 7) {
+                                           
+                                           document.write("<span class='month'>JUN</span>");  
+                                        }
+                                        if (mes === 8) {
+                                           
+                                           document.write("<span class='month'>JUL</span>");  
+                                        }
+                                        if (mes === 9) {
+                                           
+                                           document.write("<span class='month'>AGO</span>");  
+                                        }
+                                        if (mes === 10) {
+                                           
+                                           document.write("<span class='month'>SEP</span>");  
+                                        }
+                                        if (mes === 11) {
+                                           
+                                           document.write("<span class='month'>NOV</span>");  
+                                        }
+                                        if (mes === 12) {
+                                           
+                                           document.write("<span class='month'>DIC</span>");  
+                                        }
+                                        
+                                    </script>
+                                    <span class="year"><fmt:formatDate pattern="yyyy" value="${noticia.fecha}"/></span>
+                                    <span class="time">ALL DAY</span>
+                                </time>
+
+                                <div class="info">
+                                    <div class="col-md-12 col-lg-offset-0">
+                                        <h4 class="title">${noticia.titulo}</h4>
+                                        <p class="desc">${fn:substring(noticia.detalle, 0, 150)}<b><core:if test="${fn:length(noticia.detalle) > 150}">...&nbsp;</core:if></b><a class="mustraNoticiaCompleta btn btn-warning btn-xs"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Leer M&aacutes.</a></p>
+                                        </div>  
+                                    </div>
+                                </li>                            
+                            </ul>
                         </div>
-                    </div>
-                </core:forEach>
 
+                </core:forEach>
                 <!---------------------------------------------Fin Contenido------------------------------------------->                
 
             </div><!--/row--> 
@@ -44,7 +102,7 @@
                             <h4 class="modal-title" id="titulo"></h4>
                         </div>
                         <div class="modal-body" id="detalleNoticia">
-                            
+
                         </div>
                         <div class="modal-footer">
                             <p>Instituto Tecnológico de Toluca</p>

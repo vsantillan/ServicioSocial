@@ -232,25 +232,30 @@ public class PanelAdministradorController
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/updateUserData.do")
-    public @ResponseBody
-    String updateUser(int id, String nombre, String apellidopat, String apellidomat,String puesto, String telefono, String extension,
-            String email, String password, int statusPass)
+    public String updateUser(UsuarioInstancia usuario, String statusPass)
     {
         System.out.println("..............\n\n\n Entrando a controlador para modificar usuarios");
-        UsuarioInstancia usuario = usuarioInstanciaFacade.find(BigDecimal.valueOf(id));
-        usuario.setApellidoMat(apellidomat);
-        usuario.setApellidoPat(apellidopat);
-        usuario.setEmail(email);
-        usuario.setExtension(extension);
-        usuario.setTelefono(telefono);
-        usuario.setNombre(nombre);
-        usuario.setPuesto(puesto);
-        if(statusPass == 1){
-            
+        System.out.println(usuario.getApellidoMat());
+        System.out.println(usuario.getApellidoPat());
+        System.out.println(statusPass);
+        UsuarioInstancia usuarioFind = usuarioInstanciaFacade.find(usuario.getIdUsuarioInstancia());
+        System.out.println(usuario.getApellidoMat());
+        System.out.println(usuario.getApellidoPat());
+        System.out.println(statusPass);
+//        usuarioFind.setApellidoMat(apellidomat);
+//        usuarioFind.setApellidoPat(apellidopat);
+//        usuarioFind.setEmail(email);
+//        usuarioFind.setExtension(extension);
+//        usuarioFind.setTelefono(telefono);
+//        usuarioFind.setNombre(nombre);
+//        usuarioFind.setPuesto(puesto);
+        if (statusPass.equals('1'))
+        {
+
         }
         try
         {
-            usuarioInstanciaFacade.edit(usuario);
+//            usuarioInstanciaFacade.edit(usuarioFind);
 
             return "ok";
         } catch (Exception s)
