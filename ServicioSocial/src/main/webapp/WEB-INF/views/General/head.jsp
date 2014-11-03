@@ -9,6 +9,7 @@
 <link href="<%=request.getContextPath()%>/css/bootstrap.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/login.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/css/index.news.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/DT_bootsrap.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/main.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/css/datepicker.css" rel="stylesheet">

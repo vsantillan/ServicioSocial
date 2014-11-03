@@ -20,7 +20,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-primary">Editar Usuario</div> 
                         <div class="panel-body">
-                            <form:form name="form" commandName="usuarios" action="#">
+                            <form:form name="form" commandName="usuarios" action="updateUserData.do" method="POST">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombre</label>                               
@@ -56,7 +56,7 @@
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
-                                                    <div class="tab-pane active" id="panel-701803">
+                                                    <div class="tab-pane active" id="panel-701803" path="statusPass" value="1" >
                                                         <p> 
                                                         <div class="col-md-8 column">
                                                             <div class="input-group col-md-12">
@@ -65,7 +65,7 @@
                                                         </div>
                                                         </p>
                                                     </div>
-                                                    <div class="tab-pane" id="panel-600468">
+                                                    <div class="tab-pane" id="panel-600468" path="statusPass" value="2" >
                                                         <p>
                                                         <div class="col-md-8 column">
                                                             <div class="input-group col-md-12">
@@ -96,7 +96,7 @@
                                         <form:errors path="puesto" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type ="submit" class="GuardarDatosUsuarios btn btn-primary" value = "Editar Usuario" /> 
+                                        <input type ="submit" class="btn btn-primary" value = "Editar Usuario" /> 
                                     </div>
                                 </div>
                             </form:form>
