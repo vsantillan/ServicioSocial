@@ -376,7 +376,7 @@ public class PlaticaController
 
             //incrementar numero de asistentes +1
             platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
-            int numero = platica.getNumeroAsistentes().intValue();
+            int numero = platica.getNumeroAsistentes();
             numero = numero + 1;
             System.out.println("numero" + numero);
             platica.setNumeroAsistentes(numero);
@@ -394,7 +394,7 @@ public class PlaticaController
                 System.out.println(session.getAttribute("NCONTROL"));
                 parameters.put("folio", session.getAttribute("platica").toString() + session.getAttribute("NCONTROL").toString());
                 //Esta línea es la que está haciendos sus desmadres
-                byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin", "gst05a"));
+                byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin2", "gst05a"));
                 response.setContentType("application/pdf");
                 response.setContentLength(bytes.length);
                 response.getOutputStream().write(bytes);
