@@ -98,10 +98,11 @@ function abreFancy()
 }
 function recargaProyectos(idInstancia, idProyecto)
 {
-    console.log('el id de la isntancia es' + idInstancia);
+    console.log('el id de la isntancia es: ' + idInstancia);
     var idDP = $('.idDatosPersonalesOrg').val();
-    console.log('El id de los datos personales = ' + idDP);
+    console.log('El id de los datos personales: ' + idDP);
     $.get("cargarProyectos.do?id_instancia=" + idInstancia + "&id_datos_personales=" + idDP, null, function(respuesta) {
+        console.log(respuesta);
         if (respuesta.nombre_responsable.length !== 0) {
             $("#proyectos").empty();
             $('#domicilioOrg').empty();
@@ -147,6 +148,7 @@ function recargaProyectos(idInstancia, idProyecto)
                 }
             });
         } else {
+            console.log("No se recuperaron proyectos.");
             $('#domicilioOrg').val('');
             $('#nombre_responsable').val('');
             $('#responsable_puesto').val('');

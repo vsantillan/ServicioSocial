@@ -9,7 +9,6 @@ import edu.servicio.toluca.beans.FormatoUnicoDatosContactoBean;
 import edu.servicio.toluca.beans.FormatoUnicoDatosPersonalesBean;
 import edu.servicio.toluca.beans.MetodosValidacion;
 import edu.servicio.toluca.beans.ValidaSesion;
-import edu.servicio.toluca.beans.bimestrales.fechas;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoHorariosBean;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoProyectosJSON;
 import edu.servicio.toluca.entidades.CatalogoDocumento;
@@ -58,7 +57,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -825,45 +823,54 @@ public class FormatoUnicoController
     public @ResponseBody
     FormatoUnicoProyectosJSON cargarProyectos(Model a, String id_instancia, String id_datos_personales)
     {
-        Proyectos pr = null;
+        if(id_instancia == null && id_instancia.trim().equals(""))
+        {
+            // Abortar la busqueda
+        }
+        
+        System.err.println("Cargando proyectos para: " + id_instancia);
+        
         BigDecimal idDP = new BigDecimal(id_datos_personales);
-        //System.out.println("Traigo el id"+id_instancia);
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("idInstancia", id_instancia, "equal", null, null);
+        List<Instancia> listaInstancias = instanciaFacade
+                .findBySpecificField("idInstancia", BigDecimal.valueOf(Double.valueOf(id_instancia.trim())), "equal", null, null);
         Instancia instancia = listaInstancias.get(0);
-        ArrayList<FormatoUnicoProyectosJSON> fuiProyectos = new ArrayList<FormatoUnicoProyectosJSON>();
+        
         FormatoUnicoProyectosJSON fuiJSON = new FormatoUnicoProyectosJSON();
         DatosPersonales dp = datosPersonalesFacade.find(idDP);
         VistaAlumno alumno = vistaAlumnoFacade.find(dp.getAlumnoId().getId());
-        //System.out.println("iis" + instancia.getNombre());
-        //System.out.println("tamaño" +  instancia.getProyectosCollection().size());
-        for(Proyectos proy : instancia.getProyectosCollection())
+        
+        List<Proyectos> proyectos = new ArrayList<Proyectos>(instancia.getProyectosCollection());
+        System.err.println("Se encontraron " + proyectos.size() + " proyectos para la instancia: " + instancia.getIdInstancia() + ": " + instancia.getNombre());
+        
+        for(Proyectos proy : proyectos)
         {
-            //System.out.println("Aquiii");
-//            if (proy.getVacantesDisponibles().compareTo(BigInteger.ZERO) > 0) {
-            int numero = Integer.parseInt(proy.getVacantesDisponibles().toString());
-            if(numero > 0)
+            int vacantesDisp = Integer.parseInt(proy.getVacantesDisponibles().toString());
+            if(vacantesDisp > 0)
             {
                 if(proy.getProyectoPerfilCollection().isEmpty())
                 {
-                    System.out.println("oxxAgregando uno sin coleccion perfiles");
+                    System.err.println("oxx Agregando uno sin coleccion perfiles");
                     fuiJSON.getId_instancia().add(instancia.getIdInstancia());
                     fuiJSON.getId_proyecto().add(proy.getIdProyecto());
                     fuiJSON.getNombre().add(proy.getNombre());
                     fuiJSON.getDomicilio().add(proy.getDomicilio());
                     fuiJSON.getNombre_responsable().add(proy.getNombreResponsable());
                     fuiJSON.getTelefono_responsable().add(proy.getTelefonoResponsable());
-                } else
+                } 
+                else
                 {
                     for(ProyectoPerfil per : proy.getProyectoPerfilCollection())
                     {
-                        System.out.println("xxxCarrera id:" + alumno.getCarreraId());
-                        System.out.println("xxxPerfil p/proy" + per.getIdPerfil());
-                        System.out.println("xxxProyecto id ..... p/proy" + per.getIdProyecto());
-                        System.out.println("xxxNombre" + per.getIdProyecto().getNombre());
-                        System.out.println("id persona " + per.getIdPerfil().getIdPerfil().toString() + "   id carrera " + (new BigDecimal(alumno.getCarreraId()).toString()));
+                        System.out.println("xxx Carrera id: " + alumno.getCarreraId());
+                        System.out.println("xxx Perfil p/proy" + per.getIdPerfil());
+                        System.out.println("xxx Proyecto id ..... p/proy" + per.getIdProyecto());
+                        System.out.println("xxx Nombre: " + per.getIdProyecto().getNombre());
+                        System.out.println("id persona: " + per.getIdPerfil().getIdPerfil().toString() + "   id carrera " + (new BigDecimal(alumno.getCarreraId()).toString()));
+                        
                         if(per.getIdPerfil().getIdPerfil().toString().equals(new BigDecimal(alumno.getCarreraId()).toString()))
                         {
-                            System.out.println("oxxAgregando uno de perfil");
+                            System.err.println("oxx Agregando uno de perfil");
+                            
                             fuiJSON.getId_instancia().add(instancia.getIdInstancia());
                             fuiJSON.getId_proyecto().add(proy.getIdProyecto());
                             fuiJSON.getNombre().add(proy.getNombre());
