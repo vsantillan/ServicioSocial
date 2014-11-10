@@ -4,5 +4,5 @@
     Author     : Jonny
 --%>
 <div class="jumbotron">
-    <center><img src="img/banner.png" title="Instituto Tecnológico de Toluca" width="100%" /></center>
+    <center><img src="img/bannerItt.png" title="Instituto Tecnológico de Toluca" width="100%" /></center>
 </div>
