@@ -416,7 +416,7 @@ public class FormatoUnicoController
                 filtroInstancias.add(listaInstancias.get(i));
             }
         }
-        listaInstancias = instanciaFacade.findBySpecificField("estatus", "3", "equal", null, null);
+        listaInstancias = instanciaFacade.findBySpecificField("status", "3", "equal", null, null);
         for(Instancia ins : listaInstancias)
         {
             System.out.println("Revisando si la instancia es propuesta");
@@ -1221,7 +1221,7 @@ public class FormatoUnicoController
                 /*
              * Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)
              */
-            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin", "gst05a"));
+            byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin2", "gst05a"));
             /*
              * Indicamos que la respuesta va a ser en formato PDF
              */

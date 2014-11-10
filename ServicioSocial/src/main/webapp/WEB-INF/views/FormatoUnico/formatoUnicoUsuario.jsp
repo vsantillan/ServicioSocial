@@ -24,7 +24,7 @@
                             <li id="tab1" class="active tabsFormanotUnico" noTab="1"><a data-toggle="tab" href="#contensFormanotUnico1" onclick="ocultaDiv();">1.Datos Personales</a></li>
                             <li id="tab2" class="tabsFormanotUnico" noTab="2"><a data-toggle="tab" href="#contensFormanotUnico2" onclick="ocultaDiv();">2.Datos Contacto</a></li>
                             <!--                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Acad&eacute;micos</a></li>-->
-                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Organizaciones</a></li>
+                            <li id="tab3" class="tabsFormanotUnico" noTab="3"><a data-toggle="tab" href="#contensFormanotUnico3" onclick="ocultaDiv();">3.Datos Instancias</a></li>
                             <li id="tab4" class="tabsFormanotUnico" noTab="4"><a data-toggle="tab" href="#contensFormanotUnico4" onclick="ocultaDiv();">4.Horario</a></li>
                             <li id="tab5" class="tabsFormanotUnico" noTab="5"><a data-toggle="tab" href="#contensFormanotUnico5" onclick="ocultaDiv();">5.Imprimir Formato &Uacute;nico</a></li>
                             <li id="tab6" class="tabsFormanotUnico" noTab="6"><a data-toggle="tab" href="#contensFormanotUnico6" onclick="ocultaDiv();">6.Subir Formato &Uacute;nico</a></li>
@@ -114,21 +114,18 @@
                                                     <label>*Clave de Documento de Identificaci&oacute;n:</label>
                                                     <form:input maxlength="30" path ="claveDocIdentificacion" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"/>
                                                 </div>
+                                                <div class="form-group pull-right">
+                                                    <label>&nbsp;</label>
+                                                    <input type ="submit"  value="Guardar" class="btn btn-primary" />
+                                                </div>
                                             </div>
-                                            <div class="row col-md-6 col-md-offset-4">  
-                                                <div class="row col-md-2 form-group">
+                                            <div class="form-group col-md-offset-4">
+                                                <div class="row col-md-1 form-group">
                                                     <form:checkbox path="acuerdoC"/>
                                                 </div> 
-                                                <div class="row col-md-10">
+                                                <div class="row col-md-7">
                                                     <label>*He le&iacute;do y acepto el <a href="showpdf.do" class="fancyFUI" target="_blank"><b>Acuerdo de Confidencialidad</b></a></label>
-                                                </div>  
-
-
-                                                <div class="form-group">
-                                                    <label>&nbsp;</label>
-                                                    <input type ="submit"  value="Guardar Datos Personales" class="btn btn-primary" />
                                                 </div>
-
                                             </div>
                                         </form:form>  
                                     </div>
@@ -296,13 +293,13 @@
                                     </div>
                                 </div>
                                 <div class="panel panel-info">
-                                    <div class="panel-heading">Datos de Organizaci&oacute;n</div>
+                                    <div class="panel-heading">Datos de Instancia</div>
                                     <div class="panel-body">
                                         <form:form id="frmDatosOrganizaciones" modelAttribute="formatoUnicoDatosOrganizaciones" >
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <form:input class="idDatosPersonalesOrg form-control" type="hidden" path ="id"/>
-                                                    <label>*Organizaci&oacute;n:</label>
+                                                    <label>Instancia:</label>
                                                     <select id="comboOrganizaciones" name="organizacion" class="form-control">
                                                         <core:forEach items="${instancias}" var="instancia">
                                                             <option value="${instancia.idInstancia}">${instancia.nombre}</option>
@@ -498,7 +495,7 @@
                         <ul id="listaObservaciones" ></ul>
                     </div>
                 </div>
-            </div>
+                        </div>
             <div class="modal fade" id="contenidoRespuesta" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -532,7 +529,7 @@
     <script src="js/jquery.codigos.postales.js"></script>       
     <script src="js/jquery.manolo.js"></script>
     <script>
-                                                    $(document).ready(function() {
+                                                    $(document).ready(function () {
                                                         $('input[type=file]').bootstrapFileInput();
                                                     });
     </script>

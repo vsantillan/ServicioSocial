@@ -210,7 +210,7 @@
                                     </div>
                                 </div>            
                             </div>
-                            <div class="col-sm-5">
+                            <div class="col-md-offset-10">
                                 <input id="btnGdaAdminProyecto" class="btn btn-primary guardar" type = "submit" value = "Guardar Nuevo Proyecto" /> 
                             </div>
                         </form:form> 
@@ -223,14 +223,14 @@
         <script src="js/jquery.codigos.postales.js"></script>
         <script src="js/jquery.manolo.js"></script>
         <script>
-            $('a#btn-add').click(function() {
-                $('#select-from option:selected').each(function() {
+            $('a#btn-add').click(function () {
+                $('#select-from option:selected').each(function () {
                     $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
                     $(this).remove();
                 });
             });
-            $('a#btn-remove').click(function() {
-                $('#select-to option:selected').each(function() {
+            $('a#btn-remove').click(function () {
+                $('#select-to option:selected').each(function () {
                     $('#select-from').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
                     $(this).remove();
                 });

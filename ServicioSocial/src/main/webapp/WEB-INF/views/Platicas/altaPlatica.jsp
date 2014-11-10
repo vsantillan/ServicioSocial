@@ -20,7 +20,7 @@
 
                     <div class="col-md-8 col-md-offset-2">
                         <br>
-                        <div class="panel panel-info">
+                        <div class="panel panel-primary">
                             <div class="panel-heading "
                                  <center><h3>Nueva Pl&aacute;tica de Inducci&oacute;n</h3></center>
                             ${alert}</div>
