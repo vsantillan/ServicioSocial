@@ -20,7 +20,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-primary">Editar Usuario</div> 
                         <div class="panel-body">
-                            <form:form name="form" commandName="usuarios" action="#">
+                            <form:form name="form" commandName="usuarios" action="updateUserData.do" method="POST">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombre</label>                               
@@ -46,7 +46,7 @@
                                     <div class="row clearfix panel-primary">
                                         <div class="col-md-12 column">
                                             <div class="tabbable " id="tabs-155708">
-                                                <ul class="nav nav-tabs panel-danger">
+                                                <ul class="nav nav-tabs panel-danger" onclick="limpiarPassModificarUser()">
                                                     <li id="mantenerPassword" class="active">
                                                         <a  href="#panel-701803" data-toggle="tab">Mantener Contraseña</a>
                                                     </li>
@@ -56,29 +56,20 @@
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
-                                                    <div class="tab-pane active" id="panel-701803">
+                                                    <div class="tab-pane active" id="panel-701803" path="statusPass" value="1" >
                                                         <p> 
                                                         <div class="col-md-8 column">
-                                                            <div class="input-group">
-
-                                                                <span class="input-group-addon">
-                                                                    <i class="glyphicon glyphicon-lock"></i>
-                                                                </span>
-
-                                                                <input placeholder="********************" type="password" path="password"class="form-control">
+                                                            <div class="input-group col-md-12">
+                                                                <input placeholder="********************" type="password" path="password"class="form-control" disabled>
                                                             </div>
                                                         </div>
                                                         </p>
                                                     </div>
-                                                    <div class="tab-pane" id="panel-600468">
+                                                    <div class="tab-pane" id="panel-600468" path="statusPass" value="2" >
                                                         <p>
                                                         <div class="col-md-8 column">
-                                                            <div class="input-group">
-                                                                <span class="input-group-addon">
-                                                                    <i class="glyphicon glyphicon-lock"></i>
-                                                                </span>
-                                                                <form:input path="password" id="pass" class="form-control"   maxlength="10" placeholder="Introduzca sólo numeros"/>
-                                                                <form:errors path="password" cssClass="alert alert-danger"/>
+                                                            <div class="input-group col-md-12">
+                                                                <form:input path="password" id="pass" type="password" onkeyup="tamanoPass(event)" class="form-control"   maxlength="10" placeholder="Ingrese su conrtaseña"/>
                                                             </div>
                                                         </div>
                                                         </p>
@@ -105,7 +96,7 @@
                                         <form:errors path="puesto" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type ="submit" class="GuardarDatosUsuarios btn btn-primary" value = "Editar Usuario" /> 
+                                        <input type ="submit" class="btn btn-primary" value = "Editar Usuario" /> 
                                     </div>
                                 </div>
                             </form:form>

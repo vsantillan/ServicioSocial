@@ -24,52 +24,52 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombre</label>                               
-                                        <form:input path="nombre" id="nombre" size="20" class="form-control" placeholder="Introduzca sólo su nombre"/><br/>
+                                        <form:input path="nombre" onkeyup="soloTexto(event)" id="nombre" size="20" class="form-control" placeholder="Introduzca sólo su nombre" required="true"/><br/>
                                         <form:errors path="nombre" class="alert alert-danger" />
                                         ${error_sql}
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Apellido Paterno</label> 
-                                        <form:input path="apellidoPat" id="apellidopat" size="20" class="form-control" placeholder="Introduza sólo su apellido paterno"/><br/>
+                                        <form:input path="apellidoPat" onkeyup="soloTexto(event)" id="apellidopat" size="20" class="form-control" placeholder="Introduza sólo su apellido paterno" required="true"/><br/>
                                         <form:errors path="apellidoPat" class="alert alert-danger" />
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Apellido Materno</label> 
-                                        <form:input path="apellidoMat" id="apellidomat" size="20" class="form-control" placeholder="Introduza sólo su apellido materno"/><br/>
+                                        <form:input path="apellidoMat" id="apellidomat" size="20" class="form-control" placeholder="Introduza sólo su apellido materno" required="true"/><br/>
                                         <form:errors path="apellidoMat" class="alert alert-danger" />
                                     </div>
                                     <div class="form-group">
                                         <label for="calle">Email</label>
-                                        <form:input path="email" id="email" size="20" class="form-control" placeholder="ejemplo@email.com"/><br/>
-                                        <form:errors path="email" class="alert alert-danger" />
+                                        <form:input path="email" id="email" autocomplete='off' size="20" class="form-control" placeholder="ejemplo@email.com" type="email" required="true"/><br/>
+                                        <form:errors path="email" autocomplete='off' class="alert alert-danger" />
                                     </div>
                                     <div class="form-group" id="cambiaPass">
                                         <div class="form-group col-md-6">
                                             <label for="lugar">Contrase&ntilde;a:</label>
-                                            <form:input path="password" id="password" class="form-control" type="password" maxlength="50" placeholder="Minimo 6 caracteres"/><br/>
-                                            <form:errors path="password" cssClass="alert alert-danger"/>
+                                            <form:input path="password" onkeyup="tamanoPass(event)" autocomplete='off' id="passPrincipal" class="form-control" type="password" maxlength="50" placeholder="Minimo 6 caracteres" required="true"/><br/>
+                                            <form:errors path="password" autocomplete='off' cssClass="alert alert-danger"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="lugar">Confirmar Contrase&ntilde;a:</label>
-                                            <form:input path="password" id="password" class="form-control" type="password" maxlength="50" placeholder="Confirme su contraseña"/><br/>
-                                            <form:errors path="password" cssClass="alert alert-danger"/>
+                                            <form:input path="password" onkeyup="verificarPassword(event)" autocomplete='off'  id="passConfirm" class="form-control" type="password" placeholder="Confirme su contraseña" required="true"/><br/>
+                                            <form:errors path="password" autocomplete='off' cssClass="alert alert-danger"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">       
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Teléfono</label> 
-                                        <form:input path="telefono" id="telefono" class="form-control"  maxlength="10" placeholder="Introduzca sólo numeros"/><br/>
+                                        <form:input path="telefono" onkeyup="soloNumeros(event)" id="telefono" class="form-control" maxlength="10" placeholder="Introduzca sólo numeros" required="true"/><br/>
                                         <form:errors path="telefono" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Extensión</label> 
-                                        <form:input path="extension" id="extension" class="form-control"  maxlength="4" placeholder="Introduzca sólo numeros"/><br/>
+                                        <form:input path="extension" onkeyup="soloNumeros(event)" id="extension" class="form-control"  maxlength="4" placeholder="Introduzca sólo numeros" required="true"/><br/>
                                         <form:errors path="extension" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Puesto</label> 
-                                        <form:input path="puesto" id="puesto" class="form-control" maxlength="80"  placeholder="Introduzca únicamente caracteres alfanuméricos"/><br/>
+                                        <form:input path="puesto" id="puesto" class="form-control" maxlength="80"  placeholder="Introduzca únicamente caracteres alfanuméricos" required="true"/><br/>
                                         <form:errors path="puesto" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
@@ -85,7 +85,7 @@
         </div>
         <%@include file="../General/js.jsp"%>
         <!-- Javascript -->   
-        <script src="js/instancias.js"></script>
-        <script src="js/jquery-1.9.1.js"></script>
+        
     </body>
+    <script src="js/usuariosAdmin.js"></script>
 </html>

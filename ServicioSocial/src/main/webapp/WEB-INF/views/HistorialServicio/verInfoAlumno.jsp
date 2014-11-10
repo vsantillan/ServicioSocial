@@ -12,7 +12,7 @@
                 <div class="row">
                     <%@include file="../General/banner.jsp"%>  
                     <br>
-                    <div class="help-block text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Informaci&oacute;n del Alumno</h1></div>
+                    <div class="help-block text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Información del Alumno</h1></div>
                     <br>
                     <div class="col-md-12">
                         <div class="col-md-6">
@@ -34,7 +34,7 @@
                                                 <td>${alumno.estadoCivil}</td>
                                             </tr>
                                             <tr>
-                                                <th>Ocupaci&oacute;n:</th>
+                                                <th>Ocupación:</th>
                                                 <td>${alumno.ocupacion}</td>
                                             </tr>
                                             <tr>
@@ -46,22 +46,22 @@
                                                 <td>${alumno.lugarNacimiento}</td>
                                             </tr>
                                             <tr>
-                                                <th>Folio de Documento de Identificaci&oacute;n:</th>
+                                                <th>Folio de Documento de Identificación:</th>
                                                 <td>${alumno.folioDocIdentificaciin}</td>
                                             </tr>
                                             <tr>
-                                                <th>Clave de Documento de Identificaci&oacute;n:</th>
+                                                <th>Clave de Documento de Identificación:</th>
                                                 <td>${alumno.claveDocIdentificacion}</td>
                                             </tr>
                                     </table>
                                 </div>
                             </div>
                             <div class="panel-primary">
-                                <div class="panel-heading"><h3>Datos Acad&eacute;micos</h3></div>
+                                <div class="panel-heading"><h3>Datos Académicos</h3></div>
                                 <div class="panel-body">
                                     <table class="table table-striped">
                                         <tr>
-                                            <th>N&uacute;mero de Control:</th>
+                                            <th>Número de Control:</th>
                                             <td>${alumno.alumnoId.id}</td>
                                         </tr>
                                         <tr>
@@ -81,11 +81,11 @@
                                             <td>${alumno.alumnoId.semActual}</td>
                                         </tr>
                                         <tr>
-                                            <th>Total de cr&eacute;ditos cubiertos:</th>
+                                            <th>Total de créditos cubiertos:</th>
                                             <td>${alumno.alumnoId.creditosAcumulados}</td>
                                         </tr>
                                         <tr>
-                                            <th>Porcentaje de cr&eacute;ditos cubiertos:</th>
+                                            <th>Porcentaje de créditos cubiertos:</th>
                                             <td>${alumno.alumnoId.porcentaje}</td>
                                         </tr>
                                         <tr>
@@ -142,19 +142,19 @@
                                             <td>${alumno.referencia}</td>
                                         </tr>
                                         <tr>
-                                            <th>Tel&eacute;fono Casa:</th>
+                                            <th>Teléfono Casa:</th>
                                             <td>${alumno.telefonoCasa}</td>
                                         </tr>
                                         <tr>
-                                            <th>Tel&eacute;fono Celular:</th>
+                                            <th>Teléfono Celular:</th>
                                             <td>${alumno.telefonoCel}</td>
                                         </tr>
                                         <tr>
-                                            <th>Tel&eacute;fono Oficina:</th>
+                                            <th>Teléfono Oficina:</th>
                                             <td>${alumno.telefonoOficina}</td>
                                         </tr>
                                         <tr>
-                                            <th>Correo Electr&oacute;nico:</th>
+                                            <th>Correo Electrónico:</th>
                                             <td>${alumno.correoElectronico}</td>
                                         </tr>
                                         <tr>
@@ -194,9 +194,9 @@
                                         </tr>
                                         <tr>
                                             <th>Ver Detalle del Proyecto:</th>
-                                                <core:forEach items="${alumno.formatoUnicoCollection}" var="formatoUnico">
+                                            <core:forEach items="${alumno.formatoUnicoCollection}" var="formatoUnico">
                                                 <td><a href="detalleProyecto.do?id=${formatoUnico.idproyecto.idInstancia.idInstancia}" class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a></td>   
-                                                    </core:forEach>               
+                                            </core:forEach>               
                                         </tr>
                                     </table>
                                 </div>
@@ -208,7 +208,7 @@
                                 <div class="panel-body">
                                     <table class="table table-striped">
                                         <tr>
-                                            <th>D&iacute;as</th>
+                                            <th>Días</th>
                                             <td>
                                                 <core:forEach items="${alumno.formatoUnicoCollection}" var="formatoUnico">
                                                     <ul>
@@ -222,7 +222,7 @@
                                                                         <b>Martes</b>
                                                                     </core:when>
                                                                     <core:when test="${horario.dia == '3'}">
-                                                                        <b>Mi&eacute;rcoles</b>
+                                                                        <b>Miércoles</b>
                                                                     </core:when>
                                                                     <core:when test="${horario.dia == '4'}">
                                                                         <b>Jueves</b>
