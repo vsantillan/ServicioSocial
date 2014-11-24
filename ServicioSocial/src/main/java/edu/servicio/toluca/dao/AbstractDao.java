@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public abstract class AbstractDao<T extends Serializable>
 {
-    private final int MAX_RECORDS_RETURNED = 5000;
+    private final int MAX_RECORDS_RETURNED = 50000;
     
     private Class<T> entityClass;
     
@@ -49,6 +49,32 @@ public abstract class AbstractDao<T extends Serializable>
         this.entityClass = classToSet;
     }
     
+    public int count()
+    {
+        javax.persistence.criteria.CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
+        javax.persistence.criteria.Root<T> rt = cq.from(entityClass);
+        cq.select(entityManager.getCriteriaBuilder().count(rt));
+        javax.persistence.Query q = entityManager.createQuery(cq);
+        return Integer.valueOf(q.getSingleResult().toString());
+    }
+    
+    @Transactional
+    public void create(T entity)
+    {
+        entityManager.persist(entity);
+    }
+    
+    public void deleteById(Object id)
+    {
+        T entity = find(id);
+        remove(entity);
+    }
+    
+    @Transactional
+    public T edit(T entity)
+    {
+        return entityManager.merge(entity);
+    }
     
     public T find(Object id)
     {
@@ -101,6 +127,12 @@ public abstract class AbstractDao<T extends Serializable>
     public List<T> findBySpecificField(String field, Object fieldContent, String predicates,
             LinkedHashMap<String, String> ordering, LinkedList<String> grouping)
     {
+//        if(entityClass == FormatoUnico.class)
+//        {
+//            entityManager.flush();
+//            entityManager.clear();
+//        }
+        
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery();
         Root<T> root = cq.from(entityClass);
@@ -159,27 +191,20 @@ public abstract class AbstractDao<T extends Serializable>
         return query.getResultList();
     }
     
-    @Transactional
-    public void create(T entity)
+    public List<T> findRange(int[] range)
     {
-        entityManager.persist(entity);
+        javax.persistence.criteria.CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        javax.persistence.Query q = entityManager.createQuery(cq);
+        q.setMaxResults(range[1] - range[0]);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
     }
     
     @Transactional
-    public T update(T entity)
-    {
-        return entityManager.merge(entity);
-    }
-    
-    @Transactional
-    public void delete(T entity)
+    public void remove(T entity)
     {
         entityManager.remove(entity);
     }
     
-    public void deleteById(Object id)
-    {
-        T entity = find(id);
-        delete(entity);
-    }
 }
