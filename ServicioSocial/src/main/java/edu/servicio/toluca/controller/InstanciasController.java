@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.StringMD;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.Instancia;
@@ -36,6 +36,7 @@ import java.util.StringTokenizer;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,52 +52,129 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class InstanciasController
 {
+
+    private GenericDao<TipoOrganizacion> daoTipoOrganizacion;
+    private GenericDao<Colonia> daoColonia;
+    private GenericDao<Instancia> daoInstancia;
+    private GenericDao<Proyectos> daoProyectos;
+    private GenericDao<TipoProyecto> daoTipoProyecto;
+    private GenericDao<Perfil> daoPerfil;
+    private GenericDao<Programa> daoPrograma;
+    private GenericDao<Actividades> daoActividades;
+    private GenericDao<ProyectoPerfil> daoProyectoPerfil;
+    private GenericDao<UsuarioInstancia> daoUsuarioInstancia;
+
+    // <editor-fold defaultstate="collapsed" desc="EJB Facades">
     @EJB(mappedName = "java:global/ServicioSocial/TipoOrganizacionFacade")
     private TipoOrganizacionFacade tipoOrgFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
     private ColoniaFacade coloniaFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     private InstanciaFacade instanciaFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
     private ProyectosFacade proyectosFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/TipoProyectoFacade")
     private TipoProyectoFacade tiposPFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/PerfilFacade")
     private PerfilFacade perfilFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ProgramaFacade")
     private ProgramaFacade programaFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
     private ActividadesFacade actividadesFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ProyectoPerfilFacade")
     private ProyectoPerfilFacade pPerfilFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/UsuarioInstanciaFacade")
     private UsuarioInstanciaFacade usuarioInstanciaFacade;
-    
-    @RequestMapping( value="verificarinstancia.do", method=RequestMethod.GET )
+    // </editor-fold>
+
+    @Autowired
+    public void setDaoUsuarioInstancia(GenericDao<UsuarioInstancia> daoUsuarioInstancia)
+    {
+        this.daoUsuarioInstancia = daoUsuarioInstancia;
+        daoUsuarioInstancia.setClass(UsuarioInstancia.class);
+    }
+
+    @Autowired
+    public void setDaoColonia(GenericDao<Colonia> daoColonia)
+    {
+        this.daoColonia = daoColonia;
+        daoColonia.setClass(Colonia.class);
+    }
+
+    @Autowired
+    public void setDaoInstancia(GenericDao<Instancia> daoInstancia)
+    {
+        this.daoInstancia = daoInstancia;
+        daoInstancia.setClass(Instancia.class);
+    }
+
+    @Autowired
+    public void setDaodaoTipoProyecto(GenericDao<TipoProyecto> daoTipoProyecto)
+    {
+        this.daoTipoProyecto = daoTipoProyecto;
+        daoTipoProyecto.setClass(TipoProyecto.class);
+    }
+
+    @Autowired
+    public void setDaoPerfil(GenericDao<Perfil> daoPerfil)
+    {
+        this.daoPerfil = daoPerfil;
+        daoPerfil.setClass(Perfil.class);
+    }
+
+    @Autowired
+    public void setDaoPrograma(GenericDao<Programa> daoPrograma)
+    {
+        this.daoPrograma = daoPrograma;
+        daoPrograma.setClass(Programa.class);
+    }
+
+    @Autowired
+    public void setDaoActividades(GenericDao<Actividades> daoActividades)
+    {
+        this.daoActividades = daoActividades;
+        daoActividades.setClass(Actividades.class);
+    }
+
+    @Autowired
+    public void setDaoProyectoPerfil(GenericDao<ProyectoPerfil> daoProyectoPerfil)
+    {
+        this.daoProyectoPerfil = daoProyectoPerfil;
+        daoProyectoPerfil.setClass(ProyectoPerfil.class);
+    }
+
+    @Autowired
+    public void setDaoTipoOrganizacion(GenericDao<TipoOrganizacion> daoTipoOrganizacion)
+    {
+        this.daoTipoOrganizacion = daoTipoOrganizacion;
+        daoTipoOrganizacion.setClass(TipoOrganizacion.class);
+    }
+
+    @RequestMapping(value = "verificarinstancia.do", method = RequestMethod.GET)
     public String verificarInstancia(Model model)
     {
         return "/Instancias/verificarInstancia";
     }
-    
-    @RequestMapping( value="preregistrarinstancia.do", method=RequestMethod.GET)
+
+    @RequestMapping(value = "preregistrarinstancia.do", method = RequestMethod.GET)
     public String preregistro(HttpSession session, Model model)
     {
         String rol = null;
-        if(session.getAttribute("ROL") != null)
+        if (session.getAttribute("ROL") != null)
         {
             rol = session.getAttribute("ROL").toString();
         }
-        
-        if(rol != null && rol.equals("ORGANIZACION"))
+
+        if (rol != null && rol.equals("ORGANIZACION"))
         {
             List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
             Instancia nvaInstancia = new Instancia();
@@ -107,31 +185,29 @@ public class InstanciasController
             model.addAttribute("rfcError", "");
 
             return "/Instancias/preregistro";
-        }
-        else
+        } else
         {
             return preregUsuarioInstancia(model);
         }
-        
+
     }
-    
-    @RequestMapping( value="preregistrarinstancia.do", method=RequestMethod.POST)
-    public String preregistrar(HttpSession session, Model model, 
+
+    @RequestMapping(value = "preregistrarinstancia.do", method = RequestMethod.POST)
+    public String preregistrar(HttpSession session, Model model,
             @Valid Instancia instancia, BindingResult bindingResult)
     {
-        if(bindingResult.hasErrors()) // Showing error in form
+        if (bindingResult.hasErrors()) // Showing error in form
         {
             List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
             model.addAttribute("tiposOrganizacion", tiposOrg);
-            
+
             return "/Instancias/preregistro";
-        }
-        else
+        } else
         {
             // Check if instance is yet registered
-            List<Instancia> instancias = 
-                    instanciaFacade.findBySpecificField("rfc", instancia.getRfc().toUpperCase(), "equal", null, null);
-            if(instancias.size() > 0)
+            List<Instancia> instancias
+                    = instanciaFacade.findBySpecificField("rfc", instancia.getRfc().toUpperCase(), "equal", null, null);
+            if (instancias.size() > 0)
             {
                 String rfcError = "<div class='alert alert-danger'>Este RFC ya está registrado</div>";
                 List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
@@ -139,8 +215,7 @@ public class InstanciasController
                 model.addAttribute("rfcError", rfcError);
 
                 return "/Instancias/preregistro";
-            }
-            else
+            } else
             {
                 // Configurar Entity y persistir
                 Colonia col = coloniaFacade.find(instancia.getIdColonia().getIdColonia());
@@ -154,71 +229,75 @@ public class InstanciasController
                 instancia.setNombre(instancia.getNombre().toUpperCase());
                 instancia.setRfc(instancia.getRfc().toUpperCase());
                 instancia.setStatus((short) 0);
-                
+
                 // Obtener usuario al que pertenecera la instancia
                 String email = session.getAttribute("EMAIL").toString();
-                List<UsuarioInstancia> usuarios =  usuarioInstanciaFacade
+                List<UsuarioInstancia> usuarios = usuarioInstanciaFacade
                         .findBySpecificField("email", email, "equal", null, null);
-                if(usuarios.size() > 0)
+                if (usuarios.size() > 0)
                 {
                     instancia.setUsuarioInstancia(usuarios.get(0));
                 }
-                
+
                 instanciaFacade.create(instancia);
 
                 return "/Instancias/preregistroexitoso";
             }
         }
     }
-    
-    @RequestMapping( value="buscarinstancias.do", method=RequestMethod.GET )
-    public @ResponseBody List<HashMap> buscarInstancias(Model model, String field, String value)
+
+    @RequestMapping(value = "buscarinstancias.do", method = RequestMethod.GET)
+    public @ResponseBody
+    List<HashMap> buscarInstancias(Model model, String field, String value)
     {
-        List<Instancia> resultado = (field.equals("rfc")) ? 
-                instanciaFacade.findBySpecificField("rfc", value, "like", null, null) : 
-                instanciaFacade.findBySpecificField("nombre", value, "like", null, null);
-        
+        List<Instancia> resultado = (field.equals("rfc"))
+                ? instanciaFacade.findBySpecificField("rfc", value, "like", null, null)
+                : instanciaFacade.findBySpecificField("nombre", value, "like", null, null);
+
         List<HashMap> instancias = new ArrayList<HashMap>();
-        for(Instancia instancia : resultado)
+        for (Instancia instancia : resultado)
         {
             HashMap mapa = new HashMap();
             mapa.put("nombre", instancia.getNombre());
             mapa.put("email", instancia.getUsuarioInstancia().getEmail());
             mapa.put("titular", instancia.getUsuarioInstancia().getNombre() + " " + instancia.getUsuarioInstancia().getApellidoPat());
             mapa.put("rfc", instancia.getRfc());
-            
+
             instancias.add(mapa);
         }
-        
+
         return instancias;
     }
-    
-    /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-    /* --- --- --- --- --- --- USUARIOS -- --- --- --- --- --- --- --- --- --- */
-    
-    @RequestMapping( value="preregistrarusuario.do", method=RequestMethod.GET)
+
+    /*
+     * --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+     */
+    /*
+     * --- --- --- --- --- --- USUARIOS -- --- --- --- --- --- --- --- --- ---
+     */
+    @RequestMapping(value = "preregistrarusuario.do", method = RequestMethod.GET)
     public String preregUsuarioInstancia(Model model)
     {
         model.addAttribute("usuarioInstancia", new UsuarioInstancia());
-        
+
         return "/UsuarioInstancia/preregusuario";
     }
-    
-    @RequestMapping( value="registrarUsuario.do", method=RequestMethod.POST)
+
+    @RequestMapping(value = "registrarUsuario.do", method = RequestMethod.POST)
     public String registrarUsuario(HttpSession session, @Valid UsuarioInstancia usuarioInstancia,
             BindingResult bindingResult, Model model)
     {
-        if(bindingResult.hasErrors())
+
+        if (bindingResult.hasErrors())
         {
-            if(usuarioInstancia.getExtension().length() > 0)
+            if (usuarioInstancia.getExtension().length() > 0)
             {
-                for(char c : usuarioInstancia.getExtension().toCharArray())
+                for (char c : usuarioInstancia.getExtension().toCharArray())
                 {
-                    try 
+                    try
                     {
                         Integer.parseInt(c + "");
-                    }
-                    catch(NumberFormatException err)
+                    } catch (NumberFormatException err)
                     {
                         model.addAttribute("errorExt", "<div class='alert alert-danger'>Ingrese solo números o deje vacio el campo</div>");
                     }
@@ -226,33 +305,34 @@ public class InstanciasController
             }
             return "/UsuarioInstancia/preregusuario";
         }
-        
-        if(usuarioInstancia.getExtension().length() > 0)
+
+        if (usuarioInstancia.getExtension().length() > 0)
         {
-            for(char c : usuarioInstancia.getExtension().toCharArray())
+            for (char c : usuarioInstancia.getExtension().toCharArray())
             {
-                try 
+                try
                 {
                     Integer.parseInt(c + "");
-                }
-                catch(NumberFormatException err)
+                } catch (NumberFormatException err)
                 {
                     model.addAttribute("errorExt", "<div class='alert alert-danger'>Ingrese solo números o deje vacio el campo</div>");
                     return "/UsuarioInstancia/preregusuario";
                 }
             }
         }
-        
-        
+
         // Verificar si el email ya ha sido registrado con otro usuario
         List<UsuarioInstancia> usuarios = usuarioInstanciaFacade
                 .findBySpecificField("email", usuarioInstancia.getEmail().toLowerCase(), "equal", null, null);
-        if(usuarios.size() > 0)
+        List<UsuarioInstancia> usuarios2 = daoUsuarioInstancia.findBySpecificField(
+                "email", usuarioInstancia.getEmail().toLowerCase(), "equal", null, null);
+
+        if (usuarios2.size() > 0)
         {
             model.addAttribute("useryetexist", "<div class='alert alert-danger'>Este correo electrónico ya ha sido registrado.</div>");
             return "/UsuarioInstancia/preregusuario";
         }
-        
+
         // Formatear datos a UPPERCASE y registrar usuario
         usuarioInstancia.setNombre(usuarioInstancia.getNombre().toUpperCase());
         usuarioInstancia.setApellidoPat(usuarioInstancia.getApellidoPat().toUpperCase());
@@ -260,16 +340,20 @@ public class InstanciasController
         usuarioInstancia.setEmail(usuarioInstancia.getEmail().toLowerCase());
         usuarioInstancia.setPassword(StringMD.getStringMessageDigest(usuarioInstancia.getPassword(), StringMD.SHA1));
         usuarioInstancia.setStatus(Short.valueOf("0"));
-        
-        usuarioInstanciaFacade.create(usuarioInstancia);
-        
+
+//        usuarioInstanciaFacade.create(usuarioInstancia);
+        daoUsuarioInstancia.create(usuarioInstancia);
+
         return "/UsuarioInstancia/preregusuexitoso";
     }
-    
-    /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-    /* --- --- --- --- --- --- PROYECTOS   --- --- --- --- --- --- --- --- --- */
-    
-    @RequestMapping( value="registrarproyecto.do", method=RequestMethod.GET )
+
+    /*
+     * --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+     */
+    /*
+     * --- --- --- --- --- --- PROYECTOS --- --- --- --- --- --- --- --- ---
+     */
+    @RequestMapping(value = "registrarproyecto.do", method = RequestMethod.GET)
     public String registrarProyecto(Model model)
     {
         Proyectos proyecto = new Proyectos();
@@ -277,10 +361,10 @@ public class InstanciasController
         List<String> modalidades = new ArrayList<String>();
         modalidades.add("INTERNO");
         modalidades.add("EXTERNO");
-        
+
         List<Perfil> perfiles = perfilFacade.findAll();
         List<Programa> programas = programaFacade.findAll();
-        
+
         model.addAttribute("proyecto", proyecto);
         model.addAttribute("tiposP", tiposP);
         model.addAttribute("modalidades", modalidades);
@@ -288,17 +372,18 @@ public class InstanciasController
         model.addAttribute("perfilesproyecto", "");
         model.addAttribute("programas", programas);
         model.addAttribute("codigop", "");
-        
+
         return "/Instancias/regproyecto";
     }
-    
-    @RequestMapping( value="registrarproyecto.do", method=RequestMethod.POST )
+
+    @RequestMapping(value = "registrarproyecto.do", method = RequestMethod.POST)
     public String insertarProyecto(HttpSession session, String actividad1, String actividad2, String actividad3,
             String actividad4, String actividad5, String cp, String perfilesproyecto,
-            Model model,@ModelAttribute("proyecto") @Valid Proyectos proyecto, BindingResult bindingResult)
+            Model model, @ModelAttribute("proyecto")
+            @Valid Proyectos proyecto, BindingResult bindingResult)
     {
-        
-        if(bindingResult.hasErrors() || perfilesproyecto.length() < 1)
+
+        if (bindingResult.hasErrors() || perfilesproyecto.length() < 1)
         {
             List<TipoProyecto> tiposP = tiposPFacade.findAll();
             List<String> modalidades = new ArrayList<String>();
@@ -313,25 +398,24 @@ public class InstanciasController
             model.addAttribute("perfiles", perfiles);
             model.addAttribute("programas", programas);
             model.addAttribute("codigop", cp);
-            
+
             model.addAttribute("actividad1", actividad1);
             model.addAttribute("actividad2", actividad2);
             model.addAttribute("actividad3", actividad3);
             model.addAttribute("actividad4", actividad4);
             model.addAttribute("actividad5", actividad5);
-            
+
             model.addAttribute("perfilesproyecto", perfilesproyecto);
-            
-            if(perfilesproyecto.length() < 1)
+
+            if (perfilesproyecto.length() < 1)
             {
                 model.addAttribute("errorperfiles", "<div class='alert alert-danger'>Agrege al menos un perfil al proyecto</div>");
             }
 
             return "/Instancias/regproyecto";
-        }
-        else
+        } else
         {
-          // Formatear datos de la instancia
+            // Formatear datos de la instancia
             proyecto.setNombre(proyecto.getNombre().toUpperCase());
             proyecto.setNombreResponsable(proyecto.getNombreResponsable().toUpperCase());
             proyecto.setResponsablePuesto(proyecto.getResponsablePuesto().toUpperCase());
@@ -340,28 +424,27 @@ public class InstanciasController
             proyecto.setValidacionAdmin(BigInteger.ZERO);
             proyecto.setFechaAlta(Calendar.getInstance().getTime());
             proyecto.setVacantesDisponibles(proyecto.getVacantes());
-            
-            if(proyecto.getModalidad().trim().equals("INTERNO"))
+
+            if (proyecto.getModalidad().trim().equals("INTERNO"))
             {
                 proyecto.setModalidad("I");
-            }
-            else
+            } else
             {
                 proyecto.setModalidad("E");
             }
-            
+
             proyecto.setIdTipoProyecto(tiposPFacade.find(proyecto.getIdTipoProyecto().getIdTipoProyecto()));
             proyecto.setIdPrograma(programaFacade.find(proyecto.getIdPrograma().getIdPrograma()));
             proyecto.setIdColonia(coloniaFacade.find(proyecto.getIdColonia().getIdColonia()));
-            
+
             Instancia instance = instanciaFacade.findBySpecificField("nombre", session.getAttribute("NOMBRE").toString(), "equal", null, null).get(0);
             //System.out.println("SE ENCONTRO INSTANCIA: " + instance.getNombre());
             proyecto.setIdInstancia(instance);
             proyectosFacade.create(proyecto);
-            
-          // Registrar perfiles
+
+            // Registrar perfiles
             StringTokenizer stPerfiles = new StringTokenizer(perfilesproyecto, ";");
-            while(stPerfiles.hasMoreTokens())
+            while (stPerfiles.hasMoreTokens())
             {
                 Perfil perfil = perfilFacade.findBySpecificField("nombre", stPerfiles.nextToken().trim(), "equal", null, null).get(0);
                 //System.out.println("Perfil encontrado: " + perfil.getNombre());
@@ -370,22 +453,22 @@ public class InstanciasController
                 pPerfil.setIdProyecto(proyecto);
                 pPerfilFacade.create(pPerfil);
             }
-            
-          // Registrar actividades
+
+            // Registrar actividades
             Actividades actividad01 = new Actividades();
             Actividades actividad02 = new Actividades();
-            
+
             actividad01.setIdProyecto(proyecto);
             actividad01.setEstatus(BigInteger.ONE);
             actividad01.setDetalle(actividad1);
             actividadesFacade.create(actividad01);
-            
+
             actividad02.setIdProyecto(proyecto);
             actividad02.setEstatus(BigInteger.ONE);
             actividad02.setDetalle(actividad2);
             actividadesFacade.create(actividad02);
-            
-            if(actividad3.trim().length() > 0)
+
+            if (actividad3.trim().length() > 0)
             {
                 Actividades actividad03 = new Actividades();
                 actividad03.setIdProyecto(proyecto);
@@ -393,7 +476,7 @@ public class InstanciasController
                 actividad03.setDetalle(actividad3);
                 actividadesFacade.create(actividad03);
             }
-            if(actividad4.trim().length() > 0)
+            if (actividad4.trim().length() > 0)
             {
                 Actividades actividad04 = new Actividades();
                 actividad04.setIdProyecto(proyecto);
@@ -401,7 +484,7 @@ public class InstanciasController
                 actividad04.setDetalle(actividad4);
                 actividadesFacade.create(actividad04);
             }
-            if(actividad5.trim().length() > 0)
+            if (actividad5.trim().length() > 0)
             {
                 Actividades actividad05 = new Actividades();
                 actividad05.setIdProyecto(proyecto);
@@ -409,29 +492,29 @@ public class InstanciasController
                 actividad05.setDetalle(actividad5);
                 actividadesFacade.create(actividad05);
             }
-            
+
             return "/Instancias/proyectoregistrado";
         }
-        
+
     }
-    
-    @RequestMapping( value="instanciaproyectos.do", method=RequestMethod.GET)
+
+    @RequestMapping(value = "instanciaproyectos.do", method = RequestMethod.GET)
     public String administrarProyectos(HttpSession session, Model model)
     {
-        if(session.getAttribute("NOMBRE") != null)
+        if (session.getAttribute("NOMBRE") != null)
         {
             Instancia instancia;
             String instanciaNom = session.getAttribute("NOMBRE").toString();
-            
-            instancia = instanciaFacade.findBySpecificField("nombre", 
+
+            instancia = instanciaFacade.findBySpecificField("nombre",
                     instanciaNom, "equal", null, null).get(0);
-            
-            if(instancia != null)
+
+            if (instancia != null)
             {
                 return "/Instancias/administrarproyectos";
             }
         }
-        
+
         return "/NavegacionPrincipal/index";
     }
 }

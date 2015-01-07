@@ -23,7 +23,9 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading "
                                  <center><h3>Nueva Pl&aacute;tica de Inducci&oacute;n</h3></center>
-                            ${alert}</div>
+                            </div>
+                            <br>
+                            ${alert}
                         <!-- Formulario Nueva Plática -->  
                         <div class="panel-body">
                         <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica"  class=" EnviarEnter" role="form" name="altaPlatica" > 

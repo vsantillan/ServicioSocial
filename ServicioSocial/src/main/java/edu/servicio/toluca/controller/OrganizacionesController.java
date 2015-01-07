@@ -16,14 +16,18 @@ import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.ValidarProyectos;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.Ciudades;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
 import edu.servicio.toluca.entidades.MunicipiosSia;
+import edu.servicio.toluca.entidades.Programa;
 import edu.servicio.toluca.entidades.RegObservacionGeneral;
 import edu.servicio.toluca.entidades.TipoLocalidad;
+import edu.servicio.toluca.entidades.TipoOrganizacion;
+import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;
@@ -54,6 +58,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,6 +78,7 @@ public class OrganizacionesController
 //    @Resource
 //    private UserTransaction utx;
 
+    // <editor-fold defaultstate="collapsed" desc="EJB Facades Formato Único">
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     private InstanciaFacade instanciaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
@@ -105,6 +111,134 @@ public class OrganizacionesController
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionGeneralFacade")
     private RegObservacionGeneralFacade regObservacionGeneralFacade;
+    // </editor-fold>
+    
+    private GenericDao<Instancia> daoInstancia;
+    private GenericDao<Proyectos> daoProyectos;
+    private GenericDao<TipoOrganizacion> daoTipoOrganizacion;
+    private GenericDao<Perfil> daoPerfil;
+    private GenericDao<ProyectoPerfil> daoProyectoPerfil;
+    private GenericDao<TipoProyecto> daoTipoProyecto;
+    private GenericDao<EstadosSia> daoEstadosSia;
+    private GenericDao<Programa> daoPrograma;
+    private GenericDao<Actividades> daoActividades;
+    private GenericDao<CodigosPostales> daoCodigosPostales;
+    private GenericDao<MunicipiosSia> daoMunicipiosSia;
+    private GenericDao<Ciudades> daoCiudades;
+    private GenericDao<TipoLocalidad> daoTipoLocalidad;
+    private GenericDao<Colonia> daoColonia;
+    private GenericDao<CatalogoObservaciones> daoCatalogoObservaciones;
+    private GenericDao<RegObservacionGeneral> daoRegObservacionGeneral;
+    
+    @Autowired
+    public void setDaoInstancia(GenericDao<Instancia> daoInstancia)
+    {
+        this.daoInstancia = daoInstancia;
+        daoInstancia.setClass(Instancia.class);
+    }
+    
+    @Autowired
+    public void setDaoProyectos(GenericDao<Proyectos> daoProyectos)
+    {
+        this.daoProyectos = daoProyectos;
+        daoProyectos.setClass(Proyectos.class);
+    }
+    
+    @Autowired
+    public void setDaoTipoOrganizacion(GenericDao<TipoOrganizacion> daoTipoOrganizacion)
+    {
+        this.daoTipoOrganizacion = daoTipoOrganizacion;
+        daoTipoOrganizacion.setClass(TipoOrganizacion.class);
+    }
+    
+    @Autowired
+    public void setDaoPerfil(GenericDao<Perfil> daoPerfil)
+    {
+        this.daoPerfil = daoPerfil;
+        daoPerfil.setClass(Perfil.class);
+    }
+    
+    @Autowired
+    public void setDaoProyectoPerfil(GenericDao<ProyectoPerfil> daoProyectoPerfil)
+    {
+        this.daoProyectoPerfil = daoProyectoPerfil;
+        daoProyectoPerfil.setClass(ProyectoPerfil.class);
+    }
+    
+    @Autowired
+    public void setDaoTipoProyecto(GenericDao<TipoProyecto> daoTipoProyecto)
+    {
+        this.daoTipoProyecto = daoTipoProyecto;
+        daoTipoProyecto.setClass(TipoProyecto.class);
+    }
+    
+    @Autowired
+    public void setDaoEstadosSiaa(GenericDao<EstadosSia> daoEstadosSia)
+    {
+        this.daoEstadosSia = daoEstadosSia;
+        daoEstadosSia.setClass(EstadosSia.class);
+    }
+    
+    @Autowired
+    public void setDaoPrograma(GenericDao<Programa> daoPrograma)
+    {
+        this.daoPrograma = daoPrograma;
+        daoPrograma.setClass(Programa.class);
+    }
+    
+    @Autowired
+    public void setDaoActividades(GenericDao<Actividades> daoActividades)
+    {
+        this.daoActividades = daoActividades;
+        daoActividades.setClass(Actividades.class);
+    }
+    
+    @Autowired
+    public void setDaoCodigosPostales(GenericDao<CodigosPostales> daoCodigosPostales)
+    {
+        this.daoCodigosPostales = daoCodigosPostales;
+        daoCodigosPostales.setClass(CodigosPostales.class);
+    }
+    
+    @Autowired
+    public void setDaoMunicipiosSia(GenericDao<MunicipiosSia> daoMunicipiosSia)
+    {
+        this.daoMunicipiosSia = daoMunicipiosSia;
+        daoMunicipiosSia.setClass(MunicipiosSia.class);
+    }
+    
+    @Autowired
+    public void setDaoCiudades(GenericDao<Ciudades> daoCiudades)
+    {
+        this.daoCiudades = daoCiudades;
+        daoCiudades.setClass(Ciudades.class);
+    }
+    
+    @Autowired
+    public void setDaoTipoLocalidad(GenericDao<TipoLocalidad> daoTipoLocalidad)
+    {
+        this.daoTipoLocalidad = daoTipoLocalidad;
+        daoTipoLocalidad.setClass(TipoLocalidad.class);
+    }
+     @Autowired
+    public void setDaoColonia(GenericDao<Colonia> daoColonia)
+    {
+        this.daoColonia = daoColonia;
+        daoColonia.setClass(Colonia.class);
+    }
+     @Autowired
+    public void setDaoCatalogoObservaciones(GenericDao<CatalogoObservaciones> daoCatalogoObservaciones)
+    {
+        this.daoCatalogoObservaciones = daoCatalogoObservaciones;
+        daoCatalogoObservaciones.setClass(CatalogoObservaciones.class);
+    }
+     @Autowired
+    public void setDaoRegObservacionGeneral(GenericDao<RegObservacionGeneral> daoRegObservacionGeneral)
+    {
+        this.daoRegObservacionGeneral = daoRegObservacionGeneral;
+        daoRegObservacionGeneral.setClass(RegObservacionGeneral.class);
+    }
+    
     MetodosValidacion limpiar = new MetodosValidacion();
 
     private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
@@ -112,7 +246,7 @@ public class OrganizacionesController
     @RequestMapping(method = RequestMethod.GET, value = "/administrarOrganizaciones.do")
     public String administradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request)
     {
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
+        List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         System.out.println("Instancias");
         for(int i = 0; i < listaInstancias.size(); i++)
@@ -126,14 +260,14 @@ public class OrganizacionesController
             }
         }
         model.addAttribute("organizaciones", filtroInstancias);
-        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findBySpecificField("tipo", "4", "equal", null, null));
+        model.addAttribute("listadoObservaciones", daoCatalogoObservaciones.findBySpecificField("tipo", "4", "equal", null, null));
         return "/Organizaciones/administrarOrganizaciones";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/administrarProyectos.do")
     public String administradorProyectos(Model model, HttpSession session, HttpServletRequest request)
     {
-        List<Proyectos> listaProyectos = proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        List<Proyectos> listaProyectos = daoProyectos.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
         for(Proyectos proyecto : listaProyectos)
         {
@@ -146,16 +280,16 @@ public class OrganizacionesController
         }
         
         model.addAttribute("proyectos", filtroDeProyectos);
-        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findBySpecificField("tipo", "5", "equal", null, null));
+        model.addAttribute("listadoObservaciones", daoCatalogoObservaciones.findBySpecificField("tipo", "5", "equal", null, null));
         return "/Organizaciones/administrarProyectos";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/validarOrganizaciones.do")
     public String panelAdministradorOrganizaciones(Model model, HttpSession session, HttpServletRequest request)
     {
-        model.addAttribute("organizacion", instanciaFacade.findBySpecificField("status", "0", "equal", null, null));
+        model.addAttribute("organizacion", daoInstancia.findBySpecificField("status", "0", "equal", null, null));
         model.addAttribute("retroalimentacionInstancia", new BorrarInstancia());
-        model.addAttribute("listadoObservaciones", observacionesCatalogoFacade.findBySpecificField("tipo", "4", "equal", null, null));
+        model.addAttribute("listadoObservaciones", daoCatalogoObservaciones.findBySpecificField("tipo", "4", "equal", null, null));
         return "/Organizaciones/validarOrganizaciones";
     }
 
@@ -164,7 +298,7 @@ public class OrganizacionesController
     String actualizarStatusOrganizaciones(int id, Model model, HttpSession session, HttpServletRequest request)
     {
         Instancia instancia;
-        instancia = instanciaFacade.find(BigDecimal.valueOf(id));
+        instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(id));
         instancia.setStatus((short) 1);
         System.out.println("Ya actualizo");
         instanciaFacade.edit(instancia);
@@ -177,16 +311,16 @@ public class OrganizacionesController
     String actualizarStatusProyecto(int id, Model model, HttpSession session, HttpServletRequest request)
     {
         Proyectos proyecto;
-        proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
+        proyecto = (Proyectos) daoProyectos.find(BigDecimal.valueOf(id));
         proyecto.setValidacionAdmin(BigInteger.valueOf(1));
-        proyectosFacade.edit(proyecto);
+        daoProyectos.edit(proyecto);
         return "ok";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/validarProyectos.do")
     public String panelAdministradorProyectos(Model model, HttpSession session, HttpServletRequest request)
     {
-        model.addAttribute("proyecto", proyectosFacade.findBySpecificField("validacionAdmin", "0", "equal", null, null));
+        model.addAttribute("proyecto", daoProyectos.findBySpecificField("validacionAdmin", "0", "equal", null, null));
         model.addAttribute("borrarProyecto", new BorrarProyecto());
         return "/Organizaciones/validarProyectos";
     }
@@ -195,14 +329,14 @@ public class OrganizacionesController
     public String detalleProyecto(BigDecimal id, Model model, HttpSession session, HttpServletRequest request)
     {
         logger.info("ID Proyecto " + id);
-        model.addAttribute("proyectoDetalle", proyectosFacade.find(id));
+        model.addAttribute("proyectoDetalle", daoProyectos.find(id));
         return "/Organizaciones/detalleProyecto";
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/detalleOrganizacion.do")
     public String detalleOrganizacion(BigDecimal id, Model model, HttpSession session, HttpServletRequest request)
     {
-        model.addAttribute("instancia", instanciaFacade.find(id));
+        model.addAttribute("instancia", daoInstancia.find(id));
         return "/Organizaciones/detalleOrganizacion";
     }
 
@@ -215,7 +349,7 @@ public class OrganizacionesController
             List<String> listaObservaciones = new ArrayList<String>();
             String idInstancia = session.getAttribute("NCONTROL").toString();
             System.out.println("el id instancia es: " + idInstancia);
-            List<RegObservacionGeneral> list = regObservacionGeneralFacade.findBySpecificField("idLlaveUnica", idInstancia, "equal", null, null);
+            List<RegObservacionGeneral> list = daoRegObservacionGeneral.findBySpecificField("idLlaveUnica", idInstancia, "equal", null, null);
             for(int i = 0; i < list.size(); i++)
             {
                 if(list.get(i).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(4))
@@ -225,10 +359,10 @@ public class OrganizacionesController
                 }
             }
             Instancia instanciaObj = new Instancia(BigDecimal.valueOf(Integer.parseInt(idInstancia)));
-            List<Proyectos> listProyectos = proyectosFacade.findBySpecificField("idInstancia", instanciaObj, "equal", null, null);
+            List<Proyectos> listProyectos = daoProyectos.findBySpecificField("idInstancia", instanciaObj, "equal", null, null);
             for(int i = 0; i < listProyectos.size(); i++)
             {
-                list = regObservacionGeneralFacade.findBySpecificField("idLlaveUnica", listProyectos.get(i).getIdProyecto().toString(), "equal", null, null);
+                list = daoRegObservacionGeneral.findBySpecificField("idLlaveUnica", listProyectos.get(i).getIdProyecto().toString(), "equal", null, null);
                 for(int j = 0; j < list.size(); j++)
                 {
                     if(list.get(j).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(5))
@@ -250,10 +384,10 @@ public class OrganizacionesController
     @RequestMapping(method = RequestMethod.GET, value = "/editarOrganizacion.do")
     public String editarOrganizacion(int id, Model model, HttpSession session, HttpServletRequest request)
     {
-        model.addAttribute("instancia", instanciaFacade.find(BigDecimal.valueOf(id)));
-        model.addAttribute("instanciaDireccion", instanciaFacade.find(BigDecimal.valueOf(id)));
-        model.addAttribute("estados", estadosFacade.findAll());
-        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("instancia", daoInstancia.find(BigDecimal.valueOf(id)));
+        model.addAttribute("instanciaDireccion", daoInstancia.find(BigDecimal.valueOf(id)));
+        model.addAttribute("estados", daoEstadosSia.findAll());
+        model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
         return "/Organizaciones/editarOrganizacion";
     }
 
@@ -282,11 +416,11 @@ public class OrganizacionesController
         {
             System.out.println("Con errores");
             System.out.println("Los errores son: " + result.toString());
-            model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+            model.addAttribute("instanciaDireccion", daoInstancia.find(instancia.getIdInstancia()));
             model.addAttribute("otra_colonia", otra_colonia);
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
 //            model.addAttribute("ext", instancia.getExt()); ******************************************** REVISAR POR QUE HACE FALTA PARA LOS ENTITIES *************
@@ -296,7 +430,7 @@ public class OrganizacionesController
             } catch(Exception e)
             {
             }
-            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
             return "/Organizaciones/editarOrganizacion";
         } else
         {
@@ -309,19 +443,19 @@ public class OrganizacionesController
 //                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
                     System.out.println("AgregarColonia");
                     System.out.println("codigo postal:" + codigo_postal.toString());
-                    List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
+                    List<CodigosPostales> codigosPostales = daoCodigosPostales.findBySpecificField("cp", codigo_postal, "equal", null, null);
                     CodigosPostales codigoPostal = codigosPostales.get(0);
                     Colonia nvaColonia = new Colonia();
                     otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
                     nvaColonia.setNombre(otra_colonia);
                     nvaColonia.setIdCp(codigoPostal);
                     nvaColonia.setStatus(BigInteger.ONE);
-                    coloniaFacade.create(nvaColonia);
+                    daoColonia.create(nvaColonia);
 
                     //Obtenemos la ultima colonia
                     LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
                     ordenamiento.put("idColonia", "desc");
-                    Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
+                    Colonia colonia = (Colonia) daoColonia.findAll(ordenamiento).get(0);
                     instancia.setIdColonia(colonia);
                     System.out.println("Nueva colonia agregada!");
                 }
@@ -329,13 +463,13 @@ public class OrganizacionesController
             {
                 //Agregar codigo postal + colonia
 //                instancia.setIdColonia(new CodigosPostalesController().agregarCodigoPostal(codigo_postal, otra_colonia, estado, municipio, ciudad));
-                EstadosSia estadoP = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(estado)));
-                MunicipiosSia municipioP = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
-                TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
+                EstadosSia estadoP = (EstadosSia) daoEstadosSia.find(BigDecimal.valueOf(Double.parseDouble(estado)));
+                MunicipiosSia municipioP = (MunicipiosSia) daoMunicipiosSia.find(BigDecimal.valueOf(Double.parseDouble(municipio)));
+                TipoLocalidad localidad = (TipoLocalidad) daoTipoLocalidad.find(BigDecimal.ONE);
                 Ciudades ciudadP = null;
                 try
                 {
-                    ciudadP = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
+                    ciudadP = (Ciudades) daoCiudades.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
                 } catch(Exception e)
                 {
                     System.out.println("No tiene ciudad");
@@ -350,12 +484,12 @@ public class OrganizacionesController
                 {
                     codigoPostal.setIdCiudad(ciudadP);
                 }
-                codigosPostalesFacade.create(codigoPostal);
+                daoCodigosPostales.create(codigoPostal);
 
                 //Obtenemos el Ultimo codigo postal
                 LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
                 ordenamiento.put("idCp", "desc");
-                CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
+                CodigosPostales codigoPostalNew = (CodigosPostales) daoCodigosPostales.findAll(ordenamiento).get(0);
 
                 Colonia colonia = new Colonia();
                 colonia.setIdCp(codigoPostal);
@@ -363,12 +497,12 @@ public class OrganizacionesController
                 colonia.setNombre(otra_colonia);
                 colonia.setStatus(BigInteger.ONE);
 
-                coloniaFacade.create(colonia);
+                daoColonia.create(colonia);
 
                 //Obtenemos la ultima colonia
                 ordenamiento = new LinkedHashMap<String, String>();
                 ordenamiento.put("idColonia", "desc");
-                Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
+                Colonia coloniaNew = (Colonia) daoColonia.findAll(ordenamiento).get(0);
                 instancia.setIdColonia(coloniaNew);
                 System.out.println("Nuevo codigo postal + colonia agregado!");
             }
@@ -385,7 +519,7 @@ public class OrganizacionesController
             //try-catch edita instancia
             try
             {
-                instanciaFacade.edit(instancia);
+                daoInstancia.edit(instancia);
             } catch(Exception e)
             {
                 result.addError(new ObjectError("error_sql", "¡Error interno! Imposible editar organización."));
@@ -402,10 +536,10 @@ public class OrganizacionesController
     @RequestMapping(method = RequestMethod.GET, value = "/editarProyecto.do")
     public String editarProyectos(int id, Model model, HttpSession session, HttpServletRequest request)
     {
-        Proyectos proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
+        Proyectos proyecto = (Proyectos) daoProyectos.find(BigDecimal.valueOf(id));
         model.addAttribute("proyecto", proyecto);
         model.addAttribute("proyectoDireccion", proyecto);
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+        List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         System.out.println("Instancias");
         for(int i = 0; i < listaInstancias.size(); i++)
@@ -419,18 +553,19 @@ public class OrganizacionesController
             }
         }
         model.addAttribute("instancia", filtroInstancias);
-        model.addAttribute("estados", estadosFacade.findAll());
-        model.addAttribute("perfil", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
-        model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
-        model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("estados", daoEstadosSia.findAll());
+        model.addAttribute("perfil", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
         List<Perfil> perfilesNoSonDelProyecto = new ArrayList<Perfil>();
         List<Perfil> perfilesSonDelProyecto = new ArrayList<Perfil>();
-        List<Perfil> listaPerfil = perfilFacade.findAll();
+        List<Perfil> listaPerfil = daoPerfil.findAll();
         Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
         boolean agregar;
         for(int i = 0; i < listaPerfil.size(); i++)
         {
             agregar = true;
+            //TODO aquí falta cambiar al DAO, pero marca error con el método getProyectoPerfilCollection()
             iteratorProyectosPerfilCollection = proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().iterator();
             while(iteratorProyectosPerfilCollection.hasNext())
             {
@@ -485,7 +620,7 @@ public class OrganizacionesController
             } catch(Exception e)
             {
             }
-            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+            List<Instancia> listaInstancias = daoInstancia.findBySpecificField("validacionAdmin", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             System.out.println("Instancias");
             for(int i = 0; i < listaInstancias.size(); i++)
@@ -499,20 +634,21 @@ public class OrganizacionesController
                 }
             }
             model.addAttribute("instancia", filtroInstancias);
-            model.addAttribute("estados", estadosFacade.findAll());
-            model.addAttribute("perfil", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
-            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
-            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("estados", daoEstadosSia.findAll());
+            model.addAttribute("perfil", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
             List<Perfil> perfilesNoSonDelProyecto = new ArrayList<Perfil>();
             List<Perfil> perfilesSonDelProyecto = new ArrayList<Perfil>();
             List<Perfil> listaPerfil;
             Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
-            listaPerfil = perfilFacade.findAll();
+            listaPerfil = daoPerfil.findAll();
             boolean agregar;
             String nombrePerfilCollection;
             for(int i = 0; i < listaPerfil.size(); i++)
             {
                 agregar = true;
+                //TODO falta corregir esto, marca error con el dao en el método getProyectoPerfilCollection()
                 iteratorProyectosPerfilCollection = proyectosFacade.find(proyecto.getIdProyecto()).getProyectoPerfilCollection().iterator();
                 while(iteratorProyectosPerfilCollection.hasNext())
                 {
@@ -545,20 +681,20 @@ public class OrganizacionesController
                 System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
             }
             model.addAttribute("actividadAux", actividadesModel.actividades);
-            model.addAttribute("proyectoDireccion", proyectosFacade.find(proyecto.getIdProyecto()));
+            model.addAttribute("proyectoDireccion", daoProyectos.find(proyecto.getIdProyecto()));
             model.addAttribute("proyecto", proyecto);
             return "/Organizaciones/editarProyecto";
         } else
         {
             //**********************Insertar los Perfiles del proyecto**********************************
-            List<ProyectoPerfil> listaProyectosPerfil = proyectoPerfilFacade.findBySpecificField("idProyecto", proyecto, "equal", null, null);
+            List<ProyectoPerfil> listaProyectosPerfil = daoProyectoPerfil.findBySpecificField("idProyecto", proyecto, "equal", null, null);
             Iterator<ProyectoPerfil> recorreProyectosPerfil = listaProyectosPerfil.iterator();
             //while para borrar los perfiles que tiene el proyecto
             while(recorreProyectosPerfil.hasNext())
             {
                 ProyectoPerfil borrarPerfilDeProyecto;
                 borrarPerfilDeProyecto = recorreProyectosPerfil.next();
-                proyectoPerfilFacade.remove(borrarPerfilDeProyecto);
+                daoProyectoPerfil.remove(borrarPerfilDeProyecto);
             }
             if(selectfrom != null)
             {
@@ -573,15 +709,15 @@ public class OrganizacionesController
                 while(inserta.hasNext())
                 {
                     ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
-                    proyectoPerfil.setIdPerfil(perfilFacade.find(BigDecimal.valueOf(Integer.parseInt(inserta.next().toString())))); //Perfil
+                    proyectoPerfil.setIdPerfil((Perfil) daoPerfil.find(BigDecimal.valueOf(Integer.parseInt(inserta.next().toString())))); //Perfil
                     proyectoPerfil.setIdProyecto(proyecto); //Proyecto
-                    proyectoPerfilFacade.create(proyectoPerfil);
+                    daoProyectoPerfil.create(proyectoPerfil);
                 }
             }
             //****************************Insertar las Actividades**************************
             if(Integer.parseInt(nActividades) > 2 || nActividades != null)
             {
-                List<Actividades> listaActividadesProyecto = actividadesFacade.findBySpecificField("idProyecto", proyecto, "equal", null, null);
+                List<Actividades> listaActividadesProyecto = daoActividades.findBySpecificField("idProyecto", proyecto, "equal", null, null);
                 Iterator<Actividades> recorreActividades = listaActividadesProyecto.iterator();
                 //while para borrar las actividades del proyecto
                 while(recorreActividades.hasNext())
@@ -589,7 +725,7 @@ public class OrganizacionesController
                     Actividades borrarActividadesProyecto;
                     borrarActividadesProyecto = recorreActividades.next();
                     borrarActividadesProyecto.setEstatus(BigInteger.ZERO);
-                    actividadesFacade.edit(borrarActividadesProyecto);
+                    daoActividades.edit(borrarActividadesProyecto);
                 }
                 List<String> listaActividades = new ArrayList<String>();
                 StringTokenizer actividades = new StringTokenizer(cadenaActividades, ";");
@@ -605,7 +741,7 @@ public class OrganizacionesController
                     actividadesObj.setDetalle(insertaActividades.next().toString());//String
                     actividadesObj.setEstatus(BigInteger.ONE);//BigInteger
                     actividadesObj.setIdProyecto(proyecto);//Proyectos
-                    actividadesFacade.create(actividadesObj);
+                    daoActividades.create(actividadesObj);
                 }
             }
             //Pasar todo a mayusculas
@@ -617,7 +753,7 @@ public class OrganizacionesController
             //******************************try-catch para editar un proyecto**************************
             try
             {
-                proyectosFacade.edit(proyecto);
+                daoProyectos.edit(proyecto);
             } catch(Exception e)
             {
                 result.addError(new ObjectError("error_sql", "¡Error interno! Imposible editar proyecto."));
@@ -629,7 +765,7 @@ public class OrganizacionesController
                 } catch(Exception ex)
                 {
                 }
-                List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+                List<Instancia> listaInstancias = daoInstancia.findBySpecificField("validacionAdmin", "1", "equal", null, null);
                 ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
                 System.out.println("Instancias");
                 for(int i = 0; i < listaInstancias.size(); i++)
@@ -643,20 +779,21 @@ public class OrganizacionesController
                     }
                 }
                 model.addAttribute("instancia", filtroInstancias);
-                model.addAttribute("estados", estadosFacade.findAll());
-                model.addAttribute("perfil", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
-                model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
-                model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+                model.addAttribute("estados", daoEstadosSia.findAll());
+                model.addAttribute("perfil", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
+                model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
+                model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
                 List<Perfil> perfilesNoSonDelProyecto = new ArrayList<Perfil>();
                 List<Perfil> perfilesSonDelProyecto = new ArrayList<Perfil>();
                 List<Perfil> listaPerfil;
                 Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
-                listaPerfil = perfilFacade.findAll();
+                listaPerfil = daoPerfil.findAll();
                 boolean agregar;
                 String nombrePerfilCollection;
                 for(int i = 0; i < listaPerfil.size(); i++)
                 {
                     agregar = true;
+                    //TODO lo mismo con el método getProyectoPerfilCollection()
                     iteratorProyectosPerfilCollection = proyectosFacade.find(proyecto.getIdProyecto()).getProyectoPerfilCollection().iterator();
                     while(iteratorProyectosPerfilCollection.hasNext())
                     {
@@ -689,13 +826,13 @@ public class OrganizacionesController
                     System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
                 }
                 model.addAttribute("actividadAux", actividadesModel.actividades);
-                model.addAttribute("proyectoDireccion", proyectosFacade.find(proyecto.getIdProyecto()));
+                model.addAttribute("proyectoDireccion", daoProyectos.find(proyecto.getIdProyecto()));
                 model.addAttribute("proyecto", proyecto);
                 return "/Organizaciones/editarProyecto";
             }
 
             System.out.println("Sin errores");
-            List<Proyectos> listaProyectos = proyectosFacade.findBySpecificField("estatus", "1", "equal", null, null);
+            List<Proyectos> listaProyectos = daoProyectos.findBySpecificField("estatus", "1", "equal", null, null);
             ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
             for(int i = 0; i < listaProyectos.size(); i++)
             {
@@ -719,11 +856,11 @@ public class OrganizacionesController
     {
 
         Instancia instancia;
-        instancia = instanciaFacade.find(BigDecimal.valueOf(id));
+        instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(id));
         List<String> listaOb = new ArrayList<String>();
         for(String idObservacion : observaciones)
         {
-            CatalogoObservaciones catObser = observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
+            CatalogoObservaciones catObser = (CatalogoObservaciones) daoCatalogoObservaciones.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
             //Objeto a Registrar
             RegObservacionGeneral registro = new RegObservacionGeneral();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
@@ -733,7 +870,7 @@ public class OrganizacionesController
             //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
             //Creacion de Registro
-            regObservacionGeneralFacade.create(registro);
+            daoRegObservacionGeneral.create(registro);
             //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             listaOb.add(catObser.getDetalle());
         }
@@ -744,12 +881,12 @@ public class OrganizacionesController
             Proyectos proyectoEdit = proyectos.next();
             proyectoEdit.setEstatus(BigInteger.valueOf(status));
             proyectoEdit.setValidacionAdmin(BigInteger.valueOf(val_admin));
-            proyectosFacade.edit(proyectoEdit);
+            daoProyectos.edit(proyectoEdit);
         }
 //        instancia.setStatus(BigInteger.valueOf(status));
         instancia.setStatus((short) status);//.......................................correccion  de error..........................................
 //        instancia.setValidacionAdmin(BigInteger.valueOf(val_admin));:::::::::::::::::::::::::::::::::::::::::::::::::: REVISION DE VALIDACION DEL ADMINISTRADOR PARA INSTANCIAS ::::::::::::::::::::::::::::::::::
-        instanciaFacade.edit(instancia);
+        daoInstancia.edit(instancia);
 
         String mensaje;
         switch(status)
@@ -813,11 +950,11 @@ public class OrganizacionesController
             int id, int estatus, int val_admin, Model model, HttpSession session, HttpServletRequest request)
     {
         Proyectos proyecto;
-        proyecto = proyectosFacade.find(BigDecimal.valueOf(id));
+        proyecto = (Proyectos) daoProyectos.find(BigDecimal.valueOf(id));
         List<String> listaOb = new ArrayList<String>();
         for(String idObservacion : observaciones)
         {
-            CatalogoObservaciones catObser = observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
+            CatalogoObservaciones catObser = (CatalogoObservaciones) daoCatalogoObservaciones.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
             //Objeto a Registrar
             RegObservacionGeneral registro = new RegObservacionGeneral();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
@@ -827,7 +964,7 @@ public class OrganizacionesController
             //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
             //Creacion de Registro
-            regObservacionGeneralFacade.create(registro);
+            daoRegObservacionGeneral.create(registro);
             System.out.println("las observaciones son: " + idObservacion);
             //pendiente por modificar Registro de Observaciones!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             listaOb.add(catObser.getDetalle());
@@ -835,7 +972,7 @@ public class OrganizacionesController
 
         proyecto.setEstatus(BigInteger.valueOf(estatus));
         proyecto.setValidacionAdmin(BigInteger.valueOf(val_admin));
-        proyectosFacade.edit(proyecto);
+        daoProyectos.edit(proyecto);
         String mensaje;
         switch(estatus)
         {

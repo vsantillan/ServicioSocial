@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import edu.servicio.toluca.beans.PlaticaJson;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
@@ -51,6 +52,7 @@ import net.sf.jasperreports.engine.JasperRunManager;
 import org.openide.util.Exceptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -60,6 +62,7 @@ import org.slf4j.LoggerFactory;
 public class PlaticaController
 {
 
+    // <editor-fold defaultstate="collapsed" desc="EJB Facades Platica">
     @EJB(mappedName = "java:global/ServicioSocial/PlaticaFacade")
     private PlaticaFacade platicaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/LugaresPlaticaFacade")
@@ -68,8 +71,42 @@ public class PlaticaController
     private FoliosPlaticaFacade foliosPlaticaFacade;
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     private VistaAlumnoFacade VistaAlumnoFacade;
+    // </editor-fold>
 
+    private GenericDao<Platica> daoPlatica;
+    private GenericDao<LugaresPlatica> daoLugaresPlatica;
+    private GenericDao<FoliosPlatica> daoFoliosPlatica;
+    private GenericDao<VistaAlumno> daoVistaAlumno;
+    
     private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
+    
+    @Autowired
+    public void setDaoPlatica(GenericDao<Platica> daoPlatica)
+    {
+        this.daoPlatica = daoPlatica;
+        daoPlatica.setClass(Platica.class);
+    }
+    
+    @Autowired
+    public void setLugaresPlatica(GenericDao<LugaresPlatica> daoLugaresPlatica)
+    {
+        this.daoLugaresPlatica = daoLugaresPlatica;
+        daoLugaresPlatica.setClass(LugaresPlatica.class);
+    }
+    
+    @Autowired
+    public void setDaoFoliosPlatica(GenericDao<FoliosPlatica> daoFoliosPlatica)
+    {
+        this.daoFoliosPlatica = daoFoliosPlatica;
+        daoFoliosPlatica.setClass(FoliosPlatica.class);
+    }
+    
+    @Autowired
+    public void setDaoVistaAlumno(GenericDao<VistaAlumno> daoVistaAlumno)
+    {
+        this.daoVistaAlumno = daoVistaAlumno;
+        daoVistaAlumno.setClass(VistaAlumno.class);
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/altaPlatica.do")
     public String altaPlatica(Model modelo, HttpSession session, HttpServletRequest request)
@@ -85,7 +122,7 @@ public class PlaticaController
         modelo.addAttribute("anioFin", anio.anioFin());
         modelo.addAttribute("platica", new Platica());
         modelo.addAttribute("lugar_i", new LugaresPlatica());
-        modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+        modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", null, null));
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
         return "/Platicas/altaPlatica";
     }
@@ -143,8 +180,8 @@ public class PlaticaController
         }
         LinkedHashMap ordenarDesc = new LinkedHashMap();
         ordenarDesc.put("fecha", "desc");
-
-        modelo.addAttribute("platica", platicaFacade.findBySpecificField("status", "1", "equal", ordenarDesc, null));
+        
+        modelo.addAttribute("platica", daoPlatica.findBySpecificField("status", "1", "equal", ordenarDesc, null));
         return "/Platicas/consultasBajas";
     }
 
@@ -178,7 +215,7 @@ public class PlaticaController
             return "redirect:login.do";
         }
         ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
-        List<Platica> platicas = platicaFacade.findAll();
+        List<Platica> platicas = daoPlatica.findAll();
 
         Date fechaActual = new Date();
 
@@ -233,7 +270,7 @@ public class PlaticaController
                 System.out.println("intentando guardar errores");
                 modelo.addAttribute("anioInicio", anio.anioActual());
                 modelo.addAttribute("anioFin", anio.anioFin());
-                modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", null, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                 modelo.addAttribute("lugar_i", new LugaresPlatica());
                 modelo.addAttribute("alert", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</div>");
@@ -267,7 +304,7 @@ public class PlaticaController
                         System.out.println("no es hora");
                         modelo.addAttribute("anioInicio", anio.anioActual());
                         modelo.addAttribute("anioFin", anio.anioFin());
-                        modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                        modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", null, null));
                         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                         modelo.addAttribute("lugar_i", new LugaresPlatica());
                         modelo.addAttribute("alert", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</div>");
@@ -277,7 +314,7 @@ public class PlaticaController
                     {
                         platica.setDescripcion(platica.getDescripcion().toUpperCase());
                         platica.setStatus((short) 1);
-                        List<Platica> listaPlaticas = platicaFacade.findAll();
+                        List<Platica> listaPlaticas = daoPlatica.findAll();
                         Boolean existe = false;
                         MetodosValidacion limpiar1 = new MetodosValidacion();
                         for (int i = 0; i < listaPlaticas.size(); i++)
@@ -299,7 +336,7 @@ public class PlaticaController
 
                             modelo.addAttribute("anioInicio", anio.anioActual());
                             modelo.addAttribute("anioFin", anio.anioFin());
-                            modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                            modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                             modelo.addAttribute("lugar_i", new LugaresPlatica());
                             modelo.addAttribute("alert", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</div>");
@@ -310,10 +347,10 @@ public class PlaticaController
                         {
                             MetodosValidacion limpiar = new MetodosValidacion();
                             platica.setDescripcion(platica.getDescripcion().toUpperCase());
-                            platicaFacade.create(platica);
+                            daoLugaresPlatica.create(platica);
                             modelo.addAttribute("anioInicio", anio.anioActual());
                             modelo.addAttribute("anioFin", anio.anioFin());
-                            modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                            modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                             modelo.addAttribute("lugar_i", new LugaresPlatica());
                             modelo.addAttribute("alert", "<div class='alert alert-success'><span class=\"glyphicon glyphicon-saved sizeIcon\" ></span>Plática Guardada</div>");
@@ -325,7 +362,7 @@ public class PlaticaController
                 {
                     modelo.addAttribute("anioInicio", anio.anioActual());
                     modelo.addAttribute("anioFin", anio.anioFin());
-                    modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", null, null));
+                    modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", null, null));
                     modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                     modelo.addAttribute("lugar_i", new LugaresPlatica());
                     modelo.addAttribute("alert", "<div class='alert alert-danger'><h3<span class=\"glyphicon glyphicon-remove sizeIcon\" ></span>Error al guardar plática verifique los errores</h3></div>");
@@ -347,17 +384,17 @@ public class PlaticaController
     void folioPlatica(String fecha, HttpSession session, HttpServletRequest request, HttpServletResponse response)
     {
 
-        List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
+        List<FoliosPlatica> lista = daoFoliosPlatica.findBySpecificField("numeroFolio", fecha + session.getAttribute("NCONTROL").toString(), "equal", null, null);
         if (lista.isEmpty())
         {
             VistaAlumno alumnoRegistrado = new VistaAlumno();
             alumnoRegistrado.setId(session.getAttribute("NCONTROL").toString());
-            List<FoliosPlatica> tieneRegistros = foliosPlaticaFacade.findBySpecificField("alumnoId", alumnoRegistrado, "equal", null, null);
+            List<FoliosPlatica> tieneRegistros = daoFoliosPlatica.findBySpecificField("alumnoId", alumnoRegistrado, "equal", null, null);
             if (!tieneRegistros.isEmpty())
             {
                 for (int i = 0; i < tieneRegistros.size(); i++)
                 {
-                    foliosPlaticaFacade.remove(tieneRegistros.get(i));
+                    daoLugaresPlatica.remove(tieneRegistros.get(i));
                 }
             }
             FoliosPlatica foliosPlatica = new FoliosPlatica();
@@ -372,15 +409,15 @@ public class PlaticaController
             foliosPlatica.setNumeroFolio(fecha + session.getAttribute("NCONTROL").toString());
             System.out.println(fecha + session.getAttribute("NCONTROL").toString());
             foliosPlatica.setStatus((short) 1);
-            foliosPlaticaFacade.create(foliosPlatica);
+            daoLugaresPlatica.create(foliosPlatica);
 
             //incrementar numero de asistentes +1
-            platica = platicaFacade.findBySpecificField("id", fecha, "equal", null, null).get(0);
+            platica = (Platica) daoPlatica.findBySpecificField("id", fecha, "equal", null, null).get(0);
             int numero = platica.getNumeroAsistentes();
             numero = numero + 1;
             System.out.println("numero" + numero);
             platica.setNumeroAsistentes(numero);
-            platicaFacade.edit(platica);
+            daoLugaresPlatica.edit(platica);
             session.setAttribute("platica", fecha + "");
 
             System.out.println("ACEPTO LOS CAMBIOS");
@@ -433,12 +470,12 @@ public class PlaticaController
 
         } else
         {
-            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
+            List<FoliosPlatica> lista = daoLugaresPlatica.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
 
             if (lista.size() > 0)
             {
                 VistaAlumno vistaAlumno1;
-                vistaAlumno1 = VistaAlumnoFacade.find(lista.get(0).getAlumnoId().getId());
+                vistaAlumno1 = (VistaAlumno) daoVistaAlumno.find(lista.get(0).getAlumnoId().getId());
                 System.out.println(lista.get(0).getAlumnoId());
                 //vistaAlumno1 = VistaAlumnoFacade.find("09280531");
                 modelo.addAttribute("alumno", vistaAlumno1);
@@ -465,13 +502,13 @@ public class PlaticaController
 
         } else
         {
-            List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
+            List<FoliosPlatica> lista = daoFoliosPlatica.findBySpecificField("numeroFolio", foliosPlatica.getNumeroFolio(), "equal", null, null);
 
             if (lista.size() > 0)
             {
-                foliosPlatica = foliosPlaticaFacade.find(lista.get(0).getId());
+                foliosPlatica = (FoliosPlatica) daoFoliosPlatica.find(lista.get(0).getId());
                 foliosPlatica.setAsistencia((short) 1);
-                foliosPlaticaFacade.edit(foliosPlatica);
+                daoFoliosPlatica.edit(foliosPlatica);
                 modelo.addAttribute("colocado", " <div ><span class=\"glyphicon glyphicon-ok  alert-succes\" ></span></div>");
                 modelo.addAttribute("foliosPlatica", new FoliosPlatica());
                 return "/Platicas/capturarAsistencia";
@@ -492,11 +529,11 @@ public class PlaticaController
         if (no_control.length() > 7 && no_control.length() < 9)
         {
             // List<Va> listaAlumno = vaFacade.findBySpecificField("id", no_control, "equal", null, null); 
-            List<VistaAlumno> listaAlumno = VistaAlumnoFacade.findBySpecificField("id", no_control, "equal", null, null);
+            List<VistaAlumno> listaAlumno = daoVistaAlumno.findBySpecificField("id", no_control, "equal", null, null);
             if (listaAlumno.isEmpty())
             {
                 ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
-                List<Platica> platicas = platicaFacade.findAll();
+                List<Platica> platicas = daoFoliosPlatica.findAll();
                 if (!platicas.isEmpty())
                 {
                     for (int i = 0; i < platicas.size(); i++)
@@ -516,7 +553,7 @@ public class PlaticaController
                 if (Float.parseFloat(porcentaje.getPorcentaje()) < 70)
                 {
                     ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
-                    List<Platica> platicas = platicaFacade.findAll();
+                    List<Platica> platicas = daoPlatica.findAll();
                     if (!platicas.isEmpty())
                     {
                         for (int i = 0; i < platicas.size(); i++)
@@ -535,17 +572,17 @@ public class PlaticaController
                     VistaAlumno alumnoRegistrado1 = new VistaAlumno();
                     alumnoRegistrado1.setId(no_control);
                     System.out.println("creo alumno");
-                    List<FoliosPlatica> tieneRegistros = foliosPlaticaFacade.findBySpecificField("alumnoId", alumnoRegistrado1, "equal", null, null);
+                    List<FoliosPlatica> tieneRegistros = daoFoliosPlatica.findBySpecificField("alumnoId", alumnoRegistrado1, "equal", null, null);
                     if (!tieneRegistros.isEmpty())
                     {
                         System.out.println("entro no esta vacia");
                         for (int i = 0; i < tieneRegistros.size(); i++)
                         {
-                            foliosPlaticaFacade.remove(tieneRegistros.get(i));
+                            daoFoliosPlatica.remove(tieneRegistros.get(i));
                         }
                     }
 
-                    List<FoliosPlatica> lista = foliosPlaticaFacade.findBySpecificField("numeroFolio", idPlatica + "" + no_control, "equal", null, null);
+                    List<FoliosPlatica> lista = daoFoliosPlatica.findBySpecificField("numeroFolio", idPlatica + "" + no_control, "equal", null, null);
                     if (lista.isEmpty())
                     {
                         FoliosPlatica foliosPlatica = new FoliosPlatica();
@@ -561,19 +598,19 @@ public class PlaticaController
                         System.out.println(idPlatica + no_control);
                         foliosPlatica.setStatus((short) 1);
                         foliosPlatica.setAsistencia((short) 1);
-                        foliosPlaticaFacade.create(foliosPlatica);
+                        daoFoliosPlatica.create(foliosPlatica);
                         //incrementar numero de asistentes +1
-                        platica = platicaFacade.findBySpecificField("id", idPlatica, "equal", null, null).get(0);
+                        platica = (Platica) daoPlatica.findBySpecificField("id", idPlatica, "equal", null, null).get(0);
                         int numero = platica.getNumeroAsistentes();
                         numero = numero + 1;
                         System.out.println("numero" + numero);
                         platica.setNumeroAsistentes(numero);
-                        platicaFacade.edit(platica);
+                        daoPlatica.edit(platica);
                         modelo.addAttribute("folio", idPlatica + no_control);
                         modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
                         modelo.addAttribute("espacio", " ");
                         ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
-                        List<Platica> platicas = platicaFacade.findAll();
+                        List<Platica> platicas = daoPlatica.findAll();
                         if (!platicas.isEmpty())
                         {
                             for (int i = 0; i < platicas.size(); i++)
@@ -592,11 +629,11 @@ public class PlaticaController
                         FoliosPlatica foliosPlatica = lista.get(0);
                         System.out.println("si encontro numero folio");
                         foliosPlatica.setAsistencia((short) 1);
-                        foliosPlaticaFacade.edit(foliosPlatica);
+                        daoFoliosPlatica.edit(foliosPlatica);
                         modelo.addAttribute("folio", idPlatica + no_control);
                         modelo.addAttribute("idP", foliosPlatica.getPlaticaId().getId());
                         ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
-                        List<Platica> platicas = platicaFacade.findAll();
+                        List<Platica> platicas = daoPlatica.findAll();
                         if (!platicas.isEmpty())
                         {
                             for (int i = 0; i < platicas.size(); i++)
@@ -615,7 +652,7 @@ public class PlaticaController
         } else
         {
             ArrayList<Platica> platicasDisponibles = new ArrayList<Platica>();
-            List<Platica> platicas = platicaFacade.findAll();
+            List<Platica> platicas = daoPlatica.findAll();
             if (!platicas.isEmpty())
             {
                 for (int i = 0; i < platicas.size(); i++)
@@ -650,9 +687,9 @@ public class PlaticaController
         try
         {
             Platica platica;
-            platica = platicaFacade.find(id_platica);
+            platica = (Platica) daoPlatica.find(id_platica);
             platica.setStatus((short) 0);
-            platicaFacade.edit(platica);
+            daoPlatica.edit(platica);
         } catch (Exception e)
         {
         }
@@ -664,7 +701,7 @@ public class PlaticaController
     {
         if (!lugares.getLugar().isEmpty())
         {
-            List<LugaresPlatica> listaLugares = lugaresPlaticaFacade.findAll();
+            List<LugaresPlatica> listaLugares = daoLugaresPlatica.findAll();
             Boolean existe = false;
             MetodosValidacion limpiar = new MetodosValidacion();
             for (int i = 0; i < listaLugares.size(); i++)
@@ -684,7 +721,7 @@ public class PlaticaController
                 modelo.addAttribute("platica", new Platica());
                 LinkedHashMap ordenarDesc = new LinkedHashMap();
                 ordenarDesc.put("id", "desc");
-                modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", ordenarDesc, null));
+                modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", ordenarDesc, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                 modelo.addAttribute("alert", "<script>alert('El lugar ya existe');</script>");
                 return "/Platicas/altaPlatica";
@@ -694,14 +731,14 @@ public class PlaticaController
                 lugares.setLugar(lugares.getLugar());
                 MetodosValidacion limpiar2 = new MetodosValidacion();
                 lugares.setLugar(limpiar2.quitaCaracteresEspeciales(lugares.getLugar().toUpperCase().toString()));
-                lugaresPlaticaFacade.create(lugares);
+                daoLugaresPlatica.create(lugares);
                 Fecha anio = new Fecha();
                 modelo.addAttribute("anioInicio", anio.anioActual());
                 modelo.addAttribute("anioFin", anio.anioFin());
                 modelo.addAttribute("platica", new Platica());
                 LinkedHashMap ordenarDesc = new LinkedHashMap();
                 ordenarDesc.put("id", "desc");
-                modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", ordenarDesc, null));
+                modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", ordenarDesc, null));
                 modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                 modelo.addAttribute("alert", "<script>alert('Lugar agregado');</script>");
                 return "/Platicas/altaPlatica";
@@ -714,7 +751,7 @@ public class PlaticaController
             modelo.addAttribute("platica", new Platica());
             LinkedHashMap ordenarDesc = new LinkedHashMap();
             ordenarDesc.put("id", "desc");
-            modelo.addAttribute("lugares", lugaresPlaticaFacade.findBySpecificField("status", 1, "equal", ordenarDesc, null));
+            modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", ordenarDesc, null));
             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
             modelo.addAttribute("alert", "<script>alert('Error al agregar lugar el capo no puede estar vacio');</script>");
             return "/Platicas/altaPlatica";
@@ -731,7 +768,7 @@ public class PlaticaController
         PlaticaJson platicaJson = new PlaticaJson();
         modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
 
-        Platica platica = platicaFacade.find(Long.parseLong(fecha));
+        Platica platica = (Platica) daoPlatica.find(Long.parseLong(fecha));
         platicaJson.setHora("Hora:" + platica.getHora());
         platicaJson.setLugar("Lugar:" + platica.getIdLugar().getLugar());
         platicaJson.setDescripcion("Descripción:" + platica.getDescripcion());
