@@ -386,48 +386,80 @@
                                             </div>
                                             <div class="row col-md-12">
                                                 <h2 class="text-info">Horario Inicio:</h2>
-                                                <div class="form-group col-md-2 ">
+                                                <div class="form-group col-md-3">
                                                     <label>Lunes</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[1] form-control" path="luI"  />
+                                                    <%--<form:input maxlength="5" type="text"  class="timepicker.[1] form-control" path="luI"  />--%>
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input  maxlength="5" type="text"  class="timepicker.[1] form-control" path="luI"/>
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>                                           
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                     <label>Martes</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[3] form-control" path="maI"  />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[3] form-control" path="maI"  />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
+
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                     <label>Miercoles</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[5] form-control" path="miI"  />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[5] form-control" path="miI"  />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                     <label>Jueves</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[7] form-control" path="juI" />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[7] form-control" path="juI" />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
                                                 </div>
                                                 <div class="form-group col-md-2">
                                                     <label>Viernes</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[9] form-control" path="viI"  />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[9] form-control" path="viI"  />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
                                                 </div>
                                             </div>
                                             <div class="row col-md-12">
                                                 <h2 class="text-info">Horario Final</h2>
                                                 <div class="form-group col-md-2 ">
                                                     <label>Lunes</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[2] form-control" path="luF" />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[2] form-control" path="luF" />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
                                                 </div>
                                                 <div class="form-group col-md-2 ">
                                                     <label>Martes</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[4] form-control" path="maF" />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[4] form-control" path="maF" />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
                                                 </div>
                                                 <div class="form-group col-md-2 ">
                                                     <label>Miercoles</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[6] form-control" path="miF" />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[6] form-control" path="miF" />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
                                                 </div>
                                                 <div class="form-group col-md-2 ">
                                                     <label>Jueves</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[8] form-control" path="juF" />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[8] form-control" path="juF" />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
                                                 </div>
                                                 <div class="form-group col-md-2 ">
                                                     <label>Viernes</label>
-                                                    <form:input maxlength="5" type="text"  class="timepicker.[10] form-control" path="viF" />
+                                                    <div class="input-append bootstrap-timepicker input-group">
+                                                        <form:input maxlength="5" type="text"  class="timepicker.[10] form-control" path="viF" />
+                                                        <span class="add-on input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                    </div>        
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-4 col-md-offset-2">
@@ -495,7 +527,7 @@
                         <ul id="listaObservaciones" ></ul>
                     </div>
                 </div>
-                        </div>
+            </div>
             <div class="modal fade" id="contenidoRespuesta" tabindex="-1" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -529,7 +561,7 @@
     <script src="js/jquery.codigos.postales.js"></script>       
     <script src="js/jquery.manolo.js"></script>
     <script>
-                                                    $(document).ready(function () {
+                                                    $(document).ready(function() {
                                                         $('input[type=file]').bootstrapFileInput();
                                                     });
     </script>
