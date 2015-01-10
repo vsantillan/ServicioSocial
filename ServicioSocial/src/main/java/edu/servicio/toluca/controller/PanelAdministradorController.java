@@ -7,6 +7,8 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.ObservacionesBean;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.dao.GenericDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.RegObservacionGeneral;
@@ -37,6 +39,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PanelAdministradorController
 {
+
+    private GenericDao<UsuarioInstancia> daoUsuarioInstancia;
+
+    @Autowired
+    public void setDaoUsuarioInstancia(GenericDao<UsuarioInstancia> daoUsuarioInstancia)
+    {
+        this.daoUsuarioInstancia = daoUsuarioInstancia;
+        daoUsuarioInstancia.setClass(UsuarioInstancia.class);
+    }
 
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade catalogoObservacionesFacade;
@@ -188,10 +199,15 @@ public class PanelAdministradorController
     @RequestMapping(method = RequestMethod.GET, value = "/editUser.do")
     public String editUser(int id, Model model, HttpSession session, HttpServletRequest request)
     {
-        model.addAttribute("usuarios", usuarioInstanciaFacade.find(BigDecimal.valueOf(id)));
+
+        UsuarioInstancia usuario = (UsuarioInstancia) daoUsuarioInstancia.find(BigDecimal.valueOf(id));
+        model.addAttribute("usuarios", usuario);
+        System.out.println(usuario.getPassword());
+        System.out.println(usuario.getIdUsuarioInstancia());
 
         System.out.println("ENTRO A EDIT USER");
         return "/Usuarios/editarUsuario";
+
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/downUser.do")
@@ -232,35 +248,35 @@ public class PanelAdministradorController
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/updateUserData.do")
-    public String updateUser(UsuarioInstancia usuario, String statusPass)
+    public String updateUser(UsuarioInstancia usuario, String lockPass)
     {
         System.out.println("..............\n\n\n Entrando a controlador para modificar usuarios");
-        System.out.println(usuario.getApellidoMat());
-        System.out.println(usuario.getApellidoPat());
-        System.out.println(statusPass);
-        UsuarioInstancia usuarioFind = usuarioInstanciaFacade.find(usuario.getIdUsuarioInstancia());
-        System.out.println(usuario.getApellidoMat());
-        System.out.println(usuario.getApellidoPat());
-        System.out.println(statusPass);
-//        usuarioFind.setApellidoMat(apellidomat);
-//        usuarioFind.setApellidoPat(apellidopat);
-//        usuarioFind.setEmail(email);
-//        usuarioFind.setExtension(extension);
-//        usuarioFind.setTelefono(telefono);
-//        usuarioFind.setNombre(nombre);
-//        usuarioFind.setPuesto(puesto);
-        if (statusPass.equals('1'))
-        {
+        System.out.println(usuario.getPassword());
+        System.out.println(lockPass);
 
-        }
-        try
+//        if (usuario.getPassword().equals(""))
+//        {
+        UsuarioInstancia usuarioL = (UsuarioInstancia) daoUsuarioInstancia.find(usuario.getIdUsuarioInstancia());
+        usuarioL.setApellidoMat(usuario.getApellidoMat());
+        usuarioL.setApellidoPat(usuario.getApellidoPat());
+        usuarioL.setEmail(usuario.getEmail());
+        usuarioL.setPuesto(usuario.getPuesto());
+        usuarioL.setExtension(usuario.getExtension());
+        usuarioL.setTelefono(usuario.getTelefono());
+        usuarioL.setNombre(usuario.getNombre());
+        usuarioL.setStatus((short)1);
+//        } else
+//        {
+        if ("lockPassword".equals(lockPass))
         {
-//            usuarioInstanciaFacade.edit(usuarioFind);
+            System.out.println("Mantener contraseña");
+        } else
+        {
+            usuarioL.setPassword(StringMD.getStringMessageDigest(usuario.getPassword(), StringMD.SHA1));
+        }
 
-            return "ok";
-        } catch (Exception s)
-        {
-            return "bad";
-        }
+        daoUsuarioInstancia.edit(usuarioL);
+//        }|
+        return "redirect:administrarUsuarios.do";
     }
 }
