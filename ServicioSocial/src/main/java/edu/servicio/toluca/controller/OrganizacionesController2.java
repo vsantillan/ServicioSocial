@@ -23,6 +23,13 @@ import edu.servicio.toluca.entidades.TipoProyecto;
 import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
+import edu.servicio.toluca.dao.GenericDao;
+import edu.servicio.toluca.entidades.Ciudades;
+import edu.servicio.toluca.entidades.CodigosPostales;
+import edu.servicio.toluca.entidades.EstadosSia;
+import edu.servicio.toluca.entidades.MunicipiosSia;
+import edu.servicio.toluca.entidades.TipoLocalidad;
+import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.codigospostales.CodigosPostalesModel;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;
@@ -61,6 +68,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -70,57 +78,196 @@ import org.slf4j.LoggerFactory;
 public class OrganizacionesController2
 {
 
+    private GenericDao<TipoOrganizacion> daoTipoOrganizacion;
+    private GenericDao<Instancia> daoInstancia;
+    private GenericDao<Proyectos> daoProyectos;
+    private GenericDao<Perfil> daoPerfil;
+    private GenericDao<Colonia> daoColonia;
+    private GenericDao<TipoProyecto> daoTipoProyecto;
+    private GenericDao<EstadosSia> daoEstadosSia;
+    private GenericDao<Programa> daoPrograma;
+    private GenericDao<ProyectoPerfil> daoProyectoPerfil;
+    private GenericDao<Actividades> daoActividades;
+    private GenericDao<FormatoUnico> daoFormatoUnico;
+    private GenericDao<DatosPersonales> daoDatosPersonales;
+    private GenericDao<CodigosPostales> daoCodigosPostales;
+    private GenericDao<MunicipiosSia> daoMunicipiosSia;
+    private GenericDao<Ciudades> daoCiudades;
+    private GenericDao<VistaAlumno> daoVistaAlumno;
+    private GenericDao<TipoLocalidad> daoTipoLocalidad;
+
+    @Autowired
+    public void setDaoTipoOrganizacion(GenericDao<TipoOrganizacion> daoTipoOrganizacion)
+    {
+        this.daoTipoOrganizacion = daoTipoOrganizacion;
+        daoTipoOrganizacion.setClass(TipoOrganizacion.class);
+    }
+
+    @Autowired
+    public void setDaoInstancia(GenericDao<Instancia> daoInstancia)
+    {
+        this.daoInstancia = daoInstancia;
+        daoInstancia.setClass(Instancia.class);
+    }
+
+    @Autowired
+    public void setDaoProyectos(GenericDao<Proyectos> daoProyectos)
+    {
+        this.daoProyectos = daoProyectos;
+        daoProyectos.setClass(Proyectos.class);
+    }
+
+    @Autowired
+    public void setDaoColonia(GenericDao<Colonia> daoColonia)
+    {
+        this.daoColonia = daoColonia;
+        daoColonia.setClass(Colonia.class);
+    }
+
+    @Autowired
+    public void setDaoPerfil(GenericDao<Perfil> daoPerfil)
+    {
+        this.daoPerfil = daoPerfil;
+        daoColonia.setClass(Perfil.class);
+    }
+
+    @Autowired
+    public void setDaoTipoProyecto(GenericDao<TipoProyecto> daoTipoProyecto)
+    {
+        this.daoTipoProyecto = daoTipoProyecto;
+        daoTipoProyecto.setClass(TipoProyecto.class);
+    }
+
+    @Autowired
+    public void setDaoEstadosSia(GenericDao<EstadosSia> daoEstadosSia)
+    {
+        this.daoEstadosSia = daoEstadosSia;
+        daoEstadosSia.setClass(EstadosSia.class);
+    }
+
+    @Autowired
+    public void setDaoPrograma(GenericDao<Programa> daoPrograma)
+    {
+        this.daoPrograma = daoPrograma;
+        daoPrograma.setClass(Programa.class);
+    }
+
+    @Autowired
+    public void setDaoProyectoPerfil(GenericDao<ProyectoPerfil> daoProyectoPerfil)
+    {
+        this.daoProyectoPerfil = daoProyectoPerfil;
+        daoProyectoPerfil.setClass(ProyectoPerfil.class);
+    }
+
+    @Autowired
+    public void setDaoActividades(GenericDao<Actividades> daoActividades)
+    {
+        this.daoActividades = daoActividades;
+        daoActividades.setClass(Actividades.class);
+    }
+
+    @Autowired
+    public void setDaoFormatoUnico(GenericDao<FormatoUnico> daoFormatoUnico)
+    {
+        this.daoFormatoUnico = daoFormatoUnico;
+        daoFormatoUnico.setClass(FormatoUnico.class);
+    }
+
+    @Autowired
+    public void setDaoDatosPersonales(GenericDao<DatosPersonales> daoDatosPersonales)
+    {
+        this.daoDatosPersonales = daoDatosPersonales;
+        daoDatosPersonales.setClass(DatosPersonales.class);
+    }
+
+    @Autowired
+    public void setDaoCodigosPostales(GenericDao<CodigosPostales> daoCodigosPostales)
+    {
+        this.daoCodigosPostales = daoCodigosPostales;
+        daoCodigosPostales.setClass(CodigosPostales.class);
+    }
+
+    @Autowired
+    public void setDaoMunicipiosSia(GenericDao<MunicipiosSia> daoMunicipiosSia)
+    {
+        this.daoMunicipiosSia = daoMunicipiosSia;
+        daoMunicipiosSia.setClass(MunicipiosSia.class);
+    }
+
+    @Autowired
+    public void setDaoCiudades(GenericDao<Ciudades> daoCiudades)
+    {
+        this.daoCiudades = daoCiudades;
+        daoCiudades.setClass(Ciudades.class);
+    }
+
+    @Autowired
+    public void setDaoTipoLocalidad(GenericDao<TipoLocalidad> daoTipoLocalidad)
+    {
+        this.daoTipoLocalidad = daoTipoLocalidad;
+        daoTipoLocalidad.setClass(TipoLocalidad.class);
+    }
+
+    @Autowired
+    public void setDaoVistaAlumno(GenericDao<VistaAlumno> daoVistaAlumno)
+    {
+        this.daoVistaAlumno = daoVistaAlumno;
+        daoVistaAlumno.setClass(VistaAlumno.class);
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="EJB Facades">
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     private InstanciaFacade instanciaFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
     private ProyectosFacade proyectosFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/TipoOrganizacionFacade")
     private TipoOrganizacionFacade tipoOrganizacionFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/PerfilFacade")
     private PerfilFacade perfilFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
     private ColoniaFacade coloniaFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/TipoProyectoFacade")
     private TipoProyectoFacade tipoProyectoFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
     private EstadosSiaFacade estadosFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ProgramaFacade")
     private ProgramaFacade programaFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ProyectoPerfilFacade")
     private ProyectoPerfilFacade proyectoPerfilFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
     private ActividadesFacade actividadesFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
     private FormatoUnicoFacade formatoUnicoFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     private DatosPersonalesFacade datosPersonalesFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
     private CodigosPostalesFacade codigosPostalesFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
     private MunicipiosSiaFacade municipiosFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
     private CiudadesFacade ciudadesFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
     private TipoLocalidadFacade tipoLocalidadFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     private VistaAlumnoFacade vistaAlumnoFacade;
-    
+    // </editor-fold>
+
     MetodosValidacion limpiar = new MetodosValidacion();
     //Alta de Organizacion
 
@@ -131,7 +278,7 @@ public class OrganizacionesController2
     {
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
         return "/Organizaciones/altaOrganizacion";
     }
 
@@ -144,7 +291,7 @@ public class OrganizacionesController2
         {
             String idInstancia = session.getAttribute("NCONTROL") + "";
             System.out.println("idInstancia:" + idInstancia);
-            Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            Instancia instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
             Proyectos proyecto = new Proyectos();
             proyecto.setIdInstancia(instancia);
 
@@ -153,17 +300,16 @@ public class OrganizacionesController2
             //Estados
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
             //TipoProyecto
-            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
             //Perfil
-            model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("perfiles", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
             //Programa
-            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
 
             return "/Organizaciones/altaProyecto";
-        } 
-        else
+        } else
         {
             model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesió para acceder a esta sección.</div>");
             return "redirect:login.do";
@@ -179,12 +325,12 @@ public class OrganizacionesController2
         }
 
         model.addAttribute("instancia", new Instancia());
-        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
 
         //model.addAttribute("estados", estadosFacade.findAll());
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
         return "/Organizaciones/altaAdminOrganizacion";
     }
 
@@ -193,26 +339,26 @@ public class OrganizacionesController2
     {
 
         //Organizacion
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
-       
+        List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
+
         model.addAttribute("instancias", listaInstancias);
-        
+
         //Objeto proyecto para el commandAttribute
         model.addAttribute("proyecto", new Proyectos());
-        
+
         //Estados
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-        
+        model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
+
         //TipoProyecto
-        model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
-        
+        model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
+
         //Perfil
-        model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
-        
+        model.addAttribute("perfiles", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
+
         //Programa
-        model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
 
         return "/Organizaciones/altaAdminProyecto";
     }
@@ -236,29 +382,30 @@ public class OrganizacionesController2
             //Inyectamos lo que traia en la colonia
             model.addAttribute("otra_colonia", otra_colonia);
             //Agregamos atributos al formulario
-            model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
-            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("preOrganizaciones", daoInstancia.findBySpecificField("estatus", "2", "equal", null, null));
+            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
 
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
             try
             {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
-            } 
-            catch (Exception e) { }
+            } catch (Exception e)
+            {
+            }
 
-            model.addAttribute("estados", estadosFacade.findAll());
-            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("estados", daoEstadosSia.findAll());
+            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
             model.addAttribute("idInstancia", instancia.getIdInstancia().intValue());
-            model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+            model.addAttribute("instanciaDireccion", daoInstancia.find(instancia.getIdInstancia()));
 
             return "/Organizaciones/registroOrganizaciones";
 
-        } 
-        else
+        } else
         {
             //Checa codigo postal
-            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
+            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(daoColonia, daoCodigosPostales, daoEstadosSia,
+                    daoMunicipiosSia, daoCiudades, daoTipoLocalidad);
             if (existeCP.equals("true"))
             {
                 if (instancia.getIdColonia().getIdColonia().toString().equals("0"))
@@ -286,18 +433,18 @@ public class OrganizacionesController2
 //            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));
 //            instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
 //            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
-            List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
+            List<Instancia> Unicos = daoInstancia.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
             if (!Unicos.isEmpty())
             {
                 //Inyectamos lo que traia en la colonia
                 model.addAttribute("otra_colonia", otra_colonia);
                 //Agregamos atributos al formulario
-                model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
+                model.addAttribute("preOrganizaciones", daoInstancia.findBySpecificField("estatus", "2", "equal", null, null));
 //            model.addAttribute("instancia", new Instancia());
-                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
                 LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
                 ordenamiento.put("nombre", "asc");
-                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
                 //Regresar codigo postal
                 model.addAttribute("cp", codigo_postal);
                 try
@@ -313,7 +460,7 @@ public class OrganizacionesController2
 
             try
             {
-                instanciaFacade.edit(instancia);
+                daoInstancia.edit(instancia);
                 System.out.println("Instancia Creada");
             } catch (Exception e)
             {
@@ -347,10 +494,10 @@ public class OrganizacionesController2
             //Agregamos atributos al formulario
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
+            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
             model.addAttribute("idInstancia", idInstancia);
-            model.addAttribute("instanciaDireccion", instanciaFacade.find(instancia.getIdInstancia()));
+            model.addAttribute("instanciaDireccion", daoInstancia.find(instancia.getIdInstancia()));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
             model.addAttribute("otra_colonia", otra_colonia);
@@ -449,7 +596,7 @@ public class OrganizacionesController2
 //            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));
             try
             {
-                instanciaFacade.edit(instancia);
+                daoInstancia.edit(instancia);
             } catch (Exception e)
             {
                 System.out.println(e);
@@ -476,10 +623,10 @@ public class OrganizacionesController2
         {
             model.addAttribute("error_codigo_postal", "<div class='alert alert-danger'>Lo codigo postal debe de ser numerico</div>");
             //Agregamos atributos al formulario
-            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
             model.addAttribute("otra_colonia", otra_colonia);
@@ -499,10 +646,10 @@ public class OrganizacionesController2
             System.out.println(result.toString());
 
             //Agregamos atributos al formulario
-            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
             model.addAttribute("otra_colonia", otra_colonia);
@@ -527,18 +674,18 @@ public class OrganizacionesController2
 //            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION TITULAR  .............................................................................................
 //            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION  PASSWORD  .............................................................................................
 
-            List<Instancia> Unicos = instanciaFacade.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
+            List<Instancia> Unicos = daoInstancia.findBySpecificField("nombre", instancia.getNombre(), "equal", null, null);
             if (!Unicos.isEmpty())
             {
                 //Inyectamos lo que traia en la colonia
                 model.addAttribute("otra_colonia", otra_colonia);
                 //Agregamos atributos al formulario
-                model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("estatus", "2", "equal", null, null));
+                model.addAttribute("preOrganizaciones", daoInstancia.findBySpecificField("estatus", "2", "equal", null, null));
 //            model.addAttribute("instancia", new Instancia());
-                model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
                 LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
                 ordenamiento.put("nombre", "asc");
-                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
                 //Regresar codigo postal
                 model.addAttribute("cp", codigo_postal);
                 try
@@ -552,7 +699,7 @@ public class OrganizacionesController2
 
             }
 
-            instanciaFacade.create(instancia);
+            daoInstancia.create(instancia);
             System.out.println("Insercion correcta!");
             return "/Organizaciones/confirmaAdminRegOrganizacion";
         }
@@ -589,13 +736,13 @@ public class OrganizacionesController2
                 //Estados
                 LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
                 ordenamiento.put("nombre", "asc");
-                model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+                model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
                 //TipoProyecto
-                model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+                model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
                 //Perfil
-                model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+                model.addAttribute("perfiles", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
                 //Programa
-                model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+                model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
                 //Regresar codigo postal
                 model.addAttribute("cp", codigo_postal);
                 try
@@ -608,7 +755,7 @@ public class OrganizacionesController2
                 model.addAttribute("otra_colonia", otra_colonia);
 
                 //Regresa las Organizaciones
-                List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+                List<Instancia> listaInstancias = daoInstancia.findBySpecificField("validacionAdmin", "1", "equal", null, null);
                 ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
 
                 for (int i = 0; i < listaInstancias.size(); i++)
@@ -640,7 +787,8 @@ public class OrganizacionesController2
                 System.out.print("no hubo errores");
 
                 //Checa codigo postal
-                CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
+                CodigosPostalesModel codigosPostales = new CodigosPostalesModel(daoColonia, daoCodigosPostales, daoEstadosSia,
+                        daoMunicipiosSia, daoCiudades, daoTipoLocalidad);
                 if (existeCP.equals("true"))
                 {
                     if (proyecto.getIdColonia().getIdColonia().toString().equals("0"))
@@ -679,13 +827,13 @@ public class OrganizacionesController2
                 System.out.println("Modalidad:" + proyecto.getModalidad() + " len:" + proyecto.getModalidad().length());
                 System.out.println("fin");
                 //
-                proyectosFacade.create(proyecto);
+                daoProyectos.create(proyecto);
                 System.out.println("Insercion correcta!");
 
                 //Obtenemos el proyecto creado
                 LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
                 ordenamiento.put("idProyecto", "desc");
-                Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
+                Proyectos newProyecto = (Proyectos) daoProyectos.findAll(ordenamiento).get(0);
 
                 //Insercion de Actividades
                 for (int i = 0; i < actividadesModel.actividades.size(); i++)
@@ -694,7 +842,7 @@ public class OrganizacionesController2
                     actividad.setDetalle(limpiar.tuneaStringParaBD(actividadesModel.actividades.get(i)));
                     actividad.setEstatus(BigInteger.ONE);
                     actividad.setIdProyecto(newProyecto);
-                    actividadesFacade.create(actividad);
+                    daoActividades.create(actividad);
                     System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
                 }
                 //Insercion de Perfiles
@@ -714,7 +862,7 @@ public class OrganizacionesController2
                         System.out.println("Token:" + perfil);
                         if (perfil != null && !perfil.equals(""))
                         {
-                            perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
+                            perfiles.add((Perfil) daoPerfil.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
                         }
                     }
                     for (int i = 0; i < perfiles.size(); i++)
@@ -722,7 +870,7 @@ public class OrganizacionesController2
                         ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
                         proyectoPerfil.setIdPerfil(perfiles.get(i));
                         proyectoPerfil.setIdProyecto(newProyecto);
-                        proyectoPerfilFacade.create(proyectoPerfil);
+                        daoProyectoPerfil.create(proyectoPerfil);
                         System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                     }
                 } else
@@ -768,7 +916,7 @@ public class OrganizacionesController2
             System.out.println("Error:" + result.toString());
 
             //Organizacion
-            List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("status", "1", "equal", null, null);
+            List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             for (int i = 0; i < listaInstancias.size(); i++)
             {
@@ -784,13 +932,13 @@ public class OrganizacionesController2
             //Estados
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
             //TipoProyecto
-            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
             //Perfil
-            model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("perfiles", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
             //Programa
-            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
             //Regresar codigo postal
             model.addAttribute("cp", codigo_postal);
             model.addAttribute("otra_colonia", otra_colonia);
@@ -813,8 +961,7 @@ public class OrganizacionesController2
             model.addAttribute("proyecto", proyecto);
 
             return "/Organizaciones/altaAdminProyecto";
-        } 
-        else
+        } else
         {
 
             System.out.print("no hubo errores");
@@ -829,13 +976,12 @@ public class OrganizacionesController2
             proyecto.setNombreResponsable(limpiar.tuneaStringParaBD(proyecto.getNombreResponsable()));
             proyecto.setResponsablePuesto(limpiar.tuneaStringParaBD(proyecto.getResponsablePuesto()));
             proyecto.setIdInstancia(instanciaFacade.find(proyecto.getIdInstancia().getIdInstancia()));
-            
-            
+
             System.out.println("el nombre del proyecto es: " + proyecto.getNombre());
-            proyectosFacade.create(proyecto);
+            daoProyectos.create(proyecto);
             System.out.println("Insercion correcta!");
 
-            List<Proyectos> listaProyectos = proyectosFacade.findAll();
+            List<Proyectos> listaProyectos = daoProyectos.findAll();
             for (int i = 0; i < listaProyectos.size(); i++)
             {
                 System.out.println("el id del proyecto es: " + listaProyectos.get(i).getIdProyecto() + " y el nombre del proyecto es: " + listaProyectos.get(i).getNombre());
@@ -843,7 +989,7 @@ public class OrganizacionesController2
             //Obtenemos el proyecto creado
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idProyecto", "desc");
-            Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
+            Proyectos newProyecto = (Proyectos) daoProyectos.findAll(ordenamiento).get(0);
 
             //Insercion de Actividades
             for (int i = 0; i < actividadesModel.actividades.size(); i++)
@@ -852,10 +998,10 @@ public class OrganizacionesController2
                 actividad.setDetalle(limpiar.tuneaStringParaBD(actividadesModel.actividades.get(i)));
                 actividad.setEstatus(BigInteger.ONE);
                 actividad.setIdProyecto(newProyecto);
-                actividadesFacade.create(actividad);
+                daoActividades.create(actividad);
                 System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
             }
-            
+
             //Insercion de Perfiles
             if (cadenaPerfiles != null)
             {
@@ -871,7 +1017,7 @@ public class OrganizacionesController2
                     System.out.println("Token:" + perfil);
                     if (perfil != null && !perfil.equals(""))
                     {
-                        perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
+                        perfiles.add((Perfil) daoPerfil.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
                     }
                 }
                 for (int i = 0; i < perfiles.size(); i++)
@@ -879,11 +1025,10 @@ public class OrganizacionesController2
                     ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
                     proyectoPerfil.setIdPerfil(perfiles.get(i));
                     proyectoPerfil.setIdProyecto(newProyecto);
-                    proyectoPerfilFacade.create(proyectoPerfil);
+                    daoProyectoPerfil.create(proyectoPerfil);
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
-            } 
-            else
+            } else
             {
                 System.out.println("No se agregaran perfiles");
             }
@@ -898,7 +1043,7 @@ public class OrganizacionesController2
     {
 
         //Fabricacion de objeto
-        List<Perfil> perfiles = perfilFacade.findBySpecificField("estatus", "1", "equal", null, null);
+        List<Perfil> perfiles = daoPerfil.findBySpecificField("estatus", "1", "equal", null, null);
         PerfilJSON perfilJSON = new PerfilJSON();
         System.out.println("Perfiles:");
         for (int i = 0; i < perfiles.size(); i++)
@@ -915,11 +1060,11 @@ public class OrganizacionesController2
     public String confirmaOrganizacionVisitante(Model model, String idInstancia)
     {
         System.out.println("Id instancia:" + idInstancia);
-        model.addAttribute("estados", estadosFacade.findAll());
-        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("estados", daoEstadosSia.findAll());
+        model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
         model.addAttribute("idInstancia", idInstancia);
-        model.addAttribute("instanciaDireccion", instanciaFacade.find(BigDecimal.valueOf(Integer.parseInt(idInstancia))));
-        model.addAttribute("instancia", instanciaFacade.find(BigDecimal.valueOf(Integer.parseInt(idInstancia))));
+        model.addAttribute("instanciaDireccion", daoInstancia.find(BigDecimal.valueOf(Integer.parseInt(idInstancia))));
+        model.addAttribute("instancia", daoInstancia.find(BigDecimal.valueOf(Integer.parseInt(idInstancia))));
 
         return "/Organizaciones/confirmaOrganizacionVisitante";
     }
@@ -966,10 +1111,10 @@ public class OrganizacionesController2
 
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
+            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
             model.addAttribute("idInstancia", idInstancia);
-            Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            Instancia instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
 //            model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
             model.addAttribute("instancia", instancia);
 
@@ -997,8 +1142,8 @@ public class OrganizacionesController2
         //Agregamos atributos al formulario
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
-        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
+        model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
         model.addAttribute("idInstancia", idInstancia);
         model.addAttribute("cp", codigo_postal);
         model.addAttribute("instancia", instancia);
@@ -1035,7 +1180,7 @@ public class OrganizacionesController2
 
             try
             {
-                instanciaFacade.edit(instancia);
+                daoInstancia.edit(instancia);
                 model.addAttribute("mensaje", "<p><span class='glyphicon glyphicon-ok-circle sizeIconValid'></span></p><h2>Información editada correctamente</h2>");
                 model.addAttribute("idInstancia", idInstancia);
                 model.addAttribute("instancia", instancia);
@@ -1058,17 +1203,17 @@ public class OrganizacionesController2
         //Formato Unico
         model.addAttribute("datos_personales", datos_personales);
         //Tipo organizacion
-        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
         //Estados
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
         //TipoProyecto
-        model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
         //Perfil
-        model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("perfiles", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
         //Programa
-        model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
         //Command
         model.addAttribute("propuesta", new PropAluInstProyBean());
         return "/Organizaciones/propAlInstancia";
@@ -1081,20 +1226,20 @@ public class OrganizacionesController2
         System.out.println("idDatosPersonales:" + datos_personales);
         System.out.println("idInstancia:" + idInstancia);
 
-        Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+        Instancia instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
         model.addAttribute("nombreInstancia", instancia.getNombre());
         //Formato Unico
         model.addAttribute("datos_personales", datos_personales);
         //Estados
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
         //TipoProyecto
-        model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
         //Perfil
-        model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("perfiles", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
         //Programa
-        model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+        model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
         //Command
         Proyectos proyecto = new Proyectos();
         proyecto.setIdInstancia(instancia);
@@ -1129,17 +1274,17 @@ public class OrganizacionesController2
             //Command
             model.addAttribute("propuesta", propuesta);
             //Tipo organizacion
-            model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
             //Estados
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
             //TipoProyecto
-            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
             //Perfil
-            model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("perfiles", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
             //Programa
-            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
             //Regresar actividades
             model.addAttribute("nActividades", nActividades.substring(0, 1));
             System.out.println("nActividades:" + nActividades.substring(0, 1));
@@ -1177,7 +1322,8 @@ public class OrganizacionesController2
         {
             System.out.println("No hubo errores");
             //Checa codigo postal instancia
-            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
+            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(daoColonia, daoCodigosPostales, daoEstadosSia,
+                    daoMunicipiosSia, daoCiudades, daoTipoLocalidad);
             if (existeCP.equals("true"))
             {
                 if (propuesta.getIdColonia_instancia().getIdColonia().toString().equals("0"))
@@ -1221,13 +1367,13 @@ public class OrganizacionesController2
             instancia.getIdColonia().setIdColonia(propuesta.getIdColonia_instancia().getIdColonia());
 //            instancia.setExt(propuesta.getExt());//.........................................................................................comentario a validación de extension...................................................
 
-            instanciaFacade.create(instancia);
+            daoInstancia.create(instancia);
             System.out.println("Insercion  de intancia correcta!");
 
             //Obtenemos la instancia creada
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idInstancia", "desc");
-            Instancia newInstancia = instanciaFacade.findAll(ordenamiento).get(0);
+            Instancia newInstancia = (Instancia) daoInstancia.findAll(ordenamiento).get(0);
 
             //Creamos el proyecto
             Proyectos proyecto = new Proyectos();
@@ -1250,13 +1396,13 @@ public class OrganizacionesController2
             proyecto.getIdColonia().setIdColonia(propuesta.getIdColonia_proyecto().getIdColonia());
             proyecto.setIdInstancia(newInstancia);
 
-            proyectosFacade.create(proyecto);
+            daoProyectos.create(proyecto);
             System.out.println("Insercion de proyecto correcta");
 
             //Obtenemos el proyecto creado
             LinkedHashMap<String, String> ordenamiento2 = new LinkedHashMap<String, String>();
             ordenamiento2.put("idProyecto", "desc");
-            Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
+            Proyectos newProyecto = (Proyectos) daoProyectos.findAll(ordenamiento).get(0);
 
             //Insercion de Actividades
             for (int i = 0; i < actividadesModel.actividades.size(); i++)
@@ -1265,13 +1411,13 @@ public class OrganizacionesController2
                 actividad.setDetalle(limpiar.tuneaStringParaBD(actividadesModel.actividades.get(i)));
                 actividad.setEstatus(BigInteger.ONE);
                 actividad.setIdProyecto(newProyecto);
-                actividadesFacade.create(actividad);
+                daoActividades.create(actividad);
                 System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
             }
             //Preparacion de usuario
-            DatosPersonales datosPersonales = datosPersonalesFacade.find(BigDecimal.valueOf(Double.parseDouble(datos_personales)));
+            DatosPersonales datosPersonales = (DatosPersonales) daoDatosPersonales.find(BigDecimal.valueOf(Double.parseDouble(datos_personales)));
             System.out.println("Datos per" + datosPersonales.getNombre());
-            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+            List<FormatoUnico> listaFormatoUnico = daoFormatoUnico.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
             FormatoUnico formatoUnico = listaFormatoUnico.get(0);
             int idPerfilAlumno = datosPersonales.getAlumnoId().getCarreraId();
             boolean agregoSuPerfil = false;
@@ -1293,7 +1439,7 @@ public class OrganizacionesController2
                     System.out.println("Token:" + perfil);
                     if (perfil != null && !perfil.equals(""))
                     {
-                        perfiles.add(perfilFacade.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
+                        perfiles.add((Perfil) daoPerfil.find(BigDecimal.valueOf(Double.parseDouble(perfil))));
                         if (idPerfilAlumno == Integer.parseInt(perfil))
                         {
                             agregoSuPerfil = true;
@@ -1305,17 +1451,17 @@ public class OrganizacionesController2
                     ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
                     proyectoPerfil.setIdPerfil(perfiles.get(i));
                     proyectoPerfil.setIdProyecto(newProyecto);
-                    proyectoPerfilFacade.create(proyectoPerfil);
+                    daoProyectoPerfil.create(proyectoPerfil);
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
                 //Agregamos su perfil si no lo agrego
                 if (!agregoSuPerfil)
                 {
-                    Perfil suPerfil = perfilFacade.find(BigDecimal.valueOf(idPerfilAlumno));
+                    Perfil suPerfil = (Perfil) daoPerfil.find(BigDecimal.valueOf(idPerfilAlumno));
                     ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
                     proyectoPerfil.setIdPerfil(suPerfil);
                     proyectoPerfil.setIdProyecto(newProyecto);
-                    proyectoPerfilFacade.create(proyectoPerfil);
+                    daoProyectoPerfil.create(proyectoPerfil);
 
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
@@ -1326,7 +1472,7 @@ public class OrganizacionesController2
 
             //Relacionar proyecto con formato unico
             formatoUnico.setIdproyecto(newProyecto);
-            formatoUnicoFacade.edit(formatoUnico);
+            daoFormatoUnico.edit(formatoUnico);
             System.out.println("Relacion a formato unico correcta");
 
             return "/Organizaciones/confirmaAltaPropuesta";
@@ -1363,13 +1509,13 @@ public class OrganizacionesController2
             //Estados
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
             //TipoProyecto
-            model.addAttribute("tipoProyecto", tipoProyectoFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("tipoProyecto", daoTipoProyecto.findBySpecificField("status", "1", "equal", null, null));
             //Perfil
-            model.addAttribute("perfiles", perfilFacade.findBySpecificField("estatus", "1", "equal", null, null));
+            model.addAttribute("perfiles", daoPerfil.findBySpecificField("estatus", "1", "equal", null, null));
             //Programa
-            model.addAttribute("programas", programaFacade.findBySpecificField("status", "1", "equal", null, null));
+            model.addAttribute("programas", daoPrograma.findBySpecificField("status", "1", "equal", null, null));
             //Regresar codigo postal
             model.addAttribute("otra_colonia", otra_colonia);
 
@@ -1399,7 +1545,8 @@ public class OrganizacionesController2
 
             System.out.print("no hubo errores");
             //Checa codigo postal
-            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(coloniaFacade, codigosPostalesFacade, estadosFacade, municipiosFacade, ciudadesFacade, tipoLocalidadFacade);
+            CodigosPostalesModel codigosPostales = new CodigosPostalesModel(daoColonia, daoCodigosPostales, daoEstadosSia,
+                    daoMunicipiosSia, daoCiudades, daoTipoLocalidad);
             if (existeCP.equals("true"))
             {
                 if (proyecto.getIdColonia().getIdColonia().toString().equals("0"))
@@ -1426,13 +1573,13 @@ public class OrganizacionesController2
             System.out.println("###################");
             proyecto.getInfToBd();
             System.out.println("###################");
-            proyectosFacade.create(proyecto);
+            daoProyectos.create(proyecto);
             System.out.println("Insercion correcta!");
 
             //Obtenemos el proyecto creado
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idProyecto", "desc");
-            Proyectos newProyecto = proyectosFacade.findAll(ordenamiento).get(0);
+            Proyectos newProyecto = (Proyectos) daoProyectos.findAll(ordenamiento).get(0);
 
             //Insercion de Actividades
             for (int i = 0; i < actividadesModel.actividades.size(); i++)
@@ -1441,7 +1588,7 @@ public class OrganizacionesController2
                 actividad.setDetalle(limpiar.tuneaStringParaBD(actividadesModel.actividades.get(i)));
                 actividad.setEstatus(BigInteger.ONE);
                 actividad.setIdProyecto(newProyecto);
-                actividadesFacade.create(actividad);
+                daoActividades.create(actividad);
                 System.out.println("Se inserto la actividad: " + actividad.getDetalle() + " en el proyecto: " + actividad.getIdProyecto().getNombre());
             }
             //Insercion de Perfiles
@@ -1469,7 +1616,7 @@ public class OrganizacionesController2
                     ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
                     proyectoPerfil.setIdPerfil(perfiles.get(i));
                     proyectoPerfil.setIdProyecto(newProyecto);
-                    proyectoPerfilFacade.create(proyectoPerfil);
+                    daoProyectoPerfil.create(proyectoPerfil);
                     System.out.println("Perfil insertado: " + proyectoPerfil.getIdPerfil().getNombre() + " En proyecto :" + proyectoPerfil.getIdProyecto().getNombre());
                 }
             } else
@@ -1478,13 +1625,13 @@ public class OrganizacionesController2
             }
 
             //Relacionar proyecto con formato unico
-            DatosPersonales datosPersonales = datosPersonalesFacade.find(BigDecimal.valueOf(Double.parseDouble(datos_personales)));
+            DatosPersonales datosPersonales = (DatosPersonales) daoDatosPersonales.find(BigDecimal.valueOf(Double.parseDouble(datos_personales)));
             System.out.println("Datos per" + datosPersonales.getNombre());
-            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+            List<FormatoUnico> listaFormatoUnico = daoFormatoUnico.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
             FormatoUnico formatoUnico = listaFormatoUnico.get(0);
 
             formatoUnico.setIdproyecto(newProyecto);
-            formatoUnicoFacade.edit(formatoUnico);
+            daoFormatoUnico.edit(formatoUnico);
             System.out.println("Relacion a formato unico correcta");
 
             return "/Organizaciones/confirmaAltaPropuesta";
@@ -1497,7 +1644,7 @@ public class OrganizacionesController2
         if (new ValidaSesion().validaOrganizacion(session, request))
         {
             String idInstancia = session.getAttribute("NCONTROL").toString();
-            Instancia instancia = instanciaFacade.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
+            Instancia instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
             System.out.println("idInstancia:" + idInstancia);
             //Valida que no sea nula la collection
             ArrayList<Proyectos> listaProyectos = new ArrayList<Proyectos>();
@@ -1538,7 +1685,7 @@ public class OrganizacionesController2
         if (valSession.validaOrganizacion() || valSession.validaAdmin() || valSession.validaConsultas() || valSession.validaOperador() || valSession.validaRegistro())
         {
             List<FormatoUnico> alumnos = new ArrayList<FormatoUnico>();
-            Proyectos proyecto = proyectosFacade.find(id);
+            Proyectos proyecto = (Proyectos) daoProyectos.find(id);
             try
             {
                 alumnos = new ArrayList<FormatoUnico>(proyectosFacade.find(id).getFormatoUnicoCollection());

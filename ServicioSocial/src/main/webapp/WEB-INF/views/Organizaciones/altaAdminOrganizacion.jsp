@@ -15,15 +15,15 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
-                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Nueva Organizaci&oacute;n</h1></div>
+                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Nueva Instancia</h1></div>
                 <div class="row col-md-12">
                     <div class="panel panel-info">
-                        <div class="panel-heading">Alta Organizaci&oacute;n</div> 
+                        <div class="panel-heading">Alta Instancia</div> 
                         <div class="panel-body">
                             <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAdminAltaOrganizacion.do"  method="POST">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="nombre">Nombre de la Organizaci&oacute;n:</label>                               
+                                        <label for="nombre">Nombre de la Instancia:</label>                               
                                         <form:input path="nombre" id="nombre" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/><br/>
                                         <form:errors path="nombre" class="alert alert-danger" />
                                         ${error_sql}
@@ -35,7 +35,7 @@
                                         <form:errors path="rfc" class="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> 
+                                        <label for="tipo_organizacion">Tipo de Instancia:</label> 
                                         <form:select id="tipoOrganizacion" path="TipoOrganizacion.idTipoOrganizacion" name="tipoOrganizacion" class="form-control">
                                             <core:forEach items="${tipoOrganizaciones}" var="tipoOrganizaciones">
                                                 <form:option  value="${tipoOrganizaciones.idTipoOrganizacion}">${tipoOrganizaciones.detalle}</form:option>
@@ -49,7 +49,7 @@
                                         <form:errors path="domicilio" class="alert alert-danger"/>
                                     </div>
                                       <div class="form-group">
-                                        <input type ="submit" value = "Guardar Nueva Organización" class="btn btn-primary" /> 
+                                        <input type ="submit" value = "Guardar" class="btn btn-primary" /> 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
