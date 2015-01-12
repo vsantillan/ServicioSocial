@@ -64,19 +64,7 @@ public class PanelAdministradorController
         daoRegObservacionGeneral.setClass(RegObservacionGeneral.class);
     }
     
-    
 
-    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
-    private CatalogoObservacionesFacade catalogoObservacionesFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/UsuarioInstanciaFacade")
-    private UsuarioInstanciaFacade usuarioInstanciaFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
-    private CatalogoObservacionesFacade observacionesCatalogoFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionGeneralFacade")
-    private RegObservacionGeneralFacade regObservacionGeneralFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelAdministrador.do")
     public String panelAdministrador(Model model, HttpSession session, HttpServletRequest request)
@@ -153,7 +141,7 @@ public class PanelAdministradorController
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador())
         {
-            List<UsuarioInstancia> listaUsuarios = daoUsuarioInstancia.findBySpecificField("status", "0", "equal", null, null);
+            List<UsuarioInstancia> listaUsuarios = daoUsuarioInstancia.findBySpecificField("status", 0, "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
 
             for (UsuarioInstancia listaUsuario : listaUsuarios)
@@ -259,7 +247,7 @@ public class PanelAdministradorController
         }
         usuario.setStatus((short) status);
 
-        usuarioInstanciaFacade.edit(usuario);
+        daoUsuarioInstancia.edit(usuario);
 
         return "ok";
     }
