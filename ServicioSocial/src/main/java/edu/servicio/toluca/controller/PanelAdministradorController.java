@@ -41,6 +41,8 @@ public class PanelAdministradorController
 {
 
     private GenericDao<UsuarioInstancia> daoUsuarioInstancia;
+    private GenericDao<CatalogoObservaciones> daoCatalogoObservaciones;
+    private GenericDao<RegObservacionGeneral> daoRegObservacionGeneral;
 
     @Autowired
     public void setDaoUsuarioInstancia(GenericDao<UsuarioInstancia> daoUsuarioInstancia)
@@ -48,6 +50,21 @@ public class PanelAdministradorController
         this.daoUsuarioInstancia = daoUsuarioInstancia;
         daoUsuarioInstancia.setClass(UsuarioInstancia.class);
     }
+    
+    @Autowired
+    public void setDaoCatalogoObservaciones (GenericDao<CatalogoObservaciones> daoCatalogoObservaciones)
+    {
+        this.daoCatalogoObservaciones = daoCatalogoObservaciones;
+        daoCatalogoObservaciones.setClass(CatalogoObservaciones.class);
+    }
+    @Autowired
+    public void setDaoRegObservacionGeneral (GenericDao<RegObservacionGeneral> daoRegObservacionGeneral)
+    {
+        this.daoRegObservacionGeneral = daoRegObservacionGeneral;
+        daoRegObservacionGeneral.setClass(RegObservacionGeneral.class);
+    }
+    
+    
 
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade catalogoObservacionesFacade;
@@ -85,8 +102,8 @@ public class PanelAdministradorController
         if (valSession.accesaPanelAdministrador())
         {
 
-            List<CatalogoObservaciones> catalogo = catalogoObservacionesFacade.findBySpecificField("tipo", "6", "equal", null, null);
-            List<UsuarioInstancia> listaUsuarios = usuarioInstanciaFacade.findBySpecificField("status", "1", "equal", null, null);
+            List<CatalogoObservaciones> catalogo = daoCatalogoObservaciones.findBySpecificField("tipo", "6", "equal", null, null);
+            List<UsuarioInstancia> listaUsuarios = daoUsuarioInstancia.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
 
             for (UsuarioInstancia listaUsuario : listaUsuarios)
@@ -136,7 +153,7 @@ public class PanelAdministradorController
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador())
         {
-            List<UsuarioInstancia> listaUsuarios = usuarioInstanciaFacade.findBySpecificField("status", "0", "equal", null, null);
+            List<UsuarioInstancia> listaUsuarios = daoUsuarioInstancia.findBySpecificField("status", "0", "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
 
             for (UsuarioInstancia listaUsuario : listaUsuarios)
@@ -171,7 +188,7 @@ public class PanelAdministradorController
             {
                 usuarioInstancia.setStatus((short) 1);
                 usuarioInstancia.setPassword(StringMD.getStringMessageDigest(usuarioInstancia.getPassword(), StringMD.SHA1));
-                usuarioInstanciaFacade.create(usuarioInstancia);
+                daoUsuarioInstancia.create(usuarioInstancia);
             } catch (Exception e)
             {
                 System.out.println("Match");
@@ -189,9 +206,9 @@ public class PanelAdministradorController
     public @ResponseBody
     String actualizarStatusOrganizaciones(UsuarioInstancia usuario, int id, Model model, HttpSession session, HttpServletRequest request)
     {
-        usuario = usuarioInstanciaFacade.find(BigDecimal.valueOf(id));
+        usuario = (UsuarioInstancia) daoUsuarioInstancia.find(BigDecimal.valueOf(id));
         usuario.setStatus((short) 1);
-        usuarioInstanciaFacade.edit(usuario);
+        daoUsuarioInstancia.edit(usuario);
 
         return "ok";
     }
@@ -217,7 +234,7 @@ public class PanelAdministradorController
 
         System.out.println("ENTRANDO......................................");
 
-        UsuarioInstancia usuario = usuarioInstanciaFacade.find(BigDecimal.valueOf(id));
+        UsuarioInstancia usuario = (UsuarioInstancia) daoUsuarioInstancia.find(BigDecimal.valueOf(id));
         System.out.println(usuario.getIdUsuarioInstancia());
         System.out.println(usuario.getNombre());
         System.out.println(usuario.getApellidoMat());
@@ -227,7 +244,7 @@ public class PanelAdministradorController
         for (String Observacion : observaciones)
         {
 
-            CatalogoObservaciones catObser = observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(Observacion)));
+            CatalogoObservaciones catObser = (CatalogoObservaciones) daoCatalogoObservaciones.find(BigDecimal.valueOf(Integer.parseInt(Observacion)));
             //Objeto a Registrar
             RegObservacionGeneral registro = new RegObservacionGeneral();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
@@ -237,7 +254,7 @@ public class PanelAdministradorController
             //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
             //Creacion de Registro
-            regObservacionGeneralFacade.create(registro);
+            daoRegObservacionGeneral.create(registro);
             System.out.println("las observaciones son: " + Observacion);
         }
         usuario.setStatus((short) status);
@@ -252,7 +269,7 @@ public class PanelAdministradorController
     {
         System.out.println("..............\n\n\n Entrando a controlador para modificar usuarios");
         System.out.println(usuario.getPassword());
-        System.out.println(lockPass);
+        System.out.println("s:" + lockPass);
 
 //        if (usuario.getPassword().equals(""))
 //        {
@@ -264,12 +281,13 @@ public class PanelAdministradorController
         usuarioL.setExtension(usuario.getExtension());
         usuarioL.setTelefono(usuario.getTelefono());
         usuarioL.setNombre(usuario.getNombre());
-        usuarioL.setStatus((short)1);
+        usuarioL.setStatus((short) 1);
 //        } else
 //        {
-        if ("lockPassword".equals(lockPass))
+        if ("".equals(usuario.getPassword()))
         {
             System.out.println("Mantener contraseña");
+            usuarioL.setPassword(usuarioL.getPassword());
         } else
         {
             usuarioL.setPassword(StringMD.getStringMessageDigest(usuario.getPassword(), StringMD.SHA1));
