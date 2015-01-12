@@ -31,7 +31,7 @@
 
                                     <div class="form-group">
                                         <label for="rfc">RFC:</label> 
-                                        <form:input path="rfc" id="rfc" size="20" maxlength="13" class="form-control" placeholder="RFC debe tener entre 12 y 13 caraceres" /><br/>
+                                        <form:input path="rfc" id="rfc" size="20" maxlength="13" class="form-control" placeholder="RFC debe tener entre 12 y 13 caracteres." /><br/>
                                         <form:errors path="rfc" class="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
@@ -44,12 +44,14 @@
                                         <form:errors path="tipoOrganizacion" class="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="calle">Calle:</label>
-                                        <form:input path="domicilio" id="domicilio" size="20" class="form-control" placeholder="Ingrese su calle"/><br/>
-                                        <form:errors path="domicilio" class="alert alert-danger"/>
+                                        <label for="calle">Teléfono de Instancia:</label>
+                                        <form:input path="telefono" id="telefono" size="20" maxlength="13" class="form-control" placeholder="Ingrese el número telefónico de la instancia."/><br/>
+                                        <form:errors path="telefono" class="alert alert-danger"/>
                                     </div>
-                                      <div class="form-group">
-                                        <input type ="submit" value = "Guardar" class="btn btn-primary" /> 
+                                    <div class="form-group">
+                                        <label for="calle">Calle:</label>
+                                        <form:input path="domicilio" id="domicilio" size="20" maxlength="50" class="form-control" placeholder="Ingrese su calle"/><br/>
+                                        <form:errors path="domicilio" class="alert alert-danger"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -86,6 +88,10 @@
                                         <!--select name="colonia" id="colonia" disabled="true"></select--> 
                                         <form:select id="idColonia" path="idColonia.idColonia" name="idColonia" class="form-control"></form:select> 
                                         </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <input type ="submit" value = "Guardar" class="btn btn-primary pull-right" /> 
+                                        </div>
                                         <div id="otra_colonia" style="display:none;">
                                             <input type="text" name="otra_colonia" value="${otra_colonia}" class="form-control"/>
                                         <input type="hidden" id="existeCP" name="existeCP" value="true">
@@ -102,10 +108,10 @@
             </div>
         </div>
         <%@include file="../General/js.jsp"%>
-          <!-- Javascript -->
+        <!-- Javascript -->
         <script src="js/jquery.codigos.postales.js"></script>       
         <script src="js/jquery.manolo.js"></script>
-<!--        <script src="js/instancias.js"></script>
-        <script src="js/jquery-1.9.1.js"></script>-->
+        <!--        <script src="js/instancias.js"></script>
+                <script src="js/jquery-1.9.1.js"></script>-->
     </body>
 </html>
