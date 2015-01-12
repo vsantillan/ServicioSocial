@@ -128,7 +128,7 @@ public class OrganizacionesController2
     public void setDaoPerfil(GenericDao<Perfil> daoPerfil)
     {
         this.daoPerfil = daoPerfil;
-        daoColonia.setClass(Perfil.class);
+        daoPerfil.setClass(Perfil.class);
     }
 
     @Autowired
