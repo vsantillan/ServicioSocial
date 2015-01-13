@@ -78,8 +78,6 @@ public class PlaticaController
     private GenericDao<FoliosPlatica> daoFoliosPlatica;
     private GenericDao<VistaAlumno> daoVistaAlumno;
     
-    private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
-    
     @Autowired
     public void setDaoPlatica(GenericDao<Platica> daoPlatica)
     {

@@ -14,9 +14,14 @@ import java.util.ArrayList;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.BajaTemporal;
 import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.FoliosPlatica;
 import edu.servicio.toluca.entidades.LogServicio;
+import edu.servicio.toluca.entidades.Noticias;
+import edu.servicio.toluca.entidades.RegObservaciones;
+import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.documentosFinales.ValidaDocumentosFinalesModel;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
@@ -37,6 +42,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +50,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Controlador para el historial de servicio social Autor: Jose Manuel Nieto
- * Gomez
+ * Controlador para el historial de servicio social Autor: Jose Manuel Nieto Gomez
  *
  * @author bustedvillain
  */
@@ -53,27 +58,92 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HistorialServicioController
 {
 
+    private GenericDao<DatosPersonales> daoDatosPersonales;
+    private GenericDao<VistaAlumno> daoVistaAlumno;
+    private GenericDao<FoliosPlatica> daoFoliosPlatica;
+    private GenericDao<Noticias> daoNoticias;
+    private GenericDao<RegObservaciones> daoRegObservaciones;
+    private GenericDao<Sanciones> daoSanciones;
+    private GenericDao<LogServicio> daoLogServicio;
+    private GenericDao<BajaTemporal> daoBajaTemporal;
+
+    @Autowired
+    public void setDaoDatosPersonales(GenericDao<DatosPersonales> daoDatosPersonales)
+    {
+        this.daoDatosPersonales = daoDatosPersonales;
+        daoDatosPersonales.setClass(DatosPersonales.class);
+    }
+
+    @Autowired
+    public void setDaoVistaAlumno(GenericDao<VistaAlumno> daoVistaAlumno)
+    {
+        this.daoVistaAlumno = daoVistaAlumno;
+        daoVistaAlumno.setClass(VistaAlumno.class);
+    }
+
+    @Autowired
+    public void setFoliosPlatica(GenericDao<FoliosPlatica> daoFoliosPlatica)
+    {
+        this.daoFoliosPlatica = daoFoliosPlatica;
+        daoFoliosPlatica.setClass(FoliosPlatica.class);
+    }
+
+    @Autowired
+    public void setDaoNoticias(GenericDao<Noticias> daoNoticias)
+    {
+        this.daoNoticias = daoNoticias;
+        daoNoticias.setClass(Noticias.class);
+    }
+
+    @Autowired
+    public void setDaoRegObservaciones(GenericDao<RegObservaciones> daoRegObservaciones)
+    {
+        this.daoRegObservaciones = daoRegObservaciones;
+        daoRegObservaciones.setClass(RegObservaciones.class);
+    }
+
+    @Autowired
+    public void setDaoSanciones(GenericDao<Sanciones> daoSanciones)
+    {
+        this.daoSanciones = daoSanciones;
+        daoSanciones.setClass(Sanciones.class);
+    }
+
+    @Autowired
+    public void setDaoLogServicio(GenericDao<LogServicio> daoLogServicio)
+    {
+        this.daoLogServicio = daoLogServicio;
+        daoLogServicio.setClass(LogServicio.class);
+    }
+
+    @Autowired
+    public void setDaoBajaTemporal(GenericDao<BajaTemporal> daoBajaTemporal)
+    {
+        this.daoBajaTemporal = daoBajaTemporal;
+        daoBajaTemporal.setClass(BajaTemporal.class);
+    }
+
     @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
     public DatosPersonalesFacade datosPersonalesFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
     public VistaAlumnoFacade vistaAlumnoFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
     public FoliosPlaticaFacade foliosPlaticaFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/NoticiasFacade")
     public NoticiasFacade noticiasFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     public RegObservacionesFacade regObservacionesFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
     public SancionesFacade sancionesFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/LogServicioFacade")
     public LogServicioFacade logServicioFacade;
-    
+
     @EJB(mappedName = "java:global/ServicioSocial/BajaTemporalFacade")
     private BajaTemporalFacade bajaTemporal;
 
@@ -82,18 +152,17 @@ public class HistorialServicioController
     {
         //Valida sesion
         ValidaSesion valSession = new ValidaSesion(session, request);
-        if(valSession.accesaPanelAdministrador())
+        if (valSession.accesaPanelAdministrador())
         {
             //Modelo para procesar el historial de alumnos
-            HistorialServicioModel historialModel = new HistorialServicioModel(datosPersonalesFacade);
-            
+            HistorialServicioModel historialModel = new HistorialServicioModel(daoDatosPersonales);
+
             //Obtener todos los alumnos procesados en el sistema y validandolos
             List<StatusServicioBean> alumnos = new ArrayList<StatusServicioBean>();
             try
             {
                 alumnos = historialModel.getHistorialAlumnos();
-            } 
-            catch(Exception e)
+            } catch (Exception e)
             {
                 System.err.println("Error al cargar alumnos en el servicio social");
             }
@@ -104,8 +173,7 @@ public class HistorialServicioController
             model.addAttribute("bajasTemporales", bajasTemporales);
 
             return "/HistorialServicio/historialServicio";
-        } 
-        else
+        } else
         {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
@@ -117,12 +185,12 @@ public class HistorialServicioController
     {
         //Valida sesion
         ValidaSesion valSession = new ValidaSesion(session, request);
-        if(valSession.accesaPanelAdministrador())
+        if (valSession.accesaPanelAdministrador())
         {
             try
             {
                 //Obtenemos al alumno
-                ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+                ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(daoVistaAlumno);
                 VistaAlumno alumno = consultaVistaAlumno.getAlumno(id);
 
                 //Valida el servicio social
@@ -133,14 +201,14 @@ public class HistorialServicioController
                 model.addAttribute("tipoPanel", servicioBean.getTipoPanel());
 
                 //Hara las validaciones pertinentes si el estatus del servicio esta activo
-                if(servicioBean.getStatusServicio() == 1)
+                if (servicioBean.getStatusServicio() == 1)
                 {
                     /**
-                     * El tipo de panel que se le va a mostrar al alumno
-                     * 0:Interno 1:Egresado 2:Egresado haciendo servicio normal
+                     * El tipo de panel que se le va a mostrar al alumno 0:Interno 1:Egresado 2:Egresado haciendo
+                     * servicio normal
                      */
                     //Checa si es egresado, o si es egresado realizando servicio
-                    if(servicioBean.getTipoPanel() == 1 || servicioBean.getTipoPanel() == 2)
+                    if (servicioBean.getTipoPanel() == 1 || servicioBean.getTipoPanel() == 2)
                     {
                         //Proceso inicial del egresado, sin poder realizar el proceso de servicio social
                         model.addAttribute("accesoCartaMotivos", servicioBean.getEgresado().isAccesoCartaMotivos());
@@ -148,11 +216,11 @@ public class HistorialServicioController
                         model.addAttribute("statusCartaMotivos", servicioBean.getEgresado().getStatusCartaMotivos());
                     }
                     //Checa si es alumno interno haciendo servicio normal o egresado haciendo servicio normal
-                    if(servicioBean.getTipoPanel() == 0 || servicioBean.getTipoPanel() == 2)
+                    if (servicioBean.getTipoPanel() == 0 || servicioBean.getTipoPanel() == 2)
                     {
                         //Es alumno interno y tambien puede ser un egresado realizando su proceso de servicio social
                         //Checa platica
-                        ConsultasPlatica platica = new ConsultasPlatica(foliosPlaticaFacade);
+                        ConsultasPlatica platica = new ConsultasPlatica(daoFoliosPlatica);
                         FoliosPlaticaBean beanPlatica = platica.checaAlumnoPlatica(servicioBean);
 
                         model.addAttribute("platica", beanPlatica.isTienePlatica());
@@ -162,7 +230,7 @@ public class HistorialServicioController
                         //Valida Formato Unico
                         try
                         {
-                            if(servicioBean.getDatosPersonales() != null)
+                            if (servicioBean.getDatosPersonales() != null)
                             {
                                 ValidacionPanelUsuarioFU valFormatoUnico = new ValidacionPanelUsuarioFU();
                                 FormatoUnicoPanelUsuarioBean beanFU = valFormatoUnico.validaPanelUsuario(servicioBean);
@@ -177,7 +245,7 @@ public class HistorialServicioController
                                 model.addAttribute("statusFui", 2);
                                 model.addAttribute("mensajeFormatoUnico", "No has dado de alta tu Formato Único");
                             }
-                        } catch(Exception e)
+                        } catch (Exception e)
                         {
                             System.out.println("Error en la validacion del formato unico");
                             e.printStackTrace();
@@ -186,12 +254,12 @@ public class HistorialServicioController
                         //Observaciones
                         try
                         {
-                            if(servicioBean.getDatosPersonales() != null)
+                            if (servicioBean.getDatosPersonales() != null)
                             {
                                 ObservacionesModel observaciones = new ObservacionesModel();
-                                model.addAttribute("observaciones", observaciones.consultaObservaciones(servicioBean.getDatosPersonales(), regObservacionesFacade, "desc"));
+                                model.addAttribute("observaciones", observaciones.consultaObservaciones(servicioBean.getDatosPersonales(), daoRegObservaciones, "desc"));
                             }
-                        } catch(Exception e)
+                        } catch (Exception e)
                         {
                             System.out.println("Eror en observaciones");
                             e.printStackTrace();
@@ -200,7 +268,7 @@ public class HistorialServicioController
                         //Reportes Bimestrales
                         try
                         {
-                            if(servicioBean.getDatosPersonales() != null)
+                            if (servicioBean.getDatosPersonales() != null)
                             {
                                 ValidaReportesBimestralesModel bimestralesModel = new ValidaReportesBimestralesModel();
                                 ReportesBean reporteBimestral = bimestralesModel.validaReportesBimestrales(servicioBean);
@@ -215,7 +283,7 @@ public class HistorialServicioController
                                 model.addAttribute("mensajeReportesBimestrales", "No has comenzado tu proceso de servicio social");
                                 model.addAttribute("statusReporteBimestrales", 2);
                             }
-                        } catch(Exception e)
+                        } catch (Exception e)
                         {
                             System.out.println("Error en validacion de reportes bimestrales");
                             e.printStackTrace();
@@ -224,7 +292,7 @@ public class HistorialServicioController
                         //Sanciones
                         try
                         {
-                            if(servicioBean.getDatosPersonales() != null)
+                            if (servicioBean.getDatosPersonales() != null)
                             {
                                 ConsultasPanelUsuarioSanciones consultaSanciones = new ConsultasPanelUsuarioSanciones();
                                 SancionesBean sancionesBean = consultaSanciones.consultaHorasSancion(servicioBean);
@@ -232,14 +300,14 @@ public class HistorialServicioController
                                 model.addAttribute("mensajeSanciones", sancionesBean.getMensaje());
                                 model.addAttribute("accesoSanciones", true);
                                 model.addAttribute("tieneSancion", sancionesBean.isTieneSancion());
-                                model.addAttribute("sanciones", consultaSanciones.listaSanciones(servicioBean.getDatosPersonales(), sancionesFacade, "desc"));
+                                model.addAttribute("sanciones", consultaSanciones.listaSanciones(servicioBean.getDatosPersonales(), daoSanciones, "desc"));
                             } else
                             {
                                 model.addAttribute("mensajeSanciones", "No has comenzado tu proceso de servicio social");
                                 model.addAttribute("accesoSanciones", false);
                                 model.addAttribute("tieneSancion", false);
                             }
-                        } catch(Exception e)
+                        } catch (Exception e)
                         {
                             System.out.println("Eror en observaciones");
                             e.printStackTrace();
@@ -248,7 +316,7 @@ public class HistorialServicioController
                         //Documentos Finales
                         try
                         {
-                            if(servicioBean.getDatosPersonales() != null)
+                            if (servicioBean.getDatosPersonales() != null)
                             {
                                 ValidaDocumentosFinalesModel validaDocFinales = new ValidaDocumentosFinalesModel();
                                 ReportesFinalesBean reportesFinales = validaDocFinales.validaDocumentosFinales(servicioBean);
@@ -263,17 +331,17 @@ public class HistorialServicioController
                                 model.addAttribute("mensajeDocumentosFinales", "No has comenzado tu proceso de servicio social");
                                 model.addAttribute("statusDocumentosFinales", 2);
                             }
-                        } catch(Exception e)
+                        } catch (Exception e)
                         {
                             System.out.println("Eror en observaciones");
                             e.printStackTrace();
                         }
 
-                        //Historial de servicio social
-                        HistorialServicioModel historialModel = new HistorialServicioModel(logServicioFacade);
-                        List<LogServicio> historialServicio = new ArrayList<LogServicio>();
-                        historialServicio = historialModel.getHistorialEventos(servicioBean.getDatosPersonales());
-                        model.addAttribute("historialEventos", historialServicio);
+                        //TODO Ver para que sirve esto
+//                        HistorialServicioModel historialModel = new HistorialServicioModel(logServicioFacade);
+//                        List<LogServicio> historialServicio = new ArrayList<LogServicio>();
+//                        historialServicio = historialModel.getHistorialEventos(servicioBean.getDatosPersonales());
+//                        model.addAttribute("historialEventos", historialServicio);
                     }
 
                 } else
@@ -281,7 +349,7 @@ public class HistorialServicioController
                     //Es la primera vez que ingresa al sistema
 
                     //Checa si es alumno interno entrando por primera vez
-                    if(servicioBean.getTipoPanel() == 0)
+                    if (servicioBean.getTipoPanel() == 0)
                     {
 
                         //Accesos
@@ -301,7 +369,7 @@ public class HistorialServicioController
                         model.addAttribute("mensajeSanciones", servicioBean.getMensaje());
 
                         //If servicio social terminado            
-                        if(servicioBean.getStatusServicio() == 4)
+                        if (servicioBean.getStatusServicio() == 4)
                         {
                             //Para poner palomas a todos los procesos del servicio
                             model.addAttribute("platica", true);
@@ -322,7 +390,7 @@ public class HistorialServicioController
                     }
 
                     //Checa si es egresado entrando por primera vez
-                    if(servicioBean.getTipoPanel() == 1)
+                    if (servicioBean.getTipoPanel() == 1)
                     {
                         //Proceso inicial del egresado, sin poder realizar el proceso de servicio social
                         model.addAttribute("accesoCartaMotivos", servicioBean.getEgresado().isAccesoCartaMotivos());
@@ -331,7 +399,7 @@ public class HistorialServicioController
                     }
                 }
 
-            } catch(Exception e)
+            } catch (Exception e)
             {
                 e.printStackTrace();
             }
@@ -349,10 +417,10 @@ public class HistorialServicioController
     {
         //Valida sesion
         ValidaSesion valSession = new ValidaSesion(session, request);
-        if(valSession.accesaPanelAdministrador())
+        if (valSession.accesaPanelAdministrador())
         {
             //Obtenemos al alumno
-            ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+            ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(daoVistaAlumno);
             VistaAlumno alumno = consultaVistaAlumno.getAlumno(id);
 
             try
@@ -360,15 +428,13 @@ public class HistorialServicioController
                 List<DatosPersonales> datosPersonales = new ArrayList<DatosPersonales>(alumno.getDatosPersonalesCollection());
                 model.addAttribute("alumno", datosPersonales.get(0));
                 return "/HistorialServicio/verInfoAlumno";
-            } 
-            catch(Exception e)
+            } catch (Exception e)
             {
                 System.err.println("Error al cargar datos personales");
                 return "error";
             }
 
-        } 
-        else
+        } else
         {
             model.addAttribute("error", "<div class='error'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";

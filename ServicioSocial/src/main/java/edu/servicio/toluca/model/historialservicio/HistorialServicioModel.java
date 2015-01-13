@@ -5,6 +5,7 @@
 package edu.servicio.toluca.model.historialservicio;
 
 import edu.servicio.toluca.beans.StatusServicioBean;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.LogServicio;
 import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
@@ -14,6 +15,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Autor: Jose Manuel Nieto Gomez 
@@ -25,24 +27,39 @@ import java.util.List;
  */
 public class HistorialServicioModel
 {
-
-    public DatosPersonalesFacade datosPersonalesFacade;
-    public LogServicioFacade logServicioFacade;
-
-    public HistorialServicioModel(DatosPersonalesFacade datosPersonalesFacade, LogServicioFacade logServicioFacade)
+    
+    private GenericDao<DatosPersonales> daoDatosPersonales;
+    private GenericDao<LogServicio> daoLogServicio;
+    
+    @Autowired
+    public void setDaoDatosPersonales(GenericDao<DatosPersonales> daoDatosPersonales)
     {
-        this.datosPersonalesFacade = datosPersonalesFacade;
-        this.logServicioFacade = logServicioFacade;
+        this.daoDatosPersonales = daoDatosPersonales;
+        daoDatosPersonales.setClass(DatosPersonales.class);
+    }
+    
+    @Autowired
+    public void setDaoLogServicio(GenericDao<LogServicio> daoLogServicio)
+    {
+        this.daoLogServicio = daoLogServicio;
+        daoLogServicio.setClass(LogServicio.class);
     }
 
-    public HistorialServicioModel(LogServicioFacade logServicioFacade)
+    public HistorialServicioModel(GenericDao<DatosPersonales> daoDatosPersonales, GenericDao<LogServicio> daoLogServicio)
     {
-        this.logServicioFacade = logServicioFacade;
+        this.daoDatosPersonales = daoDatosPersonales;
+        this.daoLogServicio = daoLogServicio;
     }
 
-    public HistorialServicioModel(DatosPersonalesFacade datosPersonalesFacade)
+    //ESTO NO SE USA, POR ESO LO COMENTÉ
+//    public HistorialServicioModel(GenericDao<LogServicio> daoLogServicio)
+//    {
+//        this.daoLogServicio = daoLogServicio;
+//    }
+
+    public HistorialServicioModel(GenericDao<DatosPersonales> daoDatosPersonales)
     {
-        this.datosPersonalesFacade = datosPersonalesFacade;
+        this.daoDatosPersonales = daoDatosPersonales;
     }
 
     /**
@@ -54,7 +71,7 @@ public class HistorialServicioModel
     public List<StatusServicioBean> getHistorialAlumnos()
     {
         List<StatusServicioBean> servicios = new ArrayList<StatusServicioBean>();
-        List<DatosPersonales> datosPersonales = datosPersonalesFacade.findAll();
+        List<DatosPersonales> datosPersonales = daoDatosPersonales.findAll();
         
         //Valida estatus del servicio social
         ValidacionStatusServicio validacionServicio = new ValidacionStatusServicio();
@@ -93,7 +110,7 @@ public class HistorialServicioModel
         logServicio.setFecha(Calendar.getInstance().getTime());
         logServicio.setDetalle(detalle);
         logServicio.setTipoLog(BigInteger.ZERO);
-        logServicioFacade.create(logServicio);
+        daoLogServicio.create(logServicio);
     }
 
     public List<LogServicio> getHistorialEventos(DatosPersonales datosPersonales)
@@ -101,8 +118,8 @@ public class HistorialServicioModel
         List<LogServicio> historial = new ArrayList<LogServicio>();
         try
         {
-            System.out.println("logservicio:" + logServicioFacade);
-            historial = logServicioFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+            System.out.println("logservicio:" + daoLogServicio);
+            historial = daoLogServicio.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
         } catch(Exception e)
         {
             System.out.println("Error al cargar el historial de eventos");
