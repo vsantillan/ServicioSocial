@@ -16,7 +16,7 @@
 <html>
     <head>
         <%@include file="../General/head.jsp"%>
-        <title>Administraci&oacute;n de Usuarios</title>
+        <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list-alt"></span>Administrar Usuarios</h2></div>
     </head>
     <body>
         <div class="container">
@@ -36,7 +36,7 @@
                                 <th>Nombre</th>
                                 <th>Puesto</th>
                                 <th>Email</th>                                            
-                                <th>Telefono</th>                                            
+                                <th>Teléfono</th>                                            
                             </tr>
                         </thead>
                         <tbody>

@@ -16,7 +16,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuOrganizacion.jsp"%>
                 <div class="col-md-12">
-                    <div class="help-block col-md-12 text-center"><h1><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Alta de Proyecto</h1></div>
+                    <div class="help-block col-md-12 text-center"><h2><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Alta de Proyecto</h2></div>
                     &nbsp;
                     <form:form  name="altaOrganizacion" modelAttribute="proyecto" class="MyForm" action="gdaAltaProyecto.do" method="POST">
                         <div class="panel panel-info">

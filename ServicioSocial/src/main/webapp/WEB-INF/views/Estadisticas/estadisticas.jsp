@@ -15,7 +15,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-stats"></span>&nbsp; Estadisticas</h1></div>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-stats"></span>&nbsp; Estadisticas</h2></div>
                     <div class="row">
                         <div class="col-md-2 col-md-offset-4">
                             <select id="anio" class="form-control" onchange="actualizaInformacion();">

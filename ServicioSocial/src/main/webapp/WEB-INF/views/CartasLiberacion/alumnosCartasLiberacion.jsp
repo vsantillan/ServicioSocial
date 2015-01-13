@@ -15,7 +15,7 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
-                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp; Cartas de Liberaci&oacute;n</h1></div>
+                <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp; Cartas de Liberaci&oacute;n</h2></div>
                 <div class="row col-md-12 center-block">
                     <div class="alert alert-warning col-md-10 col-md-offset-1">
                         <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestra una lista de los alumnos a los cuales se les puede generar la Carta de Liberación.</h4></div>
@@ -27,7 +27,7 @@
                                     <th>Generar</th>
                                     <th>Nombre</th>
                                     <th>N. Control</th>
-                                    <th>¿Se entrego anteriormente?</th>
+                                    <th>¿Se entregó anteriormente?</th>
                                     <th>Horas Acumuladas</th>
                                 </tr>
                             </thead>

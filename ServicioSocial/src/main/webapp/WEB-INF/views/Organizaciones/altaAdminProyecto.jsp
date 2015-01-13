@@ -23,7 +23,7 @@
                 <%@include file="../General/menuAdministrador.jsp"%>                    
 
                 <div class="row col-md-14">
-                    <div class="panel-heading"> <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Nuevo Proyecto</h1></div></div> 
+                    <div class="panel-heading"> <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Nuevo Proyecto</h2></div></div> 
                     <div class="panel-body">
                         <form:form  name="altaOrganizacion" modelAttribute="proyecto" class="MyForm" action="gdaAltaAdminProyecto.do" method="POST">
                             <p>${error_sql}</p>

@@ -18,12 +18,12 @@
                     <div class="col-md-8 col-md-offset-2">
                         <br/>
                         <div class="panel panel-info">
-                            <div class="panel-heading"><h3>Asignar Sancion</h3></div>
+                            <div class="panel-heading"><h3>Asignar Sanción</h3></div>
                             <div class="panel-body">
                                 <form:form  role="form"  name="sancion" action="asignaSancionAlumno.do"   method="POST" >
 
                                     <div class="form-group">
-                                        <label for="no_control">Seleccione la sancion:</label>
+                                        <label for="no_control">Seleccione la sanción:</label>
                                         <select class="form-control" name="idSancion">
                                             <core:forEach items="${catalogoSancion}" var="sanciones" >
                                                 <option value="${sanciones.id}">${sanciones.detalle}</option>

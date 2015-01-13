@@ -73,7 +73,7 @@
 
                         </form:form>
                     </div>
-                    <div class="modal-footer">Instituto Tecnologico de Toluca</div>
+                    <div class="modal-footer">Instituto Tecnológico de Toluca</div>
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@
 
                         </form:form>
 
-                        <div class="modal-footer">Instituto Tecnologico de Toluca</div>
+                        <div class="modal-footer">Instituto Tecnológico de Toluca</div>
                     </div>
                 </div>
             </div>

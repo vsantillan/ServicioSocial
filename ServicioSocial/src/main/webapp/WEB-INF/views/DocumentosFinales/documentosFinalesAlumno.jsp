@@ -17,7 +17,7 @@
                 <%@include file="../General/banner.jsp"%>
                 <%@include file="../General/menuUsuario.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Documentos Finales</h1></div>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Documentos Finales</h2></div>
                     <p>&nbsp;</p>
                     <div class="row">
                         <div class="alert alert-warning col-md-9 col-md-offset-1">

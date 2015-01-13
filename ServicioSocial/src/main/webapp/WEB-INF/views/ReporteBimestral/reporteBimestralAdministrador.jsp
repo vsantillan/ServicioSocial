@@ -17,7 +17,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Administraci&oacute;n de Reportes Bimestrales</h1></div>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Administraci&oacute;n de Reportes Bimestrales</h2></div>
                     <div class="tab-content">
                         <ul class="nav nav-tabs" id="formatoUnico-tabla">
                             <li class="active"><a href="#noRevisados" data-toggle="tab">No Revisados</a></li>

@@ -10,7 +10,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                <center class="row help-block  text-center" ><h2>Sanciones</h2></center>
+                <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-thumbs-down "></span> Sanciones</h2></div>
                 <h5 class="alert alert-warning">A continuaci&oacute;n se muestran los alumnos con sanciones.</h5>
                 <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' width='100%'>
                     <thead>

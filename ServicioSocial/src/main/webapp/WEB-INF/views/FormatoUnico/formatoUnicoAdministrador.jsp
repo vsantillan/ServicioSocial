@@ -16,7 +16,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <center><h2>Página del Formato Unico - Administrador</h2></center>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-file"></span> Página del Formato Único - Administrador </h2></div>
                     <div class="tab-content">
                         <ul class="nav nav-tabs" id="formatoUnico-tabla">
                             <li class="active"><a href="#noRevisados" data-toggle="tab">No revisados</a></li>
@@ -29,7 +29,7 @@
 
                                 <thead>
                                     <tr>
-                                        <th>Acci&oacute;nes</th>
+                                        <th>Acciones</th>
                                         <th>Periodo</th>
                                         <th>N. Control</th>
                                         <th>Nombre</th>

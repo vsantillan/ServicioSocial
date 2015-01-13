@@ -16,7 +16,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Cambio de Dependencia</h1></div>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Cambio de Dependencia</h2></div>
                     <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' width='100%'>
                         <thead>
                         <div class="form-group">

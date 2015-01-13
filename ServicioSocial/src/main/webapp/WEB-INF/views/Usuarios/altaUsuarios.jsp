@@ -15,7 +15,7 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
-                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-user"></span>&nbsp; Nuevo Usuario</h1></div>
+                <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-user"></span>&nbsp; Nuevo Usuario</h2></div>
                 <div class="row col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-primary">Alta Usuario</div> 

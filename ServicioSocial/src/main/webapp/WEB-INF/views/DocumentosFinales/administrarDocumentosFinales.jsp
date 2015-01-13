@@ -17,14 +17,14 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Administraci&oacute;n Documentos Finales</h1></div>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list-alt"></span>&nbsp;Administraci&oacute;n Documentos Finales</h2></div>
                     <div class="alert alert-warning col-md-9 col-md-offset-1">
                         <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestra una vista de los documentos originales de cada alumno.</h4></div>
                     </div>
                     <div id="div-validar-organizacion" style="display:none;">
                         <center>
                             <span class="glyphicon glyphicon-ok-circle sizeIconValid"></span>
-                            <h2>Reporte validada correctamente</h2>
+                            <h2>Reporte validado correctamente</h2>
                         </center>
                     </div>
                     <table cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="example" width='100%'>

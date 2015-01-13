@@ -11,7 +11,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <h2>Cat&aacute;logo de Sanciones</h2>
+                   <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-folder-open "></span> Catálogo Sanciones</h2></div>
 
                     <div class="tab-content">
                         <ul class="nav nav-tabs">
@@ -46,7 +46,7 @@
                                 <!--<p>Nueva Sanci&oacute;n</p>-->
                                 <form id="frmNuevaSancion" >
                                     <div class="row col-md-8 col-md-offset-2">
-                                        <h3>Nueva Sancion</h3>
+                                        <h3>Nueva Sanción</h3>
                                             <label for="hora">Horas: </label><input type="number" name="horas" size="2" value="0" required="required" class="form-control"/>
                                             <br/>
 <!--                                            <label for="tolerancia">D&iacute;as de tolerancia: </label><input type="number" name="tolerancia" class="form-control" size="2" value="0" pagoSanciones/>-->

@@ -19,7 +19,7 @@
                     <!---------------------------------------------Contenido------------------------------------------->                
 
                     <div class="jumbotron">
-                        <h1 >Bienvenido(a)!</h1>
+                        <h1 ><center>Servicio Social - Administrador</center> </h1>
                         <br/><br/><br/>
                     </div>
 

@@ -17,7 +17,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
-                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp;Validar Proyectos</h1></div>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp;Validar Proyectos</h2></div>
                     <p>&nbsp;</p>
                     <div class="row">
                         <div class="alert alert-warning col-md-6  col-md-offset-3">

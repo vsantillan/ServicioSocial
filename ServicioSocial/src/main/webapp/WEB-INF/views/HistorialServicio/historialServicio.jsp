@@ -10,7 +10,7 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%> 
                 <div class="row col-md-12 center-block">
-                    <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Historial Servicio</h1></div>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Historial Servicio</h2></div>
                     <div class="alert alert-warning col-md-10 col-md-offset-1">
                         <div class="alert-heading "><h4 class="text-center"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;A continuaci&oacute;n se muestran todos los alumnos que mantienen un registro en el sistema de servicio social..</h4></div>
                     </div>

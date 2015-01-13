@@ -18,7 +18,7 @@
                 <%@include file="../General/menuAdministrador.jsp"%> 
                 <!---------------------------------------------Contenido-------------------------------------------> 
                 <div class="row col-md-12 center-block">
-                    <center><h1>Administraci&oacute;n de Alumnos Becados</h1></center>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list-alt"></span>Administración de Alumnos Becados</h2></div>
                     <div class="tab-content">
                         <ul class="nav nav-tabs" id="administracionBecados-tabla">
                             <li class="active"><a href="#preseleccion" data-toggle="tab">Alumnos Preseleccionados</a></li>
