@@ -252,7 +252,7 @@ public class OrganizacionesController
         for(int i = 0; i < listaInstancias.size(); i++)
         {
 //            String estatus = listaInstancias.get(i).getEstatus().toString();-..........Correccion de error...................................................
-            short listStatus = listaInstancias.get(i).getStatus();
+            short listStatus = (short) listaInstancias.get(i).getStatus();
             String estatus = Short.toString(listStatus);
             if((estatus.equals("1")))
             {
@@ -545,7 +545,7 @@ public class OrganizacionesController
         for(int i = 0; i < listaInstancias.size(); i++)
         {
 //            String estatus = listaInstancias.get(i).getEstatus().toString();
-            short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
+            short listStatus = (short) listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
             String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
             if((estatus.equals("1")) || (estatus.equals("2")))
             {
@@ -620,13 +620,13 @@ public class OrganizacionesController
             } catch(Exception e)
             {
             }
-            List<Instancia> listaInstancias = daoInstancia.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+            List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             System.out.println("Instancias");
             for(int i = 0; i < listaInstancias.size(); i++)
             {
 //                String estatus = listaInstancias.get(i).getEstatus().toString();
-                short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
+                short listStatus = (short) listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
                 String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
                 if((estatus.equals("1")) || (estatus.equals("2")))
                 {
@@ -771,7 +771,7 @@ public class OrganizacionesController
                 for(int i = 0; i < listaInstancias.size(); i++)
                 {
 //                    String estatus = listaInstancias.get(i).getEstatus().toString();
-                    short listStatus = listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
+                    short listStatus = (short) listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
                     String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
                     if((estatus.equals("1")) || (estatus.equals("2")))
                     {

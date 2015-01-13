@@ -7,6 +7,8 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.ObservacionesBean;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.ValidaSesion;
+import edu.servicio.toluca.dao.GenericDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.RegObservacionGeneral;
@@ -38,17 +40,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PanelAdministradorController
 {
 
-    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
-    private CatalogoObservacionesFacade catalogoObservacionesFacade;
+    private GenericDao<UsuarioInstancia> daoUsuarioInstancia;
+    private GenericDao<CatalogoObservaciones> daoCatalogoObservaciones;
+    private GenericDao<RegObservacionGeneral> daoRegObservacionGeneral;
 
-    @EJB(mappedName = "java:global/ServicioSocial/UsuarioInstanciaFacade")
-    private UsuarioInstanciaFacade usuarioInstanciaFacade;
+    @Autowired
+    public void setDaoUsuarioInstancia(GenericDao<UsuarioInstancia> daoUsuarioInstancia)
+    {
+        this.daoUsuarioInstancia = daoUsuarioInstancia;
+        daoUsuarioInstancia.setClass(UsuarioInstancia.class);
+    }
+    
+    @Autowired
+    public void setDaoCatalogoObservaciones (GenericDao<CatalogoObservaciones> daoCatalogoObservaciones)
+    {
+        this.daoCatalogoObservaciones = daoCatalogoObservaciones;
+        daoCatalogoObservaciones.setClass(CatalogoObservaciones.class);
+    }
+    @Autowired
+    public void setDaoRegObservacionGeneral (GenericDao<RegObservacionGeneral> daoRegObservacionGeneral)
+    {
+        this.daoRegObservacionGeneral = daoRegObservacionGeneral;
+        daoRegObservacionGeneral.setClass(RegObservacionGeneral.class);
+    }
+    
 
-    @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
-    private CatalogoObservacionesFacade observacionesCatalogoFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionGeneralFacade")
-    private RegObservacionGeneralFacade regObservacionGeneralFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/panelAdministrador.do")
     public String panelAdministrador(Model model, HttpSession session, HttpServletRequest request)
@@ -74,8 +90,8 @@ public class PanelAdministradorController
         if (valSession.accesaPanelAdministrador())
         {
 
-            List<CatalogoObservaciones> catalogo = catalogoObservacionesFacade.findBySpecificField("tipo", "6", "equal", null, null);
-            List<UsuarioInstancia> listaUsuarios = usuarioInstanciaFacade.findBySpecificField("status", "1", "equal", null, null);
+            List<CatalogoObservaciones> catalogo = daoCatalogoObservaciones.findBySpecificField("tipo", "6", "equal", null, null);
+            List<UsuarioInstancia> listaUsuarios = daoUsuarioInstancia.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
 
             for (UsuarioInstancia listaUsuario : listaUsuarios)
@@ -125,7 +141,7 @@ public class PanelAdministradorController
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador())
         {
-            List<UsuarioInstancia> listaUsuarios = usuarioInstanciaFacade.findBySpecificField("status", "0", "equal", null, null);
+            List<UsuarioInstancia> listaUsuarios = daoUsuarioInstancia.findBySpecificField("status", 0, "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
 
             for (UsuarioInstancia listaUsuario : listaUsuarios)
@@ -160,7 +176,7 @@ public class PanelAdministradorController
             {
                 usuarioInstancia.setStatus((short) 1);
                 usuarioInstancia.setPassword(StringMD.getStringMessageDigest(usuarioInstancia.getPassword(), StringMD.SHA1));
-                usuarioInstanciaFacade.create(usuarioInstancia);
+                daoUsuarioInstancia.create(usuarioInstancia);
             } catch (Exception e)
             {
                 System.out.println("Match");
@@ -178,9 +194,9 @@ public class PanelAdministradorController
     public @ResponseBody
     String actualizarStatusOrganizaciones(UsuarioInstancia usuario, int id, Model model, HttpSession session, HttpServletRequest request)
     {
-        usuario = usuarioInstanciaFacade.find(BigDecimal.valueOf(id));
+        usuario = (UsuarioInstancia) daoUsuarioInstancia.find(BigDecimal.valueOf(id));
         usuario.setStatus((short) 1);
-        usuarioInstanciaFacade.edit(usuario);
+        daoUsuarioInstancia.edit(usuario);
 
         return "ok";
     }
@@ -188,10 +204,15 @@ public class PanelAdministradorController
     @RequestMapping(method = RequestMethod.GET, value = "/editUser.do")
     public String editUser(int id, Model model, HttpSession session, HttpServletRequest request)
     {
-        model.addAttribute("usuarios", usuarioInstanciaFacade.find(BigDecimal.valueOf(id)));
+
+        UsuarioInstancia usuario = (UsuarioInstancia) daoUsuarioInstancia.find(BigDecimal.valueOf(id));
+        model.addAttribute("usuarios", usuario);
+        System.out.println(usuario.getPassword());
+        System.out.println(usuario.getIdUsuarioInstancia());
 
         System.out.println("ENTRO A EDIT USER");
         return "/Usuarios/editarUsuario";
+
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/downUser.do")
@@ -201,7 +222,7 @@ public class PanelAdministradorController
 
         System.out.println("ENTRANDO......................................");
 
-        UsuarioInstancia usuario = usuarioInstanciaFacade.find(BigDecimal.valueOf(id));
+        UsuarioInstancia usuario = (UsuarioInstancia) daoUsuarioInstancia.find(BigDecimal.valueOf(id));
         System.out.println(usuario.getIdUsuarioInstancia());
         System.out.println(usuario.getNombre());
         System.out.println(usuario.getApellidoMat());
@@ -211,7 +232,7 @@ public class PanelAdministradorController
         for (String Observacion : observaciones)
         {
 
-            CatalogoObservaciones catObser = observacionesCatalogoFacade.find(BigDecimal.valueOf(Integer.parseInt(Observacion)));
+            CatalogoObservaciones catObser = (CatalogoObservaciones) daoCatalogoObservaciones.find(BigDecimal.valueOf(Integer.parseInt(Observacion)));
             //Objeto a Registrar
             RegObservacionGeneral registro = new RegObservacionGeneral();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
@@ -221,46 +242,47 @@ public class PanelAdministradorController
             //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
             //Creacion de Registro
-            regObservacionGeneralFacade.create(registro);
+            daoRegObservacionGeneral.create(registro);
             System.out.println("las observaciones son: " + Observacion);
         }
         usuario.setStatus((short) status);
 
-        usuarioInstanciaFacade.edit(usuario);
+        daoUsuarioInstancia.edit(usuario);
 
         return "ok";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/updateUserData.do")
-    public String updateUser(UsuarioInstancia usuario, String statusPass)
+    public String updateUser(UsuarioInstancia usuario, String lockPass)
     {
         System.out.println("..............\n\n\n Entrando a controlador para modificar usuarios");
-        System.out.println(usuario.getApellidoMat());
-        System.out.println(usuario.getApellidoPat());
-        System.out.println(statusPass);
-        UsuarioInstancia usuarioFind = usuarioInstanciaFacade.find(usuario.getIdUsuarioInstancia());
-        System.out.println(usuario.getApellidoMat());
-        System.out.println(usuario.getApellidoPat());
-        System.out.println(statusPass);
-//        usuarioFind.setApellidoMat(apellidomat);
-//        usuarioFind.setApellidoPat(apellidopat);
-//        usuarioFind.setEmail(email);
-//        usuarioFind.setExtension(extension);
-//        usuarioFind.setTelefono(telefono);
-//        usuarioFind.setNombre(nombre);
-//        usuarioFind.setPuesto(puesto);
-        if (statusPass.equals('1'))
-        {
+        System.out.println(usuario.getPassword());
+        System.out.println("s:" + lockPass);
 
-        }
-        try
+//        if (usuario.getPassword().equals(""))
+//        {
+        UsuarioInstancia usuarioL = (UsuarioInstancia) daoUsuarioInstancia.find(usuario.getIdUsuarioInstancia());
+        usuarioL.setApellidoMat(usuario.getApellidoMat());
+        usuarioL.setApellidoPat(usuario.getApellidoPat());
+        usuarioL.setEmail(usuario.getEmail());
+        usuarioL.setPuesto(usuario.getPuesto());
+        usuarioL.setExtension(usuario.getExtension());
+        usuarioL.setTelefono(usuario.getTelefono());
+        usuarioL.setNombre(usuario.getNombre());
+        usuarioL.setStatus((short) 1);
+//        } else
+//        {
+        if ("".equals(usuario.getPassword()))
         {
-//            usuarioInstanciaFacade.edit(usuarioFind);
+            System.out.println("Mantener contraseña");
+            usuarioL.setPassword(usuarioL.getPassword());
+        } else
+        {
+            usuarioL.setPassword(StringMD.getStringMessageDigest(usuario.getPassword(), StringMD.SHA1));
+        }
 
-            return "ok";
-        } catch (Exception s)
-        {
-            return "bad";
-        }
+        daoUsuarioInstancia.edit(usuarioL);
+//        }|
+        return "redirect:administrarUsuarios.do";
     }
 }

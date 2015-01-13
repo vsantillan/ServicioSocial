@@ -20,6 +20,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-primary">Editar Usuario</div> 
                         <div class="panel-body">
+                             
                             <form:form name="form" commandName="usuarios" action="updateUserData.do" method="POST">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -46,13 +47,12 @@
                                     <div class="row clearfix panel-primary">
                                         <div class="col-md-12 column">
                                             <div class="tabbable " id="tabs-155708">
-                                                <ul class="nav nav-tabs panel-danger" onclick="limpiarPassModificarUser()">
+                                                <ul class="nav nav-tabs panel-danger">
                                                     <li id="mantenerPassword" class="active">
-                                                        <a  href="#panel-701803" data-toggle="tab">Mantener Contraseña</a>
+                                                        <a id="mantener_pass"href="#panel-701803" data-toggle="tab" onclick="OptionPassGet()">Mantener Contraseña</a>
                                                     </li>
                                                     <li id="nuevoPassword">
-                                                        <a n  href="#panel-600468" data-toggle="tab">Cambiar Contraseña</a>   
-
+                                                        <a  href="#panel-600468" data-toggle="tab" onclick="OptionPassSet()">Cambiar Contraseña</a>   
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
@@ -60,7 +60,7 @@
                                                         <p> 
                                                         <div class="col-md-8 column">
                                                             <div class="input-group col-md-12">
-                                                                <input placeholder="********************" type="password" path="password"class="form-control" disabled>
+                                                                <input  type="password" id="lockPassword" name="lockPass" class="form-control"  value="lockPassword" placeholder="**************" disabled>
                                                             </div>
                                                         </div>
                                                         </p>
@@ -69,7 +69,7 @@
                                                         <p>
                                                         <div class="col-md-8 column">
                                                             <div class="input-group col-md-12">
-                                                                <form:input path="password" id="pass" type="password" onkeyup="tamanoPass(event)" class="form-control"   maxlength="10" placeholder="Ingrese su conrtaseña"/>
+                                                                <form:input path="password" id="pass" type="password" onkeyup="tamanoPass(event)" class="form-control"  maxlength="10" placeholder="Ingrese su conrtaseña"/>
                                                             </div>
                                                         </div>
                                                         </p>
@@ -99,6 +99,7 @@
                                         <input type ="submit" class="btn btn-primary" value = "Editar Usuario" /> 
                                     </div>
                                 </div>
+                                    <form:input hidden="hidden" path="idUsuarioInstancia" />
                             </form:form>
                         </div>
                     </div>
@@ -112,9 +113,16 @@
     <script src="js/usuariosAdmin.js"></script>
     <script src="js/jquery-1.9.1.js"></script>
     <script>
-        $(document).ready(function()
-        {
-        $('#pass').removeAttr('value');
-        });
+                                                            $(document).ready(function()
+                                                            {
+                                                                $('#pass').removeAttr('value');
+                                                            });
+                                                            
+                                                            function OptionPassGet() {
+                                                           document.getElementById('pass').value = "";
+                                                            }
+                                                            function OptionPassSet() {
+                                                           document.getElementById('lockPassword').value = "lockPassword";
+                                                            }
     </script>
 </html>

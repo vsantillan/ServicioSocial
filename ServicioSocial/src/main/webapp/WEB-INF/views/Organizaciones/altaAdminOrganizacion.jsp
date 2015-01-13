@@ -15,27 +15,27 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
-                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Nueva Organizaci&oacute;n</h1></div>
+                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-list"></span>&nbsp; Nueva Instancia</h1></div>
                 <div class="row col-md-12">
                     <div class="panel panel-info">
-                        <div class="panel-heading">Alta Organizaci&oacute;n</div> 
+                        <div class="panel-heading">Alta Instancia</div> 
                         <div class="panel-body">
                             <form:form name="altaOrganizacion" commandName="instancia" class="MyForm" action="gdaAdminAltaOrganizacion.do"  method="POST">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="nombre">Nombre de la Organizaci&oacute;n:</label>                               
-                                        <h4><form:input path="nombre" id="nombre" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/></h4><br/>
+                                        <label for="nombre">Nombre de la Instancia:</label>                               
+                                        <form:input path="nombre" id="nombre" size="20" class="form-control" placeholder="Introduzca ï¿½nicamente caracteres alfanumï¿½ricos"/><br/>
                                         <form:errors path="nombre" class="alert alert-danger" />
                                         ${error_sql}
                                     </div>
 
                                     <div class="form-group">
                                         <label for="rfc">RFC:</label> 
-                                        <form:input path="rfc" id="rfc" size="20" maxlength="13" class="form-control" placeholder="RFC debe tener entre 12 y 13 caraceres" /><br/>
+                                        <form:input path="rfc" id="rfc" size="20" maxlength="13" class="form-control" placeholder="RFC debe tener entre 12 y 13 caracteres." /><br/>
                                         <form:errors path="rfc" class="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tipo_organizacion">Tipo de Organizaci&oacute;n:</label> 
+                                        <label for="tipo_organizacion">Tipo de Instancia:</label> 
                                         <form:select id="tipoOrganizacion" path="TipoOrganizacion.idTipoOrganizacion" name="tipoOrganizacion" class="form-control">
                                             <core:forEach items="${tipoOrganizaciones}" var="tipoOrganizaciones">
                                                 <form:option  value="${tipoOrganizaciones.idTipoOrganizacion}">${tipoOrganizaciones.detalle}</form:option>
@@ -44,12 +44,14 @@
                                         <form:errors path="tipoOrganizacion" class="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
-                                        <label for="calle">Calle:</label>
-                                        <form:input path="domicilio" id="domicilio" size="20" class="form-control" placeholder="Ingrese su calle"/><br/>
-                                        <form:errors path="domicilio" class="alert alert-danger"/>
+                                        <label for="calle">Telï¿½fono de Instancia:</label>
+                                        <form:input path="telefono" id="telefono" size="20" maxlength="13" class="form-control" placeholder="Ingrese el nï¿½mero telefï¿½nico de la instancia."/><br/>
+                                        <form:errors path="telefono" class="alert alert-danger"/>
                                     </div>
-                                      <div class="form-group">
-                                        <input type ="submit" value = "Guardar Nueva Organización" class="btn btn-primary" /> 
+                                    <div class="form-group">
+                                        <label for="calle">Calle:</label>
+                                        <form:input path="domicilio" id="domicilio" size="20" maxlength="50" class="form-control" placeholder="Ingrese su calle"/><br/>
+                                        <form:errors path="domicilio" class="alert alert-danger"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -86,6 +88,10 @@
                                         <!--select name="colonia" id="colonia" disabled="true"></select--> 
                                         <form:select id="idColonia" path="idColonia.idColonia" name="idColonia" class="form-control"></form:select> 
                                         </div>
+                                        <br>
+                                        <div class="form-group">
+                                            <input type ="submit" value = "Guardar" class="btn btn-primary pull-right" /> 
+                                        </div>
                                         <div id="otra_colonia" style="display:none;">
                                             <input type="text" name="otra_colonia" value="${otra_colonia}" class="form-control"/>
                                         <input type="hidden" id="existeCP" name="existeCP" value="true">
@@ -102,10 +108,10 @@
             </div>
         </div>
         <%@include file="../General/js.jsp"%>
-          <!-- Javascript -->
+        <!-- Javascript -->
         <script src="js/jquery.codigos.postales.js"></script>       
         <script src="js/jquery.manolo.js"></script>
-<!--        <script src="js/instancias.js"></script>
-        <script src="js/jquery-1.9.1.js"></script>-->
+        <!--        <script src="js/instancias.js"></script>
+                <script src="js/jquery-1.9.1.js"></script>-->
     </body>
 </html>

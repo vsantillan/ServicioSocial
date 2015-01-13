@@ -176,7 +176,7 @@ public class InstanciasController
 
         if (rol != null && rol.equals("ORGANIZACION"))
         {
-            List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
+            List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
             Instancia nvaInstancia = new Instancia();
             nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
 
@@ -198,7 +198,7 @@ public class InstanciasController
     {
         if (bindingResult.hasErrors()) // Showing error in form
         {
-            List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
+            List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
             model.addAttribute("tiposOrganizacion", tiposOrg);
 
             return "/Instancias/preregistro";
@@ -206,11 +206,11 @@ public class InstanciasController
         {
             // Check if instance is yet registered
             List<Instancia> instancias
-                    = instanciaFacade.findBySpecificField("rfc", instancia.getRfc().toUpperCase(), "equal", null, null);
+                    = daoInstancia.findBySpecificField("rfc", instancia.getRfc().toUpperCase(), "equal", null, null);
             if (instancias.size() > 0)
             {
                 String rfcError = "<div class='alert alert-danger'>Este RFC ya está registrado</div>";
-                List<TipoOrganizacion> tiposOrg = tipoOrgFacade.findAll();
+                List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
                 model.addAttribute("tiposOrganizacion", tiposOrg);
                 model.addAttribute("rfcError", rfcError);
 
@@ -218,10 +218,10 @@ public class InstanciasController
             } else
             {
                 // Configurar Entity y persistir
-                Colonia col = coloniaFacade.find(instancia.getIdColonia().getIdColonia());
+                Colonia col = (Colonia) daoColonia.find(instancia.getIdColonia().getIdColonia());
                 instancia.setIdColonia(col);
 
-                TipoOrganizacion tipoOrg = tipoOrgFacade.find(
+                TipoOrganizacion tipoOrg = (TipoOrganizacion) daoTipoOrganizacion.find(
                         instancia.getTipoOrganizacion().getIdTipoOrganizacion());
                 instancia.setTipoOrganizacion(tipoOrg);
 
@@ -232,14 +232,14 @@ public class InstanciasController
 
                 // Obtener usuario al que pertenecera la instancia
                 String email = session.getAttribute("EMAIL").toString();
-                List<UsuarioInstancia> usuarios = usuarioInstanciaFacade
+                List<UsuarioInstancia> usuarios = daoUsuarioInstancia
                         .findBySpecificField("email", email, "equal", null, null);
                 if (usuarios.size() > 0)
                 {
                     instancia.setUsuarioInstancia(usuarios.get(0));
                 }
 
-                instanciaFacade.create(instancia);
+                daoInstancia.create(instancia);
 
                 return "/Instancias/preregistroexitoso";
             }
@@ -251,8 +251,8 @@ public class InstanciasController
     List<HashMap> buscarInstancias(Model model, String field, String value)
     {
         List<Instancia> resultado = (field.equals("rfc"))
-                ? instanciaFacade.findBySpecificField("rfc", value, "like", null, null)
-                : instanciaFacade.findBySpecificField("nombre", value, "like", null, null);
+                ? daoInstancia.findBySpecificField("rfc", value, "like", null, null)
+                : daoInstancia.findBySpecificField("nombre", value, "like", null, null);
 
         List<HashMap> instancias = new ArrayList<HashMap>();
         for (Instancia instancia : resultado)
@@ -322,7 +322,7 @@ public class InstanciasController
         }
 
         // Verificar si el email ya ha sido registrado con otro usuario
-        List<UsuarioInstancia> usuarios = usuarioInstanciaFacade
+        List<UsuarioInstancia> usuarios = daoUsuarioInstancia
                 .findBySpecificField("email", usuarioInstancia.getEmail().toLowerCase(), "equal", null, null);
         List<UsuarioInstancia> usuarios2 = daoUsuarioInstancia.findBySpecificField(
                 "email", usuarioInstancia.getEmail().toLowerCase(), "equal", null, null);
@@ -357,13 +357,13 @@ public class InstanciasController
     public String registrarProyecto(Model model)
     {
         Proyectos proyecto = new Proyectos();
-        List<TipoProyecto> tiposP = tiposPFacade.findAll();
+        List<TipoProyecto> tiposP = daoTipoProyecto.findAll();
         List<String> modalidades = new ArrayList<String>();
         modalidades.add("INTERNO");
         modalidades.add("EXTERNO");
 
-        List<Perfil> perfiles = perfilFacade.findAll();
-        List<Programa> programas = programaFacade.findAll();
+        List<Perfil> perfiles = daoPerfil.findAll();
+        List<Programa> programas = daoPrograma.findAll();
 
         model.addAttribute("proyecto", proyecto);
         model.addAttribute("tiposP", tiposP);
@@ -385,13 +385,13 @@ public class InstanciasController
 
         if (bindingResult.hasErrors() || perfilesproyecto.length() < 1)
         {
-            List<TipoProyecto> tiposP = tiposPFacade.findAll();
+            List<TipoProyecto> tiposP = daoTipoProyecto.findAll();
             List<String> modalidades = new ArrayList<String>();
             modalidades.add("INTERNO");
             modalidades.add("EXTERNO");
 
-            List<Perfil> perfiles = perfilFacade.findAll();
-            List<Programa> programas = programaFacade.findAll();
+            List<Perfil> perfiles = daoPerfil.findAll();
+            List<Programa> programas = daoPrograma.findAll();
 
             model.addAttribute("tiposP", tiposP);
             model.addAttribute("modalidades", modalidades);
@@ -433,25 +433,25 @@ public class InstanciasController
                 proyecto.setModalidad("E");
             }
 
-            proyecto.setIdTipoProyecto(tiposPFacade.find(proyecto.getIdTipoProyecto().getIdTipoProyecto()));
-            proyecto.setIdPrograma(programaFacade.find(proyecto.getIdPrograma().getIdPrograma()));
-            proyecto.setIdColonia(coloniaFacade.find(proyecto.getIdColonia().getIdColonia()));
+            proyecto.setIdTipoProyecto((TipoProyecto) daoTipoProyecto.find(proyecto.getIdTipoProyecto().getIdTipoProyecto()));
+            proyecto.setIdPrograma((Programa) daoPrograma.find(proyecto.getIdPrograma().getIdPrograma()));
+            proyecto.setIdColonia((Colonia) daoColonia.find(proyecto.getIdColonia().getIdColonia()));
 
-            Instancia instance = instanciaFacade.findBySpecificField("nombre", session.getAttribute("NOMBRE").toString(), "equal", null, null).get(0);
+            Instancia instance = (Instancia) daoInstancia.findBySpecificField("nombre", session.getAttribute("NOMBRE").toString(), "equal", null, null).get(0);
             //System.out.println("SE ENCONTRO INSTANCIA: " + instance.getNombre());
             proyecto.setIdInstancia(instance);
-            proyectosFacade.create(proyecto);
+            daoProyectos.create(proyecto);
 
             // Registrar perfiles
             StringTokenizer stPerfiles = new StringTokenizer(perfilesproyecto, ";");
             while (stPerfiles.hasMoreTokens())
             {
-                Perfil perfil = perfilFacade.findBySpecificField("nombre", stPerfiles.nextToken().trim(), "equal", null, null).get(0);
+                Perfil perfil = (Perfil) daoPerfil.findBySpecificField("nombre", stPerfiles.nextToken().trim(), "equal", null, null).get(0);
                 //System.out.println("Perfil encontrado: " + perfil.getNombre());
                 ProyectoPerfil pPerfil = new ProyectoPerfil();
                 pPerfil.setIdPerfil(perfil);
                 pPerfil.setIdProyecto(proyecto);
-                pPerfilFacade.create(pPerfil);
+                daoPerfil.create(pPerfil);
             }
 
             // Registrar actividades
@@ -461,12 +461,12 @@ public class InstanciasController
             actividad01.setIdProyecto(proyecto);
             actividad01.setEstatus(BigInteger.ONE);
             actividad01.setDetalle(actividad1);
-            actividadesFacade.create(actividad01);
+            daoActividades.create(actividad01);
 
             actividad02.setIdProyecto(proyecto);
             actividad02.setEstatus(BigInteger.ONE);
             actividad02.setDetalle(actividad2);
-            actividadesFacade.create(actividad02);
+            daoActividades.create(actividad02);
 
             if (actividad3.trim().length() > 0)
             {
@@ -474,7 +474,7 @@ public class InstanciasController
                 actividad03.setIdProyecto(proyecto);
                 actividad03.setEstatus(BigInteger.ONE);
                 actividad03.setDetalle(actividad3);
-                actividadesFacade.create(actividad03);
+                daoActividades.create(actividad03);
             }
             if (actividad4.trim().length() > 0)
             {
@@ -482,7 +482,7 @@ public class InstanciasController
                 actividad04.setIdProyecto(proyecto);
                 actividad04.setEstatus(BigInteger.ONE);
                 actividad04.setDetalle(actividad4);
-                actividadesFacade.create(actividad04);
+                daoActividades.create(actividad04);
             }
             if (actividad5.trim().length() > 0)
             {
@@ -490,7 +490,7 @@ public class InstanciasController
                 actividad05.setIdProyecto(proyecto);
                 actividad05.setEstatus(BigInteger.ONE);
                 actividad05.setDetalle(actividad5);
-                actividadesFacade.create(actividad05);
+                daoActividades.create(actividad05);
             }
 
             return "/Instancias/proyectoregistrado";
@@ -506,7 +506,7 @@ public class InstanciasController
             Instancia instancia;
             String instanciaNom = session.getAttribute("NOMBRE").toString();
 
-            instancia = instanciaFacade.findBySpecificField("nombre",
+            instancia = (Instancia) daoInstancia.findBySpecificField("nombre",
                     instanciaNom, "equal", null, null).get(0);
 
             if (instancia != null)

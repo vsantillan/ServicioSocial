@@ -185,10 +185,11 @@ public class ValidacionesOrganizaciones {
         }
 
         try {
-            String strTelefono = /*instancia.getTelefono() + */"";
-            Double telefono = Double.parseDouble(strTelefono);
+            long strTelefono = instancia.getTelefono();
+            String telefonoCadena = String.valueOf(strTelefono);
+            Double telefono = Double.parseDouble(telefonoCadena);
             //Validacion si esta fuera del rango permitido
-            if (strTelefono.length() > 13 || strTelefono.length() < 7) {
+            if (telefonoCadena.length() > 13 || telefonoCadena.length() < 7) {
                 result.addError(new ObjectError("telefono", "Formato de teléfono inválido."));
                 model.addAttribute("telefono", error("Formato inválido. Solo se aceptan de 7 a 13 números."));
             } else {

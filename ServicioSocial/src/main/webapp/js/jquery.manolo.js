@@ -3,7 +3,9 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
-
+    
+    $("#telefono").val("");
+    
     $(".btn-validar-org").click(function(event) {
         $("#div-validar-organizacion").show('slow');
 

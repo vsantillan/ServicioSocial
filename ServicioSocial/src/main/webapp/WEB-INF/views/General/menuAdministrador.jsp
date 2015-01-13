@@ -81,11 +81,11 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instancias<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-submenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Organizaciones</a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Instancias</a>
                             <ul class="dropdown-menu">
-                                <li><a href="altaAdminOrganizacion.do">Alta Organizaciones</a></li>
-                                <li><a href="administrarOrganizaciones.do">Administrar Organizaciones</a></li>
-                                <li><a href="validarOrganizaciones.do">Validar Organizaciones</a></li>
+                                <li><a href="altaAdminOrganizacion.do">Alta Instancias</a></li>
+                                <li><a href="administrarOrganizaciones.do">Administrar Instancias</a></li>
+                                <li><a href="validarOrganizaciones.do">Validar Instancias</a></li>
                             </ul>
                         </li>
                         <li class="dropdown-submenu">

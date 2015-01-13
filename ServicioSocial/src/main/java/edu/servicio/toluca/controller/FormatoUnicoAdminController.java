@@ -7,31 +7,28 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoBean;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Documentos;
 import edu.servicio.toluca.entidades.FormatoUnico;
 import edu.servicio.toluca.entidades.RegObservaciones;
-import edu.servicio.toluca.entidades.VistaAlumno;
-import edu.servicio.toluca.model.formatoUnico.FormatoUnicoAdminModel;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.DocumentosFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,7 +44,49 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FormatoUnicoAdminController
 {
+    
+    private GenericDao<CatalogoObservaciones> daoCatalogoObservaciones;
+    private GenericDao<FormatoUnico> daoFormatoUnico;
+    private GenericDao<Documentos> daoDocumentos;
+    private GenericDao<DatosPersonales> daoDatosPersonales;
+    private GenericDao<RegObservaciones> daoRegObservaciones;
+    
+    @Autowired
+    public void setDaoCatalogoObservaciones(GenericDao<CatalogoObservaciones> daoCatalogoObservaciones)
+    {
+        this.daoCatalogoObservaciones = daoCatalogoObservaciones;
+        daoCatalogoObservaciones.setClass(CatalogoObservaciones.class);
+    }
+    
+    @Autowired
+    public void setDaoFormatoUnico(GenericDao<FormatoUnico> daoFormatoUnico)
+    {
+        this.daoFormatoUnico = daoFormatoUnico;
+        daoFormatoUnico.setClass(FormatoUnico.class);
+    }
+    
+    @Autowired
+    public void setDaoDocumentos(GenericDao<Documentos> daoDocumentos)
+    {
+        this.daoDocumentos = daoDocumentos;
+        daoDocumentos.setClass(Documentos.class);
+    }
+    
+    @Autowired
+    public void setDaoDatosPersonales(GenericDao<DatosPersonales> daoDatosPersonales)
+    {
+        this.daoDatosPersonales = daoDatosPersonales;
+        daoDatosPersonales.setClass(DatosPersonales.class);
+    }
+    
+    @Autowired
+    public void setDaoRegObservaciones(GenericDao<RegObservaciones> daoRegObservaciones)
+    {
+        this.daoRegObservaciones = daoRegObservaciones;
+        daoRegObservaciones.setClass(RegObservaciones.class);
+    }
 
+    // <editor-fold defaultstate="collapsed" desc="EJB Facades">
     @EJB(mappedName = "java:global/ServicioSocial/CatalogoObservacionesFacade")
     private CatalogoObservacionesFacade observacionesCatalogoFacade;
     @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
@@ -58,6 +97,8 @@ public class FormatoUnicoAdminController
     private DatosPersonalesFacade datosPersonalesFacade;
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
     private RegObservacionesFacade regisObservacionesFacade;
+    // </editor-fold>
+    
     //Status de FormatoUnico FUI en  base al documento status_DOC_1.doc
     final int VALOR_NO_REVISADOS = 4;
     final int VALOR_ACEPTADOS = 1;
@@ -71,11 +112,6 @@ public class FormatoUnicoAdminController
     final boolean banderaPrueba = false;
     final String correoTest = "rehoscript@gmail.com";
     //**********************************************
-    private FormatoUnicoAdminModel modeloFormatoUnico = new FormatoUnicoAdminModel(observacionesCatalogoFacade,
-            formatoUnicoFacade,
-            documentoFacade,
-            datosPersonalesFacade,
-            regisObservacionesFacade);
 
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoAdministrador.do")
     public String formatoUnicoAdministrador(Model model, HttpSession session, HttpServletRequest request)
@@ -93,8 +129,10 @@ public class FormatoUnicoAdminController
             List<FormatoUnicoBean> listadoFormatosAceptados = new ArrayList<FormatoUnicoBean>();
             List<FormatoUnicoBean> listadoFormatosRechazados = new ArrayList<FormatoUnicoBean>();
             List<FormatoUnicoBean> listadoFormatosCorreccion = new ArrayList<FormatoUnicoBean>();
+            
+            List<FormatoUnico> formatos = daoFormatoUnico.findAll();
 
-            for (FormatoUnico formato : formatoUnicoFacade.findAll())
+            for (FormatoUnico formato : formatos)
             {
 
                 //------------------Formatos No Revisados------------------------
@@ -113,7 +151,7 @@ public class FormatoUnicoAdminController
                     //Buscar FormatoUnico en Tabla Documentos Regresa todos los .pdf .jpg .png
                     //En caso de que HIBERNATE se generen consultas con AND, se tiene que modificar este query 
                     // y se reducen lineas de codigo
-                    List<Documentos> listaDocumentos = documentoFacade.findBySpecificField("datosPersonalesId",
+                    List<Documentos> listaDocumentos = daoDocumentos.findBySpecificField("datosPersonalesId",
                             formato.getDatosPersonalesId(),
                             "equal", null, null);
                     //Filtrar Resultado 
@@ -145,7 +183,7 @@ public class FormatoUnicoAdminController
                             + " " + formato.getDatosPersonalesId().getApellidoP()
                             + " " + formato.getDatosPersonalesId().getApellidoM());
                     formatoAceptados.setPeriodo(formato.getPeriodoInicio());
-                    List<Documentos> listaDocumentos2 = documentoFacade.findBySpecificField("datosPersonalesId",
+                    List<Documentos> listaDocumentos2 = daoDocumentos.findBySpecificField("datosPersonalesId",
                             formato.getDatosPersonalesId(),
                             "equal", null, null);
 
@@ -171,7 +209,7 @@ public class FormatoUnicoAdminController
                             + " " + formato.getDatosPersonalesId().getApellidoM());
                     formatoRechazados.setPeriodo(formato.getPeriodoInicio());
                     formatoRechazados.setIdDatosPersonales(formato.getDatosPersonalesId().getId().toString());
-                    List<Documentos> listaDocumentos3 = documentoFacade.findBySpecificField("datosPersonalesId",
+                    List<Documentos> listaDocumentos3 = daoDocumentos.findBySpecificField("datosPersonalesId",
                             formato.getDatosPersonalesId(),
                             "equal", null, null);
 
@@ -197,7 +235,7 @@ public class FormatoUnicoAdminController
                             + " " + formato.getDatosPersonalesId().getApellidoM());
                     formatoCorreccion.setPeriodo(formato.getPeriodoInicio());
                     formatoCorreccion.setIdDatosPersonales(formato.getDatosPersonalesId().getId().toString());
-                    List<Documentos> listaDocumentos4 = documentoFacade.findBySpecificField("datosPersonalesId",
+                    List<Documentos> listaDocumentos4 = daoDocumentos.findBySpecificField("datosPersonalesId",
                             formato.getDatosPersonalesId(),
                             "equal", null, null);
 
@@ -226,7 +264,7 @@ public class FormatoUnicoAdminController
             //Formato Correccion
             model.addAttribute("listadoFormatoUnicoCorreccion", listadoFormatosCorreccion);
             //Catalogo Sanciones
-            List<CatalogoObservaciones> observaciones = observacionesCatalogoFacade.findAll();
+            List<CatalogoObservaciones> observaciones = daoCatalogoObservaciones.findAll();
             List<CatalogoObservaciones> observacionesBimestrales = new ArrayList();
             for (CatalogoObservaciones observacionActual : observaciones)
             {
@@ -254,13 +292,13 @@ public class FormatoUnicoAdminController
     {
         //Obtener FormatoUnico en especifico 
 
-        FormatoUnico fA = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(id)));
+        FormatoUnico fA = (FormatoUnico) daoFormatoUnico.find(BigDecimal.valueOf(Long.valueOf(id)));
         //Se encontro el Objeto
         if (fA != null)
         {
             //Cambiar Estado de NO_ACEPTADO A ACEPTADO
             fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
-            formatoUnicoFacade.edit(fA);
+            daoFormatoUnico.edit(fA);
 
             String nombre = fA.getDatosPersonalesId().getNombre() + " "
                     + fA.getDatosPersonalesId().getApellidoP() + " "
@@ -295,13 +333,13 @@ public class FormatoUnicoAdminController
             //Objeto a Registrar
             RegObservaciones registro = new RegObservaciones();
             //Buscar Objeto Pertenciente al CatalogoObservaciones con el id recibido y asignarlo
-            registro.setCatalogoObservacionId(observacionesCatalogoFacade.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
+            registro.setCatalogoObservacionId((CatalogoObservaciones) daoCatalogoObservaciones.find(BigDecimal.valueOf(Long.valueOf(idObservacion))));
             //Buscar Objeto Pertenciente a la Tabla de DatosPersonales con el id recibido y asignarlo
-            registro.setDatosPersonalesId(datosPersonalesFacade.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
+            registro.setDatosPersonalesId((DatosPersonales) daoDatosPersonales.find(BigDecimal.valueOf(Long.valueOf(idDatoPersonales))));
             //Asignar Fecha Actual al momento para registro 
             registro.setFecha(new Date());
             //Creacion de Registro
-            regisObservacionesFacade.create(registro);
+            daoRegObservaciones.create(registro);
         }
         System.out.println("Ya ingreso las observaciones");
         System.out.println("Inicia la modificación... tipo: " + tipo + " idDatosPersonales: " + idDatoPersonales + " idFormatoUnico: " + idFormatoUnico);
@@ -310,10 +348,10 @@ public class FormatoUnicoAdminController
         {
             case 1://Correccion
                 //Buscar Formato Unico
-                FormatoUnico fu = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
+                FormatoUnico fu = (FormatoUnico) daoFormatoUnico.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
                 //Cambiar Status 
                 fu.setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
-                formatoUnicoFacade.edit(fu);
+                daoFormatoUnico.edit(fu);
                 //Enviar Correo
                 nombre = fu.getDatosPersonalesId().getNombre() + " "
                         + fu.getDatosPersonalesId().getApellidoP() + " "
@@ -323,11 +361,11 @@ public class FormatoUnicoAdminController
                 break;
             case 2://Rechazo
                 //Buscar Formato Unico
-                FormatoUnico fuR = formatoUnicoFacade.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
+                FormatoUnico fuR = (FormatoUnico) daoFormatoUnico.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
                 //Cambiar Status
                 fuR.setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
                 fuR.setStatusServicio(BigInteger.valueOf(VALOR_RECHAZADOS));
-                formatoUnicoFacade.edit(fuR);
+                daoFormatoUnico.edit(fuR);
                 //Enviar Correo
                 nombre = fuR.getDatosPersonalesId().getNombre() + " "
                         + fuR.getDatosPersonalesId().getApellidoP() + " "
@@ -345,7 +383,7 @@ public class FormatoUnicoAdminController
     public void showPDF(String id, HttpServletRequest request, HttpServletResponse httpServletResponse) throws IOException
     {
         //Buscar el Documento en base al ID
-        Documentos doc = documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
+        Documentos doc = (Documentos) daoDocumentos.find(BigDecimal.valueOf(Long.parseLong(id)));
 
         if (doc != null)
         {
@@ -368,8 +406,8 @@ public class FormatoUnicoAdminController
     public String mostrarObservacion(String idDatosPersonales, Model modelo)
     {
         modelo.addAttribute("listadoObservaciones",
-                regisObservacionesFacade.findBySpecificField("datosPersonalesId",
-                        datosPersonalesFacade.find(BigDecimal.valueOf(Long.parseLong(idDatosPersonales))),
+                daoRegObservaciones.findBySpecificField("datosPersonalesId",
+                        daoDatosPersonales.find(BigDecimal.valueOf(Long.parseLong(idDatosPersonales))),
                         "equal", null, null));
 
         return "/FormatoUnico/detalleObservacion";
@@ -458,9 +496,10 @@ public class FormatoUnicoAdminController
                         + "<ul>\n";
                 mensaje += mns1;
 
-                for (RegObservaciones reg : regisObservacionesFacade.findBySpecificField("datosPersonalesId",
-                        dtp,
-                        "equal", null, null))
+                List<RegObservaciones> observaciones = regisObservacionesFacade.findBySpecificField("datosPersonalesId", dtp,
+                        "equal", null, null);
+                
+                for (RegObservaciones reg : observaciones)
                 {
 
                     String detalle = reg.getCatalogoObservacionId().getDetalle();
@@ -505,10 +544,10 @@ public class FormatoUnicoAdminController
             @RequestParam("file") MultipartFile file, String id) throws IOException
     {
 
-        Documentos doc = documentoFacade.find(BigDecimal.valueOf(Long.parseLong(id)));
+        Documentos doc = (Documentos) daoDocumentos.find(BigDecimal.valueOf(Long.parseLong(id)));
         doc.setArchivo(file.getBytes());
         doc.setExtension("pdf");
-        documentoFacade.edit(doc);
+        daoDocumentos.edit(doc);
         return "redirect:subirpdf2.do";
     }
 

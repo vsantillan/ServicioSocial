@@ -41,6 +41,14 @@ import org.hibernate.annotations.GenericGenerator;
 @XmlRootElement
 public class Instancia implements Serializable, ExpresionesRegulares, CatalogoErrores
 {
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "STATUS")
+    private int status;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "TELEFONO")
+    private long telefono;
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -64,9 +72,6 @@ public class Instancia implements Serializable, ExpresionesRegulares, CatalogoEr
     @Size(min=12, max=13, message = "El campo RFC debe tener entre 12 y 13 caraceres")
     private String rfc;
     
-    @Column(name = "STATUS")
-    @NotNull
-    private short status;
     
     
   // Domicilio de la INSTANCIA
@@ -158,21 +163,6 @@ public class Instancia implements Serializable, ExpresionesRegulares, CatalogoEr
         this.rfc = rfc;
     }
 
-    /**
-     * @return the status
-     */
-    public short getStatus()
-    {
-        return status;
-    }
-
-    /**
-     * @param status the status to set
-     */
-    public void setStatus(short status)
-    {
-        this.status = status;
-    }
 
     /**
      * @return the domicilio
@@ -295,5 +285,25 @@ public class Instancia implements Serializable, ExpresionesRegulares, CatalogoEr
             return false;
         }
         return true;
+    }
+
+    public int getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(int status)
+    {
+        this.status = status;
+    }
+
+    public long getTelefono()
+    {
+        return telefono;
+    }
+
+    public void setTelefono(long telefono)
+    {
+        this.telefono = telefono;
     }
 }

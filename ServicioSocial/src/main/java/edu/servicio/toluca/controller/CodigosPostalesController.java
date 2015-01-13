@@ -13,6 +13,7 @@ import edu.servicio.toluca.beans.organizaciones.MunicipiosJSON;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
+import edu.servicio.toluca.entidades.MunicipiosSia;
 import edu.servicio.toluca.sesion.CiudadesFacade;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
 import edu.servicio.toluca.sesion.ColoniaFacade;
@@ -24,6 +25,9 @@ import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
+import edu.servicio.toluca.dao.CodigoPostalesDao;
+import edu.servicio.toluca.entidades.UsuarioInstancia;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,24 +41,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class CodigosPostalesController
 {
+    
+    
+    private CodigoPostalesDao<CodigosPostales> daoCodigosPostales;
+    private CodigoPostalesDao<EstadosSia> daoEstados;
+    private CodigoPostalesDao<MunicipiosSia> daoMunicipios;
 
-    @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
-    private CodigosPostalesFacade codigosPostalesFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
-    private EstadosSiaFacade estadosFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
-    private MunicipiosSiaFacade municipiosFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
-    private ColoniaFacade coloniaFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
-    private CiudadesFacade ciudadesFacade;
-
-    @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
-    private TipoLocalidadFacade tipoLocalidadFacade;
+    @Autowired
+    public void setDaoCodigosPostales(CodigoPostalesDao<CodigosPostales> daoCodigosPostales)
+    {
+        this.daoCodigosPostales = daoCodigosPostales;
+        daoCodigosPostales.setClass(CodigosPostales.class);
+    }
+    @Autowired
+    public void setDaoEstadosSia(CodigoPostalesDao<EstadosSia> daoEstados)
+    {
+        this.daoEstados = daoEstados;
+        daoEstados.setClass(EstadosSia.class);
+    }
+    @Autowired
+    public void setDaoMunicipiosSia(CodigoPostalesDao<MunicipiosSia> daoMunicipios)
+    {
+        this.daoMunicipios = daoMunicipios;
+        daoMunicipios.setClass(MunicipiosSia.class);
+    }
 
     MetodosValidacion limpiar = new MetodosValidacion();
 
@@ -83,7 +93,7 @@ public class CodigosPostalesController
         try
         {
 //            CodigosPostales codigosPostales = codigosPostalesFacade.find(Integer.parseInt(cp));
-            List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", cp, "equal", null, null);
+            List<CodigosPostales> codigosPostales = daoCodigosPostales.findBySpecificField("cp", cp, "equal", null, null);
 
             ArrayList<Colonia> colonias = new ArrayList(codigosPostales.get(0).getColoniaCollection());
             for(int i = 0; i < colonias.size(); i++)
@@ -128,7 +138,7 @@ public class CodigosPostalesController
             LinkedHashMap<String, String> ordering = new LinkedHashMap<String, String>();
             ordering.put("asc", "nombre");
             //List<EstadosSia> estados = estadosFacade.findBySpecificField(null, null, null, null, null);
-            List<EstadosSia> estados = estadosFacade.findAll();
+            List<EstadosSia> estados = daoEstados.findAll();
             for(int i = 0; i < estados.size(); i++)
             {
                 estadosJSON.getIdEstados().add(estados.get(i).getIdEstado() + "");
@@ -161,7 +171,7 @@ public class CodigosPostalesController
             long tiempo1 = ahora1.getTimeInMillis();
 
             //Consulta
-            municipiosJSON = codigosPostalesFacade.municipiosEstado(idEstado);
+            municipiosJSON = daoCodigosPostales.municipiosEstado(idEstado);
 
             //Operacion realizada con exito
             municipiosJSON.setStatusJSON(true);
@@ -191,9 +201,9 @@ public class CodigosPostalesController
             //Track tiempo
             Calendar ahora1 = Calendar.getInstance();
             long tiempo1 = ahora1.getTimeInMillis();
-
+             
             //COnsulta
-            ciudadesJSON = codigosPostalesFacade.ciudadMunicipio(idMunicipio);
+            ciudadesJSON = daoCodigosPostales.ciudadMunicipio(idMunicipio);
 
             //Operacion realizada con exito
             ciudadesJSON.setStatusJSON(true);
@@ -224,7 +234,7 @@ public class CodigosPostalesController
             //Track tiempo
             Calendar ahora1 = Calendar.getInstance();
             long tiempo1 = ahora1.getTimeInMillis();
-            municipiosJSON = codigosPostalesFacade.municipiosEstado("15");
+            municipiosJSON = daoCodigosPostales.municipiosEstado("15");
 
             //Operacion realizada con exito
             municipiosJSON.setStatusJSON(true);

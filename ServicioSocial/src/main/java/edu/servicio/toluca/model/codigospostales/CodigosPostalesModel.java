@@ -5,6 +5,7 @@
 package edu.servicio.toluca.model.codigospostales;
 
 import edu.servicio.toluca.beans.MetodosValidacion;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.Ciudades;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
@@ -21,6 +22,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
 /**
@@ -28,7 +30,57 @@ import org.springframework.ui.Model;
  *
  * @author bustedvillain
  */
-public class CodigosPostalesModel {
+public class CodigosPostalesModel
+{
+
+    private GenericDao<Colonia> daoColonia;
+    private GenericDao<CodigosPostales> daoCodigosPostales;
+    private GenericDao<EstadosSia> daoEstadosSia;
+    private GenericDao<MunicipiosSia> daoMunicipiosSia;
+    private GenericDao<Ciudades> daoCiudades;
+    private GenericDao<TipoLocalidad> daoTipoLocalidad;
+
+    @Autowired
+    public void setDaoColonia(GenericDao<Colonia> daoColonia)
+    {
+        this.daoColonia = daoColonia;
+        daoColonia.setClass(Colonia.class);
+    }
+
+    @Autowired
+    public void setDaoCodigosPostales(GenericDao<CodigosPostales> daoCodigosPostales)
+    {
+        this.daoCodigosPostales = daoCodigosPostales;
+        daoCodigosPostales.setClass(CodigosPostales.class);
+    }
+
+    @Autowired
+    public void setDaoEstadosSia(GenericDao<EstadosSia> daoEstadosSia)
+    {
+        this.daoEstadosSia = daoEstadosSia;
+        daoEstadosSia.setClass(EstadosSia.class);
+    }
+
+    @Autowired
+    public void setDaoCiudades(GenericDao<Ciudades> daoCiudades)
+    {
+        this.daoCiudades = daoCiudades;
+        daoCiudades.setClass(Ciudades.class);
+    }
+
+    @Autowired
+    public void setDaoTipoLocalidad(GenericDao<TipoLocalidad> daoTipoLocalidad)
+    {
+        this.daoTipoLocalidad = daoTipoLocalidad;
+        daoTipoLocalidad.setClass(TipoLocalidad.class);
+    }
+
+    @Autowired
+    public void setDaoMunicipiosSia(GenericDao<MunicipiosSia> daoMunicipiosSia)
+    {
+        this.daoMunicipiosSia = daoMunicipiosSia;
+        daoMunicipiosSia.setClass(MunicipiosSia.class);
+    }
 
     public ColoniaFacade coloniaFacade;
     public CodigosPostalesFacade codigosPostalesFacade;
@@ -38,42 +90,47 @@ public class CodigosPostalesModel {
     public TipoLocalidadFacade tipoLocalidadFacade;
     public MetodosValidacion limpiar = new MetodosValidacion();
 
-    public CodigosPostalesModel(ColoniaFacade coloniaFacade, CodigosPostalesFacade codigosPostalesFacade, EstadosSiaFacade estadosFacade, MunicipiosSiaFacade municipiosFacade, CiudadesFacade ciudadesFacade, TipoLocalidadFacade tipoLocalidadFacade) {
-        this.coloniaFacade = coloniaFacade;
-        this.codigosPostalesFacade = codigosPostalesFacade;
-        this.estadosFacade = estadosFacade;
-        this.municipiosFacade = municipiosFacade;
-        this.ciudadesFacade = ciudadesFacade;
-        this.tipoLocalidadFacade = tipoLocalidadFacade;
+    public CodigosPostalesModel(GenericDao<Colonia> daoColonia, GenericDao<CodigosPostales> daoCodigosPostales, GenericDao<EstadosSia> daoEstadosSia,
+            GenericDao<MunicipiosSia> daoMunicipiosSia, GenericDao<Ciudades> daoCiudades, GenericDao<TipoLocalidad> tipoLocalidad)
+    {
+        this.daoColonia = daoColonia;
+        this.daoCodigosPostales = daoCodigosPostales;
+        this.daoEstadosSia = daoEstadosSia;
+        this.daoMunicipiosSia = daoMunicipiosSia;
+        this.daoCiudades = daoCiudades;
+        this.daoTipoLocalidad = tipoLocalidad;
     }
 
     /**
-     * Metodo que agrega una nueva colonia a un codigo postale en especifico
-     * y al final retorna la nueva colonia
+     * Metodo que agrega una nueva colonia a un codigo postale en especifico y al final retorna la nueva colonia
+     *
      * @param codigo_postal al que se le agregara la colonia
      * @param otra_colonia nombre de la colonia
      * @return el objeto de la colonia nuevo
      */
-    public Colonia agregaColonia(String codigo_postal, String otra_colonia) {
-        try {
+    public Colonia agregaColonia(String codigo_postal, String otra_colonia)
+    {
+        try
+        {
             System.out.println("AgregarColonia");
             System.out.println("codigo postal:" + codigo_postal.toString());
-            List<CodigosPostales> codigosPostales = codigosPostalesFacade.findBySpecificField("cp", codigo_postal, "equal", null, null);
+            List<CodigosPostales> codigosPostales = daoCodigosPostales.findBySpecificField("cp", codigo_postal, "equal", null, null);
             CodigosPostales codigoPostal = codigosPostales.get(0);
             Colonia nvaColonia = new Colonia();
             otra_colonia = limpiar.tuneaStringParaBD(otra_colonia);
             nvaColonia.setNombre(otra_colonia);
             nvaColonia.setIdCp(codigoPostal);
             nvaColonia.setStatus(BigInteger.ONE);
-            coloniaFacade.create(nvaColonia);
+            daoColonia.create(nvaColonia);
 
             //Obtenemos la ultima colonia
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idColonia", "desc");
-            Colonia colonia = coloniaFacade.findAll(ordenamiento).get(0);
+            Colonia colonia = (Colonia) daoColonia.findAll(ordenamiento).get(0);
             return colonia;
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             System.out.println(e);
             return null;
@@ -82,6 +139,7 @@ public class CodigosPostalesModel {
 
     /**
      * Agrega un nuevo codigo postal + colonia
+     *
      * @param codigo_postal codigo postal nuevo
      * @param otra_colonia nombre de la colonia
      * @param idEstado id del estado
@@ -89,16 +147,20 @@ public class CodigosPostalesModel {
      * @param idCiudad id de la ciudad
      * @return el objeto de la nueva colonia
      */
-    public Colonia agregarCodigoPostal(String codigo_postal, String otra_colonia, String idEstado, String idMunicipio, String idCiudad) {
+    public Colonia agregarCodigoPostal(String codigo_postal, String otra_colonia, String idEstado, String idMunicipio, String idCiudad)
+    {
 
-        try {
-            EstadosSia estado = estadosFacade.find(BigDecimal.valueOf(Double.parseDouble(idEstado)));
-            MunicipiosSia municipio = municipiosFacade.find(BigDecimal.valueOf(Double.parseDouble(idMunicipio)));
-            TipoLocalidad localidad = tipoLocalidadFacade.find(BigDecimal.ONE);
+        try
+        {
+            EstadosSia estado = (EstadosSia) daoEstadosSia.find(BigDecimal.valueOf(Double.parseDouble(idEstado)));
+            MunicipiosSia municipio = (MunicipiosSia) daoMunicipiosSia.find(BigDecimal.valueOf(Double.parseDouble(idMunicipio)));
+            TipoLocalidad localidad = (TipoLocalidad) daoTipoLocalidad.find(BigDecimal.ONE);
             Ciudades ciudad = null;
-            try {
-                ciudad = ciudadesFacade.find(BigDecimal.valueOf(Double.parseDouble(idCiudad)));
-            } catch (Exception e) {
+            try
+            {
+                ciudad = (Ciudades) daoCiudades.find(BigDecimal.valueOf(Double.parseDouble(idCiudad)));
+            } catch (Exception e)
+            {
                 System.out.println("No tiene ciudad");
             }
 
@@ -107,15 +169,16 @@ public class CodigosPostalesModel {
             codigoPostal.setIdMunicipio(municipio);
             codigoPostal.setIdEstado(estado);
             codigoPostal.setIdTipoLocalidad(localidad);
-            if (ciudad != null) {
+            if (ciudad != null)
+            {
                 codigoPostal.setIdCiudad(ciudad);
             }
-            codigosPostalesFacade.create(codigoPostal);
+            daoCodigosPostales.create(codigoPostal);
 
             //Obtenemos el Ultimo codigo postal
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("idCp", "desc");
-            CodigosPostales codigoPostalNew = codigosPostalesFacade.findAll(ordenamiento).get(0);
+            CodigosPostales codigoPostalNew = (CodigosPostales) daoCodigosPostales.findAll(ordenamiento).get(0);
 
             Colonia colonia = new Colonia();
             colonia.setIdCp(codigoPostal);
@@ -123,7 +186,7 @@ public class CodigosPostalesModel {
             colonia.setNombre(otra_colonia);
             colonia.setStatus(BigInteger.ONE);
 
-            coloniaFacade.create(colonia);
+            daoColonia.create(colonia);
 
             //Obtenemos la ultima colonia
             ordenamiento = new LinkedHashMap<String, String>();
@@ -131,12 +194,12 @@ public class CodigosPostalesModel {
             Colonia coloniaNew = coloniaFacade.findAll(ordenamiento).get(0);
             return coloniaNew;
 
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             System.out.println(e);
             return null;
         }
-
 
     }
 }
