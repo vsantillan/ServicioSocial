@@ -15,7 +15,7 @@
                 <%@include file="../General/menuAdministrador.jsp"%>
                 <div class="row col-md-12 center-block">
 
-                    <center> <h2 id="h1p">Listado de Noticias</h2></center>
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-list"></span>Listado de Noticias</h2></div>
                     <table  cellpadding='0' cellspacing='0' border='0' class='table table-striped table-bordered example' id="example">
                         <thead>
                             <tr>

@@ -18,7 +18,7 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
-                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp; Administrar Lugares</h1></div>
+                <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-eye-open"></span>&nbsp; Administrar Lugares</h2></div>
                 <div class="row col-md-12 center-block">
                     <form:errors path="lugar" cssClass="error"/>
                     <div class="alert alert-warning col-md-9  col-md-offset-1">

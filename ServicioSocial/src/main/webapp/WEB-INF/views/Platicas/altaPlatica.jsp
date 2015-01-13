@@ -16,18 +16,20 @@
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%> 
                 <div class="row ">
+                    <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-upload"></span>Alta Plática</h2></div>
                     <!---------------------------------------------Contenido------------------------------------------->      
 
                     <div class="col-md-8 col-md-offset-2">
                         <br>
                         <div class="panel panel-primary">
                             <div class="panel-heading "
-                                 <center><h3>Nueva Pl&aacute;tica de Inducci&oacute;n</h3></center>
+                                 <center><h4>Nueva Pl&aacute;tica de Inducci&oacute;n</h4></center>
                             </div>
-                            <br>
-                            ${alert}
+                          
                         <!-- Formulario Nueva Plática -->  
                         <div class="panel-body">
+                            <br>
+                            ${alert}
                         <form:form action="altaPlaticaBD.do" method="post" commandName="platica" id="formPlatica"  class=" EnviarEnter" role="form" name="altaPlatica" > 
 
                             <div class="form-group">

@@ -23,7 +23,7 @@
                 <div class="row">
                     <div class="col-md-12 center-block">
                         <br/>
-                        <center><h1>Observaciones</h1></center>
+                      <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-eye-open "></span> Observaciones</h2></div>
                         <div id="tabs">
                             <ul class="nav nav-tabs" id="formatoUnico-tabla">
                                 <li class="active"><a href="#nuevaObservacion" data-toggle="tab">Nueva Observaci&oacute;n</a></li>

@@ -16,7 +16,7 @@
             <div class="row">
                 <%@include file="../General/banner.jsp"%>  
                 <%@include file="../General/menuAdministrador.jsp"%>
-                <div class=" row help-block col-md-12 text-center"><h1 class=""><span class="glyphicon glyphicon-pencil"></span>&nbsp; Capturar Asitencia</h1></div>
+                <div class=" row help-block col-md-12 text-center"><h2 class=""><span class="glyphicon glyphicon-pencil"></span>&nbsp; Capturar Asitencia</h2></div>
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <div class="panel panel-info">
@@ -32,7 +32,6 @@
                                             <label></label>
                                             ${colocado}
                                         </div>
-
                                     </div>
                                     <div class="form-group">
                                         <form:errors path="numeroFolio" class="alert alert-danger"/>

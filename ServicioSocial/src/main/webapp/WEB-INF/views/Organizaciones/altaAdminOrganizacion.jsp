@@ -24,7 +24,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombre de la Organizaci&oacute;n:</label>                               
-                                        <form:input path="nombre" id="nombre" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/><br/>
+                                        <h4><form:input path="nombre" id="nombre" size="20" class="form-control" placeholder="Introduzca únicamente caracteres alfanuméricos"/></h4><br/>
                                         <form:errors path="nombre" class="alert alert-danger" />
                                         ${error_sql}
                                     </div>

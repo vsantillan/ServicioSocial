@@ -19,7 +19,7 @@
                         <td><p><core:out value="${instancia.nombre}" /></p></td>
                     </tr>
                     <tr>
-                        <th><p>RCF:</p></th>
+                        <th><p>RFC:</p></th>
                         <td><p><core:out value="${instancia.rfc}" /></p></td>
                     </tr>
                     <tr>
