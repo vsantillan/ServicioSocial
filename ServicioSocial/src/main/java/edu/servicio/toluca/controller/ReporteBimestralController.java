@@ -12,8 +12,6 @@ import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.BimestralesActividades;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
-import edu.servicio.toluca.entidades.ProyectoPerfil;
-import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.Reportes;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
@@ -24,7 +22,6 @@ import edu.servicio.toluca.sesion.DatosPersonalesFacade;
 import edu.servicio.toluca.sesion.FormatoUnicoFacade;
 import edu.servicio.toluca.sesion.ReportesFacade;
 import edu.servicio.toluca.sesion.VistaAlumnoFacade;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -44,7 +41,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import edu.servicio.toluca.dao.GenericDao;
 
 /**
  *
@@ -52,19 +50,56 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class ReporteBimestralController {
+    
+    private GenericDao<DatosPersonales> daoDatosPersonales;
+    private GenericDao<VistaAlumno> daoVistaAlumno;
+    private GenericDao<FormatoUnico> daoFormatoUnico;
+    private GenericDao<Reportes> daoReportes;
+    private GenericDao<BimestralesActividades> daoBimestralesActividades;
+    private GenericDao<Actividades> daoActividades;
+    
 
-    @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
-    private DatosPersonalesFacade datosPersonalesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
-    private VistaAlumnoFacade vistaAlumnoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
-    private FormatoUnicoFacade formatoUnicoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/ReportesFacade")
-    private ReportesFacade reportesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/BimestralesActividadesFacade")
-    private BimestralesActividadesFacade actividadesBimestralesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
-    private ActividadesFacade actividadesFacade;
+    @Autowired
+    public void setdaoDatosPersonales(GenericDao<DatosPersonales> daoDatosPersonales){
+        this.daoDatosPersonales = daoDatosPersonales;
+        daoDatosPersonales.setClass(DatosPersonales.class);
+    }
+    
+   
+    @Autowired
+    public void setdaoVistaAlumno(GenericDao<VistaAlumno> daoVistaAlumno){
+        this.daoVistaAlumno = daoVistaAlumno;
+        daoVistaAlumno.setClass(VistaAlumno.class);
+    }
+    @Autowired
+    public void setdaoFormatoUnico(GenericDao<FormatoUnico> daoFormatoUnico){
+        this.daoFormatoUnico = daoFormatoUnico;
+        daoFormatoUnico.setClass(FormatoUnico.class);
+    }
+    
+    @Autowired
+    public void setdaoReportes(GenericDao<Reportes> daoReportes){
+        this.daoReportes = daoReportes;
+        daoReportes.setClass(Reportes.class);
+    }
+    
+    @Autowired
+    public void setdaoBimestralesActividades(GenericDao<BimestralesActividades> daoBimestralesActividades){
+        this.daoBimestralesActividades = daoBimestralesActividades;
+        daoBimestralesActividades.setClass(BimestralesActividades.class);
+    }
+    @Autowired
+    public void setdaoActividades(GenericDao<Actividades> daoActividades){
+        this.daoActividades = daoActividades;
+        daoActividades.setClass(Actividades.class);
+    }
+    
+//    @EJB(mappedName = "java:global/ServicioSocial/ReportesFacade")
+////    private ReportesFacade reportesFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/BimestralesActividadesFacade")
+//    private BimestralesActividadesFacade actividadesBimestralesFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/ActividadesFacade")
+//    private ActividadesFacade actividadesFacade;
 
 //    @RequestMapping(method = RequestMethod.GET, value = "/reporteBimestralAdministrador.do")
 //    public String reporteBimestralAdministrador(Model modelo) {
@@ -83,7 +118,7 @@ public class ReporteBimestralController {
         FormatoUnico fechaInicioFU = null;
 
         //Obtenemos Objetos del Alumno
-        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(daoVistaAlumno);
         VistaAlumno alumnoB = consultaVistaAlumno.getAlumnoSesion(session);
         ValidacionStatusServicio validaServicio = new ValidacionStatusServicio();
         StatusServicioBean servicioBean = validaServicio.validaServicio(alumnoB);
@@ -95,7 +130,7 @@ public class ReporteBimestralController {
             return "redirect:login.do";
         }
         ///////////MUESTRA REPORTES/////////////
-        List<Reportes> listaReportes = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+        List<Reportes> listaReportes = daoReportes.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
         List<FormatoUnico> listaFormatoUnicos = (List) servicioBean.getDatosPersonales().getFormatoUnicoCollection();
         modelo.addAttribute("Plan", listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
         modelo.addAttribute("listaReportes", listaReportes);
@@ -103,19 +138,19 @@ public class ReporteBimestralController {
         alumno_id = session.getAttribute("NCONTROL").toString();
         reporteBimestral RBObjeto = new reporteBimestral();
         ///////////BUSCAR ALUMNO///////////
-        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
+        List<VistaAlumno> listaAlumnos = daoVistaAlumno.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
-        List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        List<DatosPersonales> datosPersonales = daoDatosPersonales.findBySpecificField("alumnoId", alumno, "equal", null, null);
         if (!datosPersonales.isEmpty()) {
             DatosPersonales DP = datosPersonales.get(0);
             modelo.addAttribute("datosPersonales", datosPersonales);
-            List<FormatoUnico> formatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
+            List<FormatoUnico> formatoUnico = daoFormatoUnico.findBySpecificField("datosPersonalesId", DP.getId(), "equal", null, null);
             fechaInicioFU = formatoUnico.get(0);
 
             /////////////Validamos si es su primer reporte//////////////
             LinkedHashMap ordenarAsc = new LinkedHashMap();
             ordenarAsc.put("id", "asc");
-            List<Reportes> RB = reportesFacade.findBySpecificField("datosPersonalesId", DP.getId(), "equal", ordenarAsc, null);
+            List<Reportes> RB = daoReportes.findBySpecificField("datosPersonalesId", DP.getId(), "equal", ordenarAsc, null);
             if (RB.isEmpty()) {
 
                 modelo.addAttribute("numeroReporte", 1);
@@ -202,13 +237,13 @@ public class ReporteBimestralController {
         ordenarAsc.put("id", "asc");
         selectfrom += "";
         //Obtenemos Objetos del Alumno
-        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(daoVistaAlumno);
         VistaAlumno alumnoB = consultaVistaAlumno.getAlumnoSesion(session);
         ValidacionStatusServicio validaServicio = new ValidacionStatusServicio();
         StatusServicioBean servicioBean = validaServicio.validaServicio(alumnoB);
 
         ///////////MUESTRA REPORTES/////////////
-        List<Reportes> listaReportes = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+        List<Reportes> listaReportes = daoReportes.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
         List<FormatoUnico> listaFormatoUnicos = (List) servicioBean.getDatosPersonales().getFormatoUnicoCollection();
         //modelo.addAttribute("Plan", listaFormatoUnicos.get(0).getCatalogoPlanId().getDetalle());
         modelo.addAttribute("listaReportes", listaReportes);
@@ -233,9 +268,9 @@ public class ReporteBimestralController {
                 resultado.addError(ao);
             }
         }
-        List<VistaAlumno> listaAlumnos = vistaAlumnoFacade.findBySpecificField("id", alumno_id, "equal", null, null);
+        List<VistaAlumno> listaAlumnos = daoVistaAlumno.findBySpecificField("id", alumno_id, "equal", null, null);
         VistaAlumno alumno = listaAlumnos.get(0);
-        List<DatosPersonales> datosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        List<DatosPersonales> datosPersonales = daoDatosPersonales.findBySpecificField("alumnoId", alumno, "equal", null, null);
 
         //------------------------------------------------------------------------//
         //Validacion cuando entra String en tipo Number campo Hora----------------//
@@ -279,7 +314,7 @@ public class ReporteBimestralController {
             //Verificar si el status del utimo reporte es rechazado
             //Se borran las Actividades que hay con este
 
-            List<Reportes> bimestralesUltimos = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal",ordenarAsc, null);
+            List<Reportes> bimestralesUltimos = daoReportes.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal",ordenarAsc, null);
 
             if (!bimestralesUltimos.isEmpty()) {
                 Reportes bimestralU = bimestralesUltimos.get(bimestralesUltimos.size() - 1);
@@ -288,31 +323,31 @@ public class ReporteBimestralController {
                     FormatoUnico actualizaHoras = servicioBean.getFormatoUnico();
                     actualizaHoras.setHorasAcumuladas(actualizaHoras.getHorasAcumuladas().subtract(bimestralU.getHoras()));
                     actualizaHoras.setHorasAcumuladas(BigInteger.valueOf(reporte.getHoras()).add(actualizaHoras.getHorasAcumuladas()));
-                    formatoUnicoFacade.edit(actualizaHoras);
+                    daoFormatoUnico.edit(actualizaHoras);
                     
 
                     //Actualizamos La informacion del Reporte
                     bimestralU.setHoras(BigInteger.valueOf(reporte.getHoras()));
                     bimestralU.setCalificacion(BigInteger.valueOf(reporte.getCalificacion()));
-                    reportesFacade.edit(bimestralU);
+                    daoReportes.edit(bimestralU);
 
 
                     //while para eliminar actividades antiguass
-                    List<BimestralesActividades> actividadesEliminar = actividadesBimestralesFacade.findBySpecificField("idReporte", bimestralU.getId(), "equal", null, null);
+                    List<BimestralesActividades> actividadesEliminar = daoBimestralesActividades.findBySpecificField("idReporte", bimestralU.getId(), "equal", null, null);
                     Iterator<BimestralesActividades> recorreActividades = actividadesEliminar.iterator();
                     while (recorreActividades.hasNext()) {
                         BimestralesActividades borraActividades;
                         borraActividades = recorreActividades.next();
-                        actividadesBimestralesFacade.remove(borraActividades);
+                        daoBimestralesActividades.remove(borraActividades);
                     }
                     Iterator inserta = listaIds.iterator();
                     //while que inserta la lista de las actividades
                     while (inserta.hasNext()) {
                         BimestralesActividades actividadesB = new BimestralesActividades();
                         actividadesB.setIdReporte(bimestralU);
-                        List<Actividades> actividades = actividadesFacade.findBySpecificField("idActividad", inserta.next(), "equal", null, null);
+                        List<Actividades> actividades = daoActividades.findBySpecificField("idActividad", inserta.next(), "equal", null, null);
                         actividadesB.setIdActividades(actividades.get(0));
-                        actividadesBimestralesFacade.create(actividadesB);
+                        daoBimestralesActividades.create(actividadesB);
                     }
                     System.out.println("Actualizo La Informacion Correctamente");
                     //return "/ReporteBimestral/formatoReporteBimestral";
@@ -331,12 +366,12 @@ public class ReporteBimestralController {
                     reporteBimestral.setFechaEntregaMax(fecha.covierteString(fecha.fechaEntrgaMax(fechaFin)));
                     reporteBimestral.setNumeroRevisiones(BigInteger.ZERO);
                     //Creamos el nuevo Reporte Bimestral
-                    reportesFacade.create(reporteBimestral);
+                    daoReportes.create(reporteBimestral);
 
                     //Actualizamos las horas acumuladas en el formato Unico
                     FormatoUnico actualizaHoras = servicioBean.getFormatoUnico();
                     actualizaHoras.setHorasAcumuladas(BigInteger.valueOf(reporte.getHoras()).add(actualizaHoras.getHorasAcumuladas()));
-                    formatoUnicoFacade.edit(actualizaHoras);
+                    daoFormatoUnico.edit(actualizaHoras);
                     System.out.println("Primera Insercion");
                     //---------------------------------------------------------//
                     //Insertamos las actividades del reporte                   //
@@ -346,7 +381,7 @@ public class ReporteBimestralController {
                     //Buscamos el reporte recien insertado
                     //DatosPersonales dp = datosPersonales.get(0);
 
-                    List<Reportes> bimestrales = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", ordenarAsc, null);
+                    List<Reportes> bimestrales = daoReportes.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", ordenarAsc, null);
                     Reportes bimestralInsertado = bimestrales.get(bimestrales.size() - 1);//tenia -1
                     for (int i = 0; i < bimestrales.size(); i++) {
                         System.out.println("*********************** el num de reporte es: " + bimestrales.get(i).getNumeroReporte());
@@ -357,9 +392,9 @@ public class ReporteBimestralController {
                     while (inserta.hasNext()) {
                         BimestralesActividades actividadesB = new BimestralesActividades();
                         actividadesB.setIdReporte(bimestralInsertado);
-                        List<Actividades> actividades = actividadesFacade.findBySpecificField("idActividad", inserta.next(), "equal", null, null);
+                        List<Actividades> actividades = daoActividades.findBySpecificField("idActividad", inserta.next(), "equal", null, null);
                         actividadesB.setIdActividades(actividades.get(0));
-                        actividadesBimestralesFacade.create(actividadesB);
+                        daoBimestralesActividades.create(actividadesB);
                     }
                     System.out.println("Inserto N Reporte Correctamente");
                     return "redirect:formatoReporteBimestral.do?OK=true";
@@ -381,12 +416,12 @@ public class ReporteBimestralController {
             reporteBimestral.setFechaEntregaMax(fecha.covierteString(fecha.fechaEntrgaMax(fechaFin)));
             reporteBimestral.setNumeroRevisiones(BigInteger.ZERO);
             //Creamos el nuevo Reporte Bimestral
-            reportesFacade.create(reporteBimestral);
+            daoReportes.create(reporteBimestral);
 
             //Actualizamos las horas acumuladas en el formato Unico
             FormatoUnico actualizaHoras = servicioBean.getFormatoUnico();
             actualizaHoras.setHorasAcumuladas(BigInteger.valueOf(reporte.getHoras()).add(actualizaHoras.getHorasAcumuladas()));
-            formatoUnicoFacade.edit(actualizaHoras);
+            daoFormatoUnico.edit(actualizaHoras);
             //---------------------------------------------------------//
             //Insertamos las actividades del reporte                   //
             //---------------------------------------------------------//
@@ -394,7 +429,7 @@ public class ReporteBimestralController {
 
             //Buscamos el reporte recien insertado
             //DatosPersonales dp = datosPersonales.get(0);
-            List<Reportes> bimestrales = reportesFacade.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
+            List<Reportes> bimestrales = daoReportes.findBySpecificField("datosPersonalesId", servicioBean.getDatosPersonales().getId(), "equal", null, null);
             Reportes bimestralInsertado = bimestrales.get(bimestrales.size() - 1);
 
             Iterator inserta = listaIds.iterator();
@@ -402,9 +437,9 @@ public class ReporteBimestralController {
             while (inserta.hasNext()) {
                 BimestralesActividades actividadesB = new BimestralesActividades();
                 actividadesB.setIdReporte(bimestralInsertado);
-                List<Actividades> actividades = actividadesFacade.findBySpecificField("idActividad", inserta.next(), "equal", null, null);
+                List<Actividades> actividades =daoActividades.findBySpecificField("idActividad", inserta.next(), "equal", null, null);
                 actividadesB.setIdActividades(actividades.get(0));
-                actividadesBimestralesFacade.create(actividadesB);
+                daoBimestralesActividades.create(actividadesB);
             }
             System.out.println("Inserto por Primera vez");
             return "redirect:formatoReporteBimestral.do?OK=true";

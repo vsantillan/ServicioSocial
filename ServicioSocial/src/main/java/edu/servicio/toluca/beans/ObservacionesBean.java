@@ -6,13 +6,9 @@ package edu.servicio.toluca.beans;
 
 import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
-import edu.servicio.toluca.entidades.Noticias;
-import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import javax.ejb.EJB;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
