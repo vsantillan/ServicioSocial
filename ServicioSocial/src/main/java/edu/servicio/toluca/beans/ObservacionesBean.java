@@ -4,6 +4,7 @@
  */
 package edu.servicio.toluca.beans;
 
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.Noticias;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
@@ -12,20 +13,28 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import javax.ejb.EJB;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author Héctor
  */
 public class ObservacionesBean {
-    private CatalogoObservacionesFacade catalogoObservacionesFacade;
+       private GenericDao<CatalogoObservaciones> daoCatalogoObservaciones;
+    
+     
+
+//    private CatalogoObservacionesFacade catalogoObservacionesFacade;
     //tipo 0:Eliminado 1: Formato Unico 2: Reportes Bimestrales 3:Documentos Finales
-    public ObservacionesBean(CatalogoObservacionesFacade catalogoObservacionesFacade){
-        this.catalogoObservacionesFacade=catalogoObservacionesFacade;
+       
+    @Autowired   
+    public ObservacionesBean(GenericDao<CatalogoObservaciones> daoCatalogoObservaciones){
+        this.daoCatalogoObservaciones=daoCatalogoObservaciones;
+        daoCatalogoObservaciones.setClass(CatalogoObservaciones.class);
     }
     
     public List<CatalogoObservaciones> ConsultaTodas(){
-        List<CatalogoObservaciones> crude = catalogoObservacionesFacade.findAll();
+        List<CatalogoObservaciones> crude = daoCatalogoObservaciones.findAll();
         for (int i=0; i<crude.size(); i++) {
             if (crude.get(i).getTipo()== BigInteger.ZERO) crude.remove(i);
         }
@@ -46,7 +55,7 @@ public class ObservacionesBean {
         if (orden.equals("asc")) {
             ordenamiento.put("fecha", "asc");
         }
-        return catalogoObservacionesFacade.findBySpecificField("tipo", "1", "equal", ordenamiento , null);
+        return daoCatalogoObservaciones.findBySpecificField("tipo", "1", "equal", ordenamiento , null);
     }
     
     public List<CatalogoObservaciones> ConsultaObservacionesUsuario(String orden){
@@ -57,7 +66,7 @@ public class ObservacionesBean {
         if (orden.equals("asc")) {
             ordenamiento.put("fecha", "asc");
         }
-        return catalogoObservacionesFacade.findBySpecificField("tipo", "6", "equal", ordenamiento , null);
+        return daoCatalogoObservaciones.findBySpecificField("tipo", "6", "equal", ordenamiento , null);
     }
     
     /**
@@ -74,7 +83,7 @@ public class ObservacionesBean {
         if (orden.equals("asc")) {
             ordenamiento.put("fecha", "asc");
         }
-        return catalogoObservacionesFacade.findBySpecificField("tipo", "2", "equal", ordenamiento , null);
+        return daoCatalogoObservaciones.findBySpecificField("tipo", "2", "equal", ordenamiento , null);
     }
     
     /**
@@ -91,6 +100,6 @@ public class ObservacionesBean {
         if (orden.equals("asc")) {
             ordenamiento.put("fecha", "asc");
         }
-        return catalogoObservacionesFacade.findBySpecificField("tipo", "2", "equal", ordenamiento , null);
+        return daoCatalogoObservaciones.findBySpecificField("tipo", "2", "equal", ordenamiento , null);
     }
 }
