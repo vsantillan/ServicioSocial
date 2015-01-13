@@ -8,12 +8,14 @@ import edu.servicio.toluca.beans.FechaAPalabras;
 import edu.servicio.toluca.beans.SancionBean;
 import edu.servicio.toluca.beans.SancionesBean;
 import edu.servicio.toluca.beans.StatusServicioBean;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.sesion.SancionesFacade;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -21,6 +23,15 @@ import java.util.List;
  */
 public class ConsultasPanelUsuarioSanciones
 {
+    
+    private GenericDao<Sanciones> daoSanciones;
+    
+    @Autowired
+    public void setDaoSanciones(GenericDao<Sanciones> daoSanciones)
+    {
+        this.daoSanciones = daoSanciones;
+        daoSanciones.setClass(Sanciones.class);
+    }
 
     public SancionesBean consultaHorasSancion(StatusServicioBean servicioBean)
     {
@@ -46,7 +57,7 @@ public class ConsultasPanelUsuarioSanciones
         return sancionesBean;
     }
 
-    public List<SancionBean> listaSanciones(DatosPersonales datosPersonales, SancionesFacade sancionesFacade, String orden)
+    public List<SancionBean> listaSanciones(DatosPersonales datosPersonales, GenericDao<Sanciones> daoSanciones, String orden)
     {
         FechaAPalabras fecha = new FechaAPalabras();
         List<SancionBean> sancionesBean = new ArrayList<SancionBean>();
@@ -62,7 +73,7 @@ public class ConsultasPanelUsuarioSanciones
             ordenamiento.put("fecha", "asc");
         }
         //Consulta a las sanciones
-        sanciones = sancionesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenamiento, null);
+        sanciones = daoSanciones.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenamiento, null);
 
         //Imprime noticias en consola
 //        System.out.println("Observaciones");

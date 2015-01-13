@@ -4,25 +4,17 @@
  */
 package edu.servicio.toluca.controller;
 
-import edu.servicio.toluca.beans.ObservacionesBean;
 import edu.servicio.toluca.beans.StringMD;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.dao.GenericDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
-import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.RegObservacionGeneral;
 import edu.servicio.toluca.entidades.UsuarioInstancia;
-import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
-import edu.servicio.toluca.sesion.RegObservacionGeneralFacade;
-import edu.servicio.toluca.sesion.UsuarioInstanciaFacade;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;

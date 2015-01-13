@@ -12,6 +12,12 @@ import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.formatoUnico.FormatoUnicoPanelUsuarioBean;
 import edu.servicio.toluca.beans.platica.FoliosPlaticaBean;
+import edu.servicio.toluca.dao.GenericDao;
+import edu.servicio.toluca.entidades.FoliosPlatica;
+import edu.servicio.toluca.entidades.LogServicio;
+import edu.servicio.toluca.entidades.Noticias;
+import edu.servicio.toluca.entidades.RegObservaciones;
+import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.model.documentosFinales.ValidaDocumentosFinalesModel;
 import edu.servicio.toluca.model.vistaalumno.ConsultasVistaAlumno;
 import edu.servicio.toluca.model.formatoUnico.ValidacionPanelUsuarioFU;
@@ -21,17 +27,11 @@ import edu.servicio.toluca.model.panelUsuario.ValidacionStatusServicio;
 import edu.servicio.toluca.model.platica.ConsultasPlatica;
 import edu.servicio.toluca.model.reportesBimestrales.ValidaReportesBimestralesModel;
 import edu.servicio.toluca.model.sanciones.ConsultasPanelUsuarioSanciones;
-import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
-import edu.servicio.toluca.sesion.LogServicioFacade;
-import edu.servicio.toluca.sesion.NoticiasFacade;
-import edu.servicio.toluca.sesion.RegObservacionesFacade;
-import edu.servicio.toluca.sesion.SancionesFacade;
-import edu.servicio.toluca.sesion.VistaAlumnoFacade;
-import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,19 +44,47 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class PanelUsuarioController
 {
-
-    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
-    public VistaAlumnoFacade vistaAlumnoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
-    public FoliosPlaticaFacade foliosPlaticaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/NoticiasFacade")
-    public NoticiasFacade noticiasFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
-    public RegObservacionesFacade regObservacionesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
-    public SancionesFacade sancionesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/LogServicioFacade")
-    public LogServicioFacade logServicioFacade;
+    
+    private GenericDao<VistaAlumno> daoVistaAlumno;
+    private GenericDao<FoliosPlatica> daoFoliosPlatica;
+    private GenericDao<Noticias> daoNoticias;
+    private GenericDao<RegObservaciones> daoRegObservaciones;
+    private GenericDao<Sanciones> daoSanciones;
+    
+    @Autowired
+    public void setDaoVistaAlumno(GenericDao<VistaAlumno> daoVistaAlumno)
+    {
+        this.daoVistaAlumno = daoVistaAlumno;
+        daoVistaAlumno.setClass(VistaAlumno.class);
+    }
+    
+    @Autowired
+    public void setDaoFoliosPlatica(GenericDao<FoliosPlatica> daoFoliosPlatica)
+    {
+        this.daoFoliosPlatica = daoFoliosPlatica;
+        daoFoliosPlatica.setClass(FoliosPlatica.class);
+    }
+    
+    @Autowired
+    public void setDaoNoticias(GenericDao<Noticias> daoNoticias)
+    {
+        this.daoNoticias = daoNoticias;
+        daoNoticias.setClass(Noticias.class);
+    }
+    
+    @Autowired
+    public void setDaoRegObservaciones(GenericDao<RegObservaciones> daoRegObservaciones)
+    {
+        this.daoRegObservaciones = daoRegObservaciones;
+        daoRegObservaciones.setClass(RegObservaciones.class);
+    }
+    
+    @Autowired
+    public void setDaoSanciones(GenericDao<Sanciones> daoSanciones)
+    {
+        this.daoSanciones = daoSanciones;
+        daoSanciones.setClass(Sanciones.class);
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
 
@@ -73,13 +101,13 @@ public class PanelUsuarioController
         logger.info("Número de Control: ", session.getAttribute("NCONTROL"));
 
         //Obtenemos al alumno
-        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(vistaAlumnoFacade);
+        ConsultasVistaAlumno consultaVistaAlumno = new ConsultasVistaAlumno(daoVistaAlumno);
         VistaAlumno alumno = consultaVistaAlumno.getAlumnoSesion(session);
 
         logger.info("Bienvenido al panale de usuario");
 
         //Cargar noticias noticias
-        ConsultasNoticias noticias = new ConsultasNoticias(noticiasFacade);
+        ConsultasNoticias noticias = new ConsultasNoticias(daoNoticias);
         model.addAttribute("noticiasAlumnos", noticias.consultaNoticiasGenerales("desc"));
 
         //Valida estatus del servicio social
@@ -115,7 +143,7 @@ public class PanelUsuarioController
             {
                 //Es alumno interno y tambien puede ser un egresado realizando su proceso de servicio social
                 //Checa platica
-                ConsultasPlatica platica = new ConsultasPlatica(foliosPlaticaFacade);
+                ConsultasPlatica platica = new ConsultasPlatica(daoFoliosPlatica);
                 FoliosPlaticaBean beanPlatica = platica.checaAlumnoPlatica(servicioBean);
 
                 model.addAttribute("platica", beanPlatica.isTienePlatica());
@@ -161,7 +189,7 @@ public class PanelUsuarioController
                     if (servicioBean.getDatosPersonales() != null)
                     {
                         ObservacionesModel observaciones = new ObservacionesModel();
-                        model.addAttribute("observaciones", observaciones.consultaObservaciones(servicioBean.getDatosPersonales(), regObservacionesFacade, "desc"));
+                        model.addAttribute("observaciones", observaciones.consultaObservaciones(servicioBean.getDatosPersonales(), daoRegObservaciones, "desc"));
                     }
                 } catch (Exception e)
                 {
@@ -204,7 +232,7 @@ public class PanelUsuarioController
                         model.addAttribute("mensajeSanciones", sancionesBean.getMensaje());
                         model.addAttribute("accesoSanciones", true);
                         model.addAttribute("tieneSancion", sancionesBean.isTieneSancion());
-                        model.addAttribute("sanciones", consultaSanciones.listaSanciones(servicioBean.getDatosPersonales(), sancionesFacade, "desc"));
+                        model.addAttribute("sanciones", consultaSanciones.listaSanciones(servicioBean.getDatosPersonales(), daoSanciones, "desc"));
                     } else
                     {
                         model.addAttribute("mensajeSanciones", "No has comenzado tu proceso de servicio social");

@@ -57,6 +57,48 @@ public class NavegacionPrincipalController
         daoInstancia.setClass(Instancia.class);
     }
     
+    @Autowired
+    public void setDaoCodigosPostales(GenericDao<CodigosPostales> daoCodigosPostales)
+    {
+        this.daoCodigosPostales = daoCodigosPostales;
+        daoCodigosPostales.setClass(CodigosPostales.class);
+    }
+    
+    @Autowired
+    public void setDaoTipoOrganizacion(GenericDao<TipoOrganizacion> daoTipoOrganizacion)
+    {
+        this.daoTipoOrganizacion = daoTipoOrganizacion;
+        daoTipoOrganizacion.setClass(TipoOrganizacion.class);
+    }
+    
+    @Autowired
+    public void setDaoEstadosSia(GenericDao<EstadosSia> daoEstadosSia)
+    {
+        this.daoEstadosSia = daoEstadosSia;
+        daoEstadosSia.setClass(EstadosSia.class);
+    }
+    
+    @Autowired
+    public void setDaoVistaAlumno(GenericDao<VistaAlumno> daoVistaAlumno)
+    {
+        this.daoVistaAlumno = daoVistaAlumno;
+        daoVistaAlumno.setClass(VistaAlumno.class);
+    }
+    
+    @Autowired
+    public void setDaoNoticias(GenericDao<Noticias> daoNoticias)
+    {
+        this.daoNoticias = daoNoticias;
+        daoNoticias.setClass(Noticias.class);
+    }
+    
+    @Autowired
+    public void setDaoUsuarioInstancia(GenericDao<UsuarioInstancia> daoUsuarioInstancia)
+    {
+        this.daoUsuarioInstancia = daoUsuarioInstancia;
+        daoUsuarioInstancia.setClass(UsuarioInstancia.class);
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="EJB Facades">
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     public InstanciaFacade instanciaFacade;
@@ -83,7 +125,7 @@ public class NavegacionPrincipalController
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model modelo)
     {
-        ConsultasNoticias noticiasBean = new ConsultasNoticias(noticiasFacade);
+        ConsultasNoticias noticiasBean = new ConsultasNoticias(daoNoticias);
         modelo.addAttribute("Noticias", noticiasBean.consultaNoticiasPrincipales("desc"));
         return "/NavegacionPrincipal/index";
     }
@@ -93,7 +135,7 @@ public class NavegacionPrincipalController
     public NoticiaJson mostarNoticiaCompleta(Model modelo, String idNoticia)
     {
         NoticiaJson noticia = new NoticiaJson();
-        ConsultasNoticias noticiasBean = new ConsultasNoticias(noticiasFacade);
+        ConsultasNoticias noticiasBean = new ConsultasNoticias(daoNoticias);
         noticia.setTitulo(noticiasBean.consultaNoticiaPrincipal(Integer.parseInt(idNoticia)).getTitulo());
         noticia.setDetalle(noticiasBean.consultaNoticiaPrincipal(Integer.parseInt(idNoticia)).getDetalle());
         System.out.println("descrpcion" + noticia.getDetalle());
@@ -151,12 +193,12 @@ public class NavegacionPrincipalController
     @RequestMapping(method = RequestMethod.GET, value = "/registroOrganizaciones.do")
     public String registroOrganizaciones(Model model)
     {
-        model.addAttribute("preOrganizaciones", instanciaFacade.findBySpecificField("status", "2", "equal", null, null));
+        model.addAttribute("preOrganizaciones", daoInstancia.findBySpecificField("status", "2", "equal", null, null));
         model.addAttribute("instancia", new Instancia());
-        model.addAttribute("tipoOrganizaciones", tipoOrganizacionFacade.findBySpecificField("estatus", "1", "equal", null, null));
+        model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
         ordenamiento.put("nombre", "asc");
-        model.addAttribute("estados", estadosFacade.findAll(ordenamiento));
+        model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
         return "/Organizaciones/registroOrganizaciones";
     }
 
@@ -181,7 +223,7 @@ public class NavegacionPrincipalController
 
         ValidaLogin login = new ValidaLogin();
         SesionBean sesionBean = login.validaLogin(usuario, pass, 
-                vistaAlumnoFacade, instanciaFacade, uInstanciaFacade, session);
+                daoVistaAlumno, daoInstancia, daoUsuarioInstancia, session);
 
         if(sesionBean.getMensaje() != null)
         {

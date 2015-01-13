@@ -7,6 +7,7 @@ package edu.servicio.toluca.controller;
 import edu.servicio.toluca.beans.bajasTemporales.BajasTemporales;
 import edu.servicio.toluca.beans.bajasTemporales.cambioDependencia;
 import edu.servicio.toluca.beans.bimestrales.fechas;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.BajaTemporal;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
@@ -24,6 +25,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,26 +42,56 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class BajasTemporalesController
 {
 
-    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
-    private FormatoUnicoFacade formatoUnicoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/BajaTemporalFacade")
-    private BajaTemporalFacade bajaTemporal;
-    @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
-    private DatosPersonalesFacade datosPersonalesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
-    private InstanciaFacade instanciaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
-    private ProyectosFacade proyectoFacade;
+    private GenericDao<FormatoUnico> daoFormatoUnico;
+    private GenericDao<DatosPersonales> daoDatosPersonales;
+    private GenericDao<BajaTemporal> daoBajaTemporal;
+    private GenericDao<Instancia> daoInstancia;
+    private GenericDao<Proyectos> daoProyectos;
+
+    @Autowired
+    public void setdaoFormatoUnico(GenericDao<FormatoUnico> daoFormatoUnico)
+    {
+        this.daoFormatoUnico = daoFormatoUnico;
+        daoFormatoUnico.setClass(FormatoUnico.class);
+    }
+
+    @Autowired
+    public void setdaoDatosPersonales(GenericDao<DatosPersonales> daoDatosPersonales)
+    {
+        this.daoDatosPersonales = daoDatosPersonales;
+        daoDatosPersonales.setClass(DatosPersonales.class);
+    }
+
+    @Autowired
+    public void setdaoBajaTemporal(GenericDao<BajaTemporal> daoBajaTemporal)
+    {
+        this.daoBajaTemporal = daoBajaTemporal;
+        daoBajaTemporal.setClass(BajaTemporal.class);
+    }
+
+    @Autowired
+    public void setdaoInstancia(GenericDao<Instancia> daoInstancia)
+    {
+        this.daoInstancia = daoInstancia;
+        daoInstancia.setClass(Instancia.class);
+    }
+
+    @Autowired
+    public void setDaoProyectos(GenericDao<Proyectos> daoProyectos)
+    {
+        this.daoProyectos = daoProyectos;
+        daoProyectos.setClass(Proyectos.class);
+    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/actualizaInstancia.do")
     public String actualizaInstancia(Model modelo, String idFormatoUnico, String proyectosInstancia)
     {
         System.out.println("idDatos: " + idFormatoUnico + "Proyectos: " + proyectosInstancia);
-        List<FormatoUnico> formatoUnico = formatoUnicoFacade.findBySpecificField("id", idFormatoUnico, "equal", null, null);
-        List<Proyectos> proyectos = proyectoFacade.findBySpecificField("idProyecto", proyectosInstancia, "equal", null, null);
+        List<FormatoUnico> formatoUnico = daoFormatoUnico.findBySpecificField("id", idFormatoUnico, "equal", null, null);
+        List<Proyectos> proyectos = daoProyectos.findBySpecificField("idProyecto", proyectosInstancia, "equal", null, null);
         FormatoUnico formatoActualizar = formatoUnico.get(0);
         formatoActualizar.setIdproyecto(proyectos.get(0));
-        formatoUnicoFacade.edit(formatoActualizar);
+        daoFormatoUnico.edit(formatoActualizar);
         return "redirect:cambioDependencia.do";
     }
 
@@ -68,7 +100,7 @@ public class BajasTemporalesController
     String dameProyctos(Model modelo, int idInstancia)
     {
         String arrJSON = "";
-        List<Proyectos> listProyectos = proyectoFacade.findBySpecificField("idInstancia", idInstancia, "equal", null, null);
+        List<Proyectos> listProyectos = daoProyectos.findBySpecificField("idInstancia", idInstancia, "equal", null, null);
         Iterator<Proyectos> recorreProyectos = listProyectos.iterator();
 
         while (recorreProyectos.hasNext())
@@ -84,10 +116,10 @@ public class BajasTemporalesController
     public String cambioDependencia(Model modelo)
     {
 
-        List<FormatoUnico> formatos = formatoUnicoFacade.findAll();
+        List<FormatoUnico> formatos = daoFormatoUnico.findAll();
         Iterator listaFormatos = formatos.iterator();
         List<FormatoUnico> formatosSinBaja = new ArrayList<FormatoUnico>();
-        List<Instancia> listaInstancias = instanciaFacade.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+        List<Instancia> listaInstancias = daoInstancia.findBySpecificField("validacionAdmin", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
 
         for (int i = 0; i < listaInstancias.size(); i++)
@@ -101,9 +133,9 @@ public class BajasTemporalesController
         while (listaFormatos.hasNext())
         {
             FormatoUnico FU = (FormatoUnico) listaFormatos.next();
-            if (FU.getStatusServicio() == BigInteger.ONE 
-//                    && FU.getIdproyecto().getIdInstancia().getEstatus() == BigInteger.ONE)//.....................................correcion de la sentencia if al comparar status.................................................
-                    && FU.getIdproyecto().getIdInstancia().getStatus() ==(short) BigInteger.ONE.intValue())
+            if (FU.getStatusServicio() == BigInteger.ONE
+                    //                    && FU.getIdproyecto().getIdInstancia().getEstatus() == BigInteger.ONE)//.....................................correcion de la sentencia if al comparar status.................................................
+                    && FU.getIdproyecto().getIdInstancia().getStatus() == (short) BigInteger.ONE.intValue())
             {
                 formatosSinBaja.add(FU);
             }
@@ -119,8 +151,8 @@ public class BajasTemporalesController
     public String administrarBajas(Model modelo)
     {
         BajasTemporales bt = new BajasTemporales();
-        List<FormatoUnico> formatos = formatoUnicoFacade.findAll();
-        List<BajaTemporal> bajasTemporales = bajaTemporal.findAll();
+        List<FormatoUnico> formatos = daoFormatoUnico.findAll();
+        List<BajaTemporal> bajasTemporales = daoBajaTemporal.findAll();
         Iterator listaFormatos = formatos.iterator();
 
         List<FormatoUnico> formatosBaja = new ArrayList<FormatoUnico>();
@@ -161,28 +193,28 @@ public class BajasTemporalesController
     {
         BajaTemporal bt = new BajaTemporal();
         fechas fechas = new fechas();
-        List<BajaTemporal> listaBajas = bajaTemporal.findBySpecificField("datosPersonalesId", baja.getDatosPersonales().getId(), "equal", null, null);
-        List<DatosPersonales> DP = datosPersonalesFacade.findBySpecificField("id", baja.getDatosPersonales().getId(), "equal", null, null);
+        List<BajaTemporal> listaBajas = daoBajaTemporal.findBySpecificField("datosPersonalesId", baja.getDatosPersonales().getId(), "equal", null, null);
+        List<DatosPersonales> DP = daoDatosPersonales.findBySpecificField("id", baja.getDatosPersonales().getId(), "equal", null, null);
         if (listaBajas.isEmpty())
         {
             //Insertamos el registro 
             bt.setFechaBaja(baja.getFechaBaja());
             bt.setFechaLimiteBaja(baja.getFechaLimiteBaja());
             bt.setDatosPersonalesId(DP.get(0));
-            bajaTemporal.create(bt);
+            daoBajaTemporal.create(bt);
             System.out.println("Se inserto la baja temporal");
         } else
         {
             BajaTemporal bajaAntigua = listaBajas.get(0);
             bajaAntigua.setFechaBaja(baja.getFechaBaja());
             bajaAntigua.setFechaLimiteBaja(baja.getFechaLimiteBaja());
-            bajaTemporal.edit(bajaAntigua);
+            daoBajaTemporal.edit(bajaAntigua);
         }
 
         //Cambiamos el Status de Servicio a 3
-        List<FormatoUnico> editarFU = formatoUnicoFacade.findBySpecificField("datosPersonalesId", DP.get(0).getId(), "equal", null, null);
+        List<FormatoUnico> editarFU = daoFormatoUnico.findBySpecificField("datosPersonalesId", DP.get(0).getId(), "equal", null, null);
         editarFU.get(0).setStatusServicio(BigInteger.valueOf(3));
-        formatoUnicoFacade.edit(editarFU.get(0));
+        daoFormatoUnico.edit(editarFU.get(0));
         System.out.println("Se actualizo el status de baja");
 
         return "redirect:administrarBajas.do";
@@ -194,9 +226,9 @@ public class BajasTemporalesController
     {
 
         //Cambiamos el Status de Servicio a 3
-        List<FormatoUnico> editarFU = formatoUnicoFacade.findBySpecificField("datosPersonalesId", id, "equal", null, null);
+        List<FormatoUnico> editarFU = daoFormatoUnico.findBySpecificField("datosPersonalesId", id, "equal", null, null);
         editarFU.get(0).setStatusServicio(BigInteger.valueOf(1));
-        formatoUnicoFacade.edit(editarFU.get(0));
+        daoFormatoUnico.edit(editarFU.get(0));
         System.out.println("Se actualizo el status de baja");
 
         return "ok";

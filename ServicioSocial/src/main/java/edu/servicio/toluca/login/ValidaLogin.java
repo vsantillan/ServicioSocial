@@ -6,8 +6,10 @@ package edu.servicio.toluca.login;
 
 import edu.servicio.toluca.beans.SesionBean;
 import edu.servicio.toluca.beans.StringMD;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.FormatoUnico;
+import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.UsuarioInstancia;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.sesion.InstanciaFacade;
@@ -25,8 +27,8 @@ public class ValidaLogin
 {
 
     public SesionBean validaLogin(String usuario, String pass,
-            VistaAlumnoFacade vistaAlumnoFacade, InstanciaFacade instanciaFacade,
-            UsuarioInstanciaFacade uInstanciaFacade, HttpSession session)
+            GenericDao<VistaAlumno> daoVistaAlumno, GenericDao<Instancia> daoInstancia,
+            GenericDao<UsuarioInstancia> daoUsuarioInstancia, HttpSession session)
     {
         SesionBean sesionBean = new SesionBean();
 
@@ -49,7 +51,7 @@ public class ValidaLogin
             if(rol.equals("ROLE_ALUMNOS"))
             {
                 System.out.println("buscar:" + usuario.substring(4));
-                List<VistaAlumno> alumno = vistaAlumnoFacade.findBySpecificField("id", usuario.substring(4), "equal", null, null);
+                List<VistaAlumno> alumno = daoVistaAlumno.findBySpecificField("id", usuario.substring(4), "equal", null, null);
                 System.out.println("tamaño lista:" + alumno.size());
                 Double porcentaje = Double.parseDouble(alumno.get(0).getPorcentaje());
                 System.out.println("Porcentaje del alumno:" + porcentaje);
@@ -132,7 +134,7 @@ public class ValidaLogin
                 
                 //Verifica si es una instancia por medio de su correo
                 List<UsuarioInstancia> usuarioInstancia
-                        = uInstanciaFacade.findBySpecificField("email", usuario.trim(), "equal", null, null);
+                        = daoUsuarioInstancia.findBySpecificField("email", usuario.trim(), "equal", null, null);
                 if(usuarioInstancia.size() > 0)
                 {
                     //System.out.println("SA86");

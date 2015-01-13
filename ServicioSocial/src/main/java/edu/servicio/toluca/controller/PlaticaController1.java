@@ -33,8 +33,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PlaticaController1 {
 
-    @EJB(mappedName = "java:global/ServicioSocial/LugaresPlaticaFacade")
-    private LugaresPlaticaFacade LugaresPlaticaFacade;
     
     private GenericDao<LugaresPlatica> daoLugaresPlatica;
     
