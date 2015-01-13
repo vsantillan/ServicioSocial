@@ -29,6 +29,7 @@ import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.EstadosSia;
 import edu.servicio.toluca.entidades.MunicipiosSia;
 import edu.servicio.toluca.entidades.TipoLocalidad;
+import edu.servicio.toluca.entidades.UsuarioInstancia;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.model.codigospostales.CodigosPostalesModel;
 import edu.servicio.toluca.sesion.ActividadesFacade;
@@ -95,6 +96,14 @@ public class OrganizacionesController2
     private GenericDao<Ciudades> daoCiudades;
     private GenericDao<VistaAlumno> daoVistaAlumno;
     private GenericDao<TipoLocalidad> daoTipoLocalidad;
+    private GenericDao<UsuarioInstancia> daoUsuarioInstancia;
+
+    @Autowired
+    public void setDaoUsuarioInstancia(GenericDao<UsuarioInstancia> daoUsuarioInstancia)
+    {
+        this.daoUsuarioInstancia = daoUsuarioInstancia;
+        daoUsuarioInstancia.setClass(UsuarioInstancia.class);
+    }
 
     @Autowired
     public void setDaoTipoOrganizacion(GenericDao<TipoOrganizacion> daoTipoOrganizacion)
@@ -671,6 +680,10 @@ public class OrganizacionesController2
             instancia.setNombre(limpiar.tuneaStringParaBD(instancia.getNombre()));
 //            instancia.setPuesto(limpiar.tuneaStringParaBD(instancia.getPuesto()));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION PUESTO  .............................................................................................
             instancia.setRfc(limpiar.tuneaStringParaBD(instancia.getRfc()));
+            UsuarioInstancia usuario = (UsuarioInstancia) daoUsuarioInstancia.find(BigDecimal.valueOf(1));
+            System.out.println(usuario.getApellidoMat());
+            System.out.println(usuario.getIdUsuarioInstancia());
+            instancia.setUsuarioInstancia(usuario);
 //            instancia.setTitular(limpiar.tuneaStringParaBD(instancia.getTitular()));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION TITULAR  .............................................................................................
 //            instancia.setPassword(StringMD.getStringMessageDigest(instancia.getPassword(), StringMD.SHA1));//.....................................................................................................COMENTARIO A LA LINEA DE VALIDACION  PASSWORD  .............................................................................................
 
