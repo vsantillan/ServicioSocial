@@ -100,7 +100,7 @@ public class BajasTemporalesController
     String dameProyctos(Model modelo, int idInstancia)
     {
         String arrJSON = "";
-        List<Proyectos> listProyectos = daoProyectos.findBySpecificField("idInstancia", idInstancia, "equal", null, null);
+        List<Proyectos> listProyectos = daoProyectos.findBySpecificField("idInstancia", idInstancia , "equal", null, null);
         Iterator<Proyectos> recorreProyectos = listProyectos.iterator();
 
         while (recorreProyectos.hasNext())
