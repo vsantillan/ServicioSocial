@@ -5,11 +5,13 @@
 package edu.servicio.toluca.model.observaciones;
 
 import edu.servicio.toluca.beans.FechaAPalabras;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.DatosPersonales;
 import edu.servicio.toluca.entidades.RegObservaciones;
 import edu.servicio.toluca.sesion.RegObservacionesFacade;
 import java.util.LinkedHashMap;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -17,7 +19,16 @@ import java.util.List;
  */
 public class ObservacionesModel {
     
-    public List<RegObservaciones> consultaObservaciones(DatosPersonales datosPersonales, RegObservacionesFacade regObservacionesFacade, String orden){
+    private GenericDao<RegObservaciones> daoRegObservaciones;
+    
+    @Autowired
+    public void setRegObservaciones(GenericDao<RegObservaciones> daoRegObservaciones)
+    {
+        this.daoRegObservaciones = daoRegObservaciones;
+        daoRegObservaciones.setClass(RegObservaciones.class);
+    }
+    
+    public List<RegObservaciones> consultaObservaciones(DatosPersonales datosPersonales, GenericDao<RegObservaciones> daoRegObservaciones, String orden){
         FechaAPalabras fecha = new FechaAPalabras();
         List<RegObservaciones> observaciones = null;
         LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
@@ -29,7 +40,7 @@ public class ObservacionesModel {
             ordenamiento.put("fecha", "asc");
         }
         //Consulta a las noticias generales
-        observaciones = regObservacionesFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenamiento, null);
+        observaciones = daoRegObservaciones.findBySpecificField("datosPersonalesId", datosPersonales, "equal", ordenamiento, null);
 
         //Imprime noticias en consola
 //        System.out.println("Observaciones");

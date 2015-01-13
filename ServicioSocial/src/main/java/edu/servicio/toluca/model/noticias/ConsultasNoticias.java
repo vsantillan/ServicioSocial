@@ -5,13 +5,14 @@
 package edu.servicio.toluca.model.noticias;
 
 import edu.servicio.toluca.beans.FechaAPalabras;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.Noticias;
-import edu.servicio.toluca.sesion.NoticiasFacade;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -19,10 +20,17 @@ import java.util.List;
  */
 public class ConsultasNoticias {
 
-    public NoticiasFacade noticiasFacade;
+    private GenericDao<Noticias> daoNoticias;
+    
+    @Autowired
+    public void setDaoNoticias(GenericDao<Noticias> daoNoticias)
+    {
+        this.daoNoticias = daoNoticias;
+        daoNoticias.setClass(Noticias.class);
+    }
 
-    public ConsultasNoticias(NoticiasFacade noticiasFacade) {
-        this.noticiasFacade = noticiasFacade;
+    public ConsultasNoticias(GenericDao<Noticias> daoNoticias) {
+        this.daoNoticias = daoNoticias;
     }
 
     /**
@@ -43,7 +51,7 @@ public class ConsultasNoticias {
         }
         //Consulta a las noticias generales
 //        noticias = noticiasFacade.findBySpecificField("tipoServicio", 2, "equal", ordenamiento, null);
-        List<Noticias> noticiasCrude = noticiasFacade.findAll(ordenamiento);
+        List<Noticias> noticiasCrude = daoNoticias.findAll(ordenamiento);
         System.out.println("Noticias crude:" + noticiasCrude.size());
 
         for (int i = 0; i < noticiasCrude.size(); i++) {
@@ -69,7 +77,7 @@ public class ConsultasNoticias {
         }
         //Consulta a las noticias generales
 //        noticias = noticiasFacade.findBySpecificField("tipoServicio", 2, "equal", ordenamiento, null);
-        List<Noticias> noticiasCrude = noticiasFacade.findAll(ordenamiento);
+        List<Noticias> noticiasCrude = daoNoticias.findAll(ordenamiento);
         System.out.println("Noticias crude:" + noticiasCrude.size());
         String detalle = "";
         for (int i = 0; i < noticiasCrude.size(); i++) {
@@ -87,7 +95,7 @@ public class ConsultasNoticias {
         try {
             BigDecimal idNoticia = null;
             idNoticia = BigDecimal.valueOf(id);
-            Noticias noticiaa = noticiasFacade.find(idNoticia);
+            Noticias noticiaa = (Noticias) daoNoticias.find(idNoticia);
 
             //Uno para Noticias Generales
             if (noticiaa.getTipoServicio().compareTo(new BigInteger("1")) == 0) {
@@ -104,7 +112,7 @@ public class ConsultasNoticias {
 
     public boolean nuevaNoticia(Noticias noticia) {
         try {
-            noticiasFacade.create(noticia);
+            daoNoticias.create(noticia);
             return true;
         } catch (Exception e) {
             System.out.println(e);
@@ -117,7 +125,7 @@ public class ConsultasNoticias {
         try {
             BigDecimal idNoticia = null;
             idNoticia = BigDecimal.valueOf(id);
-            Noticias noticia = noticiasFacade.find(idNoticia);
+            Noticias noticia = (Noticias) daoNoticias.find(idNoticia);
             return noticia;
         } catch (Exception e) {
             return null;
@@ -126,17 +134,17 @@ public class ConsultasNoticias {
     }
 
     public void eliminarNoticia(Noticias noticia) {
-        noticiasFacade.remove(noticia);
+        daoNoticias.remove(noticia);
     }
 
     public boolean editarNoticia(Noticias noticia) {
         try {
-            Noticias noticiaEditar = noticiasFacade.find(noticia.getId());
+            Noticias noticiaEditar = (Noticias) daoNoticias.find(noticia.getId());
 
             noticiaEditar.setTitulo(noticia.getTitulo());
             noticiaEditar.setTipoServicio(noticia.getTipoServicio());
             noticiaEditar.setDetalle(noticia.getDetalle());
-            noticiasFacade.edit(noticiaEditar);
+            daoNoticias.edit(noticiaEditar);
             return true;
         } catch (Exception e) {
             return false;
@@ -148,7 +156,7 @@ public class ConsultasNoticias {
             LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
             ordenamiento.put("fecha", "desc");
             ordenamiento.put("id", "desc");
-            List<Noticias> noticiasListado = noticiasFacade.findAll(ordenamiento);
+            List<Noticias> noticiasListado = daoNoticias.findAll(ordenamiento);
             return noticiasListado;
         } catch (Exception e) {
             return null;
