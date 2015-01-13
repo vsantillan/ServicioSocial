@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * ESTA CLASE NO SE UTILIZA EN NINGUNA PARTE DEL PROYECTO, SE VA A ELIMINAR.
  */
 package edu.servicio.toluca.controller;
 

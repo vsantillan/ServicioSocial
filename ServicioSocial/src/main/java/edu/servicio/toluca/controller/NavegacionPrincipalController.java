@@ -10,7 +10,14 @@ package edu.servicio.toluca.controller;
  */
 import edu.servicio.toluca.beans.NoticiaJson;
 import edu.servicio.toluca.beans.SesionBean;
+import edu.servicio.toluca.dao.GenericDao;
+import edu.servicio.toluca.entidades.CodigosPostales;
+import edu.servicio.toluca.entidades.EstadosSia;
 import edu.servicio.toluca.entidades.Instancia;
+import edu.servicio.toluca.entidades.Noticias;
+import edu.servicio.toluca.entidades.TipoOrganizacion;
+import edu.servicio.toluca.entidades.UsuarioInstancia;
+import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.ValidaLogin;
 import edu.servicio.toluca.model.noticias.ConsultasNoticias;
 import edu.servicio.toluca.sesion.CodigosPostalesFacade;
@@ -24,6 +31,7 @@ import java.util.LinkedHashMap;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +41,23 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class NavegacionPrincipalController
 {
-
+    
+    private GenericDao<Instancia> daoInstancia;
+    private GenericDao<CodigosPostales> daoCodigosPostales;
+    private GenericDao<TipoOrganizacion> daoTipoOrganizacion;
+    private GenericDao<EstadosSia> daoEstadosSia;
+    private GenericDao<VistaAlumno> daoVistaAlumno;
+    private GenericDao<Noticias> daoNoticias;
+    private GenericDao<UsuarioInstancia> daoUsuarioInstancia;
+    
+    @Autowired
+    public void setDaoInstancia(GenericDao<Instancia> daoInstancia)
+    {
+        this.daoInstancia = daoInstancia;
+        daoInstancia.setClass(Instancia.class);
+    }
+    
+    // <editor-fold defaultstate="collapsed" desc="EJB Facades">
     @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
     public InstanciaFacade instanciaFacade;
     
@@ -54,6 +78,7 @@ public class NavegacionPrincipalController
     
     @EJB(mappedName = "java:global/ServicioSocial/UsuarioInstanciaFacade")
     public UsuarioInstanciaFacade uInstanciaFacade;
+    // </editor-fold>
 
     @RequestMapping(method = RequestMethod.GET, value = "/index.do")
     public String index(Model modelo)
