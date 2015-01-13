@@ -620,7 +620,7 @@ public class OrganizacionesController
             } catch(Exception e)
             {
             }
-            List<Instancia> listaInstancias = daoInstancia.findBySpecificField("validacionAdmin", "1", "equal", null, null);
+            List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             System.out.println("Instancias");
             for(int i = 0; i < listaInstancias.size(); i++)
