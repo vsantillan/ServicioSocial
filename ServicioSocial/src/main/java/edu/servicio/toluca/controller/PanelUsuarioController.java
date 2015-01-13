@@ -47,7 +47,6 @@ public class PanelUsuarioController
     
     private GenericDao<VistaAlumno> daoVistaAlumno;
     private GenericDao<FoliosPlatica> daoFoliosPlatica;
-    private GenericDao<LogServicio> daoLogServicio;
     private GenericDao<Noticias> daoNoticias;
     private GenericDao<RegObservaciones> daoRegObservaciones;
     private GenericDao<Sanciones> daoSanciones;
@@ -64,13 +63,6 @@ public class PanelUsuarioController
     {
         this.daoFoliosPlatica = daoFoliosPlatica;
         daoFoliosPlatica.setClass(FoliosPlatica.class);
-    }
-    
-    @Autowired
-    public void setDaoLogServicio(GenericDao<LogServicio> daoLogServicio)
-    {
-        this.daoLogServicio = daoLogServicio;
-        daoLogServicio.setClass(LogServicio.class);
     }
     
     @Autowired
