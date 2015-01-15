@@ -375,7 +375,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="contensFormanotUnico4" class="contensFormanotUnico tab-pane col-md-8 col-md-offset-2">
+                            <div id="contensFormanotUnico4" class="contensFormanotUnico tab-pane col-md-11 col-md-offset-1">
                                 <p>&nbsp;</p>
                                 <div class="panel panel-info">
                                     <div class="panel-heading">Horarios</div>
@@ -384,9 +384,9 @@
                                             <div class="form-group">
                                                 <form:input type = "hidden" path="id" />
                                             </div>
-                                            <div class="row col-md-12">
+                                            <div class="row  col-md-11 col-md-offset-1">
                                                 <h2 class="text-info">Horario Inicio:</h2>
-                                                <div class="form-group col-md-3">
+                                                <div class="form-group col-md-2">
                                                     <label>Lunes</label>
                                                     <%--<form:input maxlength="5" type="text"  class="timepicker.[1] form-control" path="luI"  />--%>
                                                     <div class="input-append bootstrap-timepicker input-group">
@@ -424,7 +424,7 @@
                                                     </div>        
                                                 </div>
                                             </div>
-                                            <div class="row col-md-12">
+                                            <div class="row col-md-11 col-md-offset-1">
                                                 <h2 class="text-info">Horario Final</h2>
                                                 <div class="form-group col-md-2 ">
                                                     <label>Lunes</label>

@@ -413,7 +413,7 @@ public class FormatoUnicoController
 
             // Setear en vacío los horarios alumno 
             // Recuperar el objeto FormatoUnico que se acaba de insertar para insertarlo en los horarios_alumno
-            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
+            List<FormatoUnico> listaFormatoUnico = daoFormatoUnico.findBySpecificField("datosPersonalesId", datosPersonales, "equal", null, null);
             if (listaFormatoUnico.isEmpty())
             {
                 System.err.println("La lista de formatoUnico está vacía");
@@ -437,7 +437,7 @@ public class FormatoUnicoController
 
             // Consultas de los objetos necesarios para el despliegue de la vista alumno
             //Aquí en esta línea no funciona el DAO y no sé por qué, perdón les he fallado.
-            List<FormatoUnico> listaFormatoUnico = formatoUnicoFacade.findBySpecificField("datosPersonalesId", dp2, "equal", null, null);
+            List<FormatoUnico> listaFormatoUnico = daoFormatoUnico.findBySpecificField("datosPersonalesId", dp2, "equal", null, null);
             System.err.println("El alumno ya está, su id de datosPersonales es " + listaDatosPersonales.get(0).getId());
 
             // Asignación a objetos para posteriormente preparar

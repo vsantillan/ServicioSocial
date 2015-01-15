@@ -76,7 +76,7 @@ function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
             $('#linkMasInfoProyecto').attr("href", "detalleProyecto.do?id=" + proyecto.id_proyecto[i]);
             $('#domicilioOrg').val(proyecto.domicilio[i]);
             $('#nombre_responsable').val(proyecto.nombre_responsable[i]);
-            $('#responsable_puesto').val(proyecto.nombre_responsable[i]);
+            $('#responsable_puesto').val(proyecto.responsable_puesto[i]);
             $('#telefono_responsable').val(proyecto.telefono_responsable[i]);
             $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDatosPer + "&idInstancia=" + idInstancia + "");
         }
@@ -125,7 +125,7 @@ function recargaProyectos(idInstancia, idProyecto)
                 $('#telefono_responsable').val('');
                 $('#domicilioOrg').val(respuesta.domicilio[i]);
                 $('#nombre_responsable').val(respuesta.nombre_responsable[i]);
-                $('#responsable_puesto').val(respuesta.nombre_responsable[i]);
+                $('#responsable_puesto').val(respuesta.responsable_puesto[i]);
                 $('#telefono_responsable').val(respuesta.telefono_responsable[i]);
                 $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDP + "&idInstancia=" + idInstancia + "");
             }
