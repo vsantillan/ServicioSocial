@@ -35,25 +35,6 @@ import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.model.SancionesModelo;
-import edu.servicio.toluca.sesion.CatalogoDocumentoFacade;
-import edu.servicio.toluca.sesion.CatalogoPlanFacade;
-import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
-import edu.servicio.toluca.sesion.CiudadesFacade;
-import edu.servicio.toluca.sesion.CodigosPostalesFacade;
-import edu.servicio.toluca.sesion.ColoniaFacade;
-import edu.servicio.toluca.sesion.DatosPersonalesFacade;
-import edu.servicio.toluca.sesion.DocumentosFacade;
-import edu.servicio.toluca.sesion.EstadosSiaFacade;
-import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
-import edu.servicio.toluca.sesion.FormatoUnicoFacade;
-import edu.servicio.toluca.sesion.HorariosAlumnoFacade;
-import edu.servicio.toluca.sesion.InstanciaFacade;
-import edu.servicio.toluca.sesion.MunicipiosSiaFacade;
-import edu.servicio.toluca.sesion.ProyectosFacade;
-import edu.servicio.toluca.sesion.RegObservacionesFacade;
-import edu.servicio.toluca.sesion.SancionesFacade;
-import edu.servicio.toluca.sesion.TipoLocalidadFacade;
-import edu.servicio.toluca.sesion.VistaAlumnoFacade;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -65,7 +46,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -93,45 +73,45 @@ import org.springframework.web.multipart.MultipartFile;
 public class FormatoUnicoController
 {
 
-    // <editor-fold defaultstate="collapsed" desc="EJB Facades Formato Único">
-    @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
-    private DatosPersonalesFacade datosPersonalesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
-    private VistaAlumnoFacade vistaAlumnoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
-    private FormatoUnicoFacade formatoUnicoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
-    private EstadosSiaFacade estadosFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
-    private InstanciaFacade instanciaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
-    private ProyectosFacade proyectoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/HorariosAlumnoFacade")
-    private HorariosAlumnoFacade horarioFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
-    private ColoniaFacade coloniaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/DocumentosFacade")
-    private DocumentosFacade documentoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/CatalogoDocumentoFacade")
-    private CatalogoDocumentoFacade catalogoDocumentoFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/CatalogoPlanFacade")
-    private CatalogoPlanFacade catalogoPlanFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
-    private FoliosPlaticaFacade foliosPlaticaFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
-    private CodigosPostalesFacade codigosPostalesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
-    private CiudadesFacade ciudadesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
-    private MunicipiosSiaFacade municipiosFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
-    private TipoLocalidadFacade tipoLocalidadFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/CatalogoSancionesFacade")
-    private CatalogoSancionesFacade catalogoSancionesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
-    private SancionesFacade sancionesFacade;
-    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
-    private RegObservacionesFacade regisObservacionesFacade;
+//    // <editor-fold defaultstate="collapsed" desc="EJB Facades Formato Único">
+//    @EJB(mappedName = "java:global/ServicioSocial/DatosPersonalesFacade")
+//    private DatosPersonalesFacade datosPersonalesFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/VistaAlumnoFacade")
+//    private VistaAlumnoFacade vistaAlumnoFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/FormatoUnicoFacade")
+//    private FormatoUnicoFacade formatoUnicoFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/EstadosSiaFacade")
+//    private EstadosSiaFacade estadosFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/InstanciaFacade")
+//    private InstanciaFacade instanciaFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/ProyectosFacade")
+//    private ProyectosFacade proyectoFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/HorariosAlumnoFacade")
+//    private HorariosAlumnoFacade horarioFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/ColoniaFacade")
+//    private ColoniaFacade coloniaFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/DocumentosFacade")
+//    private DocumentosFacade documentoFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/CatalogoDocumentoFacade")
+//    private CatalogoDocumentoFacade catalogoDocumentoFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/CatalogoPlanFacade")
+//    private CatalogoPlanFacade catalogoPlanFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/FoliosPlaticaFacade")
+//    private FoliosPlaticaFacade foliosPlaticaFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/CodigosPostalesFacade")
+//    private CodigosPostalesFacade codigosPostalesFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/CiudadesFacade")
+//    private CiudadesFacade ciudadesFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/MunicipiosSiaFacade")
+//    private MunicipiosSiaFacade municipiosFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/TipoLocalidadFacade")
+//    private TipoLocalidadFacade tipoLocalidadFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/CatalogoSancionesFacade")
+//    private CatalogoSancionesFacade catalogoSancionesFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/SancionesFacade")
+//    private SancionesFacade sancionesFacade;
+//    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
+//    private RegObservacionesFacade regisObservacionesFacade;
     // </editor-fold>
 
     private GenericDao<DatosPersonales> daoDatosPersonales;
@@ -337,7 +317,7 @@ public class FormatoUnicoController
         FormatoUnico formatoUnico = new FormatoUnico();
 
         // Verificar si ya está en datos personales
-        List<DatosPersonales> listaDatosPersonales = datosPersonalesFacade.findBySpecificField("alumnoId", alumno, "equal", null, null);
+        List<DatosPersonales> listaDatosPersonales = daoDatosPersonales.findBySpecificField("alumnoId", alumno, "equal", null, null);
         if (listaDatosPersonales.isEmpty())
         {
             // Si No fue dado de alta el alumno
@@ -1170,7 +1150,7 @@ public class FormatoUnicoController
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         //----Asignar la sanción---
         //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-        SancionesModelo sm = new SancionesModelo(catalogoSancionesFacade, sancionesFacade, fecha_max, dp, "S001");
+        SancionesModelo sm = new SancionesModelo(daoCatalogoSanciones, daoSanciones, fecha_max, dp, "S001");
         sm.asignaSancion();
 
 //        java.util.Date fecha_actual = new java.util.Date();

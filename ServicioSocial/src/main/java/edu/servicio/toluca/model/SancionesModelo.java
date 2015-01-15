@@ -5,23 +5,28 @@
 package edu.servicio.toluca.model;
 
 import edu.servicio.toluca.beans.EnviarCorreo;
+import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.CatalogoSanciones;
 import edu.servicio.toluca.entidades.DatosPersonales;
+import edu.servicio.toluca.entidades.Sanciones;
 import edu.servicio.toluca.sesion.SancionesFacade;
 import edu.servicio.toluca.sesion.CatalogoSancionesFacade;
 import java.util.Calendar;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author SATELLITE
  */
-public class SancionesModelo {
+public class SancionesModelo
+{
 
     java.util.Date fecha_max;
-    CatalogoSancionesFacade catalogoSancionesFacade;
-    SancionesFacade sancionesFacade;
+    private GenericDao<Sanciones> daoSanciones;
     DatosPersonales dp;
+    private GenericDao<DatosPersonales> daoDatosPersonales;
+    private GenericDao<CatalogoSanciones> daoCatalogoSanciones;
     String clave_sancion;
 
     /**
@@ -31,6 +36,8 @@ public class SancionesModelo {
      * objeto de datos personales a quien se aplicará la sanción, el último
      * parámetro es el nombre en clave de la sanción por ejemplo S01
      *
+     * @param daoCatalogoSanciones
+     * @param daoSanciones
      * @param catalogoSancionesFacade Es el facade de CatalogoSanciones
      * @param sancionesFacade Es el facade de Sanciones
      * @param fecha_max Es la fecha máxima o la que limita la sanción
@@ -39,27 +46,32 @@ public class SancionesModelo {
      * @param clave_sancion Es la clave de la sanción en la BD por ejemplo S01
      *
      */
-    public SancionesModelo(CatalogoSancionesFacade catalogoSancionesFacade, SancionesFacade sancionesFacade, java.util.Date fecha_max, DatosPersonales dp, String clave_sancion) {
+    @Autowired
+    public SancionesModelo(GenericDao<CatalogoSanciones> daoCatalogoSanciones, GenericDao<Sanciones> daoSanciones, java.util.Date fecha_max, DatosPersonales dp, String clave_sancion)
+    {
         this.fecha_max = fecha_max;
-        this.catalogoSancionesFacade = catalogoSancionesFacade;
-        this.sancionesFacade = sancionesFacade;
+        this.daoCatalogoSanciones = daoCatalogoSanciones;
+        this.daoSanciones = daoSanciones;
         this.dp = dp;
         this.clave_sancion = clave_sancion;
     }
 
-    public String asignaSancion() {
+    public String asignaSancion()
+    {
         java.util.Date fecha_actual = new java.util.Date();
         System.out.println("La fecha actual es: " + fecha_actual);
         System.out.println("La fecha máxima es:" + fecha_max);
         if (fecha_actual.after(fecha_max))//fecha_max el la fecha máxima que tengas definida
         {
             System.out.println("La fecha actual sobrepasa la fecha máxima, procedo a revisar tolerancia");
-            if (catalogoSancionesFacade.count() < 1) {
+            if (daoCatalogoSanciones.count() < 1)
+            {
                 System.out.println("La tabla de sanciones está vacía");
                 return "redirect:panelUsuario.do";
             }
-            List<CatalogoSanciones> listaCatalogoSanciones = catalogoSancionesFacade.findBySpecificField("detalle", clave_sancion, "like", null, null);
-            if (listaCatalogoSanciones.isEmpty()) {
+            List<CatalogoSanciones> listaCatalogoSanciones = daoCatalogoSanciones.findBySpecificField("detalle", clave_sancion, "like", null, null);
+            if (listaCatalogoSanciones.isEmpty())
+            {
                 System.out.println("La sanción no pudo ser encontrada");
                 return "redirect:panelUsuario.do";
             }
@@ -69,7 +81,8 @@ public class SancionesModelo {
             fecha_max_x.add(Calendar.DATE, 5);
             fecha_max = fecha_max_x.getTime();
             System.out.println("La fecha con la tolerancia es" + fecha_max);
-            if (fecha_actual.after(fecha_max)) {
+            if (fecha_actual.after(fecha_max))
+            {
                 System.out.println("La fecha actual sobrepasa la de con tolerancia");
                 edu.servicio.toluca.entidades.Sanciones sancion = new edu.servicio.toluca.entidades.Sanciones();
                 sancion.setCatalogoSancionesId(catalogoSancion);
@@ -80,16 +93,20 @@ public class SancionesModelo {
                 System.out.println("Y su correo es:" + dp.getCorreoElectronico());
                 EnviarCorreo correo = new EnviarCorreo("Se te ha asignado una sanción", dp.getCorreoElectronico(), "Tienes una sanción de " + sancion.getHorasSancion() + "horas. La sanción es: " + catalogoSancion.getDetalle());
                 correo.enviaCorreo();
-                try {
-                    sancionesFacade.create(sancion);
+                try
+                {
+                    daoSanciones.create(sancion);
 
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     System.out.println("Problema al crear" + e.getMessage());
                 }
-            } else {
+            } else
+            {
                 System.out.println("La fecha actual no sobrepasa la de con tolerancia, no hay sancion");
             }
-        } else {
+        } else
+        {
             System.out.println("La fecha actual está dentro de la fecha máxima. No hay sanción");
         }
         return null;
