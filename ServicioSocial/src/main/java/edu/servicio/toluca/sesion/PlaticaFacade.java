@@ -32,6 +32,7 @@ public class PlaticaFacade extends AbstractFacade<Platica> {
     public PlaticaFacade() {
         super(Platica.class);
     }
+    
      public List<Platica> platicasPeriodo() {
          getEntityManager().flush();
         getEntityManager().clear();

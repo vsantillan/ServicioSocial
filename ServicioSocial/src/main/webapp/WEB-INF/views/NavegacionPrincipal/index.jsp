@@ -81,11 +81,15 @@
                                 </time>
 
                                 <div class="info">
-                                    <div class="col-md-12 col-lg-offset-0">
+                                    <div class="col-md-10">
                                         <h4 class="title">${noticia.titulo}</h4>
-                                        <p class="desc">${fn:substring(noticia.detalle, 0, 150)}<b><core:if test="${fn:length(noticia.detalle) > 150}">...&nbsp;</core:if></b><a class="mustraNoticiaCompleta btn btn-warning btn-xs"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Leer M&aacutes.</a></p>
-                                        </div>  
+                                        <p class="desc">${fn:substring(noticia.detalle, 0, 150)}<b><core:if test="${fn:length(noticia.detalle) > 150}">...&nbsp;</core:if></b></p>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a class="mustraNoticiaCompleta btn btn-warning btn-xs"  idNoticia="${noticia.id}" data-toggle="modal" data-target="#detalle" role="button">Leer M&aacutes.</a>
+                                        </div>
                                     </div>
+                                        
                                 </li>                            
                             </ul>
                         </div>

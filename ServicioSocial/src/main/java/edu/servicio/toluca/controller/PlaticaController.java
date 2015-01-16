@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.servicio.toluca.beans.PlaticaJson;
 import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.dao.GenericDao;
+import edu.servicio.toluca.dao.PlaticaDao;
 import edu.servicio.toluca.entidades.VistaAlumno;
 import edu.servicio.toluca.login.Conexion;
 import edu.servicio.toluca.sesion.FoliosPlaticaFacade;
@@ -37,21 +38,16 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
 import org.openide.util.Exceptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -73,13 +69,13 @@ public class PlaticaController
     private VistaAlumnoFacade VistaAlumnoFacade;
     // </editor-fold>
 
-    private GenericDao<Platica> daoPlatica;
+    private PlaticaDao<Platica> daoPlatica;
     private GenericDao<LugaresPlatica> daoLugaresPlatica;
     private GenericDao<FoliosPlatica> daoFoliosPlatica;
     private GenericDao<VistaAlumno> daoVistaAlumno;
     
     @Autowired
-    public void setDaoPlatica(GenericDao<Platica> daoPlatica)
+    public void setDaoPlatica(PlaticaDao<Platica> daoPlatica)
     {
         this.daoPlatica = daoPlatica;
         daoPlatica.setClass(Platica.class);
@@ -244,7 +240,7 @@ public class PlaticaController
             modelo.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
-        modelo.addAttribute("platicasPeriodo", platicaFacade.platicasPeriodo());
+        modelo.addAttribute("platicasPeriodo", daoPlatica.platicasPeriodo());
         modelo.addAttribute("platica", new Platica());
         return "/Platicas/seleccionarPlatica";
     }
