@@ -3,6 +3,14 @@
     Created on : 22/01/2014, 03:56:21 PM
     Author     : Jonny
 --%>
+
+<%@page import="edu.servicio.toluca.entidades.Platica"%>
+<%
+    Platica p = new Platica();
+    
+    
+%>
+
 <%@include file="../General/jstl.jsp"%>
 <div class="container bs-docs-container">
     <div class="row">
@@ -120,6 +128,6 @@
             </div>
             <br>
             <p class="alert alert-info informativo">Es importante que recuerdes que a pesar de que el proceso es digital, debes conservar todos tus documentos y formatos originales,
-                ya que deben ser entregados físicamente al final de tu proceso de servicio social.<p>  
+                ya que deben ser entregados físicamente al final de tu proceso de Servicio Social.<p>  
         </div>
         <div class="col-md-9" role="main">

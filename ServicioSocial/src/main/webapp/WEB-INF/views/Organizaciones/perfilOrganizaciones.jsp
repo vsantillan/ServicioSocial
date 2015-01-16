@@ -144,11 +144,7 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-                    <!--                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!--                                    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content"><br/><br/>
                                                 <form class="form-horizontal">
@@ -185,7 +181,7 @@
                                         </div>
                                         
                                     </div>-->
-                    <div class="col-md-12">
+                    <div class="col-md-14">
                         <%@include file="../General/footer.jsp"%> 
                     </div>
                 </div>

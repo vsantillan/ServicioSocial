@@ -23,7 +23,7 @@
                     <div class="alert alert-warning col-md-6 col-md-offset-3">
                         <div class="alert-heading "><h5 class="text-center"><span class="glyphicon glyphicon-import"></span>&nbsp;A continuaci&oacute;n se muestran mensajes que el administrador le ha enviado:</h5></div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-14">
                         <%@include file="../General/footer.jsp"%> 
                     </div>
                 </div>
