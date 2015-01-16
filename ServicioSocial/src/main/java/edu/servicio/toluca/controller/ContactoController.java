@@ -10,6 +10,9 @@ import edu.servicio.toluca.beans.EnviarCorreo;
 import edu.servicio.toluca.beans.SSLEmail;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMultipart;
 import javax.validation.Valid;
 import org.openide.util.Exceptions;
 import org.springframework.stereotype.Controller;
@@ -27,11 +30,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/contacto.do")
 public class ContactoController {
     boolean enviado = false;
+    String mensajeContacto = "";
     final private String correosAdmins[] =
     {
-        "viktor.santillan@gmail.com",
+        //"viktor.santillan@gmail.com",
         "zizou.tol@gmail.com",
-        "giovanni.fi05@gmail.com"
+        "think674@gmail.com",
+        "bebe.20oi32@gmail.com"
+    //"giovanni.fi05@gmail.com"
     };
     
     @RequestMapping(method = RequestMethod.GET)
@@ -40,22 +46,37 @@ public class ContactoController {
         return "/NavegacionPrincipal/contacto";
     }
     @RequestMapping(method = RequestMethod.POST)
-    public String nuevoMensaje( @ModelAttribute("Contacto") @Valid Contacto contacto, BindingResult result,Map modelo) {
+    public String nuevoMensaje(@ModelAttribute("Contacto") @Valid Contacto contacto, BindingResult result, Map modelo) throws MessagingException
+    {
         if(result.hasErrors()) {            
             modelo.put("Contacto",contacto);
             return "/NavegacionPrincipal/contacto";
         }
-        
-        String mensajeContacto = "Mensaje <br>"
+        String img = "img/banner.png";
+        mensajeContacto = "Mensaje: <br>"
+                //+ "<img src=\">" + img + "\" />"
+                + "<h4>cow</h4>"
                 + "<p>" + contacto.getNombre() + "</p>"
                 + "<h3>" + contacto.getAsunto() + "</h3>"
                 + "<p>" + contacto.getCorreo() + "</p>"
                 + "<h4>" + contacto.getDetalle() + "</h4>";
-        System.out.println("á");
+        System.out.println("a");
+
+        MimeMultipart content = new MimeMultipart("related");
+
+        MimeBodyPart textPart = new MimeBodyPart();
+        textPart.setText("<html><head>"
+                + "<title>The title is not usually displayed</title>"
+                + "</head>n"
+                + "<body><div><strong>Hi there!</strong></div>n"
+                + "<div>Sending HTML in email is so <em>cool!</em></div>"
+                + "</body></html>",
+                "ascii", "html");
+        content.addBodyPart(textPart);
         System.out.println(mensajeContacto);
         try
         {
-            Thread hiloCorreo = new Thread(new HiloCorreo(mensajeContacto));
+            Thread hiloCorreo = new Thread(new SendCorreo(textPart));
             hiloCorreo.start();
             enviado = true;
         } catch (Exception e)
@@ -78,7 +99,7 @@ public class ContactoController {
     {
         private String mensaje;
         public HiloCorreo(String mensaje) {
-            this.mensaje=mensaje;
+            this.mensaje = mensaje;
         }
         
         @Override
@@ -86,22 +107,40 @@ public class ContactoController {
         {
             try
             {
-//                for (String emailsAdmins : correosAdmins)
-////                for (int i = 0; i < 3; i++)
-//                {
-//                    //EnviarCorreo correoContacto = new EnviarCorreo("Contacto Servicio Social", correoDev,this.mensaje);
-//                    //correoContacto.enviaCorreo();
-//                        SSLEmail.send("zizou.tol@gmail.com", this.mensaje);
-//
-//                }
-                SSLEmail.send("zizou.tol@gmail.com", this.mensaje);
-                
+                for (String emailsAdmins : correosAdmins)
+                {
+                    SSLEmail.send(emailsAdmins, this.mensaje);
+                }
             }
             catch(Exception e)
             {
                 System.out.println(e);
             }
         }
-    
+    }
+
+    private class SendCorreo implements Runnable
+    {
+        private MimeBodyPart mensaje;
+
+        public SendCorreo(MimeBodyPart mensaje)
+        {
+            this.mensaje = mensaje;
+        }
+
+        @Override
+        public void run()
+        {
+            try
+            {
+                for (String emailsAdmins : correosAdmins)
+                {
+                    SSLEmail.send(emailsAdmins, mensajeContacto);
+                }
+            } catch (Exception e)
+            {
+                System.out.println(e);
+            }
+        }
     }
 }

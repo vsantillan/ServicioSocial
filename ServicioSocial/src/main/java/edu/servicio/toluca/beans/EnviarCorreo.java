@@ -55,8 +55,8 @@ public class EnviarCorreo implements Runnable
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(remitente));
             message.addRecipient(
-                    Message.RecipientType.TO,
-                    new InternetAddress(destinatario));
+            Message.RecipientType.TO,
+            new InternetAddress(destinatario));
             message.setSubject(asunto,"UTF-8");
             message.setText(mensaje, "UTF-8", "html");
 
