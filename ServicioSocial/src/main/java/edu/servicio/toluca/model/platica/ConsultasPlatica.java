@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  *
  * @author bustedvillain
- */
+ */ 
 public class ConsultasPlatica
 {
 
@@ -33,7 +33,7 @@ public class ConsultasPlatica
     }
 
     @Autowired
-    public void setDaoPlatica(GenericDao<Platica> daoVistaAlumno)
+    public void setDaoPlatica(GenericDao<Platica> daoPlatica)
     {
         this.daoPlatica = daoPlatica;
         daoPlatica.setClass(Platica.class);
