@@ -153,6 +153,7 @@ public class PlaticaController
             httpServletResponse.setContentType("application/pdf");
             httpServletResponse.setContentLength(bytes.length);
             httpServletResponse.getOutputStream().write(bytes);
+            
 
         } catch (Exception ex)
         {
@@ -333,7 +334,7 @@ public class PlaticaController
                             modelo.addAttribute("lugares", daoLugaresPlatica.findBySpecificField("status", 1, "equal", null, null));
                             modelo.addAttribute("lugaresPlatica", new LugaresPlatica());
                             modelo.addAttribute("lugar_i", new LugaresPlatica());
-                            modelo.addAttribute("alert", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove\" ></span>Error al guardar plática verifique los errores</div>");
+//                            modelo.addAttribute("alert", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove\" ></span>Error al guardar plática verifique los errores</div>");
                             modelo.addAttribute("exito", "<div class='alert alert-danger'><span class=\"glyphicon glyphicon-remove\" ></span> La platica ya existe</div>");
                             System.out.println("ya existia");
                             return "/Platicas/altaPlatica";
