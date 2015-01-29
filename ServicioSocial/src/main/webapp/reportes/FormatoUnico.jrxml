@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormatoUnico" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ff8df54-78ed-4b02-a7d1-dd231445f55d">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormatoUnico" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ff8df54-78ed-4b02-a7d1-dd231445f55d">
 	<property name="ireport.zoom" value="2.357947691000105"/>
-	<property name="ireport.x" value="776"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="240"/>
 	<parameter name="idProyecto" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="noControl" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<queryString>
+	<queryString language="SQL">
 		<![CDATA[select to_char(vaA.fec_nac, 'dd/MM/yyyy') as fechaNac,
 dp.apellido_p ||' '||dp.apellido_m ||' '|| dp.nombre || '' as nombreDP,
 SUBSTR(dp.SEXO,0,1) as sexoDP,
@@ -736,7 +736,7 @@ electrónico:]]></text>
 				<textFieldExpression><![CDATA[$F{TELEFONOCASADP}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="85" y="105" width="94" height="11" uuid="75d77dd6-92fa-436c-8ae4-3ed51e46a171"/>
+				<reportElement x="88" y="105" width="94" height="11" uuid="75d77dd6-92fa-436c-8ae4-3ed51e46a171"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
