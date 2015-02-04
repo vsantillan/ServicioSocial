@@ -49,11 +49,11 @@ function listo()
 
 }
 
-  $("#comboOrganizaciones").change(function(event) {
-        var idInstancia = $("#comboOrganizaciones option:selected").val();
-        recargaProyectos(idInstancia);
+$("#comboOrganizaciones").change(function(event) {
+    var idInstancia = $("#comboOrganizaciones option:selected").val();
+    recargaProyectos(idInstancia);
 
-    });
+});
 
 $("#proyectos").change(function() {
 
@@ -130,10 +130,7 @@ function recargaProyectos(idInstancia, idProyecto)
                 $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDP + "&idInstancia=" + idInstancia + "");
             }
 
-            $("#linkMasInfoProyecto").click(function() {
-                var idProyectoCombo = $("#proyectos option:selected").val();
-                $('#linkMasInfoProyecto').attr("href", "detalleProyecto.do?id=" + idProyectoCombo);
-            });
+
 
             console.log('Pasando a proyectos');
             console.log('tamanio de proyec es' + $("#proyectos option").size());
@@ -158,6 +155,11 @@ function recargaProyectos(idInstancia, idProyecto)
     });
 
 }
+
+$("#linkMasInfoProyecto").click(function() {
+    var idProyectoCombo = $("#proyectos option:selected").val();
+    $('#linkMasInfoProyecto').attr("href", "detalleProyecto.do?id=" + idProyectoCombo);
+});
 
 function recargaCombosOrgs(idProyecto)
 {

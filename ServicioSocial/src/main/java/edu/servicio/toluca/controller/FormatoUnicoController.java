@@ -113,7 +113,6 @@ public class FormatoUnicoController
 //    @EJB(mappedName = "java:global/ServicioSocial/RegObservacionesFacade")
 //    private RegObservacionesFacade regisObservacionesFacade;
     // </editor-fold>
-
     private GenericDao<DatosPersonales> daoDatosPersonales;
     private GenericDao<VistaAlumno> daoVistaAlumno;
     private GenericDao<FormatoUnico> daoFormatoUnico;
@@ -384,6 +383,8 @@ public class FormatoUnicoController
             }
 
             Proyectos proyecto = listaProyectos.get(0);
+            System.err.println("Nombre del responsable del proyecto-----------------------------------------------------------");
+            System.out.println(proyecto.getNombreResponsable());
             formatoUnico.setIdproyecto(proyecto);
 //            fechas manejoFechas = new fechas();
 //            SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -1289,15 +1290,17 @@ public class FormatoUnicoController
              */
             File reportFile = new File(request.getRealPath("reportes//FormatoUnico.jasper"));
             /*
-             * No enviamos parámetros porque nuestro reporte no los necesita asi que escriba cualquier cadena de texto
-             * ya que solo seguiremos el formato del método runReportToPdf
+             * No enviamos parámetros porque nuestro reporte no los necesita asi
+             * que escriba cualquier cadena de texto ya que solo seguiremos el
+             * formato del método runReportToPdf
              */
             Map parameters = new HashMap();
             parameters.put("noControl", noControl);
             parameters.put("idProyecto", listaFormatoUnico.get(0).getIdproyecto().getIdProyecto().toString());//idProyecto
             //parameters.put("Nombre_parametro", "Valor_Parametro"); 
                 /*
-             * Enviamos la ruta del reporte, los parámetros y la conexión(objeto Connection)
+             * Enviamos la ruta del reporte, los parámetros y la conexión(objeto
+             * Connection)
              */
             byte[] bytes = JasperRunManager.runReportToPdf(reportFile.getPath(), parameters, conn.conectarAux("ges_vin2", "gst05a"));
             /*
