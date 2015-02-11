@@ -11,8 +11,8 @@ var statusPass = "";
 
 
 
-$( document ).ready(function() {
-   
+$(document).ready(function() {
+
 });
 
 $(document).on("click", ".guardarObservacionesUsuario", observacionesUsuario);
@@ -24,17 +24,13 @@ function updateUser(e)
 {
     if (confirm('\u00BFSeguro que desea aprobar este usuario?'))
     {
-        row = $(this).parents('tr')[0];
-        idUpdate = $(e.target).attr('ide');
-        tabla = $('.example').dataTable();
+
+        var idUpdate = $(e.target).attr('ide');
+
         $.post("addUsuariosAdmin.do", {id: idUpdate}, function(response) {
             if (response === "ok")
             {
-                tabla.fnDeleteRow(row);
-                $("#div-user").show('slow');
-                setTimeout(function() {
-                    $("#div-user").hide('slow');
-                }, 3000);
+                  window.location.reload(true);
             } else {
                 alert("Imposible aceptar Usuario. ERROR Interno");
             }
@@ -96,7 +92,7 @@ function observacionesUsuario(event)
     }
 }
 function ActualizarUsuario() {
-   
+
     var tabActivo = $('#mantenerPassword').attr('class');
     if (tabActivo === 'active') {
         statusPass = 1;
@@ -141,24 +137,39 @@ function soloNumeros(e) {
     }
 }
 
-function tamanoPass(e){
+function tamanoPass(e) {
     var lenght = $(document.getElementById(e.target.id)).val().length;
 
-    if (lenght >= 6) {        
-        $("#alertPassword").remove('div');      
-    }else{
-         $("#alertPassword").remove('div');     
-         $(document.getElementById(e.target.id)).after('<div class="row-fluid" id="alertPassword"><br><div class="alert alert-danger">La contrase&ntildea debe ser mayor a 6 caracteres</div></div>');
-    }   
-}   
+    if (lenght >= 6) {
+        $("#alertPassword").remove('div');
+    } else {
+        $("#alertPassword").remove('div');
+        $(document.getElementById(e.target.id)).after('<div class="row-fluid" id="alertPassword"><br><div class="alert alert-danger">La contrase&ntildea debe ser mayor a 6 caracteres</div></div>');
+    }
+}
 
 function verificarPassword(e) {
-    var passPrincipal=$("#passPrincipal").val();   
+    var passPrincipal = $("#passPrincipal").val();
     var passSecundario = $(document.getElementById(e.target.id)).val();
-    if(passPrincipal === passSecundario){
-        $("#alertPasswordConfirm").remove('div'); 
-    }else{
-        $("#alertPasswordConfirm").remove('div'); 
-       $(document.getElementById(e.target.id)).after('<div class="row-fluid" id="alertPasswordConfirm"><br><div class="alert alert-danger">La contrase&ntildea no coincide</div></div>');
-    }   
+    if (passPrincipal === passSecundario) {
+        $("#alertPasswordConfirm").remove('div');
+    } else {
+        $("#alertPasswordConfirm").remove('div');
+        $(document.getElementById(e.target.id)).after('<div class="row-fluid" id="alertPasswordConfirm"><br><div class="alert alert-danger">La contrase&ntildea no coincide</div></div>');
+    }
 }
+
+function soloTexto(inputtxt)
+{
+    var letters = /^[0-9a-zA-Z]+$/;
+    if (inputtxt.value.match(letters))
+    {     
+        return true;
+    }
+    else
+    {
+        $(document.getElementById(inputtxt.target.id)).after('<div class="row-fluid" id="alertNumber"><br><div class="alert alert-danger">Ingrese solo caracteres alfanuméricos</div></div>');
+
+    }
+}
+

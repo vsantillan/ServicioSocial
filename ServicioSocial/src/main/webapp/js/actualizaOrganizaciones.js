@@ -29,11 +29,12 @@ function updateProyecto(e)
         var idUpdate = $(e.target).attr('ide');
         var tabla = $('.example').dataTable();
         $.post("updateProyecto.do", {id: idUpdate}, function(response) {
-            tabla.fnDeleteRow(row);
-            $("#div-validar-proyecto").show('slow')
-            setTimeout(function() {
-                $("#div-validar-proyecto").hide('slow')
-            }, 3000)
+//            tabla.fnDeleteRow(row);
+//            $("#div-validar-proyecto").show('slow')
+//            setTimeout(function() {
+//                $("#div-validar-proyecto").hide('slow')
+//            }, 3000)
+             window.location.reload(true);
         });
     }
 }

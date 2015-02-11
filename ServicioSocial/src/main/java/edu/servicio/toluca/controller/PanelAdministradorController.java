@@ -133,7 +133,7 @@ public class PanelAdministradorController
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador())
         {
-            List<UsuarioInstancia> listaUsuarios = daoUsuarioInstancia.findBySpecificField("status", 0, "equal", null, null);
+            List<UsuarioInstancia> listaUsuarios = daoUsuarioInstancia.findBySpecificField("status", "0", "equal", null, null);
             ArrayList<UsuarioInstancia> usuarioList = new ArrayList<UsuarioInstancia>();
 
             for (UsuarioInstancia listaUsuario : listaUsuarios)

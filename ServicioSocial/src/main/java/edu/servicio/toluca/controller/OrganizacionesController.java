@@ -301,7 +301,7 @@ public class OrganizacionesController
         instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(id));
         instancia.setStatus((short) 1);
         System.out.println("Ya actualizo");
-        instanciaFacade.edit(instancia);
+        daoInstancia.edit(instancia);
 
         return "ok";
     }

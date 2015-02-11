@@ -23,7 +23,7 @@
                             <form:form name="#" commandName="usuarios" class="MyForm" action="upUserAdmin.do"  method="POST">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="nombre">Nombre</label>                               
+                                        <label for="nombre">Nombre(s)</label>                               
                                         <form:input path="nombre" onkeyup="soloTexto(event)" id="nombre" size="20" class="form-control" placeholder="Introduzca sólo su nombre" required="true"/><br/>
                                         <form:errors path="nombre" class="alert alert-danger" />
                                         ${error_sql}
@@ -59,12 +59,12 @@
                                 <div class="form-group col-md-6">       
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Teléfono</label> 
-                                        <form:input path="telefono" onkeyup="soloNumeros(event)" id="telefono" class="form-control" maxlength="10" placeholder="Introduzca sólo numeros" required="true"/><br/>
+                                        <form:input path="telefono" onkeyup="soloNumeros(event)" id="telefono" class="form-control" maxlength="10" placeholder="Introduzca sólo números" required="true"/><br/>
                                         <form:errors path="telefono" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Extensión</label> 
-                                        <form:input path="extension" onkeyup="soloNumeros(event)" id="extension" class="form-control"  maxlength="4" placeholder="Introduzca sólo numeros" required="true"/><br/>
+                                        <form:input path="extension" onkeyup="soloNumeros(event)" id="extension" class="form-control"  maxlength="4" placeholder="Introduzca sólo números" /><br/>
                                         <form:errors path="extension" cssClass="alert alert-danger"/>
                                     </div>
                                     <div class="form-group">

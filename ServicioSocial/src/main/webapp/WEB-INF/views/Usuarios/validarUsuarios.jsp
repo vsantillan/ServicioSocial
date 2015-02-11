@@ -53,7 +53,7 @@
         <div class="modal-dialog" id="motivos" style="display: none;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title titulos-naranja">Motivos de Rechazo de la Organización</h3>
+                    <h3 class="modal-title titulos-naranja">Motivos de Rechazo del Usuario</h3>
                 </div>
                 <form id="observacionesCat" action="#"  onsubmit="return  false;">
                     <div class="modal-body">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Eliminar y guardar las observaciones a la Organización</button>
+                        <button id="guardarObservacionesInstancia" type="button" class="btn btn-primary">Eliminar y guardar las observaciones del Usuario</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" onClick="$.fancybox.close();">Cancelar</button>
                     </div>
                 </form>
