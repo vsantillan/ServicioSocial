@@ -15,13 +15,13 @@
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>
-                <%@include file="menuPreregistroInstancia.jsp" %>
+                <%@include file="../PanelOrganizacion/menuPanelOrganizacion.jsp" %>
             </div>
             <div id="aviso-instancia" class="row">
                 <br />
                 <div class="aviso-instancia">
                     <div class="formprereg-cont-header">
-                        <h2>Por favor asegurate de que la instancia no ha sido registrada previamente.</h2>
+                        <h2>Por favor asegurese de que la instancia no ha sido registrada previamente.</h2>
                     </div>
                     <br />
                     <div class="form-group col-md-6">

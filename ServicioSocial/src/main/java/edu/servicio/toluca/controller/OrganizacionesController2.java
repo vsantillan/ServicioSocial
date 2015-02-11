@@ -1118,31 +1118,26 @@ public class OrganizacionesController2
     {
         if (new ValidaSesion().validaOrganizacion(session, request))
         {
-            String idInstancia = session.getAttribute("NCONTROL").toString();
-            //idInstancia=idInstancia.trim();
-            System.out.println("idInstancia:" + idInstancia);
+            String idUsuarioInstancia = session.getAttribute("NCONTROL").toString();
+            UsuarioInstancia uInstancia = (UsuarioInstancia) daoUsuarioInstancia
+                    .find(BigDecimal.valueOf(Double.valueOf(idUsuarioInstancia)));
+            List<Instancia> instanciasu = new ArrayList<Instancia>(uInstancia.getInstancias());
 
-            LinkedHashMap<String, String> ordenamiento = new LinkedHashMap<String, String>();
-            ordenamiento.put("nombre", "asc");
-            model.addAttribute("estados", daoEstadosSia.findAll(ordenamiento));
-            model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
-            model.addAttribute("idInstancia", idInstancia);
-            Instancia instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(Double.parseDouble(idInstancia)));
-//            model.addAttribute("cp", instancia.getIdColonia().getIdCp().getCp());
-            model.addAttribute("instancia", instancia);
-
+            System.err.println("Hay tantas intancias: " + instanciasu.size());
+            model.addAttribute("numinstancias", instanciasu.size());
+            model.addAttribute("instanciasu", instanciasu);
+            model.addAttribute("nombre", session.getAttribute("NOMBRE"));
             if (session.getAttribute("MENSAJE") != null)
             {
                 model.addAttribute("mensaje1", session.getAttribute("MENSAJE").toString());
             }
             return "/PanelOrganizacion/panelOrganizacion";
-            //return "/General/menuOrganizacion";
-        } else
+        }
+        else
         {
             model.addAttribute("error", "<div class='alert alert-danger'>Debes iniciar sesión para acceder a esta sección.</div>");
             return "redirect:login.do";
         }
-
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/gdaEdicionOrganizacion.do")

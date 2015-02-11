@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row">
                 <%@include file="../General/banner.jsp"%>
-                <%@include file="../General/menuOrganizacion.jsp" %>
+                <%@include file="../PanelOrganizacion/menuPanelOrganizacion.jsp" %>
             </div>
             <div class="">
                 <br>

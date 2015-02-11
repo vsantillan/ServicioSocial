@@ -27,6 +27,7 @@ import edu.servicio.toluca.sesion.ProyectosFacade;
 import edu.servicio.toluca.sesion.TipoOrganizacionFacade;
 import edu.servicio.toluca.sesion.TipoProyectoFacade;
 import edu.servicio.toluca.sesion.UsuarioInstanciaFacade;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -160,8 +161,9 @@ public class InstanciasController
     }
 
     @RequestMapping(value = "verificarinstancia.do", method = RequestMethod.GET)
-    public String verificarInstancia(Model model)
+    public String verificarInstancia(HttpSession session, Model model)
     {
+        model.addAttribute("nombre", session.getAttribute("NOMBRE"));
         return "/Instancias/verificarInstancia";
     }
 
@@ -179,17 +181,18 @@ public class InstanciasController
             List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
             Instancia nvaInstancia = new Instancia();
             nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
-
+            
             model.addAttribute("tiposOrganizacion", tiposOrg);
             model.addAttribute("instancia", nvaInstancia);
             model.addAttribute("rfcError", "");
+            model.addAttribute("nombre", session.getAttribute("NOMBRE"));
 
             return "/Instancias/preregistro";
-        } else
+        } 
+        else
         {
             return preregUsuarioInstancia(model);
         }
-
     }
 
     @RequestMapping(value = "preregistrarinstancia.do", method = RequestMethod.POST)
@@ -200,9 +203,11 @@ public class InstanciasController
         {
             List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
             model.addAttribute("tiposOrganizacion", tiposOrg);
+            model.addAttribute("nombre", session.getAttribute("NOMBRE"));
 
             return "/Instancias/preregistro";
-        } else
+        } 
+        else
         {
             // Check if instance is yet registered
             List<Instancia> instancias
@@ -213,9 +218,11 @@ public class InstanciasController
                 List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
                 model.addAttribute("tiposOrganizacion", tiposOrg);
                 model.addAttribute("rfcError", rfcError);
-
+                model.addAttribute("nombre", session.getAttribute("NOMBRE"));
+                
                 return "/Instancias/preregistro";
-            } else
+            } 
+            else
             {
                 // Configurar Entity y persistir
                 Colonia col = (Colonia) daoColonia.find(instancia.getIdColonia().getIdColonia());
@@ -231,16 +238,14 @@ public class InstanciasController
                 instancia.setStatus((short) 0);
 
                 // Obtener usuario al que pertenecera la instancia
-                String email = session.getAttribute("EMAIL").toString();
-                List<UsuarioInstancia> usuarios = daoUsuarioInstancia
-                        .findBySpecificField("email", email, "equal", null, null);
-                if (usuarios.size() > 0)
-                {
-                    instancia.setUsuarioInstancia(usuarios.get(0));
-                }
+                String idUInstancia = session.getAttribute("NCONTROL").toString();
+                UsuarioInstancia uInstancia = (UsuarioInstancia) daoUsuarioInstancia
+                        .find(BigDecimal.valueOf(Double.valueOf(idUInstancia)));
 
+                instancia.setUsuarioInstancia(uInstancia);
                 daoInstancia.create(instancia);
 
+                model.addAttribute("nombre", session.getAttribute("NOMBRE"));
                 return "/Instancias/preregistroexitoso";
             }
         }

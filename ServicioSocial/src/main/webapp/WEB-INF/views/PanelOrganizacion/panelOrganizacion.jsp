@@ -3,35 +3,78 @@
     Created on : 3/06/2013, 01:01:28 PM
     Author     : Bustedvillain
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@include file="../General/jstl.jsp"%>
 
 <!DOCTYPE html>
 <html>
-    <head
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <%@include file="../General/head.jsp"%>
-        <title>Panel Organizaci&oacute;n</title>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row">
-                <%@include file="../General/banner.jsp"%>
-                <%@include file="../General/menuOrganizacion.jsp"%>
-                <div class="col-md-12">
-                    <div class="help-block col-md-12 text-center"><h1><span class="glyphicon glyphicon-user"></span>&nbsp;Bienvenido al Sitio para Organizaciones</h1></div>
-                    <!--<div class="row" id="edicionCorrecta" ><center>${mensaje1} ${mensaje}</center></div>-->
-                    <div class="alert alert-warning col-md-6 col-md-offset-3">
-                        <div class="alert-heading "><h5 class="text-center"><span class="glyphicon glyphicon-import"></span>&nbsp;A continuaci&oacute;n se muestran mensajes que el administrador le ha enviado:</h5></div>
-                    </div>
-                    <div class="col-md-14">
-                        <%@include file="../General/footer.jsp"%> 
-                    </div>
+  <head
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <%@include file="../General/head.jsp"%>
+    <title>Panel Organización</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <%@include file="../General/banner.jsp"%>
+        <%@include file="menuPanelOrganizacion.jsp"%>
+        <div class="col-md-7">
+          <h2>Instancias registradas:</h2>
+          <a href="verificarinstancia.do" type="button" class="btn btn-primary">
+            Agregar instancia
+          </a><br/><br/>
+          
+          <!-- Foreach instancia en instancias del usuario -->
+          <c:choose>
+            <c:when test="${numinstancias} > 1">
+              <c:forEach items="${instanciasu}" var="instancia">
+                <div class="instancia-encontrada">
+                  <div class="col-xs-8 instancia-encontrada-title">
+                    ${instancia.nombre}
+                  </div>
+                  <div class="col-xs-4">
+                    <a href="#" class="btn btn-warning btn-xs pull-right">Detalles</a>
+                  </div>
+                  <div class="space-helper"> &nbsp; </div>
+                  <div class="col-sm-5">
+                    <span class="instancia-encontrada-subtitle">RFC de instancia</span><br>
+                    <span class="instancia-encontrada-info">${instancia.rfc}</span>
+                  </div>
+                  <div class="col-sm-2">
+                    <span class="instancia-encontrada-subtitle">Teléfono</span><br>
+                    <span class="instancia-encontrada-info">${instancia.telefono}</span>
+                  </div>
+                  <div class="col-sm-5" style="padding-top: 5px">
+                    <a href="#" class="btn btn-primary pull-right">
+                      Administrar proyectos
+                    </a>
+                    <div class="space-helper"> &nbsp; </div>
+                  </div>
+                  <br><div class="space-helper"> &nbsp; </div>
+                  <div class="space-helper"> &nbsp; </div>
                 </div>
-            </div>
+              </c:forEach>
+            </c:when>
+            <c:otherwise>
+              <div class="alert alert-warning">
+                <h4>Usted no tiene instancias registradas en el sistema</h4>
+                <a href="verificarinstancia.do" class="btn btn-default">Registrar instancia</a>
+              </div>
+            </c:otherwise>
+          </c:choose>
+                
         </div>
-        <script>document.getElementById("password").value = "";</script>
-        <%@include file="../General/js.jsp"%>
-        <script src="js/jquery.codigos.postales.js"></script>       
-        <script src="js/jquery.manolo.js"></script>
-    </body>
+          
+        <div class="col-md-5">
+          <h2>Mensajes recibidos:</h2>
+          <div class="alert alert-warning">Por el momento no hay mensajes sin revisar.</div>
+        </div>
+      </div>
+      <br/><br/><%@include file="../General/footer.jsp"%>
+    </div>
+
+    <!--script>document.getElementById("password").value = "";</script>
+    <script src="js/jquery.codigos.postales.js"></script>       
+    <script src="js/jquery.manolo.js"></script-->
+  </body>
 </html>
