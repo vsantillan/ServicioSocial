@@ -78,6 +78,7 @@ public abstract class AbstractDao<T extends Serializable>
     
     public T find(Object id)
     {
+        entityManager.clear();
         return entityManager.find(entityClass, id);
     }
 

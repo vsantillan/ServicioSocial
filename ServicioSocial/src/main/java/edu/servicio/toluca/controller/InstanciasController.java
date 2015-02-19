@@ -243,6 +243,9 @@ public class InstanciasController
                         .find(BigDecimal.valueOf(Double.valueOf(idUInstancia)));
 
                 instancia.setUsuarioInstancia(uInstancia);
+                instancia.setTelefono(Long.parseLong(uInstancia.getTelefono()));
+                //uInstancia.getInstancias().add(instancia);
+                //daoUsuarioInstancia.edit(uInstancia);
                 daoInstancia.create(instancia);
 
                 model.addAttribute("nombre", session.getAttribute("NOMBRE"));
