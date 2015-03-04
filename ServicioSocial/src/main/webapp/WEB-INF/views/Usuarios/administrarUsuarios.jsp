@@ -45,7 +45,7 @@
                                     <!--onclick="if(!confirm('¿Está seguro?'))history.go(0);return' ' ;" -->
                                     <td><a href="editUser.do?id=${current.idUsuarioInstancia}" ><span class="glyphicon glyphicon-edit sizeIcon" title="Editar Usuario"></span></a>&nbsp;&nbsp;
                                         <a href="#" class="btn-validar-org"><span class="cambiaStatusUsuario glyphicon glyphicon-trash sizeIcon" ide="${current.idUsuarioInstancia}" title="Borrar Usuario"></span></a></td>
-                                    <td><a href="#" data-EditUsmodal="modal" class="fancy"><span class=" glyphicon glyphicon-search sizeIcon" title="Editar Usuario"></span></a></td>
+                                    <td><a href="detalleUsuario.do?id=${current.idUsuarioInstancia}" data-EditUsmodal="modal" class="fancy"><span class=" glyphicon glyphicon-search sizeIcon" title="Detalle Usuario"></span></a></td>
                                     <td><core:out value="${current.nombre}" /></td>
                                     <td><core:out value="${current.puesto}" /></td>
                                     <td><core:out value="${current.email}" /></td>

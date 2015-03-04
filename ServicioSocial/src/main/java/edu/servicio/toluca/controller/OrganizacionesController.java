@@ -5,29 +5,30 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.MetodosValidacion;
+import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.BorrarInstancia;
 import edu.servicio.toluca.beans.organizaciones.BorrarProyecto;
-import edu.servicio.toluca.entidades.Actividades;
-import edu.servicio.toluca.entidades.Instancia;
-import edu.servicio.toluca.entidades.Perfil;
-import edu.servicio.toluca.entidades.ProyectoPerfil;
-import edu.servicio.toluca.entidades.Proyectos;
-import edu.servicio.toluca.model.ActividadesModel;
-import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.beans.organizaciones.ValidacionesOrganizaciones;
 import edu.servicio.toluca.beans.organizaciones.ValidarProyectos;
 import edu.servicio.toluca.dao.GenericDao;
+import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.CatalogoObservaciones;
 import edu.servicio.toluca.entidades.Ciudades;
 import edu.servicio.toluca.entidades.CodigosPostales;
 import edu.servicio.toluca.entidades.Colonia;
 import edu.servicio.toluca.entidades.EstadosSia;
+import edu.servicio.toluca.entidades.Instancia;
 import edu.servicio.toluca.entidades.MunicipiosSia;
+import edu.servicio.toluca.entidades.Perfil;
 import edu.servicio.toluca.entidades.Programa;
+import edu.servicio.toluca.entidades.ProyectoPerfil;
+import edu.servicio.toluca.entidades.Proyectos;
 import edu.servicio.toluca.entidades.RegObservacionGeneral;
 import edu.servicio.toluca.entidades.TipoLocalidad;
 import edu.servicio.toluca.entidades.TipoOrganizacion;
 import edu.servicio.toluca.entidades.TipoProyecto;
+import edu.servicio.toluca.entidades.UsuarioInstancia;
+import edu.servicio.toluca.model.ActividadesModel;
 import edu.servicio.toluca.sesion.ActividadesFacade;
 import edu.servicio.toluca.sesion.CatalogoObservacionesFacade;
 import edu.servicio.toluca.sesion.CiudadesFacade;
@@ -52,10 +53,10 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-import javax.validation.Valid;
 import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,7 +113,7 @@ public class OrganizacionesController
     @EJB(mappedName = "java:global/ServicioSocial/RegObservacionGeneralFacade")
     private RegObservacionGeneralFacade regObservacionGeneralFacade;
     // </editor-fold>
-    
+
     private GenericDao<Instancia> daoInstancia;
     private GenericDao<Proyectos> daoProyectos;
     private GenericDao<TipoOrganizacion> daoTipoOrganizacion;
@@ -129,116 +130,127 @@ public class OrganizacionesController
     private GenericDao<Colonia> daoColonia;
     private GenericDao<CatalogoObservaciones> daoCatalogoObservaciones;
     private GenericDao<RegObservacionGeneral> daoRegObservacionGeneral;
-    
+    private GenericDao<UsuarioInstancia> daoUsuarioInstancia;
+
     @Autowired
     public void setDaoInstancia(GenericDao<Instancia> daoInstancia)
     {
         this.daoInstancia = daoInstancia;
         daoInstancia.setClass(Instancia.class);
     }
-    
+
+    @Autowired
+    public void setDaoUsuarioInstancia(GenericDao<UsuarioInstancia> daoUsuarioInstancia)
+    {
+        this.daoUsuarioInstancia = daoUsuarioInstancia;
+        daoUsuarioInstancia.setClass(UsuarioInstancia.class);
+    }
+
     @Autowired
     public void setDaoProyectos(GenericDao<Proyectos> daoProyectos)
     {
         this.daoProyectos = daoProyectos;
         daoProyectos.setClass(Proyectos.class);
     }
-    
+
     @Autowired
     public void setDaoTipoOrganizacion(GenericDao<TipoOrganizacion> daoTipoOrganizacion)
     {
         this.daoTipoOrganizacion = daoTipoOrganizacion;
         daoTipoOrganizacion.setClass(TipoOrganizacion.class);
     }
-    
+
     @Autowired
     public void setDaoPerfil(GenericDao<Perfil> daoPerfil)
     {
         this.daoPerfil = daoPerfil;
         daoPerfil.setClass(Perfil.class);
     }
-    
+
     @Autowired
     public void setDaoProyectoPerfil(GenericDao<ProyectoPerfil> daoProyectoPerfil)
     {
         this.daoProyectoPerfil = daoProyectoPerfil;
         daoProyectoPerfil.setClass(ProyectoPerfil.class);
     }
-    
+
     @Autowired
     public void setDaoTipoProyecto(GenericDao<TipoProyecto> daoTipoProyecto)
     {
         this.daoTipoProyecto = daoTipoProyecto;
         daoTipoProyecto.setClass(TipoProyecto.class);
     }
-    
+
     @Autowired
     public void setDaoEstadosSiaa(GenericDao<EstadosSia> daoEstadosSia)
     {
         this.daoEstadosSia = daoEstadosSia;
         daoEstadosSia.setClass(EstadosSia.class);
     }
-    
+
     @Autowired
     public void setDaoPrograma(GenericDao<Programa> daoPrograma)
     {
         this.daoPrograma = daoPrograma;
         daoPrograma.setClass(Programa.class);
     }
-    
+
     @Autowired
     public void setDaoActividades(GenericDao<Actividades> daoActividades)
     {
         this.daoActividades = daoActividades;
         daoActividades.setClass(Actividades.class);
     }
-    
+
     @Autowired
     public void setDaoCodigosPostales(GenericDao<CodigosPostales> daoCodigosPostales)
     {
         this.daoCodigosPostales = daoCodigosPostales;
         daoCodigosPostales.setClass(CodigosPostales.class);
     }
-    
+
     @Autowired
     public void setDaoMunicipiosSia(GenericDao<MunicipiosSia> daoMunicipiosSia)
     {
         this.daoMunicipiosSia = daoMunicipiosSia;
         daoMunicipiosSia.setClass(MunicipiosSia.class);
     }
-    
+
     @Autowired
     public void setDaoCiudades(GenericDao<Ciudades> daoCiudades)
     {
         this.daoCiudades = daoCiudades;
         daoCiudades.setClass(Ciudades.class);
     }
-    
+
     @Autowired
     public void setDaoTipoLocalidad(GenericDao<TipoLocalidad> daoTipoLocalidad)
     {
         this.daoTipoLocalidad = daoTipoLocalidad;
         daoTipoLocalidad.setClass(TipoLocalidad.class);
     }
-     @Autowired
+
+    @Autowired
     public void setDaoColonia(GenericDao<Colonia> daoColonia)
     {
         this.daoColonia = daoColonia;
         daoColonia.setClass(Colonia.class);
     }
-     @Autowired
+
+    @Autowired
     public void setDaoCatalogoObservaciones(GenericDao<CatalogoObservaciones> daoCatalogoObservaciones)
     {
         this.daoCatalogoObservaciones = daoCatalogoObservaciones;
         daoCatalogoObservaciones.setClass(CatalogoObservaciones.class);
     }
-     @Autowired
+
+    @Autowired
     public void setDaoRegObservacionGeneral(GenericDao<RegObservacionGeneral> daoRegObservacionGeneral)
     {
         this.daoRegObservacionGeneral = daoRegObservacionGeneral;
         daoRegObservacionGeneral.setClass(RegObservacionGeneral.class);
     }
-    
+
     MetodosValidacion limpiar = new MetodosValidacion();
 
     private static final Logger logger = LoggerFactory.getLogger(OrganizacionesController.class);
@@ -249,12 +261,12 @@ public class OrganizacionesController
         List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         System.out.println("Instancias");
-        for(int i = 0; i < listaInstancias.size(); i++)
+        for (int i = 0; i < listaInstancias.size(); i++)
         {
 //            String estatus = listaInstancias.get(i).getEstatus().toString();-..........Correccion de error...................................................
             short listStatus = (short) listaInstancias.get(i).getStatus();
             String estatus = Short.toString(listStatus);
-            if((estatus.equals("1")))
+            if ((estatus.equals("1")))
             {
                 filtroInstancias.add(listaInstancias.get(i));
             }
@@ -269,16 +281,16 @@ public class OrganizacionesController
     {
         List<Proyectos> listaProyectos = daoProyectos.findBySpecificField("estatus", "1", "equal", null, null);
         ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
-        for(Proyectos proyecto : listaProyectos)
+        for (Proyectos proyecto : listaProyectos)
         {
-            if(proyecto.getEstatus() == BigInteger.ONE && 
-               proyecto.getValidacionAdmin() == BigInteger.ONE &&
-               proyecto.getIdInstancia().getStatus() == 1)
+            if (proyecto.getEstatus() == BigInteger.ONE
+                    && proyecto.getValidacionAdmin() == BigInteger.ONE
+                    && proyecto.getIdInstancia().getStatus() == 1)
             {
                 filtroDeProyectos.add(proyecto);
             }
         }
-        
+
         model.addAttribute("proyectos", filtroDeProyectos);
         model.addAttribute("listadoObservaciones", daoCatalogoObservaciones.findBySpecificField("tipo", "5", "equal", null, null));
         return "/Organizaciones/administrarProyectos";
@@ -340,19 +352,28 @@ public class OrganizacionesController
         return "/Organizaciones/detalleOrganizacion";
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/detalleUsuario.do")
+    public String detalleUusario(BigDecimal id, Model model, HttpSession session, HttpServletRequest request)
+    {
+        System.out.println("ID Usuario " + id);
+
+        model.addAttribute("usuario", daoUsuarioInstancia.find(id));
+        return "/Usuarios/detalleUsuario";
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/mensajeOrganizacion.do")
     public String mensajeOrganizacion(Model model, HttpSession session, HttpServletRequest request)
     {
         //Valida sesion
-        if(new ValidaSesion().validaOrganizacion(session, request))
+        if (new ValidaSesion().validaOrganizacion(session, request))
         {
             List<String> listaObservaciones = new ArrayList<String>();
             String idInstancia = session.getAttribute("NCONTROL").toString();
             System.out.println("el id instancia es: " + idInstancia);
             List<RegObservacionGeneral> list = daoRegObservacionGeneral.findBySpecificField("idLlaveUnica", idInstancia, "equal", null, null);
-            for(int i = 0; i < list.size(); i++)
+            for (int i = 0; i < list.size(); i++)
             {
-                if(list.get(i).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(4))
+                if (list.get(i).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(4))
                 {
                     System.out.println("La observacion es: " + list.get(i).getCatalogoObservacionId().getDetalle());
                     listaObservaciones.add(list.get(i).getCatalogoObservacionId().getDetalle());
@@ -360,12 +381,12 @@ public class OrganizacionesController
             }
             Instancia instanciaObj = new Instancia(BigDecimal.valueOf(Integer.parseInt(idInstancia)));
             List<Proyectos> listProyectos = daoProyectos.findBySpecificField("idInstancia", instanciaObj, "equal", null, null);
-            for(int i = 0; i < listProyectos.size(); i++)
+            for (int i = 0; i < listProyectos.size(); i++)
             {
                 list = daoRegObservacionGeneral.findBySpecificField("idLlaveUnica", listProyectos.get(i).getIdProyecto().toString(), "equal", null, null);
-                for(int j = 0; j < list.size(); j++)
+                for (int j = 0; j < list.size(); j++)
                 {
-                    if(list.get(j).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(5))
+                    if (list.get(j).getCatalogoObservacionId().getTipo() == BigInteger.valueOf(5))
                     {
                         listaObservaciones.add("El Proyecto: " + listProyectos.get(i).getNombre() + " tiene la observación: " + list.get(j).getCatalogoObservacionId().getDetalle());
                     }
@@ -412,7 +433,7 @@ public class OrganizacionesController
 //            }
 //        }
 
-        if(result.hasErrors())
+        if (result.hasErrors())
         {
             System.out.println("Con errores");
             System.out.println("Los errores son: " + result.toString());
@@ -427,7 +448,7 @@ public class OrganizacionesController
             try
             {
                 model.addAttribute("idColonia", instancia.getIdColonia().getIdColonia());
-            } catch(Exception e)
+            } catch (Exception e)
             {
             }
             model.addAttribute("tipoOrganizaciones", daoTipoOrganizacion.findBySpecificField("estatus", "1", "equal", null, null));
@@ -435,9 +456,9 @@ public class OrganizacionesController
         } else
         {
             //---------------------------A continuación código para agregar nueva colonia
-            if(existeCP.equals("true"))
+            if (existeCP.equals("true"))
             {
-                if(instancia.getIdColonia().getIdColonia().toString().equals("0"))
+                if (instancia.getIdColonia().getIdColonia().toString().equals("0"))
                 {
                     //Agregar colonia                   
 //                    instancia.setIdColonia(new CodigosPostalesController().agregaColonia(model, codigo_postal, otra_colonia));
@@ -470,7 +491,7 @@ public class OrganizacionesController
                 try
                 {
                     ciudadP = (Ciudades) daoCiudades.find(BigDecimal.valueOf(Double.parseDouble(ciudad)));
-                } catch(Exception e)
+                } catch (Exception e)
                 {
                     System.out.println("No tiene ciudad");
                 }
@@ -480,7 +501,7 @@ public class OrganizacionesController
                 codigoPostal.setIdMunicipio(municipioP);
                 codigoPostal.setIdEstado(estadoP);
                 codigoPostal.setIdTipoLocalidad(localidad);
-                if(ciudad != null)
+                if (ciudad != null)
                 {
                     codigoPostal.setIdCiudad(ciudadP);
                 }
@@ -520,7 +541,7 @@ public class OrganizacionesController
             try
             {
                 daoInstancia.edit(instancia);
-            } catch(Exception e)
+            } catch (Exception e)
             {
                 result.addError(new ObjectError("error_sql", "¡Error interno! Imposible editar organización."));
                 System.out.println(result.getGlobalError().toString());
@@ -542,12 +563,12 @@ public class OrganizacionesController
         List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
         ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
         System.out.println("Instancias");
-        for(int i = 0; i < listaInstancias.size(); i++)
+        for (int i = 0; i < listaInstancias.size(); i++)
         {
 //            String estatus = listaInstancias.get(i).getEstatus().toString();
             short listStatus = (short) listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
             String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
-            if((estatus.equals("1")) || (estatus.equals("2")))
+            if ((estatus.equals("1")) || (estatus.equals("2")))
             {
                 filtroInstancias.add(listaInstancias.get(i));
             }
@@ -562,14 +583,14 @@ public class OrganizacionesController
         List<Perfil> listaPerfil = daoPerfil.findAll();
         Iterator<ProyectoPerfil> iteratorProyectosPerfilCollection;
         boolean agregar;
-        for(int i = 0; i < listaPerfil.size(); i++)
+        for (int i = 0; i < listaPerfil.size(); i++)
         {
             agregar = true;
             //TODO aquí falta cambiar al DAO, pero marca error con el método getProyectoPerfilCollection()
             iteratorProyectosPerfilCollection = proyectosFacade.find(BigDecimal.valueOf(id)).getProyectoPerfilCollection().iterator();
-            while(iteratorProyectosPerfilCollection.hasNext())
+            while (iteratorProyectosPerfilCollection.hasNext())
             {
-                if(!listaPerfil.get(i).getNombre().equals(iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre()) && agregar)
+                if (!listaPerfil.get(i).getNombre().equals(iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre()) && agregar)
                 {
                     agregar = true;
                 } else
@@ -577,10 +598,10 @@ public class OrganizacionesController
                     agregar = false;
                 }
             }
-            if(agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
+            if (agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
             {
                 perfilesNoSonDelProyecto.add(listaPerfil.get(i));
-            } else if(listaPerfil.get(i).getEstatus().intValue() == 1)
+            } else if (listaPerfil.get(i).getEstatus().intValue() == 1)
             {
                 perfilesSonDelProyecto.add(listaPerfil.get(i));
             }
@@ -603,13 +624,13 @@ public class OrganizacionesController
         ActividadesModel actividadesModel = new ActividadesModel(cadenaActividades);
 
         //Valida Actividades
-        if(!actividadesModel.validarInsercionActividades().isSuccess())
+        if (!actividadesModel.validarInsercionActividades().isSuccess())
         {
             result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
         }
         model.addAttribute("validacion_actividades", actividadesModel.validarInsercionActividades().getMensaje());
         //++++++++++++++++++++++++++++++++Si hubo un error+++++++++++++++++++++++++++++++++++
-        if(result.hasErrors())
+        if (result.hasErrors())
         {
             System.out.println("Entroooooooooo aquiiiiiiiiiiiiiiiiiiiiiiiiiiii");
             //Regresar codigo postal
@@ -617,18 +638,18 @@ public class OrganizacionesController
             try
             {
                 model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
-            } catch(Exception e)
+            } catch (Exception e)
             {
             }
             List<Instancia> listaInstancias = daoInstancia.findBySpecificField("status", "1", "equal", null, null);
             ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
             System.out.println("Instancias");
-            for(int i = 0; i < listaInstancias.size(); i++)
+            for (int i = 0; i < listaInstancias.size(); i++)
             {
 //                String estatus = listaInstancias.get(i).getEstatus().toString();
                 short listStatus = (short) listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
                 String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
-                if((estatus.equals("1")) || (estatus.equals("2")))
+                if ((estatus.equals("1")) || (estatus.equals("2")))
                 {
                     filtroInstancias.add(listaInstancias.get(i));
                 }
@@ -645,15 +666,15 @@ public class OrganizacionesController
             listaPerfil = daoPerfil.findAll();
             boolean agregar;
             String nombrePerfilCollection;
-            for(int i = 0; i < listaPerfil.size(); i++)
+            for (int i = 0; i < listaPerfil.size(); i++)
             {
                 agregar = true;
                 //TODO falta corregir esto, marca error con el dao en el método getProyectoPerfilCollection()
                 iteratorProyectosPerfilCollection = proyectosFacade.find(proyecto.getIdProyecto()).getProyectoPerfilCollection().iterator();
-                while(iteratorProyectosPerfilCollection.hasNext())
+                while (iteratorProyectosPerfilCollection.hasNext())
                 {
                     nombrePerfilCollection = iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre();
-                    if(!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
+                    if (!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
                     {
                         agregar = true;
                     } else
@@ -661,10 +682,10 @@ public class OrganizacionesController
                         agregar = false;
                     }
                 }
-                if(agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
+                if (agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
                 {
                     perfilesNoSonDelProyecto.add(listaPerfil.get(i));
-                } else if(listaPerfil.get(i).getEstatus().intValue() == 1)
+                } else if (listaPerfil.get(i).getEstatus().intValue() == 1)
                 {
                     perfilesSonDelProyecto.add(listaPerfil.get(i));
                 }
@@ -675,7 +696,7 @@ public class OrganizacionesController
             model.addAttribute("nActividades", nActividades.substring(0, 1));
             System.out.println("nActividades:" + nActividades.substring(0, 1));
 
-            for(int i = 0; i < actividadesModel.actividades.size(); i++)
+            for (int i = 0; i < actividadesModel.actividades.size(); i++)
             {
                 model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
                 System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
@@ -690,23 +711,23 @@ public class OrganizacionesController
             List<ProyectoPerfil> listaProyectosPerfil = daoProyectoPerfil.findBySpecificField("idProyecto", proyecto, "equal", null, null);
             Iterator<ProyectoPerfil> recorreProyectosPerfil = listaProyectosPerfil.iterator();
             //while para borrar los perfiles que tiene el proyecto
-            while(recorreProyectosPerfil.hasNext())
+            while (recorreProyectosPerfil.hasNext())
             {
                 ProyectoPerfil borrarPerfilDeProyecto;
                 borrarPerfilDeProyecto = recorreProyectosPerfil.next();
                 daoProyectoPerfil.remove(borrarPerfilDeProyecto);
             }
-            if(selectfrom != null)
+            if (selectfrom != null)
             {
                 List<String> listaIds = new ArrayList<String>();
                 StringTokenizer palabra = new StringTokenizer(selectfrom, ",");
-                while(palabra.hasMoreTokens())
+                while (palabra.hasMoreTokens())
                 {
                     listaIds.add(palabra.nextToken());
                 }
                 Iterator inserta = listaIds.iterator();
                 //while que inserta la lista de los perfiles para el proyecto
-                while(inserta.hasNext())
+                while (inserta.hasNext())
                 {
                     ProyectoPerfil proyectoPerfil = new ProyectoPerfil();
                     proyectoPerfil.setIdPerfil((Perfil) daoPerfil.find(BigDecimal.valueOf(Integer.parseInt(inserta.next().toString())))); //Perfil
@@ -715,12 +736,12 @@ public class OrganizacionesController
                 }
             }
             //****************************Insertar las Actividades**************************
-            if(Integer.parseInt(nActividades) > 2 || nActividades != null)
+            if (Integer.parseInt(nActividades) > 2 || nActividades != null)
             {
                 List<Actividades> listaActividadesProyecto = daoActividades.findBySpecificField("idProyecto", proyecto, "equal", null, null);
                 Iterator<Actividades> recorreActividades = listaActividadesProyecto.iterator();
                 //while para borrar las actividades del proyecto
-                while(recorreActividades.hasNext())
+                while (recorreActividades.hasNext())
                 {
                     Actividades borrarActividadesProyecto;
                     borrarActividadesProyecto = recorreActividades.next();
@@ -729,13 +750,13 @@ public class OrganizacionesController
                 }
                 List<String> listaActividades = new ArrayList<String>();
                 StringTokenizer actividades = new StringTokenizer(cadenaActividades, ";");
-                while(actividades.hasMoreTokens())
+                while (actividades.hasMoreTokens())
                 {
                     listaActividades.add(actividades.nextToken());
                 }
                 Iterator insertaActividades = listaActividades.iterator();
                 //while que inserta la lista de actividades para el proyecto
-                while(insertaActividades.hasNext())
+                while (insertaActividades.hasNext())
                 {
                     Actividades actividadesObj = new Actividades();
                     actividadesObj.setDetalle(insertaActividades.next().toString());//String
@@ -754,7 +775,7 @@ public class OrganizacionesController
             try
             {
                 daoProyectos.edit(proyecto);
-            } catch(Exception e)
+            } catch (Exception e)
             {
                 result.addError(new ObjectError("error_sql", "¡Error interno! Imposible editar proyecto."));
                 model.addAttribute("error_sql", "<div class='alert alert-danger'>¡Error interno! Imposible editar proyecto.</div>");
@@ -762,18 +783,18 @@ public class OrganizacionesController
                 try
                 {
                     model.addAttribute("idColonia", proyecto.getIdColonia().getIdColonia());
-                } catch(Exception ex)
+                } catch (Exception ex)
                 {
                 }
                 List<Instancia> listaInstancias = daoInstancia.findBySpecificField("validacionAdmin", "1", "equal", null, null);
                 ArrayList<Instancia> filtroInstancias = new ArrayList<Instancia>();
                 System.out.println("Instancias");
-                for(int i = 0; i < listaInstancias.size(); i++)
+                for (int i = 0; i < listaInstancias.size(); i++)
                 {
 //                    String estatus = listaInstancias.get(i).getEstatus().toString();
                     short listStatus = (short) listaInstancias.get(i).getStatus();//.................................................Coreccion de error...........................................
                     String estatus = Short.toString(listStatus);  //.................................................Coreccion de error.........................................................
-                    if((estatus.equals("1")) || (estatus.equals("2")))
+                    if ((estatus.equals("1")) || (estatus.equals("2")))
                     {
                         filtroInstancias.add(listaInstancias.get(i));
                     }
@@ -790,15 +811,15 @@ public class OrganizacionesController
                 listaPerfil = daoPerfil.findAll();
                 boolean agregar;
                 String nombrePerfilCollection;
-                for(int i = 0; i < listaPerfil.size(); i++)
+                for (int i = 0; i < listaPerfil.size(); i++)
                 {
                     agregar = true;
                     //TODO lo mismo con el método getProyectoPerfilCollection()
                     iteratorProyectosPerfilCollection = proyectosFacade.find(proyecto.getIdProyecto()).getProyectoPerfilCollection().iterator();
-                    while(iteratorProyectosPerfilCollection.hasNext())
+                    while (iteratorProyectosPerfilCollection.hasNext())
                     {
                         nombrePerfilCollection = iteratorProyectosPerfilCollection.next().getIdPerfil().getNombre();
-                        if(!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
+                        if (!listaPerfil.get(i).getNombre().equals(nombrePerfilCollection) && agregar)
                         {
                             agregar = true;
                         } else
@@ -806,10 +827,10 @@ public class OrganizacionesController
                             agregar = false;
                         }
                     }
-                    if(agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
+                    if (agregar && listaPerfil.get(i).getEstatus().intValue() == 1)
                     {
                         perfilesNoSonDelProyecto.add(listaPerfil.get(i));
-                    } else if(listaPerfil.get(i).getEstatus().intValue() == 1)
+                    } else if (listaPerfil.get(i).getEstatus().intValue() == 1)
                     {
                         perfilesSonDelProyecto.add(listaPerfil.get(i));
                     }
@@ -820,7 +841,7 @@ public class OrganizacionesController
                 model.addAttribute("nActividades", nActividades.substring(0, 1));
                 System.out.println("nActividades:" + nActividades.substring(0, 1));
 
-                for(int i = 0; i < actividadesModel.actividades.size(); i++)
+                for (int i = 0; i < actividadesModel.actividades.size(); i++)
                 {
                     model.addAttribute("actividad" + i, actividadesModel.actividades.get(i));
                     System.out.println("Regresando Actividad:" + actividadesModel.actividades.get(i));
@@ -834,10 +855,10 @@ public class OrganizacionesController
             System.out.println("Sin errores");
             List<Proyectos> listaProyectos = daoProyectos.findBySpecificField("estatus", "1", "equal", null, null);
             ArrayList<Proyectos> filtroDeProyectos = new ArrayList<Proyectos>();
-            for(int i = 0; i < listaProyectos.size(); i++)
+            for (int i = 0; i < listaProyectos.size(); i++)
             {
                 int validacionAdmin = Integer.parseInt(listaProyectos.get(i).getValidacionAdmin().toString());
-                if(validacionAdmin == 1)
+                if (validacionAdmin == 1)
                 {
                     filtroDeProyectos.add(listaProyectos.get(i));
                 }
@@ -858,7 +879,7 @@ public class OrganizacionesController
         Instancia instancia;
         instancia = (Instancia) daoInstancia.find(BigDecimal.valueOf(id));
         List<String> listaOb = new ArrayList<String>();
-        for(String idObservacion : observaciones)
+        for (String idObservacion : observaciones)
         {
             CatalogoObservaciones catObser = (CatalogoObservaciones) daoCatalogoObservaciones.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
             //Objeto a Registrar
@@ -876,7 +897,7 @@ public class OrganizacionesController
         }
 
         Iterator<Proyectos> proyectos = instancia.getProyectosCollection().iterator();
-        while(proyectos.hasNext())
+        while (proyectos.hasNext())
         {
             Proyectos proyectoEdit = proyectos.next();
             proyectoEdit.setEstatus(BigInteger.valueOf(status));
@@ -889,7 +910,7 @@ public class OrganizacionesController
         daoInstancia.edit(instancia);
 
         String mensaje;
-        switch(status)
+        switch (status)
         {
             case 0://Dada de baja
                 mensaje = "<h1>Notificación Servicio Social</h1>\n"
@@ -937,7 +958,7 @@ public class OrganizacionesController
     public String dameObservaciones(List<String> lista)
     {
         String observaciones = "";
-        for(int i = 0; i < lista.size(); i++)
+        for (int i = 0; i < lista.size(); i++)
         {
             observaciones += " * " + lista.get(i) + "\n";
         }
@@ -952,7 +973,7 @@ public class OrganizacionesController
         Proyectos proyecto;
         proyecto = (Proyectos) daoProyectos.find(BigDecimal.valueOf(id));
         List<String> listaOb = new ArrayList<String>();
-        for(String idObservacion : observaciones)
+        for (String idObservacion : observaciones)
         {
             CatalogoObservaciones catObser = (CatalogoObservaciones) daoCatalogoObservaciones.find(BigDecimal.valueOf(Integer.parseInt(idObservacion)));
             //Objeto a Registrar
@@ -974,7 +995,7 @@ public class OrganizacionesController
         proyecto.setValidacionAdmin(BigInteger.valueOf(val_admin));
         daoProyectos.edit(proyecto);
         String mensaje;
-        switch(estatus)
+        switch (estatus)
         {
             case 0://Dada de baja
                 mensaje = "<h1>Notificación Servicio Social</h1>\n"
