@@ -100,10 +100,10 @@ public class FormatoUnicoAdminController
     // </editor-fold>
     
     //Status de FormatoUnico FUI en  base al documento status_DOC_1.doc
-    final int VALOR_NO_REVISADOS = 4;
-    final int VALOR_ACEPTADOS = 1;
-    final int VALOR_RECHAZADOS = 2;
-    final int VALOR_CORRECCION = 3;
+    final int NO_REVISADOS = 4;
+    final int ACEPTADOS = 1;
+    final int RECHAZADOS = 2;
+    final int EN_CORRECCION = 3;
     //ID CatalogoDocumentos FormatoUnico
     final long DOC_CAT_FU = 1;
     //Pruebas Developer
@@ -137,7 +137,7 @@ public class FormatoUnicoAdminController
 
                 //------------------Formatos No Revisados------------------------
                 if (formato.getStatusFui() != null
-                        && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_NO_REVISADOS)))
+                        && formato.getStatusFui().equals(BigInteger.valueOf(NO_REVISADOS)))
                 {
                     //Asignando Datos A Formato Unico en estado NO_REVISADO
                     FormatoUnicoBean formatoNR = new FormatoUnicoBean();
@@ -174,7 +174,7 @@ public class FormatoUnicoAdminController
                     }
                 }
                 //------------------Formatos Aceptados------------------------    
-                if (formato.getStatusFui() != null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_ACEPTADOS)))//
+                if (formato.getStatusFui() != null && formato.getStatusFui().equals(BigInteger.valueOf(ACEPTADOS)))//
                 {
                     FormatoUnicoBean formatoAceptados = new FormatoUnicoBean();
 
@@ -200,7 +200,7 @@ public class FormatoUnicoAdminController
                     }
                 }
                 //------------------Formatos Rechazados------------------------   
-                if (formato.getStatusFui() != null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_RECHAZADOS)))//
+                if (formato.getStatusFui() != null && formato.getStatusFui().equals(BigInteger.valueOf(RECHAZADOS)))//
                 {
                     FormatoUnicoBean formatoRechazados = new FormatoUnicoBean();
                     formatoRechazados.setNoControl(formato.getDatosPersonalesId().getAlumnoId().getId());
@@ -226,7 +226,7 @@ public class FormatoUnicoAdminController
                     }
                 }
                 //------------------//Formatos Correccion-----------------------   
-                if (formato.getStatusFui() != null && formato.getStatusFui().equals(BigInteger.valueOf(VALOR_CORRECCION)))
+                if (formato.getStatusFui() != null && formato.getStatusFui().equals(BigInteger.valueOf(EN_CORRECCION)))
                 {
                     FormatoUnicoBean formatoCorreccion = new FormatoUnicoBean();
                     formatoCorreccion.setNoControl(formato.getDatosPersonalesId().getAlumnoId().getId());
@@ -297,7 +297,7 @@ public class FormatoUnicoAdminController
         if (fA != null)
         {
             //Cambiar Estado de NO_ACEPTADO A ACEPTADO
-            fA.setStatusFui(BigInteger.valueOf(VALOR_ACEPTADOS));
+            fA.setStatusFui(BigInteger.valueOf(ACEPTADOS));
             daoFormatoUnico.edit(fA);
 
             String nombre = fA.getDatosPersonalesId().getNombre() + " "
@@ -350,7 +350,7 @@ public class FormatoUnicoAdminController
                 //Buscar Formato Unico
                 FormatoUnico fu = (FormatoUnico) daoFormatoUnico.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
                 //Cambiar Status 
-                fu.setStatusFui(BigInteger.valueOf(VALOR_CORRECCION));
+                fu.setStatusFui(BigInteger.valueOf(EN_CORRECCION));
                 daoFormatoUnico.edit(fu);
                 //Enviar Correo
                 nombre = fu.getDatosPersonalesId().getNombre() + " "
@@ -363,8 +363,8 @@ public class FormatoUnicoAdminController
                 //Buscar Formato Unico
                 FormatoUnico fuR = (FormatoUnico) daoFormatoUnico.find(BigDecimal.valueOf(Long.valueOf(idFormatoUnico)));
                 //Cambiar Status
-                fuR.setStatusFui(BigInteger.valueOf(VALOR_RECHAZADOS));
-                fuR.setStatusServicio(BigInteger.valueOf(VALOR_RECHAZADOS));
+                fuR.setStatusFui(BigInteger.valueOf(RECHAZADOS));
+                fuR.setStatusServicio(BigInteger.valueOf(RECHAZADOS));
                 daoFormatoUnico.edit(fuR);
                 //Enviar Correo
                 nombre = fuR.getDatosPersonalesId().getNombre() + " "

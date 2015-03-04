@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormatoUnico" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ff8df54-78ed-4b02-a7d1-dd231445f55d">
 	<property name="ireport.zoom" value="2.357947691000105"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="240"/>
+	<property name="ireport.y" value="436"/>
 	<parameter name="idProyecto" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -199,16 +199,17 @@ where dp.id (+) = fu.datos_personales_id
 				<reportElement x="10" y="667" width="552" height="61" uuid="88c9480c-e757-4326-86af-9851f557f57f"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="14" y="161" width="532" height="122" uuid="ad7c00ce-751f-4e6a-87b3-496737b5290d"/>
+				<reportElement x="14" y="161" width="532" height="125" uuid="ad7c00ce-751f-4e6a-87b3-496737b5290d"/>
 				<textElement textAlignment="Justified">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<text><![CDATA[Con el fin de dar cumplimiento a  lo   establecido en la Ley  Reglamentaria del Artículo 5°  Constitucional relativo al ejercicio  de
-profesiones,  me  comprometo  a  realizar  el  Servicio  Social  acatando  el  reglamento  del  Sistema  Nacional  de  Educación
-Superior Tecnológica  y  llevarlo a cabo  en el   lugar y períodos  manifestados,  así como, a participar con mis conocimientos e
-iniciativa  en  las  actividades  que desempeñe,  procurando  dar  una imagen  positiva  del Instituto Tecnológico de Toluca en la
-instancia,   de   no  hacerlo   así,   quedo  enterado(a)  de  la  cancelación  respectiva,  la  cual  procederá  automáticamente.
-En la ciudad de Metepec, Estado de México, el día            del mes de                                         de                         .]]></text>
+				<text><![CDATA[Con el fin de dar cumplimiento a  lo   establecido en la Ley  Reglamentaria del Artículo 5°  Constitucional relativo al
+ejercicio  de profesiones,  me  comprometo  a  realizar  el  Servicio  Social  acatando  el  reglamento  del  Sistema
+Nacional  de  Educación Superior Tecnológica  y  llevarlo a cabo  en el   lugar y períodos  manifestados,  así como, a
+participar con mis conocimientos e iniciativa  en  las  actividades  que desempeñe,  procurando  dar  una imagen
+positiva del Instituto Tecnológico de Toluca en la instancia,   de   no  hacerlo   así,   quedo  enterado(a)  de  la
+cancelación respectiva,  la  cual  procederá  automáticamente. En la ciudad de Metepec, Estado de México,
+el día    del mes de         de          .]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="25" y="732" width="100" height="20" uuid="bc3d48d6-6a27-41d0-907a-90dee8444e2d"/>
@@ -799,21 +800,21 @@ electrónico:]]></text>
 				<textFieldExpression><![CDATA[$F{PTCC}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="220" y="214" width="26" height="12" uuid="8e521fb6-bbc5-4354-a531-19712e91755a"/>
+				<reportElement x="37" y="223" width="26" height="12" uuid="8e521fb6-bbc5-4354-a531-19712e91755a"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DIAACTUAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="295" y="214" width="86" height="12" uuid="96c17db0-ad64-4a53-acd5-acfda02f204c"/>
+				<reportElement x="88" y="223" width="86" height="12" uuid="96c17db0-ad64-4a53-acd5-acfda02f204c"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MESACTUAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="408" y="214" width="56" height="12" uuid="fde17002-ae08-493a-ae2f-6506da726a71"/>
+				<reportElement x="133" y="223" width="56" height="12" uuid="fde17002-ae08-493a-ae2f-6506da726a71"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
