@@ -49,7 +49,7 @@
                               <span class="instancia-encontrada-info">${instancia.telefono}</span>
                             </div>
                             <div class="col-sm-5" style="padding-top: 5px">
-                              <a href="#" class="btn btn-default pull-right">
+                              <a href="admproyectos.do?idInstancia=${instancia.idInstancia}" class="btn btn-default pull-right">
                                 Administrar proyectos
                               </a>
                               <div class="space-helper"> &nbsp; </div>
@@ -76,7 +76,7 @@
                               <span class="instancia-encontrada-info">${instancia.telefono}</span>
                             </div>
                             <div class="col-sm-5" style="padding-top: 5px">
-                              <a href="#" class="btn btn-primary pull-right">
+                              <a href="admproyectos.do?idInstancia=${instancia.idInstancia}" class="btn btn-primary pull-right">
                                 Administrar proyectos
                               </a>
                               <div class="space-helper"> &nbsp; </div>
@@ -103,7 +103,7 @@
                               <span class="instancia-encontrada-info">${instancia.telefono}</span>
                             </div>
                             <div class="col-sm-5" style="padding-top: 5px">
-                              <a href="#" class="btn btn-default pull-right">
+                              <a href="admproyectos.do?idInstancia=${instancia.idInstancia}" class="btn btn-default pull-right">
                                 Administrar proyectos
                               </a>
                               <div class="space-helper"> &nbsp; </div>

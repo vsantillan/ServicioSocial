@@ -6,6 +6,7 @@
 package edu.servicio.toluca.controller;
 
 import edu.servicio.toluca.beans.StringMD;
+import edu.servicio.toluca.beans.ValidaSesion;
 import edu.servicio.toluca.dao.GenericDao;
 import edu.servicio.toluca.entidades.Actividades;
 import edu.servicio.toluca.entidades.Colonia;
@@ -35,12 +36,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -154,6 +158,13 @@ public class InstanciasController
     }
 
     @Autowired
+    public void setDaoProyectos(GenericDao<Proyectos> daoProyectos)
+    {
+        this.daoProyectos = daoProyectos;
+        daoProyectos.setClass(Proyectos.class);
+    }
+
+    @Autowired
     public void setDaoTipoOrganizacion(GenericDao<TipoOrganizacion> daoTipoOrganizacion)
     {
         this.daoTipoOrganizacion = daoTipoOrganizacion;
@@ -171,25 +182,24 @@ public class InstanciasController
     public String preregistro(HttpSession session, Model model)
     {
         String rol = null;
-        if (session.getAttribute("ROL") != null)
+        if(session.getAttribute("ROL") != null)
         {
             rol = session.getAttribute("ROL").toString();
         }
 
-        if (rol != null && rol.equals("ORGANIZACION"))
+        if(rol != null && rol.equals("ORGANIZACION"))
         {
             List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
             Instancia nvaInstancia = new Instancia();
             nvaInstancia.setTipoOrganizacion(tiposOrg.get(0)); // Default in radio buttons
-            
+
             model.addAttribute("tiposOrganizacion", tiposOrg);
             model.addAttribute("instancia", nvaInstancia);
             model.addAttribute("rfcError", "");
             model.addAttribute("nombre", session.getAttribute("NOMBRE"));
 
             return "/Instancias/preregistro";
-        } 
-        else
+        } else
         {
             return preregUsuarioInstancia(model);
         }
@@ -199,30 +209,28 @@ public class InstanciasController
     public String preregistrar(HttpSession session, Model model,
             @Valid Instancia instancia, BindingResult bindingResult)
     {
-        if (bindingResult.hasErrors()) // Showing error in form
+        if(bindingResult.hasErrors()) // Showing error in form
         {
             List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
             model.addAttribute("tiposOrganizacion", tiposOrg);
             model.addAttribute("nombre", session.getAttribute("NOMBRE"));
 
             return "/Instancias/preregistro";
-        } 
-        else
+        } else
         {
             // Check if instance is yet registered
             List<Instancia> instancias
                     = daoInstancia.findBySpecificField("rfc", instancia.getRfc().toUpperCase(), "equal", null, null);
-            if (instancias.size() > 0)
+            if(instancias.size() > 0)
             {
                 String rfcError = "<div class='alert alert-danger'>Este RFC ya está registrado</div>";
                 List<TipoOrganizacion> tiposOrg = daoTipoOrganizacion.findAll();
                 model.addAttribute("tiposOrganizacion", tiposOrg);
                 model.addAttribute("rfcError", rfcError);
                 model.addAttribute("nombre", session.getAttribute("NOMBRE"));
-                
+
                 return "/Instancias/preregistro";
-            } 
-            else
+            } else
             {
                 // Configurar Entity y persistir
                 Colonia col = (Colonia) daoColonia.find(instancia.getIdColonia().getIdColonia());
@@ -263,7 +271,7 @@ public class InstanciasController
                 : daoInstancia.findBySpecificField("nombre", value, "like", null, null);
 
         List<HashMap> instancias = new ArrayList<HashMap>();
-        for (Instancia instancia : resultado)
+        for(Instancia instancia : resultado)
         {
             HashMap mapa = new HashMap();
             mapa.put("nombre", instancia.getNombre());
@@ -277,9 +285,6 @@ public class InstanciasController
         return instancias;
     }
 
-    /*
-     * --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-     */
     /*
      * --- --- --- --- --- --- USUARIOS -- --- --- --- --- --- --- --- --- ---
      */
@@ -296,16 +301,16 @@ public class InstanciasController
             BindingResult bindingResult, Model model)
     {
 
-        if (bindingResult.hasErrors())
+        if(bindingResult.hasErrors())
         {
-            if (usuarioInstancia.getExtension().length() > 0)
+            if(usuarioInstancia.getExtension().length() > 0)
             {
-                for (char c : usuarioInstancia.getExtension().toCharArray())
+                for(char c : usuarioInstancia.getExtension().toCharArray())
                 {
                     try
                     {
                         Integer.parseInt(c + "");
-                    } catch (NumberFormatException err)
+                    } catch(NumberFormatException err)
                     {
                         model.addAttribute("errorExt", "<div class='alert alert-danger'>Ingrese solo números o deje vacio el campo</div>");
                     }
@@ -314,14 +319,14 @@ public class InstanciasController
             return "/UsuarioInstancia/preregusuario";
         }
 
-        if (usuarioInstancia.getExtension().length() > 0)
+        if(usuarioInstancia.getExtension().length() > 0)
         {
-            for (char c : usuarioInstancia.getExtension().toCharArray())
+            for(char c : usuarioInstancia.getExtension().toCharArray())
             {
                 try
                 {
                     Integer.parseInt(c + "");
-                } catch (NumberFormatException err)
+                } catch(NumberFormatException err)
                 {
                     model.addAttribute("errorExt", "<div class='alert alert-danger'>Ingrese solo números o deje vacio el campo</div>");
                     return "/UsuarioInstancia/preregusuario";
@@ -335,7 +340,7 @@ public class InstanciasController
         List<UsuarioInstancia> usuarios2 = daoUsuarioInstancia.findBySpecificField(
                 "email", usuarioInstancia.getEmail().toLowerCase(), "equal", null, null);
 
-        if (usuarios2.size() > 0)
+        if(usuarios2.size() > 0)
         {
             model.addAttribute("useryetexist", "<div class='alert alert-danger'>Este correo electrónico ya ha sido registrado.</div>");
             return "/UsuarioInstancia/preregusuario";
@@ -356,14 +361,20 @@ public class InstanciasController
     }
 
     /*
-     * --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
-     */
-    /*
      * --- --- --- --- --- --- PROYECTOS --- --- --- --- --- --- --- --- ---
      */
     @RequestMapping(value = "registrarproyecto.do", method = RequestMethod.GET)
-    public String registrarProyecto(Model model)
+    public String registrarProyecto(HttpSession session, HttpServletRequest request,
+            Model model, String idInstancia)
     {
+        if(!new ValidaSesion().validaOrganizacion(session, request))
+        {
+            System.out.println("USUARIO NO AUTENTICADO");
+            model.addAttribute("msgerror", "<div class='alert alert-danger'>Debes "
+                    + "iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
+        }
+        
         Proyectos proyecto = new Proyectos();
         List<TipoProyecto> tiposP = daoTipoProyecto.findAll();
         List<String> modalidades = new ArrayList<String>();
@@ -381,18 +392,38 @@ public class InstanciasController
         model.addAttribute("programas", programas);
         model.addAttribute("codigop", "");
 
-        return "/Instancias/regproyecto";
+        model.addAttribute("nombre", session.getAttribute("NOMBRE"));
+        model.addAttribute("idinstancia", idInstancia);
+        System.out.println("Enviando idinstancia: " + idInstancia);
+        return "/Instancias/registrarProyecto";
     }
 
     @RequestMapping(value = "registrarproyecto.do", method = RequestMethod.POST)
-    public String insertarProyecto(HttpSession session, String actividad1, String actividad2, String actividad3,
-            String actividad4, String actividad5, String cp, String perfilesproyecto,
-            Model model, @ModelAttribute("proyecto")
+    public String insertarProyecto(HttpSession session, String idinstancia, String actividad1, 
+            String actividad2, String actividad3, String actividad4, String actividad5, 
+            String cp, String perfilesproyecto, Model model, @ModelAttribute("proyecto")
             @Valid Proyectos proyecto, BindingResult bindingResult)
     {
-
-        if (bindingResult.hasErrors() || perfilesproyecto.length() < 1)
+        if(bindingResult.hasErrors() || perfilesproyecto.length() < 1)
         {
+            System.out.println("ERROR DE VALIDACION");
+            System.out.println("INVALIDANDO PROYECTO PARA INSTANCIA: " + idinstancia);
+            for(Object object : bindingResult.getAllErrors())
+            {
+                if(object instanceof FieldError)
+                {
+                    FieldError ferror = (FieldError) object;
+                    System.out.println(ferror.getDefaultMessage());
+                    System.out.println(ferror.getField());
+                }
+                if(object instanceof ObjectError)
+                {
+                    ObjectError oError = (ObjectError) object;
+                    System.out.println(oError.getDefaultMessage());
+                    System.out.println(oError.getCode());
+                }
+            }
+            
             List<TipoProyecto> tiposP = daoTipoProyecto.findAll();
             List<String> modalidades = new ArrayList<String>();
             modalidades.add("INTERNO");
@@ -415,15 +446,21 @@ public class InstanciasController
 
             model.addAttribute("perfilesproyecto", perfilesproyecto);
 
-            if (perfilesproyecto.length() < 1)
+            if(perfilesproyecto.length() < 1)
             {
                 model.addAttribute("errorperfiles", "<div class='alert alert-danger'>Agrege al menos un perfil al proyecto</div>");
             }
 
-            return "/Instancias/regproyecto";
-        } else
+            model.addAttribute("idinstancia", idinstancia);
+            model.addAttribute("nombre", session.getAttribute("NOMBRE"));
+            return "/Instancias/registrarProyecto";
+        }
+        else
         {
-            // Formatear datos de la instancia
+            System.out.println("LA INSTANCIA ES: " + idinstancia);
+            System.out.println("NO HAY ERRORES DE VALIDACION DE ENTIDAD");
+            
+            // Formatear datos del proyecto
             proyecto.setNombre(proyecto.getNombre().toUpperCase());
             proyecto.setNombreResponsable(proyecto.getNombreResponsable().toUpperCase());
             proyecto.setResponsablePuesto(proyecto.getResponsablePuesto().toUpperCase());
@@ -433,10 +470,11 @@ public class InstanciasController
             proyecto.setFechaAlta(Calendar.getInstance().getTime());
             proyecto.setVacantesDisponibles(proyecto.getVacantes());
 
-            if (proyecto.getModalidad().trim().equals("INTERNO"))
+            if(proyecto.getModalidad().trim().equals("INTERNO"))
             {
                 proyecto.setModalidad("I");
-            } else
+            }
+            else
             {
                 proyecto.setModalidad("E");
             }
@@ -445,14 +483,15 @@ public class InstanciasController
             proyecto.setIdPrograma((Programa) daoPrograma.find(proyecto.getIdPrograma().getIdPrograma()));
             proyecto.setIdColonia((Colonia) daoColonia.find(proyecto.getIdColonia().getIdColonia()));
 
-            Instancia instance = (Instancia) daoInstancia.findBySpecificField("nombre", session.getAttribute("NOMBRE").toString(), "equal", null, null).get(0);
+            Instancia instance = (Instancia) daoInstancia
+                    .find(BigDecimal.valueOf(Long.valueOf(idinstancia)));
             //System.out.println("SE ENCONTRO INSTANCIA: " + instance.getNombre());
             proyecto.setIdInstancia(instance);
             daoProyectos.create(proyecto);
 
             // Registrar perfiles
             StringTokenizer stPerfiles = new StringTokenizer(perfilesproyecto, ";");
-            while (stPerfiles.hasMoreTokens())
+            while(stPerfiles.hasMoreTokens())
             {
                 Perfil perfil = (Perfil) daoPerfil.findBySpecificField("nombre", stPerfiles.nextToken().trim(), "equal", null, null).get(0);
                 //System.out.println("Perfil encontrado: " + perfil.getNombre());
@@ -476,7 +515,7 @@ public class InstanciasController
             actividad02.setDetalle(actividad2);
             daoActividades.create(actividad02);
 
-            if (actividad3.trim().length() > 0)
+            if(actividad3.trim().length() > 0)
             {
                 Actividades actividad03 = new Actividades();
                 actividad03.setIdProyecto(proyecto);
@@ -484,7 +523,7 @@ public class InstanciasController
                 actividad03.setDetalle(actividad3);
                 daoActividades.create(actividad03);
             }
-            if (actividad4.trim().length() > 0)
+            if(actividad4.trim().length() > 0)
             {
                 Actividades actividad04 = new Actividades();
                 actividad04.setIdProyecto(proyecto);
@@ -492,7 +531,7 @@ public class InstanciasController
                 actividad04.setDetalle(actividad4);
                 daoActividades.create(actividad04);
             }
-            if (actividad5.trim().length() > 0)
+            if(actividad5.trim().length() > 0)
             {
                 Actividades actividad05 = new Actividades();
                 actividad05.setIdProyecto(proyecto);
@@ -501,28 +540,62 @@ public class InstanciasController
                 daoActividades.create(actividad05);
             }
 
+            model.addAttribute("nombre", session.getAttribute("NOMBRE"));
+            model.addAttribute("idinstancia", idinstancia);
             return "/Instancias/proyectoregistrado";
         }
 
     }
 
-    @RequestMapping(value = "instanciaproyectos.do", method = RequestMethod.GET)
-    public String administrarProyectos(HttpSession session, Model model)
+    @RequestMapping(value = "admproyectos.do", method = RequestMethod.GET)
+    public String administrarProyectos(HttpSession session, HttpServletRequest request,
+            Model model, String iduinstancia, String idInstancia)
     {
-        if (session.getAttribute("NOMBRE") != null)
+        if(!new ValidaSesion().validaOrganizacion(session, request))
         {
-            Instancia instancia;
-            String instanciaNom = session.getAttribute("NOMBRE").toString();
-
-            instancia = (Instancia) daoInstancia.findBySpecificField("nombre",
-                    instanciaNom, "equal", null, null).get(0);
-
-            if (instancia != null)
-            {
-                return "/Instancias/administrarproyectos";
-            }
+            System.out.println("USUARIO NO AUTENTICADO");
+            model.addAttribute("msgerror", "<div class='alert alert-danger'>Debes "
+                    + "iniciar sesión para acceder a esta sección.</div>");
+            return "redirect:login.do";
         }
+        try 
+        {
+            String idUInstancia = session.getAttribute("NCONTROL").toString();
+            UsuarioInstancia uInstancia = (UsuarioInstancia) daoUsuarioInstancia
+                    .find(BigDecimal.valueOf(Long.valueOf(idUInstancia)));
+            Instancia instancia = (Instancia) daoInstancia.find(BigDecimal
+                    .valueOf(Long.valueOf(idInstancia)));
 
-        return "/NavegacionPrincipal/index";
+            // Verificar que la instancia pertenezca a este usuario
+            if(instancia.getUsuarioInstancia().getIdUsuarioInstancia()
+                    .compareTo(uInstancia.getIdUsuarioInstancia()) != 0)
+            {
+                System.out.println(uInstancia.getIdUsuarioInstancia() + " vs " + instancia.getUsuarioInstancia().getIdUsuarioInstancia());
+                model.addAttribute("msgerror", "<div class='alert alert-danger'>"
+                        + "Usted no tiene permisos sobre esta instancia</div>");
+            }
+            else
+            {
+                model.addAttribute("instancia", instancia);
+                model.addAttribute("proyectos", instancia.getProyectosCollection());
+            }
+            
+        }
+        catch(NumberFormatException err)
+        {
+            model.addAttribute("msgerror", "<div class='alert alert-danger'>"
+                    + "El id de la instancia '" + idInstancia + "' es incorrecto</div>");
+        }
+        
+        System.out.println("Enviando a admproyectos: " + idInstancia);
+        model.addAttribute("idinstancia", idInstancia);
+        model.addAttribute("nombre", session.getAttribute("NOMBRE"));
+        return "/Instancias/administrarproyectos";
+    }
+    
+    @RequestMapping(value = "proyectoreg.do", method=RequestMethod.GET)
+    public String proyectoRegistrado(Model model)
+    {
+       return "/Instancias/proyectoregistrado";
     }
 }
