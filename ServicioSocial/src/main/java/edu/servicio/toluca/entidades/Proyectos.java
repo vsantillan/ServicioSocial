@@ -133,7 +133,7 @@ public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoEr
     
     @Basic(optional = false)
     @Column(name = "VACANTES_DISPONIBLES")
-    @Min(1)
+    //@Min(1)
     private BigInteger vacantesDisponibles;
     
     @Basic(optional = false)

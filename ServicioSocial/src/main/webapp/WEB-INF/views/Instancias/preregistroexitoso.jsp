@@ -18,13 +18,14 @@
         <%@include file="../PanelOrganizacion/menuPanelOrganizacion.jsp" %>
       </div>
       <br/><br/>
-      <div class="panel panel-danger" style="text-align: center">
+      <div class="alert alert-success" style="text-align: center">
         <h2>
           El preregistro se ha realizado satisfactoriamente. Ahora
           debes esperar a que el administrador valide tu instancia.
           El sistema te notificará via correo electrónico cuando tu
           instancia este aprobada.
-        </h2>
+        </h2><br/>
+        <a href="panelOrganizacion.do" class="btn btn-default">Volver al panel principal</a>
       </div>
       <%@include file="../General/footer.jsp" %>
     </div>
