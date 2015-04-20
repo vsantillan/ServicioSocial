@@ -1,143 +1,252 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FormatoUnico" pageWidth="612" pageHeight="792" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0ff8df54-78ed-4b02-a7d1-dd231445f55d">
 	<property name="ireport.zoom" value="2.357947691000105"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="436"/>
+	<property name="ireport.x" value="209"/>
+	<property name="ireport.y" value="228"/>
 	<parameter name="idProyecto" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="noControl" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<queryString language="SQL">
-		<![CDATA[select to_char(vaA.fec_nac, 'dd/MM/yyyy') as fechaNac,
-dp.apellido_p ||' '||dp.apellido_m ||' '|| dp.nombre || '' as nombreDP,
-SUBSTR(dp.SEXO,0,1) as sexoDP,
-(SELECT NUMERO_FOLIO FROM  FOLIOS_PLATICA WHERE ALUMNO_ID=$P{noControl}) as folioPlatica,
-NVL(dp.lugar_nacimiento,' ') as lugarNacimientoDP,
-NVL(dp.curp,' ') as curpDP,
-NVL2(dp.FOLIO_DOC_IDENTIFICACIIN,dp.FOLIO_DOC_IDENTIFICACIIN||'',' ') as ifeDP,
-NVL2(dp.CLAVE_DOC_IDENTIFICACION,dp.CLAVE_DOC_IDENTIFICACION||'',' ') as claveIfeDP,
-NVL(dp.TELEFONO_CASA,' ') as telefonoCasaDP,
-NVL(dp.CORREO_ELECTRONICO,' ') as correoElectronicoDP,
-NVL(dp.TELEFONO_CEL,' ') as telefonoCelDP,
-dp.ALUMNO_ID as numeroControlDP,
-vaA.CARRERA as carrera,
-CONCAT(SUBSTR(fu.PERIODO_INICIO,0,8),to_char(fu.FECHA_INICIO, 'yyyy')) as periodo,
-vaA.SEM_ACTUAL semestre,
-fu.NUMERO_CREDITOS as TCC,
-ROUND(fu.PORCENTAJE_CREDITOS,1) as PTCC,
-( CASE
-  WHEN to_char(fu.FECHA_INICIO, 'MM')='01' THEN 'Enero'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='02' THEN 'Febrero'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='03' THEN 'Marzo'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='04' THEN 'Abril'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='05' THEN 'Mayo'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='06' THEN 'Junio'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='07' THEN 'Julio'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='08' THEN 'Agosto'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='09' THEN 'Septiembre'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='10' THEN 'Octubre'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='11' THEN 'Noviembre'
-WHEN to_char(fu.FECHA_INICIO, 'MM')='12' THEN 'Diciembre'
-ELSE 'Unknown'
-END )  as mesActual,
-to_char(fu.FECHA_INICIO, 'dd') as diaActual,
-to_char(fu.FECHA_INICIO, 'yyyy') as anioActual,
-fu.FECHA_FIN as fechaFin,
-codigoDP.CP as CP,
-UPPER(dp.CALLE) || ' ' || NVL2(dp.numero_E,'NE. '||dp.numero_E,' ') || ' '||NVL2(dp.numero_I,'int. '||dp.numero_I,' ') || ', '   || col.NOMBRE||', '|| municipioDP.NOMBRE ||', '||estadoDP.NOMBRE as domicilioDP,
-proy.MODALIDAD as modalidadP,
-prog.SIGLAS as  programaP,
-UPPER(inst.NOMBRE) as nombreInstanciaP,
-codigoInstancia.CP as codigoCPInstancia,
-UPPER(inst.TITULAR) as titularInstancia,
-UPPER(inst.PUESTO) as puestoInstancia,
-inst.TELEFONO||NVL2(inst.EXT,' ext. '||inst.EXT,' ') as telefonoInstancia,
-UPPER(inst.DOMICILIO) || ', '|| colInstancia.nombre||', '|| municipioInstancia.NOMBRE ||', '||estadoInstancia.NOMBRE  as domicilioIntancia,
-proy.NOMBRE_RESPONSABLE as titularProyecto,
-proy.RESPONSABLE_PUESTO as puestoProyecto,
-proy.DOMICILIO || ', '|| colProyecto.nombre||', '|| municipioProyecto.Nombre ||', '||estadoProyecto.NOMBRE as domicilioProyecto,
-proy.TELEFONO_RESPONSABLE||NVL2(proy.ext,' ext. '||proy.ext,' ') as telefonoProyecto,
-to_char(fu.FECHA_INICIO, 'dd/MM/yyyy') as  fechaInicio,
-fu.IDPROYECTO as idProyecto,
-fu.ID as idFormatoUnico,
-   NVL((Select HORA_INICIO||'-'||HORA_FIN
-        FROM HORARIOS_ALUMNO
-        WHERE FORMATO_UNICO_ID=fu.ID and DIA=1
-	),' ') as horarioLunes,
-   NVL((Select HORA_INICIO||'-'||HORA_FIN
-        FROM HORARIOS_ALUMNO
-        WHERE FORMATO_UNICO_ID=fu.ID and DIA=2
-	),' ') as horarioMartes,
-   NVL((Select HORA_INICIO||'-'||HORA_FIN
-        FROM HORARIOS_ALUMNO
-        WHERE FORMATO_UNICO_ID=fu.ID and DIA=3
-	),' ') as horarioMiercoles,
-   NVL((Select HORA_INICIO||'-'||HORA_FIN
-        FROM HORARIOS_ALUMNO
-        WHERE FORMATO_UNICO_ID=fu.ID and DIA=4
-	),' ') as horarioJuevez,
-   NVL((Select HORA_INICIO||'-'||HORA_FIN
-        FROM HORARIOS_ALUMNO
-        WHERE FORMATO_UNICO_ID=fu.ID and DIA=5
-	),' ') as horarioViernes,
-   NVL((SELECT detalle FROM (
-        SELECT  rownum num,b.detalle FROM ACTIVIDADES b  WHERE b.ID_PROYECTO=$P{idProyecto}
-   ) WHERE num >= 1 and num <= 1),' ') as actividad1,
-
-   NVL((SELECT detalle FROM (
-        SELECT  rownum num,b.detalle FROM ACTIVIDADES b  WHERE b.ID_PROYECTO=$P{idProyecto}
-   ) WHERE num >= 2 and num <= 2),' ') as actividad2,
-
-   NVL((SELECT detalle FROM (
-        SELECT  rownum num,b.detalle FROM ACTIVIDADES b  WHERE b.ID_PROYECTO=$P{idProyecto}
-   ) WHERE num >= 3 and num <= 3),' ') as actividad3,
-
-   NVL((SELECT detalle FROM (
-        SELECT  rownum num,b.detalle FROM ACTIVIDADES b  WHERE b.ID_PROYECTO=$P{idProyecto}
-   ) WHERE num >= 4 and num <= 4),' ') as actividad4,
-
-   NVL((SELECT detalle FROM (
-        SELECT  rownum num,b.detalle FROM ACTIVIDADES b  WHERE b.ID_PROYECTO=$P{idProyecto}
-   ) WHERE num >= 5 and num <= 5),' ') as actividad5
-
-From datos_personales dp,
-     formato_unico fu,
-     VISTA_ALUMNO  vaA,
-     Colonia col,
-     Colonia colInstancia,
-     Colonia colProyecto,
-     CODIGOS_POSTALES codigoDP,
-     CODIGOS_POSTALES codigoInstancia,
-     CODIGOS_POSTALES codigoProyecto,
-     MUNICIPIOS_SIA municipioInstancia,
-	 MUNICIPIOS_SIA municipioDP,
-     MUNICIPIOS_SIA municipioProyecto,
-     ESTADOS_SIA estadoInstancia,
-	 ESTADOS_SIA estadoDP,
-     ESTADOS_SIA estadoProyecto,
-     Proyectos proy,
-     Programa prog,
-     INSTANCIA inst
-where dp.id (+) = fu.datos_personales_id
-      and vaA.ID (+)=  dp.ALUMNO_ID
-      and col.id_colonia (+)= dp.id_colonia
-      and codigoDP.id_cp (+)=  col.id_cp
-	  and municipioDP.ID_MUNICIPIO (+)= codigoDP.ID_MUNICIPIO
-	  and estadoDP.ID_ESTADO (+)= codigoDP.ID_ESTADO
-      and proy.ID_PROYECTO  (+)= fu.IDPROYECTO
-      and prog.ID_PROGRAMA  (+)= proy.ID_PROGRAMA
-      and inst.ID_INSTANCIA (+)= proy.ID_INSTANCIA
-      and colInstancia.ID_COLONIA (+)= inst.ID_COLONIA
-      and codigoInstancia.ID_CP (+)= colInstancia.ID_CP
-      and municipioInstancia.ID_MUNICIPIO (+)= codigoInstancia.ID_MUNICIPIO
-      and estadoInstancia.ID_ESTADO (+)= codigoInstancia.ID_ESTADO
-      and colProyecto.ID_COLONIA (+)= proy.ID_COLONIA
-      and codigoProyecto.ID_CP (+)= colProyecto.ID_CP
-      and municipioProyecto.ID_MUNICIPIO (+)= codigoProyecto.ID_MUNICIPIO
-      and estadoProyecto.ID_ESTADO (+)= codigoProyecto.ID_ESTADO
-      and dp.alumno_id = $P{noControl}]]>
+	<queryString>
+		<![CDATA[SELECT TO_CHAR(vaA.fec_nac, 'dd/MM/yyyy') AS fechaNac,
+  dp.apellido_p
+  ||' '
+  ||dp.apellido_m
+  ||' '
+  || dp.nombre
+  || ''               AS nombreDP,
+  SUBSTR(dp.SEXO,0,1) AS sexoDP,
+  (SELECT NUMERO_FOLIO
+  FROM FOLIOS_PLATICA
+  WHERE ALUMNO_ID=$P{noControl}
+  )                            AS folioPlatica,
+  NVL(dp.lugar_nacimiento,' ') AS lugarNacimientoDP,
+  NVL(dp.curp,' ')             AS curpDP,
+  NVL2(dp.FOLIO_DOC_IDENTIFICACIIN,dp.FOLIO_DOC_IDENTIFICACIIN
+  ||'',' ') AS ifeDP,
+  NVL2(dp.CLAVE_DOC_IDENTIFICACION,dp.CLAVE_DOC_IDENTIFICACION
+  ||'',' ')                                                              AS claveIfeDP,
+  NVL(dp.TELEFONO_CASA,' ')                                              AS telefonoCasaDP,
+  NVL(dp.CORREO_ELECTRONICO,' ')                                         AS correoElectronicoDP,
+  NVL(dp.TELEFONO_CEL,' ')                                               AS telefonoCelDP,
+  dp.ALUMNO_ID                                                           AS numeroControlDP,
+  vaA.CARRERA                                                            AS carrera,
+  CONCAT(SUBSTR(fu.PERIODO_INICIO,0,8),TO_CHAR(fu.FECHA_INICIO, 'yyyy')) AS periodo,
+  vaA.SEM_ACTUAL semestre,
+  fu.NUMERO_CREDITOS              AS TCC,
+  ROUND(fu.PORCENTAJE_CREDITOS,1) AS PTCC,
+  (
+  CASE
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='01'
+    THEN 'Enero'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='02'
+    THEN 'Febrero'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='03'
+    THEN 'Marzo'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='04'
+    THEN 'Abril'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='05'
+    THEN 'Mayo'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='06'
+    THEN 'Junio'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='07'
+    THEN 'Julio'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='08'
+    THEN 'Agosto'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='09'
+    THEN 'Septiembre'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='10'
+    THEN 'Octubre'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='11'
+    THEN 'Noviembre'
+    WHEN TO_CHAR(fu.FECHA_INICIO, 'MM')='12'
+    THEN 'Diciembre'
+    ELSE 'Unknown'
+  END )                            AS mesActual,
+  TO_CHAR(fu.FECHA_INICIO, 'dd')   AS diaActual,
+  TO_CHAR(fu.FECHA_INICIO, 'yyyy') AS anioActual,
+  fu.FECHA_FIN                     AS fechaFin,
+  codigoDP.CP                      AS CP,
+  UPPER(dp.CALLE)
+  || ' '
+  || NVL2(dp.numero_E,'NE. '
+  ||dp.numero_E,' ')
+  || ' '
+  ||NVL2(dp.numero_I,'int. '
+  ||dp.numero_I,' ')
+  || ', '
+  || col.NOMBRE
+  ||', '
+  || municipioDP.NOMBRE
+  ||', '
+  ||estadoDP.NOMBRE   AS domicilioDP,
+  proy.MODALIDAD      AS modalidadP,
+  prog.SIGLAS         AS programaP,
+  UPPER(uinst.NOMBRE)  AS nombreInstanciaP,
+  codigoInstancia.CP  AS codigoCPInstancia,
+  UPPER(uinst.NOMBRE) AS titularInstancia,
+  UPPER(uinst.PUESTO)  AS puestoInstancia,
+  inst2.TELEFONO
+  ||NVL2(uinst.EXT,' ext. '
+  ||uinst.EXT,' ') AS telefonoInstancia,
+  UPPER(inst2.DOMICILIO)
+  || ', '
+  || colInstancia.nombre
+  ||', '
+  || municipioInstancia.NOMBRE
+  ||', '
+  ||estadoInstancia.NOMBRE AS domicilioIntancia,
+  proy.NOMBRE_RESPONSABLE  AS titularProyecto,
+  proy.RESPONSABLE_PUESTO  AS puestoProyecto,
+  proy.DOMICILIO
+  || ', '
+  || colProyecto.nombre
+  ||', '
+  || municipioProyecto.Nombre
+  ||', '
+  ||estadoProyecto.NOMBRE AS domicilioProyecto,
+  proy.TELEFONO_RESPONSABLE
+  ||NVL2(proy.ext,' ext. '
+  ||proy.ext,' ')                        AS telefonoProyecto,
+  TO_CHAR(fu.FECHA_INICIO, 'dd/MM/yyyy') AS fechaInicio,
+  fu.IDPROYECTO                          AS idProyecto,
+  fu.ID                                  AS idFormatoUnico,
+  NVL(
+  (SELECT HORA_INICIO
+    ||'-'
+    ||HORA_FIN
+  FROM HORARIOS_ALUMNO
+  WHERE FORMATO_UNICO_ID=fu.ID
+  AND DIA               =1
+  ),' ') AS horarioLunes,
+  NVL(
+  (SELECT HORA_INICIO
+    ||'-'
+    ||HORA_FIN
+  FROM HORARIOS_ALUMNO
+  WHERE FORMATO_UNICO_ID=fu.ID
+  AND DIA               =2
+  ),' ') AS horarioMartes,
+  NVL(
+  (SELECT HORA_INICIO
+    ||'-'
+    ||HORA_FIN
+  FROM HORARIOS_ALUMNO
+  WHERE FORMATO_UNICO_ID=fu.ID
+  AND DIA               =3
+  ),' ') AS horarioMiercoles,
+  NVL(
+  (SELECT HORA_INICIO
+    ||'-'
+    ||HORA_FIN
+  FROM HORARIOS_ALUMNO
+  WHERE FORMATO_UNICO_ID=fu.ID
+  AND DIA               =4
+  ),' ') AS horarioJuevez,
+  NVL(
+  (SELECT HORA_INICIO
+    ||'-'
+    ||HORA_FIN
+  FROM HORARIOS_ALUMNO
+  WHERE FORMATO_UNICO_ID=fu.ID
+  AND DIA               =5
+  ),' ') AS horarioViernes,
+  NVL(
+  (SELECT detalle
+  FROM
+    (SELECT rownum num,
+      b.detalle
+    FROM ACTIVIDADES b
+    WHERE b.ID_PROYECTO=$P{idProyecto}
+    )
+  WHERE num >= 1
+  AND num   <= 1
+  ),' ') AS actividad1,
+  NVL(
+  (SELECT detalle
+  FROM
+    (SELECT rownum num,
+      b.detalle
+    FROM ACTIVIDADES b
+    WHERE b.ID_PROYECTO=$P{idProyecto}
+    )
+  WHERE num >= 2
+  AND num   <= 2
+  ),' ') AS actividad2,
+  NVL(
+  (SELECT detalle
+  FROM
+    (SELECT rownum num,
+      b.detalle
+    FROM ACTIVIDADES b
+    WHERE b.ID_PROYECTO=$P{idProyecto}
+    )
+  WHERE num >= 3
+  AND num   <= 3
+  ),' ') AS actividad3,
+  NVL(
+  (SELECT detalle
+  FROM
+    (SELECT rownum num,
+      b.detalle
+    FROM ACTIVIDADES b
+    WHERE b.ID_PROYECTO=$P{idProyecto}
+    )
+  WHERE num >= 4
+  AND num   <= 4
+  ),' ') AS actividad4,
+  NVL(
+  (SELECT detalle
+  FROM
+    (SELECT rownum num,
+      b.detalle
+    FROM ACTIVIDADES b
+    WHERE b.ID_PROYECTO=$P{idProyecto}
+    )
+  WHERE num >= 5
+  AND num   <= 5
+  ),' ') AS actividad5
+FROM datos_personales dp,
+  formato_unico fu,
+  VISTA_ALUMNO vaA,
+  Colonia col,
+  Colonia colInstancia,
+  Colonia colProyecto,
+  CODIGOS_POSTALES codigoDP,
+  CODIGOS_POSTALES codigoInstancia,
+  CODIGOS_POSTALES codigoProyecto,
+  MUNICIPIOS_SIA municipioInstancia,
+  MUNICIPIOS_SIA municipioDP,
+  MUNICIPIOS_SIA municipioProyecto,
+  ESTADOS_SIA estadoInstancia,
+  ESTADOS_SIA estadoDP,
+  ESTADOS_SIA estadoProyecto,
+  Proyectos proy,
+  Programa prog,
+  INSTANCIA inst,
+  INSTANCIA2 inst2,
+  USUARIO_INSTANCIA uinst
+WHERE dp.id (+)                        = fu.datos_personales_id
+AND vaA.ID (+)                         = dp.ALUMNO_ID
+AND col.id_colonia (+)                 = dp.id_colonia
+AND codigoDP.id_cp (+)                 = col.id_cp
+AND municipioDP.ID_MUNICIPIO (+)       = codigoDP.ID_MUNICIPIO
+AND estadoDP.ID_ESTADO (+)             = codigoDP.ID_ESTADO
+AND proy.ID_PROYECTO (+)               = fu.IDPROYECTO
+AND prog.ID_PROGRAMA (+)               = proy.ID_PROGRAMA
+AND inst2.ID_INSTANCIA (+)              = proy.ID_INSTANCIA
+AND colInstancia.ID_COLONIA (+)        = inst2.ID_COLONIA
+AND codigoInstancia.ID_CP (+)          = colInstancia.ID_CP
+AND municipioInstancia.ID_MUNICIPIO (+)= codigoInstancia.ID_MUNICIPIO
+AND estadoInstancia.ID_ESTADO (+)      = codigoInstancia.ID_ESTADO
+AND colProyecto.ID_COLONIA (+)         = proy.ID_COLONIA
+AND codigoProyecto.ID_CP (+)           = colProyecto.ID_CP
+AND municipioProyecto.ID_MUNICIPIO (+) = codigoProyecto.ID_MUNICIPIO
+AND estadoProyecto.ID_ESTADO (+)       = codigoProyecto.ID_ESTADO
+AND inst2.ID_USUARIO_INSTANCIA         = uinst.ID_USUARIO_INSTANCIA
+AND dp.alumno_id                       = $P{noControl}]]>
 	</queryString>
 	<field name="FECHANAC" class="java.lang.String"/>
 	<field name="NOMBREDP" class="java.lang.String"/>
@@ -199,17 +308,16 @@ where dp.id (+) = fu.datos_personales_id
 				<reportElement x="10" y="667" width="552" height="61" uuid="88c9480c-e757-4326-86af-9851f557f57f"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="14" y="161" width="532" height="125" uuid="ad7c00ce-751f-4e6a-87b3-496737b5290d"/>
-				<textElement textAlignment="Justified">
+				<reportElement x="10" y="161" width="562" height="74" uuid="ad7c00ce-751f-4e6a-87b3-496737b5290d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
 					<font fontName="Arial" size="9"/>
 				</textElement>
-				<text><![CDATA[Con el fin de dar cumplimiento a  lo   establecido en la Ley  Reglamentaria del Artículo 5°  Constitucional relativo al
-ejercicio  de profesiones,  me  comprometo  a  realizar  el  Servicio  Social  acatando  el  reglamento  del  Sistema
-Nacional  de  Educación Superior Tecnológica  y  llevarlo a cabo  en el   lugar y períodos  manifestados,  así como, a
-participar con mis conocimientos e iniciativa  en  las  actividades  que desempeñe,  procurando  dar  una imagen
-positiva del Instituto Tecnológico de Toluca en la instancia,   de   no  hacerlo   así,   quedo  enterado(a)  de  la
-cancelación respectiva,  la  cual  procederá  automáticamente. En la ciudad de Metepec, Estado de México,
-el día    del mes de         de          .]]></text>
+				<text><![CDATA[Con el fin de dar cumplimiento a lo establecido en la Ley Reglamentaria del Artículo 5°Constitucional relativo al ejercicio de
+profesiones, me comprometo a realizar el Servicio Social acatando el reglamento del Sistema Nacional de Educación
+Superior Tecnológica y llevarlo a cabo en el lugar y períodos manifestados, así como, a participar con misconocimientos e
+iniciativa en las actividades que desempeñe, procurando dar una imagen positiva del Instituto Tecnológico de Toluca en la
+instancia, de no hacerlo así, quedo enterado(a) de la cancelación respectiva, la cual procederá automáticamente.
+En la ciudad de Metepec, Estado de México, el día      del mes de              de                     .]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="25" y="732" width="100" height="20" uuid="bc3d48d6-6a27-41d0-907a-90dee8444e2d"/>
@@ -800,21 +908,21 @@ electrónico:]]></text>
 				<textFieldExpression><![CDATA[$F{PTCC}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="37" y="223" width="26" height="12" uuid="8e521fb6-bbc5-4354-a531-19712e91755a"/>
+				<reportElement x="215" y="214" width="26" height="12" uuid="8e521fb6-bbc5-4354-a531-19712e91755a"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{DIAACTUAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="88" y="223" width="86" height="12" uuid="96c17db0-ad64-4a53-acd5-acfda02f204c"/>
+				<reportElement x="279" y="214" width="55" height="12" uuid="96c17db0-ad64-4a53-acd5-acfda02f204c"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{MESACTUAL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="133" y="223" width="56" height="12" uuid="fde17002-ae08-493a-ae2f-6506da726a71"/>
+				<reportElement x="325" y="214" width="21" height="12" uuid="fde17002-ae08-493a-ae2f-6506da726a71"/>
 				<textElement>
 					<font fontName="Arial" size="8"/>
 				</textElement>

@@ -277,7 +277,8 @@ public class FormatoUnicoController
     @RequestMapping(method = RequestMethod.GET, value = "/formatoUnicoUsuario.do")
     public String formatoUnico(Model modelo, String alumno_id, HttpSession session, HttpServletRequest request) throws ParseException
     {
-        if (daoFoliosPlatica.count() == 0)
+        
+        if (daoFoliosPlatica.count() == 0 || daoProyectos.count() == 0)
         {
             return "PanelUsuario/panelUsuario";
         }
@@ -296,6 +297,7 @@ public class FormatoUnicoController
         List<VistaAlumno> listaAlumnos = daoVistaAlumno.findBySpecificField("id", alumno_id, "equal", null, null);
         if (listaAlumnos.isEmpty())
         {
+            //TODO Corregir aquí, NO utilizar el return
             System.err.println("La lista de alumnos está vacía");
             return "PanelUsuario/panelUsuario";
         }
@@ -306,6 +308,7 @@ public class FormatoUnicoController
         // Check creditos necesarios
         if (Float.parseFloat(alumno.getPorcentaje()) < 70)
         {
+            //TODO Corregir aquí, NO utilizar el return
             System.err.println("El alumno no tiene los créditos necesarios");
             return "PanelUsuario/panelUsuario";
         }
@@ -347,7 +350,6 @@ public class FormatoUnicoController
             datosPersonales.setTelefonoOficina("");
             datosPersonales.setTwitter("");
             datosPersonales.setFacebook("");
-
             // Persistimos el objeto datosPersonales
             daoDatosPersonales.create(datosPersonales);
 
@@ -423,6 +425,9 @@ public class FormatoUnicoController
 
             // Asignación a objetos para posteriormente preparar
             datosPersonales = listaDatosPersonales.get(0);
+            
+            // TODO Esta línea genera un error si listaFormatoUnico está vacía, viene de línea 421
+            // el motivo es que no existe nada en Formato único
             formatoUnico = listaFormatoUnico.get(0);
 
             // Validar que el alumno esté rechazado o en correción

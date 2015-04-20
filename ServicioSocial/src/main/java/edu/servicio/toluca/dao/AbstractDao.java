@@ -62,6 +62,7 @@ public abstract class AbstractDao<T extends Serializable>
     public void create(T entity)
     {
         entityManager.persist(entity);
+        getEntityMgr().flush();
     }
     
     public void deleteById(Object id)

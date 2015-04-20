@@ -156,6 +156,7 @@ public class AbstractPlaticaDao<T extends Serializable>
 //            entityManager.clear();
 //        }
 
+        entityManager.clear();
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery();
         Root<T> root = cq.from(entityClass);
