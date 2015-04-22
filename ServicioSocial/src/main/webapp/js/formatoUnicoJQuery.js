@@ -1,9 +1,13 @@
+
+var proyectos;
+
 $(document).ready(listo);
 var alumno = {};
 var contacto = {};
 var proyecto = {};
 var tabActual;
 var contentActual;
+
 function listo()
 {
     var foliodociden = $(".foliodociden");
@@ -23,48 +27,34 @@ function listo()
     $('#cmdDescargaFui').click(cambiaStatusSubidaFui);
 //    $('#subeFui').click(subirFUI);
 
-    $('.otraorg').click(function(event) {
+    $('.otraorg').click(function (event) {
         alert('ola ke ase');
     });
 
-    $("#comboOrganizaciones").change(function(event) {
+    $("#comboOrganizaciones").change(function (event) {
         var idInstancia = $("#comboOrganizaciones").val();
-        recargaProyectos(idInstancia);
-
+        mostrarProyectosInstancia(idInstancia);
     });
 
-    $("#proyectos").change(function() {
+    $("#proyectos").change(function () {
 
         var idProyActual = $("#proyectos").val();
         var idInstancia = $("#comboOrganizaciones").val();
         var idDatosPer = $('.idDatosPersonalesOrg').val();
 
-        recargaInfoProyectos(idProyActual, idInstancia, idDatosPer);
-
+        //recargaInfoProyectos(idProyActual, idInstancia, idDatosPer);
+        mostrarProyecto();
     });
-
-    function prueba() {
-        alert("funciona!");
-    }
-
 }
 
-$("#comboOrganizaciones").change(function(event) {
-    var idInstancia = $("#comboOrganizaciones option:selected").val();
-    recargaProyectos(idInstancia);
-
-});
-
-$("#proyectos").change(function() {
-
-    var idProyActual = $("#proyectos option:selected").val();
-    var idInstancia = $("#comboOrganizaciones option:selected").val();
-    var idDatosPer = $('.idDatosPersonalesOrg').val();
-    recargaInfoProyectos(idProyActual, idInstancia, idDatosPer);
-});
-
-
-function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
+/**
+ * @deprecated replaced with mostrarProyecto()
+ * @param {type} idProyActual
+ * @param {type} idInstancia
+ * @param {type} idDatosPer
+ * @returns {undefined}
+ */
+function recargaInfoProyectosDeprecated(idProyActual, idInstancia, idDatosPer)
 {
     console.log('--IdProyactual:' + idProyActual);
     for (i = 0; i < proyecto.nombre_responsable.length; i++) {
@@ -81,27 +71,29 @@ function recargaInfoProyectos(idProyActual, idInstancia, idDatosPer)
             $('#linkNuevoP').attr("href", "propAlProyecto.do?datos_personales=" + idDatosPer + "&idInstancia=" + idInstancia + "");
         }
     }
-
-
 }
+
 function cambiaStatusSubidaFui()
 {
     var idDP = $('#idSubirFui').val();
     console.log('Se cambiará el estatus por descargado al id de datos personales ' + idDP);
-    $.get("cambiaStatusSubidaFui.do?&id_datos_personales=" + idDP, null, function(respuesta) {
+    $.get("cambiaStatusSubidaFui.do?&id_datos_personales=" + idDP, null, function (respuesta) {
         console.log('Subida con respuesta = ' + respuesta);
     });
 }
-function abreFancy()
-{
-    alert('asdad');
-}
-function recargaProyectos(idInstancia, idProyecto)
+
+/**
+ * @Deprecated
+ * @param {type} idInstancia
+ * @param {type} idProyecto
+ * @returns {undefined}
+ */
+function recargaProyectosDeprecated(idInstancia, idProyecto)
 {
     console.log('el id de la isntancia es: ' + idInstancia);
     var idDP = $('.idDatosPersonalesOrg').val();
     console.log('El id de los datos personales: ' + idDP);
-    $.get("cargarProyectos.do?id_instancia=" + idInstancia + "&id_datos_personales=" + idDP, null, function(respuesta) {
+    $.get("cargarProyectos.do?id_instancia=" + idInstancia + "&id_datos_personales=" + idDP, null, function (respuesta) {
         console.log(respuesta);
         if (respuesta.nombre_responsable.length !== 0) {
             $("#proyectos").empty();
@@ -134,7 +126,7 @@ function recargaProyectos(idInstancia, idProyecto)
 
             console.log('Pasando a proyectos');
             console.log('tamanio de proyec es' + $("#proyectos option").size());
-            $("#proyectos option").each(function() {
+            $("#proyectos option").each(function () {
                 console.log('??');
                 console.log('tiene:' + $(this).attr('value') + '--');
                 if (parseInt($(this).attr('value')) === parseInt(idProyecto))
@@ -156,7 +148,64 @@ function recargaProyectos(idInstancia, idProyecto)
 
 }
 
-$("#linkMasInfoProyecto").click(function() {
+/**
+ * Solicita al servidor la lista de proyectos para la instancia
+ * y los muestra en el combo para proyectos ('#proyectos');
+ * 
+ * @param {integer} idInstancia
+ * @returns 
+ */
+function mostrarProyectosInstancia(idInstancia)
+{
+    if (idInstancia) {
+        var url = 'getproyectosinstancia.do';
+        $.get(url, { 'idInstancia': idInstancia}, function(response) {
+            proyectos = response;
+            if (response.length === 0) {
+                $('#proyectos').empty();
+                $('#proyectos').append('<option>Esta instancia no tiene proyectos autorizados</option>');
+            }
+            else {
+                $('#proyectos').empty();
+                response.forEach(function (proyecto) {
+                   var nvaOpt = '<option value="' + proyecto.idProyecto +
+                           '">' + proyecto.nombre + '</option>';
+                   $('#proyectos').append(nvaOpt);
+                });
+            }
+        });
+        mostrarProyecto();
+    }
+}
+
+/**
+ * Muestra informacióñ sobre el proyecto elegido en el combo $('#proyectos')
+ * @returns 
+ */
+function mostrarProyecto()
+{
+    $('#domicilioOrg').val('');
+    $('#nombre_responsable').val('');
+    $('#responsable_puesto').val('');
+    $('#telefono_responsable').val('');
+    
+    var idProyectoSel = $("#proyectos").val();
+    if (idProyectoSel) {
+        var proyectoActual;
+        proyectos.forEach(function (proyecto){
+            if (proyecto.nombre === idProyectoSel) {
+                proyectoActual = proyecto;
+            } 
+        });
+        
+        $('#domicilioOrg').val(proyectoActual.domicilio);
+        $('#nombre_responsable').val(proyectoActual.titular);
+        $('#responsable_puesto').val(proyectoActual.titularPuesto);
+        $('#telefono_responsable').val(proyectoActual.titularTelefono);
+    }
+}
+
+$("#linkMasInfoProyecto").click(function () {
     var idProyectoCombo = $("#proyectos option:selected").val();
     $('#linkMasInfoProyecto').attr("href", "detalleProyecto.do?id=" + idProyectoCombo);
 });
@@ -164,30 +213,7 @@ $("#linkMasInfoProyecto").click(function() {
 function recargaCombosOrgs(idProyecto)
 {
     var idInstancia = $("#comboOrganizaciones option:selected").val();
-    recargaProyectos(idInstancia);
-//    console.log("el id del proyecto es:" + idProyecto);
-//    //Obtener el id de la instancia para seleccionarlo en el combo
-//    $.get("idInstancia.do?idProyecto=" + idProyecto, null, function(respuesta) {
-//        console.log('el id de la isnt es' + respuesta.idProyecto + '--');
-//        var idInstancia = respuesta.idProyecto;
-//        $('#comboOrganizaciones option:eq(' + idInstancia + ')').prop('selected', true);
-//
-//        console.log('La org a seleccionar ' + idProyecto + "--");
-//        console.log('tamanio de org es' + $("#comboOrganizaciones option").size());
-//        $("#comboOrganizaciones option").each(function() {
-//            console.log('::');
-//            console.log('tiene:' + $(this).attr('value') + '--');
-//            if (parseInt($(this).attr('value')) === parseInt(idInstancia))
-//            {
-//                console.log('lo halle en ' + $(this).attr('value'));
-//                $("#comboOrganizaciones").val(idInstancia);
-//            }
-//        });
-//
-//
-//    });
-
-
+    mostrarProyectosInstancia(idInstancia);
 }
 //Ubicar el indice en el numero de habitaciones correspondiente
 
@@ -195,11 +221,11 @@ function enviarDatosAlumno()
 {
     $('#observacionesOK').hide("fast");
     $('#observaciones').hide("fast");
-    $("form#frmDatosPersonales :input").each(function() {
+    $("form#frmDatosPersonales :input").each(function () {
         prepararJSON($(this));
     });
 
-    $.post("modificarDatosPersonales.do", alumno, function(respuesta) {
+    $.post("modificarDatosPersonales.do", alumno, function (respuesta) {
         var respJ = {};
         if (respuesta !== "noInfo")
         {
@@ -209,7 +235,7 @@ function enviarDatosAlumno()
         {
             console.log('Tienes errores');
             $('.observacion').remove();
-            $.each(respJ, function(i, accion) {
+            $.each(respJ, function (i, accion) {
                 $('#observaciones').show('slow');
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
                 window.location.hash = '#observaciones';
@@ -233,11 +259,11 @@ function enviarDatosContactoAlumno()
 {
     $('#observacionesOK').hide("fast");
     $('#observaciones').hide("fast");
-    $("form#frmDatosContacto :input").each(function() {
+    $("form#frmDatosContacto :input").each(function () {
         prepararJSON($(this));
     });
 
-    $.post("modificarDatosContacto.do", alumno, function(respuesta) {
+    $.post("modificarDatosContacto.do", alumno, function (respuesta) {
         var respJ = {};
         if (respuesta !== "noInfo")
         {
@@ -248,7 +274,7 @@ function enviarDatosContactoAlumno()
             //alert('Tienes errores');
             console.log('Tienes errores');
             $('.observacion').remove();
-            $.each(respJ, function(i, accion) {
+            $.each(respJ, function (i, accion) {
                 $('#observaciones').show('slow');
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
                 window.location.hash = '#observaciones';
@@ -272,11 +298,11 @@ function enviarHorarios()
 {
     $('#observacionesOK').hide("fast");
     $('#observaciones').hide("fast");
-    $("form#frmHorarios :input").each(function() {
+    $("form#frmHorarios :input").each(function () {
         prepararJSON($(this));
     });
 
-    $.post("modificarHorarios.do", alumno, function(respuesta) {
+    $.post("modificarHorarios.do", alumno, function (respuesta) {
         var respJ = {};
         if (respuesta !== "noInfo")
         {
@@ -286,7 +312,7 @@ function enviarHorarios()
         {
             //alert('Tienes errores');
             console.log('Tienes errores');
-            $.each(respJ, function(i, accion) {
+            $.each(respJ, function (i, accion) {
                 $('#listaObservaciones').empty();
                 $('#observaciones').show('slow');
                 $('#listaObservaciones').append("<li class= 'observacion'>" + accion.observacion + "</li>");
@@ -312,7 +338,7 @@ function enviarDatosOrganizaciones()
     $('#observacionesOK').hide("fast");
     $('#observaciones').hide("fast");
     console.log('el id de proy que subo ' + $('#proyectos').val());
-    $("form#frmDatosOrganizaciones :input").each(function() {
+    $("form#frmDatosOrganizaciones :input").each(function () {
         prepararJSON($(this));
     });
     $('.observacion').remove();
@@ -322,7 +348,7 @@ function enviarDatosOrganizaciones()
         window.location.hash = '#observaciones';
     }
     console.log(alumno);
-    $.post("modificarDatosOrganizaciones.do", alumno, function(respuesta) {
+    $.post("modificarDatosOrganizaciones.do", alumno, function (respuesta) {
         if (respuesta !== "" && respuesta !== "fallo fecha") {
             cambioAutomatico();
             $('#listaObservacionesOK').empty();
@@ -400,12 +426,12 @@ function ocultaDiv() {
 
 function cambiaTab() {
     var reg = /active/;
-    $(".tabsFormanotUnico").each(function() {
+    $(".tabsFormanotUnico").each(function () {
         if ($(this).attr("class").match(reg)) {
             tabActual = this;
         }
     });
-    $(".contensFormanotUnico").each(function() {
+    $(".contensFormanotUnico").each(function () {
         if ($(this).attr("class").match(reg)) {
             contentActual = this;
         }

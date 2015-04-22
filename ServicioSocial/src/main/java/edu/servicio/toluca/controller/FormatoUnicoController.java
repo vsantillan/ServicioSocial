@@ -1016,6 +1016,29 @@ public class FormatoUnicoController
         }
         return fuiJSON;
     }
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/getproyectosinstancia.do")
+    public @ResponseBody List<HashMap> getProyectosInstancia(String idInstancia)
+    {
+        Instancia instancia = (Instancia) daoInstancia.find(new BigDecimal(idInstancia.trim()));
+        List<HashMap> proyectos = new ArrayList<HashMap>();
+        for(Proyectos proyecto : instancia.getProyectosCollection())
+        {
+            proyecto.getInfToBd();
+            
+            /** @TODO Validate administrator authorization to project */
+            HashMap project = new HashMap();
+            project.put("idProyecto", proyecto.getIdProyecto());
+            project.put("nombre", proyecto.getNombre());
+            project.put("domicilio", proyecto.getDomicilio());
+            project.put("titular", proyecto.getNombreResponsable());
+            project.put("titularPuesto", proyecto.getResponsablePuesto());
+            project.put("titularTelefono", proyecto.getTelefonoResponsable());
+            proyectos.add(project);
+        }
+        
+        return proyectos;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/idInstancia.do")
     public @ResponseBody
