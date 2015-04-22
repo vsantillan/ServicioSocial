@@ -440,7 +440,7 @@ public class FormatoUnicoController
                 } else
                 {
                     System.out.println("El formato único no puede entrar, anda en validaciones o ya fue aceptado");
-                    return "PanelUsuario/panelUsuario";
+                    return "redirect:panelUsuario.do";
                 }
             }
         }
