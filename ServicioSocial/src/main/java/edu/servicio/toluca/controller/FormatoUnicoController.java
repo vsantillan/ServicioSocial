@@ -1018,23 +1018,43 @@ public class FormatoUnicoController
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/getproyectosinstancia.do")
-    public @ResponseBody List<HashMap> getProyectosInstancia(String idInstancia)
+    public @ResponseBody List<HashMap> getProyectosInstancia(String idInstancia, String idDatosPersonales)
     {
+        if(idInstancia == null || idDatosPersonales == null)
+        {
+            return new ArrayList<HashMap>();
+        }
+        
         Instancia instancia = (Instancia) daoInstancia.find(new BigDecimal(idInstancia.trim()));
         List<HashMap> proyectos = new ArrayList<HashMap>();
+        
+        DatosPersonales dp = (DatosPersonales) daoDatosPersonales
+                .find(new BigDecimal(idDatosPersonales.trim()));
+        VistaAlumno alumno = (VistaAlumno) daoVistaAlumno
+                .find(dp.getAlumnoId().getId());
+        
         for(Proyectos proyecto : instancia.getProyectosCollection())
         {
-            proyecto.getInfToBd();
-            
-            /** @TODO Validate administrator authorization to project */
-            HashMap project = new HashMap();
-            project.put("idProyecto", proyecto.getIdProyecto());
-            project.put("nombre", proyecto.getNombre());
-            project.put("domicilio", proyecto.getDomicilio());
-            project.put("titular", proyecto.getNombreResponsable());
-            project.put("titularPuesto", proyecto.getResponsablePuesto());
-            project.put("titularTelefono", proyecto.getTelefonoResponsable());
-            proyectos.add(project);
+            if(Integer.parseInt(proyecto.getVacantesDisponibles().toString()) > 0 &&
+                    proyecto.getValidacionAdmin() == BigInteger.ONE)
+            {
+                for(ProyectoPerfil pPerfil : proyecto.getProyectoPerfilCollection())
+                {
+                    int pPerfilID = Integer.parseInt(pPerfil.getIdPerfil().getIdPerfil().toString());
+                    int aluCarreraID = (int) alumno.getCarreraId();
+                    if(pPerfilID == aluCarreraID)
+                    {
+                        HashMap project = new HashMap();
+                        project.put("idProyecto", proyecto.getIdProyecto());
+                        project.put("nombre", proyecto.getNombre());
+                        project.put("domicilio", proyecto.getDomicilio());
+                        project.put("titular", proyecto.getNombreResponsable());
+                        project.put("titularPuesto", proyecto.getResponsablePuesto());
+                        project.put("titularTelefono", proyecto.getTelefonoResponsable());
+                        proyectos.add(project);
+                    }
+                }
+            }
         }
         
         return proyectos;

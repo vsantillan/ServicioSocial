@@ -32,8 +32,7 @@ function listo()
     });
 
     $("#comboOrganizaciones").change(function (event) {
-        var idInstancia = $("#comboOrganizaciones").val();
-        mostrarProyectosInstancia(idInstancia);
+        mostrarProyectosInstancia();
     });
 
     $("#proyectos").change(function () {
@@ -152,14 +151,16 @@ function recargaProyectosDeprecated(idInstancia, idProyecto)
  * Solicita al servidor la lista de proyectos para la instancia
  * y los muestra en el combo para proyectos ('#proyectos');
  * 
- * @param {integer} idInstancia
  * @returns 
  */
-function mostrarProyectosInstancia(idInstancia)
+function mostrarProyectosInstancia()
 {
+    var idInstancia = $("#comboOrganizaciones option:selected").val();
+    var idDatosPersonales = $('.idDatosPersonalesOrg').val();
+
     if (idInstancia) {
         var url = 'getproyectosinstancia.do';
-        $.get(url, {'idInstancia': idInstancia}, function (response) {
+        $.get(url, {'idInstancia': idInstancia, 'idDatosPersonales': idDatosPersonales}, function (response) {
             proyectos = response;
             if (response.length === 0) {
                 $('#proyectos').empty();
@@ -211,8 +212,7 @@ $("#linkMasInfoProyecto").click(function () {
 
 function recargaCombosOrgs(idProyecto)
 {
-    var idInstancia = $("#comboOrganizaciones option:selected").val();
-    mostrarProyectosInstancia(idInstancia);
+    mostrarProyectosInstancia();
 }
 //Ubicar el indice en el numero de habitaciones correspondiente
 
