@@ -20,39 +20,38 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-primary">Alta Usuario</div> 
                         <div class="panel-body">
-                            <form:form name="#" commandName="usuarios" class="MyForm" action="upUserAdmin.do"  method="POST">
+                            <form:form name="form" commandName="usuarios" class="MyForm" action="upUserAdmin.do"  method="POST">
+                                ${error}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="nombre">Nombre(s)</label>                               
                                         <form:input path="nombre" onkeyup="soloTexto(event)" id="nombre" size="20" class="form-control" placeholder="Introduzca sólo su nombre" required="true"/><br/>
-                                        <form:errors path="nombre" class="alert alert-danger" />
-                                        ${error_sql}
+                                                                    
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Apellido Paterno</label> 
                                         <form:input path="apellidoPat" onkeyup="soloTexto(event)" id="apellidopat" size="20" class="form-control" placeholder="Introduza sólo su apellido paterno" required="true"/><br/>
-                                        <form:errors path="apellidoPat" class="alert alert-danger" />
+                                       
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Apellido Materno</label> 
                                         <form:input path="apellidoMat" id="apellidomat" size="20" class="form-control" placeholder="Introduza sólo su apellido materno" required="true"/><br/>
-                                        <form:errors path="apellidoMat" class="alert alert-danger" />
+                                      
                                     </div>
                                     <div class="form-group">
                                         <label for="calle">Email</label>
                                         <form:input path="email" id="email" autocomplete='off' size="20" class="form-control" placeholder="ejemplo@email.com" type="email" required="true"/><br/>
-                                        <form:errors path="email" autocomplete='off' class="alert alert-danger" />
+                                        
                                     </div>
                                     <div class="form-group" id="cambiaPass">
                                         <div class="form-group col-md-6">
                                             <label for="lugar">Contrase&ntilde;a:</label>
-                                            <form:input path="password" onkeyup="tamanoPass(event)" autocomplete='off' id="passPrincipal" class="form-control" type="password" maxlength="50" placeholder="Minimo 6 caracteres" required="true"/><br/>
-                                            <form:errors path="password" autocomplete='off' cssClass="alert alert-danger"/>
+                                            <input onkeyup="tamanoPass(event)" autocomplete='off' id="passPrincipal" class="form-control" type="password" maxlength="50" placeholder="Minimo 6 caracteres" required="true"/><br/>
+                                           
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="lugar">Confirmar Contrase&ntilde;a:</label>
-                                            <form:input path="password" onkeyup="verificarPassword(event)" autocomplete='off'  id="passConfirm" class="form-control" type="password" placeholder="Confirme su contraseña" required="true"/><br/>
-                                            <form:errors path="password" autocomplete='off' cssClass="alert alert-danger"/>
+                                            <form:input path="password" onkeyup="verificarPassword(event)" autocomplete='off'  id="passConfirm" class="form-control" type="password" placeholder="Confirme su contraseña" required="true"/><br/>                                          
                                         </div>
                                     </div>
                                 </div>

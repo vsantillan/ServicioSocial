@@ -227,7 +227,7 @@ public class ValidacionesOrganizaciones {
                 model.addAttribute("error_otra_colonia", error("No ha ingresado el nombre de la colonia."));
             }
         }
-
+        
         try {
             model.addAttribute("nombre", error(result.getFieldError("nombre").getDefaultMessage()));
         } catch (Exception e) {

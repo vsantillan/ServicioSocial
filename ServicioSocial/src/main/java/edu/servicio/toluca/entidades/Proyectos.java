@@ -64,9 +64,9 @@ public class Proyectos implements Serializable, ExpresionesRegulares, CatalogoEr
 {
     private static final long serialVersionUID = 1L;
 
-    @Size(max = 7, message = "La extensión no puede tener mas de 7 digitos")
+    @Size(max = 7,min= 0, message = "La extensión no puede tener mas de 7 digitos")
     @Pattern(regexp = numeros, message = "La extensión solo puede incluir números")
-    @Column(name = "EXT")
+    @Column(name = "EXT", nullable = true)
     private String ext;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idProyecto")

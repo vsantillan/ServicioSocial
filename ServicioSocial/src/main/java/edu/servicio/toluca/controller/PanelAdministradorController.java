@@ -164,6 +164,12 @@ public class PanelAdministradorController
         ValidaSesion valSession = new ValidaSesion(session, request);
         if (valSession.accesaPanelAdministrador())
         {
+            System.err.println(usuarioInstancia.getPassword());
+            System.err.println(usuarioInstancia.getApellidoMat());
+            System.err.println(usuarioInstancia.getApellidoPat());
+            if(usuarioInstancia.getPassword().length() >= 6){
+                
+            
             try
             {
                 usuarioInstancia.setStatus((short) 1);
@@ -173,6 +179,13 @@ public class PanelAdministradorController
             {
                 System.out.println("Match");
             }
+            }else{
+                      model.addAttribute("error", "<div class='alter alert-warning error'>La contraseña debe de tener mas de 6 caracteres.</div>");
+                      usuarioInstancia.setPassword(null);
+                      model.addAttribute("usuarios", usuarioInstancia);
+            return "/Usuarios/altaUsuarios";
+            }
+           
             return "redirect:administrarUsuarios.do";
         } else
         {

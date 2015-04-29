@@ -919,7 +919,7 @@ public class OrganizacionesController2
         if (!actividadesModel.validarInsercionActividades().isSuccess())
         {
             result.addError(new ObjectError("actividades", actividadesModel.validarInsercionActividades().getMensaje()));
-        }
+        }        
         model.addAttribute("validacion_actividades", actividadesModel.validarInsercionActividades().getMensaje());
 
         if (result.hasErrors())

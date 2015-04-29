@@ -20,6 +20,7 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-primary">Editar Usuario</div> 
                         <div class="panel-body">
+                            ${error}
                              
                             <form:form name="form" commandName="usuarios" action="updateUserData.do" method="POST">
                                 <div class="col-md-6">
@@ -27,7 +28,7 @@
                                         <label for="nombre">Nombre</label>                               
                                         <form:input path="nombre" id="nombre" size="20" class="form-control"/><br/>
                                         <form:errors path="nombre" class="alert alert-danger" />
-                                        ${error_sql}
+                                        
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_organizacion">Apellido Paterno</label> 
