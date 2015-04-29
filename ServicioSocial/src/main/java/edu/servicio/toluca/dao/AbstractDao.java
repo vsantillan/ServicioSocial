@@ -77,14 +77,17 @@ public abstract class AbstractDao<T extends Serializable>
         return entityManager.merge(entity);
     }
     
+    @Transactional
     public T find(Object id)
     {
         entityManager.clear();
         return entityManager.find(entityClass, id);
     }
 
+    @Transactional
     public List<T> findAll()
     {
+        entityManager.clear();
         javax.persistence.criteria.CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         return entityManager.createQuery(cq).getResultList();
@@ -99,8 +102,10 @@ public abstract class AbstractDao<T extends Serializable>
      * 
      * @return Registros recuperados ordenados mediante los criterios dados
      */
+    @Transactional
     public List<T> findAll(LinkedHashMap<String, String> ordering)
     {
+        entityManager.clear();
         CriteriaQuery cq = entityManager.getCriteriaBuilder().createQuery();
         Root<T> root = cq.from(entityClass);
         cq.select(root);
@@ -129,6 +134,7 @@ public abstract class AbstractDao<T extends Serializable>
     public List<T> findBySpecificField(String field, Object fieldContent, String predicates,
             LinkedHashMap<String, String> ordering, LinkedList<String> grouping)
     {
+        entityManager.clear();
 //        if(entityClass == FormatoUnico.class)
 //        {
 //            entityManager.flush();

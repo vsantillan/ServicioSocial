@@ -32,15 +32,14 @@ function listo()
     });
 
     $("#comboOrganizaciones").change(function (event) {
-        var idInstancia = $("#comboOrganizaciones").val();
-        mostrarProyectosInstancia(idInstancia);
+        mostrarProyectosInstancia();
     });
 
     $("#proyectos").change(function () {
 
-        var idProyActual = $("#proyectos").val();
-        var idInstancia = $("#comboOrganizaciones").val();
-        var idDatosPer = $('.idDatosPersonalesOrg').val();
+//        var idProyActual = $("#proyectos").val();
+//        var idInstancia = $("#comboOrganizaciones").val();
+//        var idDatosPer = $('.idDatosPersonalesOrg').val();
 
         //recargaInfoProyectos(idProyActual, idInstancia, idDatosPer);
         mostrarProyecto();
@@ -152,29 +151,32 @@ function recargaProyectosDeprecated(idInstancia, idProyecto)
  * Solicita al servidor la lista de proyectos para la instancia
  * y los muestra en el combo para proyectos ('#proyectos');
  * 
- * @param {integer} idInstancia
  * @returns 
  */
-function mostrarProyectosInstancia(idInstancia)
+function mostrarProyectosInstancia()
 {
+    var idInstancia = $("#comboOrganizaciones option:selected").val();
+    var idDatosPersonales = $('.idDatosPersonalesOrg').val();
+
     if (idInstancia) {
         var url = 'getproyectosinstancia.do';
-        $.get(url, { 'idInstancia': idInstancia}, function(response) {
+        $.get(url, {'idInstancia': idInstancia, 'idDatosPersonales': idDatosPersonales}, function (response) {
             proyectos = response;
             if (response.length === 0) {
                 $('#proyectos').empty();
                 $('#proyectos').append('<option>Esta instancia no tiene proyectos autorizados</option>');
+                mostrarProyecto();
             }
             else {
                 $('#proyectos').empty();
                 response.forEach(function (proyecto) {
-                   var nvaOpt = '<option value="' + proyecto.idProyecto +
-                           '">' + proyecto.nombre + '</option>';
-                   $('#proyectos').append(nvaOpt);
+                    var nvaOpt = '<option value="' + proyecto.idProyecto +
+                            '">' + proyecto.nombre + '</option>';
+                    $('#proyectos').append(nvaOpt);
                 });
+                mostrarProyecto();
             }
         });
-        mostrarProyecto();
     }
 }
 
@@ -188,20 +190,18 @@ function mostrarProyecto()
     $('#nombre_responsable').val('');
     $('#responsable_puesto').val('');
     $('#telefono_responsable').val('');
-    
-    var idProyectoSel = $("#proyectos").val();
+
+    var idProyectoSel = $("#proyectos option:selected").val();
     if (idProyectoSel) {
-        var proyectoActual;
-        proyectos.forEach(function (proyecto){
-            if (proyecto.nombre === idProyectoSel) {
-                proyectoActual = proyecto;
-            } 
-        });
-        
-        $('#domicilioOrg').val(proyectoActual.domicilio);
-        $('#nombre_responsable').val(proyectoActual.titular);
-        $('#responsable_puesto').val(proyectoActual.titularPuesto);
-        $('#telefono_responsable').val(proyectoActual.titularTelefono);
+        for (var i = 0; i < proyectos.length; i++) {
+            idProyectoSel = parseInt(idProyectoSel, '10');
+            if (idProyectoSel === proyectos[i].idProyecto) {
+                $('#domicilioOrg').val(proyectos[i].domicilio);
+                $('#nombre_responsable').val(proyectos[i].titular);
+                $('#responsable_puesto').val(proyectos[i].titularPuesto);
+                $('#telefono_responsable').val(proyectos[i].titularTelefono);
+            }
+        }
     }
 }
 
@@ -212,8 +212,7 @@ $("#linkMasInfoProyecto").click(function () {
 
 function recargaCombosOrgs(idProyecto)
 {
-    var idInstancia = $("#comboOrganizaciones option:selected").val();
-    mostrarProyectosInstancia(idInstancia);
+    mostrarProyectosInstancia();
 }
 //Ubicar el indice en el numero de habitaciones correspondiente
 

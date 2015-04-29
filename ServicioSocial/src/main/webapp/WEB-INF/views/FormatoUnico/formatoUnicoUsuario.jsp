@@ -357,11 +357,11 @@
                             <input id="responsable_puesto"type ="text" readonly="true" class="form-control" />
                           </div>
                           <div class="form-group">
-                            <label>Tel&eacute;fono del titular</label>
+                            <label>Teléfono del titular</label>
                             <input id="telefono_responsable" type ="text" readonly="true" class="form-control" /> 
                           </div>
                           <div class="form-group">
-                            <label>Para ver más informaci&oacute;n del proyecto, da clic en la lupa</label>
+                            <label>Para ver más información del proyecto, da clic en la lupa</label>
                             <a id="linkMasInfoProyecto"  class="fancy"><span class="glyphicon glyphicon-search sizeIcon"></span></a>
                           </div>
                         </div>
@@ -534,7 +534,7 @@
             <div class="modal-body">
               <div class="row">
                 <div id="observacionesOK" class="alert alert-success" style="display: none;">
-                  <div class="alert-heading"><h3><b>Informaci&oacute;n guardada con exito</b></h3></div>
+                  <div class="alert-heading"><h3><b>Información guardada con exito</b></h3></div>
                   <div class="alert-body">
                     <ul id="listaObservacionesOK" ></ul>
                   </div>
