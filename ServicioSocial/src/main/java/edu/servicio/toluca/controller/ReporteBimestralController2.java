@@ -474,8 +474,9 @@ public class ReporteBimestralController2
         try
         {
             GeneraDocumento obj = new GeneraDocumento();
-            obj.generar("ges_vin", "gst05a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
-        } catch (Exception ex)
+            obj.generar("GES_VIN2", "gst05a", "plantilaReporteBimestral", parameters, request, httpServletResponse);
+        } 
+        catch (Exception ex)
         {
             Exceptions.printStackTrace(ex);
         }
